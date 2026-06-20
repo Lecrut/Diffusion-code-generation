@@ -1,21 +1,17 @@
-def compare_lengths(length1, length2):
-    absolute_difference = abs(length1 - length2)
-    if length1 == 0 and length2 == 0:
-        percentage_difference = 0.0
-    elif length1 == 0:
-        percentage_difference = (absolute_difference / length2) * 100 if length2 != 0 else float('inf')
-    elif length2 == 0:
-        percentage_difference = (absolute_difference / length1) * 100
+def compare_lengths(a, b):
+    diff = abs(a - b)
+    if a > b:
+        description = f"{a} is greater than {b}"
+    elif b > a:
+        description = f"{b} is greater than {a}"
     else:
-        percentage_difference = (absolute_difference / ((length1 + length2) / 2)) * 100
-    return absolute_difference, percentage_difference
+        description = "both are equal"
+    return diff, description
+
 if __name__ == '__main__':
-    length_a = 15.5
-    length_b = 22.0
-    diff, percent = compare_lengths(length_a, length_b)
-    print("Length Comparison Report")
-    print("------------------------")
-    print(f"Length 1: {length_a}")
-    print(f"Length 2: {length_b}")
-    print(f"Absolute Difference: {diff}")
-    print(f"Percentage Difference: {percent:.2f}%")
+    result = compare_lengths(3.14, 2.72)
+    print(result)
+    result2 = compare_lengths(5.0, 10.5)
+    print(result2)
+    result3 = compare_lengths(4.2, 4.2)
+    print(result3)

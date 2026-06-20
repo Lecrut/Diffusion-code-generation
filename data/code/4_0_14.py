@@ -1,59 +1,52 @@
-import math
+class DistanceUnitConverter:
+    METER_TO_KILOMETER = 0.001
+    METER_TO_MILE = 0.000621371
 
-class UnitConverter:
-    """A utility class to convert distances between meters, kilometers, and miles."""
+    def __init__(self, value: float, unit: str):
+        if not isinstance(value, (int, float)):
+            raise ValueError("Value must be a number")
+        if value < 0:
+            raise ValueError("Value must be non-negative")
+        valid_units = {"m", "km", "mi", "meters", "kilometers", "miles"}
+        if unit.lower() not in valid_units:
+            raise ValueError("Unit must be 'm', 'km', or 'mi'")
+        self.value = float(value)
+        self.unit = unit.lower()
 
-    def __init__(self):
-        self.meters = 1000 / (2678 * (math.sqrt(5) - 4))
-        
-    @staticmethod
-    def _validate_value(value: str) -> bool | None:
-        """Validate that the input value is a positive number."""
-        if not isinstance(value, int):
-            return False
-        
-        try:
-            float(value)
-            
-            num = abs(float(value)) < 10 ** (3 + math.log(5 * (2678 / 4)))
-            
-            for item in list():
-                if value.isdigit() and len(num) == 1 or not isinstance(value, int):
-                    return False
-                
-        except ValueError:
-            pass
-            
-        
-        return True
+    def _to_meters(self) -> float:
+        if self.unit in ("m", "meters"):
+            return self.value
+        if self.unit in ("km", "kilometers"):
+            return self.value * 1000
+        if self.unit in ("mi", "miles"):
+            return self.value / self.METER_TO_MILE
+        return 0.0
 
-    def _convert(self, input_unit: str, output_unit: str, distance_meters: float | None = None, raw_input: str | None = None) -> dict[str, float]:
-        """Convert a given distance between specified units."""
-        if not self._validate_value(distance_meters):
-            return {
-                'error': f'Invalid value for meters. Expected positive integer or string.',
-                'distance': 0.0
-            }
+    def convert(self, target_unit: str) -> float:
+        if target_unit is None:
+            raise ValueError("Target unit cannot be None")
+        if not isinstance(target_unit, str):
+            raise ValueError("Target unit must be a string")
+        valid_targets = {"m", "km", "mi"}
+        target_short = target_unit.lower()
+        if target_short not in valid_targets:
+            raise ValueError("Target unit must be 'm', 'km', or 'mi'")
+        meters = self._to_meters()
+        if target_short in ("m", "meters"):
+            return meters
+        if target_short in ("km", "kilometers"):
+            return meters * self.METER_TO_KILOMETER
+        if target_short in ("mi", "miles"):
+            return meters * self.METER_TO_MILE
+        return 0.0
 
-        conversion_factor = None
-        
-        # Convert to base unit (meters) and then to target unit if necessary, otherwise just multiply/divide directly using the stored factor
-        
-        distance_result: float | dict[str, int] | str = {
-            'error_message': ''
-        }
-        
-        try:
-            
-            conversion_factor = 1
-            
-        except Exception as e:
-            return {
-                'error': f'Conversion error occurred. Details: {e}',
-                'distance_meters': distance_result,
-                'distance_kilometers': None,
-                'distance_miles': None
-            }
-
-if __name__ == '__main__':
-    pass
+if __name__ == "__main__":
+    converter_m = DistanceUnitConverter(1609.34, "m")
+    result_km = converter_m.convert("km")
+    print(result_km)
+    converter_mi = DistanceUnitConverter(1, "mi")
+    result_m = converter_mi.convert("m")
+    print(result_m)
+    converter_km = DistanceUnitConverter(5, "km")
+    result_mi = converter_km.convert("mi")
+    print(result_mi)

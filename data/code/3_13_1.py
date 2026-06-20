@@ -1,12 +1,19 @@
-class TemperatureConverter:
-    def convert_all(self, celsius_readings):
-        fahrenheit_readings = []
-        for celsius in celsius_readings:
-            fahrenheit = (celsius * 9/5) + 32
-            fahrenheit_readings.append(fahrenheit)
-        return fahrenheit_readings
+def kelvin_to_celsius(temps):
+    results = []
+    for t in temps:
+        try:
+            if not isinstance(t, (int, float)):
+                raise TypeError
+            c = round(float(t) - 273.15, 2)
+            if c < -273.15:
+                results.append(None)
+            else:
+                results.append(c)
+        except (TypeError, ValueError):
+            results.append(None)
+    return results
+
 if __name__ == '__main__':
-    converter = TemperatureConverter()
-    celsius_data = [0, 10, 20, 25, 30]
-    fahrenheit_data = converter.convert_all(celsius_data)
-    print(fahrenheit_data)
+    sample_data = [0, 273.15, 300.5, -10, "invalid", 400]
+    output = kelvin_to_celsius(sample_data)
+    print(output)

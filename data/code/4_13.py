@@ -1,36 +1,47 @@
-class DistanceConverter:
-    MILES_TO_KM = 1.60934
-    KM_TO_MILES = 1 / MILES_TO_KM
-    METER_TO_KM = 0.001
-    KM_TO_METER = 1000
-    def convert(self, value, from_unit, to_unit):
-        if from_unit == to_unit:
-            return value
-        if from_unit == "miles" and to_unit == "kilometers":
-            return value * self.MILES_TO_KM
-        elif from_unit == "kilometers" and to_unit == "miles":
-            return value * self.KM_TO_MILES
-        elif from_unit == "miles" and to_unit == "meters":
-            return value * self.MILES_TO_KM * self.KM_TO_METER
-        elif from_unit == "meters" and to_unit == "miles":
-            return value / (self.MILES_TO_KM * self.KM_TO_METER)
-        elif from_unit == "kilometers" and to_unit == "meters":
-            return value * self.KM_TO_METER
-        elif from_unit == "meters" and to_unit == "kilometers":
-            return value / self.KM_TO_METER
-        else:
-            raise ValueError("Unsupported unit conversion")
+import argparse
+import sys
+
+def convert_distances(distance1, distance2, output_unit):
+    valid_units = ['km', 'm', 'cm', 'mm', 'mi', 'yd', 'ft', 'in']
+    if output_unit not in valid_units:
+        raise ValueError(f"Invalid unit: {output_unit}. Must be one of {valid_units}")
+    
+    unit_to_meters = {
+        'km': 1000.0,
+        'm': 1.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'mi': 1609.344,
+        'yd': 0.9144,
+        'ft': 0.3048,
+        'in': 0.0254
+    }
+    
+    meter_to_unit = {v: k for k, v in unit_to_meters.items()}
+    
+    m1 = distance1 * unit_to_meters[output_unit]
+    m2 = distance2 * unit_to_meters[output_unit]
+    
+    total_meters = m1 + m2
+    result = total_meters / unit_to_meters[output_unit]
+    
+    return result
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert and sum two distances.")
+    parser.add_argument("distance1", type=float, help="First distance value")
+    parser.add_argument("distance2", type=float, help="Second distance value")
+    parser.add_argument("unit", type=str, help="Desired output unit")
+    
+    args = parser.parse_args()
+    
+    try:
+        result = convert_distances(args.distance1, args.distance2, args.unit)
+        print(f"{result} {args.unit}")
+    except ValueError as e:
+        print(f"Error: {e}")
+
 if __name__ == '__main__':
-    converter = DistanceConverter()
-    miles_value = 10
-    km_value = 16.0934
-    m_value = 1000
-    print(f"Converting {miles_value} miles to kilometers: {converter.convert(miles_value, 'miles', 'kilometers'):.4f} km")
-    print(f"Converting {km_value} kilometers to miles: {converter.convert(km_value, 'kilometers', 'miles'):.4f} miles")
-    print(f"Converting {m_value} meters to kilometers: {converter.convert(m_value, 'meters', 'kilometers'):.4f} km")
-    print(f"Converting {m_value} meters to miles: {converter.convert(m_value, 'meters', 'miles'):.4f} miles")
-    print(f"Converting {miles_value} miles to meters: {converter.convert(miles_value, 'miles', 'meters'):.4f} m")
-    print(f"Converting {m_value} meters to miles: {converter.convert(m_value, 'meters', 'miles'):.4f} miles")
-    print(f"Converting {km_value} kilometers to meters: {converter.convert(km_value, 'kilometers', 'meters'):.4f} m")
-    print(f"Converting {miles_value} miles to miles: {converter.convert(miles_value, 'miles', 'miles'):.4f} miles")
-    print(f"Converting {km_value} kilometers to kilometers: {converter.convert(km_value, 'kilometers', 'kilometers'):.4f} km")
+    import sys
+    sys.argv = ['script.py', '10', '5', 'km']
+    main()

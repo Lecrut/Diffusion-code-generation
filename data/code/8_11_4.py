@@ -1,27 +1,58 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    sum1 = 0.0
-    sum2 = 0.0
-    for i in range(n):
-        x_i, y_i = vertices[i]
-        x_next, y_next = vertices[(i + 1) % n]
-        sum1 += x_i * y_next
-        sum2 += y_i * x_next
-    area = 0.5 * (sum1 - sum2)
-    return area
+
+class Circle:
+    def __init__(self, radius: float) -> None:
+        if radius <= 0:
+            raise ValueError("Radius must be positive")
+        self.radius: float = radius
+
+    def area(self) -> float:
+        return math.pi * (self.radius ** 2)
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+        self.radius *= factor
+
+    def scaled_area(self, factor: float) -> float:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+        return self.area() * (factor ** 2)
+
+class Rectangle:
+    def __init__(self, width: float, height: float) -> None:
+        if width <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.width: float = width
+        self.height: float = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+        self.width *= factor
+        self.height *= factor
+
+    def scaled_area(self, factor: float) -> float:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+        return self.area() * (factor ** 2)
+
 if __name__ == '__main__':
-    polygon1 = [(0, 0), (1, 0), (0, 1)]
-    area1 = calculate_polygon_area(polygon1)
-    print(f"Area of Polygon 1: {area1}")
-    polygon2 = [(2, 1), (4, 0), (1, 3)]
-    area2 = calculate_polygon_area(polygon2)
-    print(f"Area of Polygon 2: {area2}")
-    polygon3 = [(0, 0), (5, 0), (5, 5), (0, 5)]
-    area3 = calculate_polygon_area(polygon3)
-    print(f"Area of Polygon 3: {area3}")
-    polygon4 = [(1.5, 2.5), (3.5, 1.5), (2.5, 4.5)]
-    area4 = calculate_polygon_area(polygon4)
-    print(f"Area of Polygon 4: {area4}")
+    circle = Circle(radius=5.0)
+    circle_area = circle.area()
+    print(f"Circle Area: {circle_area}")
+
+    circle.scale(factor=2.0)
+    scaled_circle_area = circle.scaled_area(factor=1.0)
+    print(f"Scaled Circle Area: {scaled_circle_area}")
+
+    rectangle = Rectangle(width=4.0, height=6.0)
+    rect_area = rectangle.area()
+    print(f"Rectangle Area: {rect_area}")
+
+    rectangle.scale(factor=3.0)
+    scaled_rect_area = rectangle.scaled_area(factor=1.0)
+    print(f"Scaled Rectangle Area: {scaled_rect_area}")

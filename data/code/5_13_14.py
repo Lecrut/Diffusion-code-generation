@@ -1,42 +1,20 @@
-import math
+class LengthComparator:
+    def __init__(self):
+        self.length1 = 10.0001
+        self.length2 = 10.0002
+        self.epsilon = 0.0001
 
-def get_length_measurements():
-    """Returns a tuple of two numeric length values."""
-    return (10, 25) # Hard-coded sample values as per instructions to avoid input() calls
+    def are_equal(self, a, b, tolerance=None):
+        if tolerance is None:
+            tolerance = self.epsilon
+        return abs(a - b) <= tolerance
 
-def compare_lengths(val_a: float, val_b: float) -> None:
-    """Prints detailed comparison and calculated difference between two lengths."""
-    print(f"Comparing length measurements:")
-    print(f"Value A (First): {val_a}")
-    print(f"Value B (Second): {val_b}")
-
-    # Check for non-numeric input validation logic structure, though not needed with hard-coded values
-    try:
-        float(val_a)
-        float(val_b)
-        is_numeric = True
-    except ValueError:
-        is_numeric = False
-    
-    if is_numeric:
-        diff = val_a - val_b
-        
-        print(f"\nAnalysis:")
-        if abs(diff) < 1e-6 and math.isclose(val_a, val_b):
-            status_message = "The two lengths are equal."
-        elif val_a > val_b:
-            status_message = f"Value A is greater than Value B by {diff} units."
-        else:
-            status_message = f"Value B is greater than Value A by {-diff} units."
-        
-        print(f"Difference (A - B): {diff}")
-        print(status_message)
+    def absolute_difference(self, a, b):
+        return abs(a - b)
 
 if __name__ == '__main__':
-    # No input(), sys.stdin, or argparse used. 
-    # Sample values are hard-coded to ensure the script runs without user interaction.
-    
-    length_a = get_length_measurements()[0]
-    length_b = get_length_measurements()[1]
-
-    compare_lengths(length_a, length_b)
+    comparator = LengthComparator()
+    result_equal = comparator.are_equal(comparator.length1, comparator.length2)
+    result_diff = comparator.absolute_difference(comparator.length1, comparator.length2)
+    print(f"{result_equal=}")
+    print(f"{result_diff=}")

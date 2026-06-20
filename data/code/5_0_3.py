@@ -1,13 +1,13 @@
-import sys
-def calculate_difference(len1, len2):
+def calculate_length_difference(length1, length2):
     try:
-        num1 = float(len1)
-        num2 = float(len2)
-        return num1 - num2
-    except ValueError:
-        return "Error: Both inputs must be valid numbers."
+        val1 = float(length1)
+        val2 = float(length2)
+        return abs(val1 - val2)
+    except (ValueError, TypeError):
+        raise ValueError("Both inputs must be numeric values.")
+
 if __name__ == '__main__':
-    input_length1 = "15.5"
-    input_length2 = "7.2"
-    result = calculate_difference(input_length1, input_length2)
+    sample_length1 = "10.5"
+    sample_length2 = "3.2"
+    result = calculate_length_difference(sample_length1, sample_length2)
     print(result)

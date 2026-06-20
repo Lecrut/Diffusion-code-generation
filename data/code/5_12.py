@@ -1,19 +1,14 @@
-class LengthComparator:
-    def compare_lengths(self, length1, length2):
-        if length1 > length2:
-            return f"{length1} is greater than {length2}"
-        elif length1 < length2:
-            return f"{length1} is less than {length2}"
-        else:
-            return f"{length1} is equal to {length2}"
+def get_larger_in_original_unit(meters1, meters2):
+    if meters1 is None or meters2 is None:
+        raise ValueError("Both arguments must be numbers")
+    centimeters1 = meters1 * 100
+    centimeters2 = meters2 * 100
+    if centimeters1 > centimeters2:
+        return meters1
+    return meters2
+
 if __name__ == '__main__':
-    comparator = LengthComparator()
-    l1 = 15.5
-    l2 = 22.1
-    print(comparator.compare_lengths(l1, l2))
-    l3 = 100
-    l4 = 100
-    print(comparator.compare_lengths(l3, l4))
-    l5 = 5.0
-    l6 = 1.2
-    print(comparator.compare_lengths(l5, l6))
+    val1 = 1.5
+    val2 = 2.3
+    result = get_larger_in_original_unit(val1, val2)
+    print(result)

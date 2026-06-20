@@ -1,19 +1,14 @@
-import sys
-
-def calculate_ratio(a: float, b: float) -> float:
-    """Calculate the ratio of two positive numbers."""
-    if a <= 0 or b <= 0:
-        raise ValueError("Both measurements must be positive numbers.")
-    return a / b
+def compare_lengths(length_a, length_b):
+    difference = length_a - length_b
+    if length_a > length_b:
+        return f"Length A is longer than Length B by {difference} units"
+    elif length_a < length_b:
+        return f"Length A is shorter than Length B by {abs(difference)} units"
+    else:
+        return f"Length A is equal to Length B"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input, command-line arguments, 
-    # network access, or pre-existing files are required.
-    measurement_a = 10.5
-    measurement_b = 2
-
-    try:
-        result = calculate_ratio(measurement_a, measurement_b)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
+    length_a = 15.5
+    length_b = 10.2
+    result = compare_lengths(length_a, length_b)
+    print(result)

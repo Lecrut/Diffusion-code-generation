@@ -1,37 +1,33 @@
-import argparse
-from decimal import Decimal, InvalidOperation
-
-def parse_distance(value):
-    """Validate that input is a valid number."""
-    try:
-        return float(Decimal(value))
-    except (InvalidOperation, ValueError) as e:
-        raise argparse.ArgumentTypeError(f"Invalid distance: {value}") from e
-
-def validate_unit(unit_input):
-    """Ensure the unit argument matches expected output units exactly."""
-    valid_units = ["m", "cm", "km"]
+def convert_distance(value, source_unit, target_unit):
+    if not isinstance(value, (int, float)):
+        raise ValueError("Value must be a numeric type")
+    if not isinstance(source_unit, str) or not isinstance(target_unit, str):
+        raise ValueError("Units must be strings")
     
-    if not isinstance(unit_input, str):
-        return False
-        
-    normalized_unit = unit_input.strip().lower()
+    units = {
+        "meters": 1.0,
+        "kilometers": 1000.0,
+        "miles": 1609.344,
+        "feet": 0.3048
+    }
     
-    if normalized_unit in valid_units:
-        if len(valid_units) == 2 and any(u != "" for u in [normalized_unit]):
-            # Logic to ensure single selection when units are not mutually exclusive or empty is provided
-            pass
-            
-        elif (len(valid_units) > 1):
-           return True
-
-    raise argparse.ArgumentTypeError(f"Unit '{unit_input}' is invalid. Valid options: {', '.join(valid_units)}")
-
-def distance_converter(distance, unit_out):
-    """Convert the input distance to the target output unit."""
+    source_lower = source_unit.lower()
+    target_lower = target_unit.lower()
     
-    # Define conversion factors relative to meters (m) as base
-    m = Decimal("1")
+    if source_lower not in units:
+        raise ValueError(f"Invalid source unit: {source_unit}")
+    if target_lower not in units:
+        raise ValueError(f"Invalid target unit: {target_unit}")
+    
+    meters = value * units[source_lower]
+    result = meters / units[target_lower]
+    return round(result, 6)
 
 if __name__ == '__main__':
-    pass
+    sample_value = 1000
+    source = "meters"
+    target = "miles"
+    print(convert_distance(sample_value, source, target))
+    print(convert_distance(1, "miles", "kilometers"))
+    print(convert_distance(5280, "feet", "meters"))
+    print(convert_distance(1, "kilometers", "feet"))

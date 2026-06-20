@@ -1,11 +1,8 @@
-# Calculate simple weight difference between two variables using a lambda function
-weight_diff = lambda x, y: abs(x - y)  # Lambda that returns absolute difference of weights
+def calculate_weight_difference(weight1: float, weight2: float) -> float:
+    return abs(weight1 - weight2)
 
 if __name__ == '__main__':
-    var_a = 10.5
-    var_b = 3.2
-    
-    result_var = weight_diff(var_a, var_b)
-    
-    print(f"Variable A: {var_a}, Variable B: {var_b}")
-    print(f"Difference (absolute): {result_var}")
+    w1 = 10.5
+    w2 = 3.2
+    result = calculate_weight_difference(w1, w2)
+    print(result)

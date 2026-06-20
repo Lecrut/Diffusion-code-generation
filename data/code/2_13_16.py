@@ -1,71 +1,119 @@
-import argparse
-from statistics import mean as calculate_mean, stdev as calculate_stdev
+class Volume:
+    def __init__(self, cc_value=0.0):
+        self._cc = float(cc_value)
 
-def parse_arguments():
-    """Parse command-line arguments."""
-    parser = argparse.ArgumentParser(
-        description="Calculate arithmetic mean and standard deviation of volume values."
-    )
-    
-    # Add a non-required argument for flexibility; the task forbids required args.
-    # We will use this to accept multiple floats separated by spaces or newlines in one go,
-    # but since we cannot call input(), argparse is used solely here as requested 
-    # (though typically it's avoided if no arguments are needed).
-    # To strictly adhere to "Never call... argparse required arguments", we define a non-required list.
-    
-    parser.add_argument(
-        'volumes',
-        nargs='*',  # Non-required, accepts zero or more items
-        type=float,
-        help="List of volume values."
-    )
-    
-    return parser.parse_args()
+    @property
+    def cubic_centimeters(self):
+        return self._cc
 
-def calculate_statistics(values):
-    """Calculate mean and standard deviation efficiently."""
-    if not values:
-        raise ValueError("No valid numerical data provided.")
-    
-    # Using the 'statistics' module is highly efficient for these specific calculations.
-    avg = calculate_mean(values)
-    
-    try:
-        std_dev = calculate_stdev(values, population=False)  # Sample standard deviation by default in Python's statistics.stdev() if n > 1
-    except ValueError as e:
-        raise ValueError(f"Cannot compute standard deviation with less than two values: {e}") from e
-    
-    return avg, std_dev
+    @cubic_centimeters.setter
+    def cubic_centimeters(self, value):
+        self._cc = float(value)
 
-def main():
-    """Main execution block."""
-    args = parse_arguments()
-    
-    # Convert input strings to floats if necessary (argparse handles this via type=float)
-    volumes = [float(v) for v in args.volumes]
-    
-    try:
-        average_volume, std_deviation = calculate_statistics(volumes)
-        
-        print(f"Arithmetic Mean: {average_volume}")
-        print(f"Standard Deviation (Sample): {std_deviation:.4f}" if len(args.volumes) > 1 else "Standard Deviation (Population): N/A")
-    except ValueError as ve:
-        print(f"Error during calculation: {ve}", file=__import__('sys').stderr)
+    @property
+    def liters(self):
+        return self._cc / 1000.0
+
+    @liters.setter
+    def liters(self, value):
+        self._cc = float(value) * 1000.0
+
+    @property
+    def milliliters(self):
+        return self._cc
+
+    @milliliters.setter
+    def milliliters(self, value):
+        self._cc = float(value)
+
+    @property
+    def gallons(self):
+        return self._cc / 3785.411784
+
+    @gallons.setter
+    def gallons(self, value):
+        self._cc = float(value) * 3785.411784
+
+    @property
+    def cubic_meters(self):
+        return self._cc / 1000000.0
+
+    @cubic_meters.setter
+    def cubic_meters(self, value):
+        self._cc = float(value) * 1000000.0
+
+    def __add__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._cc + other._cc)
+        elif isinstance(other, (int, float)):
+            return Volume(self._cc + other)
+        return NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._cc - other._cc)
+        elif isinstance(other, (int, float)):
+            return Volume(self._cc - other)
+        return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Volume(self._cc * other)
+        return NotImplemented
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, (int, float)) and other != 0:
+            return Volume(self._cc / other)
+        if isinstance(other, Volume) and other._cc != 0:
+            return self._cc / other._cc
+        return NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other, Volume):
+            return abs(self._cc - other._cc) < 1e-9
+        return NotImplemented
+
+    def __repr__(self):
+        return f"Volume(cc={self._cc})"
+
+    def __str__(self):
+        return f"{self._cc} cm³"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    # Simulating a scenario where arguments are passed directly in code logic 
-    # by temporarily modifying args before execution, as argparse cannot be bypassed easily 
-    # while still using it for parsing structure (as per task constraints).
-    
-    import sys
-    
-    original_argv = sys.argv[1:]  # Keep the rest of argv if any existed during module load context simulation
-    
-    # Inject sample values into arguments to simulate command-line input without user interaction.
-    # This satisfies "hard-coded sample values" and avoids interactive prompts or stdin calls.
-    sample_data = [50, 60, 70, 80, 90]
-    
-    sys.argv[1:] = str(sample_data).split()
-    
-    main()
+    v1 = Volume(cc_value=1000)
+    v2 = Volume()
+    v2.liters = 1.5
+
+    print(v1)
+    print(v1.liters)
+    print(v1.milliliters)
+    print(v1.gallons)
+    print(v1.cubic_meters)
+
+    print(v2)
+    print(v2.cubic_centimeters)
+
+    v3 = v1 + v2
+    print(v3)
+    print(v3.liters)
+
+    v4 = v3 * 2.0
+    print(v4)
+    print(v4.milliliters)
+
+    v5 = v4 / 2.0
+    print(v5)
+    print(v5 == v3)
+
+    v6 = Volume()
+    v6.gallons = 1.0
+    print(v6)
+    print(v6.liters)
+
+    v7 = Volume()
+    v7.cubic_meters = 0.001
+    print(v7)
+    print(v7.liters)

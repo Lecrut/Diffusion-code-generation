@@ -1,48 +1,59 @@
 def convert_time(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    seconds = 0
-    if from_unit == "seconds":
-        seconds = value
-    elif from_unit == "minutes":
-        seconds = value * 60
-    elif from_unit == "hours":
-        seconds = value * 3600
-    elif from_unit == "days":
-        seconds = value * 86400
-    elif from_unit == "weeks":
-        seconds = value * 604800
-    elif from_unit == "milliseconds":
-        seconds = value / 1000.0
-    elif from_unit == "microseconds":
-        seconds = value / 1000000.0
-    else:
-        raise ValueError("Unsupported 'from_unit'")
-    if to_unit == "seconds":
-        return seconds
-    elif to_unit == "minutes":
-        return seconds / 60.0
-    elif to_unit == "hours":
-        return seconds / 3600.0
-    elif to_unit == "days":
-        return seconds / 86400.0
-    elif to_unit == "weeks":
-        return seconds / 604800.0
-    elif to_unit == "milliseconds":
-        return seconds * 1000.0
-    elif to_unit == "microseconds":
-        return seconds * 1000000.0
-    else:
-        raise ValueError("Unsupported 'to_unit'")
+    units = {
+        'second': 1,
+        'sec': 1,
+        's': 1,
+        'minute': 60,
+        'min': 60,
+        'm': 60,
+        'hour': 3600,
+        'hr': 3600,
+        'h': 3600,
+        'day': 86400,
+        'd': 86400,
+        'week': 604800,
+        'wk': 604800,
+        'w': 604800,
+        'month': 2629746,
+        'mo': 2629746,
+        'year': 31556952,
+        'yr': 31556952,
+        'y': 31556952,
+    }
+
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+
+    if from_unit_lower not in units:
+        raise ValueError(f"Invalid from_unit: {from_unit}")
+    if to_unit_lower not in units:
+        raise ValueError(f"Invalid to_unit: {to_unit}")
+
+    seconds = value * units[from_unit_lower]
+    result = seconds / units[to_unit_lower]
+    return result
+
 if __name__ == '__main__':
-    print(convert_time(3600, "seconds", "minutes"))
-    print(convert_time(120, "minutes", "hours"))
-    print(convert_time(86400, "hours", "days"))
-    print(convert_time(1, "days", "hours"))
-    print(convert_time(5000, "milliseconds", "seconds"))
-    print(convert_time(1000000, "microseconds", "seconds"))
-    print(convert_time(7200, "seconds", "days"))
-    try:
-        convert_time(10, "seconds", "months")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    sample_value = 2.5
+    sample_from = 'hour'
+    sample_to = 'minute'
+    result_minutes = convert_time(sample_value, sample_from, sample_to)
+    print(f"{sample_value} {sample_from} is {result_minutes} {sample_to}")
+    
+    sample_value_2 = 90
+    sample_from_2 = 'minute'
+    sample_to_2 = 'hour'
+    result_hours = convert_time(sample_value_2, sample_from_2, sample_to_2)
+    print(f"{sample_value_2} {sample_from_2} is {result_hours} {sample_to_2}")
+    
+    sample_value_3 = 1
+    sample_from_3 = 'day'
+    sample_to_3 = 'second'
+    result_seconds = convert_time(sample_value_3, sample_from_3, sample_to_3)
+    print(f"{sample_value_3} {sample_from_3} is {result_seconds} {sample_to_3}")
+    
+    sample_value_4 = 31536000
+    sample_from_4 = 'second'
+    sample_to_4 = 'year'
+    result_years = convert_time(sample_value_4, sample_from_4, sample_to_4)
+    print(f"{sample_value_4} {sample_from_4} is {result_years} {sample_to_4}")

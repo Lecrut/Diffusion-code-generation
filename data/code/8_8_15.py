@@ -1,111 +1,148 @@
-def calculate_area(shape_type: str, parameters: dict) -> float:
-    """
-    Calculate the area of a 2D shape based on its type and defining parameters.
+import math
+
+def calculate_convex_hull_area(points):
+    if len(points) < 3:
+        return 0.0
     
-    Supported shapes (case-insensitive):
-        - 'circle': requires {'radius': float}
-        - 'rectangle': requires {'width': float, 'height': float}
-        - 'triangle': requires {'base': float, 'height': float}
-        
-    Args:
-        shape_type (str): The type of the 2D shape.
-        parameters (dict): A dictionary containing the defining parameters for the shape.
-        
-    Returns:
-        float: The calculated area of the shape.
-        
-    Raises:
-        ValueError: If an unknown shape is provided or required parameters are missing/invalid.
-    """
-    if not isinstance(shape_type, str) or not isinstance(parameters, dict):
-        raise TypeError("Shape type must be a string and parameters must be a dictionary.")
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    
+    sorted_points = sorted(points)
+    
+    lower = []
+    for p in sorted_points:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    
+    upper = []
+    for p in reversed(sorted_points):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    
+    hull = lower[:-1] + upper[:-1]
+    
+    if len(hull) < 3:
+        return 0.0
+    
+    area = 0.0
+    n = len(hull)
+    for i in range(n):
+        j = (i + 1) % n
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
+    
+    return abs(area) / 2.0
 
-    # Normalize the shape name to lowercase for comparison
-    normalized_shape = shape_type.lower().strip()
+def radians_to_degrees(radians):
+    return radians * 180.0 / math.pi
 
-    try:
-        area = 0.0
+def degrees_to_radians(degrees):
+    return degrees * math.pi / 180.0
+
+def calculate_convex_hull_area_geo(points):
+    if len(points) < 3:
+        return 0.0
+    
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    
+    sorted_points = sorted(points)
+    
+    lower = []
+    for p in sorted_points:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    
+    upper = []
+    for p in reversed(sorted_points):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    
+    hull = lower[:-1] + upper[:-1]
+    
+    if len(hull) < 3:
+        return 0.0
+    
+    earth_radius_km = 6371.0
+    n = len(hull)
+    total_area = 0.0
+    
+    for i in range(n):
+        j = (i + 1) % n
         
-        if normalized_shape == 'circle':
-            radius = parameters.get('radius')
-            if not isinstance(radius, (int, float)) or radius <= 0:
-                raise ValueError("Circle requires a positive numeric radius.")
-            area = 3.141592653589793 * radius ** 2
-            
-        elif normalized_shape == 'rectangle':
-            width = parameters.get('width')
-            height = parameters.get('height')
-            
-            if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
-                raise ValueError("Rectangle requires numeric width and height.")
-            if width <= 0 or height <= 0:
-                raise ValueError("Width and height must be positive numbers.")
-            area = width * height
-            
-        elif normalized_shape == 'triangle':
-            base = parameters.get('base')
-            triangle_height = parameters.get('height', None) # Using a specific key to avoid confusion with general 'height' if needed, but standard is often just 'h'. Let's stick to generic keys or explicit ones. 
-            # Re-evaluating based on prompt "defining parameters": usually base and height are distinct enough.
-            # If the user passes {'base': 10, 'height': 5}, it works.
-            
-            if not isinstance(base, (int, float)) or not isinstance(triangle_height, (int, float)):
-                raise ValueError("Triangle requires numeric base and height.")
-            if base <= 0 or triangle_height <= 0:
-                raise ValueError("Base and height must be positive numbers.")
-            area = 0.5 * base * triangle_height
-            
-        else:
-            known_shapes = ['circle', 'rectangle', 'triangle']
-            raise ValueError(f"Unsupported shape type '{shape_type}'. Supported types are {known_shapes}.")
+        lat1_rad = degrees_to_radians(hull[i][0])
+        lon1_rad = degrees_to_radians(hull[i][1])
+        lat2_rad = degrees_to_radians(hull[j][0])
+        lon2_rad = degrees_to_radians(hull[j][1])
+        
+        d_lon = lon2_rad - lon1_rad
+        
+        area_segment = 2 * math.atan2(
+            math.tan(lat2_rad - lat1_rad / 2) * math.sin(d_lon / 2) * 
+            math.sin(lat1_rad + lat2_rad) * math.sin(lat1_rad + lat2_rad),
+            1 + math.cos(lat1_rad) * math.cos(lat2_rad) + math.sin(lat1_rad) * math.sin(lat2_rad) * math.cos(d_lon)
+        )
+        
+        total_area += area_segment
+    
+    return total_area * earth_radius_km * earth_radius_km / 2
 
-    except (TypeError, KeyError) as e:
-        # Re-raise or handle specific errors from the try block logic above which already checks validity.
-        if "requires a positive numeric radius" in str(e):
-            raise ValueError("Radius must be a positive number.")
-        elif "Rectangle requires numeric width and height" in str(e) or \
-             "Width and height must be positive numbers" in str(e):
-            raise ValueError("Dimensions for rectangle must be valid positive numbers.")
-        elif "Triangle requires numeric base and height" in str(e) or \
-             "Base and height must be positive numbers" in str(e):
-            raise ValueError("Dimensions for triangle must be valid positive numbers.")
-            
-    return area
+def calculate_convex_hull_area_planar(points):
+    if len(points) < 3:
+        return 0.0
+    
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    
+    sorted_points = sorted(points)
+    
+    lower = []
+    for p in sorted_points:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    
+    upper = []
+    for p in reversed(sorted_points):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    
+    hull = lower[:-1] + upper[:-1]
+    
+    if len(hull) < 3:
+        return 0.0
+    
+    area = 0.0
+    n = len(hull)
+    for i in range(n):
+        j = (i + 1) % n
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
+    
+    return abs(area) / 2.0
+
+def calculate_total_area(points, unit='planar'):
+    if unit == 'geo':
+        return calculate_convex_hull_area_geo(points)
+    else:
+        return calculate_convex_hull_area_planar(points)
 
 if __name__ == '__main__':
-    # Sample calculations to demonstrate functionality without user input
-    
-    shapes = [
-        {
-            'type': 'circle', 
-            'params': {'radius': 5}
-        },
-        {
-            'type': 'rectangle', 
-            'params': {'width': 10, 'height': 4.5}
-        },
-        {
-            'type': 'triangle', 
-            'params': {'base': 8, 'height': 6}
-        }
+    sample_coordinates = [
+        (40.7128, -74.0060),
+        (34.0522, -118.2437),
+        (41.8781, -87.6298),
+        (29.7604, -95.3698),
+        (39.7392, -104.9903)
     ]
-
-    print("Area Calculations:")
-    for shape in shapes:
-        result = calculate_area(shape['type'], shape['params'])
-        # Format output nicely based on whether it's a whole number or float with decimals
-        if isinstance(result, int):
-            formatted_result = f"{result:.0f}"
-        else:
-            formatted_result = str(round(result, 2))
-        
-        print(f"Shape '{shape['type'].capitalize()}': {formatted_result}")
-
-    # Test error handling example (commented out to ensure it doesn't run on every execution if desired, 
-    # but the task says "runnable", so we can include a try-except block or just let it crash.
-    # To be safe and demonstrate robustness without crashing immediately in the main output flow:
     
-    print("\nError Handling Test (Circle with negative radius):")
-    try:
-        bad_result = calculate_area('circle', {'radius': -5})
-    except ValueError as ve:
-        print(f"Caught expected error: {ve}")
+    planar_area = calculate_total_area(sample_coordinates, unit='planar')
+    print(planar_area)
+    
+    geo_area = calculate_total_area(sample_coordinates, unit='geo')
+    print(geo_area)

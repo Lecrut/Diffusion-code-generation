@@ -1,15 +1,8 @@
-import sys
-def calculate_difference(weight1, weight2):
+def calculate_weight_difference(weight1: float, weight2: float) -> float:
     return abs(weight1 - weight2)
+
 if __name__ == '__main__':
-    weight1 = 50.5
-    weight2 = 120.75
-    try:
-        if not isinstance(weight1, (int, float)) or not isinstance(weight2, (int, float)):
-            raise ValueError("Inputs must be numeric.")
-        difference = calculate_difference(weight1, weight2)
-        print(difference)
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+    sample_weight1 = 75.5
+    sample_weight2 = 68.2
+    result = calculate_weight_difference(sample_weight1, sample_weight2)
+    print(result)

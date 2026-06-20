@@ -1,15 +1,23 @@
-import argparse
-import os
+def celsius_to_kelvin(celsius):
+    return celsius + 273.15
 
-def celsius_to_fahrenheit(c):
-    """Convert temperature from Celsius to Fahrenheit."""
-    return (c * 9/5) + 32
-
-def process_file(file_path):
-    """Read a file, convert temperatures in lines ending with '°C', and write back."""
-    if not os.path.isfile(file_path):
-        print(f"Error: File '{file_path}' does not exist.")
-        return
+def format_temperature_table(sensor_data):
+    header = f"{'Sensor ID':<12} {'Temp (°C)':<12} {'Temp (K)':<12}"
+    separator = "-" * len(header)
+    lines = [header, separator]
+    for sensor_id, celsius in sensor_data:
+        kelvin = celsius_to_kelvin(celsius)
+        row = f"{sensor_id:<12} {celsius:<12.2f} {kelvin:<12.2f}"
+        lines.append(row)
+    return "\n".join(lines)
 
 if __name__ == '__main__':
-    pass
+    sample_sensors = [
+        ("Sensor_01", 22.5),
+        ("Sensor_02", 30.0),
+        ("Sensor_03", -5.2),
+        ("Sensor_04", 100.0),
+        ("Sensor_05", 0.0),
+    ]
+    table = format_temperature_table(sample_sensors)
+    print(table)

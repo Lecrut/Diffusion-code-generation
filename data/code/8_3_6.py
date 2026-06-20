@@ -1,20 +1,21 @@
-def calculate_area(length: str, width: str) -> float:
-    """Calculates the area of a rectangle given length and width strings."""
-    try:
-        l = float(length)
-        w = float(width)
-        return l * w
-    except ValueError as e:
-        raise ValueError("Invalid numeric input for dimensions") from e
+def calculate_polygon_area(vertices):
+    if len(vertices) < 3:
+        return 0.0
+    area = 0.0
+    n = len(vertices)
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    sample_length_str = "5"
-    sample_width_str = "10"
-
-    try:
-        area = calculate_area(sample_length_str, sample_width_str)
-        print(f"The calculated area is {area}")
-    except ValueError as e:
-        # Handling any potential errors from the hard-coded values (unlikely here but good practice).
-        print(f"Error occurred during calculation: {e}", file=__import__('sys').stderr)
+    sample_vertices = [(0, 0), (4, 0), (4, 4), (0, 4)]
+    result = calculate_polygon_area(sample_vertices)
+    print(result)
+    sample_vertices_2 = [(1, 1), (5, 1), (5, 4), (2, 4)]
+    result_2 = calculate_polygon_area(sample_vertices_2)
+    print(result_2)
+    sample_triangle = [(0, 0), (6, 0), (3, 5)]
+    result_3 = calculate_polygon_area(sample_triangle)
+    print(result_3)

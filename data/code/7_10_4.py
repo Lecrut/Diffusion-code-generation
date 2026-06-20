@@ -1,100 +1,45 @@
-import math
-def convert_duration(value, unit):
-    if unit == 'seconds':
-        seconds = value
-        minutes = seconds / 60
-        hours = seconds / 3600
-        days = seconds / 86400
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'minutes':
-        seconds = value * 60
-        minutes = value
-        hours = value / 60
-        days = value / (60 * 24)
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'hours':
-        seconds = value * 3600
-        minutes = value * 60
-        hours = value
-        days = value / 24
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'days':
-        seconds = value * 86400
-        minutes = value * 86400 / 60
-        hours = value * 24
-        days = value
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    else:
-        raise ValueError("Invalid unit specified. Must be 'seconds', 'minutes', 'hours', or 'days'.")
+def convert_time_duration(value, unit):
+    valid_units = {'seconds', 'minutes', 'hours', 'days'}
+    if unit not in valid_units:
+        raise ValueError(f"Invalid unit: {unit}. Must be one of {valid_units}")
+    if value < 0:
+        raise ValueError("Value must be non-negative")
+    
+    to_seconds = {
+        'seconds': 1,
+        'minutes': 60,
+        'hours': 3600,
+        'days': 86400
+    }
+    
+    total_seconds = value * to_seconds[unit]
+    
+    result = {
+        'seconds': total_seconds,
+        'minutes': total_seconds / 60,
+        'hours': total_seconds / 3600,
+        'days': total_seconds / 86400
+    }
+    
+    return result
+
 if __name__ == '__main__':
-    input_value = 7200
-    input_unit = 'seconds'
+    sample_value = 5
+    sample_unit = 'hours'
+    conversions = convert_time_duration(sample_value, sample_unit)
+    print(conversions)
+    
+    sample_value2 = 2
+    sample_unit2 = 'days'
+    conversions2 = convert_time_duration(sample_value2, sample_unit2)
+    print(conversions2)
+    
     try:
-        results = convert_duration(input_value, input_unit)
-        print(f"Input Duration: {input_value} {input_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
+        convert_time_duration(1, 'weeks')
     except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    input_value = 120
-    input_unit = 'minutes'
+        print(str(e))
+        
     try:
-        results = convert_duration(input_value, input_unit)
-        print(f"\nInput Duration: {input_value} {input_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
+        convert_time_duration(-1, 'hours')
     except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    input_value = 36
-    input_unit = 'hours'
-    try:
-        results = convert_duration(input_value, input_unit)
-        print(f"\nInput Duration: {input_value} {input_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    input_value = 100000
-    input_unit = 'years'
-    try:
-        results = convert_duration(input_value, input_unit)
-        print(f"\nInput Duration: {input_value} {input_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        print(str(e))

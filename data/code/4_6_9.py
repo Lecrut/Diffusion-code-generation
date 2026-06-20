@@ -1,52 +1,101 @@
+import unittest
 import math
-def convert_distance(distance, from_unit, to_unit):
-    if from_unit == to_unit:
-        return distance
-    if from_unit == "meter" and to_unit == "kilometer":
-        return distance / 1000
-    elif from_unit == "kilometer" and to_unit == "meter":
-        return distance * 1000
-    elif from_unit == "mile" and to_unit == "kilometer":
-        return distance * 1.60934
-    elif from_unit == "kilometer" and to_unit == "mile":
-        return distance / 1.60934
-    elif from_unit == "meter" and to_unit == "centimeter":
-        return distance * 100
-    elif from_unit == "centimeter" and to_unit == "meter":
-        return distance / 100
-    else:
-        raise ValueError("Unsupported unit conversion.")
+
+class DistanceConverter:
+    def __init__(self, distance_in_meters):
+        self.distance_in_meters = distance_in_meters
+
+    def to_kilometers(self):
+        return self.distance_in_meters / 1000.0
+
+    def to_miles(self):
+        return self.distance_in_meters / 1609.344
+
+    def to_feet(self):
+        return self.distance_in_meters * 3.28084
+
+    def to_centimeters(self):
+        return self.distance_in_meters * 100.0
+
+    def to_millimeters(self):
+        return self.distance_in_meters * 1000.0
+
+    def to_inches(self):
+        return self.distance_in_meters * 39.3701
+
+    def get_meters(self):
+        return self.distance_in_meters
+
+class TestDistanceConverter(unittest.TestCase):
+    def test_to_kilometers(self):
+        converter = DistanceConverter(1000.0)
+        self.assertAlmostEqual(converter.to_kilometers(), 1.0, places=5)
+
+    def test_to_kilometers_zero(self):
+        converter = DistanceConverter(0.0)
+        self.assertAlmostEqual(converter.to_kilometers(), 0.0, places=5)
+
+    def test_to_miles(self):
+        converter = DistanceConverter(1609.344)
+        self.assertAlmostEqual(converter.to_miles(), 1.0, places=5)
+
+    def test_to_miles_zero(self):
+        converter = DistanceConverter(0.0)
+        self.assertAlmostEqual(converter.to_miles(), 0.0, places=5)
+
+    def test_to_feet(self):
+        converter = DistanceConverter(1.0)
+        self.assertAlmostEqual(converter.to_feet(), 3.28084, places=5)
+
+    def test_to_feet_zero(self):
+        converter = DistanceConverter(0.0)
+        self.assertAlmostEqual(converter.to_feet(), 0.0, places=5)
+
+    def test_to_centimeters(self):
+        converter = DistanceConverter(1.0)
+        self.assertAlmostEqual(converter.to_centimeters(), 100.0, places=5)
+
+    def test_to_centimeters_zero(self):
+        converter = DistanceConverter(0.0)
+        self.assertAlmostEqual(converter.to_centimeters(), 0.0, places=5)
+
+    def test_to_millimeters(self):
+        converter = DistanceConverter(1.0)
+        self.assertAlmostEqual(converter.to_millimeters(), 1000.0, places=5)
+
+    def test_to_millimeters_zero(self):
+        converter = DistanceConverter(0.0)
+        self.assertAlmostEqual(converter.to_millimeters(), 0.0, places=5)
+
+    def test_to_inches(self):
+        converter = DistanceConverter(1.0)
+        self.assertAlmostEqual(converter.to_inches(), 39.3701, places=5)
+
+    def test_to_inches_zero(self):
+        converter = DistanceConverter(0.0)
+        self.assertAlmostEqual(converter.to_inches(), 0.0, places=5)
+
+    def test_get_meters(self):
+        converter = DistanceConverter(500.5)
+        self.assertAlmostEqual(converter.get_meters(), 500.5, places=5)
+
+    def test_negative_distance(self):
+        converter = DistanceConverter(-10.0)
+        self.assertAlmostEqual(converter.to_kilometers(), -0.01, places=5)
+        self.assertAlmostEqual(converter.to_miles(), -0.0062137, places=7)
+
+    def test_large_distance(self):
+        converter = DistanceConverter(1000000.0)
+        self.assertAlmostEqual(converter.to_kilometers(), 1000.0, places=5)
+        self.assertAlmostEqual(converter.to_miles(), 621.371, places=3)
+
 if __name__ == '__main__':
-    sample_distance = 5
-    sample_from_unit = "mile"
-    sample_to_unit = "kilometer"
-    try:
-        converted_value = convert_distance(sample_distance, sample_from_unit, sample_to_unit)
-        print(f"Input Distance: {sample_distance} {sample_from_unit}")
-        print(f"Converted Value: {converted_value:.4f} {sample_to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    sample_distance_2 = 100
-    sample_from_unit_2 = "meter"
-    sample_to_unit_2 = "centimeter"
-    try:
-        converted_value_2 = convert_distance(sample_distance_2, sample_from_unit_2, sample_to_unit_2)
-        print(f"\nInput Distance: {sample_distance_2} {sample_from_unit_2}")
-        print(f"Converted Value: {converted_value_2:.2f} {sample_to_unit_2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    sample_distance_3 = 10
-    sample_from_unit_3 = "mile"
-    sample_to_unit_3 = "meter"
-    try:
-        converted_value_3 = convert_distance(sample_distance_3, sample_from_unit_3, sample_to_unit_3)
-        print(f"\nInput Distance: {sample_distance_3} {sample_from_unit_3}")
-        print(f"Converted Value: {converted_value_3:.2f} {sample_to_unit_3}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    converter = DistanceConverter(5000.0)
+    print(converter.to_kilometers())
+    print(converter.to_miles())
+    print(converter.to_feet())
+    print(converter.to_centimeters())
+    print(converter.to_millimeters())
+    print(converter.to_inches())
+    print(converter.get_meters())
+    unittest.main()

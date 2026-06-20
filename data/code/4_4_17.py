@@ -1,109 +1,87 @@
-"""Unit conversion module handling metric to imperial conversions."""
+def convert_distance(distance, target_unit, base_unit='meters', conversion_factors=None):
+    if conversion_factors is None:
+        conversion_factors = {
+            'meters': 1.0,
+            'kilometers': 1000.0,
+            'centimeters': 0.01,
+            'millimeters': 0.001,
+            'inches': 0.0254,
+            'feet': 0.3048,
+            'yards': 0.9144,
+            'miles': 1609.344,
+            'nautical_miles': 1852.0
+        }
 
-class UnitConverter:
-    """A class to handle unit conversions between metric and imperial systems."""
+    if target_unit not in conversion_factors:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
 
-    @staticmethod
-    def meters_to_feet(meters: float) -> float:
-        """Convert meters to feet.
+    if target_unit == base_unit:
+        return float(distance)
 
-        Args:
-            meters (float): Distance in meters.
-
-        Returns:
-            float: Distance in feet.
-        """
-        return meters * 3.28084
-
-    @staticmethod
-    def kilometers_to_miles(kilometers: float) -> float:
-        """Convert kilometers to miles.
-
-        Args:
-            kilometers (float): Distance in kilometers.
-
-        Returns:
-            float: Distance in miles.
-        """
-        return kilometers * 0.621371
-
-    @staticmethod
-    def grams_to_ounces(grams: float) -> float:
-        """Convert grams to ounces (mass).
-
-        Args:
-            grams (float): Mass in grams.
-
-        Returns:
-            float: Mass in ounces.
-        """
-        return grams * 0.035274
-
-    @staticmethod
-    def liters_to_gallons(liters: float) -> float:
-        """Convert liters to US gallons (volume).
-
-        Args:
-            liters (float): Volume in liters.
-
-        Returns:
-            float: Volume in US gallons.
-        """
-        return liters * 0.264172
-
-def convert_temperature(celsius: float) -> tuple[float, str]:
-    """Convert Celsius to Fahrenheit and Kelvin.
-
-    Args:
-        celsius (float): Temperature in Celsius.
-
-    Returns:
-        tuple[float, str]: A tuple containing the temperature in Fahrenheit 
-                          as a string representation of '(fahrenheit_value, "F")' 
-                          and Kelvin as a string representation of '(kelvin_value, "K")'.
+    distance_in_base = float(distance) / conversion_factors.get(target_unit, 1.0)
     
-    Note: The return format is designed to be easily parsed while keeping it self-contained.
-          Returns (float_str_for_fah, unit_string) where float_str_for_fah includes the value and unit symbol separated by space.
-        """
-    fahrenheit = celsius * 9/5 + 32
-    kelvin = celsius + 273.15
+    if target_unit != base_unit:
+        for unit, factor in conversion_factors.items():
+            if unit == target_unit:
+                distance_in_base = float(distance) * factor
+                break
     
-    # Returning a tuple of (value_with_unit, pure_value) for clarity in usage if needed later
-    return str(f"{fahrenheit} F"), float(kelvin), "K"
+    return distance_in_base / conversion_factors[target_unit] * conversion_factors[base_unit]
+
+def safe_convert_distance(distance, target_unit):
+    try:
+        if target_unit is None or target_unit == '':
+            raise ValueError("Target unit cannot be empty or None")
+        
+        factors = {
+            'm': 1.0,
+            'km': 0.001,
+            'cm': 100.0,
+            'mm': 1000.0,
+            'in': 39.37007874,
+            'ft': 3.280839895,
+            'yd': 1.093613298,
+            'mi': 0.000621371,
+            'nm': 0.000539957
+        }
+        
+        if target_unit not in factors:
+            raise ValueError(f"Invalid target unit: {target_unit}")
+            
+        target_factor = factors[target_unit]
+        if target_factor == 0:
+            return 0.0
+            
+        result = float(distance) / target_factor
+        return result
+        
+    except ZeroDivisionError:
+        return 0.0
+    except (ValueError, TypeError, KeyError):
+        return 0.0
 
 if __name__ == '__main__':
-    converter = UnitConverter()
-
-    # Sample conversions using hard-coded values
+    sample_distance = 100.0
+    sample_target = 'inches'
+    result = safe_convert_distance(sample_distance, sample_target)
+    print(result)
     
-    length_1 = 50.0
-    length_2 = 3678.49
-        
-    mass_grams = 1000.0
-    volume_liters = 5.0
-    temp_celsius = 25.0
-
-    print("Unit Conversion Results")
-    print("-" * 20)
+    sample_distance_2 = 5280.0
+    sample_target_2 = 'miles'
+    result_2 = safe_convert_distance(sample_distance_2, sample_target_2)
+    print(result_2)
     
-    feet_result = converter.meters_to_feet(length_1)
-    miles_result = converter.kilometers_to_miles(length_2)
-    ounces_result = converter.grams_to_ounces(mass_grams)
-    gallons_result = converter.liters_to_gallons(volume_liters)
-
-    print(f"{length_1} meters is {feet_result:.4f} feet")
-    print(f"{length_2} kilometers is {miles_result:.6f} miles")
-    print(f"{mass_grams} grams is {ounces_result:.6f} ounces")
-    print(f"{volume_liters} liters is {gallons_result:.6f} gallons")
-
-    fah_str, kelvin_val, unit_k = convert_temperature(temp_celsius)
+    sample_distance_3 = 0.0
+    sample_target_3 = 'meters'
+    result_3 = safe_convert_distance(sample_distance_3, sample_target_3)
+    print(result_3)
     
-    # Parsing the string to display nicely or just using it as returned format based on docstring logic 
-    # Re-implementing simple parse for clarity in output since tuple structure was defined above:
-    parts_f = fah_str.split(" ")  # Assuming split by space works if formatted as "X F"
+    sample_distance_4 = 100.0
+    sample_target_4 = 'invalid_unit'
+    result_4 = safe_convert_distance(sample_distance_4, sample_target_4)
+    print(result_4)
     
-    print(f"{temp_celsius}°C is {parts_f[0]}") 
-    # Note: The convert_temperature returns a string for Fahrenheit and float + str for Kelvin.
-    kelvin_output = f"{kelvin_val:.4f}" + unit_k
-    
-    print(f"{temp_celsius}°C is also {kelvin_val:.4f}{unit_k}")
+    sample_distance_5 = 100.0
+    sample_target_5 = ''
+    result_5 = safe_convert_distance(sample_distance_5, sample_target_5)
+    print(result_5)

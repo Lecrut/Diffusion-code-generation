@@ -1,18 +1,15 @@
-import sys
-def calculate_ratio(a, b):
-    try:
-        num_a = float(a)
-        num_b = float(b)
-        if num_a > 0 and num_b > 0:
-            return num_a / num_b
-        else:
-            raise ValueError("Measurements must be positive.")
-    except ValueError as e:
-        return f"Error: {e}"
-    except TypeError:
-        return "Error: Invalid input type."
+def compare_lengths(length_a, length_b):
+    if length_a > length_b:
+        difference = length_a - length_b
+        return f"Length A is longer than Length B by {difference} units"
+    elif length_b > length_a:
+        difference = length_b - length_a
+        return f"Length B is longer than Length A by {difference} units"
+    else:
+        return "Length A and Length B are equal"
+
 if __name__ == '__main__':
-    measurement1 = "10.0"
-    measurement2 = "2.5"
-    result = calculate_ratio(measurement1, measurement2)
+    a = 10
+    b = 7
+    result = compare_lengths(a, b)
     print(result)

@@ -1,51 +1,20 @@
 import pytz
 from datetime import datetime
 
-def convert_timezone(dt: datetime, target_tz_name: str) -> datetime:
-    """
-    Converts a given datetime object to the specified target time zone using pytz.
-    
-    Parameters:
-        dt (datetime): The original datetime object in UTC or any timezone.
-        target_tz_name (str): Name of the target time zone (e.g., 'America/New_York').
-        
-    Returns:
-        datetime: A new datetime object converted to the specified time zone.
-    
-    Raises:
-        ValueError: If the provided time zone name is invalid or not found in pytz database.
-    """
-    try:
-        target_tz = pytz.timezone(target_tz_name)
-    except pytz.UnknownTimeZoneError as e:
-        raise ValueError(f"Invalid timezone '{target_tz_name}'. Please check your input.") from e
-    
-    # If the datetime is naive, assume it's in UTC before converting to the target tz.
+def convert_timezone(dt, target_tz_name):
     if dt.tzinfo is None:
-        utc = pytz.UTC
-        converted_dt = utc.localize(dt)
-    else:
-        # Convert existing timezone-aware datetime to UTC first for consistency
-        converted_dt = dt.astimezone(pytz.UTC).replace(tzinfo=utc)
-
-    return target_tz.localize(converted_dt.replace(tzinfo=None))
+        raise ValueError("The provided datetime object must be timezone-aware.")
+    source_tz = dt.tzinfo
+    target_tz = pytz.timezone(target_tz_name)
+    utc_dt = dt.astimezone(pytz.utc)
+    converted_dt = utc_dt.astimezone(target_tz)
+    return converted_dt
 
 if __name__ == '__main__':
-    # Sample values - no user input, network access, or file dependencies required.
-    
-    # Example 1: Naive datetime (assumed UTC by default in this function)
-    naive_datetime = datetime(2023, 6, 15, 14, 30, 0)
-    
-    # Example 2: Timezone-aware datetime in UTC
-    utc_datetime = datetime(2023, 6, 15, 14, 30, 0, tzinfo=pytz.UTC)
-
-    target_tz_name = 'America/New_York'
-    
-    result_naive = convert_timezone(naive_datetime, target_tz_name)
-    result_aware = convert_timezone(utc_datetime, target_tz_name)
-    
-    print(f"Original Naive Datetime: {naive_datetime}")
-    print(f"Converted to {target_tz_name}: {result_naive}")
-    print("-" * 40)
-    print(f"Original UTC Datetime: {utc_datetime}")
-    print(f"Converted to {target_tz_name}: {result_aware}")
+    naive_dt = datetime(2023, 10, 27, 15, 30, 0)
+    eastern_tz = pytz.timezone('US/Eastern')
+    aware_dt = eastern_tz.localize(naive_dt)
+    target_timezone = 'Asia/Tokyo'
+    result = convert_timezone(aware_dt, target_timezone)
+    print(result)
+    print(result.strftime("%Y-%m-%d %H:%M:%S %Z%z"))

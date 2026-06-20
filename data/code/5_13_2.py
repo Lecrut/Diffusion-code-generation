@@ -1,12 +1,15 @@
-def compare_lengths(length1, length2):
-    if isinstance(length1, (int, float)) and isinstance(length2, (int, float)):
-        difference = abs(length1 - length2)
-        print(f"Length 1: {length1}")
-        print(f"Length 2: {length2}")
-        print(f"The difference between the two lengths is: {difference}")
-    else:
-        print("Error: Both inputs must be numeric values.")
+class LengthComparator:
+    def __init__(self):
+        self.length1 = 10.0
+        self.length2 = 10.0001
+
+    def are_equal_within_tolerance(self, epsilon):
+        return abs(self.length1 - self.length2) <= epsilon
+
+    def get_absolute_difference(self):
+        return abs(self.length1 - self.length2)
+
 if __name__ == '__main__':
-    sample_length1 = 15.5
-    sample_length2 = 22.3
-    compare_lengths(sample_length1, sample_length2)
+    comparator = LengthComparator()
+    print(comparator.are_equal_within_tolerance(0.001))
+    print(comparator.get_absolute_difference())

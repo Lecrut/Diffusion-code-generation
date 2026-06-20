@@ -1,20 +1,20 @@
-def calculate_rectangle_area(length: float, width: float) -> float:
-    """Calculate the area of a rectangle given its length and width."""
-    return length * width
+import math
+
+def calculate_polygon_area(vertices):
+    n = len(vertices)
+    if n < 3:
+        return 0.0
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or command-line arguments.
-    try:
-        length = 5.0
-        width = 10.0
-        
-        area = calculate_rectangle_area(length, width)
-        
-        print(f"Rectangle dimensions: {length} x {width}")
-        print(f"Area: {area}")
-    
-    except ValueError as e:
-        # This block is structured to handle potential errors if the logic were extended 
-        # to parse input dynamically. Since inputs are hard-coded here, this exception 
-        # will not be triggered in normal execution but demonstrates proper error handling structure.
-        print(f"Error calculating area: {e}")
+    square_vertices = [(0, 0), (0, 4), (4, 4), (4, 0)]
+    triangle_vertices = [(0, 0), (4, 0), (0, 3)]
+    square_area = calculate_polygon_area(square_vertices)
+    triangle_area = calculate_polygon_area(triangle_vertices)
+    print(square_area)
+    print(triangle_area)

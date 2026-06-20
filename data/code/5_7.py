@@ -1,30 +1,11 @@
-class LengthError(Exception):
-    pass
-class Shape:
-    def __init__(self, length1, length2):
-        self.length1 = length1
-        self.length2 = length2
-    def compare_lengths(self):
-        if self.length1 < 0 or self.length2 < 0:
-            raise LengthError("One or both lengths cannot be negative.")
-        if abs(self.length1 - self.length2) > 1000000:
-            raise LengthError("Lengths are impossibly different.")
+import numpy as np
+
+def compare_length_signs(arr1, arr2):
+    arr1 = np.asarray(arr1, dtype=np.float64)
+    arr2 = np.asarray(arr2, dtype=np.float64)
+    return np.sign(arr1 - arr2)
 if __name__ == '__main__':
-    shape1 = Shape(10, 5)
-    try:
-        shape1.compare_lengths()
-        print("Lengths are valid.")
-    except LengthError as e:
-        print(f"Error: {e}")
-    shape2 = Shape(-5, 10)
-    try:
-        shape2.compare_lengths()
-        print("Lengths are valid.")
-    except LengthError as e:
-        print(f"Error: {e}")
-    shape3 = Shape(10000000, 10)
-    try:
-        shape3.compare_lengths()
-        print("Lengths are valid.")
-    except LengthError as e:
-        print(f"Error: {e}")
+    sample_arr1 = np.array([1.5, 2.0, 3.5, 4.0, 5.5])
+    sample_arr2 = np.array([1.0, 2.5, 3.5, 3.0, 6.0])
+    result = compare_length_signs(sample_arr1, sample_arr2)
+    print(result)

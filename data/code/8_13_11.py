@@ -1,12 +1,30 @@
 import math
-from typing import List, Tuple, Optional
 
-def cross_product(o: Tuple[float, float], a: Tuple[float, float], b: Tuple[float, float]) -> float:
-    """Calculate the cross product of vectors OA and OB."""
-    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+def scale_rectangle(width: float, height: float, scale: float) -> float:
+    new_width = width * scale
+    new_height = height * scale
+    area = new_width * new_height
+    return area
 
-def distance_squared(p1: Tuple[float, float], p2: Tuple[float, float]) -> float:
-    """Calculate squared Euclidean distance between two points."""
+def scale_circle(radius: float, scale: float) -> float:
+    new_radius = radius * scale
+    area = math.pi * (new_radius ** 2)
+    return area
+
+def calculate_scaled_areas(rect_dims: dict, circle_dims: dict, scale: float) -> dict:
+    rect_area = scale_rectangle(rect_dims['width'], rect_dims['height'], scale)
+    circle_area = scale_circle(circle_dims['radius'], scale)
+    return {
+        'rectangle_area': rect_area,
+        'circle_area': circle_area
+    }
 
 if __name__ == '__main__':
-    pass
+    rect_dimensions = {'width': 10.0, 'height': 5.0}
+    circle_dimensions = {'radius': 4.0}
+    scale_factor = 2.0
+
+    results = calculate_scaled_areas(rect_dimensions, circle_dimensions, scale_factor)
+
+    print(results['rectangle_area'])
+    print(results['circle_area'])

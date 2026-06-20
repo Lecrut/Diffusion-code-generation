@@ -1,19 +1,7 @@
-def calculate_weight_difference(w1: float | int, w2: float | int) -> float:
-    """
-    Calculate the absolute difference between two weight values.
-    
-    Args:
-        w1 (float|int): First weight value.
-        w2 (float|int): Second weight value.
-        
-    Returns:
-        float: The absolute difference between w1 and w2.
-    """
-    return abs(w1 - w2)
+def calculate_absolute_difference(weight_one, weight_two):
+    return abs(weight_one - weight_two)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_weights = [50.7, 48.3]
-    
-    result = calculate_weight_difference(sample_weights[0], sample_weights[1])
-    print(f"Absolute difference: {result}")
+    w1 = 10.5
+    w2 = 3.2
+    print(calculate_absolute_difference(w1, w2))

@@ -1,51 +1,57 @@
+import array
 import math
 
-# Predefined conversion factors to cubic meters (m^3)
-CONVERSION_FACTORS = {
-    'water': 0.01,       # Assuming input is in liters -> m^3 (1 L = 0.001 m^3, adjusted for example context if needed, here using direct factor logic below)
-    'sand': 0.025        # Example specific factors; actual usage depends on assumed input units per key name convention or explicit mapping
-    
-}
+SCALE_CUBIC = 3.0
+BASE_SCALE = 1.0
 
-def standardize_volume(volume_dict):
-    """
-    Converts a dictionary of volume measurements to cubic meters based on predefined conversion factors.
-    
-    Args:
-        volume_dict (dict): A dictionary where keys are material names and values are volumes in arbitrary assumed input units.
-        
-    Returns:
-        dict: A new dictionary with all values converted to cubic meters using the CONVERSION_FACTORS mapping.
-            
-    Note: 
-    The conversion logic assumes that for each key 'k' in volume_dict, the value is multiplied by CONVERSION_FACTORS[k].
-    If a unit is not found in factors, it defaults to identity (no change) or raises an error depending on strictness;
-    here we assume valid keys exist based on task description.
-    
-    Example: 
-        Input: {'water': 10.0} -> Output: { 'water': 0.1 } if factor is 0.01
-    
-    """
-    standardized = {}
-    for material, value in volume_dict.items():
-        # Ensure the conversion factor exists; default to 1.0 if missing (though task implies predefined)
-        factor = CONVERSION_FACTORS.get(material, 1.0)
-        
-        # Apply conversion: result = original_value * factor
-        converted_value = value * factor
-        
-        standardized[material] = converted_value
-    
-    return standardized
+class CompactVolumeManager:
+    def __init__(self):
+        self._raw_volumes = array.array('d')
+        self._reference_scales = array.array('d')
+        self._global_scale = BASE_SCALE
+
+    def insert_measurement(self, volume_value, reference_scale=BASE_SCALE):
+        self._raw_volumes.append(volume_value)
+        self._reference_scales.append(reference_scale)
+
+    def update_global_scale(self, new_scale):
+        self._global_scale = float(new_scale)
+
+    def retrieve_volume(self, index):
+        count = len(self._raw_volumes)
+        if index < 0 or index >= count:
+            raise IndexError("Index out of bounds for volume data")
+        base_vol = self._raw_volumes[index]
+        ref_scale = self._reference_scales[index]
+        scale_ratio = self._global_scale / ref_scale
+        return base_vol * (scale_ratio ** SCALE_CUBIC)
+
+    def retrieve_all_scaled(self):
+        results = []
+        count = len(self._raw_volumes)
+        for i in range(count):
+            results.append(self.retrieve_volume(i))
+        return results
+
+    def get_total_volume(self):
+        total = 0.0
+        count = len(self._raw_volumes)
+        for i in range(count):
+            total += self.retrieve_volume(i)
+        return total
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files needed)
-    sample_data = {'water': 10.0, 'sand': 5.5}
+    manager = CompactVolumeManager()
+    manager.insert_measurement(100.0, 1.0)
+    manager.insert_measurement(200.0, 2.0)
+    manager.insert_measurement(50.0, 0.5)
     
-    result = standardize_volume(sample_data)
+    manager.update_global_scale(2.0)
     
-    print("Standardized Volume Measurements:")
-    for material, vol in result.items():
-        # Formatting to avoid excessive decimals if integers become floats naturally
-        formatted_vol = round(vol, 6) 
-        print(f"{material}: {formatted_vol} m^3")
+    single_val = manager.retrieve_volume(1)
+    all_vals = manager.retrieve_all_scaled()
+    total_vol = manager.get_total_volume()
+    
+    print(single_val)
+    print(all_vals)
+    print(total_vol)

@@ -1,33 +1,37 @@
-import numpy as np
+class LengthComparator:
+    def __init__(self, unit):
+        self.unit = unit
+        self.meters_per_unit = {
+            "mm": 0.001,
+            "cm": 0.01,
+            "m": 1.0,
+            "km": 1000.0,
+            "in": 0.0254,
+            "ft": 0.3048,
+            "yd": 0.9144,
+            "mi": 1609.344,
+        }
 
-def compare_signs(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    """
-    Compare two arrays of length measurements element-wise.
-    
-    Returns an array where each element is 1 if a[i] > b[i], 
-    -1 if a[i] < b[i], and 0 otherwise.
-    
-    Parameters:
-        a (np.ndarray): First array of float values.
-        b (np.ndarray): Second array of float values.
-        
-    Returns:
-        np.ndarray: Array of signs corresponding to the difference (a - b).
-    """
-    diff = a.astype(np.float64) - b.astype(np.float64)
-    
-    # Use sign function for robustness and performance with NumPy's C backend
-    result = np.sign(diff)
-    
-    return result
+    def compare(self, value1, value2):
+        if self.unit not in self.meters_per_unit:
+            raise ValueError(f"Unsupported unit: {self.unit}")
+        m1 = value1 * self.meters_per_unit[self.unit]
+        m2 = value2 * self.meters_per_unit[self.unit]
+        if m1 > m2:
+            return f"{value1} {self.unit} is greater than {value2} {self.unit}"
+        elif m1 < m2:
+            return f"{value1} {self.unit} is less than {value2} {self.unit}"
+        else:
+            return f"{value1} {self.unit} is equal to {value2} {self.unit}"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or files.
-    length_measurements_a = np.array([10.5, 23.7, -4.2, 0.0, 99.9])
-    length_measurements_b = np.array([10.0, 24.0, -4.0, 1.0, 98.0])
-
-    result_array = compare_signs(length_measurements_a, length_measurements_b)
-
-    print("Input Array A:", length_measurements_a)
-    print("Input Array B:", length_measurements_b)
-    print("Sign of Difference (A - B):", result_array)
+    comparator = LengthComparator("m")
+    result1 = comparator.compare(10.5, 12.0)
+    print(result1)
+    result2 = comparator.compare(5.0, 5.0)
+    print(result2)
+    result3 = comparator.compare(1.5, 1.0)
+    print(result3)
+    comparator_inch = LengthComparator("ft")
+    result4 = comparator_inch.compare(10, 300)
+    print(result4)

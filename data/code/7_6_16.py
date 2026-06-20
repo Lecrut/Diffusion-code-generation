@@ -1,106 +1,121 @@
 import unittest
-from datetime import timedelta
 
-def seconds_to_timedelta(total_seconds):
-    """Convert total seconds to a timedelta object."""
+def convert_seconds_to_hms(total_seconds):
+    if total_seconds < 0:
+        raise ValueError("Time cannot be negative")
     if not isinstance(total_seconds, (int, float)):
-        raise TypeError("Input must be an integer or float representing seconds.")
-    
-    # Handle very large numbers by converting to int first for precision
-    try:
-        secs = int(round(float(total_seconds)))
-    except ValueError:
-        raise ValueError(f"Invalid input type: {type(total_seconds).__name__}")
+        raise TypeError("Input must be a number")
+    hours = int(total_seconds) // 3600
+    remaining_seconds = int(total_seconds) % 3600
+    minutes = remaining_seconds // 60
+    seconds = remaining_seconds % 60
+    return hours, minutes, seconds
 
-    return timedelta(seconds=secs)
-
-def timedelta_to_string(td):
-    """Convert a timedelta object to an ISO 8601 formatted string."""
-    if not isinstance(td, timedelta):
-        raise TypeError("Input must be a datetime.timedelta object.")
-    
-    total_seconds = td.total_seconds()
-    sign = "-" if total_seconds < 0 else ""
-    abs_total = abs(total_seconds)
-    
-    days = int(abs_total // 86400)
-    remaining_abs = (abs_total % 86400) * -1
-    
-    hours = int(remaining_abs // 3600)
-    remaining_hours = (remaining_abs % 3600) * -1
-    
-    minutes = int(remaining_hours // 60)
-    
-    return f"{sign}{days}d {hours:02d}:{minutes:02d}:00"
+def convert_hms_to_seconds(hours, minutes, seconds):
+    if hours < 0 or minutes < 0 or seconds < 0:
+        raise ValueError("Time components cannot be negative")
+    if not all(isinstance(x, (int, float)) for x in [hours, minutes, seconds]):
+        raise TypeError("Time components must be numbers")
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    return total_seconds
 
 class TestTimeConversion(unittest.TestCase):
-
-    def test_seconds_to_timedelta_basic(self):
-        """Test basic positive and negative second conversions."""
-        self.assertEqual(seconds_to_timedelta(3661), timedelta(hours=1, minutes=1))
-        self.assertEqual(seconds_to_timedelta(-7200), timedelta(minutes=-2))
-        
-    def test_seconds_to_timedelta_zero(self):
-        """Test handling of zero values."""
-        result = seconds_to_timedelta(0)
-        self.assertIsInstance(result, timedelta)
-        self.assertEqual(result.total_seconds(), 0.0)
-
-    def test_seconds_to_timedelta_large_span(self):
-        """Test handling of large time spans (years worth)."""
-        # Approximate one year in seconds: 365 days * 24 hours * 60 minutes * 60 seconds + leap day
-        years = 100
-        total_seconds = sum(86400 * d for d in range(years)) 
-        result = seconds_to_timedelta(total_seconds)
-        
-        self.assertIsInstance(result, timedelta)
-        # Verify the days component matches exactly since we used integers
-        expected_days = sum(d for d in range(years))  # Assuming non-leap years logic simplified to just count * day length
-        actual_days = result.days
-        
-        # Note: The above calculation is slightly loose on leap years, but ensures large int handling works.
-        self.assertEqual(result.total_seconds(), total_seconds)
-
-    def test_timedelta_to_string_basic(self):
-        """Test basic string conversion."""
-        td = timedelta(days=1, hours=2, minutes=30)
-        result = timedelta_to_string(td)
-        
-        # Construct expected manually to verify format logic without external deps issues
-        self.assertEqual(result, "1d 02:30:00")
-
-    def test_timedelta_to_string_zero(self):
-        """Test conversion of zero duration."""
-        td = timedelta(0)
-        result = timedelta_to_string(td)
-        
-        # Ensure it handles the sign logic correctly for positive zero (though total_seconds is 0.0)
-        self.assertEqual(result, "0d 00:00:00")
-
-    def test_timedelta_to_string_large_span(self):
-        """Test string conversion of a large span."""
-        td = timedelta(days=123456789)
-        result = timedelta_to_string(td)
-        
-        # Verify the days are present and formatted correctly without overflow errors
-        self.assertIn("d", result)  # Ensure format includes 'd' for days component
-
-    def test_input_type_errors(self):
-        """Test handling of invalid input types."""
-        with self.assertRaises(TypeError):
-            seconds_to_timedelta("invalid")
-            
+    
+    def test_convert_seconds_to_hms_zero(self):
+        result = convert_seconds_to_hms(0)
+        self.assertEqual(result, (0, 0, 0))
+    
+    def test_convert_seconds_to_hms_one_hour(self):
+        result = convert_seconds_to_hms(3600)
+        self.assertEqual(result, (1, 0, 0))
+    
+    def test_convert_seconds_to_hms_one_minute(self):
+        result = convert_seconds_to_hms(60)
+        self.assertEqual(result, (0, 1, 0))
+    
+    def test_convert_seconds_to_hms_one_second(self):
+        result = convert_seconds_to_hms(1)
+        self.assertEqual(result, (0, 0, 1))
+    
+    def test_convert_seconds_to_hms_large_value(self):
+        result = convert_seconds_to_hms(86400)
+        self.assertEqual(result, (24, 0, 0))
+    
+    def test_convert_seconds_to_hms_mixed_values(self):
+        result = convert_seconds_to_hms(3661)
+        self.assertEqual(result, (1, 1, 1))
+    
+    def test_convert_seconds_to_hms_negative_value(self):
         with self.assertRaises(ValueError):
-            seconds_to_timedelta(3.14)  # Floats are allowed but converted to int, this might pass depending on spec; 
-                                       # strictly speaking float is allowed in function logic above via round().
-                                       # Let's adjust test expectation or keep it permissive as designed.
+            convert_seconds_to_hms(-1)
+    
+    def test_convert_seconds_to_hms_invalid_type(self):
+        with self.assertRaises(TypeError):
+            convert_seconds_to_hms("abc")
+    
+    def test_convert_hms_to_seconds_zero(self):
+        result = convert_hms_to_seconds(0, 0, 0)
+        self.assertEqual(result, 0)
+    
+    def test_convert_hms_to_seconds_one_hour(self):
+        result = convert_hms_to_seconds(1, 0, 0)
+        self.assertEqual(result, 3600)
+    
+    def test_convert_hms_to_seconds_one_minute(self):
+        result = convert_hms_to_seconds(0, 1, 0)
+        self.assertEqual(result, 60)
+    
+    def test_convert_hms_to_seconds_one_second(self):
+        result = convert_hms_to_seconds(0, 0, 1)
+        self.assertEqual(result, 1)
+    
+    def test_convert_hms_to_seconds_mixed_values(self):
+        result = convert_hms_to_seconds(1, 1, 1)
+        self.assertEqual(result, 3661)
+    
+    def test_convert_hms_to_seconds_negative_value(self):
+        with self.assertRaises(ValueError):
+            convert_hms_to_seconds(-1, 0, 0)
+    
+    def test_convert_hms_to_seconds_negative_minutes(self):
+        with self.assertRaises(ValueError):
+            convert_hms_to_seconds(0, -1, 0)
+    
+    def test_convert_hms_to_seconds_negative_seconds(self):
+        with self.assertRaises(ValueError):
+            convert_hms_to_seconds(0, 0, -1)
+    
+    def test_convert_hms_to_seconds_invalid_type(self):
+        with self.assertRaises(TypeError):
+            convert_hms_to_seconds("1", 0, 0)
+    
+    def test_round_trip_conversion(self):
+        original_hms = (10, 30, 45)
+        seconds = convert_hms_to_seconds(*original_hms)
+        result_hms = convert_seconds_to_hms(seconds)
+        self.assertEqual(result_hms, original_hms)
+    
+    def test_large_time_span_conversion(self):
+        original_hms = (1000000, 59, 59)
+        seconds = convert_hms_to_seconds(*original_hms)
+        result_hms = convert_seconds_to_hms(seconds)
+        self.assertEqual(result_hms, original_hms)
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestTimeConversion)
+    sample_tests = [
+        (0, "Zero seconds"),
+        (3600, "One hour"),
+        (3661, "One hour one minute one second"),
+        (86400, "One day"),
+        (123456, "Random large value"),
+    ]
     
-    # Run tests directly to ensure they execute without command line args
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
+    print("Time Conversion Results:")
+    for total_sec, description in sample_tests:
+        h, m, s = convert_seconds_to_hms(total_sec)
+        print(f"{description}: {total_sec}s = {h}h {m}m {s}s")
     
-    if not result.wasSuccessful():
-        raise SystemExit(result.errors + result.failures)
+    back_to_sec = convert_hms_to_seconds(h, m, s)
+    print(f"Back to seconds: {back_to_sec}s")
+    
+    unittest.main(argv=[''], exit=False, verbosity=2)

@@ -1,123 +1,62 @@
-"""
-General-purpose area calculation module for various 2D shapes.
-Accepts a dictionary specifying shape type and parameters to compute area.
-Supports: 'rectangle', 'circle', 'triangle'.
-"""
+import math
+import numpy as np
 
-def calculate_area(shape_data):
-    """
-    Calculates the area of a 2D shape based on provided data.
-    
-    Args:
-        shape_data (dict): Dictionary with keys defining shape type and parameters.
-                          Supported types: 
-                            - {'type': 'rectangle', 'width': float, 'height': float}
-                            - {'type': 'circle', 'radius': float}
-                            - {'type': 'triangle', 'base': float, 'height': float}
-    
-    Returns:
-        float: The calculated area.
-    
-    Raises:
-        ValueError: If unsupported shape type or missing required parameters.
-        TypeError: If input is not a dictionary with numeric values.
-    """
-    if not isinstance(shape_data, dict):
-        raise TypeError("Input must be a dictionary.")
+def calculate_convex_hull_area(points):
+    if len(points) < 3:
+        return 0.0
 
-    shape_type = shape_data.get('type')
+    points_array = np.array(points, dtype=np.float64)
     
-    supported_types = ['rectangle', 'circle', 'triangle']
-    if shape_type not in supported_types:
-        raise ValueError(f"Unsupported shape type '{shape_type}'. Supported types are {supported_types}.")
+    x = points_array[:, 0]
+    y = points_array[:, 1]
     
-    try:
-        float(shape_data['width']), float(shape_data['height'])
-        return rectangle_area(width=shape_data.get('width'), height=shape_data.get('height'))
-    except (KeyError, TypeError):
-        pass
-
-    if shape_type == 'rectangle':
-        raise ValueError("Rectangle requires both width and height.")
+    n = len(x)
     
-    try:
-        float(shape_data['radius'])
-        return circle_area(radius=shape_data.get('radius'))
-    except KeyError:
-        pass
+    area_sum = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area_sum += (x[i] * y[j]) - (x[j] * y[i])
     
-    if shape_type == 'circle':
-        raise ValueError("Circle requires radius parameter.")
+    return abs(area_sum) / 2.0
 
-    try:
-        base = float(shape_data['base'])
-        height = float(shape_data['height'])
-        return triangle_area(base=base, height=height)
-    except (KeyError, TypeError):
-        pass
+def get_convex_hull_area_for_coordinates(points):
+    if len(points) < 3:
+        return 0.0
     
-    if shape_type == 'triangle':
-        raise ValueError("Triangle requires both base and height parameters.")
+    x = [p[0] for p in points]
+    y = [p[1] for p in points]
+    
+    n = len(points)
+    
+    area_sum = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area_sum += (x[i] * y[j]) - (x[j] * y[i])
+    
+    return abs(area_sum) / 2.0
 
-def rectangle_area(width: float, height: float) -> float:
-    """Calculate area of a rectangle."""
-    return width * height
-
-def circle_area(radius: float) -> float:
-    import math
-    return math.pi * (radius ** 2)
-
-def triangle_area(base: float, height: float) -> float:
-    """Calculate area of a triangle."""
-    return 0.5 * base * height
+def compute_convex_hull_and_area(points):
+    if len(points) < 3:
+        return 0.0
+    
+    n = len(points)
+    x = [p[0] for p in points]
+    y = [p[1] for p in points]
+    
+    area_sum = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area_sum += (x[i] * y[j]) - (x[j] * y[i])
+    
+    return abs(area_sum) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    
-    samples = [
-        {
-            'type': 'rectangle', 
-            'width': 10, 
-            'height': 5
-        },
-        {
-            'type': 'circle', 
-            'radius': 4.2
-        },
-        {
-            'type': 'triangle', 
-            'base': 8, 
-            'height': 6
-        }
+    sample_coordinates = [
+        (0.0, 0.0),
+        (10.0, 0.0),
+        (10.0, 10.0),
+        (0.0, 10.0)
     ]
-
-    print("Area Calculations:\n")
     
-    for sample in samples:
-        try:
-            area = calculate_area(sample)
-            shape_name = sample['type'].capitalize()
-            if sample['type'] == 'circle':
-                radius_str = f"radius={sample['radius']}"
-            else:
-                dim_parts = []
-                for k, v in [('width', 'w'), ('height', 'h')]:
-                    if hasattr(sample, '__getitem__'):
-                        val = sample[k]
-                        param_name = k.lower() + "=" + str(val)
-                        dim_parts.append(param_name)
-                params_str = ", ".join(dim_parts) if dim_parts else ""
-            print(f"Shape: {shape_name} ({params_str}) -> Area: {area:.2f}")
-        except Exception as e:
-            print(f"Error processing sample: {e}")
-
-    # Additional test for invalid inputs to show error handling
-    try:
-        calculate_area({'type': 'unknown'})
-    except ValueError as ve:
-        print(f"\nExpected error caught: {ve}")
-
-    try:
-        calculate_area('not a dict')
-    except TypeError as te:
-        print(f"Type error expected: {te}")
+    result_area = compute_convex_hull_and_area(sample_coordinates)
+    print(result_area)

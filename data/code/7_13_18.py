@@ -1,28 +1,44 @@
-import argparse
-
-def convert_time(hours: float, minutes: int) -> None:
-    """Converts hours to total minutes."""
-    return hours * 60 + minutes
+def time_string_to_human_readable(time_str):
+    parts = time_str.split(':')
+    if len(parts) != 3:
+        raise ValueError("Time string must be in 'HH:MM:SS' format")
+    
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
+    
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    
+    days = total_seconds // 86400
+    remaining_seconds = total_seconds % 86400
+    
+    hours_from_remaining = remaining_seconds // 3600
+    remaining_seconds %= 3600
+    
+    minutes_from_remaining = remaining_seconds // 60
+    seconds_from_remaining = remaining_seconds % 60
+    
+    parts = []
+    if days > 0:
+        parts.append(f"{days} day{'s' if days != 1 else ''}")
+    if hours_from_remaining > 0:
+        parts.append(f"{hours_from_remaining} hour{'s' if hours_from_remaining != 1 else ''}")
+    if minutes_from_remaining > 0:
+        parts.append(f"{minutes_from_remaining} minute{'s' if minutes_from_remaining != 1 else ''}")
+    if seconds_from_remaining > 0 or (not parts):
+        parts.append(f"{seconds_from_remaining} second{'s' if seconds_from_remaining != 1 else ''}")
+    
+    return ", ".join(parts)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Convert time between hours and minutes.")
+    sample_time = "25:10:45"
+    result = time_string_to_human_readable(sample_time)
+    print(result)
     
-    # Define non-required arguments with defaults for the sample run
-    hour_arg = parser.add_argument(
-        '--hours', 
-        type=float, 
-        default=2.5,  # Hard-coded sample value: 2.5 hours
-        help='Number of hours (default: 2.5)'
-    )
+    sample_time_2 = "00:00:05"
+    result_2 = time_string_to_human_readable(sample_time_2)
+    print(result_2)
     
-    minute_arg = parser.add_argument(
-        '--minutes', 
-        type=int, 
-        default=30,   # Hard-coded sample value: 30 minutes
-        help='Additional minutes in seconds or as part of the time (default: 30)'
-    )
-
-    args = parser.parse_args()
-    
-    total_minutes = convert_time(args.hours, args.minutes)
-    print(f"{args.hours} hours and {args.minutes} minutes is equal to {total_minutes:.2f} minutes.")
+    sample_time_3 = "48:00:00"
+    result_3 = time_string_to_human_readable(sample_time_3)
+    print(result_3)

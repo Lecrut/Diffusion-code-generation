@@ -1,16 +1,44 @@
-def celsius_to_fahrenheit(celsius):
-    return (celsius * 9/5) + 32
-def fahrenheit_to_celsius(fahrenheit):
-    return (fahrenheit - 32) * 5/9
-def kelvin_to_celsius(kelvin):
-    return kelvin - 273.15
+class Sensor:
+    def __init__(self, raw_temperature):
+        self.raw_temperature = raw_temperature
+
+    def read_raw(self):
+        return self.raw_temperature
+
+class Converter:
+    @staticmethod
+    def celsius_to_fahrenheit(celsius):
+        return (celsius * 9/5) + 32
+
+    @staticmethod
+    def celsius_to_kelvin(celsius):
+        return celsius + 273.15
+
+    @staticmethod
+    def fahrenheit_to_celsius(fahrenheit):
+        return (fahrenheit - 32) * 5/9
+
+    @staticmethod
+    def fahrenheit_to_kelvin(fahrenheit):
+        return (fahrenheit - 32) * 5/9 + 273.15
+
+    @staticmethod
+    def kelvin_to_celsius(kelvin):
+        return kelvin - 273.15
+
+    @staticmethod
+    def kelvin_to_fahrenheit(kelvin):
+        return (kelvin - 273.15) * 9/5 + 32
+
 if __name__ == '__main__':
-    c_sample = 25.0
-    f_sample = 77.0
-    k_sample = 300.0
-    f_to_c = celsius_to_fahrenheit(c_sample)
-    c_to_f = fahrenheit_to_celsius(f_sample)
-    k_to_c = kelvin_to_celsius(k_sample)
-    print(f"Celsius to Fahrenheit: {c_sample}°C is {f_to_c:.2f}°F")
-    print(f"Fahrenheit to Celsius: {f_sample}°F is {c_to_f:.2f}°C")
-    print(f"Kelvin to Celsius: {k_sample}K is {k_to_c:.2f}°C")
+    sensor = Sensor(25.0)
+    raw_temp = sensor.read_raw()
+    
+    converter = Converter()
+    
+    fahrenheit = converter.celsius_to_fahrenheit(raw_temp)
+    kelvin = converter.celsius_to_kelvin(raw_temp)
+    
+    print(raw_temp)
+    print(fahrenheit)
+    print(kelvin)

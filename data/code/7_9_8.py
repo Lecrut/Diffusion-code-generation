@@ -1,29 +1,54 @@
 import datetime
+
 def calculate_time_difference(start_time, end_time, unit):
-    difference = end_time - start_time
+    if start_time > end_time:
+        raise ValueError("Start time must be before end time")
+    
+    delta = end_time - start_time
+    total_seconds = delta.total_seconds()
+    
     if unit == 'days':
-        result = difference.total_seconds() / (60 * 60 * 24)
-        return result
+        return total_seconds / 86400
     elif unit == 'hours':
-        result = difference.total_seconds() / (60 * 60)
-        return result
+        return total_seconds / 3600
     elif unit == 'minutes':
-        result = difference.total_seconds() / 60
-        return result
+        return total_seconds / 60
     elif unit == 'seconds':
-        return difference.total_seconds()
+        return total_seconds
+    elif unit == 'milliseconds':
+        return total_seconds * 1000
     else:
-        raise ValueError("Unsupported time unit. Please use 'days', 'hours', 'minutes', or 'seconds'.")
+        raise ValueError(f"Unsupported unit: {unit}")
+
+def format_time_difference(start_time, end_time):
+    if start_time > end_time:
+        raise ValueError("Start time must be before end time")
+    
+    delta = end_time - start_time
+    total_seconds = int(delta.total_seconds())
+    
+    days = total_seconds // 86400
+    remaining_seconds = total_seconds % 86400
+    
+    hours = remaining_seconds // 3600
+    remaining_seconds = remaining_seconds % 3600
+    
+    minutes = remaining_seconds // 60
+    seconds = remaining_seconds % 60
+    
+    return days, hours, minutes, seconds
+
 if __name__ == '__main__':
-    start = datetime.datetime(2023, 10, 26, 10, 30, 0)
-    end = datetime.datetime(2023, 10, 28, 14, 45, 15)
-    unit = 'hours'
-    try:
-        time_diff = calculate_time_difference(start, end, unit)
-        print(f"Start Time: {start}")
-        print(f"End Time: {end}")
-        print(f"Time Difference in {unit}: {time_diff}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    start = datetime.datetime(2023, 1, 1, 10, 0, 0)
+    end = datetime.datetime(2023, 1, 3, 14, 30, 45)
+    
+    result_days = calculate_time_difference(start, end, 'days')
+    result_hours = calculate_time_difference(start, end, 'hours')
+    result_minutes = calculate_time_difference(start, end, 'minutes')
+    
+    formatted = format_time_difference(start, end)
+    
+    print(result_days)
+    print(result_hours)
+    print(result_minutes)
+    print(f"Days: {formatted[0]}, Hours: {formatted[1]}, Minutes: {formatted[2]}, Seconds: {formatted[3]}")

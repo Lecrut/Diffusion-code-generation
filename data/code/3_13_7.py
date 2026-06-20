@@ -1,12 +1,13 @@
-class TemperatureConverter:
-    def convert_all(self, celsius_readings):
-        """Converts a list of Celsius temperatures to Fahrenheit."""
-        fahrenheit = [c * 9 / 5 + 32 for c in celsius_readings]
-        return fahrenheit
+def convert_kelvin_to_celsius(values):
+    result = []
+    for value in values:
+        if isinstance(value, (int, float)):
+            celsius = value - 273.15
+            result.append(celsius)
+        else:
+            result.append(None)
+    return result
 
 if __name__ == '__main__':
-    converter = TemperatureConverter()
-    sample_celsius = [-40, -10, 0, 25, 100]
-    result = converter.convert_all(sample_celsius)
-    print("Celsius:", sample_celsius)
-    print("Fahrenheit:", result)
+    sample_data = [273.15, 0, 300.5, "invalid", -10, 1000.0]
+    print(convert_kelvin_to_celsius(sample_data))

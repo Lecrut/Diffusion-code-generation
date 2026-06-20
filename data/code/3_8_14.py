@@ -1,38 +1,57 @@
-import math
+import csv
+import os
+import tempfile
 
-def celsius_to_kelvin(celsius: float) -> float:
-    """Convert temperature from Celsius to Kelvin."""
-    return celsius + 273.15
+def convert_csv_celsius_to_fahrenheit(input_path, output_path):
+    with open(input_path, 'r', newline='') as infile:
+        reader = csv.reader(infile)
+        header = next(reader)
+        rows = list(reader)
 
-def format_table(temperature_data):
-    """Print a neatly formatted table of temperatures and their Kelvin equivalents."""
-    print(f"{'Index':<6} {'Celsius (°C)':<14} {'Kelvin (K)':<14}")
-    print("-" * 38)
+    converted_rows = []
+    for row in rows:
+        converted_row = []
+        for value in row:
+            try:
+                celsius = float(value)
+                fahrenheit = (celsius * 9 / 5) + 32
+                converted_row.append(f"{fahrenheit:.2f}")
+            except ValueError:
+                converted_row.append(value)
+        converted_rows.append(converted_row)
 
-    for idx, c in enumerate(temperature_data):
-        k = celsius_to_kelvin(c)
-        # Format to ensure consistent decimal places and alignment
-        print(f"{idx:<6} {c:>10.2f}   {k:>10.2f}")
+    with open(output_path, 'w', newline='') as outfile:
+        writer = csv.writer(outfile)
+        writer.writerow(header)
+        writer.writerows(converted_rows)
+
+    return converted_rows
 
 def main():
-    """Main function containing hard-coded sample sensor data."""
-    # Predefined set of temperature readings in Celsius
-    raw_temperatures = [
-        25.5,
-        -40.0,
-        87.3,
-        -196.1,
-        0.0
-    ]
+    temp_data = [[
+        "Temperature", "Notes"
+    ], [
+        "0", "Freezing"
+    ], [
+        "100", "Boiling"
+    ]]
 
-    print("Temperature Data Simulation")
-    print("=" * 38)
-    
-    # Process and display data in a table
-    format_table(raw_temperatures)
-    
-    print("-" * 38)
-    print(f"Total readings processed: {len(raw_temperatures)}")
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp_in:
+        writer = csv.writer(tmp_in)
+        writer.writerows(temp_data)
+        tmp_in_path = tmp_in.name
+
+    tmp_out_path = tmp_in_path + ".out"
+
+    try:
+        result = convert_csv_celsius_to_fahrenheit(tmp_in_path, tmp_out_path)
+        for row in result:
+            print(row)
+    finally:
+        if os.path.exists(tmp_in_path):
+            os.remove(tmp_in_path)
+        if os.path.exists(tmp_out_path):
+            os.remove(tmp_out_path)
 
 if __name__ == '__main__':
     main()

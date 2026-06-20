@@ -1,28 +1,26 @@
-import unittest
-class DistanceConverter:
-    def convert_miles_to_km(self, miles):
-        return miles * 1.60934
-    def convert_km_to_miles(self, km):
-        return km / 1.60934
-class TestDistanceConverter(unittest.TestCase):
-    def setUp(self):
-        self.converter = DistanceConverter()
-    def test_miles_to_km_positive(self):
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(10), 16.0934)
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(0), 0.0)
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(1), 1.60934)
-    def test_miles_to_km_zero(self):
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(0), 0.0)
-    def test_miles_to_km_negative(self):
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(-5), -8.0467)
-    def test_km_to_miles_positive(self):
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(16.0934), 10.0)
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(0), 0.0)
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(1), 0.621371)
-    def test_km_to_miles_zero(self):
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(0), 0.0)
-    def test_km_to_miles_negative(self):
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(-16.0934), -10.0)
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(-1), -0.621371)
+import math
+
+def normalize_to_meters(value: float, unit: str) -> float:
+    value = float(value)
+    unit = unit.lower().strip()
+    conversion_factors = {'m': 1.0, 'km': 1000.0, 'cm': 0.01, 'mm': 0.001, 'mi': 1609.344, 'ft': 0.3048, 'in': 0.0254, 'yd': 0.9144}
+    if unit not in conversion_factors:
+        raise ValueError(f'Unsupported unit: {unit}')
+    return value * conversion_factors[unit]
+
+def format_distance(meters: float, precision: int=2) -> str:
+    meters = float(meters)
+    if abs(meters) < 0.001:
+        return f'{meters * 1000:.{precision}f} mm'
+    elif abs(meters) < 1:
+        return f'{meters * 100:.{precision}f} cm'
+    elif abs(meters) < 1000:
+        return f'{meters:.{precision}f} m'
+    else:
+        return f'{meters / 1000:.{precision}f} km'
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    samples = [(5.0, 'km'), (150.0, 'cm'), (0.005, 'km'), (3.28, 'ft'), (1.0, 'in'), (10000.0, 'mm')]
+    for val, unit in samples:
+        meters = normalize_to_meters(val, unit)
+        formatted = format_distance(meters)
+        print(f'{val} {unit} = {meters} m -> {formatted}')

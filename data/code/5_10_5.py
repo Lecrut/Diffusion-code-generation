@@ -1,22 +1,10 @@
-def compare_lengths(length1, length2):
-    difference = length1 - length2
-    if difference > 0:
-        comparison_result = "greater than"
-    elif difference < 0:
-        comparison_result = "less than"
-    else:
-        comparison_result = "equal to"
-    return difference, comparison_result
+def difference_length(len1, len2):
+    return len1 - len2 if len1 >= len2 else len2 - len1
+
 if __name__ == '__main__':
-    a = 15
-    b = 10
-    diff_ab, result_ab = compare_lengths(a, b)
-    print(f"Comparing {a} and {b}: Difference = {diff_ab}, Result = {result_ab}")
-    c = 25
-    d = 25
-    diff_cd, result_cd = compare_lengths(c, d)
-    print(f"Comparing {c} and {d}: Difference = {diff_cd}, Result = {result_cd}")
-    e = 5
-    f = 12
-    diff_ef, result_ef = compare_lengths(e, f)
-    print(f"Comparing {e} and {f}: Difference = {diff_ef}, Result = {result_ef}")
+    length_a = 10
+    length_b = 7
+    print(difference_length(length_a, length_b))
+    length_c = 3
+    length_d = 15
+    print(difference_length(length_c, length_d))

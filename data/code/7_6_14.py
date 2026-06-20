@@ -1,83 +1,100 @@
 import unittest
-from datetime import timedelta
 
-def seconds_to_time(seconds):
-    """Convert total seconds into a time object (days, hours, minutes)."""
-    days = seconds // 86400
-    remaining_seconds = seconds % 86400
-    hours = remaining_seconds // 3600
-    remaining_seconds %= 3600
-    minutes = remaining_seconds // 60
-    return {
-        'days': days,
-        'hours': hours,
-        'minutes': minutes,
-        'seconds': seconds % 60
-    }
+def seconds_to_days(hours):
+    return hours * 3600
 
-def time_to_seconds(time_dict):
-    """Convert a dictionary of time components back to total seconds."""
-    d = time_dict.get('days', 0)
-    h = time_dict.get('hours', 0)
-    m = time_dict.get('minutes', 0)
-    s = time_dict.get('seconds', 0)
-    
-    return (d * 86400) + (h * 3600) + (m * 60) + s
+def days_to_seconds(days):
+    return days * 86400
+
+def total_seconds_to_days(total_seconds):
+    return total_seconds / 86400
+
+def total_days_to_seconds(total_days):
+    return total_days * 86400
+
+def days_to_hours(days):
+    return days * 24
+
+def hours_to_days(hours):
+    return hours / 24
+
+def hours_to_seconds(hours):
+    return hours * 3600
+
+def seconds_to_hours(seconds):
+    return seconds / 3600
 
 class TestTimeConversion(unittest.TestCase):
+    def test_seconds_to_days_zero(self):
+        self.assertEqual(seconds_to_days(0), 0)
 
-    def test_zero_values(self):
-        """Test conversion with zero input."""
-        self.assertEqual(seconds_to_time(0), {'days': 0, 'hours': 0, 'minutes': 0, 'seconds': 0})
-        result = time_to_seconds({'days': 0, 'hours': 0, 'minutes': 0, 'seconds': 0})
-        self.assertEqual(result, 0)
+    def test_days_to_seconds_zero(self):
+        self.assertEqual(days_to_seconds(0), 0)
 
-    def test_large_time_spans(self):
-        """Test conversion with large values."""
-        # One year approx (365 days * 86400 seconds = 31,536,000) plus extra hours/minutes
-        total_seconds = 31536000 + 23*3600 + 59*60 + 59
-        
-        result_dict = seconds_to_time(total_seconds)
-        
-        self.assertEqual(result_dict['days'], 365)
-        self.assertEqual(result_dict['hours'], 23)
-        self.assertEqual(result_dict['minutes'], 59)
-        self.assertEqual(result_dict['seconds'], 59)
+    def test_total_seconds_to_days_zero(self):
+        self.assertEqual(total_seconds_to_days(0), 0.0)
 
-    def test_round_trip_conversion(self):
-        """Ensure seconds_to_time and time_to_seconds are inverses."""
-        original_seconds = 100000
-        
-        converted_back = time_to_seconds(seconds_to_time(original_seconds))
-        
-        self.assertEqual(converted_back, original_seconds)
+    def test_total_days_to_seconds_zero(self):
+        self.assertEqual(total_days_to_seconds(0), 0)
 
-    def test_negative_values_handling(self):
-        """Test that negative values do not crash and return expected math results (though logically invalid for physical time)."""
-        # While physically impossible, the function should handle it without crashing.
-        result = seconds_to_time(-100)
-        
-        self.assertEqual(result['days'], -1)  # -1 day is roughly correct magnitude-wise in this simple implementation
-        
-    def test_boundary_conditions(self):
-        """Test boundaries like exactly one hour or minute."""
-        # Exactly one hour (3600 seconds)
-        result = seconds_to_time(3600)
-        self.assertEqual(result['days'], 0)
-        self.assertEqual(result['hours'], 1)
-        self.assertEqual(result['minutes'], 0)
-        
-        # Exactly one minute (60 seconds)
-        result = seconds_to_time(60)
-        self.assertEqual(result['seconds'], 0)
-        self.assertEqual(result['minutes'], 1)
+    def test_days_to_hours_zero(self):
+        self.assertEqual(days_to_hours(0), 0)
+
+    def test_hours_to_days_zero(self):
+        self.assertEqual(hours_to_days(0), 0.0)
+
+    def test_hours_to_seconds_zero(self):
+        self.assertEqual(hours_to_seconds(0), 0)
+
+    def test_seconds_to_hours_zero(self):
+        self.assertEqual(seconds_to_hours(0), 0.0)
+
+    def test_large_seconds_to_days(self):
+        self.assertEqual(seconds_to_days(1000000), 3600000000)
+
+    def test_large_days_to_seconds(self):
+        self.assertEqual(days_to_seconds(1000000), 86400000000)
+
+    def test_large_total_seconds_to_days(self):
+        self.assertEqual(total_seconds_to_days(86400000000), 1000000.0)
+
+    def test_large_total_days_to_seconds(self):
+        self.assertEqual(total_days_to_seconds(1000000), 86400000000)
+
+    def test_large_days_to_hours(self):
+        self.assertEqual(days_to_hours(1000000), 24000000)
+
+    def test_large_hours_to_days(self):
+        self.assertEqual(hours_to_days(24000000), 1000000.0)
+
+    def test_large_hours_to_seconds(self):
+        self.assertEqual(hours_to_seconds(1000000), 3600000000)
+
+    def test_large_seconds_to_hours(self):
+        self.assertEqual(seconds_to_hours(3600000000), 1000000.0)
+
+    def test_fractional_hours_to_days(self):
+        self.assertEqual(hours_to_days(12), 0.5)
+
+    def test_fractional_seconds_to_hours(self):
+        self.assertEqual(seconds_to_hours(1800), 0.5)
+
+    def test_fractional_days_to_hours(self):
+        self.assertEqual(days_to_hours(0.5), 12.0)
+
+    def test_fractional_total_seconds_to_days(self):
+        self.assertEqual(total_seconds_to_days(43200), 0.5)
+
+    def test_fractional_total_days_to_seconds(self):
+        self.assertEqual(total_days_to_seconds(0.5), 43200.0)
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestTimeConversion)
-    
-    # Run the tests directly to ensure they execute without external dependencies or input prompts.
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    if not result.wasSuccessful():
-        exit(result.failures[0][1] if result.failures else result.errors[0][1])
+    unittest.main()
+    print(days_to_seconds(30))
+    print(seconds_to_days(1000000000))
+    print(total_seconds_to_days(864000000))
+    print(total_days_to_seconds(10000))
+    print(days_to_hours(25))
+    print(hours_to_days(48))
+    print(hours_to_seconds(10000))
+    print(seconds_to_hours(72000))

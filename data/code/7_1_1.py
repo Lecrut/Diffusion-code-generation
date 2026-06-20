@@ -1,28 +1,64 @@
 class TimeConverter:
     def __init__(self):
-        pass
-    def to_total_seconds(self, hours, minutes, seconds):
-        return (hours * 3600) + (minutes * 60) + seconds
-    def from_total_seconds(self, total_seconds):
-        hours = total_seconds // 3600
-        remaining = total_seconds % 3600
-        minutes = remaining // 60
-        seconds = remaining % 60
-        return hours, minutes, seconds
-    def convert_to_hms(self, total_seconds):
-        hours = total_seconds // 3600
-        minutes = (total_seconds % 3600) // 60
-        seconds = total_seconds % 60
-        return hours, minutes, seconds
+        self._cache = {}
+
+    def hours_to_minutes(self, hours):
+        key = ('hours_to_minutes', hours)
+        if key in self._cache:
+            return self._cache[key]
+        result = hours * 60
+        self._cache[key] = result
+        return result
+
+    def hours_to_seconds(self, hours):
+        key = ('hours_to_seconds', hours)
+        if key in self._cache:
+            return self._cache[key]
+        result = hours * 3600
+        self._cache[key] = result
+        return result
+
+    def minutes_to_hours(self, minutes):
+        key = ('minutes_to_hours', minutes)
+        if key in self._cache:
+            return self._cache[key]
+        result = minutes / 60
+        self._cache[key] = result
+        return result
+
+    def minutes_to_seconds(self, minutes):
+        key = ('minutes_to_seconds', minutes)
+        if key in self._cache:
+            return self._cache[key]
+        result = minutes * 60
+        self._cache[key] = result
+        return result
+
+    def seconds_to_hours(self, seconds):
+        key = ('seconds_to_hours', seconds)
+        if key in self._cache:
+            return self._cache[key]
+        result = seconds / 3600
+        self._cache[key] = result
+        return result
+
+    def seconds_to_minutes(self, seconds):
+        key = ('seconds_to_minutes', seconds)
+        if key in self._cache:
+            return self._cache[key]
+        result = seconds / 60
+        self._cache[key] = result
+        return result
+
 if __name__ == '__main__':
     converter = TimeConverter()
-    sample_h = 2
-    sample_m = 30
-    sample_s = 15
-    total_s = converter.to_total_seconds(sample_h, sample_m, sample_s)
-    print(f"Input: {sample_h}h {sample_m}m {sample_s}s")
-    print(f"Total seconds: {total_s}")
-    h, m, s = converter.from_total_seconds(total_s)
-    print(f"Converted back: {h}h {m}m {s}s")
-    h_out, m_out, s_out = converter.convert_to_hms(total_s)
-    print(f"Converted to HMS: {h_out}h {m_out}m {s_out}s")
+    sample_hours = 2.5
+    sample_minutes = 150
+    sample_seconds = 7200
+
+    print(converter.hours_to_minutes(sample_hours))
+    print(converter.hours_to_seconds(sample_hours))
+    print(converter.minutes_to_hours(sample_minutes))
+    print(converter.minutes_to_seconds(sample_minutes))
+    print(converter.seconds_to_hours(sample_seconds))
+    print(converter.seconds_to_minutes(sample_seconds))

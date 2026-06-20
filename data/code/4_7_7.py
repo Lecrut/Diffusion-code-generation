@@ -1,93 +1,74 @@
-import unittest
-
-class DistanceConverter:
-    """A class to convert distances between different units."""
+def normalize_to_meters(distance_value, distance_unit):
+    unit_map = {
+        "meter": 1.0,
+        "metre": 1.0,
+        "m": 1.0,
+        "meters": 1.0,
+        "metres": 1.0,
+        "kilometer": 1000.0,
+        "kilometre": 1000.0,
+        "km": 1000.0,
+        "kilometers": 1000.0,
+        "kilometres": 1000.0,
+        "centimeter": 0.01,
+        "centimetre": 0.01,
+        "cm": 0.01,
+        "centimeters": 0.01,
+        "centimetres": 0.01,
+        "millimeter": 0.001,
+        "millimetre": 0.001,
+        "mm": 0.001,
+        "millimeters": 0.001,
+        "millimetres": 0.001,
+        "micrometer": 1e-6,
+        "micrometre": 1e-6,
+        "um": 1e-6,
+        "micron": 1e-6,
+        "nanometer": 1e-9,
+        "nanometre": 1e-9,
+        "nm": 1e-9,
+        "inch": 0.0254,
+        "in": 0.0254,
+        "inches": 0.0254,
+        "foot": 0.3048,
+        "ft": 0.3048,
+        "feet": 0.3048,
+        "yard": 0.9144,
+        "yd": 0.9144,
+        "yards": 0.9144,
+        "mile": 1609.344,
+        "mi": 1609.344,
+        "miles": 1609.344,
+        "nautical_mile": 1852.0,
+        "nm": 1852.0,
+        "nmile": 1852.0,
+        "nmi": 1852.0,
+        "knot": 1852.0 / 3600.0,
+    }
     
-    def __init__(self, value_in_meters):
-        self.value = value_in_meters  # Base unit is meters
+    cleaned_unit = distance_unit.lower().strip()
     
-    def to_kilometers(self) -> float:
-        return self.value / 1000.0
-    
-    def to_miles(self) -> float:
-        return self.value * 0.000621371
-    
-    def to_feet(self) -> float:
-        return self.value * 3.28084
-    
-    def to_inches(self) -> float:
-        return self.to_feet() * 12
-
-class TestDistanceConverter(unittest.TestCase):
-    
-    def setUp(self):
-        """Set up test fixtures."""
-        # Using a standard distance for testing (e.g., length of a football field is ~90 meters, 
-        # but we use exactly 500 meters to avoid floating point edge cases in simple math)
-        self.converter = DistanceConverter(500.0)
-
-    def test_to_kilometers_exact(self):
-        """Test conversion from meters to kilometers."""
-        expected = 0.5
-        result = self.converter.to_kilometers()
-        self.assertEqual(result, expected)
-
-    def test_to_miles_approximate(self):
-        """Test conversion from meters to miles with approximate value check."""
-        # 500 * 0.000621371 = 0.3106855
-        result = self.converter.to_miles()
-        expected = 0.3106855
-        self.assertAlmostEqual(result, expected)
-
-    def test_to_feet_exact(self):
-        """Test conversion from meters to feet."""
-        # 500 * 3.28084 = 1640.42
-        result = self.converter.to_feet()
-        expected = 1640.42
-        self.assertEqual(result, expected)
-
-    def test_to_inches_exact(self):
-        """Test conversion from meters to inches."""
-        # 500 * 3.28084 * 12 = 19685.04
-        result = self.converter.to_inches()
-        expected = 19685.04
-        self.assertEqual(result, expected)
-
-    def test_conversion_from_zero(self):
-        """Test conversion when input is zero."""
-        converter_zero = DistanceConverter(0.0)
+    if cleaned_unit not in unit_map:
+        raise ValueError("Unknown unit: {}".format(distance_unit))
         
-        # Zero meters should be exactly zero in any unit
-        self.assertEqual(converter_zero.to_kilometers(), 0.0)
-        self.assertAlmostEqual(converter_zero.to_miles(), 0.0, places=5)
-        self.assertEqual(converter_zero.to_feet(), 0.0)
-        self.assertEqual(converter_zero.to_inches(), 0.0)
-
-    def test_conversion_from_large_value(self):
-        """Test conversion with a larger input value (1 kilometer = 1000 meters)."""
-        converter_km = DistanceConverter(1000.0)
-        
-        # Should return exactly 1.0 km
-        self.assertEqual(converter_km.to_kilometers(), 1.0)
-        expected_miles = 1000 * 0.000621371
-        self.assertAlmostEqual(converter_km.to_miles(), expected_miles, places=5)
-
-    def test_negative_value_handling(self):
-        """Test conversion with a negative value."""
-        converter_neg = DistanceConverter(-500.0)
-        
-        # Negative meters should yield consistent negative results in all units
-        self.assertEqual(converter_neg.to_kilometers(), -0.5)
-        expected_miles = -500 * 0.000621371
-        self.assertAlmostEqual(converter_neg.to_miles(), expected_miles, places=5)
+    factor = unit_map[cleaned_unit]
+    return distance_value * factor
 
 if __name__ == '__main__':
-    # Hard-coded sample values are embedded in the setUp method and test cases above.
-    # No user input, command-line arguments, or network access is required.
+    samples = [
+        (1.0, "km"),
+        (100.0, "cm"),
+        (1.0, "mi"),
+        (12.0, "in"),
+        (1.0, "yard"),
+        (1000.0, "mm"),
+        (1.0, "nautical_mile"),
+    ]
     
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestDistanceConverter)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    # Exit with error code if tests failed
-    exit(result.wasSuccessful() and 0 or 1)
+    results = []
+    for val, unit in samples:
+        converted = normalize_to_meters(val, unit)
+        results.append(converted)
+        
+    for res in results:
+        print(res)

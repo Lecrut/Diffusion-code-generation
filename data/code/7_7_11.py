@@ -1,46 +1,20 @@
-import datetime
 import pytz
+from datetime import datetime
 
-def convert_to_timezone(dt: datetime.datetime, target_tz: str) -> datetime.datetime:
-    """
-    Converts a given datetime object to the specified time zone using pytz.
-
-    Parameters:
-        dt (datetime.datetime): The datetime instance to be converted. It should ideally 
-                                represent UTC or a known timezone; if not, it will first
-                                be localized to 'UTC' before conversion for accuracy 
-                                when an offset is involved during naive-to-aware transition.
-        target_tz (str): Name of the time zone string as defined in pytz database
-
-    Returns:
-        datetime.datetime: The new datetime object adjusted to represent the same instant 
-                           but interpreted and displayed according to the target timezone.
+def convert_timezone(dt: datetime, target_tz_name: str) -> datetime:
+    if dt.tzinfo is None:
+        raise ValueError("The input datetime must have timezone information.")
     
-    Raises:
-        ValueError: If the provided time zone name is not found by pytz
-    """
-    try:
-        tz = pytz.timezone(target_tz)
-    except Exception as e:
-        raise ValueError(f"Invalid or unsupported timezone '{target_tz}': {e}")
-
-    # Ensure dt has a correct UTC offset before conversion for non-UTC inputs
-    if not (dt.tzinfo is None):  # If already aware, just localize it appropriately first 
-        local_time = pytz.utc.localize(dt).replace(tzinfo=tz)
-        return local_time
+    local_tz = dt.tzinfo
+    utc_dt = dt.astimezone(pytz.utc)
     
-    else:  
-        local_tz_naive_dt = tz.localize(datetime.datetime(2005, 6, 15))  # dummy value for testing
-
-        result = dt.astimezone(pytz.UTC).astimezone(tz)
-        
-        return result
+    target_tz = pytz.timezone(target_tz_name)
+    target_dt = utc_dt.astimezone(target_tz)
+    
+    return target_dt
 
 if __name__ == '__main__':
-    import datetime
-    
-    sample_datetime_utc = datetime.datetime(2005, 6, 15, tzinfo=pytz.utc)
-
-    target_tz_name = 'America/New_York'
-    
-    converted_time = convert_to_timezone(sample_datetime_utc, target_tz_name)
+    sample_dt = datetime(2023, 10, 27, 15, 30, 0, tzinfo=pytz.timezone('America/New_York'))
+    target_zone = 'Asia/Tokyo'
+    result = convert_timezone(sample_dt, target_zone)
+    print(result)

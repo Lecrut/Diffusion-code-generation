@@ -1,50 +1,25 @@
-import sys
 def convert_distance(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    if from_unit == 'm':
-        if to_unit == 'km':
-            return value / 1000.0
-        elif to_unit == 'mi':
-            return value / 1609.34
-    elif from_unit == 'km':
-        if to_unit == 'm':
-            return value * 1000.0
-        elif to_unit == 'mi':
-            return value / 1.60934
-    elif from_unit == 'mi':
-        if to_unit == 'km':
-            return value * 1.60934
-        elif to_unit == 'm':
-            return value * 1609.34
-    raise ValueError("Invalid unit specified. Must be 'm', 'km', or 'mi'.")
+    if value < 0:
+        raise ValueError("Distance cannot be negative")
+    valid_units = {'meters', 'kilometers', 'miles'}
+    if from_unit not in valid_units or to_unit not in valid_units:
+        raise ValueError("Invalid unit. Use 'meters', 'kilometers', or 'miles'.")
+    conversion_factors = {
+        'meters': {'meters': 1, 'kilometers': 0.001, 'miles': 0.000621371},
+        'kilometers': {'meters': 1000, 'kilometers': 1, 'miles': 0.621371},
+        'miles': {'meters': 1609.34, 'kilometers': 1.60934, 'miles': 1}
+    }
+    factor = conversion_factors[from_unit][to_unit]
+    return value * factor
+
 if __name__ == '__main__':
-    sample_value = 5000.0
-    from_unit = 'm'
-    to_unit = 'km'
-    print(f"Original Value: {sample_value} {from_unit}")
-    try:
-        result = convert_distance(sample_value, from_unit, to_unit)
-        print(f"Converted Value: {result:.4f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    print("-" * 20)
-    sample_value = 10.0
-    from_unit = 'mi'
-    to_unit = 'm'
-    print(f"Original Value: {sample_value} {from_unit}")
-    try:
-        result = convert_distance(sample_value, from_unit, to_unit)
-        print(f"Converted Value: {result:.4f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    print("-" * 20)
-    sample_value = 100.0
-    from_unit = 'km'
-    to_unit = 'mi'
-    print(f"Original Value: {sample_value} {from_unit}")
-    try:
-        result = convert_distance(sample_value, from_unit, to_unit)
-        print(f"Converted Value: {result:.4f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
+    samples = [
+        (1000, 'meters', 'kilometers'),
+        (1, 'kilometers', 'miles'),
+        (5, 'miles', 'meters'),
+        (1500, 'meters', 'miles'),
+        (2.5, 'kilometers', 'meters')
+    ]
+    for value, from_u, to_u in samples:
+        result = convert_distance(value, from_u, to_u)
+        print(f"{value} {from_u} = {result} {to_u}")

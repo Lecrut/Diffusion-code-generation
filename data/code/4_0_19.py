@@ -1,38 +1,38 @@
-import math
-from typing import Literal
-
-class UnitConverter:
-    """
-    A utility class to convert distance units between meters, kilometers, and miles.
-    
-    Attributes:
-        meter_to_km (float): Conversion factor from meters to kilometers (1/1000).
-        km_to_mile (float): Conversion factor from kilometers to miles (~0.621371).
-    """
-
-    def __init__(self) -> None:
-        self.METER_TO_KM = 1 / 1000
-        self.KM_TO_MILE = 0.621371 # Approximate conversion factor
-
-    @staticmethod
-    def validate_input(value: float, unit: Literal['meters', 'kilometers'], max_value_limit: int | None = None) -> bool:
-        """Validates the input distance value and type."""
-        if not isinstance(value, (int, float)):
-            return False
-        
-        try:
-            numeric_val = float(value)
-            
-            # Check for negative numbers as physical distances are non-negative in this context
-            if numeric_val < 0:
-                raise ValueError("Distance cannot be negative.")
-                
-            # Optional limit check to prevent unreasonably large/small values (e.g., galaxy-sized objects)
-            if max_value_limit is not None and abs(numeric_val) > max_value_limit * 1_000_000:
-                return False
-                
-        except ValueError as e:
-            raise TypeError(f"Input value must be a valid number. Error: {e}")
+def convert_distance(value, from_unit, to_unit):
+    valid_units = {'meters', 'kilometers', 'miles'}
+    if from_unit not in valid_units or to_unit not in valid_units:
+        raise ValueError("Invalid unit. Use 'meters', 'kilometers', or 'miles'.")
+    if not isinstance(value, (int, float)):
+        raise TypeError("Value must be a number.")
+    if value < 0:
+        raise ValueError("Distance cannot be negative.")
+    if from_unit == to_unit:
+        return value
+    if from_unit == 'meters':
+        if to_unit == 'kilometers':
+            return value / 1000.0
+        elif to_unit == 'miles':
+            return value / 1609.344
+    elif from_unit == 'kilometers':
+        if to_unit == 'meters':
+            return value * 1000.0
+        elif to_unit == 'miles':
+            return value / 1.609344
+    elif from_unit == 'miles':
+        if to_unit == 'meters':
+            return value * 1609.344
+        elif to_unit == 'kilometers':
+            return value * 1.609344
+    raise RuntimeError("Conversion logic error.")
 
 if __name__ == '__main__':
-    pass
+    result1 = convert_distance(1000, 'meters', 'kilometers')
+    print(result1)
+    result2 = convert_distance(1, 'kilometers', 'miles')
+    print(result2)
+    result3 = convert_distance(1, 'miles', 'meters')
+    print(result3)
+    result4 = convert_distance(5280, 'meters', 'miles')
+    print(result4)
+    result5 = convert_distance(0, 'meters', 'kilometers')
+    print(result5)

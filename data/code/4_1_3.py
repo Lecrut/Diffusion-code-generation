@@ -1,101 +1,102 @@
-import math
-
 class DistanceConverter:
-    """A class to handle conversions between meters, kilometers, and miles."""
-    
-    # Constants defining conversion factors relative to meters
-    METERS_PER_KILOMETER = 1000.0
-    
-    MILES_TO_METERS = 1609.344
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit
 
-    def __init__(self):
-        """Initialize the DistanceConverter with default unit (meters)."""
-        self.current_unit = 'meters'
+    def to_meters(self):
+        if self.unit == 'meters':
+            return self.value
+        if self.unit == 'kilometers':
+            return self.value * 1000
+        if self.unit == 'miles':
+            return self.value * 1609.34
+        raise ValueError(f"Unknown unit: {self.unit}")
 
-    def convert_to(self, value: float, target_unit: str) -> float:
-        """
-        Convert a distance from meters to the specified unit.
+    def to_kilometers(self):
+        meters = self.to_meters()
+        return meters / 1000
 
-        Args:
-            value (float): The distance in meters.
-            target_unit (str): Target unit ('kilometers', 'miles').
+    def to_miles(self):
+        meters = self.to_meters()
+        return meters / 1609.34
 
-        Returns:
-            float: Converted distance.
+    def convert(self, target_unit):
+        if self.unit == target_unit:
+            return self.value
+        if target_unit == 'meters':
+            return self.to_meters()
+        if target_unit == 'kilometers':
+            return self.to_kilometers()
+        if target_unit == 'miles':
+            return self.to_miles()
+        raise ValueError(f"Unknown target unit: {target_unit}")
 
-        Raises:
-            ValueError: If an invalid target unit is provided.
-        """
-        if not isinstance(value, (int, float)):
-            raise TypeError("Value must be a number.")
+    def add(self, other):
+        if not isinstance(other, DistanceConverter):
+            raise TypeError("Can only add DistanceConverter instances")
+        meters = self.to_meters() + other.to_meters()
+        return DistanceConverter(meters, 'meters')
 
-        valid_units = ['kilometers', 'miles']
-        if target_unit not in valid_units:
-            raise ValueError(f"Invalid unit '{target_unit}'. Supported units are {valid_units}.")
+    def subtract(self, other):
+        if not isinstance(other, DistanceConverter):
+            raise TypeError("Can only subtract DistanceConverter instances")
+        meters = self.to_meters() - other.to_meters()
+        return DistanceConverter(meters, 'meters')
 
-        # Convert meters to the target unit directly using constants defined above
-        converted_value = value / self.METERS_PER_KILOMETER if target_unit == 'kilometers' else \
-                          value / self.MILES_TO_METERS
-        
-        return round(converted_value, 6)
+    def __str__(self):
+        return f"{self.value} {self.unit}"
 
-    def convert_from(self, value: float, source_unit: str) -> float:
-        """
-        Convert a distance from the specified unit to meters.
+    def __repr__(self):
+        return f"DistanceConverter({self.value}, '{self.unit}')"
 
-        Args:
-            value (float): The distance in the source unit.
-            source_unit (str): Source unit ('kilometers', 'miles').
+    def __eq__(self, other):
+        if not isinstance(other, DistanceConverter):
+            return False
+        return self.to_meters() == other.to_meters()
 
-        Returns:
-            float: Converted distance in meters.
+    def __lt__(self, other):
+        if not isinstance(other, DistanceConverter):
+            return NotImplemented
+        return self.to_meters() < other.to_meters()
 
-        Raises:
-            ValueError: If an invalid source unit is provided.
-        """
-        if not isinstance(value, (int, float)):
-            raise TypeError("Value must be a number.")
+    def __le__(self, other):
+        if not isinstance(other, DistanceConverter):
+            return NotImplemented
+        return self.to_meters() <= other.to_meters()
 
-        valid_units = ['kilometers', 'miles']
-        if source_unit not in valid_units:
-            raise ValueError(f"Invalid unit '{source_unit}'. Supported units are {valid_units}.")
+    def __gt__(self, other):
+        if not isinstance(other, DistanceConverter):
+            return NotImplemented
+        return self.to_meters() > other.to_meters()
 
-        # Convert the target unit to meters directly using constants defined above
-        converted_value = value * self.METERS_PER_KILOMETER if source_unit == 'kilometers' else \
-                          value * self.MILES_TO_METERS
-        
-        return round(converted_value, 6)
+    def __ge__(self, other):
+        if not isinstance(other, DistanceConverter):
+            return NotImplemented
+        return self.to_meters() >= other.to_meters()
+
+    def __add__(self, other):
+        return self.add(other)
+
+    def __sub__(self, other):
+        return self.subtract(other)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    
-    converter = DistanceConverter()
+    d1 = DistanceConverter(5, 'kilometers')
+    d2 = DistanceConverter(3, 'miles')
 
-    print("--- Conversions from Meters ---")
-    
-    # Sample: Convert 1000 meters to kilometers and miles
-    km_result = converter.convert_to(1000, 'kilometers')
-    mi_result = converter.convert_to(1000, 'miles')
-    print(f"1000 m -> {km_result} km")
-    print(f"1000 m -> {mi_result} miles")
+    print(d1.convert('meters'))
+    print(d2.convert('kilometers'))
 
-    # Sample: Convert 5 kilometers to meters and miles
-    m_from_km = converter.convert_from(5.0, 'kilometers')
-    mi_from_km = converter.convert_to(m_from_km, 'miles')
-    print(f"5 km -> {m_from_km} m (via conversion)")
-    print(f"{m_from_km} m -> {mi_from_km} miles")
+    d3 = d1.add(d2)
+    print(d3.convert('miles'))
 
-    # Sample: Convert 1 mile to meters and kilometers
-    m_from_mi = converter.convert_from(1.0, 'miles')
-    km_from_mi = converter.convert_to(m_from_mi, 'kilometers')
-    print(f"1 mi -> {m_from_mi} m (via conversion)")
-    print(f"{m_from_mi} m -> {km_from_mi} km")
+    d4 = DistanceConverter(1000, 'meters')
+    d5 = DistanceConverter(1, 'kilometers')
+    print(d4 == d5)
 
-    # Sample: Round-trip check for accuracy
-    original_meters = 2500.75
-    converted_back_km = converter.convert_to(original_meters, 'kilometers')
-    reconverted_meters = converter.convert_from(converted_back_km, 'kilometers')
-    
-    print(f"\n--- Accuracy Check ---")
-    print(f"Original: {original_meters} m")
-    print(f"After round-trip via km: {reconverted_meters} m")
+    d6 = DistanceConverter(100, 'meters')
+    d7 = DistanceConverter(150, 'meters')
+    print(d6 < d7)
+
+    d8 = d7.subtract(d6)
+    print(d8.value)

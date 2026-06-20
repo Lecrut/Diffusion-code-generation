@@ -1,40 +1,39 @@
-def weight_difference_generator(weight_pairs):
-    """
-    Generator function that yields the absolute difference between pairs of weights.
-    
-    Args:
-        weight_pairs (list[tuple]): A list where each element is a tuple containing two numeric values representing weights.
-        
-    Yields:
-        float or int: The absolute difference between the first and second value in each pair.
-        
-    Example:
-        >>> gen = weight_difference_generator([(10, 5), (20, 3)])
-        >>> next(gen)
-        5.0
-        >>> next(gen)
-        17.0
-    """
-    for w1, w2 in weight_pairs:
-        yield abs(w1 - w2)
+import unittest
+
+def calculate_weight_difference(weight_before, weight_after):
+    if not isinstance(weight_before, (int, float)) or not isinstance(weight_after, (int, float)):
+        raise TypeError("Both inputs must be numbers")
+    return weight_before - weight_after
+
+class TestWeightDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_weight_difference(100, 80), 20)
+
+    def test_negative_difference(self):
+        self.assertEqual(calculate_weight_difference(80, 100), -20)
+
+    def test_equal_weights(self):
+        self.assertEqual(calculate_weight_difference(50, 50), 0)
+
+    def test_negative_inputs(self):
+        self.assertEqual(calculate_weight_difference(-50, -30), -20)
+        self.assertEqual(calculate_weight_difference(-30, -50), 20)
+        self.assertEqual(calculate_weight_difference(-10, 10), -20)
+
+    def test_float_inputs(self):
+        self.assertAlmostEqual(calculate_weight_difference(10.5, 8.5), 2.0)
+
+    def test_mixed_negative_positive(self):
+        self.assertEqual(calculate_weight_difference(-100, 100), -200)
+        self.assertEqual(calculate_weight_difference(100, -100), 200)
+
+    def test_invalid_type(self):
+        with self.assertRaises(TypeError):
+            calculate_weight_difference("100", 80)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as a list of tuples (weight_pair_1, weight_pair_2, ...)
-    samples = [
-        (10.5, 4.2),
-        (20, 3),
-        (100, 98),
-        (-5, -12)
-    ]
-
-    generator_obj = weight_difference_generator(samples)
-
-    print("Weight differences:")
-    for diff in generator_obj:
-        # Ensure float formatting is consistent if needed, though Python handles mixed types naturally here.
-        formatted_diff = f"{diff:.2f}" if isinstance(diff, (int, float)) else str(diff)
-        print(formatted_diff)
-
-    # Verify all items were processed without memory issues by iterating once through the generator
-    count = sum(1 for _ in weight_difference_generator(samples))
-    assert count == len(samples), "Generator should yield exactly one value per input pair."
+    sample_result = calculate_weight_difference(150, 120)
+    print(sample_result)
+    negative_input_result = calculate_weight_difference(-20, -10)
+    print(negative_input_result)
+    unittest.main(exit=False)

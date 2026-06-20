@@ -1,20 +1,13 @@
-import datetime
-from pytz import timezone
+import pytz
+from datetime import datetime
 
-def convert_timezone(dt: datetime.datetime, target_tz_str: str) -> datetime.datetime:
-    """
-    Converts a given datetime object to the specified target time zone using pytz.
-    
-    Args:
-        dt (datetime.datetime): The original datetime object without timezone info or with one to be converted.
-        target_tz_str (str): A string representing the IANA time zone name (e.g., 'America/New_York').
-
-    Returns:
-        datetime.datetime: The new datetime object adjusted for the target time zone.
-    
-    Raises:
-        ValueError: If the provided timezone string is not recognized by pytz.
-    """
+def convert_timezone(dt, target_tz_str):
+    if dt.tzinfo is None:
+        dt = pytz.utc.localize(dt)
+    target_tz = pytz.timezone(target_tz_str)
+    return dt.astimezone(target_tz)
 
 if __name__ == '__main__':
-    pass
+    sample_dt = datetime(2023, 10, 15, 12, 0, 0)
+    converted = convert_timezone(sample_dt, 'America/New_York')
+    print(converted)

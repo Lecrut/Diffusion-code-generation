@@ -1,7 +1,8 @@
-def calculate_difference(a: float, b: float) -> float:
-    """Calculate simple weight difference between two variables."""
-    return a - b
+def calculate_weight_difference(weight1, weight2):
+    return abs(float(weight1) - float(weight2))
 
 if __name__ == '__main__':
-    result = calculate_difference(10.5, 3.2)
+    sample_weight1 = 75.5
+    sample_weight2 = 68.2
+    result = calculate_weight_difference(sample_weight1, sample_weight2)
     print(result)

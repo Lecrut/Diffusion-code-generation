@@ -1,20 +1,8 @@
-def calculate_weight_difference(a: float, b: float) -> float:
-    """
-    Calculate the absolute difference between two floating-point numbers.
-    
-    Args:
-        a (float): The first number.
-        b (float): The second number.
-        
-    Returns:
-        float: The absolute value of their difference.
-    """
-    return abs(a - b)
+class WeightCalculator:
+    def calculate_difference(self, weight1, weight2):
+        return abs(weight1 - weight2)
 
 if __name__ == '__main__':
-    sample_a = 10.5
-    sample_b = 3.2
-    
-    result = calculate_weight_difference(sample_a, sample_b)
-    
+    calculator = WeightCalculator()
+    result = calculator.calculate_difference(150.5, 120.3)
     print(result)

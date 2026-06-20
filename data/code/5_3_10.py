@@ -1,17 +1,29 @@
-def calculate_ratio(a: float, b: float) -> None:
-    """Prints the ratio of two positive numbers."""
-    if a <= 0 or b <= 0:
-        raise ValueError("Both measurements must be positive numbers.")
-    
-    result = a / b
-    print(f"{a} : {b} = {result}")
+class LengthComparator:
+    def __init__(self, length_a, length_b):
+        self.validate_length(length_a)
+        self.validate_length(length_b)
+        self.length_a = length_a
+        self.length_b = length_b
+
+    @staticmethod
+    def validate_length(value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Length must be a numeric type")
+        if value < 0:
+            raise ValueError("Length cannot be negative")
+
+    def compare(self):
+        diff = self.length_a - self.length_b
+        if diff > 0:
+            return f"Length A is longer than Length B by {diff} units"
+        elif diff < 0:
+            return f"Length B is longer than Length A by {abs(diff)} units"
+        else:
+            return "Length A and Length B are equal"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    measurement_a = 10.5
-    measurement_b = 2
-    
-    try:
-        calculate_ratio(measurement_a, measurement_b)
-    except ValueError as e:
-        print(f"Error: {e}")
+    a = 20.5
+    b = 15.0
+    comparator = LengthComparator(a, b)
+    output = comparator.compare()
+    print(output)

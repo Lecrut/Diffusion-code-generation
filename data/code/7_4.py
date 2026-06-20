@@ -1,81 +1,58 @@
-import math
-def convert_to_seconds(value, unit):
-    if unit == 'year':
-        return value * 365.25 * 24 * 60 * 60
-    elif unit == 'month':
-        return value * 30.44 * 24 * 60 * 60
-    elif unit == 'day':
-        return value * 24 * 60 * 60
-    elif unit == 'hour':
-        return value * 60 * 60
-    elif unit == 'minute':
-        return value * 60
-    elif unit == 'second':
-        return value
-    else:
-        raise ValueError("Invalid unit specified")
-def convert_from_seconds(seconds, unit):
-    if unit == 'year':
-        return seconds / (365.25 * 24 * 60 * 60)
-    elif unit == 'month':
-        return seconds / (30.44 * 24 * 60 * 60)
-    elif unit == 'day':
-        return seconds / (24 * 60 * 60)
-    elif unit == 'hour':
-        return seconds / (60 * 60)
-    elif unit == 'minute':
-        return seconds / 60
-    elif unit == 'second':
-        return seconds
-    else:
-        raise ValueError("Invalid unit specified")
+def convert_time(value, from_unit, to_unit):
+    base_seconds = {
+        'seconds': 1,
+        'minutes': 60,
+        'hours': 3600,
+        'days': 86400,
+        'weeks': 604800,
+        'months': 2629746,
+        'years': 31556952
+    }
+    
+    if from_unit not in base_seconds or to_unit not in base_seconds:
+        raise ValueError("Unsupported time unit provided")
+    
+    value_in_seconds = value * base_seconds[from_unit]
+    converted_value = value_in_seconds / base_seconds[to_unit]
+    
+    return converted_value
+
+def create_time_context(value, unit):
+    seconds_total = convert_time(value, unit, 'seconds')
+    
+    years = int(seconds_total / 31556952)
+    remaining_seconds = seconds_total - (years * 31556952)
+    
+    months = int(remaining_seconds / 2629746)
+    remaining_seconds = remaining_seconds - (months * 2629746)
+    
+    weeks = int(remaining_seconds / 604800)
+    remaining_seconds = remaining_seconds - (weeks * 604800)
+    
+    days = int(remaining_seconds / 86400)
+    remaining_seconds = remaining_seconds - (days * 86400)
+    
+    hours = int(remaining_seconds / 3600)
+    remaining_seconds = remaining_seconds - (hours * 3600)
+    
+    minutes = int(remaining_seconds / 60)
+    remaining_seconds = remaining_seconds - (minutes * 60)
+    
+    seconds = int(remaining_seconds)
+    
+    return {
+        'years': years,
+        'months': months,
+        'weeks': weeks,
+        'days': days,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds
+    }
+
 if __name__ == '__main__':
-    sample_years = 2
-    sample_months = 6
-    sample_days = 10
-    sample_hours = 14
-    sample_minutes = 30
-    sample_seconds = 5
-    print("--- Time Unit Conversion Module ---")
-    print(f"\nSample Input:")
-    print(f"Years: {sample_years}")
-    print(f"Months: {sample_months}")
-    print(f"Days: {sample_days}")
-    print(f"Hours: {sample_hours}")
-    print(f"Minutes: {sample_minutes}")
-    print(f"Seconds: {sample_seconds}")
-    total_seconds_from_years = convert_to_seconds(sample_years, 'year')
-    print(f"\nConversion Check (Years to Seconds):")
-    print(f"{sample_years} years is approximately {total_seconds_from_years:.2f} seconds.")
-    total_seconds_from_months = convert_to_seconds(sample_months, 'month')
-    print(f"Conversion Check (Months to Seconds):")
-    print(f"{sample_months} months is approximately {total_seconds_from_months:.2f} seconds.")
-    total_seconds_from_days = convert_to_seconds(sample_days, 'day')
-    print(f"Conversion Check (Days to Seconds):")
-    print(f"{sample_days} days is approximately {total_seconds_from_days:.2f} seconds.")
-    total_seconds_from_hours = convert_to_seconds(sample_hours, 'hour')
-    print(f"Conversion Check (Hours to Seconds):")
-    print(f"{sample_hours} hours is approximately {total_seconds_from_hours:.2f} seconds.")
-    total_seconds_from_minutes = convert_to_seconds(sample_minutes, 'minute')
-    print(f"Conversion Check (Minutes to Seconds):")
-    print(f"{sample_minutes} minutes is approximately {total_seconds_from_minutes:.2f} seconds.")
-    print(f"Conversion Check (Seconds to Seconds):")
-    print(f"{sample_seconds} seconds is {sample_seconds:.2f} seconds.")
-    seconds_from_years = convert_from_seconds(total_seconds_from_years, 'year')
-    print(f"\nConversion Check (Back to Years):")
-    print(f"{total_seconds_from_years:.2f} seconds is approximately {seconds_from_years:.2f} years.")
-    seconds_from_months = convert_from_seconds(total_seconds_from_months, 'month')
-    print(f"Conversion Check (Back to Months):")
-    print(f"{total_seconds_from_months:.2f} seconds is approximately {seconds_from_months:.2f} months.")
-    seconds_from_days = convert_from_seconds(total_seconds_from_days, 'day')
-    print(f"Conversion Check (Back to Days):")
-    print(f"{total_seconds_from_days:.2f} seconds is approximately {seconds_from_days:.2f} days.")
-    seconds_from_hours = convert_from_seconds(total_seconds_from_hours, 'hour')
-    print(f"Conversion Check (Back to Hours):")
-    print(f"{total_seconds_from_hours:.2f} seconds is approximately {seconds_from_hours:.2f} hours.")
-    seconds_from_minutes = convert_from_seconds(total_seconds_from_minutes, 'minute')
-    print(f"Conversion Check (Back to Minutes):")
-    print(f"{total_seconds_from_minutes:.2f} seconds is approximately {seconds_from_minutes:.2f} minutes.")
-    seconds_from_seconds = convert_from_seconds(sample_seconds, 'second')
-    print(f"Conversion Check (Back to Seconds):")
-    print(f"{sample_seconds:.2f} seconds is {seconds_from_seconds:.2f} seconds.")
+    result = convert_time(1, 'years', 'days')
+    print(result)
+    
+    detailed_breakdown = create_time_context(365, 'days')
+    print(detailed_breakdown)

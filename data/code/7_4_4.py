@@ -1,72 +1,62 @@
-import math
-def convert_to_seconds(value, unit):
-    if unit == 'year':
-        return value * 365.25 * 24 * 60 * 60
-    elif unit == 'month':
-        return value * 30.44 * 24 * 60 * 60
-    elif unit == 'day':
-        return value * 24 * 60 * 60
-    elif unit == 'hour':
-        return value * 60 * 60
-    elif unit == 'minute':
-        return value * 60
-    elif unit == 'second':
-        return value
+def _days_to_seconds(days):
+    return days * 24 * 60 * 60
+
+def _years_to_days(years):
+    return years * 365.25
+
+def _months_to_days(months):
+    return months * 30.4375
+
+def convert_time(value, from_unit, to_unit):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Value must be a number")
+    if value < 0:
+        raise ValueError("Value must be non-negative")
+    
+    to_seconds = 0
+    
+    if from_unit == 'seconds':
+        to_seconds = value
+    elif from_unit == 'minutes':
+        to_seconds = value * 60
+    elif from_unit == 'hours':
+        to_seconds = value * 3600
+    elif from_unit == 'days':
+        to_seconds = value * 86400
+    elif from_unit == 'weeks':
+        to_seconds = value * 86400 * 7
+    elif from_unit == 'months':
+        to_seconds = _months_to_days(value) * 86400
+    elif from_unit == 'years':
+        to_seconds = _years_to_days(value) * 86400
     else:
-        raise ValueError("Invalid unit specified")
-def convert_from_seconds(seconds, unit):
-    if unit == 'year':
-        return seconds / (365.25 * 24 * 60 * 60)
-    elif unit == 'month':
-        return seconds / (30.44 * 24 * 60 * 60)
-    elif unit == 'day':
-        return seconds / (24 * 60 * 60)
-    elif unit == 'hour':
-        return seconds / (60 * 60)
-    elif unit == 'minute':
-        return seconds / 60
-    elif unit == 'second':
-        return seconds
+        raise ValueError(f"Unknown source unit: {from_unit}")
+    
+    if to_unit == 'seconds':
+        return to_seconds
+    elif to_unit == 'minutes':
+        return to_seconds / 60
+    elif to_unit == 'hours':
+        return to_seconds / 3600
+    elif to_unit == 'days':
+        return to_seconds / 86400
+    elif to_unit == 'weeks':
+        return to_seconds / (86400 * 7)
+    elif to_unit == 'months':
+        return to_seconds / (86400 * 30.4375)
+    elif to_unit == 'years':
+        return to_seconds / (86400 * 365.25)
     else:
-        raise ValueError("Invalid unit specified")
+        raise ValueError(f"Unknown target unit: {to_unit}")
+
+def main():
+    years_in_a_day = convert_time(1, 'days', 'years')
+    seconds_in_a_year = convert_time(1, 'years', 'seconds')
+    minutes_in_a_week = convert_time(1, 'weeks', 'minutes')
+    
+    print(f"1 day in years: {years_in_a_day}")
+    print(f"1 year in seconds: {seconds_in_a_year}")
+    print(f"1 week in minutes: {minutes_in_a_week}")
+
 if __name__ == '__main__':
-    sample_years = 2
-    sample_months = 6
-    sample_days = 10
-    sample_hours = 14
-    sample_minutes = 30
-    sample_seconds = 5
-    print("--- Time Unit Conversion Module ---")
-    print(f"\nSample Input:")
-    print(f"Years: {sample_years}")
-    print(f"Months: {sample_months}")
-    print(f"Days: {sample_days}")
-    print(f"Hours: {sample_hours}")
-    print(f"Minutes: {sample_minutes}")
-    print(f"Seconds: {sample_seconds}")
-    print("\nConversion to Seconds:")
-    seconds_from_year = convert_to_seconds(sample_years, 'year')
-    print(f"{sample_years} years in seconds: {seconds_from_year:.2f}")
-    seconds_from_month = convert_to_seconds(sample_months, 'month')
-    print(f"{sample_months} months in seconds: {seconds_from_month:.2f}")
-    seconds_from_day = convert_to_seconds(sample_days, 'day')
-    print(f"{sample_days} days in seconds: {seconds_from_day:.2f}")
-    seconds_from_hour = convert_to_seconds(sample_hours, 'hour')
-    print(f"{sample_hours} hours in seconds: {seconds_from_hour:.2f}")
-    seconds_from_minute = convert_to_seconds(sample_minutes, 'minute')
-    print(f"{sample_minutes} minutes in seconds: {seconds_from_minute:.2f}")
-    seconds_from_second = convert_to_seconds(sample_seconds, 'second')
-    print(f"{sample_seconds} seconds in seconds: {seconds_from_second:.2f}")
-    print("\nConversion from Seconds:")
-    result_years = convert_from_seconds(seconds_from_year, 'year')
-    print(f"{seconds_from_year:.2f} seconds converted to years: {result_years:.4f}")
-    result_months = convert_from_seconds(seconds_from_month, 'month')
-    print(f"{seconds_from_month:.2f} seconds converted to months: {result_months:.4f}")
-    result_days = convert_from_seconds(seconds_from_day, 'day')
-    print(f"{seconds_from_day:.2f} seconds converted to days: {result_days:.4f}")
-    result_hours = convert_from_seconds(seconds_from_hour, 'hour')
-    print(f"{seconds_from_hour:.2f} seconds converted to hours: {result_hours:.4f}")
-    result_minutes = convert_from_seconds(seconds_from_minute, 'minute')
-    print(f"{seconds_from_minute:.2f} seconds converted to minutes: {result_minutes:.4f}")
-    result_seconds = convert_from_seconds(seconds_from_second, 'second')
-    print(f"{seconds_from_second:.2f} seconds converted to seconds: {result_seconds:.2f}")
+    main()

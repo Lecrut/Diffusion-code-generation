@@ -1,74 +1,46 @@
-def calculate_area(shape: str, parameters: dict) -> float:
-    """
-    General-purpose area calculation function supporting various 2D shapes.
-    
-    Supported shapes:
-        - 'rectangle': {'width': float, 'height': float}
-        - 'circle': {'radius': float}
-        - 'triangle': {'base': float, 'height': float}
-        - 'square': {'side': float} (treated as rectangle with equal sides)
+import math
 
-    Args:
-        shape (str): Type of the 2D shape.
-        parameters (dict): Dictionary defining specific dimensions for the shape.
+def calculate_convex_hull_area(coordinates):
+    def cross_product(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
-    Returns:
-        float: Area of the given shape.
-    
-    Raises:
-        ValueError: If invalid inputs or unsupported shapes are provided.
-    """
-    if shape == 'rectangle':
-        width = parameters.get('width')
-        height = parameters.get('height')
-        if not all(isinstance(x, (int, float)) for x in [width, height]):
-            raise ValueError("Rectangle dimensions must be numeric.")
-        return round(width * height, 2)
+    def get_convex_hull(points):
+        if len(points) <= 1:
+            return points
+        points = sorted(set(points))
+        lower = []
+        for p in points:
+            while len(lower) >= 2 and cross_product(lower[-2], lower[-1], p) <= 0:
+                lower.pop()
+            lower.append(p)
+        upper = []
+        for p in reversed(points):
+            while len(upper) >= 2 and cross_product(upper[-2], upper[-1], p) <= 0:
+                upper.pop()
+            upper.append(p)
+        return lower[:-1] + upper[:-1]
 
-    elif shape == 'circle':
-        radius = parameters.get('radius')
-        if not isinstance(radius, (int, float)):
-            raise ValueError("Circle radius must be a number.")
-        if radius <= 0:
-            raise ValueError("Radius must be positive.")
-        return round(3.141592653589793 * radius ** 2, 2)
+    def polygon_area(vertices):
+        n = len(vertices)
+        if n < 3:
+            return 0.0
+        area = 0.0
+        for i in range(n):
+            j = (i + 1) % n
+            area += vertices[i][0] * vertices[j][1]
+            area -= vertices[j][0] * vertices[i][1]
+        return abs(area) / 2.0
 
-    elif shape == 'triangle':
-        base = parameters.get('base')
-        height = parameters.get('height')
-        if not all(isinstance(x, (int, float)) for x in [base, height]):
-            raise ValueError("Triangle dimensions must be numeric.")
-        return round(0.5 * base * height, 2)
-
-    elif shape == 'square':
-        side = parameters.get('side')
-        if not isinstance(side, (int, float)):
-            raise ValueError("Square side length must be a number.")
-        return round(side ** 2, 2)
-
-    else:
-        raise ValueError(f"Unsupported shape type: {shape}")
+    hull_vertices = get_convex_hull(coordinates)
+    return polygon_area(hull_vertices)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values (no external input required)
-    
-    test_cases = [
-        ('rectangle', {'width': 5.0, 'height': 3.0}),
-        ('circle', {'radius': 4.2}),
-        ('triangle', {'base': 10.0, 'height': 6.0}),
-        ('square', {'side': 7.5})
+    sample_points = [
+        (40.7128, -74.0060),
+        (40.7580, -73.9855),
+        (40.7061, -74.0087),
+        (40.7282, -73.9942),
+        (40.7484, -73.9857)
     ]
-
-    results = []
-    for shape_type, params in test_cases:
-        try:
-            area_value = calculate_area(shape_type, params)
-            result_entry = f"{shape_type}: {area_value}"
-            results.append(result_entry)
-        except ValueError as e:
-            result_entry = f"Error calculating {shape_type} area: {e}"
-            results.append(result_entry)
-
-    # Print all computed or error messages to console
-    for r in results:
-        print(r)
+    result = calculate_convex_hull_area(sample_points)
+    print(result)

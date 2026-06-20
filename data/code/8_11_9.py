@@ -1,27 +1,68 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    sum1 = 0.0
-    sum2 = 0.0
-    for i in range(n):
-        x_i, y_i = vertices[i]
-        x_next, y_next = vertices[(i + 1) % n]
-        sum1 += x_i * y_next
-        sum2 += y_i * x_next
-    area = 0.5 * (sum1 - sum2)
-    return area
+from typing import List, Tuple
+
+SCALE_FACTOR_MIN = 0.001
+MAX_SHAPES = 100
+
+class GeometricEntity:
+    def calculate_area(self) -> float:
+        raise ValueError("Direct instantiation of GeometricEntity is not supported")
+    
+    def resize(self, multiplier: float) -> None:
+        if multiplier <= SCALE_FACTOR_MIN:
+            raise ValueError(f"Multiplier must be greater than {SCALE_FACTOR_MIN}")
+
+class Disk(GeometricEntity):
+    def __init__(self, radius: float) -> None:
+        self.radius = radius
+    
+    def calculate_area(self) -> float:
+        return math.pi * self.radius * self.radius
+    
+    def resize(self, multiplier: float) -> None:
+        super().resize(multiplier)
+        self.radius *= multiplier
+    
+    def describe(self) -> str:
+        return f"Disk with radius {self.radius:.2f} and area {self.calculate_area():.2f}"
+
+class Box(GeometricEntity):
+    def __init__(self, length: float, width: float, height: float) -> None:
+        self.length = length
+        self.width = width
+        self.height = height
+    
+    def calculate_area(self) -> float:
+        return 2 * (self.length * self.width + self.width * self.height + self.height * self.length)
+    
+    def resize(self, multiplier: float) -> None:
+        super().resize(multiplier)
+        self.length *= multiplier
+        self.width *= multiplier
+        self.height *= multiplier
+    
+    def describe(self) -> str:
+        return f"Box with dims {self.length:.2f}x{self.width:.2f}x{self.height:.2f} and area {self.calculate_area():.2f}"
+
+def process_shapes(items: List[GeometricEntity], factor: float) -> List[float]:
+    results: List[float] = []
+    for item in items:
+        old_area = item.calculate_area()
+        item.resize(factor)
+        new_area = item.calculate_area()
+        results.append(new_area)
+    return results
+
 if __name__ == '__main__':
-    sample_vertices1 = [(0, 0), (1, 0), (0, 1)]
-    area1 = calculate_polygon_area(sample_vertices1)
-    print(f"Area 1: {area1}")
-    sample_vertices2 = [(2, 1), (4, 5), (7, 3), (5, 0)]
-    area2 = calculate_polygon_area(sample_vertices2)
-    print(f"Area 2: {area2}")
-    sample_vertices3 = [(1.5, 2.5), (3.0, 1.0), (0.5, 4.0)]
-    area3 = calculate_polygon_area(sample_vertices3)
-    print(f"Area 3: {area3}")
-    sample_vertices4 = [(1.0, 1.0), (1.0, 1.000000000000001), (2.0, 1.0)]
-    area4 = calculate_polygon_area(sample_vertices4)
-    print(f"Area 4 (Testing float tolerance): {area4}")
+    shape_registry: List[GeometricEntity] = [
+        Disk(5.0),
+        Box(2.0, 3.0, 4.0),
+        Disk(10.0),
+        Box(1.0, 1.0, 1.0)
+    ]
+    scaling_factor = 2.0
+    final_areas = process_shapes(shape_registry, scaling_factor)
+    print(f"Original shape count: {len(shape_registry)}")
+    print(f"Applied scaling factor: {scaling_factor}")
+    for idx, area in enumerate(final_areas):
+        print(f"Shape {idx + 1} new area: {area:.4f}")

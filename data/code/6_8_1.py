@@ -1,5 +1,5 @@
+def calculate_weight_difference(weight1, weight2):
+    return abs(float(weight1) - float(weight2))
+
 if __name__ == '__main__':
-    a = 10
-    b = 4
-    weight_diff = lambda x, y: x - y
-    print(weight_diff(a, b))
+    print(calculate_weight_difference(10.5, 7.3))

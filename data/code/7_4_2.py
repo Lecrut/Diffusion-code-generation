@@ -1,66 +1,58 @@
-import math
-def convert_to_seconds(value, unit):
-    if unit == 'year':
-        return value * 365.25 * 24 * 60 * 60
-    elif unit == 'month':
-        return value * 30.44 * 24 * 60 * 60
-    elif unit == 'day':
-        return value * 24 * 60 * 60
-    elif unit == 'hour':
-        return value * 60 * 60
-    elif unit == 'minute':
-        return value * 60
-    elif unit == 'second':
-        return value
-    else:
-        raise ValueError("Invalid unit specified")
-def convert_from_seconds(seconds, unit):
-    if unit == 'year':
-        return seconds / (365.25 * 24 * 60 * 60)
-    elif unit == 'month':
-        return seconds / (30.44 * 24 * 60 * 60)
-    elif unit == 'day':
-        return seconds / (24 * 60 * 60)
-    elif unit == 'hour':
-        return seconds / (60 * 60)
-    elif unit == 'minute':
-        return seconds / 60
-    elif unit == 'second':
-        return seconds
-    else:
-        raise ValueError("Invalid unit specified")
+class TimeConverter:
+    SECONDS_IN_MINUTE = 60
+    MINUTES_IN_HOUR = 60
+    HOURS_IN_DAY = 24
+    DAYS_IN_YEAR = 365
+    DAYS_IN_MONTH = 30
+
+    @staticmethod
+    def _to_seconds(value: float, unit: str) -> float:
+        unit = unit.lower()
+        if unit == 'second':
+            return value
+        if unit == 'minute':
+            return value * TimeConverter.SECONDS_IN_MINUTE
+        if unit == 'hour':
+            return value * TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR
+        if unit == 'day':
+            return value * TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR * TimeConverter.HOURS_IN_DAY
+        if unit == 'month':
+            return value * TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR * TimeConverter.HOURS_IN_DAY * TimeConverter.DAYS_IN_MONTH
+        if unit == 'year':
+            return value * TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR * TimeConverter.HOURS_IN_DAY * TimeConverter.DAYS_IN_YEAR
+        raise ValueError(f"Unknown unit: {unit}")
+
+    @staticmethod
+    def _from_seconds(seconds: float, target_unit: str) -> float:
+        unit = target_unit.lower()
+        if unit == 'second':
+            return seconds
+        if unit == 'minute':
+            return seconds / TimeConverter.SECONDS_IN_MINUTE
+        if unit == 'hour':
+            return seconds / (TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR)
+        if unit == 'day':
+            return seconds / (TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR * TimeConverter.HOURS_IN_DAY)
+        if unit == 'month':
+            return seconds / (TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR * TimeConverter.HOURS_IN_DAY * TimeConverter.DAYS_IN_MONTH)
+        if unit == 'year':
+            return seconds / (TimeConverter.SECONDS_IN_MINUTE * TimeConverter.MINUTES_IN_HOUR * TimeConverter.HOURS_IN_DAY * TimeConverter.DAYS_IN_YEAR)
+        raise ValueError(f"Unknown unit: {target_unit}")
+
+    @staticmethod
+    def convert(value: float, from_unit: str, to_unit: str) -> float:
+        seconds = TimeConverter._to_seconds(value, from_unit)
+        return TimeConverter._from_seconds(seconds, to_unit)
+
 if __name__ == '__main__':
-    sample_years = 2
-    sample_months = 6
-    sample_days = 10
-    sample_hours = 15
-    sample_minutes = 30
-    sample_seconds = 45
-    print("--- Time Unit Conversion Module ---")
-    print(f"\n--- Converting from Years ---")
-    seconds_from_year = convert_to_seconds(sample_years, 'year')
-    print(f"{sample_years} years is approximately {seconds_from_year:.2f} seconds")
-    print(f"\n--- Converting from Months ---")
-    seconds_from_month = convert_to_seconds(sample_months, 'month')
-    print(f"{sample_months} months is approximately {seconds_from_month:.2f} seconds")
-    print(f"\n--- Converting from Days ---")
-    seconds_from_day = convert_to_seconds(sample_days, 'day')
-    print(f"{sample_days} days is approximately {seconds_from_day:.2f} seconds")
-    print(f"\n--- Converting from Hours ---")
-    seconds_from_hour = convert_to_seconds(sample_hours, 'hour')
-    print(f"{sample_hours} hours is approximately {seconds_from_hour:.2f} seconds")
-    print(f"\n--- Converting from Minutes ---")
-    seconds_from_minute = convert_to_seconds(sample_minutes, 'minute')
-    print(f"{sample_minutes} minutes is approximately {seconds_from_minute:.2f} seconds")
-    print(f"\n--- Converting from Seconds ---")
-    seconds_from_second = convert_to_seconds(sample_seconds, 'second')
-    print(f"{sample_seconds} seconds is approximately {seconds_from_second:.2f} seconds")
-    print("\n--- Converting Back from Seconds ---")
-    total_seconds = convert_to_seconds(sample_years, 'year') + convert_to_seconds(sample_months, 'month') + convert_to_seconds(sample_days, 'day') + convert_to_seconds(sample_hours, 'hour') + convert_to_seconds(sample_minutes, 'minute') + convert_to_seconds(sample_seconds, 'second')
-    print(f"Total calculated seconds: {total_seconds:.2f}")
-    print(f"\nConverting total seconds back to Years:")
-    result_years = convert_from_seconds(total_seconds, 'year')
-    print(f"{total_seconds:.2f} seconds is approximately {result_years:.2f} years")
-    print(f"\nConverting total seconds back to Days:")
-    result_days = convert_from_seconds(total_seconds, 'day')
-    print(f"{total_seconds:.2f} seconds is approximately {result_days:.2f} days")
+    converter = TimeConverter()
+    years_to_days = converter.convert(1.5, 'year', 'day')
+    print(f"1.5 years in days: {years_to_days}")
+    hours_to_minutes = converter.convert(2.5, 'hour', 'minute')
+    print(f"2.5 hours in minutes: {hours_to_minutes}")
+    months_to_seconds = converter.convert(3, 'month', 'second')
+    print(f"3 months in seconds: {months_to_seconds}")
+    days_to_hours = converter.convert(7, 'day', 'hour')
+    print(f"7 days in hours: {days_to_hours}")
+    minutes_to_days = converter.convert(1440, 'minute', 'day')
+    print(f"1440 minutes in days: {minutes_to_days}")

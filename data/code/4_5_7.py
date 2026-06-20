@@ -1,52 +1,67 @@
-import math
-def convert_distance(distance, target_unit):
-    if target_unit == 0:
-        raise ValueError("Target unit cannot be zero.")
-    if target_unit == 1:
-        return distance
-    if target_unit == 1000:
-        return distance / 1000.0
-    if target_unit == 1000000:
-        return distance / 1000000.0
-    if target_unit == 1000000000:
-        return distance / 1000000000.0
-    if target_unit == 10000000000:
-        return distance / 10000000000.0
-    if target_unit == 1:
-        return distance
-    try:
-        if target_unit == 1:
-            return distance
-        if target_unit == 1000:
-            return distance / 1000.0
-        if target_unit == 1000000:
-            return distance / 1000000.0
-        if target_unit == 1000000000:
-            return distance / 1000000000.0
-        if target_unit == 10000000000:
-            return distance / 10000000000.0
-        if target_unit == 0:
-            raise ZeroDivisionError
-        return distance / target_unit
-    except ZeroDivisionError:
-        raise ValueError("Invalid target unit: Division by zero attempted.")
-    except Exception as e:
-        raise ValueError(f"An unexpected error occurred: {e}")
+class DistanceConverter:
+    def __init__(self):
+        self.kilometer_to_base = 1000
+        self.meter_to_base = 1
+        self.centimeter_to_base = 0.01
+        self.millimeter_to_base = 0.001
+        self.mile_to_base = 1609.344
+        self.yard_to_base = 0.9144
+        self.foot_to_base = 0.3048
+        self.inch_to_base = 0.0254
+
+    def convert(self, value, from_unit, to_unit):
+        if value < 0:
+            raise ValueError("Distance cannot be negative")
+        
+        from_factors = {
+            'km': self.kilometer_to_base,
+            'm': self.meter_to_base,
+            'cm': self.centimeter_to_base,
+            'mm': self.millimeter_to_base,
+            'mi': self.mile_to_base,
+            'yd': self.yard_to_base,
+            'ft': self.foot_to_base,
+            'in': self.inch_to_base,
+            'kilometer': self.kilometer_to_base,
+            'meter': self.meter_to_base,
+            'centimeter': self.centimeter_to_base,
+            'millimeter': self.millimeter_to_base,
+            'mile': self.mile_to_base,
+            'yard': self.yard_to_base,
+            'foot': self.foot_to_base,
+            'inch': self.inch_to_base,
+        }
+
+        to_factors = {
+            'km': self.kilometer_to_base,
+            'm': self.meter_to_base,
+            'cm': self.centimeter_to_base,
+            'mm': self.millimeter_to_base,
+            'mi': self.mile_to_base,
+            'yd': self.yard_to_base,
+            'ft': self.foot_to_base,
+            'in': self.inch_to_base,
+            'kilometer': self.kilometer_to_base,
+            'meter': self.meter_to_base,
+            'centimeter': self.centimeter_to_base,
+            'millimeter': self.millimeter_to_base,
+            'mile': self.mile_to_base,
+            'yard': self.yard_to_base,
+            'foot': self.foot_to_base,
+            'inch': self.inch_to_base,
+        }
+
+        if from_unit not in from_factors:
+            raise ValueError(f"Unsupported source unit: {from_unit}")
+        if to_unit not in to_factors:
+            raise ValueError(f"Unsupported target unit: {to_unit}")
+
+        base_value = value * from_factors[from_unit]
+        converted_value = base_value / to_factors[to_unit]
+        
+        return converted_value
+
 if __name__ == '__main__':
-    distance_miles = 10.5
-    target_unit_km = 1000.0
-    target_unit_miles = 1.0
-    target_unit_invalid = 0.0
-    try:
-        result_km = convert_distance(distance_miles, target_unit_km)
-        print(f"Distance: {distance_miles} miles, Target: {target_unit_km} (km) -> {result_km} km")
-        result_miles = convert_distance(distance_miles, target_unit_miles)
-        print(f"Distance: {distance_miles} miles, Target: {target_unit_miles} (miles) -> {result_miles} miles")
-        try:
-            convert_distance(distance_miles, target_unit_invalid)
-        except ValueError as e:
-            print(f"Error handling for invalid unit: {e}")
-    except ValueError as e:
-        print(f"Conversion failed: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred during testing: {e}")
+    converter = DistanceConverter()
+    result = converter.convert(5, 'km', 'mi')
+    print(result)

@@ -1,37 +1,20 @@
-class TemperatureConverter:
-    """A class to convert temperatures from Celsius to Fahrenheit."""
-
-    def __init__(self):
-        # No state needed initially, but allows instantiation of the converter object
-        pass
-
-    def convert_all(self, celsius_readings):
-        """
-        Converts a list of Celsius temperature readings to their corresponding 
-        Fahrenheit values.
-
-        The conversion formula is: F = (C * 9/5) + 32
-        
-        Args:
-            celsius_readings (list[float]): A list containing floating-point numbers representing temperatures in Celsius.
-
-        Returns:
-            list[float]: A new list containing the converted temperatures in Fahrenheit.
-        
-        Example:
-            >>> converter = TemperatureConverter()
-            >>> readings = [0, 100]
-            >>> result = convert_all(readings) # This calls via instance method below if used as class func or self-call
-            """
-        return [(c * 9/5) + 32 for c in celsius_readings]
+def kelvin_to_celsius(readings):
+    if readings is None:
+        return []
+    result = []
+    for reading in readings:
+        if reading is None:
+            result.append(None)
+        elif isinstance(reading, (int, float)):
+            if reading < 0:
+                result.append(None)
+            else:
+                result.append(reading - 273.15)
+        else:
+            result.append(None)
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without external inputs
-    sample_celcius = [0, 18.64, -40, 100]
-
-    converter = TemperatureConverter()
-    
-    fahrenheit_results = converter.convert_all(sample_celcius)
-
-    print("Celsius Readings:", sample_celcius)
-    print("Fahrenheit Results:", fahrenheit_results)
+    k_values = [273.15, 300.0, 0, 373.15, -10, None, "bad", 0.0]
+    celsius_values = kelvin_to_celsius(k_values)
+    print(celsius_values)

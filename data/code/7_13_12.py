@@ -1,52 +1,54 @@
-import argparse
+def time_string_to_seconds(time_str):
+    parts = time_str.split(':')
+    if len(parts) != 3:
+        raise ValueError("Time string must be in 'HH:MM:SS' format")
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    return total_seconds
 
-def convert_time(hours: float, minutes: int) -> str:
-    """Convert hours to total minutes."""
-    return f"{hours * 60} minutes"
+def seconds_to_human_readable(total_seconds):
+    if total_seconds < 0:
+        raise ValueError("Total seconds cannot be negative")
+    days = total_seconds // 86400
+    remainder = total_seconds % 86400
+    hours = remainder // 3600
+    remainder %= 3600
+    minutes = remainder // 60
+    seconds = remainder % 60
+    parts = []
+    if days > 0:
+        parts.append(f"{days} days" if days != 1 else "1 day")
+    if hours > 0:
+        parts.append(f"{hours} hours" if hours != 1 else "1 hour")
+    if minutes > 0:
+        parts.append(f"{minutes} minutes" if minutes != 1 else "1 minute")
+    if seconds > 0 or not parts:
+        parts.append(f"{seconds} seconds" if seconds != 1 else "1 second")
+    return ", ".join(parts)
+
+def convert_time_to_human_readable(time_str):
+    total_seconds = time_string_to_seconds(time_str)
+    return seconds_to_human_readable(total_seconds)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Convert time between hours and minutes.")
-
-    subparsers = parser.add_subparsers(dest='command', help='Conversion command')
-
-    # Hours to Minutes parser
-    h_to_m = subparsers.add_parser('h2m', help='Convert hours to minutes')
+    sample_time_1 = "00:01:30"
+    result_1 = convert_time_to_human_readable(sample_time_1)
+    print(f"Input: {sample_time_1} -> Output: {result_1}")
     
-    # Minutes to Hours parser
-    m_to_h = subparsers.add_parser('m2h', help='Convert minutes to hours')
-
-    args = parser.parse_args()
-
-    if not hasattr(args, 'hours'):
-        print("Error: No valid conversion command provided.")
-        exit(1)
-
-    # Hard-coded sample values as per requirements (no user input or stdin calls allowed in execution flow logic beyond argparse parsing which is standard for CLI scripts unless required args are enforced). 
-    # The requirement states "Never call ... argparse required arguments", so we use optional arguments with defaults to ensure the script runs without needing external inputs.
+    sample_time_2 = "25:45:10"
+    result_2 = convert_time_to_human_readable(sample_time_2)
+    print(f"Input: {sample_time_2} -> Output: {result_2}")
     
-    if hasattr(args, 'hours'):
-        sample_hours = 2.5
-        
-        if args.command == 'h2m':
-            result = convert_time(sample_hours, None)
-            print(result)
-        
-        elif args.command == 'm2h':
-            # For m2h, we need minutes input but it's not in the h2m parser setup above. 
-            # We will simulate a sample value for consistency with the "hard-coded" rule and avoid interactive prompts.
-            sample_minutes = 150
-            
-            total_hours = int(sample_minutes // 60) + (sample_minutes % 60 / 60)
-            
-            print(f"{total_hours} hours")
-
-    else:
-        # Fallback if no command is given, using default samples for demonstration.
-        sample_hours = 1
-        sample_minutes = 30
-        
-        result_h2m = convert_time(sample_hours, None)
-        m_to_result = f"{sample_minutes // 60} hours and {sample_minutes % 60:02d} minutes"
-
-        print(result_h2m)
-        print(m_to_result)
+    sample_time_3 = "1:02:03"
+    result_3 = convert_time_to_human_readable(sample_time_3)
+    print(f"Input: {sample_time_3} -> Output: {result_3}")
+    
+    sample_time_4 = "00:00:01"
+    result_4 = convert_time_to_human_readable(sample_time_4)
+    print(f"Input: {sample_time_4} -> Output: {result_4}")
+    
+    sample_time_5 = "00:00:00"
+    result_5 = convert_time_to_human_readable(sample_time_5)
+    print(f"Input: {sample_time_5} -> Output: {result_5}")

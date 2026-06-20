@@ -1,47 +1,36 @@
 import argparse
 from datetime import datetime
+from typing import Tuple
 
 def parse_time(time_str: str) -> datetime:
-    """Parse a time string in 'HH:MM' format into a datetime object."""
-    try:
-        return datetime.strptime(time_str, "%H:%M")
-    except ValueError as e:
-        raise SystemExit(f"Error parsing time '{time_str}': {e}")
+    return datetime.strptime(time_str, "%H:%M:%S")
 
-def calculate_elapsed_time(start_dt: datetime, end_dt: datetime) -> int:
-    """Calculate the elapsed time in minutes between two datetime objects."""
-    delta = end_dt - start_dt
-    return int(delta.total_seconds() / 60)
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="Calculate the total elapsed time between a start and an end time."
-    )
-
-    # Define non-interactive arguments with defaults to ensure no user input is required.
-    parser.add_argument("--start", type=str, default="10:30", help="Start time in HH:MM format.")
-    parser.add_argument("--end", type=str, default="14:45", help="End time in HH:MM format.")
-    parser.add_argument(
-        "--unit",
-        type=str,
-        choices=["minutes"],
-        default="minutes",
-        help="Desired output unit (currently only 'minutes' is supported).",
-    )
-
-    args = parser.parse_args()
-
-    try:
-        start_time = parse_time(args.start)
-        end_time = parse_time(args.end)
-        
-        elapsed_minutes = calculate_elapsed_time(start_time, end_time)
-        
-        print(f"Elapsed time from {args.start} to {args.end}: {elapsed_minutes} {args.unit}")
-
-    except SystemExit as e:
-        # Re-raise if it's an error exit (e.g., invalid arguments), otherwise ignore.
-        raise
+def calculate_elapsed_time(start_time_str: str, end_time_str: str, output_unit: str) -> float:
+    start_time = parse_time(start_time_str)
+    end_time = parse_time(end_time_str)
+    
+    if end_time < start_time:
+        end_time += datetime(1900, 1, 1) - datetime(1900, 1, 1) + timedelta(days=1)
+    
+    delta = end_time - start_time
+    total_seconds = delta.total_seconds()
+    
+    if output_unit == "minutes":
+        return total_seconds / 60
+    elif output_unit == "hours":
+        return total_seconds / 3600
+    elif output_unit == "seconds":
+        return total_seconds
+    else:
+        raise ValueError(f"Unsupported unit: {output_unit}. Use 'minutes', 'hours', or 'seconds'.")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Calculate elapsed time between two times.")
+    parser.add_argument("--start", type=str, required=True, help="Start time in HH:MM:SS format")
+    parser.add_argument("--end", type=str, required=True, help="End time in HH:MM:SS format")
+    parser.add_argument("--unit", type=str, required=True, choices=["minutes", "hours", "seconds"], help="Output unit")
+    
+    args = parser.parse_args()
+    
+    result = calculate_elapsed_time(args.start, args.end, args.unit)
+    print(f"Elapsed time: {result} {args.unit}")

@@ -1,83 +1,83 @@
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given its ordered vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple[float, float]]): A list of (x, y) tuples representing 
-                                            the vertices of the polygon in order.
-                                            
-    Returns:
-        float: The area of the polygon as a non-negative floating-point number.
-        
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided or if input format is invalid.
-    """
-    n = len(vertices)
-    
-    # Basic validation for minimum vertex count and data type check
-    if not isinstance(vertices, list):
-        raise TypeError("Input must be a list.")
-    if any(not isinstance(v, tuple) or len(v) != 2 for v in vertices):
-        raise ValueError("Each element of the input list must be a (x, y) tuple.")
-    
-    # Ensure at least 3 points to form a polygon
-    unique_points = set(vertices)
-    if len(unique_points) < 3:
-        raise ValueError("A valid polygon requires at least three distinct vertices.")
+import math
 
-    area_sum = 0.0
-    
-    for i in range(n):
-        x1, y1 = vertices[i]
-        # Wrap around to the first vertex when comparing with the last point (index n-1)
-        x2, y2 = vertices[(i + 1) % n] if isinstance(vertices[n - 1], tuple) else vertices[0] 
-        # Correction: The loop logic needs adjustment for modulo arithmetic on indices directly
-        
-    # Re-implementing the core loop with correct index handling to avoid confusion
-    area_sum = 0.0
-    
-    m = len(vertices)
-    
-    if m < 3:
-        raise ValueError("Polygon must have at least 3 vertices.")
+class GeometricShape:
+    def __init__(self, name: str) -> None:
+        self.name = name
 
-    for i in range(m):
-        x1, y1 = float(vertices[i][0])
-        x2, y2 = float(vertices[(i + 1) % m][0]), float(vertices[(i + 1) % m][1])
-        
-        # Shoelace formula term: (x_i * y_{i+1}) - (y_i * x_{i+1})
-        area_sum += (x1 * y2 - y1 * x2)
+    def get_area(self) -> float:
+        raise ValueError("Method must be implemented in subclass")
 
-    return abs(area_sum) / 2.0
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+
+class Circle(GeometricShape):
+    def __init__(self, radius: float, name: str = "Circle") -> None:
+        super().__init__(name)
+        if radius <= 0:
+            raise ValueError("Radius must be positive")
+        self.radius = radius
+
+    def get_area(self) -> float:
+        return math.pi * (self.radius ** 2)
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.radius *= factor
+
+class Rectangle(GeometricShape):
+    def __init__(self, width: float, height: float, name: str = "Rectangle") -> None:
+        super().__init__(name)
+        if width <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.width = width
+        self.height = height
+
+    def get_area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.width *= factor
+        self.height *= factor
+
+class Triangle(GeometricShape):
+    def __init__(self, base: float, height: float, name: str = "Triangle") -> None:
+        super().__init__(name)
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive")
+        self.base = base
+        self.height = height
+
+    def get_area(self) -> float:
+        return 0.5 * self.base * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.base *= factor
+        self.height *= factor
+
+def calculate_scaled_area(shape: GeometricShape, factor: float) -> float:
+    original_area = shape.get_area()
+    shape.scale(factor)
+    return shape.get_area()
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    
-    # Sample polygon: A simple square with vertices at (0,0), (4,0), (4,3), (0,3) -> Area should be 12.0
-    square_vertices = [(0.0, 0.0), (4.0, 0.0), (4.0, 3.0), (0.0, 3.0)]
-    
-    # Sample polygon: A triangle with vertices at (-5,-5), (12,-6), (8,7) -> Area should be approx 94.0
-    triangle_vertices = [(-5.0, -5.0), (12.0, -6.0), (8.0, 7.0)]
+    circle = Circle(radius=5.0)
+    circle_area = circle.get_area()
+    scaled_circle_area = calculate_scaled_area(circle, 2.0)
 
-    
-    # Test case 1: Square area calculation
-    try:
-        square_area = calculate_polygon_area(square_vertices)
-        print(f"Area of the square polygon: {square_area}")
-    except Exception as e:
-        print(f"Error calculating square area: {e}")
+    rectangle = Rectangle(width=4.0, height=6.0)
+    rectangle_area = rectangle.get_area()
+    scaled_rectangle_area = calculate_scaled_area(rectangle, 3.0)
 
-    # Test case 2: Triangle area calculation with floating point vertices
-    try:
-        triangle_area = calculate_polygon_area(triangle_vertices)
-        print(f"Area of the triangle polygon: {triangle_area:.1f}")
-    except Exception as e:
-        print(f"Error calculating triangle area: {e}")
+    triangle = Triangle(base=10.0, height=5.0)
+    triangle_area = triangle.get_area()
+    scaled_triangle_area = calculate_scaled_area(triangle, 0.5)
 
-    # Test case 3: Degenerate input (less than 3 points) - should raise an error
-    try:
-        invalid_vertices = [(0.0, 0.0), (1.0, 1.0)]
-        result = calculate_polygon_area(invalid_vertices)
-        print(f"Unexpected success for degenerate polygon: {result}")
-    except ValueError as e:
-        print(f"Correctly caught error for invalid input: {e}")
+    print(f"Original Circle Area: {circle_area}")
+    print(f"Scaled Circle Area: {scaled_circle_area}")
+    print(f"Original Rectangle Area: {rectangle_area}")
+    print(f"Scaled Rectangle Area: {scaled_rectangle_area}")
+    print(f"Original Triangle Area: {triangle_area}")
+    print(f"Scaled Triangle Area: {scaled_triangle_area}")

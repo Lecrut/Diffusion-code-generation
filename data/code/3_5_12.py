@@ -1,28 +1,21 @@
-import statistics
+def celsius_to_fahrenheit(celsius):
+    return celsius * 9 / 5 + 32
 
-def filter_temperatures(temperatures):
-    """
-    Filters out temperature readings below 0°C from a list of temperatures.
-    
-    Args:
-        temperatures (list[float]): A list of floating-point numbers representing 
-                                   temperature readings in degrees Celsius.
-        
-    Returns:
-        list[float]: A new list containing only the non-negative temperature values.
-    """
-    return [temp for temp in temperatures if temp >= 0]
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5 / 9
+
+def kelvin_to_celsius(kelvin):
+    return kelvin - 273.15
 
 if __name__ == '__main__':
-    # Hard-coded sample data representing daily high/low temperatures over a week
-    raw_readings = [-5, -2, 3, 18, 4.5, -7, 9, 0, 12, 6]
-    
-    filtered_data = filter_temperatures(raw_readings)
-    
-    print("Original readings:", raw_readings)
-    print("Filtered temperatures (>= 0°C):", filtered_data)
-    
-    # Optional: Calculate and display the average of remaining valid temperatures
-    if len(filtered_data) > 0:
-        avg_temp = statistics.mean(filtered_data)
-        print(f"Average temperature of valid readings: {avg_temp:.2f}°C")
+    sample_celsius = 25.0
+    sample_fahrenheit = 77.0
+    sample_kelvin = 300.0
+
+    f_result = celsius_to_fahrenheit(sample_celsius)
+    c_from_f = fahrenheit_to_celsius(sample_fahrenheit)
+    c_from_k = kelvin_to_celsius(sample_kelvin)
+
+    print(f_result)
+    print(c_from_f)
+    print(c_from_k)

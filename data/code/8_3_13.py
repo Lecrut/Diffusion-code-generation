@@ -1,21 +1,17 @@
-import sys
-
-def calculate_rectangle_area(length: str, width: str) -> float:
-    """Calculate the area of a rectangle given length and width as strings."""
-    try:
-        l = float(length)
-        w = float(width)
-        return l * w
-    except ValueError:
-        raise ValueError("Length and width must be numeric values.")
+def calculate_polygon_area(vertices):
+    n = len(vertices)
+    if n < 3:
+        raise ValueError("Polygon must have at least 3 vertices")
+    
+    area = 0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+        
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to satisfy the requirement of running without input.
-    sample_length_str = "10"
-    sample_width_str = "5"
-
-    try:
-        area_value = calculate_rectangle_area(sample_length_str, sample_width_str)
-        print(f"The area of the rectangle is {area_value}")
-    except ValueError as e:
-        print(str(e), file=sys.stderr)
+    poly = [(0, 0), (4, 0), (4, 3), (0, 3)]
+    result = calculate_polygon_area(poly)
+    print(result)

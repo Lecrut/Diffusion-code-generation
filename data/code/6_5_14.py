@@ -1,39 +1,24 @@
-def weight_difference(weights):
-    """
-    Calculates the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of float or int): A non-empty list representing weights.
-        
-    Returns:
-        float or int: The difference between the maximum and minimum values.
-        
-    Raises:
-        ValueError: If the input list is empty.
-    """
-    if not weights:
-        raise ValueError("The weight list cannot be empty.")
+class WeightDifferenceStore:
+    def __init__(self):
+        self.data = {}
 
-    min_weight = max(weights)  # O(n) operations combined, effectively single pass in practice or two passes but constant factors are low and still linear overall for simple comparisons without full sort which would be O(n log n). However to strictly achieve one pass we can do manual tracking.
-    
-    # To guarantee true O(n) with a single pass logic explicitly:
-    min_w = weights[0]
-    max_w = weights[0]
+    def add_pair(self, key, weight_a, weight_b):
+        self.data[key] = {'weight_a': weight_a, 'weight_b': weight_b, 'difference': weight_a - weight_b}
 
-    for w in weights[1:]:
-        if w < min_w:
-            min_w = w
-        elif w > max_w:
-            max_w = w
-            
-    return max_w - min_w
+    def get_difference(self, key):
+        if key not in self.data:
+            return None
+        return self.data[key]['difference']
+
+def main():
+    store = WeightDifferenceStore()
+    store.add_pair('item1', 10, 3)
+    store.add_pair('item2', 20, 5)
+    store.add_pair('item3', 100, 90)
+    print(store.get_difference('item1'))
+    print(store.get_difference('item2'))
+    print(store.get_difference('item3'))
+    print(store.get_difference('missing'))
 
 if __name__ == '__main__':
-    sample_weights = [5.2, 3.8, 9.1, 7.0, 4.5]
-    
-    try:
-        diff = weight_difference(sample_weights)
-        print(f"Lightest: {min(sample_weights)}, Heaviest: {max(sample_weights)}")
-        print(f"Difference: {diff}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    main()

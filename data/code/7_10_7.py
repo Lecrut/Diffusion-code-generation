@@ -1,77 +1,61 @@
-import math
 def convert_duration(value, unit):
+    valid_units = ['seconds', 'minutes', 'hours', 'days']
+    if unit not in valid_units:
+        raise ValueError(f"Invalid unit: {unit}. Must be one of {valid_units}")
+    if not isinstance(value, (int, float)):
+        raise TypeError(f"Value must be a number, got {type(value).__name__}")
+    if value < 0:
+        raise ValueError("Duration value cannot be negative")
+    
+    seconds = 0
     if unit == 'seconds':
         seconds = value
-        minutes = seconds / 60
-        hours = seconds / 3600
-        days = seconds / 86400
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
     elif unit == 'minutes':
-        minutes = value
-        seconds = minutes * 60
-        hours = minutes * 60 / 60
-        days = minutes * 60 / 3600
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
+        seconds = value * 60
     elif unit == 'hours':
-        hours = value
-        seconds = hours * 3600
-        minutes = hours * 60
-        days = hours / 24
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
+        seconds = value * 3600
     elif unit == 'days':
-        days = value
-        seconds = days * 86400
-        minutes = days * 86400 / 60
-        hours = days * 86400 / 3600
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    else:
-        raise ValueError("Invalid unit specified. Must be 'seconds', 'minutes', 'hours', or 'days'.")
+        seconds = value * 86400
+    
+    result = {
+        'seconds': seconds,
+        'minutes': seconds / 60,
+        'hours': seconds / 3600,
+        'days': seconds / 86400
+    }
+    
+    return result
+
+def format_duration_result(result):
+    lines = []
+    for unit, value in result.items():
+        formatted_value = value
+        if value == int(value):
+            formatted_value = int(value)
+        lines.append(f"{unit}: {formatted_value}")
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    sample_value = 7200
-    sample_unit = 'seconds'
+    test_value = 5.5
+    test_unit = 'hours'
+    
     try:
-        result = convert_duration(sample_value, sample_unit)
-        print(f"Input Value: {sample_value} {sample_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {result['seconds']:.2f}")
-        print(f"Minutes: {result['minutes']:.2f}")
-        print(f"Hours: {result['hours']:.2f}")
-        print(f"Days: {result['days']:.2f}")
-        sample_value_2 = 30
-        sample_unit_2 = 'minutes'
-        result_2 = convert_duration(sample_value_2, sample_unit_2)
-        print("\n--- Second Sample ---")
-        print(f"Input Value: {sample_value_2} {sample_unit_2}")
-        print("Conversion Results:")
-        print(f"Seconds: {result_2['seconds']:.2f}")
-        print(f"Minutes: {result_2['minutes']:.2f}")
-        print(f"Hours: {result_2['hours']:.2f}")
-        print(f"Days: {result_2['days']:.2f}")
-        sample_value_3 = 100
-        sample_unit_3 = 'years'
-        print("\n--- Error Handling Sample ---")
-        convert_duration(sample_value_3, sample_unit_3)
-    except ValueError as e:
+        conversion = convert_duration(test_value, test_unit)
+        print(format_duration_result(conversion))
+        
+        print("---")
+        
+        test_value2 = 7200
+        test_unit2 = 'seconds'
+        conversion2 = convert_duration(test_value2, test_unit2)
+        print(format_duration_result(conversion2))
+        
+        print("---")
+        
+        test_value3 = 2
+        test_unit3 = 'days'
+        conversion3 = convert_duration(test_value3, test_unit3)
+        print(format_duration_result(conversion3))
+        
+    except (ValueError, TypeError) as e:
         print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")

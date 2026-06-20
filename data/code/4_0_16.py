@@ -1,39 +1,32 @@
-import math
-
-def convert_distance(value: float, from_unit: str, to_unit: str) -> tuple[float, str]:
-    """
-    Converts a distance value between meters, kilometers, and miles with input validation.
+def convert_distance(value, from_unit, to_unit):
+    if value < 0:
+        raise ValueError("Distance cannot be negative.")
     
-    Args:
-        value (float): The numerical value of the distance.
-        from_unit (str): Source unit ('m', 'km', or 'mi').
-        to_unit (str): Target unit ('m', 'km', or 'mi').
-        
-    Returns:
-        tuple[float, str]: A tuple containing the converted float value and the target unit string.
-        
-    Raises:
-        ValueError: If units are invalid, numeric input is non-numeric, conversion factor calculation overflows (extremely rare).
+    factors = {
+        "meters": 1.0,
+        "kilometers": 1000.0,
+        "miles": 1609.344,
+    }
     
-    Standardized base unit is meters (m). Conversion factors from meters:
-    1 km = 1000 m
-    1 mi ≈ 1609.344 m
+    units = set(factors.keys())
     
-    Note: Input validation ensures no interactive prompts or external dependencies are used.
-    """
-
-    # Define valid units for clarity and error handling
-    VALID_UNITS = {'m': 'meter', 'km': 'kilometer', 'mi': 'mile'}
+    if from_unit not in units:
+        raise ValueError(f"Unknown source unit: {from_unit}")
+    if to_unit not in units:
+        raise ValueError(f"Unknown target unit: {to_unit}")
     
-    def _normalize_unit(unit_str: str) -> str | None:
-        """Normalizes the input unit string to a standard key."""
-        return (unit_str.lower().strip(' ,') or '') if unit_str else ''
-
-    # Validate units against allowed set and normalize strings for user feedback
-    from_key = _normalize_unit(from_unit).lower()
-    to_key = _normalize_unit(to_unit).lower()
+    meters = value * factors[from_unit]
+    result = meters / factors[to_unit]
     
-    valid_from_keys: dict[str, str] | None = VALID_UNITS.get(from_key)
+    return result
 
 if __name__ == '__main__':
-    pass
+    meters = 1000.0
+    kilometers = convert_distance(meters, "meters", "kilometers")
+    print(kilometers)
+    
+    miles = convert_distance(kilometers, "kilometers", "miles")
+    print(miles)
+    
+    back_to_meters = convert_distance(miles, "miles", "meters")
+    print(back_to_meters)

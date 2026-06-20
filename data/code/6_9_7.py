@@ -1,24 +1,39 @@
-import argparse
+class WeightCalculator:
+    MIN_WEIGHT = 0.0
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculate the difference between two weights.")
-    
-    # Define arguments but do not make any required to avoid blocking on missing input in non-interactive contexts if needed, 
-    # though per task constraints we will ensure sample block provides values.
-    weight1 = parser.add_argument('--weight1', type=float)
-    weight2 = parser.add_argument('--weight2', type=float)
+    def __init__(self, weight_one, weight_two):
+        self._weight_one = float(weight_one)
+        self._weight_two = float(weight_two)
 
-    args = parser.parse_args()
+    def _validate_weight(self, weight_value):
+        if weight_value < self.MIN_WEIGHT:
+            raise ValueError("Weight must be non-negative")
+        return weight_value
 
-    # Ensure arguments are provided for calculation safety in this context
-    if args.weight1 is None or args.weight2 is None:
-        raise ValueError("Both --weight1 and --weight2 must be provided.")
+    def get_weight_one(self):
+        return self._weight_one
 
-    difference = args.weight1 - args.weight2
-    
-    print(difference)
+    def get_weight_two(self):
+        return self._weight_two
+
+    def set_weight_one(self, new_weight):
+        self._weight_one = self._validate_weight(new_weight)
+
+    def set_weight_two(self, new_weight):
+        self._weight_two = self._validate_weight(new_weight)
+
+    def calculate_difference(self):
+        val_one = self._weight_one
+        val_two = self._weight_two
+        raw_diff = val_one - val_two
+        if raw_diff < 0:
+            return -raw_diff
+        return raw_diff
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or network access.
-    
-    main()
+    calc = WeightCalculator(85.5, 72.3)
+    diff = calc.calculate_difference()
+    print(diff)
+    calc.set_weight_one(90.0)
+    new_diff = calc.calculate_difference()
+    print(new_diff)

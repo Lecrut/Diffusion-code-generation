@@ -1,35 +1,71 @@
 import unittest
+from datetime import timedelta
+
+def seconds_to_hms(total_seconds):
+    if total_seconds < 0:
+        raise ValueError("Total seconds must be non-negative")
+    hours, remainder = divmod(int(total_seconds), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return hours, minutes, seconds
+
+def hms_to_seconds(hours, minutes, seconds):
+    if hours < 0 or minutes < 0 or seconds < 0:
+        raise ValueError("Time components must be non-negative")
+    return hours * 3600 + minutes * 60 + seconds
+
 class TestTimeConversion(unittest.TestCase):
-    def test_seconds_to_minutes(self):
-        self.assertEqual(self.convert_seconds_to_minutes(0), 0.0)
-        self.assertEqual(self.convert_seconds_to_minutes(60), 1.0)
-        self.assertEqual(self.convert_seconds_to_minutes(3599), 59.98333333333333)
-        self.assertEqual(self.convert_seconds_to_minutes(3600), 60.0)
-    def test_minutes_to_seconds(self):
-        self.assertEqual(self.convert_minutes_to_seconds(0), 0.0)
-        self.assertEqual(self.convert_minutes_to_seconds(60), 60.0)
-        self.assertEqual(self.convert_minutes_to_seconds(120), 120.0)
-        self.assertEqual(self.convert_minutes_to_seconds(1.5), 90.0)
-    def test_hours_to_minutes(self):
-        self.assertEqual(self.convert_hours_to_minutes(0), 0.0)
-        self.assertEqual(self.convert_hours_to_minutes(1), 60.0)
-        self.assertEqual(self.convert_hours_to_minutes(2), 120.0)
-        self.assertEqual(self.convert_hours_to_minutes(24), 1440.0)
-    def test_minutes_to_hours(self):
-        self.assertEqual(self.convert_minutes_to_hours(0), 0.0)
-        self.assertEqual(self.convert_minutes_to_hours(60), 1.0)
-        self.assertEqual(self.convert_minutes_to_hours(120), 2.0)
-        self.assertEqual(self.convert_minutes_to_hours(1440), 24.0)
-    def test_large_time_spans(self):
-        self.assertEqual(self.convert_seconds_to_minutes(86400), 1440.0)
-        self.assertEqual(self.convert_minutes_to_seconds(86400), 5184000.0)
-        self.assertEqual(self.convert_hours_to_minutes(48), 2880.0)
-        self.assertEqual(self.convert_minutes_to_hours(10000), 166.66666666666666)
+    def test_seconds_to_hms_zero(self):
+        self.assertEqual(seconds_to_hms(0), (0, 0, 0))
+
+    def test_seconds_to_hms_one_second(self):
+        self.assertEqual(seconds_to_hms(1), (0, 0, 1))
+
+    def test_seconds_to_hms_one_minute(self):
+        self.assertEqual(seconds_to_hms(60), (0, 1, 0))
+
+    def test_seconds_to_hms_one_hour(self):
+        self.assertEqual(seconds_to_hms(3600), (1, 0, 0))
+
+    def test_seconds_to_hms_mixed_values(self):
+        self.assertEqual(seconds_to_hms(3661), (1, 1, 1))
+
+    def test_seconds_to_hms_large_value(self):
+        self.assertEqual(seconds_to_hms(86400), (24, 0, 0))
+
+    def test_seconds_to_hms_negative_raises(self):
+        with self.assertRaises(ValueError):
+            seconds_to_hms(-1)
+
+    def test_hms_to_seconds_zero(self):
+        self.assertEqual(hms_to_seconds(0, 0, 0), 0)
+
+    def test_hms_to_seconds_one_second(self):
+        self.assertEqual(hms_to_seconds(0, 0, 1), 1)
+
+    def test_hms_to_seconds_one_minute(self):
+        self.assertEqual(hms_to_seconds(0, 1, 0), 60)
+
+    def test_hms_to_seconds_one_hour(self):
+        self.assertEqual(hms_to_seconds(1, 0, 0), 3600)
+
+    def test_hms_to_seconds_mixed_values(self):
+        self.assertEqual(hms_to_seconds(1, 1, 1), 3661)
+
+    def test_hms_to_seconds_large_value(self):
+        self.assertEqual(hms_to_seconds(24, 0, 0), 86400)
+
+    def test_hms_to_seconds_negative_raises(self):
+        with self.assertRaises(ValueError):
+            hms_to_seconds(-1, 0, 0)
+        with self.assertRaises(ValueError):
+            hms_to_seconds(0, -1, 0)
+        with self.assertRaises(ValueError):
+            hms_to_seconds(0, 0, -1)
+
+    def test_round_trip_conversion(self):
+        total = 12345
+        hours, minutes, seconds = seconds_to_hms(total)
+        self.assertEqual(hms_to_seconds(hours, minutes, seconds), total)
+
 if __name__ == '__main__':
-    def convert_seconds_to_minutes(seconds):
-        return seconds / 60.0
-    def convert_minutes_to_seconds(minutes):
-        return minutes * 60.0
-    def convert_hours_to_minutes(hours):
-        return hours * 60.0
-    unittest.main(argv=['first-arg-action', 'excite'], exit=False)
+    unittest.main(argv=[''], exit=False, verbosity=2)

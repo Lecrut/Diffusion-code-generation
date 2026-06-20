@@ -1,34 +1,68 @@
-import numpy as np
+class LengthComparator:
+    def __init__(self, unit="meters"):
+        self.unit = unit.lower()
+        self.conversion_factors = {
+            "meters": 1.0,
+            "m": 1.0,
+            "kilometers": 1000.0,
+            "km": 1000.0,
+            "centimeters": 0.01,
+            "cm": 0.01,
+            "millimeters": 0.001,
+            "mm": 0.001,
+            "miles": 1609.344,
+            "mi": 1609.344,
+            "yards": 0.9144,
+            "yd": 0.9144,
+            "feet": 0.3048,
+            "ft": 0.3048,
+            "inches": 0.0254,
+            "in": 0.0254
+        }
 
-def compare_signs(length_a: np.ndarray, length_b: np.ndarray) -> np.ndarray:
-    """
-    Compare two arrays of length measurements element-wise.
-    
-    Returns an array where each value indicates the sign of (length_a[i] - length_b[i]):
-        1 : positive difference
-         0 : zero difference
-        -1 : negative difference
-    
-    Assumes inputs are numpy arrays or lists convertible to them for performance.
-    """
-    # Convert input lists/tuples to NumPy array if necessary, then ensure float dtype
-    arr_a = np.asarray(length_a, dtype=float)
-    arr_b = np.asarray(length_b, dtype=float)
+    def convert_to_meters(self, value, unit):
+        unit_lower = unit.lower()
+        if unit_lower not in self.conversion_factors:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * self.conversion_factors[unit_lower]
 
-    # Calculate difference and apply sign using numpy's universal function 'sign' for speed
-    return np.sign(arr_a - arr_b)
+    def compare(self, value1, unit1, value2, unit2):
+        meters1 = self.convert_to_meters(value1, unit1)
+        meters2 = self.convert_to_meters(value2, unit2)
+        
+        if meters1 > meters2:
+            return f"{value1} {unit1} is greater than {value2} {unit2}"
+        elif meters1 < meters2:
+            return f"{value1} {unit1} is less than {value2} {unit2}"
+        else:
+            return f"{value1} {unit1} is equal to {value2} {unit2}"
+
+    def compare_detailed(self, value1, unit1, value2, unit2):
+        meters1 = self.convert_to_meters(value1, unit1)
+        meters2 = self.convert_to_meters(value2, unit2)
+        difference = abs(meters1 - meters2)
+        ratio = meters1 / meters2 if meters2 != 0 else float('inf')
+        
+        result = self.compare(value1, unit1, value2, unit2)
+        return {
+            "comparison": result,
+            "value1_in_meters": meters1,
+            "value2_in_meters": meters2,
+            "difference_meters": difference,
+            "ratio": ratio
+        }
 
 if __name__ == '__main__':
-    # Hard-coded sample values running without user input or external dependencies
+    comparator = LengthComparator()
     
-    array_1 = [3.5, 7.2, 4.0, 9.8]
-    array_2 = [3.5, 6.0, 4.2, 9.8]
-
-    result = compare_signs(array_1, array_2)
-
-    print("Input Arrays:")
-    print(f"Array A: {array_1}")
-    print(f"Array B: {array_2}")
+    result1 = comparator.compare(5, "km", 3000, "m")
+    print(result1)
     
-    print("\nSign of Differences (A - B):")
-    print(result)
+    result2 = comparator.compare(100, "cm", 1, "m")
+    print(result2)
+    
+    result3 = comparator.compare(1, "mile", 1, "km")
+    print(result3)
+    
+    detailed_result = comparator.compare_detailed(10, "ft", 3, "m")
+    print(detailed_result)

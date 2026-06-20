@@ -1,39 +1,15 @@
-import sys
-
-def calculate_ratio(measurement1: float, measurement2: float) -> None:
-    """
-    Calculates and prints the ratio of two positive length measurements.
-    
-    Args:
-        measurement1 (float): The first length measurement.
-        measurement2 (float): The second length measurement.
-        
-    Raises:
-        ValueError: If either measurement is not a number or if it is non-positive.
-    """
-    try:
-        # Validate that inputs are positive numbers
-        if not isinstance(measurement1, (int, float)) or measurement1 <= 0:
-            raise ValueError(f"First measurement must be a positive number, got {measurement1}")
-        if not isinstance(measurement2, (int, float)) or measurement2 <= 0:
-            raise ValueError(f"Second measurement must be a positive number, got {measurement2}")
-
-        # Calculate and print the ratio
-        result = measurement1 / measurement2
-        print(result)
-    except Exception as e:
-        if isinstance(e, ValueError):
-            raise
-        else:
-            # Handle unexpected errors gracefully by printing them without crashing
-            sys.stderr.write(f"An error occurred: {e}\n")
+def compare_lengths(length_a, length_b):
+    if length_a > length_b:
+        difference = length_a - length_b
+        return f"Length A is longer than Length B by {difference} units"
+    elif length_b > length_a:
+        difference = length_b - length_a
+        return f"Length B is longer than Length A by {difference} units"
+    else:
+        return "Length A and Length B are equal"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or network access
-    val1 = 10.5
-    val2 = 3
-    
-    try:
-        calculate_ratio(val1, val2)
-    except ValueError as ve:
-        print(f"Validation failed: {ve}", file=sys.stderr)
+    length_a = 10.5
+    length_b = 7.2
+    result = compare_lengths(length_a, length_b)
+    print(result)

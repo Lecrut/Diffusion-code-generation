@@ -1,20 +1,32 @@
-def convert_distance(value, from_unit, to_unit, factor):
-    if from_unit == to_unit:
-        return value
-    if from_unit == "miles" and to_unit == "kilometers":
-        return value * factor
-    elif from_unit == "kilometers" and to_unit == "miles":
-        return value / factor
-    else:
-        raise ValueError("Unsupported unit conversion")
+class DistanceConverter:
+    MILES_TO_KILOMETERS = 1.60934
+    KILOMETERS_TO_MILES = 0.621371
+
+    def __init__(self):
+        self._mile_factor = self.MILES_TO_KILOMETERS
+        self._km_factor = self.KILOMETERS_TO_MILES
+
+    def validate_distance(self, distance):
+        if not isinstance(distance, (int, float)):
+            raise TypeError("Distance must be a numeric value.")
+        if distance < 0:
+            raise ValueError("Distance cannot be negative.")
+
+    def miles_to_kilometers(self, miles):
+        self.validate_distance(miles)
+        return miles * self._mile_factor
+
+    def kilometers_to_miles(self, kilometers):
+        self.validate_distance(kilometers)
+        return kilometers * self._km_factor
+
 if __name__ == '__main__':
-    miles = 100
-    conversion_factor = 1.60934
-    target_unit = "kilometers"
-    try:
-        result = convert_distance(miles, "miles", target_unit, conversion_factor)
-        print(f"Original distance in miles: {miles}")
-        print(f"Conversion factor (miles to km): {conversion_factor}")
-        print(f"Converted distance in kilometers: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    converter = DistanceConverter()
+    sample_miles = 10.0
+    sample_km = 16.0934
+
+    result_km = converter.miles_to_kilometers(sample_miles)
+    result_miles = converter.kilometers_to_miles(sample_km)
+
+    print(result_km)
+    print(result_miles)

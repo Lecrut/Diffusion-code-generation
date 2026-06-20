@@ -1,60 +1,126 @@
-import math
+from datetime import datetime, timedelta
 
-class TimeUnitConverter:
-    """A comprehensive module for converting between standard time units."""
-
-    # Standard conversion factors using average approximations where necessary
-    # Averages used to simplify calculations without specific calendar dates (e.g., leap years)
-    AVG_SECONDS_PER_MINUTE = 60.0
-    AVG_MINUTES_PER_HOUR = 60.0
-    AVG_HOURS_PER_DAY = 24.0
-    AVG_DAYS_PER_MONTH = 30.4167 # Approximate average (365.25 / 12) * month factor adjustment is complex, using standard avg ~30.4 days per year distributed -> actually simplest average of month length: 365.25/12 ≈ 30.4375
-    AVG_MONTHS_PER_YEAR = 12.0
-    
-    # Recalculate precise averages for better fidelity to Gregorian calendar approximations if needed, 
-    # but sticking to the task's implied "average day length" instruction:
-    # Year average days: 365.2425 (Gregorian) or 365.25 (Julian). Let's use 365.25 for simplicity in averages unless specified otherwise.
-    DAYS_PER_YEAR = 365.25
-    
-    SECONDS_PER_DAY = AVG_HOURS_PER_DAY * AVG_MINUTES_PER_HOUR * AVG_SECONDS_PER_MINUTE
+class TimeConverter:
+    SECONDS_PER_MINUTE = 60
+    SECONDS_PER_HOUR = 3600
+    SECONDS_PER_DAY = 86400
+    SECONDS_PER_WEEK = 604800
+    SECONDS_PER_MONTH = 2629746
+    SECONDS_PER_YEAR = 31556952
 
     def __init__(self):
-        pass
+        self.units = {'seconds': 1, 'minutes': self.SECONDS_PER_MINUTE, 'hours': self.SECONDS_PER_HOUR, 'days': self.SECONDS_PER_DAY, 'weeks': self.SECONDS_PER_WEEK, 'months': self.SECONDS_PER_MONTH, 'years': self.SECONDS_PER_YEAR}
 
-    @staticmethod
-    def _validate_unit(unit_type: str) -> None:
-        """Validates if the provided unit type is supported."""
-        valid_units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds']
-        if unit_type.lower() not in valid_units:
-            raise ValueError(f"Unsupported time unit '{unit_type}'. Supported units are {valid_units}")
+    def convert(self, value, from_unit, to_unit):
+        from_unit = from_unit.lower()
+        to_unit = to_unit.lower()
+        if from_unit not in self.units:
+            raise ValueError(f'Unsupported unit: {from_unit}')
+        if to_unit not in self.units:
+            raise ValueError(f'Unsupported unit: {to_unit}')
+        value_in_seconds = value * self.units[from_unit]
+        result = value_in_seconds / self.units[to_unit]
+        return result
 
-    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
-        """
-        Converts a value between supported time units.
-        
-        Args:
-            value (float): The numerical value to convert. Must be non-negative for physical interpretation usually, 
-                           but mathematically handles negatives if requested logically.
-            from_unit (str): Source unit type ('years', 'months', 'days', 'hours', 'minutes', 'seconds').
-            to_unit (str): Target unit type.
+    def convert_to_seconds(self, value, unit):
+        unit = unit.lower()
+        if unit not in self.units:
+            raise ValueError(f'Unsupported unit: {unit}')
+        return value * self.units[unit]
 
-        Returns:
-            float: The converted value.
+    def convert_from_seconds(self, seconds, unit):
+        unit = unit.lower()
+        if unit not in self.units:
+            raise ValueError(f'Unsupported unit: {unit}')
+        return seconds / self.units[unit]
 
-        Raises:
-            ValueError: If input units are invalid or conversion factors are missing.
-        
-        Note on Approximations:
-            - Year/Month/Day relationships use average lengths (e.g., 1 year = 365.25 days, 
-              1 month ≈ 30.44 days). This avoids complexity from variable day counts in real calendars.
-        """
-        
-        # Normalize inputs
-        if value < math.isnan(value) or not isinstance(value, (int, float)):
-            raise ValueError("Value must be a valid number.")
+    def get_all_conversions(self, value, from_unit):
+        from_unit = from_unit.lower()
+        if from_unit not in self.units:
+            raise ValueError(f'Unsupported unit: {from_unit}')
+        result = {}
+        for target_unit in self.units:
+            if target_unit != from_unit:
+                result[target_unit] = self.convert(value, from_unit, target_unit)
+        return result
 
-        self._validate_unit(from_unit)
-        self._validate_unit(to_unit)
+    def parse_duration_string(self, duration_str):
+        total_seconds = 0
+        current_num = ''
+        for char in duration_str:
+            if char.isdigit() or char == '.':
+                current_num += char
+            elif char.lower() in 'ydwms':
+                if current_num:
+                    num = float(current_num)
+                    if char.lower() == 'y':
+                        total_seconds += num * self.SECONDS_PER_YEAR
+                    elif char.lower() == 'd':
+                        total_seconds += num * self.SECONDS_PER_DAY
+                    elif char.lower() == 'w':
+                        total_seconds += num * self.SECONDS_PER_WEEK
+                    elif char.lower() == 'm':
+                        total_seconds += num * self.SECONDS_PER_MONTH
+                    elif char.lower() == 's':
+                        total_seconds += num * self.SECONDS_PER_MINUTE
+                    current_num = ''
+            else:
+                raise ValueError(f'Invalid character in duration: {char}')
+        return total_seconds
 
+    def format_duration(self, seconds):
+        years = int(seconds // self.SECONDS_PER_YEAR)
+        remainder = seconds % self.SECONDS_PER_YEAR
+        months = int(remainder // self.SECONDS_PER_MONTH)
+        remainder = remainder % self.SECONDS_PER_MONTH
+        days = int(remainder // self.SECONDS_PER_DAY)
+        remainder = remainder % self.SECONDS_PER_DAY
+        hours = int(remainder // self.SECONDS_PER_HOUR)
+        remainder = remainder % self.SECONDS_PER_HOUR
+        minutes = int(remainder // self.SECONDS_PER_MINUTE)
+        seconds_left = int(remainder % self.SECONDS_PER_MINUTE)
+        parts = []
+        if years > 0:
+            parts.append(f'{years} years')
+        if months > 0:
+            parts.append(f'{months} months')
+        if days > 0:
+            parts.append(f'{days} days')
+        if hours > 0:
+            parts.append(f'{hours} hours')
+        if minutes > 0:
+            parts.append(f'{minutes} minutes')
+        if seconds_left > 0 or not parts:
+            parts.append(f'{seconds_left} seconds')
+        return ', '.join(parts)
 if __name__ == '__main__':
-    pass
+    converter = TimeConverter()
+    print('=== Basic Conversions ===')
+    print('1 year to days:', converter.convert(1, 'years', 'days'))
+    print('24 hours to days:', converter.convert(24, 'hours', 'days'))
+    print('365 days to years:', converter.convert(365, 'days', 'years'))
+    print('1 hour to minutes:', converter.convert(1, 'hours', 'minutes'))
+    print('90 minutes to hours:', converter.convert(90, 'minutes', 'hours'))
+    print('1 day to seconds:', converter.convert(1, 'days', 'seconds'))
+    print('31536000 seconds to years:', converter.convert(31536000, 'seconds', 'years'))
+    print('\n=== All Conversions from 1 Day ===')
+    all_conv = converter.get_all_conversions(1, 'days')
+    for unit, val in all_conv.items():
+        print(f'  1 day = {val:.4f} {unit}')
+    print('\n=== Parse Duration String ===')
+    parsed_secs = converter.parse_duration_string('1d12h30m15s')
+    print("Parsed '1d12h30m15s' to seconds:", parsed_secs)
+    print('Back to hours:', converter.convert(parsed_secs, 'seconds', 'hours'))
+    print('\n=== Format Duration ===')
+    total_seconds = 366.2425 * 24 * 3600
+    print(f'{total_seconds} seconds formatted:', converter.format_duration(total_seconds))
+    half_year_seconds = converter.convert(0.5, 'years', 'seconds')
+    print(f'Half year in seconds:', half_year_seconds)
+    print('Half year formatted:', converter.format_duration(half_year_seconds))
+    print('\n=== Month Conversions ===')
+    print('1 month to days:', converter.convert(1, 'months', 'days'))
+    print('30 days to months:', converter.convert(30, 'days', 'months'))
+    print('12 months to years:', converter.convert(12, 'months', 'years'))
+    print('\n=== Week Conversions ===')
+    print('1 week to days:', converter.convert(1, 'weeks', 'days'))
+    print('52 weeks to years:', converter.convert(52, 'weeks', 'years'))

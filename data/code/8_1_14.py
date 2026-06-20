@@ -1,25 +1,35 @@
-def calculate_area(length: float | int, width: float | int) -> float:
-    """Calculate the area of a rectangle given its length and width.
+import math
 
-    Args:
-        length (float or int): The length of the rectangle.
-        width (float or int): The width of the rectangle.
+class AreaCalculator:
+    def __init__(self, figure):
+        self.figure = figure
 
-    Returns:
-        float: The calculated area as a floating-point number.
+    def compute(self):
+        return self.figure.get_area()
 
-    Examples:
-        >>> calculate_area(5, 3)
-        15.0
-        >>> calculate_area("6m", "4m")  # Type hints guide IDE behavior; actual calculation expects numeric input in production to avoid runtime errors for strings unless converted first (omitted per task constraints). In this strict implementation with type hints enforced by static tools, inputs are expected as numbers.
-    """
-    return float(length) * float(width)
+class Shape:
+    def get_area(self):
+        return 0
+
+class Rectangle(Shape):
+    def __init__(self, dim_a, dim_b):
+        self.dim_a = dim_a
+        self.dim_b = dim_b
+
+    def get_area(self):
+        return self.dim_a * self.dim_b
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def get_area(self):
+        return math.pi * (self.radius ** 2)
 
 if __name__ == '__main__':
-    # Sample execution block running without external input or files
-    sample_length = 10
-    sample_width = 5
-    
-    area_result = calculate_area(sample_length, sample_width)
-
-    print(f"The area is: {area_result}")
+    rect = Rectangle(5, 8)
+    circ = Circle(3)
+    rect_calc = AreaCalculator(rect)
+    circ_calc = AreaCalculator(circ)
+    print(rect_calc.compute())
+    print(circ_calc.compute())

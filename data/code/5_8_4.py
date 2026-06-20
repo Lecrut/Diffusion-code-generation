@@ -1,14 +1,15 @@
-if __name__ == '__main__':
-    length1 = 15.5
-    length2 = 22.0
-    num1 = float(length1)
-    num2 = float(length2)
-    absolute_difference = abs(num1 - num2)
-    if num1 != 0 and num2 != 0:
-        percentage_difference = (absolute_difference / ((num1 + num2) / 2)) * 100
+def compare_lengths(length1, length2):
+    diff = abs(length1 - length2)
+    if length1 > length2:
+        description = "The first length is greater"
+    elif length2 > length1:
+        description = "The second length is greater"
     else:
-        percentage_difference = 0.0
-    print("Length 1:", num1)
-    print("Length 2:", num2)
-    print("Absolute Difference:", absolute_difference)
-    print("Percentage Difference:", percentage_difference)
+        description = "The lengths are equal"
+    return diff, description
+
+if __name__ == '__main__':
+    val1 = 10.5
+    val2 = 7.2
+    result = compare_lengths(val1, val2)
+    print(result)

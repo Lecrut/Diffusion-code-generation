@@ -1,45 +1,47 @@
-import numpy as np
+class LengthComparator:
+    def __init__(self, value1: float, unit1: str, value2: float, unit2: str):
+        self.value1 = value1
+        self.unit1 = unit1.lower()
+        self.value2 = value2
+        self.unit2 = unit2.lower()
+        self.conversion_factors = {
+            'meter': 1.0,
+            'm': 1.0,
+            'centimeter': 0.01,
+            'cm': 0.01,
+            'kilometer': 1000.0,
+            'km': 1000.0,
+            'inch': 0.0254,
+            'in': 0.0254,
+            'foot': 0.3048,
+            'ft': 0.3048,
+            'yard': 0.9144,
+            'yd': 0.9144,
+            'mile': 1609.34,
+            'mi': 1609.34
+        }
 
-def compare_signs(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    """
-    Compare two NumPy arrays element-wise and return an array of signs 
-    representing a - b (positive if a > b, negative if a < b, zero otherwise).
+    def _to_meters(self, value: float, unit: str) -> float:
+        factor = self.conversion_factors.get(unit)
+        if factor is None:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * factor
 
-    Parameters:
-        a (np.ndarray): First input array.
-        b (np.ndarray): Second input array.
-    
-    Returns:
-        np.ndarray: An integer array where each element is 1, -1, or 0 
-                    based on the sign of the difference between corresponding 
-                    elements in a and b.
+    def compare(self) -> str:
+        meters1 = self._to_meters(self.value1, self.unit1)
+        meters2 = self._to_meters(self.value2, self.unit2)
 
-    Performance Note:
-        This function uses vectorized NumPy operations to ensure high performance 
-        for large arrays without explicit Python loops.
-    """
-    # Ensure inputs are numpy arrays
-    a = np.asarray(a)
-    b = np.asarray(b)
-    
-    if a.shape != b.shape:
-        raise ValueError(f"Arrays must have the same shape, got {a.shape} and {b.shape}")
-
-    diff = a - b
-    
-    sign_result = np.sign(diff.astype(float))
-    
-    # Convert floating point signs to integers (-1.0 -> -1, etc.)
-    return sign_result.astype(int)
+        if meters1 > meters2:
+            return f"{self.value1} {self.unit1} is greater than {self.value2} {self.unit2}"
+        elif meters2 > meters1:
+            return f"{self.value2} {self.unit2} is greater than {self.value1} {self.unit1}"
+        else:
+            return f"{self.value1} {self.unit1} is equal to {self.value2} {self.unit2}"
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    arr_a = np.array([3.5, 7.2, -4.8, 0.0, 10])
-    arr_b = np.array([3.0, 6.9, -5.0, 1.5, 10.1])
-
-    result = compare_signs(arr_a, arr_b)
-    
-    # Print results for verification
-    print("Array A:", arr_a.tolist())
-    print("Array B:", arr_b.tolist())
-    print("Sign of (A - B):", result.tolist())
+    c1 = LengthComparator(100, 'cm', 1, 'm')
+    print(c1.compare())
+    c2 = LengthComparator(5, 'ft', 2, 'm')
+    print(c2.compare())
+    c3 = LengthComparator(1, 'km', 1000, 'm')
+    print(c3.compare())

@@ -1,25 +1,16 @@
-import sys
-
-def parse_weight(value):
-    """Convert a string to float with error handling."""
-    try:
-        return float(value)
-    except ValueError:
-        raise ValueError(f"Invalid weight value '{value}'. Expected numeric input.") from None
+def calculate_weight_difference(weights):
+    if not weights:
+        return 0
+    min_weight = weights[0]
+    max_weight = weights[0]
+    for weight in weights[1:]:
+        if weight < min_weight:
+            min_weight = weight
+        elif weight > max_weight:
+            max_weight = weight
+    return max_weight - min_weight
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user interaction, args, or files).
-    weights = [25.5, 30.1]
-
-    if len(weights) != 2:
-        raise ValueError("Exactly two weight values are required.")
-
-    try:
-        w1 = parse_weight(str(weights[0]))
-        w2 = parse_weight(str(weights[1]))
-    except (ValueError, IndexError) as e:
-        print(f"Error processing weights: {e}", file=sys.stderr)
-        sys.exit(1)
-
-    difference = abs(w1 - w2)
-    print(difference)
+    sample_weights = [10, 25, 3, 8, 45, 2]
+    result = calculate_weight_difference(sample_weights)
+    print(result)

@@ -1,37 +1,31 @@
-import sys
 def convert_distance(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    if from_unit == 'm':
-        if to_unit == 'km':
-            return value / 1000.0
-        elif to_unit == 'mi':
-            return value / 1609.34
-    elif from_unit == 'km':
-        if to_unit == 'm':
-            return value * 1000.0
-        elif to_unit == 'mi':
-            return value / 1.60934
-    elif from_unit == 'mi':
-        if to_unit == 'km':
-            return value * 1.60934
-        elif to_unit == 'm':
-            return value * 1609.34
-    raise ValueError("Invalid unit specified. Must be 'm', 'km', or 'mi'.")
+    valid_units = ['m', 'km', 'mi', 'miles', 'kilometers', 'meters']
+    normalized_from = from_unit.lower().replace(' ', '_')
+    normalized_to = to_unit.lower().replace(' ', '_')
+    
+    if normalized_from not in valid_units and normalized_from not in ['meters', 'kilometers', 'miles']:
+        raise ValueError(f"Invalid source unit: {from_unit}")
+    if normalized_to not in valid_units and normalized_to not in ['meters', 'kilometers', 'miles']:
+        raise ValueError(f"Invalid target unit: {to_unit}")
+    if not isinstance(value, (int, float)) or value < 0:
+        raise ValueError("Value must be a non-negative number")
+    
+    if normalized_from in ['m', 'meters']:
+        base_meters = value
+    elif normalized_from in ['km', 'kilometers']:
+        base_meters = value * 1000
+    elif normalized_from in ['mi', 'miles']:
+        base_meters = value * 1609.34
+    
+    if normalized_to in ['m', 'meters']:
+        return base_meters
+    elif normalized_to in ['km', 'kilometers']:
+        return base_meters / 1000
+    elif normalized_to in ['mi', 'miles']:
+        return base_meters / 1609.34
+
 if __name__ == '__main__':
-    distance_m = 5000.0
-    from_unit = 'm'
-    to_unit = 'km'
-    distance_mi = 10.0
-    from_unit = 'mi'
-    to_unit = 'm'
-    distance_km = 100.0
-    from_unit = 'km'
-    to_unit = 'mi'
-    print(f"{distance_m} {from_unit} to {to_unit}: {convert_distance(distance_m, from_unit, to_unit):.4f}")
-    print(f"{distance_mi} {from_unit} to {to_unit}: {convert_distance(distance_mi, from_unit, to_unit):.4f}")
-    print(f"{distance_km} {from_unit} to {to_unit}: {convert_distance(distance_km, from_unit, to_unit):.4f}")
-    try:
-        convert_distance(100, 'm', 'lightyear')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    print(convert_distance(100, 'm', 'km'))
+    print(convert_distance(1, 'km', 'mi'))
+    print(convert_distance(5, 'miles', 'meters'))
+    print(convert_distance(0, 'm', 'mi'))

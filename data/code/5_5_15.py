@@ -1,38 +1,23 @@
-import math
-
-def compare_length_lists(list1: list[float], list2: list[float]) -> dict[str, float]:
-    """
-    Compares two lists of length measurements to determine the maximum and minimum 
-    lengths present in both lists combined, then calculates the overall range difference.
-    
-    Args:
-        list1 (list[float]): First list of length measurements.
-        list2 (list[float]): Second list of length measurements.
-        
-    Returns:
-        dict[str, float]: A dictionary containing 'max_length', 'min_length', and 'range_difference'.
-    """
-    if not list1 or not list2:
-        raise ValueError("Both lists must contain at least one element.")
-
-    combined = list1 + list2
-    
-    max_len = max(combined)
-    min_len = min(combined)
-    
-    range_diff = abs(max_len - min_len)
-    
-    return {
-        "max_length": float(max_len),
-        "min_length": float(min_len),
-        "range_difference": float(range_diff)
-    }
+def compare_length_generator(seq1, seq2):
+    len1 = len(seq1)
+    len2 = len(seq2)
+    if len1 < len2:
+        yield 'seq1 is shorter than seq2'
+    elif len1 > len2:
+        yield 'seq1 is longer than seq2'
+    else:
+        yield 'seq1 and seq2 have equal length'
 
 if __name__ == '__main__':
-    sample_list1 = [5.2, 7.8, 3.4]
-    sample_list2 = [6.0, 9.1, 4.5]
+    sample_seq1 = list(range(10))
+    sample_seq2 = tuple(range(10, 20))
+    sample_seq3 = list(range(100))
     
-    result = compare_length_lists(sample_list1, sample_list2)
-    print(f"Max Length: {result['max_length']}")
-    print(f"Min Length: {result['min_length']}")
-    print(f"Range Difference: {result['range_difference']}")
+    result_gen1 = compare_length_generator(sample_seq1, sample_seq2)
+    print(next(result_gen1))
+    
+    result_gen2 = compare_length_generator(sample_seq1, sample_seq3)
+    print(next(result_gen2))
+    
+    result_gen3 = compare_length_generator(sample_seq1, sample_seq1)
+    print(next(result_gen3))

@@ -1,142 +1,128 @@
-"""
-Distance Unit Converter Module
-
-This module provides a system to convert distances between supported units.
-It handles unit parsing, conversion logic with error checking, and output formatting.
-
-Supported Units: meters (m), kilometers (km), centimeters (cm), millimeters (mm).
-Conversion Base: All values are normalized to meters for internal calculation.
-
-Error Handling Priorities:
-1. Invalid numeric input detection.
-2. Unsupported unit detection.
-3. Zero or negative distance validation (optional, but good practice; here we allow non-negative only as physical distances usually aren't negative in this context).
-"""
+import unittest
 
 class DistanceConverter:
-    """A class to handle distance conversions between metric units."""
-
-    # Conversion factors relative to meters
-    FACTORS = {
-        "m": 1.0,
-        "km": 1_000.0,
-        "cm": 0.01,
-        "mm": 0.001,
-    }
-
     def __init__(self):
-        """Initialize the converter with supported units."""
-        self.supported_units = list(self.FACTORS.keys())
+        self.conversions = {
+            'm_to_ft': 3.28084,
+            'm_to_in': 39.3701,
+            'm_to_km': 0.001,
+            'ft_to_m': 0.3048,
+            'ft_to_in': 12.0,
+            'ft_to_km': 0.0003048,
+            'in_to_m': 0.0254,
+            'in_to_ft': 1.0 / 12.0,
+            'in_to_km': 0.0000254,
+            'km_to_m': 1000.0,
+            'km_to_ft': 3280.84,
+            'km_to_in': 39370.1,
+        }
 
-    def convert_distance(
-        self, value: float, source_unit: str, target_unit: str
-    ) -> tuple[float | None, str]:
-        """
-        Convert a distance from one unit to another.
-
-        Args:
-            value (float): The numeric distance value. Must be non-negative.
-            source_unit (str): The starting unit of measurement.
-            target_unit (str): The desired ending unit of measurement.
-
-        Returns:
-            tuple[float | None, str]: A tuple containing the converted float or None if error occurred, 
-                                     and a descriptive message string.
+    def convert(self, value, from_unit, to_unit):
+        if value < 0:
+            raise ValueError("Distance cannot be negative")
         
-        Raises/Returns Errors For:
-            - Non-numeric value input handled via type check before call (assumed valid here).
-            - Negative values for physical distance.
-            - Unsupported source_unit or target_unit strings.
-        """
+        if from_unit == to_unit:
+            return value
 
-        # Validate numeric nature if passed as float, though Python types are dynamic. 
-        # Assuming caller ensures it's a number based on task constraints about no input().
-        
-        message = ""
-        converted_value = None
-
-        try:
-            # Check for negative distance (physical impossibility in this context)
-            if value < 0:
-                return None, f"Error: Distance cannot be negative. Received {value}."
-
-            source_lower = source_unit.lower()
-            target_lower = target_unit.lower()
-
-            # Validate supported units
-            if source_lower not in self.supported_units or target_lower not in self.supported_units:
-                missing_msg = ""
-                if source_lower not in self.supported_units:
-                    missing_msg += f"Unsupported source unit '{source_unit}'. "
-                if target_lower not in self.supported_units and (not message): # Avoid double msg logic, just append or replace. 
-                    # Actually simpler to check both at once for clarity
-                    pass
-                
-                valid_list = ", ".join(self.supported_units)
-                return None, f"Error: Invalid unit(s). Supported units are {valid_list}. " + \
-                             (f"'{source_unit}' is invalid." if source_lower not in self.supported_units else "")
-
-            # Perform conversion logic
-            # 1. Convert to meters
-            value_in_meters = value * self.FACTORS[source_lower]
-            
-            # 2. Convert from meters to target unit
-            converted_value = value_in_meters / self.FACTORS[target_lower]
-
-        except Exception as e:
-            return None, f"Error during conversion calculation: {str(e)}."
-
-        if message == "":
-            return float(round(converted_value, 4)), "" # Round to avoid floating point noise (e.g. 0.123456789)
-        
+        if from_unit == 'm' and to_unit == 'ft':
+            return value * self.conversions['m_to_ft']
+        elif from_unit == 'm' and to_unit == 'in':
+            return value * self.conversions['m_to_in']
+        elif from_unit == 'm' and to_unit == 'km':
+            return value * self.conversions['m_to_km']
+        elif from_unit == 'ft' and to_unit == 'm':
+            return value * self.conversions['ft_to_m']
+        elif from_unit == 'ft' and to_unit == 'in':
+            return value * self.conversions['ft_to_in']
+        elif from_unit == 'ft' and to_unit == 'km':
+            return value * self.conversions['ft_to_km']
+        elif from_unit == 'in' and to_unit == 'm':
+            return value * self.conversions['in_to_m']
+        elif from_unit == 'in' and to_unit == 'ft':
+            return value * self.conversions['in_to_ft']
+        elif from_unit == 'in' and to_unit == 'km':
+            return value * self.conversions['in_to_km']
+        elif from_unit == 'km' and to_unit == 'm':
+            return value * self.conversions['km_to_m']
+        elif from_unit == 'km' and to_unit == 'ft':
+            return value * self.conversions['km_to_ft']
+        elif from_unit == 'km' and to_unit == 'in':
+            return value * self.conversions['km_to_in']
         else:
-            return None, f"Error: {message}"
+            raise ValueError(f"Unsupported conversion from {from_unit} to {to_unit}")
 
-def main():
-    """
-    Main execution block with hard-coded sample values.
-    Demonstrates the converter's functionality without user input or external dependencies.
-    """
+class TestDistanceConverter(unittest.TestCase):
 
-    # Initialize the system
-    converter = DistanceConverter()
+    def test_meters_to_feet(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'm', 'ft'), 3.28084)
 
-    print("Distance Unit Converter")
-    print("-" * 30)
+    def test_meters_to_inches(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'm', 'in'), 39.3701)
 
-    # Sample Test Case 1: Kilometers to Meters (Standard conversion)
-    result, msg = converter.convert_distance(5.2, "km", "m")
-    if result is not None and msg == "":
-        print(f"[OK] Converted {result} meters from 5.2 km.")
-    else:
-        print(msg)
+    def test_meters_to_kilometers(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'm', 'km'), 0.001)
 
-    # Sample Test Case 2: Meters to Centimeters (Decimal expansion check)
-    result, msg = converter.convert_distance(100, "m", "cm")
-    if result is not None and msg == "":
-        print(f"[OK] Converted {result} centimeters from 100 m.")
+    def test_feet_to_meters(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'ft', 'm'), 0.3048)
 
-    # Sample Test Case 3: Invalid Unit Handling (Source)
-    result, msg = converter.convert_distance(5.2, "miles", "km")
-    if result is None and "Error" in msg:
-        print(f"[ERROR] {msg}")
+    def test_feet_to_inches(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'ft', 'in'), 12.0)
 
-    # Sample Test Case 4: Negative Value Handling
-    result, msg = converter.convert_distance(-10, "cm", "mm")
-    if result is None and "negative" in msg.lower():
-        print(f"[ERROR] {msg}")
+    def test_feet_to_kilometers(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'ft', 'km'), 0.0003048)
 
-    # Sample Test Case 5: Millimeters to Kilometers (Very small number)
-    result, msg = converter.convert_distance(1_000_000, "mm", "km")
-    if result is not None and msg == "":
-        print(f"[OK] Converted {result} kilometers from 1,000,000 mm.")
+    def test_inches_to_meters(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'in', 'm'), 0.0254)
 
-    # Sample Test Case 6: Same Unit Conversion (Identity check)
-    result, msg = converter.convert_distance(2.5, "km", "km")
-    if result is not None and msg == "" and abs(result - 2.5 * 1_000 / 1_000) < 0.0001: # Allow tiny float diff
-        print(f"[OK] Converted {result} kilometers from 2.5 km.")
+    def test_inches_to_feet(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'in', 'ft'), 1.0 / 12.0)
 
-    print("-" * 30)
+    def test_inches_to_kilometers(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'in', 'km'), 0.0000254)
+
+    def test_kilometers_to_meters(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'km', 'm'), 1000.0)
+
+    def test_kilometers_to_feet(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'km', 'ft'), 3280.84)
+
+    def test_kilometers_to_inches(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(1, 'km', 'in'), 39370.1)
+
+    def test_same_unit(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(5, 'm', 'm'), 5.0)
+        self.assertAlmostEqual(converter.convert(5, 'ft', 'ft'), 5.0)
+
+    def test_zero_distance(self):
+        converter = DistanceConverter()
+        self.assertAlmostEqual(converter.convert(0, 'm', 'ft'), 0.0)
+        self.assertAlmostEqual(converter.convert(0, 'km', 'in'), 0.0)
+
+    def test_negative_distance(self):
+        converter = DistanceConverter()
+        with self.assertRaises(ValueError):
+            converter.convert(-1, 'm', 'ft')
+
+    def test_unsupported_conversion(self):
+        converter = DistanceConverter()
+        with self.assertRaises(ValueError):
+            converter.convert(1, 'm', 'yd')
 
 if __name__ == '__main__':
-    main()
+    converter = DistanceConverter()
+    print(converter.convert(10, 'm', 'km'))
+    print(converter.convert(1, 'km', 'ft'))
+    unittest.main()

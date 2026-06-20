@@ -1,9 +1,13 @@
-class GeometryCalculator:
-    def calculate_area_of_rectangle(self, length, width):
-        return length * width
+import math
+
+def scale_areas(shapes, factor=1.0):
+    return [{"area": math.floor((s["width"] * s["height"]) * (factor ** 2))} for s in shapes]
+
 if __name__ == '__main__':
-    calculator = GeometryCalculator()
-    length_val = 10
-    width_val = 5
-    area = calculator.calculate_area_of_rectangle(length_val, width_val)
-    print(area)
+    sample_shapes = [
+        {"width": 10, "height": 20},
+        {"width": 5, "height": 15},
+        {"width": 8, "height": 8},
+    ]
+    result = scale_areas(sample_shapes, factor=2.0)
+    print(result)

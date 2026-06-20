@@ -1,84 +1,45 @@
-import argparse
-from pathlib import Path
+class TemperatureSensor:
+    def __init__(self, sensor_id, temperature_celsius):
+        self.sensor_id = sensor_id
+        self.temperature_celsius = temperature_celsius
 
-def celsius_to_fahrenheit(celsius: float) -> float:
-    """Convert a temperature value from Celsius to Fahrenheit."""
-    return (celsius * 9 / 5) + 32
+    def to_kelvin(self):
+        return self.temperature_celsius + 273.15
 
-def parse_file_content(file_path: str, line_count_limit: int = -1) -> list[str]:
-    """Read lines from the specified file path and convert temperature values.
+    def get_data(self):
+        return {
+            "sensor_id": self.sensor_id,
+            "celsius": self.temperature_celsius,
+            "kelvin": self.to_kelvin()
+        }
 
-    Args:
-        file_path: The absolute or relative path to a text file containing temperatures.
-        line_count_limit: Optional limit on how many lines to read (-1 means no limit).
+def format_temperature_table(sensors):
+    table_data = []
+    for sensor in sensors:
+        data = sensor.get_data()
+        table_data.append(data)
 
-    Returns:
-        A list of strings representing the converted content, or None if conversion failed.
-    """
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            total_lines = 0
-            result_content = []
-            
-            while True:
-                line = file.readline()
-                
-                # Stop reading when an empty string is returned (end of file) or limit reached.
-                if not line and line_count_limit > -1 and total_lines >= line_count_limit:
-                    break
-                
-                content = line.rstrip('\n')
+    header = f"{'Sensor ID':<12} {'Celsius (°C)':<15} {'Kelvin (K)':<15}"
+    separator = "-" * len(header)
+    rows = [header, separator]
 
-                # Attempt to parse the temperature value from each line using regex pattern matching.
-                import re
-                match = re.search(r'(\d+\.?\d*)\s*C.*', content) or re.search(r'.*\s*(\d+\.?\d+)\s*°[Cc]', content, flags=re.IGNORECASE)
+    for entry in table_data:
+        row = f"{entry['sensor_id']:<12} {entry['celsius']:<15.2f} {entry['kelvin']:<15.2f}"
+        rows.append(row)
 
-                if match:
-                    celsius_value = float(match.group(1))
-                    fahrenheit_value = round(celsius_to_fahrenheit(celsius_value), 2)
-                    
-                    # Replace the original temperature value with its Fahrenheit equivalent.
-                    new_content = content.replace(f"{celsius_value}°C", 
-                                             f'{fahrenheit_value}°F', flags=re.IGNORECASE).replace(
-                                                 f" {celsius_value}* C", " ")
-                else:
-                    pass
+    return "\n".join(rows)
 
-                result_content.append(new_content)
-                
-            return '\n'.join(result_content) if result_content else None
-            
-    except FileNotFoundError:
-        print(f"The file '{file_path}' does not exist.")
-        sys.exit(1)
-    except IOError as e:
-        print("An error occurred while reading the file:", e)
-        sys.exit(2)
+def main():
+    sample_sensors = [
+        TemperatureSensor("TH-001", 22.5),
+        TemperatureSensor("TH-002", -5.0),
+        TemperatureSensor("TH-003", 37.0),
+        TemperatureSensor("TH-004", 100.0),
+        TemperatureSensor("TH-005", 0.0)
+    ]
+
+    table = format_temperature_table(sample_sensors)
+    print(table)
 
 if __name__ == '__main__':
-    
-    # Sample data to simulate a temperature conversion process.
-    sample_data = "The water is at 50°C.\nThe boiling point of saltwater is around 108°F."
-
-    print("Sample Data (Celsius -> Fahrenheit Conversion):")
-    print("-" * 40)
-    
-    # Hardcoded values to simulate file path and content.
-    sample_file_path = "/tmp/sample_temps.txt"
-    
-    with open(sample_file_path, 'w') as f:
-        f.write("The room temperature is 25°C.\n")
-        f.write("Ice melts at 0°C.\n")
-        
-    try:
-        result_content = parse_file_content("/tmp/sample_temps.txt", line_count_limit=-1)
-
-        if not result_content:
-            print("No content found.")
-            
-        else:
-            # Display the converted results.
-            print(result_content.splitlines())
-    
-    except FileNotFoundError:
-        print(f"Sample file path does not exist or is inaccessible.")
+    main()

@@ -1,37 +1,48 @@
 import math
 
-def calculate_circle_area(radius: float) -> float:
-    """
-    Calculate the area of a circle given its radius using math.pi.
-    
-    Args:
-        radius (float): The radius of the circle, must be non-negative.
-        
-    Returns:
-        float: The calculated area of the circle.
-        
-    Raises:
-        ValueError: If the radius is negative.
-    """
-    if radius < 0:
-        raise ValueError("Radius cannot be negative.")
-    
-    return math.pi * (radius ** 2)
+def calculate_area(shape_params):
+    shape_type = shape_params.get('type')
+    if shape_type == 'circle':
+        radius = shape_params['radius']
+        return math.pi * radius ** 2
+    elif shape_type == 'rectangle':
+        width = shape_params['width']
+        height = shape_params['height']
+        return width * height
+    elif shape_type == 'triangle':
+        base = shape_params['base']
+        height = shape_params['height']
+        return 0.5 * base * height
+    elif shape_type == 'square':
+        side = shape_params['side']
+        return side ** 2
+    elif shape_type == 'trapezoid':
+        a = shape_params['a']
+        b = shape_params['b']
+        height = shape_params['height']
+        return 0.5 * (a + b) * height
+    elif shape_type == 'ellipse':
+        a = shape_params['a']
+        b = shape_params['b']
+        return math.pi * a * b
+    else:
+        raise ValueError(f"Unknown shape type: {shape_type}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_radius_1 = 5.0
-    test_radius_2 = -3.0
+    circle_area = calculate_area({'type': 'circle', 'radius': 5})
+    print(circle_area)
     
-    try:
-        area_1 = calculate_circle_area(test_radius_1)
-        print(f"Area of circle with radius {test_radius_1}: {area_1}")
-        
-        # Demonstrate error handling for negative radius
-        try:
-            _ = calculate_circle_area(test_radius_2)
-        except ValueError as e:
-            print(f"Error calculating area for radius {test_radius_2}: {e}")
-            
-    except Exception as ex:
-        print(f"Unexpected error occurred: {ex}")
+    rectangle_area = calculate_area({'type': 'rectangle', 'width': 4, 'height': 6})
+    print(rectangle_area)
+    
+    triangle_area = calculate_area({'type': 'triangle', 'base': 10, 'height': 5})
+    print(triangle_area)
+    
+    square_area = calculate_area({'type': 'square', 'side': 7})
+    print(square_area)
+    
+    trapezoid_area = calculate_area({'type': 'trapezoid', 'a': 8, 'b': 12, 'height': 5})
+    print(trapezoid_area)
+    
+    ellipse_area = calculate_area({'type': 'ellipse', 'a': 5, 'b': 3})
+    print(ellipse_area)

@@ -1,51 +1,49 @@
-import math
-
 def convert_time(value, from_unit, to_unit):
-    """
-    Converts a given time value from one unit to another using seconds as the base.
-    
-    Supported units: 'days', 'hours', 'minutes', 'seconds'.
-    
-    Args:
-        value (float or int): The time value to convert.
-        from_unit (str): Source unit of time ('days', 'hours', 'minutes', 'seconds').
-        to_unit (str): Target unit of time ('days', 'hours', 'minutes', 'seconds').
-        
-    Returns:
-        float: Converted time value in the target unit.
-        
-    Raises:
-        ValueError: If units are not supported or input is invalid.
-    """
-    
-    # Define conversion factors to seconds
-    SECONDS_PER_UNIT = {
-        'days': 86400,      # 24 * 60 * 60
-        'hours': 3600,      # 60 * 60
-        'minutes': 60,       # seconds in a minute
-        'seconds': 1         # base unit
+    units = {
+        'nanosecond': 1e-9,
+        'ns': 1e-9,
+        'microsecond': 1e-6,
+        'us': 1e-6,
+        'millisecond': 1e-3,
+        'ms': 1e-3,
+        'second': 1,
+        's': 1,
+        'minute': 60,
+        'min': 60,
+        'hour': 3600,
+        'h': 3600,
+        'day': 86400,
+        'd': 86400,
+        'week': 604800,
+        'wk': 604800,
+        'month': 2629800,
+        'mo': 2629800,
+        'year': 31557600,
+        'yr': 31557600
     }
-
-    if from_unit not in SECONDS_PER_UNIT or to_unit not in SECONDS_PER_UNIT:
-        raise ValueError(f"Unsupported units. Supported: {list(SECONDS_PER_UNIT.keys())}")
-    
-    try:
-        value = float(value)
-    except (TypeError, ValueError):
-        raise TypeError("Input 'value' must be a number.")
-
-    # Convert to seconds first
-    seconds_in_source = SECONDS_PER_UNIT[from_unit] * value
-    
-    # Then convert from seconds to target unit
-    seconds_per_target = SECONDS_PER_UNIT[to_unit]
-    
-    if seconds_per_target == 0:
-        raise ValueError("Cannot divide by zero.")
-
-    result_value = seconds_in_source / seconds_per_target
-    
-    return result_value
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+    if from_unit not in units:
+        raise ValueError(f"Invalid from_unit: {from_unit}")
+    if to_unit not in units:
+        raise ValueError(f"Invalid to_unit: {to_unit}")
+    seconds = value * units[from_unit]
+    result = seconds / units[to_unit]
+    return result
 
 if __name__ == '__main__':
-    pass
+    val1 = 60
+    res1 = convert_time(val1, 'minute', 'second')
+    print(res1)
+    val2 = 1000
+    res2 = convert_time(val2, 'millisecond', 'second')
+    print(res2)
+    val3 = 1
+    res3 = convert_time(val3, 'hour', 'minute')
+    print(res3)
+    val4 = 1
+    res4 = convert_time(val4, 'day', 'hour')
+    print(res4)
+    val5 = 1
+    res5 = convert_time(val5, 'year', 'day')
+    print(res5)

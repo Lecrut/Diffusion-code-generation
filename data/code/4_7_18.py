@@ -1,30 +1,34 @@
-import unittest
-
-class DistanceConverter:
-    """A class to convert distances between various units."""
-
-    def __init__(self, value_in_meters):
-        self.value = value_in_meters  # Internal storage in meters
-
-    @staticmethod
-    def _convert_to_base(value, from_unit) -> float:
-        """Convert a distance from any unit to base unit (meters)."""
-        conversions = {
-            "km": lambda v: v * 1000.0,
-            "m": lambda v: v,
-            "cm": lambda v: v / 100.0,
-            "mm": lambda v: v / 1000.0,
-            "ft": lambda v: v * 0.3048,
-            "in": lambda v: v * 0.0254,
+class DistanceNormalizer:
+    def __init__(self):
+        self.factors = {
+            'm': 1.0,
+            'km': 1000.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'in': 0.0254,
+            'ft': 0.3048,
+            'yd': 0.9144,
+            'mi': 1609.344,
+            'nm': 1e-9,
+            'um': 1e-6,
+            'nmi': 1852.0
         }
-        return conversions[from_unit](value)
 
-    @staticmethod
-    def _convert_from_base(value_in_meters, to_unit):
-        """Convert a distance from base unit (meters) to any target unit."""
-        reverse_conversions = {v: k for k, v in DistanceConverter._convert_to_base.__dict__.items()}
-        
-        # Manual mapping since lambda keys aren't directly accessible via dict of lambdas easily without getting complex
+    def normalize(self, value, unit):
+        normalized_unit = unit.lower()
+        if normalized_unit not in self.factors:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * self.factors[normalized_unit]
 
 if __name__ == '__main__':
-    pass
+    normalizer = DistanceNormalizer()
+    sample_inputs = [
+        (100, 'cm'),
+        (1.5, 'mi'),
+        (25, 'ft'),
+        (3, 'km'),
+        (500, 'in')
+    ]
+    for val, u in sample_inputs:
+        result = normalizer.normalize(val, u)
+        print(f"{val} {u} = {result} m")

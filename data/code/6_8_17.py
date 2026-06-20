@@ -1,6 +1,10 @@
-def weight_diff(a: float, b: float) -> float:
-    return a - b
+def calculate_weight_difference(weight_a, weight_b):
+    if weight_a < weight_b:
+        return weight_b - weight_a
+    return weight_a - weight_b
 
 if __name__ == '__main__':
-    result = weight_diff(100.5, 42.3)
+    weight1 = 150.5
+    weight2 = 120.75
+    result = calculate_weight_difference(weight1, weight2)
     print(result)

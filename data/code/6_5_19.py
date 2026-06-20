@@ -1,40 +1,33 @@
-def calculate_weight_difference(weights):
-    """
-    Calculates the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of float/int): List containing numerical weight values.
-        
-    Returns:
-        float or int: The difference between maximum and minimum weight, 
-                     or None if the list is empty.
-                     
-    Time Complexity: O(n) - Single pass through the list to find min and max.
-    Space Complexity: O(1) - Only uses constant extra space for tracking min/max.
-    """
-    if not weights:
-        return None
-    
-    # Initialize with first element
-    current_min = float('inf')
-    current_max = float('-inf')
-    
-    for weight in weights:
-        if weight < current_min:
-            current_min = weight
-        elif weight > current_max:
-            current_max = weight
-            
-    return current_max - current_min
+class WeightPairStorage:
+    def __init__(self):
+        self._pairs = {}
+
+    def add_pair(self, key, weight1, weight2):
+        self._pairs[key] = (weight1, weight2)
+
+    def get_difference(self, key):
+        if key not in self._pairs:
+            return None
+        w1, w2 = self._pairs[key]
+        return w1 - w2
+
+    def get_all_differences(self):
+        return {k: w1 - w2 for k, (w1, w2) in self._pairs.items()}
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input needed)
-    sample_weights = [10.5, 23.7, 8.9, 45.2, 6.1]
-    
-    result = calculate_weight_difference(sample_weights)
-    
-    print(f"Weights: {sample_weights}")
-    if result is not None:
-        print(f"Difference between heaviest and lightest weight: {result}")
-    else:
-        print("Error: Weight list cannot be empty.")
+    storage = WeightPairStorage()
+    storage.add_pair('apple', 150.5, 145.2)
+    storage.add_pair('banana', 120.0, 115.5)
+    storage.add_pair('cherry', 80.3, 80.3)
+
+    diff_apple = storage.get_difference('apple')
+    print(f"Difference for 'apple': {diff_apple}")
+
+    diff_banana = storage.get_difference('banana')
+    print(f"Difference for 'banana': {diff_banana}")
+
+    diff_cherry = storage.get_difference('cherry')
+    print(f"Difference for 'cherry': {diff_cherry}")
+
+    all_diffs = storage.get_all_differences()
+    print(f"All differences: {all_diffs}")

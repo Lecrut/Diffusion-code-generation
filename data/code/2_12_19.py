@@ -1,33 +1,66 @@
 import math
 
-# Predefined conversion factors to cubic meters (m^3)
-CONVERSION_FACTORS = {
-    'water': 0.01,       # Example: liter -> m^3
-    'sand': 25e-6,       # Example: mm^3 -> m^3
-}
+class SparseVolume:
 
-def standardize_volume(input_dict):
-    """
-    Converts a dictionary of volume measurements to cubic meters using predefined factors.
-    
-    Args:
-        input_dict (dict): Dictionary where keys are substance names and values are original volumes.
-        
-    Returns:
-        dict: New dictionary with all values converted to cubic meters.
-    """
-    standardized_data = {}
-    for substance, volume in input_dict.items():
-        if substance not in CONVERSION_FACTORS:
-            raise ValueError(f"Unsupported conversion factor for '{substance}'.")
-        normalized_volume = float(volume) * CONVERSION_FACTORS[substance]
-        standardized_data[substance] = round(normalized_volume, 6) # Round to avoid floating point noise
-    
-    return standardized_data
+    def __init__(self):
+        self.data = {}
+        self.scale_factor = 1.0
 
+    def set(self, x, y, z, value):
+        key = (x, y, z)
+        self.data[key] = value
+
+    def get(self, x, y, z):
+        key = (x, y, z)
+        if key in self.data:
+            return self.data[key]
+        return 0.0
+
+    def set_scale(self, factor):
+        self.scale_factor = factor
+
+    def get_scaled_position(self, x, y, z):
+        scaled_x = int(math.floor(x / self.scale_factor))
+        scaled_y = int(math.floor(y / self.scale_factor))
+        scaled_z = int(math.floor(z / self.scale_factor))
+        return (scaled_x, scaled_y, scaled_z)
+
+    def get_scaled_value(self, x, y, z):
+        pos = self.get_scaled_position(x, y, z)
+        return self.get(*pos)
+
+    def get_range_sum(self, min_x, max_x, min_y, max_y, min_z, max_z):
+        total = 0.0
+        step = self.scale_factor
+        if step == 0:
+            step = 1.0
+        start_x = int(math.floor(min_x / step))
+        end_x = int(math.floor(max_x / step)) + 1
+        start_y = int(math.floor(min_y / step))
+        end_y = int(math.floor(max_y / step)) + 1
+        start_z = int(math.floor(min_z / step))
+        end_z = int(math.floor(max_z / step)) + 1
+        for x in range(start_x, end_x):
+            for y in range(start_y, end_y):
+                for z in range(start_z, end_z):
+                    if (x, y, z) in self.data:
+                        val = self.data[x, y, z]
+                        cell_min_x = x * self.scale_factor
+                        cell_max_x = (x + 1) * self.scale_factor
+                        cell_min_y = y * self.scale_factor
+                        cell_max_y = (y + 1) * self.scale_factor
+                        cell_min_z = z * self.scale_factor
+                        cell_max_z = (z + 1) * self.scale_factor
+                        if not (cell_max_x <= min_x or cell_min_x >= max_x or cell_max_y <= min_y or (cell_min_y >= max_y) or (cell_max_z <= min_z) or (cell_min_z >= max_z)):
+                            total += val
+        return total
 if __name__ == '__main__':
-    sample_volumes = {'water': 10.0, 'sand': 55e3} 
-    print("Standardizing volumes...")
-    result = standardize_volume(sample_volumes)
-    for substance, vol in result.items():
-        print(f"{substance}: {vol} m^3")
+    volume = SparseVolume()
+    volume.set(0, 0, 0, 10.0)
+    volume.set(1, 1, 1, 20.0)
+    volume.set(10, 10, 10, 5.0)
+    volume.set_scale(10.0)
+    val_at_5_5_5 = volume.get_scaled_value(5, 5, 5)
+    print(val_at_5_5_5)
+    total_in_range = volume.get_range_sum(0, 15, 0, 15, 0, 15)
+    print(total_in_range)

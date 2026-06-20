@@ -1,29 +1,53 @@
-import math
+class DistanceConverter:
+    MILES_TO_KM_FACTOR = 1.609344
+    KM_TO_MILES_FACTOR = 0.621371192
 
-def convert_distance_miles_to_kilometers(miles: float) -> float:
-    """Convert a distance in miles to kilometers using standard conversion factor."""
-    return miles * 1.60934
+    def __init__(self):
+        self._factors = {
+            ('miles', 'kilometers'): self.MILES_TO_KM_FACTOR,
+            ('kilometers', 'miles'): self.KM_TO_MILES_FACTOR
+        }
 
-def convert_distance_km_to_miles(kilometers: float) -> float:
-    """Convert a distance in kilometers back to miles using the inverse of the conversion factor."""
-    return kilometers / 1.60934
+    def _validate_input(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Distance value must be numeric.")
+        if value < 0:
+            raise ValueError("Distance cannot be negative.")
+        return float(value)
+
+    def convert(self, distance, from_unit, to_unit):
+        validated_distance = self._validate_input(distance)
+        normalized_from = from_unit.lower()
+        normalized_to = to_unit.lower()
+
+        if normalized_from == normalized_to:
+            return validated_distance
+
+        factor = self._factors.get((normalized_from, normalized_to))
+
+        if factor is None:
+            raise ValueError("Unsupported unit conversion pair.")
+
+        return validated_distance * factor
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration without user input or external dependencies
-    
-    # Sample data
-    miles_sample = 5.0
-    km_sample = 25.0
-    
-    print(f"Conversion Demonstration")
-    print("-" * 30)
-    
-    result1 = convert_distance_miles_to_kilometers(miles_sample)
-    print(f"Miles ({miles_sample}) to Kilometers: {result1:.4f}")
-    
-    # Verify reverse conversion accuracy within floating-point tolerance
-    verified_km = round(result1, 2)
-    miles_back = convert_distance_km_to_miles(verified_km)
-    is_accurate = abs(miles_back - miles_sample) < 0.0001
-    
-    print(f"Verification: {result1:.4f} km converted back to {miles_back:.4f} mi (Accurate: {is_accurate})")
+    converter = DistanceConverter()
+
+    sample_miles = 100
+    sample_km = 100
+
+    result_km = converter.convert(sample_miles, 'miles', 'kilometers')
+    print(f"{sample_miles} miles is {result_km} kilometers")
+
+    result_miles = converter.convert(sample_km, 'kilometers', 'miles')
+    print(f"{sample_km} kilometers is {result_miles} miles")
+
+    try:
+        converter.convert("abc", 'miles', 'kilometers')
+    except TypeError as e:
+        print(f"Caught expected TypeError: {e}")
+
+    try:
+        converter.convert(-5, 'miles', 'kilometers')
+    except ValueError as e:
+        print(f"Caught expected ValueError: {e}")

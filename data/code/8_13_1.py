@@ -1,40 +1,23 @@
 import math
-def cross_product(o, a, b):
-    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
-def convex_hull(points):
-    if len(points) <= 2:
-        return points[:]
-    points.sort()
-    lower = []
-    for p in points:
-        while len(lower) >= 2 and cross_product(lower[-2], lower[-1], p) <= 0:
-            lower.pop()
-        lower.append(p)
-    upper = []
-    for p in reversed(points):
-        while len(upper) >= 2 and cross_product(upper[-2], upper[-1], p) <= 0:
-            upper.pop()
-        upper.append(p)
-    return lower[:-1] + upper[:-1]
-def polygon_area(hull):
-    if len(hull) < 3:
-        return 0.0
-    area = 0.0
-    n = len(hull)
-    for i in range(n):
-        j = (i + 1) % n
-        area += hull[i][0] * hull[j][1] - hull[j][0] * hull[i][1]
-    return abs(area) / 2.0
+
+def calculate_scaled_areas(rectangles, circles, scale_factor):
+    results = []
+    for width, height in rectangles:
+        original_area = width * height
+        scaled_width = width * scale_factor
+        scaled_height = height * scale_factor
+        scaled_area = scaled_width * scaled_height
+        results.append(('rectangle', original_area, scaled_area))
+    for radius, in circles:
+        original_area = math.pi * radius ** 2
+        scaled_radius = radius * scale_factor
+        scaled_area = math.pi * scaled_radius ** 2
+        results.append(('circle', original_area, scaled_area))
+    return results
 if __name__ == '__main__':
-    points = [
-        (0, 0),
-        (1, 0),
-        (0, 1),
-        (1, 1),
-        (0.5, 0.5),
-        (2, 0),
-        (0, 2)
-    ]
-    hull = convex_hull(points)
-    area = polygon_area(hull)
-    print(f"{area}")
+    sample_rectangles = [(3.0, 4.0), (5.5, 2.0), (10.0, 10.0)]
+    sample_circles = [(2.5,), (7.0,), (1.0,)]
+    sample_scale_factor = 2.5
+    results = calculate_scaled_areas(sample_rectangles, sample_circles, sample_scale_factor)
+    for shape_type, original_area, scaled_area in results:
+        print(f'{shape_type}: original_area={original_area}, scaled_area={scaled_area}')

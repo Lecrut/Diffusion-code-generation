@@ -1,52 +1,37 @@
-import math
-def convert_distance(distance, target_unit):
-    if target_unit == 0:
-        raise ValueError("Target unit cannot be zero.")
-    if target_unit == 1:
-        return distance
-    if target_unit == 1000:
-        return distance / 1000.0
-    if target_unit == 1000000:
-        return distance / 1000000.0
-    if target_unit == 1000000000:
-        return distance / 1000000000.0
-    if target_unit == 10000000000:
-        return distance / 10000000000.0
-    if target_unit == 1:
-        return distance
-    if target_unit == 0:
-        raise ValueError("Target unit cannot be zero.")
-    return distance / target_unit
+class DistanceConverter:
+    SUPPORTED_UNITS = {
+        'meter': 1.0,
+        'kilometer': 1000.0,
+        'centimeter': 0.01,
+        'millimeter': 0.001,
+        'mile': 1609.344,
+        'yard': 0.9144,
+        'foot': 0.3048,
+        'inch': 0.0254
+    }
+
+    def __init__(self):
+        self.valid_units = set(self.SUPPORTED_UNITS.keys())
+
+    def convert(self, value, from_unit, to_unit):
+        from_unit_lower = from_unit.lower()
+        to_unit_lower = to_unit.lower()
+
+        if from_unit_lower not in self.valid_units:
+            raise ValueError(f"Source unit '{from_unit}' is not supported.")
+        if to_unit_lower not in self.valid_units:
+            raise ValueError(f"Target unit '{to_unit}' is not supported.")
+        
+        if not isinstance(value, (int, float)) or value < 0:
+            raise ValueError("Distance value must be a non-negative number.")
+
+        value_in_meters = value * self.SUPPORTED_UNITS[from_unit_lower]
+        result = value_in_meters / self.SUPPORTED_UNITS[to_unit_lower]
+        return result
+
 if __name__ == '__main__':
-    distance_miles = 10.5
-    target_unit_km = 1000.0
-    try:
-        result_km = convert_distance(distance_miles, target_unit_km)
-        print(f"Distance: {distance_miles} miles")
-        print(f"Target Unit: {target_unit_km}")
-        print(f"Result: {result_km} km")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_meters = 5000.0
-    target_unit_m = 1.0
-    try:
-        result_m = convert_distance(distance_meters, target_unit_m)
-        print(f"\nDistance: {distance_meters} meters")
-        print(f"Target Unit: {target_unit_m}")
-        print(f"Result: {result_m} m")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_feet = 100.0
-    target_unit_ft = 1.0
-    try:
-        result_ft = convert_distance(distance_feet, target_unit_ft)
-        print(f"\nDistance: {distance_feet} feet")
-        print(f"Target Unit: {target_unit_ft}")
-        print(f"Result: {result_ft} ft")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        convert_distance(10.0, 0)
-    except ValueError as e:
-        print("\nTesting division by zero handling:")
-        print(f"Caught expected error: {e}")
+    converter = DistanceConverter()
+    result = converter.convert(5, 'mile', 'kilometer')
+    print(result)
+    result_meters = converter.convert(100, 'meter', 'foot')
+    print(result_meters)

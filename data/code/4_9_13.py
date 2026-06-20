@@ -1,42 +1,25 @@
-"""
-Command-Line Tool to Convert Distance between Kilometers and Miles.
-This module provides a simple conversion utility with clear prompts 
-and includes a sample execution block that runs without user input.
-"""
+def convert_distance(value, from_unit, to_unit):
+    miles_to_km = 1.60934
+    km_to_miles = 0.621371
 
-def convert_distance(distance_km: float, distance_miles: float) -> None:
-    """
-    Display the relationship between kilometers and miles for given values.
-
-    Args:
-        distance_km (float): Distance in kilometers to display alongside.
-        distance_miles (float): Distance in miles to display alongside.
-    """
-    print(f"Kilometers ({distance_km:.2f} km) is equivalent to {distance_miles:.2f} miles.")
-
-def get_sample_values() -> tuple[float, float]:
-    """
-    Returns hard-coded sample values for kilometers and miles 
-    that correspond to each other (10 km ≈ 6.2137 mi).
-    
-    Uses the standard conversion factor: 1 mile = 1.60934 kilometers.
-    Sample value chosen: 50 kilometers -> ~31.068 miles.
-    """
-    sample_km = 50.0
-    # Calculate corresponding miles using precise conversion factor
-    sample_miles = round(sample_km / 1.60934, 2)
-    return sample_km, sample_miles
+    if from_unit == 'miles' and to_unit == 'km':
+        return value * miles_to_km
+    elif from_unit == 'km' and to_unit == 'miles':
+        return value * km_to_miles
+    elif from_unit == to_unit:
+        return value
+    else:
+        raise ValueError(f"Unsupported unit conversion from {from_unit} to {to_unit}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements (no user input or args needed).
-    km_value, miles_value = get_sample_values()
-    
-    print("--- Distance Converter Sample Output ---")
-    convert_distance(km_value, miles_value)
+    sample_miles = 10.0
+    sample_km = 16.0934
 
-    # Additional demonstration with a different scale for clarity.
-    extra_km = 10.0
-    extra_miles = round(extra_km / 1.60934, 2)
-    
-    print("\n--- Another Example ---")
-    convert_distance(extra_km, extra_miles)
+    result_miles_to_km = convert_distance(sample_miles, 'miles', 'km')
+    print(result_miles_to_km)
+
+    result_km_to_miles = convert_distance(sample_km, 'km', 'miles')
+    print(result_km_to_miles)
+
+    result_same_unit = convert_distance(sample_miles, 'miles', 'miles')
+    print(result_same_unit)

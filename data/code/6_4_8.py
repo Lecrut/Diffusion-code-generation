@@ -1,26 +1,57 @@
-def weight_difference_generator(pairs):
-    """
-    Generator function that yields the absolute difference between weights in each pair.
-    
-    Args:
-        pairs (list of tuple or list): A list where each element is a sequence 
-                                      containing two numeric values representing weights.
-        
-    Yields:
-        float: The absolute difference between the two weights in each pair.
-        
-    Example:
-        >>> gen = weight_difference_generator([(10, 5), (20, 30)])
-        >>> list(gen)
-        [5.0, 10.0]
-    """
-    for a, b in pairs:
-        yield abs(a - b)
+import unittest
+
+def calculate_weight_difference(current_weight, initial_weight):
+    if initial_weight is None or current_weight is None:
+        raise ValueError("Weights cannot be None")
+    if initial_weight < 0:
+        raise ValueError("Initial weight cannot be negative")
+    if current_weight < 0:
+        raise ValueError("Current weight cannot be negative")
+    return current_weight - initial_weight
+
+class TestWeightDifference(unittest.TestCase):
+
+    def test_positive_difference(self):
+        self.assertEqual(calculate_weight_difference(100, 80), 20)
+
+    def test_negative_difference(self):
+        self.assertEqual(calculate_weight_difference(50, 80), -30)
+
+    def test_zero_difference(self):
+        self.assertEqual(calculate_weight_difference(80, 80), 0)
+
+    def test_zero_initial_weight(self):
+        self.assertEqual(calculate_weight_difference(50, 0), 50)
+
+    def test_zero_current_weight(self):
+        self.assertEqual(calculate_weight_difference(0, 50), -50)
+
+    def test_both_zero(self):
+        self.assertEqual(calculate_weight_difference(0, 0), 0)
+
+    def test_negative_initial_weight_raises(self):
+        with self.assertRaises(ValueError):
+            calculate_weight_difference(80, -10)
+
+    def test_negative_current_weight_raises(self):
+        with self.assertRaises(ValueError):
+            calculate_weight_difference(-10, 50)
+
+    def test_none_initial_weight_raises(self):
+        with self.assertRaises(ValueError):
+            calculate_weight_difference(50, None)
+
+    def test_none_current_weight_raises(self):
+        with self.assertRaises(ValueError):
+            calculate_weight_difference(None, 50)
+
+    def test_large_values(self):
+        self.assertEqual(calculate_weight_difference(1000000, 900000), 100000)
+
+    def test_float_values(self):
+        self.assertAlmostEqual(calculate_weight_difference(100.5, 50.25), 50.25)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files needed)
-    weight_pairs = [(15.5, 20.3), (100, 98.7), (5.0, 5.0)]
-
-    print("Weight differences:")
-    for diff in weight_difference_generator(weight_pairs):
-        print(f"{diff:.2f}")
+    result = calculate_weight_difference(100, 80)
+    print(result)
+    unittest.main()

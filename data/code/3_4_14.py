@@ -1,43 +1,27 @@
-def celsius_to_fahrenheit(celsius_dict: dict) -> dict:
-    """
-    Converts a dictionary of temperature readings from Celsius to Fahrenheit.
+import argparse
+import re
+import sys
+import io
+
+def convert_file_temps(file_path):
+    with open(file_path, 'r') as f:
+        content = f.read()
     
-    Args:
-        celsius_dict (dict): A dictionary where keys are locations and values 
-                            are temperatures in degrees Celsius as floats or ints.
-        
-    Returns:
-        dict: A new dictionary with the same keys but values converted to 
-              degrees Fahrenheit. Formula used: F = C * 9/5 + 32
-        
-    Raises:
-        TypeError: If any value in the input dictionary is not a number (int or float).
-    """
-    fahrenheit_dict = {}
+    def replace_celsius(match):
+        value = float(match.group(1))
+        fahrenheit = (value * 9/5) + 32
+        return f"{fahrenheit:.2f}F"
     
-    for location, celsius_temp in celsius_dict.items():
-        if isinstance(celsius_temp, (int, float)) and not isinstance(celsius_temp, bool):
-            # Apply conversion formula: F = C * 1.8 + 32
-            fahrenheit_temp = celsius_temp * 9 / 5 + 32
-            fahrenheit_dict[location] = round(fahrenheit_temp)
-        else:
-            raise TypeError(f"Invalid temperature value for location '{location}': {celsius_temp}. Expected a number.")
-            
-    return fahrenheit_dict
+    pattern = r'(-?\d+\.?\d*)\s*C\b'
+    new_content = re.sub(pattern, replace_celsius, content)
+    return new_content
 
 if __name__ == '__main__':
-    # Hard-coded sample data representing temperatures in Celsius at different locations
-    celsius_readings = {
-        "New York": 25.0,
-        "London": 18,
-        "Tokyo": -3.5,
-        "Sydney": 29.67,
-        "Moscow": 4
-    }
-
-    # Convert the dictionary and display results
-    fahrenheit_readings = celsius_to_fahrenheit(celsius_readings)
+    sample_data = "The temperature is 25 C today.\nIt dropped to -5 C last night.\nAnother reading: 100 C."
+    temp_file = "sample_temp.txt"
     
-    print("Temperature Conversion Results (Celsius to Fahrenheit):")
-    for location in sorted(fahrenheit_readings.keys()):
-        print(f"{location}: {fahrenheit_readings[location]}°F")
+    with open(temp_file, 'w') as f:
+        f.write(sample_data)
+    
+    result = convert_file_temps(temp_file)
+    print(result)

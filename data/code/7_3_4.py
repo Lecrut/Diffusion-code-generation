@@ -1,22 +1,51 @@
 def convert_duration(time_str):
-    h, m, s = map(int, time_str.split(':'))
-    days = 0
-    hours = h
-    minutes = m
-    seconds = s
-    if hours >= 24:
-        days = hours // 24
-        hours = hours % 24
+    parts = time_str.split(':')
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
+    
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    
+    days = total_seconds // 86400
+    remaining = total_seconds % 86400
+    hours = remaining // 3600
+    remaining = remaining % 3600
+    minutes = remaining // 60
+    seconds = remaining % 60
+    
+    parts_result = []
     if days > 0:
-        return f"{days} Days, {hours} Hours, {minutes} Minutes, {seconds} Seconds"
+        if days == 1:
+            parts_result.append("1 Day")
+        else:
+            parts_result.append(f"{days} Days")
+    if hours > 0:
+        if hours == 1:
+            parts_result.append("1 Hour")
+        else:
+            parts_result.append(f"{hours} Hours")
+    if minutes > 0:
+        if minutes == 1:
+            parts_result.append("1 Minute")
+        else:
+            parts_result.append(f"{minutes} Minutes")
+    if seconds > 0:
+        if seconds == 1:
+            parts_result.append("1 Second")
+        else:
+            parts_result.append(f"{seconds} Seconds")
+    
+    if not parts_result:
+        return "0 Seconds"
+    
+    if len(parts_result) == 1:
+        return parts_result[0]
     else:
-        return f"{hours} Hours, {minutes} Minutes, {seconds} Seconds"
+        return ", ".join(parts_result[:-1]) + " and " + parts_result[-1]
+
 if __name__ == '__main__':
-    test_time1 = "25:30:15"
-    test_time2 = "10:15:45"
-    test_time3 = "48:72:10"
-    test_time4 = "0:0:0"
-    print(f"Input: {test_time1}, Output: {convert_duration(test_time1)}")
-    print(f"Input: {test_time2}, Output: {convert_duration(test_time2)}")
-    print(f"Input: {test_time3}, Output: {convert_duration(test_time3)}")
-    print(f"Input: {test_time4}, Output: {convert_duration(test_time4)}")
+    print(convert_duration("01:02:03"))
+    print(convert_duration("25:00:00"))
+    print(convert_duration("00:00:00"))
+    print(convert_duration("00:01:01"))
+    print(convert_duration("48:00:00"))

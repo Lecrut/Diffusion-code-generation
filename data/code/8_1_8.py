@@ -1,31 +1,26 @@
-def calculate_area(length: float, width: float) -> float:
-    """
-    Calculates the area of a rectangle given its length and width.
+import math
 
-    Args:
-        length (float): The length of the rectangle. Must be non-negative.
-        width (float): The width of the rectangle. Must be non-negative.
+class Shape:
+    def compute_area(self):
+        return 0.0
 
-    Returns:
-        float: The calculated area as the product of length and width.
+class Rectangle(Shape):
+    def __init__(self, w, h):
+        self.width = w
+        self.height = h
 
-    Raises:
-        ValueError: If either dimension is negative or not a number.
-    """
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Length and width must be numeric.")
-    
-    if length < 0 or width < 0:
-        raise ValueError("Length and width cannot be negative.")
+    def compute_area(self):
+        return self.width * self.height
 
-    return length * width
+class Circle(Shape):
+    def __init__(self, r):
+        self.radius = r
+
+    def compute_area(self):
+        return math.pi * self.radius * self.radius
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    sample_length = 5.0
-    sample_width = 10
-    
-    result_area = calculate_area(sample_length, sample_width)
-    
-    print(f"Area of rectangle with length {sample_length} and width {sample_width}:")
-    print(result_area)
+    rect = Rectangle(4.0, 5.0)
+    circ = Circle(3.0)
+    print(rect.compute_area())
+    print(circ.compute_area())

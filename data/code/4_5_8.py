@@ -1,73 +1,39 @@
-import math
-def convert_distance(distance, target_unit):
-    if target_unit == 0:
-        raise ValueError("Target unit cannot be zero.")
-    if target_unit == 1:
-        return distance
-    if target_unit == 1000:
-        return distance / 1000.0
-    if target_unit == 1000000:
-        return distance / 1000000.0
-    if target_unit == 1000000000:
-        return distance / 1000000000.0
-    if target_unit == 1:
-        return distance
-    if target_unit == 100:
-        return distance / 100.0
-    if target_unit == 10:
-        return distance / 10.0
-    if target_unit == 0.0:
-        raise ValueError("Target unit cannot be zero.")
-    try:
-        conversion_factor = 1.0
-        if target_unit != 1:
-            conversion_map = {
-                'm': 1.0,
-                'km': 1000.0,
-                'cm': 0.01,
-                'mm': 0.001,
-                'mi': 1609.344,
-                'ft': 3.28084,
-                'in': 2.54,
-            }
-            if target_unit in conversion_map:
-                factor = conversion_map[target_unit]
-                return distance * factor
-            else:
-                raise ValueError(f"Unsupported target unit: {target_unit}")
-        else:
-            return distance
-    except ValueError as e:
-        raise e
-    except Exception as e:
-        raise ValueError(f"An unexpected error occurred during conversion: {e}")
+class DistanceConversion:
+    def __init__(self):
+        self.factors_to_base = {
+            'meter': 1.0,
+            'kilometer': 1000.0,
+            'centimeter': 0.01,
+            'millimeter': 0.001,
+            'mile': 1609.344,
+            'yard': 0.9144,
+            'foot': 0.3048,
+            'inch': 0.0254
+        }
+        self.inverse_factors = {k: 1.0 / v for k, v in self.factors_to_base.items()}
+
+    def _normalize(self, unit):
+        normalized = unit.strip().lower()
+        if normalized not in self.factors_to_base:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return normalized
+
+    def convert(self, value, from_unit, to_unit):
+        if value < 0:
+            raise ValueError("Distance cannot be negative")
+        from_norm = self._normalize(from_unit)
+        to_norm = self._normalize(to_unit)
+        if from_norm == to_norm:
+            return value
+        base_value = value * self.factors_to_base[from_norm]
+        result = base_value * self.inverse_factors[to_norm]
+        return result
+
 if __name__ == '__main__':
-    distance_m = 1000.0
-    target_km = 1.0
-    target_cm = 50.0
-    target_mi = 1.0
-    target_unknown = 5.0
-    print(f"Distance: {distance_m} meters")
-    try:
-        result_km = convert_distance(distance_m, 'km')
-        print(f"Converted to km: {result_km}")
-        result_cm = convert_distance(distance_m, 'cm')
-        print(f"Converted to cm: {result_cm}")
-        result_mi = convert_distance(distance_m, 'mi')
-        print(f"Converted to mi: {result_mi}")
-        result_self = convert_distance(distance_m, 'm')
-        print(f"Converted to m: {result_self}")
-        print("\nTesting division by zero handling:")
-        try:
-            convert_distance(10.0, 0.0)
-        except ValueError as e:
-            print(f"Caught expected error for target unit 0.0: {e}")
-        print("\nTesting unsupported unit handling:")
-        try:
-            convert_distance(10.0, 'lightyear')
-        except ValueError as e:
-            print(f"Caught expected error for unsupported unit: {e}")
-    except ValueError as e:
-        print(f"A critical error occurred: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    converter = DistanceConversion()
+    result1 = converter.convert(1, 'mile', 'kilometer')
+    print(result1)
+    result2 = converter.convert(5280, 'foot', 'meter')
+    print(result2)
+    result3 = converter.convert(100, 'centimeter', 'inch')
+    print(result3)

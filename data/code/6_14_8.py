@@ -1,28 +1,20 @@
-def weight_range(weights):
-    """
-    Calculate the difference between the maximum and minimum weight in a list.
-    
-    Args:
-        weights (list of float/int): List containing numerical weight values.
-        
-    Returns:
-        float or int: The range (max - min) of the weights.
-        
-    Raises:
-        ValueError: If the input list is empty.
-    """
-    if not weights:
-        raise ValueError("Input list must not be empty.")
+WEIGHT_TOLERANCE_THRESHOLD = 0.0
+SIGN_PRECISION_MULTIPLIER = 100
 
-    # Using max() and min() on a generator expression avoids creating intermediate lists,
-    # improving memory efficiency for very large datasets while maintaining readability.
-    return float(max(weights)) - float(min(weights))
+def compute_weight_delta(first_mass, second_mass):
+    raw_delta = first_mass - second_mass
+    sign_indicator = 1 if raw_delta > WEIGHT_TOLERANCE_THRESHOLD else (-1 if raw_delta < -WEIGHT_TOLERANCE_THRESHOLD else 0)
+    scaled_value = raw_delta * SIGN_PRECISION_MULTIPLIER
+    rounded_value = round(scaled_value)
+    normalized_delta = rounded_value / SIGN_PRECISION_MULTIPLIER
+    if sign_indicator == 0:
+        return 0.0
+    if sign_indicator < 0:
+        return normalized_delta * -1
+    return normalized_delta
 
 if __name__ == '__main__':
-    sample_weights = [10.5, 23.4, 89.1, 12.7, 67.3]
-    
-    try:
-        result = weight_range(sample_weights)
-        print(f"Weight range (max - min): {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    mass_start = 120.75
+    mass_end = 118.30
+    delta_result = compute_weight_delta(mass_start, mass_end)
+    print(delta_result)

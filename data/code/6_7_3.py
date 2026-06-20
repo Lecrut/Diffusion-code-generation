@@ -1,19 +1,17 @@
-class WeightStore:
-    def __init__(self):
-        self.weight_pairs = {}
-    def add_pair(self, key, weight1, weight2):
-        self.weight_pairs[key] = (weight1, weight2)
-    def get_difference(self, key):
-        if key in self.weight_pairs:
-            weight1, weight2 = self.weight_pairs[key]
-            return weight1 - weight2
-        return None
+import argparse
+
+def calculate_weight_difference(weight1, weight2):
+    return weight1 - weight2
+
+def main():
+    parser = argparse.ArgumentParser(description="Calculate the difference between two weights.")
+    parser.add_argument("weight1", type=float, help="First weight")
+    parser.add_argument("weight2", type=float, help="Second weight")
+    
+    args = parser.parse_args()
+    
+    result = calculate_weight_difference(args.weight1, args.weight2)
+    print(result)
+
 if __name__ == '__main__':
-    store = WeightStore()
-    store.add_pair("A", 100, 50)
-    store.add_pair("B", 200, 150)
-    store.add_pair("C", 300, 250)
-    print(f"Difference for A: {store.get_difference('A')}")
-    print(f"Difference for B: {store.get_difference('B')}")
-    print(f"Difference for C: {store.get_difference('C')}")
-    print(f"Difference for D (non-existent): {store.get_difference('D')}")
+    main()

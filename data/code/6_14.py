@@ -1,8 +1,8 @@
-def weight_difference(weights):
-    if not weights:
-        return 0
-    return max(weights) - min(weights)
+def calculate_weight_difference(weight_a, weight_b):
+    return abs(weight_a - weight_b)
+
 if __name__ == '__main__':
-    sample_weights = [10, 5, 20, 15, 8]
-    result = weight_difference(sample_weights)
-    print(result)
+    initial_weight = 150.5
+    final_weight = 145.2
+    difference = calculate_weight_difference(initial_weight, final_weight)
+    print(difference)

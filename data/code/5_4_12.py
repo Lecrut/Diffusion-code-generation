@@ -1,21 +1,12 @@
-# Module to compare two length measurements and print a formatted result.
-def main():
-    # Define sample length values in centimeters (hard-coded)
-    length_a = 150
-    length_b = 98
-    
-    # Calculate the difference
-    diff = length_a - length_b
-    
-    # Perform conditional comparison and print formatted sentence based on which is longer
-    if length_a > length_b:
-        message = f"Length A ({length_a}) is longer than Length B ({length_b}) by {diff} units."
-    elif length_b > length_a:
-        message = f"Length B ({length_b}) is longer than Length A ({length_a}) by {-1 * diff} units."
-    else:
-        message = "Length A and Length B are equal in size."
-    
-    print(message)
+def compare_length_lists(list1, list2):
+    all_lengths = list1 + list2
+    max_length = max(all_lengths)
+    min_length = min(all_lengths)
+    range_difference = max_length - min_length
+    return max_length, min_length, range_difference
 
 if __name__ == '__main__':
-    main()
+    sample_list1 = [10.5, 20.3, 15.7, 30.1]
+    sample_list2 = [25.0, 12.4, 28.9, 18.6]
+    result = compare_length_lists(sample_list1, sample_list2)
+    print(result)

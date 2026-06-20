@@ -1,29 +1,46 @@
-import datetime
-def calculate_time_difference(dt1, dt2, unit):
-    if dt1 is None or dt2 is None:
-        raise ValueError("Both datetime objects must be provided.")
-    if unit == 'days':
-        diff = dt2 - dt1
-        result = diff.days
-    elif unit == 'hours':
-        diff = dt2 - dt1
-        result = diff.total_seconds() / 3600
-    elif unit == 'minutes':
-        diff = dt2 - dt1
-        result = diff.total_seconds() / 60
-    else:
-        raise ValueError("Unsupported unit. Please use 'days', 'hours', or 'minutes'.")
-    return result
+from datetime import datetime
+
+UNIT_SECONDS = 1
+UNIT_MINUTES = 60
+UNIT_HOURS = 3600
+UNIT_DAYS = 86400
+UNIT_WEEKS = 604800
+
+def compute_time_diff(dt_first, dt_second, target_unit):
+    time_delta = dt_second - dt_first
+    total_secs = abs(time_delta.total_seconds())
+    if target_unit == "seconds":
+        return total_secs
+    if target_unit == "minutes":
+        return total_secs / UNIT_MINUTES
+    if target_unit == "hours":
+        return total_secs / UNIT_HOURS
+    if target_unit == "days":
+        return total_secs / UNIT_DAYS
+    if target_unit == "weeks":
+        return total_secs / UNIT_WEEKS
+    return total_secs
+
+def format_structured_diff(dt_first, dt_second):
+    time_delta = dt_second - dt_first
+    total_secs = abs(time_delta.total_seconds())
+    days_part = int(total_secs // UNIT_DAYS)
+    rem_after_days = total_secs % UNIT_DAYS
+    hours_part = int(rem_after_days // UNIT_HOURS)
+    rem_after_hours = rem_after_days % UNIT_HOURS
+    mins_part = int(rem_after_hours // UNIT_MINUTES)
+    secs_part = int(rem_after_hours % UNIT_MINUTES)
+    return {
+        "days": days_part,
+        "hours": hours_part,
+        "minutes": mins_part,
+        "seconds": secs_part
+    }
+
 if __name__ == '__main__':
-    start_time = datetime.datetime(2023, 10, 26, 10, 30, 0)
-    end_time = datetime.datetime(2023, 10, 29, 14, 45, 15)
-    time_unit = 'hours'
-    try:
-        difference = calculate_time_difference(start_time, end_time, time_unit)
-        print(f"Start Time: {start_time}")
-        print(f"End Time: {end_time}")
-        print(f"Time Difference in {time_unit}: {difference:.2f}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    date_a = datetime(2023, 3, 15, 9, 30, 0)
+    date_b = datetime(2023, 3, 17, 14, 45, 20)
+    diff_in_hours = compute_time_diff(date_a, date_b, "hours")
+    structured_breakdown = format_structured_diff(date_a, date_b)
+    print(diff_in_hours)
+    print(structured_breakdown)

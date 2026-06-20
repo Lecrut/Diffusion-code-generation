@@ -1,25 +1,26 @@
-def calculate_area(length: float, width: float) -> float:
-    """
-    Calculates the area of a rectangle given its length and width.
+import math
 
-    Args:
-        length (float): The length of the rectangle.
-        width (float): The width of the rectangle.
+class Shape:
+    def area(self):
+        return 0.0
 
-    Returns:
-        float: The calculated area as a floating-point number.
-    
-    Example:
-        >>> calculate_area(5, 10)
-        50.0
-    """
-    return length * width
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * (self.radius ** 2)
 
 if __name__ == '__main__':
-    # Sample values for testing the function without user input or external dependencies
-    sample_length = 4.5
-    sample_width = 8.2
-    
-    result_area = calculate_area(sample_length, sample_width)
-    
-    print(f"The area of a rectangle with length {sample_length} and width {sample_width} is: {result_area}")
+    my_rect = Rectangle(12, 8)
+    my_circle = Circle(5)
+    print(my_rect.area())
+    print(my_circle.area())

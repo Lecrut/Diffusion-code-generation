@@ -1,8 +1,16 @@
-import sys
-length1 = 15.5
-length2 = 22.7
+class LengthComparator:
+    def __init__(self, length_a, length_b):
+        self.length_a = length_a
+        self.length_b = length_b
+        self.epsilon = 1e-9
+
+    def is_equal_within_epsilon(self):
+        return abs(self.length_a - self.length_b) < self.epsilon
+
+    def get_absolute_difference(self):
+        return abs(self.length_a - self.length_b)
+
 if __name__ == '__main__':
-    print(f"Length 1: {length1}")
-    print(f"Length 2: {length2}")
-    difference = abs(length1 - length2)
-    print(f"The difference between the two lengths is: {difference}")
+    comparator = LengthComparator(10.000000001, 10.0)
+    print(comparator.is_equal_within_epsilon())
+    print(comparator.get_absolute_difference())

@@ -1,32 +1,16 @@
-def calculate_ratio(measurement1: float, measurement2: float) -> float:
-    """
-    Calculate the ratio of two positive length measurements.
-    
-    Args:
-        measurement1 (float): The first length measurement.
-        measurement2 (float): The second length measurement.
-        
-    Returns:
-        float: The result of dividing measurement1 by measurement2.
-        
-    Raises:
-        ValueError: If either input is not a positive number.
-    """
-    if not isinstance(measurement1, (int, float)) or not isinstance(measurement2, (int, float)):
-        raise ValueError("Inputs must be numeric.")
-    
-    if measurement1 <= 0 or measurement2 <= 0:
-        raise ValueError("Both measurements must be positive numbers.")
-        
-    return measurement1 / measurement2
+UNIT = 1
+
+def compute_comparison(length_a, length_b):
+    if length_a > length_b:
+        gap = length_a - length_b
+        return f"Length A is longer than Length B by {gap} units"
+    elif length_b > length_a:
+        gap = length_b - length_a
+        return f"Length B is longer than Length A by {gap} units"
+    return "Length A and Length B are equal"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    val_a = 10.5
-    val_b = 4
-    
-    try:
-        result = calculate_ratio(val_a, val_b)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}")
+    val_a = 20.0
+    val_b = 12.0
+    output = compute_comparison(val_a, val_b)
+    print(output)

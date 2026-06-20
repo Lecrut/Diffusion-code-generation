@@ -1,47 +1,37 @@
-import argparse
-
-def convert_time(hours: float) -> int:
-    """Converts hours to minutes."""
-    return round(hours * 60)
-
-def main():
-    parser = argparse.ArgumentParser(description="Convert time between hours and minutes.")
+def time_string_to_human_readable(time_str):
+    parts = time_str.split(':')
+    if len(parts) != 3:
+        raise ValueError("Input must be in 'HH:MM:SS' format")
     
-    # Define mutually exclusive groups for conversion direction since no CLI args are allowed in the sample block logic flow
-    group1 = parser.add_mutually_exclusive_group()
-    group1.add_argument("--to-minutes", "-t", required=False, help="Convert hours to minutes")
-    group1.add_argument("--to-hours", "-h", required=False, help="Convert minutes to hours (divided by 60)")
-
-    # Parse arguments. Note: The sample block below uses the internal logic of argparse with no required flags 
-    # that would fail without input, but since 'required' is not set on any argument itself,
-    # and we are relying on optional flags which default to None if not provided via CLI args (and we aren't using stdin),
-    # this setup allows the script to run. The actual conversion logic will be triggered by the hard-coded sample values 
-    # within the function call structure or by providing one of these flags in a hypothetical real scenario.
-    # To strictly adhere to "never call input()" and use argparse without requiring user interaction for the SAMPLE block:
+    try:
+        hours = int(parts[0])
+        minutes = int(parts[1])
+        seconds = int(parts[2])
+    except ValueError:
+        raise ValueError("Hours, minutes, and seconds must be integers")
     
-    args = parser.parse_args()
-
-    if hasattr(args, 'to_minutes') and args.to_minutes is not None:
-        hours_input = 5.25
-        result = convert_time(hours_input)
-        print(f"{hours_input} hours is equal to {result} minutes.")
-        
-    elif hasattr(args, 'to_hours') and args.to_hours is not None:
-        # Default sample value for the other direction if flag provided via a real CLI call in testing environment
-        minutes_input = 180
-        result = round(minutes_input / 60)
-        print(f"{minutes_input} minutes is equal to {result} hours.")
-
-    else:
-        # Fallback for demonstration purposes when no flags are passed (simulating the sample run requirement without args)
-        hours_sample = 1.5
-        minutes_sample = 90
-        
-        conversion_1 = convert_time(hours_sample)
-        print(f"Sample: {hours_sample} hours -> {conversion_1} minutes")
-        
-        result_hrs = round(minutes_sample / 60)
-        print(f"Reverse check: {minutes_sample} minutes -> {result_hrs} hours")
+    if not (0 <= hours <= 23 and 0 <= minutes <= 59 and 0 <= seconds <= 59):
+        raise ValueError("Invalid time values")
+    
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    
+    days, remainder = divmod(total_seconds, 86400)
+    hours_rem, remainder = divmod(remainder, 3600)
+    minutes_rem, seconds_rem = divmod(remainder, 60)
+    
+    result_parts = []
+    if days > 0:
+        result_parts.append(f"{days} day{'s' if days != 1 else ''}")
+    if hours_rem > 0:
+        result_parts.append(f"{hours_rem} hour{'s' if hours_rem != 1 else ''}")
+    if minutes_rem > 0:
+        result_parts.append(f"{minutes_rem} minute{'s' if minutes_rem != 1 else ''}")
+    if seconds_rem > 0 or not result_parts:
+        result_parts.append(f"{seconds_rem} second{'s' if seconds_rem != 1 else ''}")
+    
+    return ", ".join(result_parts)
 
 if __name__ == '__main__':
-    main()
+    sample_inputs = ["00:00:00", "01:02:03", "25:00:00", "1:30:45", "02:00:00"]
+    for s in sample_inputs:
+        print(time_string_to_human_readable(s))

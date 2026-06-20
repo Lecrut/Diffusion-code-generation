@@ -1,33 +1,24 @@
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple]): List of (x, y) coordinates representing vertices in order.
-        
-    Returns:
-        float: The calculated area of the polygon.
-    """
-    n = len(vertices)
-    if n < 3:
-        return 0.0
+import math
 
-    area = 0.5 * abs(
-        sum(x[i] * y[i+1] - x[i+1] * y[i] 
-                 for i in range(n)) + vertices[0][0]*vertices[n-1][1] - vertices[0][1]*vertices[n-1][0])
-
-    return area
+def calculate_area(shape_type, **kwargs):
+    shape_type = shape_type.lower()
+    if shape_type == 'rectangle':
+        length = kwargs.get('length')
+        width = kwargs.get('width')
+        if length is None or width is None:
+            raise ValueError("Rectangle requires 'length' and 'width' dimensions.")
+        return length * width
+    elif shape_type == 'circle':
+        radius = kwargs.get('radius')
+        if radius is None:
+            raise ValueError("Circle requires 'radius' dimension.")
+        return math.pi * (radius ** 2)
+    else:
+        raise ValueError("Unsupported shape type. Use 'rectangle' or 'circle'.")
 
 if __name__ == '__main__':
-    # Sample polygon defined as a rectangle with known positive and negative coordinates
-    sample_vertices = [
-        (0, 0), 
-        (4, 0), 
-        (4, -3), 
-        (-1, -3)
-    ]
+    rect_area = calculate_area('rectangle', length=5, width=3)
+    print(rect_area)
 
-    area_value = calculate_polygon_area(sample_vertices)
-    
-    # Output the result to verify functionality without user interaction
-    print(f"The area of the polygon is: {area_value}")
+    circle_area = calculate_area('circle', radius=4)
+    print(circle_area)

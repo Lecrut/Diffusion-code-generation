@@ -1,19 +1,18 @@
-import sys
-def calculate_area(length, width):
-    try:
-        area = float(length) * float(width)
-        return area
-    except ValueError:
-        return None
+def calculate_polygon_area(vertices):
+    if len(vertices) < 3:
+        return 0.0
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
+
 if __name__ == '__main__':
-    input_data = ["10", "5"]
-    if len(input_data) >= 2:
-        length = input_data[0]
-        width = input_data[1]
-        result = calculate_area(length, width)
-        if result is not None:
-            print(result)
-        else:
-            print("Error: Invalid input provided.")
-    else:
-        print("Error: Insufficient input provided.")
+    square_vertices = [(0, 0), (4, 0), (4, 4), (0, 4)]
+    print(calculate_polygon_area(square_vertices))
+    triangle_vertices = [(0, 0), (5, 0), (2.5, 3)]
+    print(calculate_polygon_area(triangle_vertices))
+    pentagon_vertices = [(1, 0), (3.05, 2.245), (0.225, 3.59), (-2.225, 3.59), (-2.225, -0.59)]
+    print(calculate_polygon_area(pentagon_vertices))

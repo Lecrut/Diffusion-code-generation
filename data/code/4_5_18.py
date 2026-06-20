@@ -1,96 +1,51 @@
-import math
+class DistanceConverter:
+    def __init__(self):
+        self.units = {
+            'm': 1.0,
+            'km': 1000.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'mi': 1609.344,
+            'yd': 0.9144,
+            'ft': 0.3048,
+            'in': 0.0254
+        }
 
-def convert_distance(distance: float, target_unit: str) -> float | None:
-    """
-    Converts a distance value to the specified unit using precise floating-point arithmetic.
-    
-    Supported units (input): meters ('m'), kilometers ('km'), miles ('mi').
-    Returns the converted value in the target unit or None if conversion is invalid.
-    
-    Handles potential division by zero gracefully and validates input types.
-    
-    Args:
-        distance (float): The numerical value of the distance to convert.
-        target_unit (str): The desired output unit ('m', 'km', 'mi').
-        
-    Returns:
-        float | None: Converted distance in the target unit, or None if conversion fails.
-    """
-    
-    # Define base units relative to meters for consistent calculation
-    BASE_METERS = 1.0
-    
-    # Conversion factors from each input unit to meters (to avoid repeated division by zero)
-    UNIT_TO_METERS = {
-        'm': BASE_METERS,
-        'km': 1000.0 * BASE_METERS,
-        'mi': 1609.344 * BASE_METERS
-    }
+    def convert(self, distance, from_unit, to_unit):
+        from_unit = from_unit.lower()
+        to_unit = to_unit.lower()
 
-    # Validate input types and handle division by zero logic implicitly via dictionary lookup
-    
-    if not isinstance(distance, (int, float)):
-        return None
-        
-    if distance != distance:  # Check for NaN using IEEE 754 standard behavior
-        return None
-        
-    target_unit_lower = str(target_unit).strip().lower()
-    
-    try:
-        meters_per_input_unit = UNIT_TO_METERS.get('m')
-        
-        if not isinstance(meters_per_input_unit, float):
-            return None
-            
-        # Convert input to meters first (avoids direct division by zero on target unit)
-        distance_in_meters = distance * meters_per_input_unit
-        
-    except ZeroDivisionError:
-        return None
-    
-    try:
-        meters_per_target_unit = UNIT_TO_METERS.get(target_unit_lower, 0.0)
-        
-        if not isinstance(meters_per_target_unit, float):
-            return None
-            
-        # Perform final conversion to target unit (safe from division by zero due to validation above)
-        converted_value = distance_in_meters / meters_per_target_unit
-        
-    except ZeroDivisionError:
-        return None
-    
-    return converted_value
+        if from_unit not in self.units:
+            raise ValueError(f"Unsupported source unit: {from_unit}")
+        if to_unit not in self.units:
+            raise ValueError(f"Unsupported target unit: {to_unit}")
+
+        if distance < 0:
+            raise ValueError("Distance cannot be negative")
+
+        meters = distance * self.units[from_unit]
+        result = meters / self.units[to_unit]
+
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        (100, 'm'),           # 100 meters to meters -> 100.0
-        (5, 'km'),            # 5 kilometers to miles -> ~3.106856
-        (2, 'mi'),            # 2 miles to kilometers -> ~3.21869
-        ('invalid', 'm'),     # Invalid input type for distance
-        (-10, 'km'),         # Negative value handling
-        (float('nan'), 'm'), # NaN input handling
-    ]
+    converter = DistanceConverter()
 
-    results = []
-    
-    for i in range(len(test_cases)):
-        dist_val, target_unit = test_cases[i]
-        
-        try:
-            result = convert_distance(dist_val, target_unit)
-            
-            if isinstance(result, float):
-                formatted_result = f"{result:.6f}"
-            else:
-                formatted_result = str(result)
-                
-            results.append(f"Test {i+1}: Input ({dist_val}, '{target_unit}') -> Output: {formatted_result}")
-        except Exception as e:
-            # Catch any unexpected errors during conversion process
-            error_msg = f"{e}" if isinstance(e, ZeroDivisionError) else "Unexpected Error"
-            results.append(f"Test {i+1}: Input ({dist_val}, '{target_unit}') -> Output: ERROR - {error_msg}")
+    result_miles_to_km = converter.convert(5.0, 'mi', 'km')
+    print(result_miles_to_km)
 
-    print("\n".join(results))
+    result_feet_to_meters = converter.convert(100.0, 'ft', 'm')
+    print(result_feet_to_meters)
+
+    result_inches_to_cm = converter.convert(12.0, 'in', 'cm')
+    print(result_inches_to_cm)
+
+    try:
+        converter.convert(10.0, 'mi', 'lightyear')
+    except ValueError as e:
+        print(str(e))
+
+    try:
+        converter.convert(-5.0, 'km', 'm')
+    except ValueError as e:
+        print(str(e))

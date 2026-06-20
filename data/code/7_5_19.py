@@ -1,32 +1,25 @@
-import math
-
-def convert_to_appropriate_unit(total_seconds: float) -> tuple[float, str]:
-    """
-    Converts a total number of seconds into the most appropriate time unit.
-    
-    Logic:
-    - If >= 3600 (1 hour), return hours and 'hours'
-    - Else if >= 60 (1 minute), return minutes and 'minutes'
-    - Otherwise, return seconds and 'seconds'
-
-    Args:
-        total_seconds (float): The number of input seconds.
-
-    Returns:
-        tuple[float, str]: A tuple containing the converted value as a float 
-                          and the unit name as a string.
-    """
-    if total_seconds >= 3600:
-        return round(total_seconds / 3600), 'hours'
-    elif total_seconds >= 60:
-        return round(total_seconds / 60), 'minutes'
-    else:
-        return float(round(total_seconds)), 'seconds'
+def format_duration(total_seconds):
+    total_seconds = int(total_seconds)
+    if total_seconds < 0:
+        return "-1 second"
+    if total_seconds < 60:
+        return f"1 second" if total_seconds == 1 else f"{total_seconds} seconds"
+    if total_seconds < 3600:
+        minutes, _ = divmod(total_seconds, 60)
+        return f"1 minute" if minutes == 1 else f"{minutes} minutes"
+    hours, remainder = divmod(total_seconds, 3600)
+    if remainder < 60:
+        return f"1 hour" if hours == 1 else f"{hours} hours"
+    minutes, _ = divmod(remainder, 60)
+    result_parts = []
+    result_parts.append(f"1 hour" if hours == 1 else f"{hours} hours")
+    result_parts.append(f"1 minute" if minutes == 1 else f"{minutes} minutes")
+    return ", ".join(result_parts)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input.
-    samples = [89, 3725, 14500]
-    
-    for sec in samples:
-        value, unit = convert_to_appropriate_unit(sec)
-        print(f"{sec} seconds is approximately {value} {unit}.")
+    print(format_duration(45))
+    print(format_duration(90))
+    print(format_duration(3600))
+    print(format_duration(3661))
+    print(format_duration(1))
+    print(format_duration(0))

@@ -1,93 +1,54 @@
-import re
+def _validate_positive(value):
+    if value <= 0:
+        raise ValueError("Value must be positive")
+    return value
 
-def parse_distance_string(s: str) -> float | None:
-    """
-    Parses a string representing a distance in any common unit to meters.
-    
-    Supported formats (case-insensitive):
-        - <number> m, M, km, Km, cm, Cm, mm, Mm (e.g., "5", "3km", "2cm")
-        - <number>.<fraction> ... same units
-    
-    Returns the value in meters or None if invalid.
-    
-    Raises: ValueError on format errors that cannot be silently ignored by returning None.
-    """
-    pattern = r'^(\d+\.?\d*)\s*([a-zA-Z]+)?$'
-    match = re.match(pattern, s.strip())
+def convert_meters_to_feet(meters):
+    validated = _validate_positive(meters)
+    return validated * 3.28084
 
-    if not match:
-        return None
+def convert_feet_to_meters(feet):
+    validated = _validate_positive(feet)
+    return validated / 3.28084
 
-    value_str = match.group(1)
-    unit_str = match.group(2).lower() if match.group(2) else 'm'
+def convert_kilometers_to_miles(kilometers):
+    validated = _validate_positive(kilometers)
+    return validated * 0.621371
 
-    try:
-        value = float(value_str)
-    except ValueError:
-        return None
+def convert_miles_to_kilometers(miles):
+    validated = _validate_positive(miles)
+    return validated / 0.621371
 
-    # Define conversion factors to meters (base unit is meter, m)
-    units_to_factor = {
-        'km': 1000.0,
-        'cm': 0.01,
-        'mm': 0.001,
-        'um': 1e-6,   # micrometer (optional extension for robustness)
-        'nm': 1e-9,   # nanometer (optional extension for robustness)
-    }
+def convert_kilograms_to_pounds(kilograms):
+    validated = _validate_positive(kilograms)
+    return validated * 2.20462
 
-    if unit_str not in units_to_factor:
-        return None
+def convert_pounds_to_kilograms(pounds):
+    validated = _validate_positive(pounds)
+    return validated / 2.20462
 
-    meters = value * units_to_factor[unit_str]
-    
-    # Basic sanity check to avoid absurdly large/small numbers that might indicate parsing error
-    if abs(meters) > 1e20 or (abs(meters) < 1e-30 and not unit_str.startswith('nm')):
-        return None
+def convert_liters_to_gallons(liters):
+    validated = _validate_positive(liters)
+    return validated * 0.264172
 
-    return meters
+def convert_gallons_to_liters(gallons):
+    validated = _validate_positive(gallons)
+    return validated / 0.264172
 
-def process_distances(input_lines):
-    """
-    Takes a list of input strings, parses each as a distance to meters.
-    
-    Returns a dictionary mapping original string -> parsed value in meters or 'INVALID' for unparseable lines.
-    """
-    results = {}
-    valid_count = 0
-    
-    for line in input_lines:
-        if not line.strip():
-            continue
-            
-        result = parse_distance_string(line)
-        
-        if result is None:
-            # Treat as invalid format, but we'll log it or handle gracefully. 
-            # Since the task says "validates", let's mark clearly.
-            results[line] = 'INVALID'
-        else:
-            valid_count += 1
-            results[line] = round(result, 6)  # Round to avoid floating point noise
-    
-    return results
+def convert_celsius_to_fahrenheit(celsius):
+    return celsius * 9 / 5 + 32
+
+def convert_fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5 / 9
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per instructions. 
-    # No user input, command-line arguments, network access, or pre-existing files required.
-    
-    SAMPLE_INPUTS = [
-        "10",                 # 10 meters
-        "5km",               # 5 kilometers -> 5000m
-        "2cm",               # 2 centimeters -> 0.02m
-        "3mm",               # 3 millimeters -> 0.003m
-        "invalid text"       # Should be marked invalid
-    ]
-
-    parsed_results = process_distances(SAMPLE_INPUTS)
-
-    print("Parsed Distances (converted to meters):")
-    for original, value in parsed_results.items():
-        if isinstance(value, float):
-            print(f"{original} -> {value}")
-        else:
-            print(f"{original} -> INVALID FORMAT")
+    print(convert_meters_to_feet(10))
+    print(convert_feet_to_meters(32.8084))
+    print(convert_kilometers_to_miles(5))
+    print(convert_miles_to_kilometers(3.10686))
+    print(convert_kilograms_to_pounds(1))
+    print(convert_pounds_to_kilograms(2.20462))
+    print(convert_liters_to_gallons(1))
+    print(convert_gallons_to_liters(0.264172))
+    print(convert_celsius_to_fahrenheit(0))
+    print(convert_fahrenheit_to_celsius(32))

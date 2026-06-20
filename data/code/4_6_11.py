@@ -1,86 +1,122 @@
-import sys
+import unittest
 
-# Define conversion factors to meters (SI unit)
-TO_METERS = {
-    'm': 1,      # meters
-    'km': 0.001, # kilometers
-    'cm': 100,   # centimeters
-    'mm': 1000,  # millimeters
-    'mi': 160934.4, # miles (US)
-    'yd': 0.9144, # yards
-    'ft': 0.3048, # feet
-    'nmi': 1852,   # nautical miles
-}
+class DistanceConverter:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit
 
-# Define meters to conversion factors for target units
-FROM_METERS = {value: key for key, value in TO_METERS.items()}
+    def to_meters(self):
+        if self.unit == "m":
+            return self.value
+        elif self.unit == "km":
+            return self.value * 1000
+        elif self.unit == "cm":
+            return self.value / 100
+        elif self.unit == "mm":
+            return self.value / 1000
+        elif self.unit == "in":
+            return self.value * 0.0254
+        elif self.unit == "ft":
+            return self.value * 0.3048
+        elif self.unit == "yd":
+            return self.value * 0.9144
+        elif self.unit == "mi":
+            return self.value * 1609.34
+        else:
+            raise ValueError(f"Unsupported unit: {self.unit}")
 
-def convert_distance(distance_value: float, from_unit: str, to_unit: str) -> tuple[float, list[str]]:
-    """
-    Converts a distance between any supported unit pair.
-    
-    Args:
-        distance_value (float): The numerical value of the distance.
-        from_unit (str): Source unit abbreviation ('m', 'km', etc.).
-        to_unit (str): Target unit abbreviation ('m', 'mi', etc.).
-        
-    Returns:
-        tuple[float, list[str]]: 
-            - Converted float value in target units.
-            - List of error messages if conversion fails.
-            
-    Raises/Returns Errors for invalid inputs or unsupported units.
-    """
-    
-    errors = []
+    def to_unit(self, target_unit):
+        meters = self.to_meters()
+        if target_unit == "m":
+            return meters
+        elif target_unit == "km":
+            return meters / 1000
+        elif target_unit == "cm":
+            return meters * 100
+        elif target_unit == "mm":
+            return meters * 1000
+        elif target_unit == "in":
+            return meters / 0.0254
+        elif target_unit == "ft":
+            return meters / 0.3048
+        elif target_unit == "yd":
+            return meters / 0.9144
+        elif target_unit == "mi":
+            return meters / 1609.34
+        else:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
 
-    # Check if source unit is supported
-    if from_unit not in TO_METERS:
-        errors.append(f"Error: Unsupported input unit '{from_unit}'. Supported units are: {', '.join(TO_METERS.keys())}.")
-        
-    else: 
-        meters = distance_value * TO_METERS[from_unit]
+class TestDistanceConverter(unittest.TestCase):
 
-    # Check if target unit is supported
-    if to_unit not in FROM_METERS:
-        errors.append(f"Error: Unsupported output unit '{to_unit}'. Supported units are: {', '.join(FROM_METERS.keys())}.")
-        
-    else: 
-        converted_value = meters / FROM_METERS[to_unit]
+    def test_kilometers_to_meters(self):
+        converter = DistanceConverter(2, "km")
+        self.assertEqual(converter.to_meters(), 2000)
 
-    return (converted_value, [])
+    def test_meters_to_kilometers(self):
+        converter = DistanceConverter(5000, "m")
+        self.assertEqual(converter.to_unit("km"), 5)
 
-def format_output(value: float) -> str:
-    """
-    Formats the numerical value for better readability.
-    
-    Args:
-        value (float): The calculated distance in target units.
-        
-    Returns:
-        str: Formatted string of the result with appropriate unit abbreviation.
-    """
-    abbreviations = TO_METERS.keys()
+    def test_miles_to_meters(self):
+        converter = DistanceConverter(1, "mi")
+        self.assertAlmostEqual(converter.to_meters(), 1609.34, places=2)
 
-    # Find the key corresponding to current meters conversion factor logic isn't needed here, just use direct lookup on FROM_METERS or generic mapping?
-    # Actually, we need the target unit's full name if possible, but we don't have names. 
-    # Let's stick to standard abbreviations as per task simplicity unless specific naming is requested.
-    
-    return f"{value:.6f} {abbreviations[-1]}"
+    def test_meters_to_miles(self):
+        converter = DistanceConverter(1609.34, "m")
+        self.assertAlmostEqual(converter.to_unit("mi"), 1, places=2)
 
-def get_unit_name(unit_key: str) -> str:
-    """Returns a descriptive name for the unit key."""
-    names = {
-        'm': "meter",
-        'km': "kilometer",
-        'cm': "centimeter",
-        'mm': "millimeter",
-        'mi': "mile (US)",
-        'yd': "yard",
-        'ft': "foot",
-        'nmi': "nautical mile"
-    }
-    return names.get(unit_key, unit_key)
+    def test_feet_to_meters(self):
+        converter = DistanceConverter(10, "ft")
+        self.assertAlmostEqual(converter.to_meters(), 3.048, places=3)
+
+    def test_meters_to_feet(self):
+        converter = DistanceConverter(3.048, "m")
+        self.assertAlmostEqual(converter.to_unit("ft"), 10, places=2)
+
+    def test_inches_to_meters(self):
+        converter = DistanceConverter(100, "in")
+        self.assertAlmostEqual(converter.to_meters(), 2.54, places=2)
+
+    def test_meters_to_inches(self):
+        converter = DistanceConverter(2.54, "m")
+        self.assertAlmostEqual(converter.to_unit("in"), 100, places=2)
+
+    def test_centimeters_to_meters(self):
+        converter = DistanceConverter(250, "cm")
+        self.assertEqual(converter.to_meters(), 2.5)
+
+    def test_meters_to_centimeters(self):
+        converter = DistanceConverter(2.5, "m")
+        self.assertEqual(converter.to_unit("cm"), 250)
+
+    def test_yards_to_meters(self):
+        converter = DistanceConverter(5, "yd")
+        self.assertAlmostEqual(converter.to_meters(), 4.572, places=3)
+
+    def test_meters_to_yards(self):
+        converter = DistanceConverter(4.572, "m")
+        self.assertAlmostEqual(converter.to_unit("yd"), 5, places=2)
+
+    def test_millimeters_to_meters(self):
+        converter = DistanceConverter(1500, "mm")
+        self.assertEqual(converter.to_meters(), 1.5)
+
+    def test_meters_to_millimeters(self):
+        converter = DistanceConverter(1.5, "m")
+        self.assertEqual(converter.to_unit("mm"), 1500)
+
+    def test_invalid_source_unit(self):
+        converter = DistanceConverter(10, "xyz")
+        with self.assertRaises(ValueError):
+            converter.to_meters()
+
+    def test_invalid_target_unit(self):
+        converter = DistanceConverter(10, "m")
+        with self.assertRaises(ValueError):
+            converter.to_unit("xyz")
 
 if __name__ == '__main__':
-    pass
+    converter = DistanceConverter(10, "km")
+    print(converter.to_meters())
+    print(converter.to_unit("mi"))
+    print(converter.to_unit("ft"))
+    print(converter.to_unit("cm"))

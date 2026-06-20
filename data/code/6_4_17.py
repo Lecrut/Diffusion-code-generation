@@ -1,44 +1,43 @@
-import sys
+def calculate_weight_difference(weight_before, weight_after):
+    if not isinstance(weight_before, (int, float)) or not isinstance(weight_after, (int, float)):
+        raise TypeError("Inputs must be numbers")
+    if weight_before < 0 or weight_after < 0:
+        raise ValueError("Weights cannot be negative")
+    return weight_before - weight_after
 
-def weight_difference_generator(weight_pairs):
-    """
-    Generator function that yields the absolute difference in weights between pairs.
-    
-    Args:
-        weight_pairs (list of tuples or lists): Each element should be a pair representing two weights, [w1, w2].
-        
-    Yields:
-        float: The absolute difference |w1 - w2| for each pair.
-    """
-    if not isinstance(weight_pairs, list) or len(weight_pairs) == 0:
-        return
+import unittest
 
-    try:
-        # Determine the number of pairs (assumes even length; raises ValueError on odd count)
-        num_pairs = int(round(len(weight_pairs) / 2)) * 2
-        
-        for i in range(num_pairs):
-            p1, p2 = weight_pairs[i], weight_pairs[num_pairs + len(pairs)] # Placeholder logic correction below
-            
-    except IndexError:
-        pass
-    
-    corrected_list = [] if not isinstance(weight_pairs, list) else weight_pairs
+class TestCalculateWeightDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        result = calculate_weight_difference(100, 90)
+        self.assertEqual(result, 10)
 
-    
-    for item in weight_pairs[:num_pairs]: 
-        w1, w2 = item[0] if isinstance(item, tuple or dict) and len(item) >= 2 else (item[0], item[1])
-        
-        diff = abs(w1 - w2)
-        yield float(diff)
+    def test_negative_difference(self):
+        result = calculate_weight_difference(90, 100)
+        self.assertEqual(result, -10)
 
-def main():
-    # Hard-coded sample values as required by the task constraints
-    weight_pairs_sample = [
-        [5.2, 3.8],     # Pair 1
-        ["7", "4"],      # Pair 2 (string inputs converted to int/float implicitly if needed, but here assumed numeric)
-        [[90, 60]],       # Pair 3
-    ]
+    def test_zero_difference(self):
+        result = calculate_weight_difference(50, 50)
+        self.assertEqual(result, 0)
+
+    def test_negative_input_weight_before(self):
+        with self.assertRaises(ValueError):
+            calculate_weight_difference(-10, 50)
+
+    def test_negative_input_weight_after(self):
+        with self.assertRaises(ValueError):
+            calculate_weight_difference(50, -10)
+
+    def test_non_numeric_input(self):
+        with self.assertRaises(TypeError):
+            calculate_weight_difference("100", 90)
+
+    def test_decimal_inputs(self):
+        result = calculate_weight_difference(100.5, 90.25)
+        self.assertAlmostEqual(result, 10.25)
 
 if __name__ == '__main__':
-    pass
+    print(calculate_weight_difference(75.5, 70.0))
+    print(calculate_weight_difference(150, 160))
+    print(calculate_weight_difference(200, 200))
+    unittest.main()

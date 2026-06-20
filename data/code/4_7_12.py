@@ -1,94 +1,44 @@
-import unittest
+class DistanceNormalizer:
+    def __init__(self):
+        self.scale_factors = {
+            'm': 1.0,
+            'meter': 1.0,
+            'meters': 1.0,
+            'km': 1000.0,
+            'kilometer': 1000.0,
+            'kilometers': 1000.0,
+            'cm': 0.01,
+            'centimeter': 0.01,
+            'centimeters': 0.01,
+            'mm': 0.001,
+            'millimeter': 0.001,
+            'millimeters': 0.001,
+            'in': 0.0254,
+            'inch': 0.0254,
+            'inches': 0.0254,
+            'ft': 0.3048,
+            'foot': 0.3048,
+            'feet': 0.3048,
+            'yd': 0.9144,
+            'yard': 0.9144,
+            'yards': 0.9144,
+            'mi': 1609.344,
+            'mile': 1609.344,
+            'miles': 1609.344
+        }
 
-class DistanceConverter:
-    """A class to convert distances between various units."""
-    
-    def __init__(self, value_in_meters):
-        self.value = float(value_in_meters) if isinstance(value_in_meters, (int, float)) else 0.0
-    
-    def kilometers(self):
-        return self.value / 1000
-
-    def meters(self):
-        return self.value
-
-    def centimeters(self):
-        return self.value * 100
-
-    def feet(self):
-        # 1 meter = 3.28084 feet
-        return self.value * 3.28084
-
-    def yards(self):
-        # 1 yard = 0.9144 meters
-        return self.value / 0.9144
-
-    def miles(self):
-        # 1 mile = 1609.344 meters
-        return self.value / 1609.344
-
-class TestDistanceConverter(unittest.TestCase):
-    
-    @classmethod
-    def setUpClass(cls):
-        """Set up a single converter instance for all tests."""
-        cls.converter = DistanceConverter(50)
-
-    def test_kilometers_positive(self):
-        expected = 50 / 1000
-        self.assertAlmostEqual(self.converter.kilometers(), expected, places=2)
-
-    def test_meters_exact_match(self):
-        self.assertEqual(self.converter.meters(), 50.0)
-
-    def test_centimeters_calculation(self):
-        expected = 50 * 100
-        self.assertAlmostEqual(self.converter.centimeters(), expected, delta=0.01)
-
-    def test_feet_conversion_factor(self):
-        # 50 meters is exactly ~164.042 feet
-        expected = round(50 * 3.28084, 2)
-        self.assertAlmostEqual(self.converter.feet(), expected, places=2)
-
-    def test_yards_conversion_exactness(self):
-        # Using the exact definition: 1 yard = 0.9144 meters exactly
-        expected = round(50 / 0.9144, 3)
-        self.assertAlmostEqual(self.converter.yards(), expected, places=2)
-
-    def test_miles_precision(self):
-        # 1 mile = 1609.344 meters
-        expected = round(50 / 1609.344, 3)
-        self.assertAlmostEqual(self.converter.miles(), expected, places=2)
-
-    def test_negative_value_handling(self):
-        """Test handling of negative distance values."""
-        neg_converter = DistanceConverter(-75)
-        # -75 meters -> -0.075 km
-        self.assertAlmostEqual(neg_converter.kilometers(), -0.075, places=2)
-
-    def test_zero_value_handling(self):
-        """Test handling of zero distance."""
-        zero_converter = DistanceConverter(0)
-        # All conversions should be 0 for input 0 regardless of unit logic (mostly), 
-        # except perhaps division by zero if implemented poorly. Here, all are safe.
-        self.assertEqual(zero_converter.kilometers(), 0.0)
-        self.assertEqual(zero_converter.meters(), 0.0)
-
-    def test_large_value_handling(self):
-        """Test handling of a large distance value."""
-        large_converter = DistanceConverter(1_609_344) # Exactly 1 mile in meters
-        expected_miles = 1.0
-        self.assertAlmostEqual(large_converter.miles(), expected_miles, places=5)
-
-    def test_type_conversion_int_to_float(self):
-        """Ensure integer input is correctly converted to float."""
-        int_input = DistanceConverter(25) # Should be treated as 25.0
-        self.assertEqual(int_input.value, 25.0)
+    def normalize_to_meters(self, value, unit):
+        if unit not in self.scale_factors:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * self.scale_factors[unit]
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestDistanceConverter)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    if not result.wasSuccessful():
-        exit(1)
+    normalizer = DistanceNormalizer()
+    sample_value_1 = 5.0
+    sample_unit_1 = 'km'
+    sample_value_2 = 12.0
+    sample_unit_2 = 'ft'
+    result_1 = normalizer.normalize_to_meters(sample_value_1, sample_unit_1)
+    result_2 = normalizer.normalize_to_meters(sample_value_2, sample_unit_2)
+    print(result_1)
+    print(result_2)

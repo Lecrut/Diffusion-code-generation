@@ -1,34 +1,34 @@
-def calculate_rectangle_area(width: float, height: float) -> float:
-    """Calculate the area of a rectangle."""
+import time
+import math
+
+def calculate_rectangle_area(width, height):
     return width * height
 
-def calculate_circle_area(radius: float) -> float:
-    """Calculate the area of a circle using pi approximated to 3.14159."""
-    import math
-    return math.pi * (radius ** 2)
+def calculate_circle_area(radius):
+    return math.pi * radius * radius
+
+def benchmark_areas():
+    rectangle_count = 10000
+    circle_count = 10000
+    
+    rectangle_width = 5.0
+    rectangle_height = 10.0
+    circle_radius = 7.0
+    
+    start_time = time.perf_counter()
+    for _ in range(rectangle_count):
+        calculate_rectangle_area(rectangle_width, rectangle_height)
+    rectangle_time = time.perf_counter() - start_time
+    
+    start_time = time.perf_counter()
+    for _ in range(circle_count):
+        calculate_circle_area(circle_radius)
+    circle_time = time.perf_counter() - start_time
+    
+    print(f"Rectangle area: {calculate_rectangle_area(rectangle_width, rectangle_height)}")
+    print(f"Circle area: {calculate_circle_area(circle_radius)}")
+    print(f"Time for 10000 rectangles: {rectangle_time:.6f} seconds")
+    print(f"Time for 10000 circles: {circle_time:.6f} seconds")
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements
-    shape_type = "rectangle"
-    
-    if shape_type.lower() == "circle":
-        radius_value = 5.0
-        area_result = calculate_circle_area(radius_value)
-        print(f"The area of the circle with radius {radius_value} is: {area_result:.2f}")
-    elif shape_type.lower() == "rectangle":
-        width_value = 10.0
-        height_value = 7.5
-        area_result = calculate_rectangle_area(width_value, height_value)
-        print(f"The area of the rectangle with dimensions {width_value}x{height_value} is: {area_result:.2f}")
-    else:
-        # Default fallback for unknown shape types to demonstrate conditional logic flow
-        default_shape_type = "rectangle"
-        if default_shape_type.lower() == "circle":
-            radius_fallback = 3.0
-            area_fallback = calculate_circle_area(radius_fallback)
-            print(f"The calculated area using the default circle type is: {area_fallback:.2f}")
-        else:
-            width_fallback = 8.0
-            height_fallback = 4.0
-            area_fallback = calculate_rectangle_area(width_fallback, height_fallback)
-            print(f"The calculated area using the default rectangle type is: {area_fallback:.2f}")
+    benchmark_areas()

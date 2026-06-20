@@ -1,9 +1,12 @@
-class TemperatureConverter:
-    def celsius_to_fahrenheit(self, celsius: float) -> float:
-        fahrenheit = (celsius * 9/5) + 32
-        return fahrenheit
+def celsius_to_fahrenheit(temperatures):
+    return {location: (temp * 9/5) + 32 for location, temp in temperatures.items()}
+
 if __name__ == '__main__':
-    converter = TemperatureConverter()
-    celsius_temp = 25.0
-    fahrenheit_temp = converter.celsius_to_fahrenheit(celsius_temp)
-    print(f"{celsius_temp}°C is equal to {fahrenheit_temp}°F")
+    sample_temps = {
+        'New York': 20.0,
+        'London': 15.5,
+        'Tokyo': 25.0,
+        'Sydney': 30.0
+    }
+    result = celsius_to_fahrenheit(sample_temps)
+    print(result)

@@ -1,17 +1,23 @@
-def compare_lengths(a, b):
+def compare_lengths(a: float, b: float) -> tuple:
     if a > b:
-        return "greater"
+        return (a, b, "greater")
     elif a < b:
-        return "less"
+        return (a, b, "less")
     else:
-        return "equal"
+        return (a, b, "equal")
+
 if __name__ == '__main__':
-    val1 = 10.5
-    val2 = 10.5
-    print(f"Comparing {val1} and {val2}: {compare_lengths(val1, val2)}")
-    val3 = 22.1
-    val4 = 15.9
-    print(f"Comparing {val3} and {val4}: {compare_lengths(val3, val4)}")
-    val5 = 5.0
-    val6 = 7.8
-    print(f"Comparing {val5} and {val6}: {compare_lengths(val5, val6)}")
+    sample_a = 3.14
+    sample_b = 2.71
+    result = compare_lengths(sample_a, sample_b)
+    print(result)
+
+    sample_c = 5.0
+    sample_d = 5.0
+    result_equal = compare_lengths(sample_c, sample_d)
+    print(result_equal)
+
+    sample_e = 1.5
+    sample_f = 2.5
+    result_less = compare_lengths(sample_e, sample_f)
+    print(result_less)

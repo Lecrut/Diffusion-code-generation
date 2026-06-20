@@ -1,31 +1,42 @@
-import argparse
+class WeightCalculator:
+    UNIT_KG = "kg"
+    UNIT_LBS = "lbs"
+    VALID_UNITS = ("kg", "lbs")
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculate the difference between two weights.")
-    
-    # Create non-required arguments to satisfy constraints without user input interaction
-    weight1_arg = parser.add_argument("--weight1", type=float, help="First weight value")
-    weight2_arg = parser.add_argument("--weight2", type=float, help="Second weight value")
+    def __init__(self, weight_a=0.0, weight_b=0.0):
+        self._weight_a = float(weight_a)
+        self._weight_b = float(weight_b)
+        self._difference = 0.0
+        self._recalculate()
 
-    args = parser.parse_args()
+    def _recalculate(self):
+        self._difference = abs(self._weight_a - self._weight_b)
 
-    # Use hard-coded sample values if no arguments are provided
-    sample_weight1 = 50.0
-    sample_weight2 = 30.0
-    
-    if args.weight1 is None:
-        w1 = sample_weight1
-    else:
-        w1 = args.weight1
-        
-    if args.weight2 is None:
-        w2 = sample_weight2
-    else:
-        w2 = args.weight2
+    def set_weight_a(self, value):
+        self._weight_a = float(value)
+        self._recalculate()
 
-    difference = w1 - w2
-    
-    print(difference)
+    def set_weight_b(self, value):
+        self._weight_b = float(value)
+        self._recalculate()
+
+    def get_weight_a(self):
+        return self._weight_a
+
+    def get_weight_b(self):
+        return self._weight_b
+
+    def get_difference(self):
+        return self._difference
+
+    def is_zero_difference(self):
+        return self._difference == 0.0
 
 if __name__ == '__main__':
-    main()
+    calc = WeightCalculator(150.5, 120.0)
+    diff = calc.get_difference()
+    print(diff)
+    zero_diff_calc = WeightCalculator(100, 100)
+    print(zero_diff_calc.is_zero_difference())
+    calc.set_weight_a(200.0)
+    print(calc.get_difference())

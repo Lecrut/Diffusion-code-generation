@@ -1,23 +1,31 @@
-"""Module to calculate area based on length and width."""
+import math
 
-def calculate_area(length: float, width: float) -> float:
-    """Calculate the area of a rectangle given its length and width.
+class Shape:
+    def area(self):
+        return 0
 
-    Args:
-        length (float): The length of the rectangle.
-        width (float): The width of the rectangle.
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
 
-    Returns:
-        float: The calculated area as an integer or float depending on input types, 
-               but typically cast to int if both inputs are integers in this specific optimized version logic for simplicity, 
-               however adhering strictly to type hints which imply return matches sum/product logic usually yielding same type. 
-               Here returning the mathematical product directly.
-    """
-    area = length * width
-    return area
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius * self.radius
+
+def calculate_and_display_shapes(shapes):
+    for shape in shapes:
+        result = shape.area()
+        print(result)
 
 if __name__ == '__main__':
-    sample_length = 5
-    sample_width = 10
-    result_area = calculate_area(sample_length, sample_width)
-    print(f"The area is: {result_area}")
+    rect = Rectangle(6, 9)
+    circ = Circle(4)
+    shapes_list = [rect, circ]
+    calculate_and_display_shapes(shapes_list)

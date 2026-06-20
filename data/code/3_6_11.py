@@ -1,58 +1,52 @@
-import argparse
+class TemperatureSensor:
+    def __init__(self, name, celsius_value):
+        self.name = name
+        self.celsius_value = celsius_value
 
-def celsius_to_fahrenheit(celsius: float) -> str:
-    """Convert a temperature value from Celsius to Fahrenheit."""
-    return f"{celsius * 9/5 + 32}°F"
+    def to_kelvin(self):
+        return self.celsius_value + 273.15
 
-def parse_arguments():
-    """Parse command-line arguments for file path and conversion logic."""
-    parser = argparse.ArgumentParser(
-        description="Convert all temperature values in a text file from Celsius to Fahrenheit."
-    )
-    # The task forbids required arguments, so we make the input optional with defaults.
-    parser.add_argument("input_file", nargs='?', default=None)
-    
-    args = parser.parse_args()
+    def __repr__(self):
+        return f"Sensor(name='{self.name}', celsius={self.celsius_value})"
 
-    if args.input_file is None:
-        return {
-            "input_path": "/home/user/data/samples.txt"  # Hard-coded sample file path for the block to run without pre-existing files logic (simulating existence in context).
-        }
-    else:
-        return {"input_path": args.input_file}
+def process_sensors(sensors):
+    results = []
+    for sensor in sensors:
+        kelvin = sensor.to_kelvin()
+        results.append({
+            'name': sensor.name,
+            'celsius': sensor.celsius_value,
+            'kelvin': kelvin
+        })
+    return results
+
+def format_table(data):
+    name_col_max = max(len(row['name']) for row in data) + 2
+    celsius_col_max = 10
+    kelvin_col_max = 10
+
+    header = f"{'Sensor':<{name_col_max}}{'Celsius':>{celsius_col_max}}{'Kelvin':>{kelvin_col_max}}"
+    separator = "-" * len(header)
+    lines = [header, separator]
+
+    for row in data:
+        line = f"{row['name']:<{name_col_max}}{row['celsius']:>{celsius_col_max}.2f}{row['kelvin']:>{kelvin_col_max}.2f}"
+        lines.append(line)
+
+    return "\n".join(lines)
 
 def main():
-    """Main function to orchestrate reading, processing, and writing temperature data."""
-    parsed_args = parse_arguments()
+    sample_sensors = [
+        TemperatureSensor("Lab A", 20.5),
+        TemperatureSensor("Lab B", -5.0),
+        TemperatureSensor("Server Room", 32.1),
+        TemperatureSensor("Outdoor", -15.3),
+        TemperatureSensor("Greenhouse", 28.7)
+    ]
 
-    # Simulate file handling for the sample block as per constraints (run without user input or pre-existing files).
-    if parsed_args["input_path"] == "/home/user/data/samples.txt":
-        lines_to_process = [
-            "Today is 25 degrees Celsius.",
-            "The temperature dropped to -10 degrees Celsius overnight."
-        ]
+    data = process_sensors(sample_sensors)
+    table = format_table(data)
+    print(table)
 
-        # Process each line containing a numeric value that could be interpreted as Celsius.
-        for original_line in lines_to_process:
-            import re
-            
-            # Regex pattern to find integers or floats representing temperatures (e.g., 25, -10)
-            matches = re.findall(r'(-?\d+(?:\.\d+)?)', original_line)
-
-            if matches:
-                new_parts = []
-                for match in matches:
-                    try:
-                        celsius_value = float(match)
-                        fahrenheit_value = round(celsius_to_fahrenheit(celsius_value), 1)
-                        
-                        # Reconstruct the line with converted values (assuming simple substitution order to avoid replacement issues)
-                        # For this sample, we assume these are isolated occurrences for demonstration.
-                        new_text = original_line.replace(match, str(fahrenheit_value)) + " °F"
-                    except ValueError:
-                        # If conversion fails, keep the number as is but mark it or skip (here just continue).
-                        new_parts.append(original_line)
-                print(new_text)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,29 +1,26 @@
-import argparse
+class WeightCalculator:
+    def __init__(self, weight1, weight2):
+        self.weight1 = float(weight1)
+        self.weight2 = float(weight2)
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculate the difference between two weights.")
-    
-    # Define arguments with defaults to avoid requiring input from user or command line
-    weight1_arg = parser.add_argument(
-        '--weight1', 
-        type=float, 
-        default=5.0, 
-        help='First weight value (default: 5.0)'
-    )
-    weight2_arg = parser.add_argument(
-        '--weight2', 
-        type=float, 
-        default=3.0, 
-        help='Second weight value (default: 3.0)'
-    )
+    def calculate_difference(self):
+        return abs(self.weight1 - self.weight2)
 
-    args = parser.parse_args()
+    def set_weights(self, weight1, weight2):
+        self.weight1 = float(weight1)
+        self.weight2 = float(weight2)
 
-    # Calculate the difference
-    difference = weight1_arg - weight2_arg
-    
-    # Output result to standard output
-    print(f"{difference:.4f}")
+    def get_weight1(self):
+        return self.weight1
+
+    def get_weight2(self):
+        return self.weight2
 
 if __name__ == '__main__':
-    main()
+    calculator = WeightCalculator(10.5, 7.3)
+    difference = calculator.calculate_difference()
+    print(difference)
+
+    calculator.set_weights(20.0, 15.5)
+    new_difference = calculator.calculate_difference()
+    print(new_difference)

@@ -1,54 +1,46 @@
-import math
-def shoelace_area(points):
-    n = len(points)
-    if n < 3:
+def compute_convex_hull_area(points):
+    if len(points) < 3:
         return 0.0
-    sum1 = 0.0
-    sum2 = 0.0
-    for i in range(n):
-        j = (i + 1) % n
-        x1, y1 = points[i]
-        x2, y2 = points[j]
-        sum1 += x1 * y2
-        sum2 += y1 * x2
-    area = 0.5 * abs(sum1 - sum2)
-    return area
-def convex_hull(points):
-    if len(points) <= 2:
-        return points
-    start_point = min(points, key=lambda p: (p[1], p[0]))
-    def angle_sort_key(p):
-        dx = p[0] - start_point[0]
-        dy = p[1] - start_point[1]
-        angle = math.atan2(dy, dx)
-        distance = (dx**2 + dy**2)
-        return (angle, distance)
-    sorted_points = sorted(points, key=angle_sort_key)
-    hull = []
-    for p in sorted_points:
-        while len(hull) >= 2:
-            p1 = hull[-2]
-            p2 = hull[-1]
-            cross_product = (p2[0] - p1[0]) * (p[1] - p1[1]) - (p2[1] - p1[1]) * (p[0] - p1[0])
-            if cross_product > 0:
-                break
-            else:
-                hull.pop()
-        hull.append(p)
-    return hull
-def calculate_convex_hull_area(coordinates):
-    if len(coordinates) < 3:
-        return 0.0
-    hull_points = convex_hull(coordinates)
-    return shoelace_area(hull_points)
+
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+    def monotone_chain(pts):
+        pts = sorted(set(map(tuple, pts)))
+        if len(pts) <= 1:
+            return pts
+        lower = []
+        for p in pts:
+            while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+                lower.pop()
+            lower.append(p)
+        upper = []
+        for p in reversed(pts):
+            while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+                upper.pop()
+            upper.append(p)
+        return lower[:-1] + upper[:-1]
+
+    def polygon_area(hull):
+        n = len(hull)
+        if n < 3:
+            return 0.0
+        area = 0.0
+        for i in range(n):
+            j = (i + 1) % n
+            area += hull[i][0] * hull[j][1]
+            area -= hull[j][0] * hull[i][1]
+        return abs(area) / 2.0
+
+    hull = monotone_chain(points)
+    return polygon_area(hull)
+
 if __name__ == '__main__':
-    sample_coordinates = [
-        (0.0, 0.0),
-        (1.0, 0.0),
-        (0.0, 1.0),
-        (1.0, 1.0),
-        (0.5, 0.5),
-        (2.0, 0.0)
-    ]
-    area = calculate_convex_hull_area(sample_coordinates)
-    print(area)
+    sample_points = [(0, 0), (1, 0), (1, 1), (0, 1), (0.5, 0.5)]
+    print(compute_convex_hull_area(sample_points))
+    sample_points_2 = [(0, 0), (5, 0), (5, 5), (0, 5)]
+    print(compute_convex_hull_area(sample_points_2))
+    sample_points_3 = [(1, 1), (2, 2), (3, 3)]
+    print(compute_convex_hull_area(sample_points_3))
+    sample_points_4 = [(0, 0), (10, 0), (5, 8.66)]
+    print(compute_convex_hull_area(sample_points_4))

@@ -1,37 +1,32 @@
-import math
 def convert_distance(value, from_unit, to_unit):
     if from_unit == to_unit:
         return value
-    if from_unit == 'm':
-        if to_unit == 'km':
-            return value / 1000.0
-        elif to_unit == 'mi':
-            return value / 1609.34
-    elif from_unit == 'km':
-        if to_unit == 'm':
-            return value * 1000.0
-        elif to_unit == 'mi':
-            return value / 1.60934
-    elif from_unit == 'mi':
-        if to_unit == 'km':
-            return value * 1.60934
-        elif to_unit == 'm':
-            return value * 1609.34
-    raise ValueError("Invalid unit specified. Must be 'm', 'km', or 'mi'.")
+    conversions = {
+        ('meters', 'kilometers'): 0.001,
+        ('kilometers', 'meters'): 1000,
+        ('meters', 'miles'): 0.000621371,
+        ('miles', 'meters'): 1609.344,
+        ('kilometers', 'miles'): 0.621371,
+        ('miles', 'kilometers'): 1.609344,
+    }
+    if from_unit == 'kilometers' and to_unit == 'miles':
+        return value * 0.621371
+    if from_unit == 'miles' and to_unit == 'kilometers':
+        return value * 1.609344
+    if from_unit == 'meters' and to_unit == 'kilometers':
+        return value * 0.001
+    if from_unit == 'kilometers' and to_unit == 'meters':
+        return value * 1000
+    if from_unit == 'meters' and to_unit == 'miles':
+        return value * 0.000621371
+    if from_unit == 'miles' and to_unit == 'meters':
+        return value * 1609.344
+    raise ValueError(f"Unsupported conversion: {from_unit} to {to_unit}")
+
 if __name__ == '__main__':
-    distance_m = 5000.0
-    from_unit = 'm'
-    to_unit = 'km'
-    distance_mi = 10.0
-    from_unit = 'mi'
-    to_unit = 'm'
-    distance_km = 100.0
-    from_unit = 'km'
-    to_unit = 'mi'
-    print(f"{distance_m} meters to kilometers: {convert_distance(distance_m, from_unit, to_unit):.4f} km")
-    print(f"{distance_mi} miles to meters: {convert_distance(distance_mi, from_unit, to_unit):.4f} m")
-    print(f"{distance_km} kilometers to miles: {convert_distance(distance_km, from_unit, to_unit):.4f} mi")
-    try:
-        convert_distance(100, 'm', 'lightyear')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    result = convert_distance(1000, 'meters', 'kilometers')
+    print(result)
+    result2 = convert_distance(5, 'miles', 'kilometers')
+    print(result2)
+    result3 = convert_distance(10, 'kilometers', 'miles')
+    print(result3)

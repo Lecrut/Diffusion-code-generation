@@ -1,41 +1,54 @@
 class TimeConverter:
     def __init__(self):
-        pass
+        self.units = {
+            'nanosecond': 1e-9,
+            'microsecond': 1e-6,
+            'millisecond': 1e-3,
+            'second': 1,
+            'minute': 60,
+            'hour': 3600,
+            'day': 86400,
+            'week': 604800,
+            'month': 2629746,
+            'year': 31556952
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        from_unit = from_unit.lower()
+        to_unit = to_unit.lower()
+        if from_unit not in self.units:
+            raise ValueError(f"Unknown unit: {from_unit}")
+        if to_unit not in self.units:
+            raise ValueError(f"Unknown unit: {to_unit}")
+        seconds = value * self.units[from_unit]
+        result = seconds / self.units[to_unit]
+        return result
+
     def seconds_to_minutes(self, seconds):
-        return seconds / 60.0
+        return self.convert(seconds, 'second', 'minute')
+
     def minutes_to_seconds(self, minutes):
-        return minutes * 60.0
-    def hours_to_minutes(self, hours):
-        return hours * 60.0
-    def minutes_to_hours(self, minutes):
-        return minutes / 60.0
-    def days_to_hours(self, days):
-        return days * 24.0
+        return self.convert(minutes, 'minute', 'second')
+
     def hours_to_days(self, hours):
-        return hours / 24.0
+        return self.convert(hours, 'hour', 'day')
+
+    def days_to_hours(self, days):
+        return self.convert(days, 'day', 'hour')
+
+    def milliseconds_to_hours(self, milliseconds):
+        return self.convert(milliseconds, 'millisecond', 'hour')
+
+    def weeks_to_seconds(self, weeks):
+        return self.convert(weeks, 'week', 'second')
+
 if __name__ == '__main__':
     converter = TimeConverter()
-    print("--- Seconds to Minutes ---")
-    seconds_val = 125
-    minutes_val = converter.seconds_to_minutes(seconds_val)
-    print(f"{seconds_val} seconds is {minutes_val} minutes")
-    print("\n--- Minutes to Seconds ---")
-    minutes_val = 90.5
-    seconds_val = converter.minutes_to_seconds(minutes_val)
-    print(f"{minutes_val} minutes is {seconds_val} seconds")
-    print("\n--- Hours to Minutes ---")
-    hours_val = 2.75
-    minutes_val = converter.hours_to_minutes(hours_val)
-    print(f"{hours_val} hours is {minutes_val} minutes")
-    print("\n--- Minutes to Hours ---")
-    minutes_val = 150
-    hours_val = converter.minutes_to_hours(minutes_val)
-    print(f"{minutes_val} minutes is {hours_val} hours")
-    print("\n--- Days to Hours ---")
-    days_val = 3.5
-    hours_val = converter.days_to_hours(days_val)
-    print(f"{days_val} days is {hours_val} hours")
-    print("\n--- Hours to Days ---")
-    hours_val = 48
-    days_val = converter.hours_to_days(hours_val)
-    print(f"{hours_val} hours is {days_val} days")
+    print(converter.seconds_to_minutes(120))
+    print(converter.minutes_to_seconds(2.5))
+    print(converter.hours_to_days(24))
+    print(converter.days_to_hours(1))
+    print(converter.milliseconds_to_hours(3600000))
+    print(converter.weeks_to_seconds(1))
+    print(converter.convert(1, 'year', 'day'))
+    print(converter.convert(1, 'nanosecond', 'millisecond'))

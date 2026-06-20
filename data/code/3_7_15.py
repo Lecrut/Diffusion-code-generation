@@ -1,29 +1,28 @@
-"""
-Temperature Conversion Module
+class Sensor:
+    def __init__(self, raw_data):
+        self.raw_data = raw_data
 
-This module provides highly optimized functions for converting between 
-Celsius (°C), Fahrenheit (°F), and Kelvin (K). All mathematical operations 
-are implemented using standard arithmetic with minimal overhead to ensure 
-performance in high-throughput scenarios.
+    def read_raw_temperature(self):
+        return self.raw_data
 
-Functions:
-    c_to_f(c): Converts temperature from Celsius to Fahrenheit.
-    f_to_c(f): Converts temperature from Fahrenheit to Celsius.
-    k_to_c(k): Converts temperature from Kelvin to Celsius.
-"""
+class Converter:
+    def celsius_to_fahrenheit(self, celsius):
+        return celsius * 9 / 5 + 32
 
-def c_to_f(celsius: float) -> float:
-    """
-    Convert a temperature value from Celsius to Fahrenheit.
+    def celsius_to_kelvin(self, celsius):
+        return celsius + 273.15
 
-    Formula: F = (C * 9/5) + 32
-    
-    Args:
-        celsius (float): Temperature in degrees Celsius.
-        
-    Returns:
-        float: Temperature in degrees Fahrenheit.
-    """
+    def fahrenheit_to_celsius(self, fahrenheit):
+        return (fahrenheit - 32) * 5 / 9
+
+    def kelvin_to_celsius(self, kelvin):
+        return kelvin - 273.15
 
 if __name__ == '__main__':
-    pass
+    sensor = Sensor(25.0)
+    raw_temp = sensor.read_raw_temperature()
+    converter = Converter()
+    fahrenheit = converter.celsius_to_fahrenheit(raw_temp)
+    kelvin = converter.celsius_to_kelvin(raw_temp)
+    print(fahrenheit)
+    print(kelvin)

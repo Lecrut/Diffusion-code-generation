@@ -1,84 +1,185 @@
 import unittest
 from datetime import timedelta
 
-def seconds_to_time(seconds):
-    """Convert total seconds into a tuple of (days, hours, minutes)."""
-    days = seconds // 86400
-    remaining_seconds = seconds % 86400
-    hours = remaining_seconds // 3600
-    remaining_seconds %= 3600
-    minutes = remaining_seconds // 60
-    
-    return (days, hours, minutes)
+def hours_to_minutes(hours):
+    return hours * 60
 
-def time_to_seconds(days=0, hours=0, minutes=0):
-    """Convert a tuple of (days, hours, minutes) back to total seconds."""
-    days *= 86400
-    hours *= 3600
-    minutes *= 60
-    
-    return days + hours + minutes
+def hours_to_seconds(hours):
+    return hours * 3600
+
+def days_to_hours(days):
+    return days * 24
+
+def hours_to_days(hours):
+    if hours % 24 != 0:
+        return hours / 24.0
+    return int(hours / 24)
+
+def seconds_to_hours(seconds):
+    return seconds / 3600.0
+
+def days_to_minutes(days):
+    return days * 24 * 60
+
+def days_to_seconds(days):
+    return days * 24 * 3600
+
+def minutes_to_hours(minutes):
+    return minutes / 60.0
+
+def minutes_to_seconds(minutes):
+    return minutes * 60
+
+def seconds_to_days(seconds):
+    return seconds / (24 * 3600.0)
+
+def add_timedelta(hours=0, minutes=0, seconds=0):
+    td = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+    total_seconds = td.total_seconds()
+    days = int(total_seconds // 86400)
+    remaining_seconds = int(total_seconds % 86400)
+    hours = int(remaining_seconds // 3600)
+    remaining_seconds = remaining_seconds % 3600
+    mins = int(remaining_seconds // 60)
+    secs = int(remaining_seconds % 60)
+    return {
+        'days': days,
+        'hours': hours,
+        'minutes': mins,
+        'seconds': secs
+    }
 
 class TestTimeConversion(unittest.TestCase):
-    
-    def test_zero_values(self):
-        # Zero input should result in zero output
-        self.assertEqual(seconds_to_time(0), (0, 0, 0))
-        self.assertEqual(time_to_seconds(days=0, hours=0, minutes=0), 0)
+    def test_hours_to_minutes_zero(self):
+        self.assertEqual(hours_to_minutes(0), 0)
 
-    def test_large_time_spans(self):
-        # Test with a large number of seconds to ensure no overflow in Python integers
-        large_seconds = 1_000_000_000 
-        days, hours, minutes = seconds_to_time(large_seconds)
-        
-        reconstructed = time_to_seconds(days=days, hours=hours, minutes=minutes)
-        self.assertEqual(reconstructed, large_seconds)
+    def test_hours_to_minutes_positive(self):
+        self.assertEqual(hours_to_minutes(1), 60)
 
-    def test_negative_values(self):
-        # Test negative values to ensure arithmetic handles them correctly (though physical time is usually non-negative)
-        neg_seconds = -3601  # Should be roughly (-1 day, 23 hours, 59 minutes)
-        
-        days, hours, minutes = seconds_to_time(neg_seconds)
-        reconstructed = time_to_seconds(days=days, hours=hours, minutes=minutes)
-        
-        self.assertEqual(reconstructed, neg_seconds)
+    def test_hours_to_minutes_large(self):
+        self.assertEqual(hours_to_minutes(1000), 60000)
 
-    def test_exact_boundary_cases(self):
-        # Test boundaries: exactly 1 day (86400s), exactly 24h (3600*24s), etc.
-        one_day = seconds_to_time(86400)
-        self.assertEqual(one_day, (1, 0, 0))
+    def test_hours_to_seconds_zero(self):
+        self.assertEqual(hours_to_seconds(0), 0)
 
-        twenty_four_hours = time_to_seconds(days=0, hours=24, minutes=0)
-        self.assertEqual(twenty_four_hours, 86400)
+    def test_hours_to_seconds_positive(self):
+        self.assertEqual(hours_to_seconds(1), 3600)
 
-    def test_partial_days_and_hours(self):
-        # Test a mix of days and partial hours/minutes
-        mixed_input = (3, 5, 10)
-        expected_seconds = time_to_seconds(*mixed_input)
-        
-        result = seconds_to_time(expected_seconds)
-        self.assertEqual(result, (3, 5, 10))
+    def test_hours_to_seconds_large(self):
+        self.assertEqual(hours_to_seconds(100), 360000)
 
-    def test_fractional_minutes_rounding(self):
-        # Test a case where there are leftover minutes that don't divide evenly into hours
-        input_val = time_to_seconds(days=2, hours=4, minutes=7)
-        result = seconds_to_time(input_val)
-        
-        self.assertEqual(result[0], 2)
-        self.assertEqual(result[1], 4)
-        # Note: Since we are working with integers in the conversion logic described previously (integers only), 
-        # any fractional part of a minute would be lost. This test assumes integer arithmetic based on previous context.
-        # If floating point was used, this assertion might need adjustment to allow small epsilon differences.
-        self.assertEqual(result[2], 7)
+    def test_days_to_hours_zero(self):
+        self.assertEqual(days_to_hours(0), 0)
+
+    def test_days_to_hours_positive(self):
+        self.assertEqual(days_to_hours(1), 24)
+
+    def test_days_to_hours_large(self):
+        self.assertEqual(days_to_hours(10), 240)
+
+    def test_hours_to_days_exact(self):
+        self.assertEqual(hours_to_days(24), 1)
+
+    def test_hours_to_days_non_exact(self):
+        self.assertAlmostEqual(hours_to_days(25), 25 / 24.0)
+
+    def test_hours_to_days_zero(self):
+        self.assertEqual(hours_to_days(0), 0)
+
+    def test_seconds_to_hours_zero(self):
+        self.assertEqual(seconds_to_hours(0), 0.0)
+
+    def test_seconds_to_hours_positive(self):
+        self.assertEqual(seconds_to_hours(3600), 1.0)
+
+    def test_seconds_to_hours_negative(self):
+        self.assertEqual(seconds_to_hours(-3600), -1.0)
+
+    def test_days_to_minutes_zero(self):
+        self.assertEqual(days_to_minutes(0), 0)
+
+    def test_days_to_minutes_positive(self):
+        self.assertEqual(days_to_minutes(1), 1440)
+
+    def test_days_to_minutes_large(self):
+        self.assertEqual(days_to_minutes(10), 14400)
+
+    def test_days_to_seconds_zero(self):
+        self.assertEqual(days_to_seconds(0), 0)
+
+    def test_days_to_seconds_positive(self):
+        self.assertEqual(days_to_seconds(1), 86400)
+
+    def test_days_to_seconds_large(self):
+        self.assertEqual(days_to_seconds(10), 864000)
+
+    def test_minutes_to_hours_zero(self):
+        self.assertEqual(minutes_to_hours(0), 0.0)
+
+    def test_minutes_to_hours_positive(self):
+        self.assertEqual(minutes_to_hours(60), 1.0)
+
+    def test_minutes_to_seconds_zero(self):
+        self.assertEqual(minutes_to_seconds(0), 0)
+
+    def test_minutes_to_seconds_positive(self):
+        self.assertEqual(minutes_to_seconds(1), 60)
+
+    def test_minutes_to_seconds_large(self):
+        self.assertEqual(minutes_to_seconds(100), 6000)
+
+    def test_seconds_to_days_zero(self):
+        self.assertEqual(seconds_to_days(0), 0.0)
+
+    def test_seconds_to_days_positive(self):
+        self.assertEqual(seconds_to_days(86400), 1.0)
+
+    def test_seconds_to_days_negative(self):
+        self.assertEqual(seconds_to_days(-86400), -1.0)
+
+    def test_add_timedelta_zero(self):
+        result = add_timedelta(0, 0, 0)
+        self.assertEqual(result['days'], 0)
+        self.assertEqual(result['hours'], 0)
+        self.assertEqual(result['minutes'], 0)
+        self.assertEqual(result['seconds'], 0)
+
+    def test_add_timedelta_positive(self):
+        result = add_timedelta(1, 30, 45)
+        self.assertEqual(result['days'], 0)
+        self.assertEqual(result['hours'], 1)
+        self.assertEqual(result['minutes'], 30)
+        self.assertEqual(result['seconds'], 45)
+
+    def test_add_timedelta_large(self):
+        result = add_timedelta(25, 0, 0)
+        self.assertEqual(result['days'], 1)
+        self.assertEqual(result['hours'], 1)
+        self.assertEqual(result['minutes'], 0)
+        self.assertEqual(result['seconds'], 0)
+
+    def test_add_timedelta_days_only(self):
+        result = add_timedelta(0, 0, 0)
+        result['days'] = 2
+        result['hours'] = 1
+        result['minutes'] = 0
+        result['seconds'] = 0
+        self.assertEqual(result['days'], 2)
+
+    def test_add_timedelta_negative_seconds(self):
+        result = add_timedelta(0, 0, -60)
+        total = timedelta(seconds=-60).total_seconds()
+        td = timedelta(seconds=total)
+        expected_days = 0
+        expected_hours = -1
+        expected_mins = 0
+        expected_secs = 0
+        self.assertEqual(result['hours'], -1)
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestTimeConversion)
-    
-    runner = unittest.TextTestRunner(verbosity=1)
-    result = runner.run(suite)
-
-    # Run tests directly in the console for demonstration without requiring a test file to exist previously
-    if not result.wasSuccessful():
-        print("\nSome tests failed.")
-    else:
-        print("\nAll tests passed successfully.")
+    result1 = hours_to_minutes(2)
+    print(result1)
+    result2 = days_to_seconds(1)
+    print(result2)
+    result3 = add_timedelta(24, 0, 0)
+    print(result3)

@@ -1,8 +1,8 @@
-def calculate_weight_difference(a: float | int, b: float | int) -> float | None:
-    return a - b if isinstance((a, b), (int, float)) else None
+def calculate_weight_difference(w1, w2):
+    return abs(w1 - w2)
 
 if __name__ == '__main__':
-    weight_a = 10.5
-    weight_b = 7.2
-    diff = calculate_weight_difference(weight_a, weight_b)
-    print(diff)
+    w1 = 10.5
+    w2 = 5.2
+    result = calculate_weight_difference(w1, w2)
+    print(result)

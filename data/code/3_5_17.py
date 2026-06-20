@@ -1,21 +1,17 @@
-def filter_temperatures(temperatures):
-    """
-    Filters out temperature readings below freezing (0°C).
+def celsius_to_fahrenheit(celsius):
+    return celsius * 9 / 5 + 32
 
-    Args:
-        temperatures (list of float or int): A list containing temperature values.
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5 / 9
 
-    Returns:
-        list of float or int: A new list with only the temperatures at or above 0°C.
-    """
-    return [temp for temp in temperatures if temp >= 0]
+def kelvin_to_celsius(kelvin):
+    return kelvin - 273.15
 
 if __name__ == '__main__':
-    # Hard-coded sample data representing temperature readings (in Celsius)
-    raw_readings = [-5, -2, 1, 3.5, 0, -8, 7, 4.2, -1.5, 9]
+    sample_celsius = 100.0
+    sample_fahrenheit = 212.0
+    sample_kelvin = 373.15
 
-    filtered_data = filter_temperatures(raw_readings)
-
-    print("Filtered temperature readings (>= 0°C):")
-    for temp in filtered_data:
-        print(f"{temp}°C")
+    print(celsius_to_fahrenheit(sample_celsius))
+    print(fahrenheit_to_celsius(sample_fahrenheit))
+    print(kelvin_to_celsius(sample_kelvin))

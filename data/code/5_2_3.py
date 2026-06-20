@@ -6,9 +6,12 @@ class LengthComparator:
             return f"{length_a} is less than {length_b}"
         else:
             return f"{length_a} is equal to {length_b}"
+
 if __name__ == '__main__':
     comparator = LengthComparator()
-    print(comparator.compare(10, 5))
-    print(comparator.compare(20, 20))
-    print(comparator.compare(3, 15))
-    print(comparator.compare(100, 99))
+    result1 = comparator.compare(10, 5)
+    result2 = comparator.compare(3, 3)
+    result3 = comparator.compare(2, 8)
+    print(result1)
+    print(result2)
+    print(result3)

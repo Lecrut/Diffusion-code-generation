@@ -1,12 +1,9 @@
-def calculate_weight_difference(weight1, weight2):
-    return abs(weight1 - weight2)
+def get_weight_difference():
+    weight_a = 10.5
+    weight_b = 2.3
+    difference = weight_a - weight_b
+    return difference
+
 if __name__ == '__main__':
-    try:
-        weight1_str = "100"
-        weight2_str = "50"
-        weight1 = float(weight1_str)
-        weight2 = float(weight2_str)
-        difference = calculate_weight_difference(weight1, weight2)
-        print(difference)
-    except ValueError:
-        print("Error: Invalid input. Please ensure both inputs are numerical.")
+    result = get_weight_difference()
+    print(result)

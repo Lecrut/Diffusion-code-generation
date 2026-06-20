@@ -1,55 +1,55 @@
-import numpy as np
+class LengthComparator:
+    def __init__(self, value1, unit1, value2, unit2):
+        self.value1 = value1
+        self.unit1 = unit1.lower()
+        self.value2 = value2
+        self.unit2 = unit2.lower()
 
-def compare_signs(arr1: np.ndarray, arr2: np.ndarray) -> np.ndarray:
-    """
-    Compare two arrays of length measurements element-wise.
-    
-    Returns an array where each element indicates the sign of 
-    (arr1[i] - arr2[i]):
-        1 if arr1[i] > arr2[i]
-         0 if arr1[i] == arr2[i]
-        -1 if arr1[i] < arr2[i]
+    def _convert_to_meters(self, value, unit):
+        conversion_factors = {
+            'meter': 1.0,
+            'meters': 1.0,
+            'm': 1.0,
+            'kilometer': 1000.0,
+            'kilometers': 1000.0,
+            'km': 1000.0,
+            'centimeter': 0.01,
+            'centimeters': 0.01,
+            'cm': 0.01,
+            'millimeter': 0.001,
+            'millimeters': 0.001,
+            'mm': 0.001,
+            'mile': 1609.34,
+            'miles': 1609.34,
+            'foot': 0.3048,
+            'feet': 0.3048,
+            'ft': 0.3048,
+            'inch': 0.0254,
+            'inches': 0.0254,
+            'in': 0.0254,
+            'yard': 0.9144,
+            'yards': 0.9144,
+            'yd': 0.9144
+        }
+        return value * conversion_factors[unit]
 
-    Parameters:
-        arr1 (np.ndarray): First array of length measurements.
-        arr2 (np.ndarray): Second array of length measurements.
+    def compare(self):
+        meters1 = self._convert_to_meters(self.value1, self.unit1)
+        meters2 = self._convert_to_meters(self.value2, self.unit2)
 
-    Returns:
-        np.ndarray: Array of signs corresponding to the difference.
-
-    Performance Note:
-        Uses vectorized NumPy operations for high performance 
-        with large datasets, avoiding Python-level loops.
-    """
-    if not isinstance(arr1, np.ndarray) or not isinstance(arr2, np.ndarray):
-        raise TypeError("Both inputs must be NumPy arrays.")
-    
-    if arr1.shape != arr2.shape:
-        raise ValueError(f"Arrays must have the same shape. Got {arr1.shape} and {arr2.shape}.")
-
-    diff = arr1 - arr2
-    signs = np.sign(diff)
-
-    return signs
+        if meters1 > meters2:
+            return f"{self.value1} {self.unit1} is greater than {self.value2} {self.unit2}"
+        elif meters1 < meters2:
+            return f"{self.value1} {self.unit1} is less than {self.value2} {self.unit2}"
+        else:
+            return f"{self.value1} {self.unit1} is equal to {self.value2} {self.unit2}"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no external input is required
-    measurements_1_meters = np.array([0.5, 1.2, 3.7, 4.89])
-    measurements_2_inches = np.array([19.69, 47.24, 145.66, 192.92], dtype=float)
+    comparator = LengthComparator(1, 'meter', 100, 'centimeter')
+    print(comparator.compare())
 
-    # Convert inches to meters for fair comparison (optional logic demonstration)
-    conversion_factor_meters_per_inch = 0.0254
-    measurements_2_converted_meters = np.array(measurements_2_inches) * conversion_factor_meters_per_inch
+    comparator2 = LengthComparator(1, 'mile', 1609, 'meter')
+    print(comparator2.compare())
 
-    signs_result = compare_signs(measurements_1_meters, measurements_2_converted_meters)
-
-    print("Sign of difference (measurement 1 vs measurement 2 converted to meters):")
-    for i, sign in enumerate(signs_result):
-        if np.isclose(measurements_1_meters[i], measurements_2_converted_meters[i]):
-            status_str = "Equal"
-        elif signs_result[i] > 0:
-            status_str = "Greater than"
-        else:
-            status_str = "Less than"
-
-        print(f"{i}: {measurements_1_meters[i]:.2f} m vs {measurements_2_converted_meters[i]:.4f} m -> Sign: {signs_result[i]} ({status_str})")
+    comparator3 = LengthComparator(10, 'feet', 3, 'meters')
+    print(comparator3.compare())

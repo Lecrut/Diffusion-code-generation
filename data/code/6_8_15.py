@@ -1,12 +1,6 @@
-from typing import Any
-import math
-
-def simple_weight_diff(a: float | int, b: float | int) -> float:
-    """Calculate absolute weight difference between two values."""
-    return abs(float(a) - float(b))
+def calculate_weight_difference(weight1: float, weight2: float) -> float:
+    return abs(weight1 - weight2)
 
 if __name__ == '__main__':
-    val1 = 50.234
-    val2 = 98.765 * math.pi
-    diff = simple_weight_diff(val1, val2)
-    print(f"Weight difference: {diff:.6f}")
+    result = calculate_weight_difference(10.5, 7.2)
+    print(result)

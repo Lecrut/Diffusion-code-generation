@@ -1,56 +1,44 @@
 import math
-def shoelace_area(points):
-    if len(points) < 3:
+
+def convex_hull_area(points):
+    if not points:
         return 0.0
+    
+    points = sorted(points)
+    
+    if len(points) <= 1:
+        return 0.0
+    
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+    lower = []
+    for p in points:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+
+    upper = []
+    for p in reversed(points):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+
+    hull = lower[:-1] + upper[:-1]
+    
+    if len(hull) < 3:
+        return 0.0
+
     area = 0.0
-    n = len(points)
+    n = len(hull)
     for i in range(n):
         j = (i + 1) % n
-        x1, y1 = points[i]
-        x2, y2 = points[j]
-        area += (x1 * y2 - x2 * y1)
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
+        
     return abs(area) / 2.0
-def calculate_convex_hull_area(coordinates):
-    if len(coordinates) < 3:
-        return 0.0
-    points = list(coordinates)
-    start_point_index = 0
-    for i in range(1, len(points)):
-        if points[i][1] < points[start_point_index][1] or \
-           (points[i][1] == points[start_point_index][1] and points[i][0] < points[start_point_index][0]):
-            start_point_index = i
-    start_point = points[start_point_index]
-    def polar_angle_sort_key(point):
-        dx = point[0] - start_point[0]
-        dy = point[1] - start_point[1]
-        angle = math.atan2(dy, dx)
-        distance_sq = dx*dx + dy*dy
-        return (angle, distance_sq)
-    sorted_points = sorted(points, key=polar_angle_sort_key)
-    hull = []
-    if sorted_points:
-        hull.append(sorted_points[0])
-        if len(sorted_points) > 1:
-            hull.append(sorted_points[1])
-        for i in range(2, len(sorted_points)):
-            while len(hull) >= 2:
-                p1 = hull[-2]
-                p2 = hull[-1]
-                cross_product = (p2[0] - p1[0]) * (sorted_points[i][1] - p2[1]) - \
-                                (p2[1] - p1[1]) * (sorted_points[i][0] - p2[0])
-                if cross_product > 0:
-                    break
-                else:
-                    hull.pop()
-            hull.append(sorted_points[i])
-    return shoelace_area(hull)
+
 if __name__ == '__main__':
-    sample_coordinates = [
-        (0.0, 0.0),
-        (1.0, 0.0),
-        (0.5, 1.0),
-        (2.0, 0.5),
-        (1.5, 2.0)
-    ]
-    area = calculate_convex_hull_area(sample_coordinates)
-    print(area)
+    pts = [(0, 0), (4, 0), (4, 3), (0, 3)]
+    result = convex_hull_area(pts)
+    print(result)

@@ -1,26 +1,32 @@
-class UnitConverter:
-    @staticmethod
-    def celsius_to_fahrenheit(celsius):
-        return (celsius * 9/5) + 32
-    @staticmethod
-    def fahrenheit_to_celsius(fahrenheit):
-        return (fahrenheit - 32) * 5/9
-    @staticmethod
-    def mass_kg_to_lbs(kilograms):
-        return kilograms * 2.20462
-    @staticmethod
-    def mass_lbs_to_kg(pounds):
-        return pounds / 2.20462
+def convert_distance(distance, target_unit, source_unit):
+    if distance == 0:
+        return 0.0
+    
+    conversion_factors = {
+        'meters': 1.0,
+        'kilometers': 1000.0,
+        'centimeters': 0.01,
+        'millimeters': 0.001,
+        'miles': 1609.34,
+        'yards': 0.9144,
+        'feet': 0.3048,
+        'inches': 0.0254
+    }
+    
+    if source_unit not in conversion_factors or target_unit not in conversion_factors:
+        raise ValueError(f"Invalid unit. Supported units: {list(conversion_factors.keys())}")
+    
+    if conversion_factors[target_unit] == 0:
+        raise ZeroDivisionError("Cannot convert to a unit with a zero conversion factor.")
+    
+    base_value = distance * conversion_factors[source_unit]
+    result = base_value / conversion_factors[target_unit]
+    return result
+
 if __name__ == '__main__':
-    celsius_temp = 25
-    fahrenheit_temp = UnitConverter.celsius_to_fahrenheit(celsius_temp)
-    print(f"{celsius_temp}°C is {fahrenheit_temp}°F")
-    fahrenheit_temp_2 = 68
-    celsius_temp_2 = UnitConverter.fahrenheit_to_celsius(fahrenheit_temp_2)
-    print(f"{fahrenheit_temp_2}°F is {celsius_temp_2}°C")
-    mass_kg = 10
-    mass_lbs = UnitConverter.mass_kg_to_lbs(mass_kg)
-    print(f"{mass_kg} kg is {mass_lbs} lbs")
-    mass_lbs_2 = 150
-    mass_kg_2 = UnitConverter.mass_lbs_to_kg(mass_lbs_2)
-    print(f"{mass_lbs_2} lbs is {mass_kg_2} kg")
+    distance_input = 100.0
+    source_unit_input = 'meters'
+    target_unit_input = 'feet'
+    
+    output_value = convert_distance(distance_input, target_unit_input, source_unit_input)
+    print(output_value)

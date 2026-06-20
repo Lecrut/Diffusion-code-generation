@@ -1,50 +1,52 @@
-import argparse
+def parse_time_string(time_str):
+    parts = time_str.split(':')
+    if len(parts) != 3:
+        raise ValueError("Time string must be in HH:MM:SS format")
+    
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
+    
+    if not (0 <= hours <= 23 and 0 <= minutes <= 59 and 0 <= seconds <= 59):
+        raise ValueError("Invalid time values")
+    
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    return total_seconds
 
-def convert_time(hours: float, minutes: int) -> None:
-    """Converts hours to total minutes."""
-    return (hours * 60) + minutes
+def total_seconds_to_human_readable(total_seconds):
+    if total_seconds < 0:
+        raise ValueError("Total seconds cannot be negative")
+    
+    days = total_seconds // 86400
+    remaining = total_seconds % 86400
+    
+    hours = remaining // 3600
+    remaining = remaining % 3600
+    
+    minutes = remaining // 60
+    seconds = remaining % 60
+    
+    parts = []
+    if days > 0:
+        parts.append(f"{days} days")
+    if hours > 0:
+        parts.append(f"{hours} hours")
+    if minutes > 0:
+        parts.append(f"{minutes} minutes")
+    if seconds > 0 or not parts:
+        parts.append(f"{seconds} seconds")
+    
+    return ", ".join(parts)
+
+def convert_time_to_human_readable(time_str):
+    total_seconds = parse_time_string(time_str)
+    return total_seconds_to_human_readable(total_seconds)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Convert time between hours and minutes.')
-
-    subparsers = parser.add_subparsers(dest='command', help='Available commands')
-
-    # Hours to Minutes command
-    h2m_parser = subparsers.add_parser('h2m', help='Convert hours to total minutes')
-    
-    m2h_parser = subparsers.add_parser('m2h', help='Convert total minutes to hours and remaining minutes')
-
-    args = parser.parse_args()
-
-    if not args.command:
-        print("Error: No command provided.")
-        exit(1)
-
-    # Hard-coded sample values as per requirements (no user input, no network access)
-    sample_hours = 2.5
-    sample_minutes_input = 90
-    
-    try:
-        hours_val = float(sample_hours if args.command == 'h2m' else sample_minutes_input / 60)
-        minutes_val = int(sample_minutes_input if args.command == 'm2h' else (sample_hours * 60))
-
-        # Ensure we have valid inputs for the specific command logic flow in a single run context
-        # Since argparse doesn't support default values easily with subparsers without making them required,
-        # and the prompt forbids input() or stdin interaction, we simulate the "prompt" by using these hardcoded samples.
-        
-        if args.command == 'h2m':
-            total_minutes = convert_time(hours_val, 0)
-            print(f"{hours_val} hours is equal to {total_minutes} minutes.")
-
-        elif args.command == 'm2h':
-            # For m2h, we treat the input as a single value representing "minutes" and split it back.
-            total_mins = int(sample_hours * 60) if sample_hours > 1 else sample_minutes_input
-            
-            hours_out = int(total_mins // 60)
-            remaining_mins = total_mins % 60
-
-            print(f"{total_mins} minutes is equal to {hours_out} hour(s) and {remaining_mins} minute(s).")
-
-    except ValueError:
-        print("Error: Invalid input value.")
-        exit(1)
+    sample_times = ["00:00:00", "01:30:45", "24:00:00", "30:15:30"]
+    for t in sample_times:
+        try:
+            result = convert_time_to_human_readable(t)
+            print(f"{t} -> {result}")
+        except ValueError as e:
+            print(f"{t} -> Error: {e}")

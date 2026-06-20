@@ -1,34 +1,15 @@
-class GeometryCalculator:
-    """A class to perform basic geometric calculations."""
-
-    def calculate_area_of_rectangle(self, length: float, width: float) -> float:
-        """
-        Calculate the area of a rectangle given its length and width.
-
-        Args:
-            length (float): The length of the rectangle.
-            width (float): The width of the rectangle.
-
-        Returns:
-            float: The calculated area of the rectangle.
-
-        Raises:
-            ValueError: If either length or width is negative.
-        """
-        if length < 0 or width < 0:
-            raise ValueError("Length and width must be non-negative.")
-        
-        return length * width
+def scale_areas(shapes, scale_factor):
+    return [
+        {**shape, 'area': shape['width'] * shape['height'] * (scale_factor ** 2)}
+        for shape in shapes
+        if 'width' in shape and 'height' in shape
+    ]
 
 if __name__ == '__main__':
-    # Sample values for testing the calculate_area_of_rectangle method
-    calc = GeometryCalculator()
-
-    try:
-        area = calc.calculate_area_of_rectangle(5.0, 10.0)
-        print(f"The area of a rectangle with length 5.0 and width 10.0 is {area}.")
-        
-        # Additional test case
-        area2 = calc.calculate_area_of_rectangle(-3.0, 4.0)
-    except ValueError as ve:
-        print(f"Error occurred: {ve}")
+    sample_shapes = [
+        {'name': 'rect1', 'width': 10, 'height': 5},
+        {'name': 'rect2', 'width': 4, 'height': 6},
+        {'name': 'rect3', 'width': 0, 'height': 0}
+    ]
+    result = scale_areas(sample_shapes, 2)
+    print(result)

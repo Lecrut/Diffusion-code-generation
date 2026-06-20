@@ -1,19 +1,20 @@
-import sys
-
-def calculate_rectangle_area(length: float, width: float) -> float:
-    """Calculate the area of a rectangle given its length and width."""
-    return length * width
+def calculate_polygon_area(vertices):
+    if len(vertices) < 3:
+        return 0.0
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input() or arguments used).
-    SAMPLE_LENGTH = 5.0
-    SAMPLE_WIDTH = 3.0
-
-    try:
-        area = calculate_rectangle_area(SAMPLE_LENGTH, SAMPLE_WIDTH)
-        print(f"Area of the rectangle is {area}")
-    except Exception:
-        # While ValueError was requested for non-numeric input handling generally,
-        # in this specific isolated execution block with hard-coded floats, no exception occurs.
-        # The function handles numeric types correctly without needing a try-except wrapper here.
-        pass
+    square = [(0, 0), (4, 0), (4, 4), (0, 4)]
+    print(calculate_polygon_area(square))
+    
+    triangle = [(0, 0), (5, 0), (0, 3)]
+    print(calculate_polygon_area(triangle))
+    
+    pentagon = [(1, 1), (4, 1), (5, 3), (3, 5), (0, 3)]
+    print(calculate_polygon_area(pentagon))

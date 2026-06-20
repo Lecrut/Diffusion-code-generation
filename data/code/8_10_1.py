@@ -1,43 +1,42 @@
 import math
-def shoelace_area(points):
+
+def convex_hull_area(points):
     if len(points) < 3:
         return 0.0
+    
+    points = list(set(points))
+    if len(points) < 3:
+        return 0.0
+    
+    points.sort(key=lambda p: (p[0], p[1]))
+    
+    lower = []
+    for p in points:
+        while len(lower) >= 2 and cross_product(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    
+    upper = []
+    for p in reversed(points):
+        while len(upper) >= 2 and cross_product(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    
+    hull = lower[:-1] + upper[:-1]
+    
     area = 0.0
-    n = len(points)
+    n = len(hull)
     for i in range(n):
         j = (i + 1) % n
-        x1, y1 = points[i]
-        x2, y2 = points[j]
-        area += (x1 * y2 - x2 * y1)
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
+    
     return abs(area) / 2.0
-def calculate_convex_hull_area(coordinates):
-    if len(coordinates) < 3:
-        return 0.0
-    points = list(coordinates)
-    def cross_product(o, a, b):
-        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
-    start_point_index = min(range(len(points)), key=lambda i: (points[i][1], points[i][0]))
-    start_point = points[start_point_index]
-    sorted_points = sorted(points, key=lambda p: (
-        math.atan2(p[1] - start_point[1], p[0] - start_point[0]), 
-        p[0] - start_point[0]                                                                                            
-    ))
-    hull = []
-    for p in sorted_points:
-        while len(hull) >= 2 and cross_product(hull[-2], hull[-1], p) <= 0:
-            hull.pop()
-        hull.append(p)
-    if len(hull) < 3:
-        return 0.0
-    return shoelace_area(hull)
+
+def cross_product(o, a, b):
+    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
 if __name__ == '__main__':
-    sample_coordinates = [
-        (0.0, 0.0),
-        (1.0, 0.0),
-        (0.0, 1.0),
-        (1.0, 1.0),
-        (0.5, 0.5),
-        (2.0, 0.0)
-    ]
-    area = calculate_convex_hull_area(sample_coordinates)
-    print(area)
+    sample_points = [(0, 0), (4, 0), (4, 4), (0, 4), (2, 2), (1, 1)]
+    result = convex_hull_area(sample_points)
+    print(result)

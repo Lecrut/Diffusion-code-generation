@@ -1,28 +1,23 @@
-import math
-def normalize_distance(distance, unit):
-    if unit == "meter":
-        return distance
-    elif unit == "kilometer":
-        return distance * 1000
-    elif unit == "centimeter":
-        return distance / 100
-    elif unit == "millimeter":
-        return distance / 1000
+def convert_kilometers_to_miles(kilometers):
+    miles = kilometers * 0.621371
+    return miles
+
+def convert_miles_to_kilometers(miles):
+    kilometers = miles / 0.621371
+    return kilometers
+
+def run_conversion_tool(distance, source_unit, target_unit):
+    if source_unit == "km" and target_unit == "mi":
+        result = convert_kilometers_to_miles(distance)
+        return f"{distance} kilometers is {result:.2f} miles"
+    elif source_unit == "mi" and target_unit == "km":
+        result = convert_miles_to_kilometers(distance)
+        return f"{distance} miles is {result:.2f} kilometers"
     else:
-        raise ValueError("Unsupported unit")
-if __name__ == '__main__':
-    distances = [
-        (500, "meter"),
-        (2.5, "kilometer"),
-        (150, "centimeter"),
-        (50000, "millimeter")
-    ]
-    results = []
-    for dist, unit in distances:
-        try:
-            normalized = normalize_distance(dist, unit)
-            results.append((dist, unit, normalized))
-        except ValueError as e:
-            results.append((dist, unit, f"Error: {e}"))
-    for dist, unit, normalized in results:
-        print(f"Original: {dist} {unit}, Normalized (meters): {normalized}")
+        raise ValueError("Invalid unit conversion requested. Use km to mi or mi to km.")
+
+if __name__ == "__main__":
+    sample_distance_km = 100
+    sample_distance_mi = 50
+    print(run_conversion_tool(sample_distance_km, "km", "mi"))
+    print(run_conversion_tool(sample_distance_mi, "mi", "km"))

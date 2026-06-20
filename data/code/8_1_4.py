@@ -1,44 +1,28 @@
-def calculate_area(length: float, width: float) -> float:
-    """
-    Calculates the area of a rectangle given its length and width.
+import math
 
-    Args:
-        length (float): The length of the rectangle.
-        width (float): The width of the rectangle.
+_BASE_AREA = 0
 
-    Returns:
-        float: The calculated area as length multiplied by width.
+class Shape:
+    def get_area(self):
+        return _BASE_AREA
 
-    Raises:
-        TypeError: If either argument is not a number.
-        ValueError: If either argument is negative.
-    
-    Example:
-        >>> calculate_area(5, 3)
-        15.0
-    """
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Both length and width must be numeric.")
-    if length < 0 or width < 0:
-        raise ValueError("Length and width cannot be negative.")
+class Rectangle(Shape):
+    def __init__(self, length, breadth):
+        self.length = length
+        self.breadth = breadth
 
-    return length * width
+    def get_area(self):
+        return self.length * self.breadth
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def get_area(self):
+        return math.pi * (self.radius ** 2)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    sample_values = [10, 5]
-    
-    area_result = calculate_area(sample_values[0], sample_values[1])
-    print(f"Area for dimensions {sample_values[0]}x{sample_values[1]} is: {area_result}")
-
-    # Additional test case with decimal inputs
-    dec_sample_values = [7.5, 4]
-    
-    area_decimal = calculate_area(dec_sample_values[0], dec_sample_values[1])
-    print(f"Area for dimensions {dec_sample_values[0]}x{dec_sample_values[1]} is: {area_decimal}")
-
-    # Test error handling example (uncomment to see in action)
-    # try:
-    #     calculate_area(-2, 5)
-    # except ValueError as e:
-    #     print(f"Error caught: {e}")
+    rect = Rectangle(4, 5)
+    circ = Circle(3)
+    print(rect.get_area())
+    print(circ.get_area())

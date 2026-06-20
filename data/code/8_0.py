@@ -1,8 +1,10 @@
-import sys
-def calculate_rectangle_area(length, width):
-    return length * width
+def calculate_rectangle_area(width, height):
+    if width < 0 or height < 0:
+        raise ValueError("Dimensions cannot be negative")
+    return width * height
+
 if __name__ == '__main__':
-    length = 10.5
-    width = 5.0
-    area = calculate_rectangle_area(length, width)
-    print(area)
+    sample_width = 5
+    sample_height = 10
+    result = calculate_rectangle_area(sample_width, sample_height)
+    print(result)

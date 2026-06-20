@@ -1,25 +1,41 @@
-def weight_difference_generator(pairs):
-    """
-    Generator function that yields the absolute difference between 
-    the weights in each pair from an iterable of pairs.
-    
-    Args:
-        pairs (iterable): An iterable containing tuples or lists of two numeric values.
-        
-    Yields:
-        float: The absolute difference |a - b| for each (a, b) pair.
-    """
-    for a, b in pairs:
-        yield abs(a - b)
+import unittest
+
+def calculate_weight_diff(weight1, weight2):
+    if not isinstance(weight1, (int, float)):
+        raise TypeError("weight1 must be a number")
+    if not isinstance(weight2, (int, float)):
+        raise TypeError("weight2 must be a number")
+    return weight1 - weight2
+
+class TestWeightDiff(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(calculate_weight_diff(10, 5), 5)
+
+    def test_negative_result(self):
+        self.assertEqual(calculate_weight_diff(5, 10), -5)
+
+    def test_negative_inputs(self):
+        self.assertEqual(calculate_weight_diff(-5, -10), 5)
+
+    def test_zero_inputs(self):
+        self.assertEqual(calculate_weight_diff(0, 0), 0)
+
+    def test_mixed_positive_negative(self):
+        self.assertEqual(calculate_weight_diff(5, -5), 10)
+
+    def test_float_inputs(self):
+        self.assertAlmostEqual(calculate_weight_diff(5.5, 2.3), 3.2)
+
+    def test_invalid_input_type(self):
+        with self.assertRaises(TypeError):
+            calculate_weight_diff("10", 5)
+
+    def test_none_input(self):
+        with self.assertRaises(TypeError):
+            calculate_weight_diff(None, 5)
 
 if __name__ == '__main__':
-    # Hard-coded sample weight pairs: [(20, 15), (30, 40), (10, 6)]
-    sample_data = [
-        (20.0, 15.0),
-        (30.0, 40.0),
-        (10.0, 6.0)
-    ]
-
-    print("Weight differences:")
-    for diff in weight_difference_generator(sample_data):
-        print(f"{diff:.2f}")
+    unittest.main(argv=[''], exit=False)
+    print(calculate_weight_diff(100, 80))
+    print(calculate_weight_diff(50, 75))
+    print(calculate_weight_diff(-10, -20))

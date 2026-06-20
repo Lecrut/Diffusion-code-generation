@@ -1,14 +1,7 @@
-def validate_input():
-    """Prompt the user for a temperature in Celsius."""
-    
-# Sample input block to run without external interaction (simulating sequential inputs)
-sample_temperatures = [25, -10, 36.6] 
-
-for t_celsius in sample_temperatures:
-    # Basic validation check ensuring only numeric values are processed here as we have pre-set samples
-    if not isinstance(t_celsius, (int, float)):
-        print(f"Error: Invalid temperature value '{t_celsius}'. Expected a number.")
-        continue
+def celsius_to_fahrenheit(celsius_values):
+    return [(c * 9 / 5) + 32 for c in celsius_values]
 
 if __name__ == '__main__':
-    pass
+    sample_temperatures = [-40, 0, 25, 37, 100]
+    fahrenheit_results = celsius_to_fahrenheit(sample_temperatures)
+    print(fahrenheit_results)

@@ -1,41 +1,78 @@
 import math
+from typing import List
 
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given ordered (x, y) vertex tuples using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple[float]]): A list of two-element tuples representing x and y coordinates in order.
-        
-    Returns:
-        float: The absolute area of the polygon as a floating-point number.
-    """
-    n = len(vertices)
-    if n < 3:
+PI = math.pi
+
+class Shape:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def area(self) -> float:
         return 0.0
 
-    # Use double precision arithmetic by default; Python floats are typically C doubles (64-bit),
-    # which provides sufficient precision for most geometric applications unless extreme coordinates 
-    # or very small areas are involved. If higher precision is needed, one could switch to the decimal module,
-    # but this keeps the solution efficient and standard-compliant by default while handling typical inaccuracies gracefully.
+    def scale_dimensions(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
 
-    area = 0.5 * sum(
-        vertices[i][0] * vertices[(i + 1) % n][1] - 
-        vertices[i][1] * vertices[(i + 1) % n][0] 
-        for i in range(n)
-    )
-    
-    return abs(area)
+    def get_scaled_area(self, factor: float) -> float:
+        self.scale_dimensions(factor)
+        return self.area()
+
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        super().__init__("Circle")
+        if radius < 0:
+            raise ValueError("Radius cannot be negative")
+        self.radius = radius
+
+    def area(self) -> float:
+        return PI * self.radius * self.radius
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self.radius *= factor
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        super().__init__("Rectangle")
+        if width < 0 or height < 0:
+            raise ValueError("Dimensions cannot be negative")
+        self.width = width
+        self.height = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self.width *= factor
+        self.height *= factor
+
+class Triangle(Shape):
+    def __init__(self, base: float, height: float) -> None:
+        super().__init__("Triangle")
+        if base < 0 or height < 0:
+            raise ValueError("Base and height cannot be negative")
+        self.base = base
+        self.height = height
+
+    def area(self) -> float:
+        return 0.5 * self.base * self.height
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self.base *= factor
+        self.height *= factor
 
 if __name__ == '__main__':
-    # Sample polygon: a triangle with vertices at (0,0), (4,0), and (2,3)
-    sample_vertices = [(0.0, 0.0), (4.0, 0.0), (2.0, 3.0)]
-    
-    calculated_area = calculate_polygon_area(sample_vertices)
-    print(f"Area of the polygon: {calculated_area}")
+    shapes: List[Shape] = []
+    shapes.append(Circle(5.0))
+    shapes.append(Rectangle(10.0, 4.0))
+    shapes.append(Triangle(6.0, 8.0))
 
-    # Sample with floating-point coordinates that might introduce minor rounding differences in intermediate steps
-    sample_floaty = [(1.5, -2), (4.3, 0.7), (-8.9, 6)]
-    
-    area_floaty = calculate_polygon_area(sample_floaty)
-    print(f"Area of the floating-point polygon: {area_floaty}")
+    scale_factor = 1.5
+
+    for shape in shapes:
+        original_area = shape.area()
+        new_area = shape.get_scaled_area(scale_factor)
+        print(f"Shape: {shape.name}, Original Area: {original_area:.2f}, Scaled Area: {new_area:.2f}")

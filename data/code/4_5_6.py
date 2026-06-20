@@ -1,59 +1,71 @@
-import math
-def convert_distance(distance, target_unit):
-    if target_unit == 0:
-        raise ValueError("Target unit cannot be zero.")
-    if target_unit == 1:
-        return distance
-    if target_unit == 1000:
-        return distance / 1000.0
-    if target_unit == 1000000:
-        return distance / 1000000.0
-    if target_unit == 1000000000:
-        return distance / 1000000000.0
-    if target_unit == 1000000000000:
-        return distance / 1000000000000.0
-    if target_unit == 1:
-        return distance
-    try:
-        conversion_factor = 1.0
-        if target_unit != 1:
-            raise ValueError("Unsupported target unit for this hardcoded conversion.")
-        return distance
-    except ValueError:
-        raise ValueError(f"Conversion failed for distance {distance} to unit {target_unit}")
+class DistanceConverter:
+    def __init__(self):
+        self.base_unit = 'meters'
+        self.conversion_to_base = {
+            'meters': 1.0,
+            'metres': 1.0,
+            'm': 1.0,
+            'kilometers': 1000.0,
+            'kilometres': 1000.0,
+            'km': 1000.0,
+            'centimeters': 0.01,
+            'centimetres': 0.01,
+            'cm': 0.01,
+            'millimeters': 0.001,
+            'millimetres': 0.001,
+            'mm': 0.001,
+            'miles': 1609.344,
+            'mile': 1609.344,
+            'mi': 1609.344,
+            'yards': 0.9144,
+            'yard': 0.9144,
+            'yd': 0.9144,
+            'feet': 0.3048,
+            'foot': 0.3048,
+            'ft': 0.3048,
+            'inches': 0.0254,
+            'inch': 0.0254,
+            'in': 0.0254,
+            'nautical_miles': 1852.0,
+            'nautical_mile': 1852.0,
+            'nm': 1852.0
+        }
+
+    def normalize_unit(self, unit_string):
+        cleaned = unit_string.strip().lower()
+        if cleaned in self.conversion_to_base:
+            return cleaned
+        return None
+
+    def convert(self, value, from_unit, to_unit):
+        from_norm = self.normalize_unit(from_unit)
+        to_norm = self.normalize_unit(to_unit)
+
+        if from_norm is None:
+            raise ValueError(f"Unsupported source unit: {from_unit}")
+        if to_norm is None:
+            raise ValueError(f"Unsupported target unit: {to_unit}")
+
+        base_value = value * self.conversion_to_base[from_norm]
+        result = base_value / self.conversion_to_base[to_norm]
+        return result
+
 if __name__ == '__main__':
-    distance_miles = 10.5
-    target_unit_km = 1000
+    converter = DistanceConverter()
+    
+    sample_cases = [
+        (1000, 'meters', 'kilometers'),
+        (1, 'mile', 'kilometers'),
+        (5.5, 'feet', 'meters'),
+        (100, 'centimeters', 'inches'),
+        (0.5, 'nautical_miles', 'meters')
+    ]
+    
+    for value, frm, to in sample_cases:
+        converted = converter.convert(value, frm, to)
+        print(f"{value} {frm} = {converted} {to}")
+        
     try:
-        result_km = convert_distance(distance_miles, target_unit_km)
-        print(f"Distance: {distance_miles} miles")
-        print(f"Target Unit: kilometers")
-        print(f"Result: {result_km} km")
+        converter.convert(10, 'lightyears', 'meters')
     except ValueError as e:
-        print(f"Error: {e}")
-    distance_meters = 500000.0
-    target_unit_m = 1000000
-    try:
-        result_m = convert_distance(distance_meters, target_unit_m)
-        print(f"\nDistance: {distance_meters} meters")
-        print(f"Target Unit: meters (scaled)")
-        print(f"Result: {result_m} m")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_in = 5.0
-    target_unit_in = 1
-    try:
-        result_in = convert_distance(distance_in, target_unit_in)
-        print(f"\nDistance: {distance_in} inches")
-        print(f"Target Unit: inches")
-        print(f"Result: {result_in} in")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_invalid = 10.0
-    target_unit_zero = 0
-    try:
-        result_zero = convert_distance(distance_invalid, target_unit_zero)
-        print(f"\nDistance: {distance_invalid} (invalid test)")
-        print(f"Result: {result_zero}")
-    except ValueError as e:
-        print(f"\nError handling division by zero: {e}")
+        print(e)

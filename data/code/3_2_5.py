@@ -1,26 +1,12 @@
-class TemperatureConverter:
-    """A class to convert temperatures between Celsius and Fahrenheit."""
-    
-    def celsius_to_fahrenheit(self, celsius):
-        """Convert a temperature from degrees Celsius to degrees Fahrenheit.
-        
-        The conversion formula used is F = (C * 9/5) + 32.
-        
-        Args:
-            celsius (float or int): Temperature in degrees Celsius.
-            
-        Returns:
-            float: Temperature in degrees Fahrenheit, rounded to two decimal places.
-        """
-        fahrenheit = (celsius * 1.8) + 32
-        return round(fahrenheit, 2)
+def celsius_to_fahrenheit(temperature_dict):
+    return {key: (value * 9 / 5) + 32 for key, value in temperature_dict.items()}
 
 if __name__ == '__main__':
-    # Sample execution with hard-coded values
-    converter = TemperatureConverter()
-    
-    test_cases = [0, 10, -40, 100]
-    
-    for c in test_cases:
-        f = converter.celsius_to_fahrenheit(c)
-        print(f"{c}°C is equal to {f}°F")
+    sample_temperatures = {
+        "New York": 20,
+        "London": 15,
+        "Tokyo": 25,
+        "Sydney": 30
+    }
+    converted_temperatures = celsius_to_fahrenheit(sample_temperatures)
+    print(converted_temperatures)

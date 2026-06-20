@@ -1,18 +1,22 @@
-# Script to compare two length measurements
-
-def main():
-    # Define sample lengths in meters
-    length_a = 150.5
-    length_b = 42.8
+def compare_length_measurements(list1, list2):
+    if not list1 and not list2:
+        return {"max_length": None, "min_length": None, "range_difference": None}
     
-    difference = length_a - length_b
+    all_lengths = list1 + list2
     
-    if difference > 0:
-        print(f"Length A is longer than Length B by {difference:.2f} units")
-    elif difference < 0:
-        print(f"Length B is longer than Length A by {-difference:.2f} units")
-    else:
-        print("Length A and Length B are equal.")
+    max_length = max(all_lengths)
+    min_length = min(all_lengths)
+    range_difference = max_length - min_length
+    
+    return {
+        "max_length": max_length,
+        "min_length": min_length,
+        "range_difference": range_difference
+    }
 
 if __name__ == '__main__':
-    main()
+    measurements_a = [10.5, 20.3, 5.7, 15.2]
+    measurements_b = [18.1, 30.0, 2.5, 12.8]
+    
+    result = compare_length_measurements(measurements_a, measurements_b)
+    print(result)

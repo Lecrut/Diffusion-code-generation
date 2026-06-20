@@ -1,39 +1,37 @@
-import numpy as np
+class LengthComparator:
+    def __init__(self, unit1, unit2):
+        self.unit1 = unit1
+        self.unit2 = unit2
 
-def compare_signs(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    """
-    Compare two arrays of length measurements element-wise.
-    
-    Returns an array where each element is the sign of (a[i] - b[i]).
-    The result contains 1 if a[i] > b[i], -1 if a[i] < b[i], and 0 otherwise.
-    
-    Parameters:
-        a (np.ndarray): First array of length measurements.
-        b (np.ndarray): Second array of length measurements.
+    def convert_to_meters(self, value, unit):
+        conversions = {
+            "m": 1.0,
+            "cm": 0.01,
+            "mm": 0.001,
+            "km": 1000.0,
+            "in": 0.0254,
+            "ft": 0.3048,
+            "yd": 0.9144,
+            "mi": 1609.34
+        }
+        if unit not in conversions:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * conversions[unit]
+
+    def compare(self, value1, value2):
+        meters1 = self.convert_to_meters(value1, self.unit1)
+        meters2 = self.convert_to_meters(value2, self.unit2)
         
-    Returns:
-        np.ndarray: Array of signs corresponding to the difference between elements.
-    """
-    # Ensure inputs are NumPy arrays for optimal performance
-    if not isinstance(a, np.ndarray) or not isinstance(b, np.ndarray):
-        raise TypeError("Both input arguments must be numpy arrays.")
-    
-    if a.shape != b.shape:
-        raise ValueError(f"Input arrays must have the same shape. Got {a.shape} and {b.shape}.")
-    
-    # Compute difference vectorized for high performance
-    diff = a - b
-    
-    # Use np.sign which is implemented in C and highly optimized
-    return np.sign(diff)
+        if meters1 > meters2:
+            result = "greater than"
+        elif meters1 < meters2:
+            result = "less than"
+        else:
+            result = "equal to"
+        
+        return f"{value1} {self.unit1} is {result} {value2} {self.unit2}"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    lengths_a = np.array([10.5, 23.7, 45.2, 67.8, 90.1])
-    lengths_b = np.array([11.0, 22.0, 44.0, 68.0, 89.0])
-
-    result = compare_signs(lengths_a, lengths_b)
-
-    print("Array A:", lengths_a)
-    print("Array B:", lengths_b)
-    print("Sign of (A - B):", result)
+    comparator = LengthComparator("m", "cm")
+    result = comparator.compare(1, 100)
+    print(result)

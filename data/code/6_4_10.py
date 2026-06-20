@@ -1,36 +1,39 @@
-def weight_difference_generator(weight_pairs):
-    """
-    Generator function that yields the absolute difference between weights in each pair.
-    
-    Args:
-        weight_pairs (list of tuples or lists): List containing pairs of numerical values representing weights.
-        
-    Yields:
-        float: The absolute difference between the two weights in a given pair.
-    """
-    for pair in weight_pairs:
-        if len(pair) != 2:
-            raise ValueError(f"Each element must be a list or tuple with exactly two elements, got {len(pair)}")
-        yield abs(pair[0] - pair[1])
+import unittest
+
+def weight_difference(weight1, weight2):
+    if not isinstance(weight1, (int, float)) or not isinstance(weight2, (int, float)):
+        raise TypeError("Inputs must be numeric")
+    return weight1 - weight2
+
+class TestWeightDifference(unittest.TestCase):
+
+    def test_normal_difference(self):
+        self.assertEqual(weight_difference(10, 5), 5)
+
+    def test_negative_result(self):
+        self.assertEqual(weight_difference(5, 10), -5)
+
+    def test_zero_difference(self):
+        self.assertEqual(weight_difference(10, 10), 0)
+
+    def test_negative_weights(self):
+        self.assertEqual(weight_difference(-10, -5), -5)
+
+    def test_mixed_negative_weights(self):
+        self.assertEqual(weight_difference(-5, 10), -15)
+
+    def test_float_inputs(self):
+        self.assertAlmostEqual(weight_difference(10.5, 2.3), 8.2)
+
+    def test_invalid_type_string(self):
+        with self.assertRaises(TypeError):
+            weight_difference("10", 5)
+
+    def test_invalid_type_list(self):
+        with self.assertRaises(TypeError):
+            weight_difference(10, [5])
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the generator without user input or external dependencies.
-    sample_weight_pairs = [
-        (50.0, 48.5),
-        (123.7, 125.9),
-        ('a', 'b'),  # Non-numeric strings to demonstrate error handling if needed; currently treated as objects with __sub__ defined? 
-                     # Actually, Python's subtraction on non-ints raises TypeError. Let's stick to numbers for robustness in this simple demo.
-    ]
-
-    # Re-defining sample pairs strictly with floats/ints to avoid runtime errors on subtraction of strings.
-    valid_sample_pairs = [
-        (10.5, 8.2),
-        (200, 195.5),
-        (-3.4, -7.6)
-    ]
-
-    print("Weight differences:")
-    for diff in weight_difference_generator(valid_sample_pairs):
-        # Formatting to two decimal places for clarity
-        formatted_diff = f"{diff:.2f}" if isinstance(diff, float) else str(diff)
-        print(formatted_diff)
+    result = weight_difference(10, 5)
+    print(result)
+    unittest.main()

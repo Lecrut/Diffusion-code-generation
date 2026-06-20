@@ -1,13 +1,30 @@
-def length_comparator_generator(seq1, seq2):
-    len1 = len(seq1)
-    len2 = len(seq2)
-    yield len1
-    yield len2
+class ImpossibleLengthError(Exception):
+    def __init__(self, message):
+        Exception.__init__(self, message)
+        self.message = message
+
+class LengthComparator:
+    def __init__(self, length_a, length_b):
+        self.length_a = length_a
+        self.length_b = length_b
+
+    def compare(self):
+        if self.length_a < 0 or self.length_b < 0:
+            raise ImpossibleLengthError("Length cannot be negative")
+        if self.length_a > self.length_b:
+            return self.length_a - self.length_b
+        return self.length_b - self.length_a
+
 if __name__ == '__main__':
-    sequence_a = list(range(1000000))
-    sequence_b = list(range(500000))
-    comparator = length_comparator_generator(sequence_a, sequence_b)
-    results = []
-    for length in comparator:
-        results.append(length)
-    print(results)
+    try:
+        comparator = LengthComparator(10, 5)
+        result = comparator.compare()
+        print(result)
+    except ImpossibleLengthError:
+        print("Caught exception")
+    try:
+        comparator_invalid = LengthComparator(-5, 5)
+        result_invalid = comparator_invalid.compare()
+        print(result_invalid)
+    except ImpossibleLengthError:
+        print("Caught exception for invalid input")

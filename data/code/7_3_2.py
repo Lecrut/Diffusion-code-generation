@@ -1,18 +1,26 @@
-import datetime
-def convert_duration(time_str):
-    h, m, s = map(int, time_str.split(':'))
-    total_seconds = h * 3600 + m * 60 + s
-    days = total_seconds // (24 * 3600)
-    remaining_seconds = total_seconds % (24 * 3600)
-    hours = remaining_seconds // 3600
-    remaining_seconds %= 3600
-    minutes = remaining_seconds // 60
-    seconds = remaining_seconds % 60
-    return f"{days} Days, {hours} Hours, {minutes} Minutes, {seconds} Seconds"
+def format_duration(duration: str) -> str:
+    hours, minutes, seconds = map(int, duration.split(':'))
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    days = total_seconds // 86400
+    remainder = total_seconds % 86400
+    hours_remaining = remainder // 3600
+    remainder = remainder % 3600
+    minutes_remaining = remainder // 60
+    seconds_remaining = remainder % 60
+
+    parts = []
+    if days > 0:
+        parts.append(f"{days} Days")
+    if hours_remaining > 0:
+        parts.append(f"{hours_remaining} Hours")
+    if minutes_remaining > 0:
+        parts.append(f"{minutes_remaining} Minutes")
+    if seconds_remaining > 0:
+        parts.append(f"{seconds_remaining} Seconds")
+    
+    return ", ".join(parts) if parts else "0 Seconds"
+
 if __name__ == '__main__':
-    sample_time1 = "25:60:00"
-    sample_time2 = "10:30:15"
-    sample_time3 = "0:0:5"
-    print(convert_duration(sample_time1))
-    print(convert_duration(sample_time2))
-    print(convert_duration(sample_time3))
+    print(format_duration("26:00:01"))
+    print(format_duration("00:00:00"))
+    print(format_duration("00:00:05"))

@@ -1,58 +1,49 @@
-import argparse
-from statistics import mean, stdev
+class Volume:
+    def __init__(self, value):
+        self.value = value
 
-def calculate_stats(values):
-    """Calculate arithmetic mean and standard deviation efficiently."""
-    if len(values) < 2:
-        return None, "Standard deviation requires at least two data points."
-    
-    avg = sum(values) / len(values)
-    variance = sum((x - avg) ** 2 for x in values) / (len(values) - 1)
-    std_dev = variance ** 0.5
-    
-    return avg, std_dev
+    def to_liters(self):
+        return self.value / 1000.0
 
-def parse_args():
-    """Parse command-line arguments."""
-    parser = argparse.ArgumentParser(description="Calculate mean and standard deviation of volume values.")
-    
-    # Allow optional input via file or direct argument list for non-interactive use cases
-    files = parser.add_argument_group('Input')
-    files.add_argument('--file', '-f', help='File containing a list of numbers (one per line).')
-    files.add_argument('-n', '--count', type=int, default=0, help='Number of volume values to read from stdin.')
-    
-    # Direct argument parsing for the list itself if no file is provided and count is 0 or not specified properly in script context
-    parser.add_argument('volumes', nargs='*', type=float, help='List of volume values directly on command line.')
-    
-    return parser.parse_args()
+    def to_milliliters(self):
+        return self.value * 1000.0
 
-def main():
-    args = parse_args()
-    
-    # Determine input data source without using interactive prompts like sys.stdin or input()
-    if args.volumes:
-        data = list(args.volumes)
-    elif hasattr(sys, 'argv') and len(sys.argv) > 1:
-        # Fallback for direct argument passing on the command line (covered by argparse above but explicit here per logic flow)
-        try:
-            from sys import argv as _sys_argv
-            data = [_float(v.strip()) for v in [v.strip() for v in _sys_argv[1:] if not v.startswith('--') and not v.startswith('-n')] ] 
-        except ValueError:
-            print("Error: Invalid numeric input provided.")
-            return
-    else:
-        # If no arguments were passed at all, use the hard-coded sample values as per requirement
-        data = [50.2, 48.7, 51.3, 49.9, 50.5]
+    def to_gallons(self):
+        return self.value * 0.000264172052
 
-    if len(data) < 2:
-        print("Insufficient data points for statistical calculation.")
-        return
-    
-    avg_val, std_val = calculate_stats(data)
-    
-    # Output results to stdout without prompts
-    print(f"Arithmetic Mean: {avg_val:.4f}")
-    print(f"Standard Deviation (Sample): {std_val:.4f}")
+    def to_cubic_meters(self):
+        return self.value * 1.0e-6
+
+    def add(self, other):
+        if not isinstance(other, Volume):
+            raise TypeError("Can only add Volume objects")
+        return Volume(self.value + other.value)
+
+    def subtract(self, other):
+        if not isinstance(other, Volume):
+            raise TypeError("Can only subtract Volume objects")
+        return Volume(self.value - other.value)
+
+    def multiply(self, factor):
+        return Volume(self.value * factor)
+
+    def __repr__(self):
+        return f"Volume({self.value})"
 
 if __name__ == '__main__':
-    main()
+    vol1 = Volume(5000)
+    vol2 = Volume(2000)
+    vol_liters = vol1.to_liters()
+    vol_milliliters = vol1.to_milliliters()
+    vol_gallons = vol1.to_gallons()
+    vol_cubic_meters = vol1.to_cubic_meters()
+    vol_sum = vol1.add(vol2)
+    vol_diff = vol1.subtract(vol2)
+    vol_scaled = vol1.multiply(2.5)
+    print(f"Liters: {vol_liters}")
+    print(f"Milliliters: {vol_milliliters}")
+    print(f"Gallons: {vol_gallons}")
+    print(f"Cubic Meters: {vol_cubic_meters}")
+    print(f"Sum: {vol_sum}")
+    print(f"Difference: {vol_diff}")
+    print(f"Scaled: {vol_scaled}")

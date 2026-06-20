@@ -1,10 +1,33 @@
-def calculate_difference_length(val1: int, val2: int) -> int:
-    diff = val1 - val2 if abs(val1) >= abs(val2) else val2 - val1
-    return max(0, diff)
+def compare_lengths(length1_in, unit1, length2_in, unit2):
+    cm_per_inch = 2.54
+    if unit1 == 'inches':
+        length1_cm = length1_in * cm_per_inch
+    elif unit1 == 'cm':
+        length1_cm = length1_in
+    else:
+        raise ValueError("Unsupported unit1")
+    
+    if unit2 == 'inches':
+        length2_cm = length2_in * cm_per_inch
+    elif unit2 == 'cm':
+        length2_cm = length2_in
+    else:
+        raise ValueError("Unsupported unit2")
+    
+    if length1_cm > length2_cm:
+        result = "Greater"
+    elif length1_cm < length2_cm:
+        result = "Less"
+    else:
+        result = "Equal"
+    
+    return result
 
 if __name__ == '__main__':
-    result_a = calculate_difference_length(10, 5)
-    print(f"Length difference ({10} and {5}): {result_a}")
+    length1 = 12
+    unit1 = 'inches'
+    length2 = 30
+    unit2 = 'cm'
     
-    result_b = calculate_difference_length(-8, -3)
-    print(f"Length difference (-{8} and {-3}): {abs(result_b)}")
+    result = compare_lengths(length1, unit1, length2, unit2)
+    print(result)

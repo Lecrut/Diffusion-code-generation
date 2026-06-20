@@ -1,56 +1,77 @@
 import math
+from typing import List, Tuple
 
-def calculate_polygon_area(vertices):
-    """
-    Calculates the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple[float, float]]): A list of ordered (x, y) tuples representing 
-                                              the vertices of the polygon in order (clockwise or counter-clockwise).
-        
-    Returns:
-        float: The area of the polygon as a positive number. Floating-point inaccuracies are handled by rounding to 6 decimal places.
-    
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided, indicating an invalid polygon.
-    """
-    if len(vertices) < 3:
-        raise ValueError("A polygon must have at least 3 vertices.")
+class Shape:
+    def __init__(self) -> None:
+        self._sides: List[float] = []
 
-    n = len(vertices)
-    area_sum = 0.0
-    
-    for i in range(n):
-        x1, y1 = vertices[i]
-        x2, y2 = vertices[(i + 1) % n]
-        
-        # Shoelace formula component: (x_i * y_{i+1}) - (y_i * x_{i+1})
-        area_sum += (x1 * y2) - (y1 * x2)
+    def area(self) -> float:
+        return 0.0
 
-    # The absolute value of the result divided by 2 gives the actual area
-    return abs(area_sum / 2.0)
+    def scale_dimensions(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+        self._sides = [s * factor for s in self._sides]
+
+    def scaled_area(self, factor: float) -> float:
+        self.scale_dimensions(factor)
+        return self.area()
+
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        super().__init__()
+        self._radius = radius
+        self._sides = [radius]
+
+    def area(self) -> float:
+        return math.pi * (self._radius ** 2)
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self._radius = self._sides[0]
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        super().__init__()
+        self._width = width
+        self._height = height
+        self._sides = [width, height]
+
+    def area(self) -> float:
+        return self._width * self._height
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self._width = self._sides[0]
+        self._height = self._sides[1]
+
+class Triangle(Shape):
+    def __init__(self, base: float, height: float) -> None:
+        super().__init__()
+        self._base = base
+        self._height = height
+        self._sides = [base, height]
+
+    def area(self) -> float:
+        return 0.5 * self._base * self._height
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self._base = self._sides[0]
+        self._height = self._sides[1]
+
+def run_demo() -> None:
+    circle = Circle(5.0)
+    rect = Rectangle(4.0, 6.0)
+    triangle = Triangle(10.0, 5.0)
+
+    print(f"Initial Circle Area: {circle.area():.4f}")
+    print(f"Initial Rectangle Area: {rect.area():.4f}")
+    print(f"Initial Triangle Area: {triangle.area():.4f}")
+
+    print(f"Circle Scaled Area (2x): {circle.scaled_area(2.0):.4f}")
+    print(f"Rectangle Scaled Area (0.5x): {rect.scaled_area(0.5):.4f}")
+    print(f"Triangle Scaled Area (3x): {triangle.scaled_area(3.0):.4f}")
 
 if __name__ == '__main__':
-    # Sample polygon: a square with vertices at (0,0), (4,0), (4,4), (0,4)
-    sample_vertices = [
-        (0.0, 0.0),
-        (4.0, 0.0),
-        (4.0, 4.0),
-        (0.0, 4.0)
-    ]
-
-    # Calculate area
-    polygon_area = calculate_polygon_area(sample_vertices)
-
-    print(f"Calculated Area: {polygon_area:.6f}")
-    
-    # Additional test case with floating point coordinates
-    triangle_vertices = [
-        (1.5, 2.3),
-        (4.7, -0.8),
-        (-1.2, 3.9)
-    ]
-
-    triangle_area = calculate_polygon_area(triangle_vertices)
-    
-    print(f"Triangle Area: {triangle_area:.6f}")
+    run_demo()

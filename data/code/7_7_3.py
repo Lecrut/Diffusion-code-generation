@@ -1,21 +1,16 @@
-import datetime
 import pytz
-def convert_timezone(dt_object, target_tz_str):
-    if dt_object.tzinfo is None or dt_object.tzinfo.utcoffset(dt_object) is None:
-        dt_object = pytz.utc.localize(dt_object)
-    target_tz = pytz.timezone(target_tz_str)
-    if dt_object.tzinfo != target_tz:
-        converted_dt = dt_object.astimezone(target_tz)
-        return converted_dt
-    else:
-        return dt_object
+from datetime import datetime
+
+def convert_timezone(dt, target_tz_name):
+    if dt.tzinfo is None:
+        raise ValueError("The provided datetime object must be timezone-aware.")
+    utc_dt = dt.astimezone(pytz.utc)
+    target_tz = pytz.timezone(target_tz_name)
+    return utc_dt.astimezone(target_tz)
+
 if __name__ == '__main__':
-    sample_datetime_naive = datetime.datetime(2023, 10, 27, 10, 30, 0)
-    sample_tz_str = 'America/New_York'
-    try:
-        converted_time = convert_timezone(sample_datetime_naive, sample_tz_str)
-        print(f"Original Naive Datetime: {sample_datetime_naive}")
-        print(f"Target Time Zone: {sample_tz_str}")
-        print(f"Converted Datetime: {converted_time}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    source_tz = pytz.timezone('America/New_York')
+    naive_dt = datetime(2023, 11, 5, 14, 30, 0)
+    aware_dt = source_tz.localize(naive_dt)
+    result = convert_timezone(aware_dt, 'Asia/Tokyo')
+    print(result)

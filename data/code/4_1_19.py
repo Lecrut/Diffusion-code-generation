@@ -1,74 +1,43 @@
 class DistanceConverter:
-    """A class to handle conversions between meters, kilometers, and miles."""
+    MILES_PER_KILOMETER = 0.621371
+    METERS_PER_KILOMETER = 1000.0
+    METERS_PER_MILE = 1609.34
 
-    # Conversion constants (1 meter = 0.000621371 miles, 1 kilometer = 1000 meters)
-    MILES_PER_METER = 0.000621371
-    KILOMETERS_PER_METER = 0.001
+    @staticmethod
+    def meters_to_kilometers(meters):
+        return meters / DistanceConverter.METERS_PER_KILOMETER
 
-    def __init__(self):
-        """Initialize the DistanceConverter instance."""
-        pass
+    @staticmethod
+    def kilometers_to_meters(kilometers):
+        return kilometers * DistanceConverter.METERS_PER_KILOMETER
 
-    def to_meters(self, value: float) -> float:
-        """Convert any distance unit (miles or kilometers) to meters.
+    @staticmethod
+    def kilometers_to_miles(kilometers):
+        return kilometers * DistanceConverter.MILES_PER_KILOMETER
 
-        Args:
-            value: The distance in miles or kilometers.
+    @staticmethod
+    def miles_to_kilometers(miles):
+        return miles / DistanceConverter.MILES_PER_KILOMETER
 
-        Returns:
-            The equivalent distance in meters as a float.
-        """
-        if isinstance(value, str):
-            # Handle string input for flexibility, though type hint suggests float
-            try:
-                numeric_value = float(value)
-            except ValueError:
-                raise TypeError("Input must be a number or convertible to float.")
-        else:
-            numeric_value = value
+    @staticmethod
+    def meters_to_miles(meters):
+        return meters / DistanceConverter.METERS_PER_MILE
 
-        return numeric_value * 1000.0 if isinstance(numeric_value, (int, float)) and self._is_kilometer_unit(numeric_value) \
-             else numeric_value # This logic is flawed for general units without knowing the source unit in __init__ or method args. 
-                             # Let's refactor to accept a 'from_unit' parameter properly.
-
-    def convert_from(self, value: float, from_unit: str) -> dict:
-        """Convert a distance from one unit (miles/kilometers/meters) to all other units.
-
-        Args:
-            value: The numerical distance value.
-            from_unit: The source unit as a string ('m', 'km', or 'mi').
-
-        Returns:
-            A dictionary containing the converted values for meters, kilometers, and miles.
-        
-        Raises:
-            ValueError: If an invalid unit is provided.
-        """
-        if not isinstance(value, (int, float)):
-            raise TypeError("Value must be a number.")
-            
-        valid_units = {'m', 'km', 'mi'}
-        if from_unit.lower() not in valid_units:
-            raise ValueError(f"Invalid unit '{from_unit}'. Supported units are {valid_units}.")
-
-        # Convert to meters first as the base unit, then convert to others.
-        value_in_meters = 0.0
-        
-        source_lower = from_unit.lower()
-        
-        if source_lower == 'm':
-            value_in_meters = float(value) * 1.0
-        elif source_lower == 'km':
-            value_in_meters = float(value) * self.KILOMETERS_PER_METER * 1000 # Wait, km to m is multiply by 1000
-            pass 
-        else: # mi
-            value_in_meters = float(value) / self.MILES_PER_METER
-
-        return {
-            'm': round(float(value_in_meters), 6),
-            'km': round(value_in_meters * self.KILOMETERS_PER_METER, 6),
-            'mi': round(value_in_meters * self.MILES_PER_METER, 6)
-        }
+    @staticmethod
+    def miles_to_meters(miles):
+        return miles * DistanceConverter.METERS_PER_MILE
 
 if __name__ == '__main__':
-    pass
+    initial_meters = 1609.34
+    initial_kilometers = 10.0
+    initial_miles = 5.0
+
+    km_result = DistanceConverter.meters_to_kilometers(initial_meters)
+    miles_result = DistanceConverter.kilometers_to_miles(initial_kilometers)
+    km_from_miles = DistanceConverter.miles_to_kilometers(initial_miles)
+    meters_from_miles = DistanceConverter.miles_to_meters(initial_miles)
+
+    print(f"{initial_meters} meters is {km_result} kilometers")
+    print(f"{initial_kilometers} kilometers is {miles_result} miles")
+    print(f"{initial_miles} miles is {km_from_miles} kilometers")
+    print(f"{initial_miles} miles is {meters_from_miles} meters")

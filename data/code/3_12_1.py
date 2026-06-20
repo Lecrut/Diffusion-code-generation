@@ -1,12 +1,7 @@
-def convert_celsius_to_fahrenheit(celsius):
-    fahrenheit = (celsius * 9/5) + 32
-    return fahrenheit
+def celsius_to_fahrenheit(celsius_values):
+    return [(c * 9 / 5) + 32 for c in celsius_values]
+
 if __name__ == '__main__':
-    sample_temperatures = [20, 37, 0, 100, -40]
-    for temp_c in sample_temperatures:
-        try:
-            temp_c = float(temp_c)
-            temp_f = convert_celsius_to_fahrenheit(temp_c)
-            print(f"Celsius: {temp_c:.2f}°C, Fahrenheit: {temp_f:.2f}°F")
-        except ValueError:
-            print(f"Invalid input encountered: {temp_c}. Skipping this reading.")
+    sample_celsius = [0, 10, 20, 30, 40, -10, 100]
+    result = celsius_to_fahrenheit(sample_celsius)
+    print(result)

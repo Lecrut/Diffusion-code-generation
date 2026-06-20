@@ -1,61 +1,48 @@
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 
-def calculate_elapsed_time(start_str: str, end_str: str, unit: str) -> None:
-    """
-    Calculates the elapsed time between a start and end timestamp 
-    based on the desired output unit.
+def calculate_elapsed_time(start_time_str, end_time_str, unit):
+    start_time = datetime.fromisoformat(start_time_str)
+    end_time = datetime.fromisoformat(end_time_str)
     
-    Args:
-        start_str (str): ISO format string for start time (e.g., "2023-10-01 14:30")
-        end_str (str): ISO format string for end time (e.g., "2023-10-01 15:00")
-        unit (str): Output unit ('minutes', 'hours', or 'days')
-    """
-    try:
-        start_time = datetime.strptime(start_str, "%Y-%m-%d %H:%M")
-        end_time = datetime.strptime(end_str, "%Y-%m-%d %H:%M")
-        
-        if start_time > end_time and (end_time - start_time).total_seconds() != 0:
-            # Assume next day if end is before start for single-day calculation logic 
-            # or raise error depending on strictness. Here we assume same session unless specified.
-            pass
-        
-        delta = end_time - start_time
-        total_seconds = delta.total_seconds()
-
-        match unit.lower():
-            case "minutes":
-                result = (total_seconds / 60) if total_seconds >= 0 else -(total_seconds / 60)
-                print(f"Elapsed time: {result:.2f} minutes")
-            case "hours":
-                result = (total_seconds / 3600) if total_seconds >= 0 else -(total_seconds / 3600)
-                print(f"Elapsed time: {result:.4f} hours")
-            case "days":
-                result = (total_seconds / 86400) if total_seconds >= 0 else -(total_seconds / 86400)
-                print(f"Elapsed time: {result:.5f} days")
-            case _:
-                raise ValueError("Unsupported unit. Choose 'minutes', 'hours', or 'days'.")
-
-    except (ValueError, TypeError):
-        print("Invalid date format provided.")
-        
-if __name__ == "__main__":
-    # Create argument parser with non-required arguments to avoid blocking for input() calls
-    parser = argparse.ArgumentParser(description="Calculate elapsed time between two timestamps.")
-    parser.add_argument("--start", type=str, default=None)
-    parser.add_argument("--end", type=str, default=None)
-    parser.add_argument("--unit", type=str, choices=["minutes", "hours", "days"], 
-                        required=False)
-
-    # Sample values hard-coded as requested to ensure execution without user input
-    start_time = "2023-10-05 09:00"
-    end_time = "2023-10-05 17:30"
+    if end_time < start_time:
+        raise ValueError("End time must be after start time")
     
-    parser.parse_args()
-
-    # Simulate command line usage with sample data since no arguments were provided or passed via CLI in this test run logic
-    if not any([args.start, args.end]):
-        start = start_time
-        end = end_time
+    delta = end_time - start_time
+    total_seconds = delta.total_seconds()
     
-    calculate_elapsed_time(start, end, "hours")
+    if unit == 'seconds':
+        return total_seconds
+    elif unit == 'minutes':
+        return total_seconds / 60
+    elif unit == 'hours':
+        return total_seconds / 3600
+    elif unit == 'days':
+        return total_seconds / 86400
+    else:
+        raise ValueError(f"Unsupported unit: {unit}")
+
+def main():
+    parser = argparse.ArgumentParser(description='Calculate elapsed time between two times.')
+    parser.add_argument('--start', type=str, required=False, help='Start time in ISO format')
+    parser.add_argument('--end', type=str, required=False, help='End time in ISO format')
+    parser.add_argument('--unit', type=str, required=False, help='Output unit (seconds, minutes, hours, days)')
+    
+    args = parser.parse_args()
+    
+    sample_start = "2023-10-01T10:00:00"
+    sample_end = "2023-10-01T10:35:45"
+    sample_unit = "minutes"
+    
+    if args.start is not None:
+        sample_start = args.start
+    if args.end is not None:
+        sample_end = args.end
+    if args.unit is not None:
+        sample_unit = args.unit
+    
+    result = calculate_elapsed_time(sample_start, sample_end, sample_unit)
+    print(result)
+
+if __name__ == '__main__':
+    main()

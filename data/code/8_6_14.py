@@ -1,33 +1,35 @@
 import math
 
-def calculate_circle_area(radius: float) -> float:
-    """
-    Calculates the area of a circle given its radius using math.pi.
-    
-    Args:
-        radius (float): The radius of the circle, must be non-negative.
-        
-    Returns:
-        float: The calculated area of the circle.
-        
-    Raises:
-        ValueError: If the radius is negative.
-    """
-    if radius < 0:
-        raise ValueError("Radius cannot be negative.")
-    
-    return math.pi * (radius ** 2)
+def calculate_area(shape_dict):
+    shape_type = shape_dict.get("type")
+    if shape_type == "circle":
+        radius = shape_dict.get("radius", 0)
+        return math.pi * radius ** 2
+    elif shape_type == "rectangle":
+        width = shape_dict.get("width", 0)
+        height = shape_dict.get("height", 0)
+        return width * height
+    elif shape_type == "triangle":
+        base = shape_dict.get("base", 0)
+        height = shape_dict.get("height", 0)
+        return 0.5 * base * height
+    elif shape_type == "square":
+        side = shape_dict.get("side", 0)
+        return side ** 2
+    elif shape_type == "ellipse":
+        semi_major = shape_dict.get("semi_major", 0)
+        semi_minor = shape_dict.get("semi_minor", 0)
+        return math.pi * semi_major * semi_minor
+    else:
+        raise ValueError(f"Unsupported shape type: {shape_type}")
 
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access
-    test_cases = [3.14, -5, 0]
-
-    print(f"Area of circle with radius {test_cases[0]}: {calculate_circle_area(test_cases[0])}")
-    
-    try:
-        area_neg = calculate_circle_area(test_cases[1])
-    except ValueError as e:
-        print(f"Error for negative radius: {e}")
-
-    zero_radius_area = calculate_circle_area(0)
-    print(f"Area of circle with radius 0: {zero_radius_area}")
+if __name__ == "__main__":
+    shapes = [
+        {"type": "circle", "radius": 5},
+        {"type": "rectangle", "width": 4, "height": 6},
+        {"type": "triangle", "base": 3, "height": 4},
+        {"type": "square", "side": 7},
+        {"type": "ellipse", "semi_major": 5, "semi_minor": 3}
+    ]
+    for shape in shapes:
+        print(calculate_area(shape))

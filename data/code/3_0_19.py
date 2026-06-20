@@ -1,61 +1,44 @@
 import csv
+import tempfile
+import os
 
-def calculate_average_temperature(filepath: str) -> float | None:
-    """
-    Reads temperature values from a CSV file, filters non-numeric entries,
-    calculates the average, and handles I/O errors gracefully.
-    
-    Args:
-        filepath (str): Path to the input CSV file containing temperature data.
-        
-    Returns:
-        float or None: The calculated average temperature if successful, 
-                       otherwise returns None upon error handling completion.
-    """
-    temperatures = []
-    
+def calculate_average_temperature(csv_file_path):
     try:
-        with open(filepath, 'r', newline='', encoding='utf-8') as csvfile:
-            # Assume the first row is headers and look for a column named 'temperature' or similar
-            reader = csv.DictReader(csvfile)
-            
-            if not any(key.lower() == 'temperature' for key in (reader.fieldnames or [])):
+        with open(csv_file_path, 'r', newline='') as file:
+            reader = csv.reader(file)
+            header = next(reader, None)
+            if header is None:
                 return None
-            
-            target_col_idx = next(i for i, k in enumerate(reader.fieldnames) if k.lower().startswith('temper'))
-            
-            count = 0
-            total_sum = 0.0
-            
-            try:
-                sum_rows = list(csvfile) # Reload content to iterate properly with DictReader logic or restart context
-                
-                # Re-iterate using the file object again since we consumed it in 'sum_rows' definition above if not careful, 
-                # but actually we can just re-read inside a fresh loop within try block for safety.
-                
-            except Exception:
+            temperature_index = None
+            for idx, col_name in enumerate(header):
+                if 'temperature' in col_name.lower():
+                    temperature_index = idx
+                    break
+            if temperature_index is None:
                 return None
-
-        # Reset iteration approach to be strictly single-pass and robust without reloading state issues
-        
-        temperatures = []
-        
+            temperatures = []
+            for row in reader:
+                if len(row) > temperature_index:
+                    try:
+                        temp_value = float(row[temperature_index])
+                        temperatures.append(temp_value)
+                    except ValueError:
+                        continue
+            if not temperatures:
+                return None
+            average = sum(temperatures) / len(temperatures)
+            return average
     except FileNotFoundError:
-        print(f"Error: The file '{filepath}' was not found.")
-        raise SystemExit(1)
-    
-    except PermissionError:
-        print(f"Error: Permission denied when trying to read the file at '{filepath}'.")
         return None
-        
-    except csv.Error as e:
-        print(f"CSV parsing error occurred for file: {e}")
+    except Exception:
         return None
-        
-    except Exception as generic_error:
-        # Generic catch-all for unexpected I/O issues like encoding problems on some systems
-        print(f"An unexpected error occurred while reading the CSV data: {generic_error}")
-        raise SystemExit(1)
-
 if __name__ == '__main__':
-    pass
+    sample_csv_content = 'Date,Time,Temperature,Humidity\n2023-01-01,00:00,22.5,45.0\n2023-01-01,01:00,22.1,46.0\n2023-01-01,02:00,21.8,47.0\n2023-01-01,03:00,21.5,48.0\n2023-01-01,04:00,21.2,49.0\n'
+    tmp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False)
+    tmp_file.write(sample_csv_content)
+    tmp_file.close()
+    try:
+        result = calculate_average_temperature(tmp_file.name)
+        print(result)
+    finally:
+        os.unlink(tmp_file.name)

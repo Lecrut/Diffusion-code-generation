@@ -1,13 +1,16 @@
-import sys
 def calculate_difference(length1, length2):
     try:
-        num1 = float(length1)
-        num2 = float(length2)
-        return num1 - num2
+        val1 = float(length1)
+        val2 = float(length2)
+        return val1 - val2
     except ValueError:
-        return "Error: Invalid input. Please provide numeric values."
+        raise ValueError("Both inputs must be numeric values representing lengths.")
+
 if __name__ == '__main__':
-    sample_length1 = "15.5"
-    sample_length2 = "8.2"
-    result = calculate_difference(sample_length1, sample_length2)
-    print(result)
+    sample_a = 10.5
+    sample_b = 4.2
+    try:
+        result = calculate_difference(sample_a, sample_b)
+        print(result)
+    except ValueError as e:
+        print(e)

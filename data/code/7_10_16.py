@@ -1,28 +1,26 @@
-def convert_time(unit: str, value: float) -> dict:
-    """
-    Converts a given time duration from one standard unit to all others.
-    
-    Args:
-        unit (str): Source unit ('seconds', 'minutes', 'hours', 'days').
-        value (float): The numeric value of the time duration.
-        
-    Returns:
-        dict: A dictionary containing the converted values for seconds, minutes, 
-              hours, and days as floats with 4 decimal places if necessary.
-              
-    Raises:
-        ValueError: If input units are invalid or value is negative.
-    """
-    
-    valid_units = ['seconds', 'minutes', 'hours', 'days']
-    
-    # Input Validation for Unit
-    if unit not in valid_units:
-        raise ValueError(f"Invalid time unit '{unit}'. Supported units are: {valid_units}")
-    
-    # Input Validation for Value (must be non-negative)
+def convert_time(value, unit):
+    conversions = {
+        'seconds': 1,
+        'minutes': 60,
+        'hours': 3600,
+        'days': 86400
+    }
+    if unit not in conversions:
+        raise ValueError(f"Unsupported unit: {unit}")
     if value < 0:
-        raise ValueError("Time duration cannot be negative.")
+        raise ValueError("Value must be non-negative")
+    total_seconds = value * conversions[unit]
+    days = total_seconds / 86400
+    hours = (total_seconds % 86400) / 3600
+    minutes = (total_seconds % 3600) / 60
+    seconds = total_seconds % 60
+    return {
+        'seconds': total_seconds,
+        'minutes': total_seconds / 60,
+        'hours': total_seconds / 3600,
+        'days': total_seconds / 86400
+    }
 
 if __name__ == '__main__':
-    pass
+    result = convert_time(90, 'minutes')
+    print(result)

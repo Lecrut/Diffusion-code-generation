@@ -1,17 +1,20 @@
 def compare_lengths(a, b):
     if a > b:
-        return "greater"
-    elif a < b:
-        return "less"
-    else:
-        return "equal"
+        return ('greater', a, b)
+    if a < b:
+        return ('less', a, b)
+    return ('equal', a, b)
+
 if __name__ == '__main__':
     val1 = 10.5
-    val2 = 10.5
-    print(f"Comparing {val1} and {val2}: {compare_lengths(val1, val2)}")
-    val3 = 22.1
-    val4 = 15.9
-    print(f"Comparing {val3} and {val4}: {compare_lengths(val3, val4)}")
-    val5 = 5.0
-    val6 = 8.2
-    print(f"Comparing {val5} and {val6}: {compare_lengths(val5, val6)}")
+    val2 = 10.2
+    result = compare_lengths(val1, val2)
+    print(result)
+    val3 = 10.2
+    val4 = 10.5
+    result2 = compare_lengths(val3, val4)
+    print(result2)
+    val5 = 7.0
+    val6 = 7.0
+    result3 = compare_lengths(val5, val6)
+    print(result3)

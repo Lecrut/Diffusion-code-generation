@@ -1,26 +1,24 @@
-import argparse
+class WeightCalculator:
+    _MIN_WEIGHT = 0.0
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculate the difference between two weights.")
-    
-    weight1_arg = parser.add_argument(
-        "weight1", 
-        type=float, 
-        help="The first weight value."
-    )
-    
-    weight2_arg = parser.add_argument(
-        "weight2", 
-        type=float, 
-        help="The second weight value."
-    )
-    
-    args = parser.parse_args()
+    def __init__(self, tolerance=1e-9):
+        self.tolerance = float(tolerance)
 
-    difference = weight1_arg - weight2_arg
-    
-    # Output the result to standard output without printing extra labels since argparse handles description and error messages.
-    print(difference)
+    def calculate_difference(self, weight1, weight2):
+        w1 = float(weight1)
+        w2 = float(weight2)
+        if w1 < self._MIN_WEIGHT:
+            raise ValueError("Weight1 cannot be negative")
+        if w2 < self._MIN_WEIGHT:
+            raise ValueError("Weight2 cannot be negative")
+        diff = abs(w1 - w2)
+        if diff < self.tolerance:
+            return 0.0
+        return diff
 
 if __name__ == '__main__':
-    main()
+    calculator = WeightCalculator()
+    weight_a = 75.5
+    weight_b = 75.5000000001
+    difference = calculator.calculate_difference(weight_a, weight_b)
+    print(difference)

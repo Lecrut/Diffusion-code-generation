@@ -1,19 +1,10 @@
-class LengthComparator:
-    def compare(self, length1, length2):
-        if length1 > length2:
-            return f"{length1} is greater than {length2}"
-        elif length1 < length2:
-            return f"{length1} is less than {length2}"
-        else:
-            return f"{length1} is equal to {length2}"
+def compare_lengths(m1, m2):
+    cm1 = m1 * 100
+    cm2 = m2 * 100
+    if cm1 >= cm2:
+        return m1
+    return m2
+
 if __name__ == '__main__':
-    comparator = LengthComparator()
-    l1 = 15.5
-    l2 = 22.1
-    print(comparator.compare(l1, l2))
-    l3 = 100
-    l4 = 100
-    print(comparator.compare(l3, l4))
-    l5 = 5.0
-    l6 = 12.3
-    print(comparator.compare(l5, l6))
+    result = compare_lengths(5.0, 3.5)
+    print(result)

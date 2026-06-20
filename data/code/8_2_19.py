@@ -1,38 +1,18 @@
-class Shape:
-    """Base class representing a geometric shape."""
-    
-    def calculate_area(self):
-        raise NotImplementedError("Subclasses must implement this method.")
+import numpy as np
 
-class Rectangle(Shape):
-    """Class representing a rectangle that calculates its area."""
-    
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-    
-    def calculate_area(self):
-        return self.width * self.height
-
-class Circle(Shape):
-    """Class representing a circle that calculates its area."""
-    
-    PI = 3.141592653589793
-    
-    def __init__(self, radius):
-        self.radius = radius
-    
-    def calculate_area(self):
-        return Circle.PI * (self.radius ** 2)
+def calculate_smallest_bounding_box_area(points):
+    if not points:
+        return 0.0
+    coordinates = np.array(points)
+    if coordinates.ndim != 2 or coordinates.shape[1] != 2:
+        raise ValueError("Input must be a list of (x, y) tuples")
+    min_x, min_y = np.min(coordinates, axis=0)
+    max_x, max_y = np.max(coordinates, axis=0)
+    width = max_x - min_x
+    height = max_y - min_y
+    return width * height
 
 if __name__ == '__main__':
-    # Sample values for testing the classes
-    rect_width = 5.0
-    rect_height = 10.0
-    circle_radius = 7.0
-    
-    rectangle = Rectangle(rect_width, rect_height)
-    circle = Circle(circle_radius)
-    
-    print(f"Rectangle Area: {rectangle.calculate_area()}")
-    print(f"Circle Area: {circle.calculate_area()}")
+    sample_points = [(1, 1), (3, 3), (2, 5), (0, 0), (4, 2)]
+    area = calculate_smallest_bounding_box_area(sample_points)
+    print(area)

@@ -1,60 +1,33 @@
-import math
-
-def compare_length_lists(list1: list[float], list2: list[float]) -> dict:
-    """
-    Compares two lists of length measurements to determine max/min lengths 
-    and reports the overall range difference across both combined sets.
+def compare_lengths(seq1, seq2):
+    iterator1 = iter(seq1)
+    iterator2 = iter(seq2)
     
-    Args:
-        list1 (list[float]): First list of numerical values representing lengths.
-        list2 (list[float]): Second list of numerical values representing lengths.
+    while True:
+        item1, item2 = None, None
+        try:
+            item1 = next(iterator1)
+        except StopIteration:
+            item1 = None
+        try:
+            item2 = next(iterator2)
+        except StopIteration:
+            item2 = None
+            
+        if item1 is None and item2 is None:
+            break
         
-    Returns:
-        dict: A dictionary containing 'combined_max', 'combined_min', and 'range_difference'.
-              Raises ValueError if lists are empty or contain non-numeric data.
-    """
-    
-    # Validate inputs for emptiness
-    if not isinstance(list1, list) or len(list1) == 0:
-        raise ValueError("First argument must be a non-empty list.")
-    if not isinstance(list2, list) or len(list2) == 0:
-        raise ValueError("Second argument must be a non-empty list.")
-    
-    # Validate inputs for numeric content and combine lists
-    combined = []
-    try:
-        for val in list1 + list2:
-            float(val)  # Attempt conversion to ensure it's numeric
-            combined.append(float(val))
-    except (ValueError, TypeError):
-        raise ValueError("All elements in both lists must be convertible to numbers.")
-
-    if len(combined) == 0:
-        return {
-            'combined_max': None, 
-            'combined_min': None, 
-            'range_difference': math.nan
-        }
-
-    combined_max = max(combined)
-    combined_min = min(combined)
-    
-    # Calculate range difference as the span of values found in both lists together
-    range_difference = combined_max - combined_min
-    
-    return {
-        'combined_max': combined_max, 
-        'combined_min': combined_min, 
-        'range_difference': range_difference
-    }
+        length1 = len(seq1) if hasattr(seq1, '__len__') else 0
+        length2 = len(seq2) if hasattr(seq2, '__len__') else 0
+        
+        if length1 > 0 and length2 > 0:
+            yield length1 > length2
+        elif length1 > 0:
+            yield True
+        elif length2 > 0:
+            yield False
+        else:
+            break
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files)
-    list_a = [10.5, 23.4, 8.9]
-    list_b = [15.2, 7.6, 24.1]
-
-    result = compare_length_lists(list_a, list_b)
-    
-    print(f"Combined Maximum Length: {result['combined_max']}")
-    print(f"Combined Minimum Length: {result['combined_min']}")
-    print(f"Overall Range Difference: {result['range_difference']:.2f}")
+    results = list(compare_lengths([1, 2, 3], [1, 2]))
+    print(results)

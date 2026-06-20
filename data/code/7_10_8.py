@@ -1,83 +1,35 @@
-import math
-def convert_duration(value, unit):
-    if unit == 'seconds':
-        seconds = value
-        minutes = seconds / 60
-        hours = seconds / 3600
-        days = seconds / 86400
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'minutes':
-        minutes = value
-        seconds = minutes * 60
-        hours = minutes * 60 / 60
-        days = minutes * 60 / 3600
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'hours':
-        hours = value
-        seconds = hours * 3600
-        minutes = hours * 60
-        days = hours / 24
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'days':
-        days = value
-        seconds = days * 86400
-        minutes = days * 86400 / 60
-        hours = days * 86400 / 3600
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    else:
-        raise ValueError("Invalid unit specified. Must be 'seconds', 'minutes', 'hours', or 'days'.")
+def convert_time_duration(amount, unit):
+    valid_units = {'seconds', 'minutes', 'hours', 'days'}
+    if unit not in valid_units:
+        raise ValueError(f"Invalid unit: {unit}. Must be one of {valid_units}")
+    
+    if not isinstance(amount, (int, float)) or amount < 0:
+        raise ValueError("Amount must be a non-negative number")
+
+    factors = {
+        'seconds': 1,
+        'minutes': 60,
+        'hours': 3600,
+        'days': 86400
+    }
+
+    total_seconds = amount * factors[unit]
+
+    result = {
+        'seconds': total_seconds,
+        'minutes': total_seconds / 60,
+        'hours': total_seconds / 3600,
+        'days': total_seconds / 86400
+    }
+    
+    return result
+
 if __name__ == '__main__':
-    test_value = 7200
-    test_unit = 'seconds'
-    try:
-        results = convert_duration(test_value, test_unit)
-        print(f"Input Value: {test_value} {test_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
-        test_value = 10800
-        test_unit = 'minutes'
-        results = convert_duration(test_value, test_unit)
-        print(f"\nInput Value: {test_value} {test_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
-        test_value = 24
-        test_unit = 'days'
-        results = convert_duration(test_value, test_unit)
-        print(f"\nInput Value: {test_value} {test_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
-        test_value = 3600
-        test_unit = 'invalid'
-        print(f"\nInput Value: {test_value} {test_unit}")
-        convert_duration(test_value, test_unit)
-    except ValueError as e:
-        print(f"\nError: {e}")
+    sample_amount = 2.5
+    sample_unit = 'hours'
+    output = convert_time_duration(sample_amount, sample_unit)
+    print(f"Input: {sample_amount} {sample_unit}")
+    print(f"Seconds: {output['seconds']}")
+    print(f"Minutes: {output['minutes']}")
+    print(f"Hours: {output['hours']}")
+    print(f"Days: {output['days']}")

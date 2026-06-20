@@ -1,30 +1,26 @@
-def weight_difference(weights):
-    """
-    Calculates the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of int/float): List containing numerical values representing weights.
-        
-    Returns:
-        float or None: The difference between max and min if valid input, else None.
-    """
-    if not weights:
-        return None
-    
-    # Initialize with the first element to ensure O(n) single pass logic without sorting overhead
-    current_min = weights[0]
-    current_max = weights[0]
+class WeightPairManager:
+    def __init__(self):
+        self.pairs = {}
 
-    for weight in weights[1:]:
-        if weight < current_min:
-            current_min = weight
-        elif weight > current_max:
-            current_max = weight
-            
-    return float(current_max - current_min)
+    def add_pair(self, key, weight1, weight2):
+        self.pairs[key] = (weight1, weight2)
+
+    def get_difference(self, key):
+        if key not in self.pairs:
+            raise KeyError(f"Key '{key}' not found in weight pairs.")
+        w1, w2 = self.pairs[key]
+        return abs(w1 - w2)
 
 if __name__ == '__main__':
-    sample_weights = [5.0, 2.3, 8.1, 9.4, 3.7]
-    
-    result = weight_difference(sample_weights)
-    print(f"Difference between heaviest and lightest: {result}")
+    manager = WeightPairManager()
+    manager.add_pair("apple", 150, 200)
+    manager.add_pair("banana", 100, 130)
+    manager.add_pair("orange", 300, 280)
+
+    diff_apple = manager.get_difference("apple")
+    diff_banana = manager.get_difference("banana")
+    diff_orange = manager.get_difference("orange")
+
+    print(diff_apple)
+    print(diff_banana)
+    print(diff_orange)

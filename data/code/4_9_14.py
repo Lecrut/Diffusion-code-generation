@@ -1,21 +1,15 @@
-import sys
-
-def kilometers_to_miles(km: float) -> float:
-    """Convert distance in kilometers to miles."""
-    return km * 0.621371
-
-def convert_distance() -> None:
-    """Perform a sample conversion from kilometers to miles using hard-coded values."""
-    
-    # Hardcoded sample value for demonstration (as per task requirement)
-    # This runs without user input, command-line arguments, network access, or pre-existing files.
-    distance_km = 100.5
-    
-    print(f"Converting {distance_km} kilometers to miles...")
-    result_miles = kilometers_to_miles(distance_km)
-    
-    formatted_result = f"{result_miles:.2f}"
-    print(f"The equivalent is {formatted_result} miles.")
+def convert_distance(value, unit):
+    if unit == 'miles':
+        return value * 1.60934
+    elif unit == 'kilometers':
+        return value / 1.60934
+    else:
+        raise ValueError("Unit must be 'miles' or 'kilometers'")
 
 if __name__ == '__main__':
-    convert_distance()
+    distance_miles = 10
+    distance_kilometers = convert_distance(distance_miles, 'miles')
+    print(f"{distance_miles} miles is {distance_kilometers:.2f} kilometers")
+
+    distance_miles_back = convert_distance(distance_kilometers, 'kilometers')
+    print(f"{distance_kilometers:.2f} kilometers is {distance_miles_back:.2f} miles")

@@ -1,25 +1,8 @@
-class WeightCalculator:
-    """A class to perform basic weight calculations."""
-
-    def calculate_difference(self, weight1, weight2):
-        """Calculate the difference between two weights.
-        
-        Args:
-            weight1 (float or int): The first weight value.
-            weight2 (float or int): The second weight value.
-            
-        Returns:
-            float: The absolute difference between the two weights.
-        """
-        return abs(weight1 - weight2)
+def weight_difference_generator(pairs):
+    for first, second in pairs:
+        yield first - second
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    calc = WeightCalculator()
-
-    w_a = 50.5
-    w_b = 48.3
-
-    difference = calc.calculate_difference(w_a, w_b)
-    
-    print(f"Difference between {w_a} and {w_b}: {difference}")
+    sample_pairs = [(10, 5), (20, 15), (30, 35), (40, 40)]
+    results = list(weight_difference_generator(sample_pairs))
+    print(results)

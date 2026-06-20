@@ -1,53 +1,66 @@
-def calculate_area(shape_data):
-    """
-    Calculates the area of a 2D shape based on provided parameters in a dictionary.
-    
-    Supported shapes: 'rectangle', 'circle', 'triangle'.
-    
-    Args:
-        shape_data (dict): A dictionary containing:
-            - 'shape_type': str, one of 'rectangle', 'circle', or 'triangle'
-            - Parameters specific to the shape type
-            
-    Returns:
-        float: The calculated area.
-        
-    Raises:
-        ValueError: If unsupported shape type is provided or parameters are missing/invalid.
-    """
-    shape_type = shape_data.get('shape_type')
+import math
+from typing import List, Tuple
 
-    if shape_type == 'rectangle':
-        width = shape_data.get('width', 0)
-        height = shape_data.get('height', 0)
-        return width * height
+def cross_product(o: Tuple[float, float], a: Tuple[float, float], b: Tuple[float, float]) -> float:
+    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+def compute_convex_hull(points: List[Tuple[float, float]]) -> List[Tuple[float, float]]:
+    if len(points) <= 1:
+        return points
+    
+    sorted_points = sorted(points, key=lambda p: (p[0], p[1]))
+    
+    lower_hull = []
+    for p in sorted_points:
+        while len(lower_hull) >= 2 and cross_product(lower_hull[-2], lower_hull[-1], p) <= 0:
+            lower_hull.pop()
+        lower_hull.append(p)
+    
+    upper_hull = []
+    for p in reversed(sorted_points):
+        while len(upper_hull) >= 2 and cross_product(upper_hull[-2], upper_hull[-1], p) <= 0:
+            upper_hull.pop()
+        upper_hull.append(p)
+    
+    if len(lower_hull) > 1:
+        lower_hull.pop()
+    if len(upper_hull) > 1:
+        upper_hull.pop()
         
-    elif shape_type == 'circle':
-        radius = shape_data.get('radius', 0)
-        import math
-        if radius < 0:
-            raise ValueError("Radius must be non-negative.")
-        return math.pi * (radius ** 2)
-        
-    elif shape_type == 'triangle':
-        base = shape_data.get('base', 0)
-        height_param = shape_data.get('height', 0)
-        if not isinstance(base, (int, float)) or not isinstance(height_param, (int, float)):
-            raise ValueError("Base and height must be numeric.")
-        return 0.5 * base * height_param
-        
-    else:
-        raise ValueError(f"Unsupported shape type: {shape_type}. Supported types are 'rectangle', 'circle', 'triangle'.")
+    return lower_hull + upper_hull
+
+def shoelace_area(hull: List[Tuple[float, float]]) -> float:
+    n = len(hull)
+    if n < 3:
+        return 0.0
+    
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
+    
+    return abs(area) / 2.0
+
+def calculate_convex_hull_area_degrees(coordinates: List[Tuple[float, float]]) -> float:
+    if len(coordinates) < 3:
+        return 0.0
+    
+    hull = compute_convex_hull(coordinates)
+    
+    if len(hull) < 3:
+        return 0.0
+    
+    return shoelace_area(hull)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values, no user input required
-    
-    sample_cases = [
-        {'shape_data': {'shape_type': 'rectangle', 'width': 5.0, 'height': 3.0}},
-        {'shape_data': {'shape_type': 'circle', 'radius': 4.2}},
-        {'shape_data': {'shape_type': 'triangle', 'base': 10, 'height': 6}},
+    sample_coords = [
+        (34.0, -118.0),
+        (34.1, -118.1),
+        (34.2, -118.0),
+        (34.1, -117.9),
+        (34.05, -118.05)
     ]
-
-    for case in sample_cases:
-        result = calculate_area(case['shape_data'])
-        print(f"Area of {case['shape_data']['shape_type']}: {result}")
+    
+    area = calculate_convex_hull_area_degrees(sample_coords)
+    print(area)

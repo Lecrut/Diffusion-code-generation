@@ -1,14 +1,14 @@
-def convert_seconds(seconds):
-    if seconds > 3600:
-        hours = seconds // 3600
-        return hours
-    elif seconds > 60:
-        minutes = seconds // 60
-        return minutes
+def convert_seconds(total_seconds):
+    if total_seconds >= 3600:
+        hours = total_seconds // 3600
+        return f"{hours} hours"
+    elif total_seconds >= 60:
+        minutes = total_seconds // 60
+        return f"{minutes} minutes"
     else:
-        return seconds
+        return f"{total_seconds} seconds"
+
 if __name__ == '__main__':
-    test_cases = [0, 59, 60, 61, 3599, 3600, 3601, 7200, 86400]
-    for s in test_cases:
-        result = convert_seconds(s)
-        print(f"Input: {s}, Output: {result}")
+    sample_values = [3661, 125, 45, 7200, 59]
+    for val in sample_values:
+        print(convert_seconds(val))

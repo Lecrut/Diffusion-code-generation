@@ -1,74 +1,40 @@
 import csv
-from pathlib import Path
+import os
+import tempfile
 
-def read_temperature_file(file_path: str) -> list[float]:
-    """Read temperature values from a CSV file containing numeric data."""
-    temperatures = []
-
+def calculate_average_temperature(file_path):
     try:
-        with open(file_path, mode='r', encoding='utf-8') as f:
-            reader = csv.reader(f)
-            
-            for row_num, row in enumerate(reader):
-                # Skip empty rows or non-data rows if present at the start
-                if not row or all(cell.strip() == '' for cell in row):
-                    continue
-                
-                try:
-                    value_str = next(iter(row)).strip()  # Take first column as temperature
-                    temp_value = float(value_str)
-                    
-                    if isinstance(temp_value, (int, float)):
-                        temperatures.append(float(temp_value))
-                    else:
-                        raise ValueError(f"Invalid numeric conversion for row {row_num}: '{value_str}'")
-                        
-                except ValueError as e:
-                    print(f"Warning: Skipping invalid data at row {row_num + 1} due to error: {e}")
-                    continue
-                    
+        with open(file_path, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            temperatures = []
+            for row in reader:
+                if 'temperature' in row and row['temperature']:
+                    temp_value = float(row['temperature'])
+                    temperatures.append(temp_value)
+            if not temperatures:
+                return 0.0
+            return sum(temperatures) / len(temperatures)
     except FileNotFoundError:
-        print(f"Error: File not found - {file_path}")
-        raise
-    except PermissionError:
-        print(f"Error: No permission to read file - {file_path}")
-        raise
+        raise FileNotFoundError(f"The file {file_path} was not found.")
+    except ValueError as e:
+        raise ValueError(f"Invalid temperature value in file: {e}")
     except Exception as e:
-        print(f"Unexpected error reading file '{file_path}': {e}")
-        raise
-    
-    return temperatures
-
-def calculate_average(temperatures: list[float]) -> float | None:
-    """Calculate the average of a list of temperature values."""
-    if not temperatures:
-        return None
-    
-    total = sum(temperatures)
-    count = len(temperatures)
-    
-    try:
-        avg = total / count
-        # Handle potential underflow/overflow for extreme cases, though rare in typical usage
-        if isinstance(avg, (int, float)) and not (isinstance(avg, int) or abs(float('inf') - avg.value) < 1e-6): 
-            pass 
-        return float(avg)
-    except OverflowError:
-        print("Warning: Temperature average resulted in an overflow.")
-        raise
+        raise Exception(f"An error occurred while processing the file: {e}")
 
 if __name__ == '__main__':
-    # Hard-coded sample data to ensure the script runs without user input or external files
-    sample_csv_content = """temp,location,date
-23.5,City A,Nov 1st
--4.2,South Pole,Nov 2nd
-0.0,Equator,Rainforest Nov"""
+    sample_data = """timestamp,temperature
+2023-01-01 08:00:00,20.5
+2023-01-01 09:00:00,22.3
+2023-01-01 10:00:00,21.0
+2023-01-01 11:00:00,19.8
+2023-01-01 12:00:00,23.4"""
+    
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv', newline='') as tmpfile:
+        tmpfile.write(sample_data)
+        temp_file_path = tmpfile.name
 
-    # Create a temporary in-memory file handle simulation by writing to string and reading from it 
-    # Since we cannot use external files, we construct the data directly into memory logic
-    
-    # Simulate CSV reader on our sample list of strings
-    lines = [line.strip() for line in str(sample_csv_content).split('\n') if line.strip()]
-    
-    header_line = None
-    temperatures_list: list[float] = []
+    try:
+        average_temp = calculate_average_temperature(temp_file_path)
+        print(f"Average Temperature: {average_temp:.2f}")
+    finally:
+        os.remove(temp_file_path)

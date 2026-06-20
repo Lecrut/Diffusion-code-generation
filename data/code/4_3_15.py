@@ -1,55 +1,67 @@
-import re
+class UnitConverter:
+    METERS_TO_FEET = 3.280839895
+    FEET_TO_METERS = 0.3048
+    KILOGRAMS_TO_POUNDS = 2.20462262185
+    POUNDS_TO_KILOGRAMS = 0.45359237
+    CELSIUS_TO_FAHRENHEIT_FACTOR = 9 / 5
+    CELSIUS_TO_FAHRENHEIT_OFFSET = 32
+    FAHRENHEIT_TO_CELSIUS_FACTOR = 5 / 9
+    FAHRENHEIT_TO_CELSIUS_OFFSET = 32
+    LITERS_TO_GALLONS = 0.264172052
+    GALLONS_TO_LITERS = 3.785411784
 
-def parse_distance(value: str) -> float | None:
-    """Parse a string into meters if it represents a valid distance, otherwise return None."""
-    pattern = r'^-?\d+(\.\d+)?\s*(km|mi|m)?$'
-    match = re.match(pattern, value.strip())
-    
-    if not match:
-        return None
-    
-    num_part = float(match.group(1))
-    unit = match.group(3) or 'm'  # Default to meters if no unit specified
-    
-    conversion_factors = {
-        'km': 1000.0,
-        'mi': 1609.344,
-        'm': 1.0
-    }
-    
-    return num_part * conversion_factors.get(unit.lower(), None)
+    @staticmethod
+    def _check_numeric(value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Input must be a number")
 
-def process_distances(inputs: list[str]) -> dict[str, float]:
-    """Process a list of distance strings and convert them to meters."""
-    results = {}
-    for idx, input_str in enumerate(inputs):
-        parsed_value = parse_distance(input_str)
-        
-        if parsed_value is None:
-            print(f"Error at index {idx}: Invalid format. Expected number with optional unit (km/mi/m).")
-        else:
-            results[idx] = parsed_value
-            
-    return results
+    @staticmethod
+    def _check_non_negative(value):
+        if value < 0:
+            raise ValueError("Input cannot be negative for this conversion")
+
+    def convert_meters_to_feet(self, meters):
+        self._check_numeric(meters)
+        self._check_non_negative(meters)
+        return meters * self.METERS_TO_FEET
+
+    def convert_feet_to_meters(self, feet):
+        self._check_numeric(feet)
+        self._check_non_negative(feet)
+        return feet * self.FEET_TO_METERS
+
+    def convert_kilograms_to_pounds(self, kilograms):
+        self._check_numeric(kilograms)
+        self._check_non_negative(kilograms)
+        return kilograms * self.KILOGRAMS_TO_POUNDS
+
+    def convert_pounds_to_kilograms(self, pounds):
+        self._check_numeric(pounds)
+        self._check_non_negative(pounds)
+        return pounds * self.POUNDS_TO_KILOGRAMS
+
+    def convert_celsius_to_fahrenheit(self, celsius):
+        self._check_numeric(celsius)
+        return (celsius * self.CELSIUS_TO_FAHRENHEIT_FACTOR) + self.CELSIUS_TO_FAHRENHEIT_OFFSET
+
+    def convert_fahrenheit_to_celsius(self, fahrenheit):
+        self._check_numeric(fahrenheit)
+        return (fahrenheit - self.FAHRENHEIT_TO_CELSIUS_OFFSET) * self.FAHRENHEIT_TO_CELSIUS_FACTOR
+
+    def convert_liters_to_gallons(self, liters):
+        self._check_numeric(liters)
+        self._check_non_negative(liters)
+        return liters * self.LITERS_TO_GALLONS
+
+    def convert_gallons_to_liters(self, gallons):
+        self._check_numeric(gallons)
+        self._check_non_negative(gallons)
+        return gallons * self.GALLONS_TO_LITERS
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_inputs = [
-        "50",           # Meters directly
-        "1.5 km",       # Kilometers
-        "3 mi 94 yd"   # Invalid: includes yards which are not supported by the parser logic above, but handled gracefully as None if strictly following regex; adjusted below to valid units for robustness demonstration
-    ]
-
-    # Correction for sample_inputs to ensure all parse correctly within current scope constraints:
-    corrected_samples = [
-        "50",           # Meters directly (50m)
-        "1.5 km",       # Kilometers -> 1509.34 meters
-        "2 mi"          # Miles -> ~3218.69 meters
-    ]
-
-    processed_results = process_distances(corrected_samples)
-    
-    print("Converted distances to meters:")
-    for idx, value in processed_results.items():
-        if isinstance(value, float):
-            print(f"{idx}: {value:.4f} m")
+    converter = UnitConverter()
+    print(converter.convert_meters_to_feet(100))
+    print(converter.convert_kilograms_to_pounds(50))
+    print(converter.convert_celsius_to_fahrenheit(37))
+    print(converter.convert_fahrenheit_to_celsius(98.6))
+    print(converter.convert_liters_to_gallons(10))

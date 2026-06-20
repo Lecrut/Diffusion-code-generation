@@ -1,8 +1,24 @@
-import sys
-length1 = 15.5
-length2 = 22.3
+import math
+
+class Measurement:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit
+
+class LengthComparator:
+    def __init__(self):
+        self.m1 = Measurement(10.0, "meters")
+        self.m2 = Measurement(10.0 + 1e-9, "meters")
+        self.epsilon = 1e-5
+
+    def is_equal_epsilon(self):
+        diff = abs(self.m1.value - self.m2.value)
+        return diff < self.epsilon
+
+    def get_absolute_difference(self):
+        return abs(self.m1.value - self.m2.value)
+
 if __name__ == '__main__':
-    print(f"Length 1: {length1}")
-    print(f"Length 2: {length2}")
-    difference = abs(length1 - length2)
-    print(f"The difference between the two lengths is: {difference}")
+    comparator = LengthComparator()
+    print(comparator.is_equal_epsilon())
+    print(comparator.get_absolute_difference())

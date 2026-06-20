@@ -1,35 +1,20 @@
-import datetime
-def calculate_time_difference(dt1, dt2, unit):
-    if dt1 is None or dt2 is None:
-        raise ValueError("Both datetime objects must be provided.")
-    if unit.lower() == 'days':
-        diff = dt2 - dt1
-        result = diff.days
-        return result
-    elif unit.lower() == 'hours':
-        diff = dt2 - dt1
-        result = diff.total_seconds() / 3600
-        return result
-    elif unit.lower() == 'minutes':
-        diff = dt2 - dt1
-        result = diff.total_seconds() / 60
-        return result
-    elif unit.lower() == 'seconds':
-        diff = dt2 - dt1
-        result = diff.total_seconds()
-        return result
-    else:
-        raise ValueError("Unsupported unit specified. Supported units are: days, hours, minutes, seconds.")
+from datetime import datetime, timedelta
+
+def calculate_time_difference(dt1: datetime, dt2: datetime, unit: str = 'seconds') -> float:
+    delta = dt2 - dt1
+    total_seconds = abs(delta.total_seconds())
+    if unit == 'seconds':
+        return total_seconds
+    if unit == 'minutes':
+        return total_seconds / 60
+    if unit == 'hours':
+        return total_seconds / 3600
+    if unit == 'days':
+        return total_seconds / 86400
+    return total_seconds
+
 if __name__ == '__main__':
-    start_time = datetime.datetime(2023, 10, 26, 10, 30, 0)
-    end_time = datetime.datetime(2023, 10, 29, 14, 45, 15)
-    time_unit = "hours"
-    try:
-        difference = calculate_time_difference(start_time, end_time, time_unit)
-        print(f"Start Time: {start_time}")
-        print(f"End Time: {end_time}")
-        print(f"Time Difference in {time_unit}: {difference}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    start_time = datetime(2023, 1, 1, 10, 0, 0)
+    end_time = datetime(2023, 1, 2, 12, 30, 0)
+    result = calculate_time_difference(start_time, end_time, 'hours')
+    print(result)

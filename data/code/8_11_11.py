@@ -1,70 +1,60 @@
 import math
+from typing import List, Union
 
-def calculate_polygon_area(vertices):
-    """
-    Calculates the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple[float, float]]): A list of ordered (x, y) tuples representing 
-                                             the vertices of the polygon in order (either clockwise or counter-clockwise).
-        
-    Returns:
-        float: The area of the polygon as a non-negative number.
-    
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided.
-        TypeError: If any vertex is not a tuple of two numbers.
-    """
-    if len(vertices) < 3:
-        raise ValueError("A polygon must have at least 3 vertices.")
+class Shape:
+    def __init__(self, name: str) -> None:
+        self.name = name
 
-    # Validate input types and ensure all points are tuples/lists with exactly two numeric elements
-    for i, point in enumerate(vertices):
-        if not isinstance(point, (tuple, list)):
-            raise TypeError(f"Vertex {i} is not a tuple or list. Expected: ((x, y), ...). Got: {point}")
-        try:
-            x = float(point[0])
-            y = float(point[1])
-        except (IndexError, ValueError):
-            raise TypeError(f"Invalid coordinates at vertex {i}: {point}. Coordinates must be numeric.")
+    def area(self) -> float:
+        return 0.0
 
-    n = len(vertices)
-    
-    # Shoelace formula implementation with floating-point tolerance handling for edge cases
-    area_sum = 0.0
-    
-    for i in range(n):
-        x1, y1 = vertices[i]
-        x2, y2 = vertices[(i + 1) % n]  # Wrap around to the first vertex
-        
-        area_sum += (x1 * y2 - x2 * y1)
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+        self._scale_internal(factor)
 
-    # Take absolute value and divide by 2.0 for final positive area
-    raw_area = abs(area_sum / 2.0)
+    def _scale_internal(self, factor: float) -> None:
+        raise ValueError("Subclasses must implement _scale_internal")
 
-    return round(raw_area, 6)
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        super().__init__("Circle")
+        self.radius = radius
+
+    def area(self) -> float:
+        return math.pi * self.radius ** 2
+
+    def _scale_internal(self, factor: float) -> None:
+        self.radius *= factor
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        super().__init__("Rectangle")
+        self.width = width
+        self.height = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def _scale_internal(self, factor: float) -> None:
+        self.width *= factor
+        self.height *= factor
+
+def calculate_scaled_area(shape: Shape, factor: float) -> float:
+    original_area = shape.area()
+    shape.scale(factor)
+    new_area = shape.area()
+    shape.scale(1.0 / factor)
+    return new_area
 
 if __name__ == '__main__':
-    # Sample polygon: a rectangle with vertices (0,0), (4,0), (4,3), (0,3)
-    sample_vertices = [
-        (0.0, 0.0),
-        (4.0, 0.0),
-        (4.0, 3.0),
-        (0.0, 3.0)
-    ]
-
-    # Calculate area using the function
-    polygon_area = calculate_polygon_area(sample_vertices)
-
-    print(f"Calculated Area: {polygon_area}")
+    circle = Circle(5.0)
+    rectangle = Rectangle(4.0, 6.0)
     
-    # Additional test case with floating point coordinates
-    sample_float_vertices = [
-        (1.5, 2.0),
-        (3.7, 4.5),
-        (6.2, 1.8)
-    ]
-
-    float_polygon_area = calculate_polygon_area(sample_float_vertices)
+    scale_factor = 2.0
     
-    print(f"Calculated Area for Float Polygon: {float_polygon_area}")
+    scaled_circle_area = calculate_scaled_area(circle, scale_factor)
+    scaled_rectangle_area = calculate_scaled_area(rectangle, scale_factor)
+    
+    print(scaled_circle_area)
+    print(scaled_rectangle_area)

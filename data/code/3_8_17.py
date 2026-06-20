@@ -1,61 +1,41 @@
-import json  # Used to demonstrate JSON-like parsing logic if needed later; currently unused but kept common in data tasks.
+import csv
+import os
 
-def parse_temperature_data(raw_input):
-    """
-    Simulates reading temperature data from a predefined set of sensor inputs.
-    
-    Args:
-        raw_input (str): A string containing comma-separated values representing 
-                        [sensor_id, timestamp, celsius_value] for each entry.
-        
-    Returns:
-        list: List of dictionaries, where each dictionary contains the parsed fields.
-              Expected format in input: "id|timestamp,celsius" or similar structured text.
-    
-    Since no external file access is allowed and input() is forbidden, 
-    this function assumes a fixed string structure derived from our hardcoded sample below.
-    """
-    # In a real scenario, we would parse the raw_input here using split(), json.loads(), etc.
-    # For simplicity in this simulation task without complex parsing logic requested:
-    entries = []
-    
-    if not raw_input.strip():
-        return []
-
-    for line in raw_input.strip().split('\n'):
-        parts = line.split(',')
-        try:
-            sensor_id = int(parts[0])
-            timestamp_str = parts[1].strip() # Assuming ISO format like "2023-10-05T14:30"
-            celsius_val = float(parts[2])
-
-            entries.append({
-                'sensor_id': sensor_id,
-                'timestamp': timestamp_str,
-                'celsius': celsius_val
-            })
-        except (ValueError, IndexError):
-            # Skip malformed lines in simulation to ensure clean output table
-            continue
-            
-    return entries
-
-def convert_celsius_to_kelvin(celsius_value):
-    """Converts temperature from Celsius to Kelvin."""
-    return round(celsius_value + 273.15, 2)
-
-def display_results(entries):
-    """
-    Displays the results in a neatly formatted table including 
-    sensor_id, timestamp, celsius value, and converted kelvin value.
-    
-    Prints to stdout directly without external dependencies or files.
-    """
-    if not entries:
-        print("No temperature data available.")
-        return
-
-    # Print Table Header
-
+def convert_celsius_to_fahrenheit(input_file_path, output_file_path):
+    if not os.path.exists(input_file_path):
+        raise FileNotFoundError(f'Input file {input_file_path} not found.')
+    results = []
+    try:
+        with open(input_file_path, mode='r', newline='') as infile:
+            reader = csv.reader(infile)
+            headers = next(reader)
+            temp_col_index = headers.index('temperature')
+            for row in reader:
+                try:
+                    temp_c = float(row[temp_col_index])
+                    temp_f = temp_c * 9 / 5 + 32
+                    row.append(temp_f)
+                    results.append(row)
+                except ValueError:
+                    continue
+    except IOError:
+        raise IOError(f'Error reading file {input_file_path}')
+    try:
+        with open(output_file_path, mode='w', newline='') as outfile:
+            writer = csv.writer(outfile)
+            writer.writerow(headers + ['temperature_f'])
+            writer.writerows(results)
+    except IOError:
+        raise IOError(f'Error writing to file {output_file_path}')
+    return results
 if __name__ == '__main__':
-    pass
+    sample_input = 'sample_input.csv'
+    sample_output = 'sample_output.csv'
+    with open(sample_input, mode='w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['id', 'temperature'])
+        writer.writerow(['1', '0'])
+        writer.writerow(['2', '100'])
+        writer.writerow(['3', '37'])
+    results = convert_celsius_to_fahrenheit(sample_input, sample_output)
+    print(results)

@@ -1,57 +1,28 @@
-import math
-
 def convert_time(value, from_unit, to_unit):
-    """
-    Converts a time value from one unit to another using seconds as an intermediate base.
-    
-    Supported units: 'days', 'hours', 'minutes', 'seconds'
-    
-    Args:
-        value (float or int): The time value to convert.
-        from_unit (str): Source unit ('days', 'hours', 'minutes', 'seconds').
-        to_unit (str): Target unit ('days', 'hours', 'minutes', 'seconds').
-        
-    Returns:
-        float: Converted time value in the target unit.
-    
-    Raises:
-        ValueError: If unsupported units are provided or conversion is invalid.
-    """
-    # Define seconds equivalent for each supported unit
-    to_seconds = {
-        'days': 86400,
-        'hours': 3600,
-        'minutes': 60,
-        'seconds': 1
+    unit_to_seconds = {
+        'nanosecond': 1e-9,
+        'microsecond': 1e-6,
+        'millisecond': 1e-3,
+        'second': 1,
+        'minute': 60,
+        'hour': 3600,
+        'day': 86400,
+        'week': 604800,
+        'month': 2592000,
+        'year': 31536000
     }
-
-    if from_unit not in to_seconds or to_unit not in to_seconds:
-        raise ValueError(f"Unsupported units. Supported: {list(to_seconds.keys())}")
-
-    # Convert input value to seconds first (intermediate calculation)
-    total_seconds = value * to_seconds[from_unit]
-
-    # Then convert seconds to target unit
-    result_value = total_seconds / to_seconds[to_unit]
-
-    return float(result_value)
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    if from_unit_lower not in unit_to_seconds:
+        raise ValueError(f"Unknown time unit: {from_unit}")
+    if to_unit_lower not in unit_to_seconds:
+        raise ValueError(f"Unknown time unit: {to_unit}")
+    value_in_seconds = value * unit_to_seconds[from_unit_lower]
+    result = value_in_seconds / unit_to_seconds[to_unit_lower]
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    
-    # Sample 1: Convert 2 days to hours
-    result_1 = convert_time(2, 'days', 'hours')
-    
-    # Sample 2: Convert 90 minutes to seconds
-    result_2 = convert_time(90, 'minutes', 'seconds')
-    
-    # Sample 3: Convert 5 hours to days
-    result_3 = convert_time(5, 'hours', 'days')
-    
-    # Sample 4: Convert 186400 seconds back to days (round trip check)
-    round_trip_result = convert_time(convert_time(2, 'days', 'seconds'), 'seconds', 'days')
-
-    print(f"Sample 1 - {result_1} hours")      # Expected: 48.0
-    print(f"Sample 2 - {result_2} seconds")     # Expected: 5400.0
-    print(f"Sample 3 - {result_3} days")       # Expected: ~0.216 (approx)
-    print(f"Round trip check - {round_trip_result:.2f} days")   # Should be close to 2.0
+    print(convert_time(1, 'hour', 'minute'))
+    print(convert_time(5, 'day', 'second'))
+    print(convert_time(1000, 'millisecond', 'second'))
+    print(convert_time(2, 'year', 'month'))

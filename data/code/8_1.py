@@ -1,7 +1,26 @@
-def calculate_area(length: float, width: float) -> float:
-    return length * width
+import math
+
+class Shape:
+    def area(self):
+        return 0
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * (self.radius ** 2)
+
 if __name__ == '__main__':
-    length_val = 10.5
-    width_val = 5.0
-    area_val = calculate_area(length_val, width_val)
-    print(area_val)
+    rect = Rectangle(5, 10)
+    print(rect.area())
+    circle = Circle(7)
+    print(circle.area())

@@ -1,90 +1,45 @@
-import sys
+def convert_distance(value, source_unit, target_unit):
+    METER_TO_FEET = 3.28084
+    METER_TO_MILE = 0.000621371
+    METER_TO_KM = 0.001
+    FEET_TO_METER = 1 / METER_TO_FEET
+    MILE_TO_METER = 1 / METER_TO_MILE
+    KM_TO_METER = 1 / METER_TO_KM
 
-def distance_converter(distance_float: float, from_unit: str) -> tuple[float, str]:
-    """
-    Converts a given distance between metric units (km/m/cm/mm).
-    
-    Args:
-        distance_float (float): The numeric value of the distance.
-        from_unit (str): String representation of the source unit ('k', 'm', 'c', or 'mm').
-        
-    Returns:
-        tuple[float, str]: A tuple containing (converted_distance, target_unit).
+    valid_units = {'m', 'km', 'mi', 'ft'}
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        raise ValueError("Value must be a numeric type")
+    if source_unit.lower() not in valid_units:
+        raise ValueError(f"Invalid source unit: {source_unit}")
+    if target_unit.lower() not in valid_units:
+        raise ValueError(f"Invalid target unit: {target_unit}")
 
-    Raises:
-        ValueError: If an invalid conversion factor is provided for 'from_unit'.
-    """
-    
-    valid_units = {
-        "km": 1e3,      # kilometers to meters ratio
-        "m": 1.0,       # base unit (meters) ratio
-        "c": 0.001,     # centimeters to meters ratio
-        "mm": 0.001     # millimeters to meters ratio
-    }
+    value_str = str(value).lower().strip()
+    source_str = str(source_unit).lower().strip()
+    target_str = str(target_unit).lower().strip()
 
-    
-    if from_unit not in valid_units:
-        raise ValueError("Invalid conversion factor for 'from_unit'. Please choose between km, m, c, mm.")
-    
-    distance_in_meters = distance_float * valid_units[from_unit]
-    
-    
-    base_units = ["km", "m"]
+    if source_str == 'm':
+        meters = value
+    elif source_str == 'km':
+        meters = value * KM_TO_METER
+    elif source_str == 'mi':
+        meters = value * MILE_TO_METER
+    elif source_str == 'ft':
+        meters = value * FEET_TO_METER
 
-    
-    return (distance_in_meters, from_base_unit)
+    if target_str == 'm':
+        result = meters
+    elif target_str == 'km':
+        result = meters * METER_TO_KM
+    elif target_str == 'mi':
+        result = meters * METER_TO_MILE
+    elif target_str == 'ft':
+        result = meters * METER_TO_FEET
 
-def main():
-    """
-    Main entry point for the CLI script. 
-    Demonstrates functionality with hard-coded sample values and no user input required."""
-    
-    print("Distance Converter Demo")
-    # Simulating inputs that would normally come via argument parsing or stdin
-    
-    distance = 5.0  # Default distance in meters (arbitrary base unit)
-
-    from_unit_str = "km"  
-    
-
-    target_unit_name, converted_distance_result = convert_distance(distance, from_unit_str)
-    
-    print(f"\nConversion result: {converted_distance_result} units.")
-
-def convert_distance(original_value: float, original_string_key: str):
-    """
-    Helper function to perform the actual conversion logic.
-
-        Args:
-            original_value (float): The input distance value as a number.
-            original_string_key (str): A string representing the unit type from valid options ('k', 'm', 'c', or 'mm').
-            
-        Returns:
-            tuple[float, str]: A pair containing the converted numerical result and the resulting target unit name.
-
-    Raises:
-        ValueError: If an invalid conversion factor is provided for original_string_key.
-    
-    """
-    
-    valid_units = {
-        "km": 1e3,      # kilometers to meters ratio
-        "m": 1.0,       # base unit (meters) ratio
-        "c": 0.001,     # centimeters to meters ratio
-        "mm": 0.001     # millimeters to meters ratio
-    }
-
-    
-    if original_string_key not in valid_units:
-        raise ValueError("Invalid conversion factor for 'from_unit'. Please choose between km, m, c, mm.")
-    
-    distance_in_meters = original_value * valid_units[original_string_key]
-    
-    
-    base_units = ["km", "m"]
-
-    
-    return (distance_in_meters, from_base_unit)
+    return round(result, 6)
 
 if __name__ == '__main__':
-    pass
+    print(convert_distance(100, 'm', 'ft'))
+    print(convert_distance(1, 'km', 'mi'))
+    print(convert_distance(5280, 'ft', 'mi'))
+    print(convert_distance(10, 'mi', 'km'))

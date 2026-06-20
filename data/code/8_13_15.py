@@ -1,26 +1,26 @@
 import math
 
-def convex_hull_area(points):
-    """
-    Computes the area of the smallest convex polygon enclosing all given 2D points.
-    Uses the Monotone Chain algorithm which is efficient (O(n log n)).
-    
-    Args:
-        points (list[tuple[float, float]]): List of [x, y] coordinates.
-        
-    Returns:
-        float: Area of the convex hull polygon.
-    """
-    if len(points) < 3:
-        return 0.0
+def calculate_scaled_areas(rectangles, circles, scale_factor):
+    scaled_rect_areas = []
+    for width, height in rectangles:
+        scaled_width = width * scale_factor
+        scaled_height = height * scale_factor
+        area = scaled_width * scaled_height
+        scaled_rect_areas.append(area)
 
-    # Sort points lexicographically by x-coordinate (then y-coordinate)
-    sorted_points = sorted(set(points))  # Remove duplicates while sorting
-    
-    n = len(sorted_points)
-    
-    # Build lower hull
-    lower_hull = []
+    scaled_circle_areas = []
+    for radius in circles:
+        scaled_radius = radius * scale_factor
+        area = math.pi * (scaled_radius ** 2)
+        scaled_circle_areas.append(area)
+
+    return scaled_rect_areas, scaled_circle_areas
 
 if __name__ == '__main__':
-    pass
+    rectangles = [(2.0, 3.0), (5.0, 5.0), (1.5, 4.0)]
+    circles = [1.0, 2.5, 3.0]
+    scale_factor = 2.0
+
+    rect_areas, circle_areas = calculate_scaled_areas(rectangles, circles, scale_factor)
+    print(rect_areas)
+    print(circle_areas)

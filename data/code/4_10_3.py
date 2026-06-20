@@ -1,24 +1,28 @@
-import sys
-def convert_distance(distance, from_unit, to_unit, factor):
-    if from_unit == to_unit:
-        return distance
-    if from_unit == "miles" and to_unit == "kilometers":
-        return distance * factor
-    elif from_unit == "kilometers" and to_unit == "miles":
-        return distance / factor
-    else:
-        raise ValueError("Unsupported unit conversion")
+class DistanceConverter:
+    MILE_TO_KM = 1.60934
+    KM_TO_MILE = 0.621371
+
+    @staticmethod
+    def convert_miles_to_kilometers(miles):
+        if not isinstance(miles, (int, float)):
+            raise ValueError("Input must be a number")
+        if miles < 0:
+            raise ValueError("Distance cannot be negative")
+        return miles * DistanceConverter.MILE_TO_KM
+
+    @staticmethod
+    def convert_kilometers_to_miles(kilometers):
+        if not isinstance(kilometers, (int, float)):
+            raise ValueError("Input must be a number")
+        if kilometers < 0:
+            raise ValueError("Distance cannot be negative")
+        return kilometers * DistanceConverter.KM_TO_MILE
+
 if __name__ == '__main__':
-    distance_value = 100
-    from_unit = "miles"
-    to_unit = "kilometers"
-    conversion_factor = 1.60934
-    try:
-        result = convert_distance(distance_value, from_unit, to_unit, conversion_factor)
-        print(f"Original Distance: {distance_value} {from_unit}")
-        print(f"Conversion Factor (1 {from_unit} = {conversion_factor} km): {conversion_factor}")
-        print(f"Converted Distance: {result:.2f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+    converter = DistanceConverter()
+    miles_input = 10
+    km_result = converter.convert_miles_to_kilometers(miles_input)
+    print(km_result)
+    km_input = 10
+    miles_result = converter.convert_kilometers_to_miles(km_input)
+    print(miles_result)

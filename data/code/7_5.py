@@ -1,28 +1,30 @@
-def convert_seconds(seconds):
-    if seconds > 3600:
-        hours = seconds // 3600
-        return hours
-    elif seconds > 60:
-        minutes = seconds // 60
-        return minutes
+def convert_seconds(total_seconds):
+    if total_seconds >= 3600:
+        hours = total_seconds // 3600
+        remainder = total_seconds % 3600
+        minutes = remainder // 60
+        seconds = remainder % 60
+        if hours > 0 and (minutes > 0 or seconds > 0):
+            return f"{hours} hour(s), {minutes} minute(s), {seconds} second(s)"
+        elif hours > 0 and minutes > 0:
+            return f"{hours} hour(s), {minutes} minute(s)"
+        elif hours > 0 and seconds > 0:
+            return f"{hours} hour(s), {seconds} second(s)"
+        else:
+            return f"{hours} hour(s)"
+    elif total_seconds >= 60:
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
+        if minutes > 0 and seconds > 0:
+            return f"{minutes} minute(s), {seconds} second(s)"
+        else:
+            return f"{minutes} minute(s)"
     else:
-        return seconds
+        return f"{total_seconds} second(s)"
+
 if __name__ == '__main__':
-    test_seconds1 = 7200
-    result1 = convert_seconds(test_seconds1)
-    print(f"Input: {test_seconds1}, Output: {result1}")
-    test_seconds2 = 3661
-    result2 = convert_seconds(test_seconds2)
-    print(f"Input: {test_seconds2}, Output: {result2}")
-    test_seconds3 = 125
-    result3 = convert_seconds(test_seconds3)
-    print(f"Input: {test_seconds3}, Output: {result3}")
-    test_seconds4 = 0
-    result4 = convert_seconds(test_seconds4)
-    print(f"Input: {test_seconds4}, Output: {result4}")
-    test_seconds5 = 3600
-    result5 = convert_seconds(test_seconds5)
-    print(f"Input: {test_seconds5}, Output: {result5}")
-    test_seconds6 = 60
-    result6 = convert_seconds(test_seconds6)
-    print(f"Input: {test_seconds6}, Output: {result6}")
+    print(convert_seconds(3661))
+    print(convert_seconds(125))
+    print(convert_seconds(45))
+    print(convert_seconds(7200))
+    print(convert_seconds(0))

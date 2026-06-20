@@ -1,33 +1,33 @@
-import math
+class VolumeDataStore:
+    def __init__(self):
+        self.bases = []
+        self.scalars = []
 
-# Predefined conversion factors to cubic meters (m³)
-CONVERSION_FACTORS = {
-    'liter': 0.001,      # 1 liter = 0.001 m³
-    'milliliter': 1e-6,  # 1 mL = 1e-6 m³
-    'gallon_us': 7.570821643924406e-4, # US gallon to m³
-    'cubic_feet': 2.8316846592e-4,     # ft³ to m³
-}
+    def store(self, base_volume):
+        self.bases.append(base_volume)
+        self.scalars.append(1.0)
 
-def standardize_volume(input_data: dict) -> float or None:
-    """
-    Converts a dictionary of volume measurements into standardized cubic meters (m³).
-    
-    Args:
-        input_data (dict): A dictionary where keys are unit strings and values are numeric volumes.
-        
-    Returns:
-        list[float]: The converted volumes in m³ as a new list, preserving the order of original items 
-                     if possible (Python 3.7+ dicts preserve insertion order). If an unknown key is found,
-                     it defaults to assuming 'cubic_feet' for safety or returns None per specific unit logic 
-                     extended here for robustness against known units only. For this implementation, 
-                     we assume valid keys exist in the dictionary passed.
-    """
+    def scale(self, factor):
+        for i in range(len(self.scalars)):
+            self.scalars[i] *= factor
 
-    # Ensure conversion factors are available and not empty (defensive check)
-    if CONVERSION_FACTORS == {}:
-        raise ValueError("Conversion factors database is empty.")
+    def get(self, index):
+        return self.bases[index] * self.scalars[index]
 
-    standardized_volumes = []
+    def get_all(self):
+        return [self.bases[i] * self.scalars[i] for i in range(len(self.bases))]
 
 if __name__ == '__main__':
-    pass
+    store = VolumeDataStore()
+    store.store(10.0)
+    store.store(20.0)
+    store.store(30.0)
+    store.scale(2.0)
+    print(store.get(0))
+    print(store.get(1))
+    print(store.get(2))
+    print(store.get_all())
+    store.store(40.0)
+    print(store.get(3))
+    store.scale(0.5)
+    print(store.get_all())

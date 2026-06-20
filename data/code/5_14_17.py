@@ -1,7 +1,11 @@
-def length_difference(len_a: int, len_b: int) -> int:
-    """Return the absolute difference between two lengths using conditional expressions."""
-    return (len_a - len_b) if len_a >= len_b else -(len_a - len_b)
+def compare_lengths(inches: float, centimeters: float) -> str:
+    cm_from_inches = inches * 2.54
+    if cm_from_inches > centimeters:
+        return f"{inches} inches ({cm_from_inches:.4f} cm) is longer than {centimeters} cm"
+    if cm_from_inches < centimeters:
+        return f"{inches} inches ({cm_from_inches:.4f} cm) is shorter than {centimeters} cm"
+    return f"{inches} inches ({cm_from_inches:.4f} cm) is equal to {centimeters} cm"
 
 if __name__ == '__main__':
-    result = length_difference(10, 4)
+    result = compare_lengths(5.0, 12.7)
     print(result)

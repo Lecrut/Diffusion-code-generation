@@ -1,59 +1,41 @@
 def convert_time(value, from_unit, to_unit):
-    """
-    Converts a time value from one unit to another using seconds as an intermediate base.
-    
-    Supported units: 'seconds', 'minutes', 'hours', 'days', 'weeks'
-    
-    Args:
-        value (float or int): The numeric value of the time period.
-        from_unit (str): Source time unit ('seconds', 'minutes', 'hours', 'days', 'weeks').
-        to_unit (str): Target time unit ('seconds', 'minutes', 'hours', 'days', 'weeks').
-        
-    Returns:
-        float: The converted value in the target unit.
-    
-    Raises:
-        ValueError: If an unsupported unit is provided or if from/to units are invalid strings.
-    """
-    # Define conversion factors to seconds (base unit)
-    base_units = {
-        'seconds': 1,
-        'minutes': 60,
-        'hours': 3600,
-        'days': 86400,
-        'weeks': 604800
+    units = {
+        'nanosecond': 1e-9,
+        'microsecond': 1e-6,
+        'millisecond': 1e-3,
+        'second': 1,
+        'minute': 60,
+        'hour': 3600,
+        'day': 86400,
+        'week': 604800,
+        'month': 2629746,
+        'year': 31556952
     }
-
-    # Validate input units against supported list
-    valid_units = set(base_units.keys())
     
-    if from_unit not in valid_units or to_unit not in valid_units:
-        raise ValueError(f"Unsupported unit. Supported units are {valid_units}")
-
-    try:
-        val_float = float(value)
-    except (TypeError, ValueError):
-        raise TypeError("Value must be a number.")
-
-    # Convert from source unit to seconds first
-    value_in_seconds = val_float * base_units[from_unit]
+    if from_unit not in units:
+        raise ValueError(f"Invalid from_unit: {from_unit}")
+    if to_unit not in units:
+        raise ValueError(f"Invalid to_unit: {to_unit}")
     
-    # Then convert from seconds to target unit
-    return value_in_seconds / base_units[to_unit]
+    seconds = value * units[from_unit]
+    result = seconds / units[to_unit]
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
+    sample_input_1 = 60
+    sample_from_1 = 'minute'
+    sample_to_1 = 'second'
+    result_1 = convert_time(sample_input_1, sample_from_1, sample_to_1)
+    print(result_1)
     
-    test_cases = [
-        (100, 'seconds', 'minutes'),
-        (3.5, 'hours', 'days'),
-        (720, 'minutes', 'hours'),
-        (14, 'days', 'weeks'),
-        (86400, 'seconds', 'hours'),
-        (2 * 60 + 30, 'minutes', 'seconds') # 1 hour 30 minutes to seconds
-    ]
-
-    print("Time Conversion Results:")
-    for val, frm, tgt in test_cases:
-        result = convert_time(val, frm, tgt)
-        print(f"{val} {frm} -> {result:.2f} {tgt}")
+    sample_input_2 = 3600
+    sample_from_2 = 'second'
+    sample_to_2 = 'hour'
+    result_2 = convert_time(sample_input_2, sample_from_2, sample_to_2)
+    print(result_2)
+    
+    sample_input_3 = 1
+    sample_from_3 = 'day'
+    sample_to_3 = 'hour'
+    result_3 = convert_time(sample_input_3, sample_from_3, sample_to_3)
+    print(result_3)

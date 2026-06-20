@@ -1,26 +1,54 @@
-def convert_temp(celsius_list: list[float]) -> list[float]:
-    """
-    Converts a list of temperatures from Celsius to Fahrenheit.
+import argparse
+import tempfile
+import os
+
+def convert_celsius_to_fahrenheit(celsius):
+    return (celsius * 9.0 / 5.0) + 32.0
+
+def process_temperature_file(input_path):
+    results = []
+    with open(input_path, 'r', encoding='utf-8') as f:
+        for line_num, line in enumerate(f, 1):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            try:
+                value = float(stripped)
+                fahrenheit = convert_celsius_to_fahrenheit(value)
+                results.append({
+                    'line': line_num,
+                    'celsius': value,
+                    'fahrenheit': fahrenheit
+                })
+            except ValueError:
+                raise ValueError(f"Invalid temperature data on line {line_num}: '{stripped}'")
+    return results
+
+def main():
+    parser = argparse.ArgumentParser(description='Convert temperature data from Celsius to Fahrenheit.')
+    parser.add_argument('input_file', help='Path to the input file containing Celsius temperatures')
+    args = parser.parse_args()
     
-    Formula used: F = (C * 9/5) + 32
+    if not os.path.exists(args.input_file):
+        print(f"Error: File not found: {args.input_file}")
+        return
     
-    Args:
-        celsius_list (list): A list of floating-point numbers representing 
-                            temperature readings in degrees Celsius.
-    
-    Returns:
-        list[float]: A new list containing the equivalent temperatures 
-                    in degrees Fahrenheit.
-    """
-    fahrenheit = [(c * 9 / 5) + 32 for c in celsius_list]
-    return fahrenheit
+    try:
+        output_data = process_temperature_file(args.input_file)
+        for item in output_data:
+            print(f"Line {item['line']}: {item['celsius']}C -> {item['fahrenheit']}F")
+    except ValueError as e:
+        print(f"Error: {e}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, network access, or files)
-    sample_celsius_readings = [0.0, 18.5, 37.2, -4.6, 100.0]
-
-    converted_values = convert_temp(sample_celsius_readings)
-
-    # Output results for verification (can be replaced with print if desired, but kept minimal as per efficiency focus)
-    result_output = [f"{c}°C -> {f:.2f}°F" for c, f in zip(sample_celsius_readings, converted_values)]
-    print(result_output)
+    sample_data = "25.0\n-10.5\n0.0\n100.0"
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp_file:
+        tmp_file.write(sample_data)
+        tmp_file_path = tmp_file.name
+    
+    try:
+        temp_data = process_temperature_file(tmp_file_path)
+        for item in temp_data:
+            print(f"Line {item['line']}: {item['celsius']}C -> {item['fahrenheit']}F")
+    finally:
+        os.remove(tmp_file_path)

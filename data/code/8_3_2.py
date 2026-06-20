@@ -1,15 +1,17 @@
-def calculate_rectangle_area(length: float, width: float) -> float:
-    """Calculates the area of a rectangle given its length and width."""
-    return length * width
+import math
+
+def calculate_polygon_area(vertices):
+    n = len(vertices)
+    if n < 3:
+        return 0.0
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input or network access.
-    hard_code_length = 5.0
-    hard_code_width = 3.0
-
-    try:
-        area = calculate_rectangle_area(hard_code_length, hard_code_width)
-        print(f"The area of the rectangle is {area}.")
-    except Exception as e:
-        # This block catches any unexpected errors during calculation.
-        print(f"An error occurred while calculating the area: {e}")
+    vertices = [(0, 0), (4, 0), (4, 4), (0, 4)]
+    result = calculate_polygon_area(vertices)
+    print(result)

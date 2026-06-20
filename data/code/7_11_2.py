@@ -1,41 +1,75 @@
 class TimeConverter:
     def __init__(self):
-        pass
-    def seconds_to_minutes(self, seconds):
-        return seconds / 60.0
-    def minutes_to_seconds(self, minutes):
-        return minutes * 60.0
-    def minutes_to_hours(self, minutes):
-        return minutes / 60.0
-    def hours_to_minutes(self, hours):
-        return hours * 60.0
-    def hours_to_days(self, hours):
-        return hours / 24.0
-    def days_to_hours(self, days):
-        return days * 24.0
+        self.units = {
+            's': 1,
+            'sec': 1,
+            'second': 1,
+            'seconds': 1,
+            'm': 60,
+            'min': 60,
+            'minute': 60,
+            'minutes': 60,
+            'h': 3600,
+            'hr': 3600,
+            'hour': 3600,
+            'hours': 3600,
+            'd': 86400,
+            'day': 86400,
+            'days': 86400,
+            'w': 604800,
+            'week': 604800,
+            'weeks': 604800,
+            'mo': 2592000,
+            'month': 2592000,
+            'months': 2592000,
+            'y': 31536000,
+            'yr': 31536000,
+            'year': 31536000,
+            'years': 31536000,
+        }
+
+    def _normalize_value(self, value):
+        if isinstance(value, tuple) and len(value) == 2:
+            val, unit = value
+            if val == 0:
+                return 0
+            unit_lower = str(unit).lower().strip()
+            if unit_lower not in self.units:
+                raise ValueError(f"Unknown unit: {unit}")
+            return val * self.units[unit_lower]
+        return float(value)
+
+    def _to_seconds(self, value):
+        return self._normalize_value(value)
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit == to_unit:
+            val = self._normalize_value(value)
+            return val
+        seconds = self._to_seconds(value)
+        if to_unit == 's' or to_unit == 'sec' or to_unit == 'second' or to_unit == 'seconds':
+            return seconds
+        target_factor = self.units.get(to_unit.lower())
+        if target_factor is None:
+            raise ValueError(f"Unknown target unit: {to_unit}")
+        return seconds / target_factor
+
+    def convert_tuple(self, value_tuple, to_unit):
+        seconds = self._to_seconds(value_tuple)
+        if to_unit == 's' or to_unit == 'sec' or to_unit == 'second' or to_unit == 'seconds':
+            return seconds
+        target_factor = self.units.get(to_unit.lower())
+        if target_factor is None:
+            raise ValueError(f"Unknown target unit: {to_unit}")
+        return seconds / target_factor
+
 if __name__ == '__main__':
     converter = TimeConverter()
-    print("--- Seconds to Minutes ---")
-    seconds_val = 120
-    minutes_val = converter.seconds_to_minutes(seconds_val)
-    print(f"{seconds_val} seconds is {minutes_val} minutes")
-    print("\n--- Minutes to Seconds ---")
-    minutes_val = 150
-    seconds_val = converter.minutes_to_seconds(minutes_val)
-    print(f"{minutes_val} minutes is {seconds_val} seconds")
-    print("\n--- Minutes to Hours ---")
-    minutes_val = 180
-    hours_val = converter.minutes_to_hours(minutes_val)
-    print(f"{minutes_val} minutes is {hours_val} hours")
-    print("\n--- Hours to Minutes ---")
-    hours_val = 5.5
-    minutes_val = converter.hours_to_minutes(hours_val)
-    print(f"{hours_val} hours is {minutes_val} minutes")
-    print("\n--- Hours to Days ---")
-    hours_val = 48
-    days_val = converter.hours_to_days(hours_val)
-    print(f"{hours_val} hours is {days_val} days")
-    print("\n--- Days to Hours ---")
-    days_val = 2.5
-    hours_val = converter.days_to_hours(days_val)
-    print(f"{days_val} days is {hours_val} hours")
+    result1 = converter.convert(1, 'hours', 'minutes')
+    result2 = converter.convert(3600, 'seconds', 'hours')
+    result3 = converter.convert_tuple((2, 'days'), 'hours')
+    result4 = converter.convert(1.5, 'hours', 'seconds')
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)

@@ -1,111 +1,110 @@
-"""General-purpose area calculation function for various 2D shapes."""
+import math
+from typing import List, Tuple
 
-def calculate_area(shape_type: str, parameters: dict) -> float:
-    """
-    Calculate the area of a 2D shape based on its type and defining parameters.
+EARTH_RADIUS_KM = 6371.0
 
-    Supported shapes:
-        - 'rectangle': requires {'width', 'height'}
-        - 'circle': requires {'radius'}
-        - 'triangle': requires {'base', 'height'}
-    
-    Args:
-        shape_type (str): Type of the shape ('rectangle', 'circle', or 'triangle').
-        parameters (dict): Dictionary containing defining parameters for the shape.
+def _to_cartesian(lat_deg: float, lon_deg: float) -> Tuple[float, float, float]:
+    lat = math.radians(lat_deg)
+    lon = math.radians(lon_deg)
+    x = math.cos(lat) * math.cos(lon)
+    y = math.cos(lat) * math.sin(lon)
+    z = math.sin(lat)
+    return x, y, z
 
-    Returns:
-        float: The calculated area of the shape.
+def _cross_2d(a: Tuple[float, float], b: Tuple[float, float]) -> float:
+    return a[0] * b[1] - a[1] * b[0]
 
-    Raises:
-        ValueError: If an unsupported shape type is provided or required parameters are missing/invalid.
-    """
-    
-    if not isinstance(shape_type, str) or shape_type.lower() == '':
-        raise ValueError("Shape type must be a non-empty string.")
-    
-    valid_shapes = ['rectangle', 'circle', 'triangle']
-    if shape_type.lower() not in valid_shapes:
-        raise ValueError(f"Unsupported shape type '{shape_type}'. Supported types are {valid_shapes}.")
+def _convex_hull_2d(points: List[Tuple[float, float]]) -> List[Tuple[float, float]]:
+    if len(points) <= 1:
+        return points[:]
+    points_sorted = sorted(points)
+    lower = []
+    for p in points_sorted:
+        while len(lower) >= 2 and _cross_2d(lower[-1] - lower[-2], p - lower[-1]) <= 0:
+            lower.pop()
+        lower.append(p)
+    upper = []
+    for p in reversed(points_sorted):
+        while len(upper) >= 2 and _cross_2d(upper[-1] - upper[-2], p - upper[-1]) <= 0:
+            upper.pop()
+        upper.append(p)
+    hull = lower[:-1] + upper[:-1]
+    return hull
 
-    params_lower_key = shape_type.lower()
-    required_params_map = {
-        'rectangle': {'width', 'height'},
-        'circle': {'radius'},
-        'triangle': {'base', 'height'}
-    }
-    
-    if not isinstance(parameters, dict):
-        raise ValueError("Parameters must be a dictionary.")
-
-    missing_keys = required_params_map[params_lower_key] - set(parameters.keys())
-    if missing_keys:
-        raise ValueError(f"Missing required parameters for '{shape_type}': {missing_keys}.")
-
-    try:
-        width = float(parameters['width']) if 'width' in parameters else 0.0
-        height = float(parameters['height']) if 'height' in parameters else 0.0
-        radius = float(parameters['radius']) if 'radius' in parameters else 0.0
-        base = float(parameters['base']) if 'base' in parameters else 0.0
-        
-        # Validate non-negative dimensions for geometric sense (optional but recommended)
-        if width < 0 or height < 0:
-            raise ValueError("Width and height must be non-negative.")
-        if radius < 0:
-            raise ValueError("Radius must be non-negative.")
-        if base < 0:
-            raise ValueError("Base must be non-negative.")
-
-    except (TypeError, KeyError):
-        # Re-raise as a more specific error or handle type conversion failure
-        raise TypeError(f"Parameters for '{shape_type}' must contain valid numeric values.") from None
-    
+def _shoelace_area_2d(points: List[Tuple[float, float]]) -> float:
+    n = len(points)
+    if n < 3:
+        return 0.0
     area = 0.0
-    
-    if params_lower_key == 'rectangle':
-        area = width * height
-    elif params_lower_key == 'circle':
-        import math
-        area = math.pi * (radius ** 2)
-    elif params_lower_key == 'triangle':
-        area = 0.5 * base * height
-    
-    return area
+    for i in range(n):
+        j = (i + 1) % n
+        area += points[i][0] * points[j][1]
+        area -= points[j][0] * points[i][1]
+    return abs(area) / 2.0
+
+def _spherical_convex_hull_area(coords: List[Tuple[float, float]]) -> float:
+    if len(coords) < 3:
+        return 0.0
+    cartesian = [_to_cartesian(lat, lon) for lat, lon in coords]
+    vectors = [c for c in cartesian]
+    n = len(vectors)
+    hull_indices = []
+    for i in range(n):
+        is_vertex = True
+        for j in range(n):
+            if i == j:
+                continue
+            for k in range(n):
+                if k == i or k == j:
+                    continue
+                cross = [
+                    vectors[i][1] * vectors[j][2] - vectors[i][2] * vectors[j][1],
+                    vectors[i][2] * vectors[j][0] - vectors[i][0] * vectors[j][2],
+                    vectors[i][0] * vectors[j][1] - vectors[i][1] * vectors[j][0]
+                ]
+                dot = cross[0] * vectors[k][0] + cross[1] * vectors[k][1] + cross[2] * vectors[k][2]
+                if dot > 1e-10:
+                    is_vertex = False
+                    break
+            if not is_vertex:
+                break
+        if is_vertex:
+            hull_indices.append(i)
+    if len(hull_indices) < 3:
+        return 0.0
+    hull_points = [vectors[idx] for idx in hull_indices]
+    if len(hull_points) < 3:
+        return 0.0
+    area = 0.0
+    for i in range(len(hull_points)):
+        j = (i + 1) % len(hull_points)
+        cross = [
+            hull_points[i][1] * hull_points[j][2] - hull_points[i][2] * hull_points[j][1],
+            hull_points[i][2] * hull_points[j][0] - hull_points[i][0] * hull_points[j][2],
+            hull_points[i][0] * hull_points[j][1] - hull_points[i][1] * hull_points[j][0]
+        ]
+        mag = math.sqrt(cross[0]**2 + cross[1]**2 + cross[2]**2)
+        if mag < 1e-10:
+            continue
+        area += mag
+    if area < 1e-10:
+        return 0.0
+    area_spherical = 2.0 * math.asin(area / 2.0)
+    total_area = area_spherical * EARTH_RADIUS_KM**2
+    return total_area
+
+def calculate_convex_hull_area(coords: List[Tuple[float, float]]) -> float:
+    if len(coords) < 3:
+        return 0.0
+    return _spherical_convex_hull_area(coords)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input or files.
-
-    samples = [
-        {
-            "shape_type": "rectangle",
-            "parameters": {"width": 10, "height": 5}
-        },
-        {
-            "shape_type": "circle",
-            "parameters": {"radius": 7}
-        },
-        {
-            "shape_type": "triangle",
-            "parameters": {"base": 8, "height": 4.5}
-        }
+    sample_coords = [
+        (40.0, -74.0),
+        (41.0, -73.0),
+        (42.0, -75.0),
+        (39.0, -72.0),
+        (40.5, -74.5)
     ]
-
-    print("Area Calculation Results:")
-    for sample in samples:
-        try:
-            result = calculate_area(sample["shape_type"], sample["parameters"])
-            shape_name = sample["shape_type"].capitalize()
-            params_str = f"{', '.join([f'{k}={v}' if isinstance(v, int) else str(f'{v}') for k, v in sorted(sample['parameters'].items(), key=lambda x: (isinstance(x[1], float), x[0]))])}"
-            
-            print(f"Shape: {shape_name}")
-            print(f"Parameters: {params_str}")
-            print(f"Area: {result:.2f}\n")
-        except Exception as e:
-            print(f"Error calculating area for sample '{sample['shape_type']}': {e}\n")
-
-    # Additional test case with invalid input to demonstrate error handling
-    try:
-        calculate_area("pentagon", {"sides": 5})
-    except ValueError as ve:
-        print(f"Expected Error Handling Test:")
-        print(f"Input: {{'shape_type': 'pentagon', 'parameters': {{'sides': 5}}}}")
-        print(f"Error Message: {ve}\n")
+    area = calculate_convex_hull_area(sample_coords)
+    print(area)

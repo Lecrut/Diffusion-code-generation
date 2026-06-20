@@ -1,19 +1,18 @@
-import sys
-
-def calculate_difference(length_a: float, length_b: float) -> float:
-    """Calculate the difference between two lengths."""
-    return length_a - length_b
+def calculate_length_difference(length1, length2):
+    try:
+        val1 = float(length1)
+    except (TypeError, ValueError):
+        raise TypeError(f"Invalid input for length1: {length1}. Expected a numeric value.")
+    try:
+        val2 = float(length2)
+    except (TypeError, ValueError):
+        raise TypeError(f"Invalid input for length2: {length2}. Expected a numeric value.")
+    
+    difference = val1 - val2
+    return abs(difference)
 
 if __name__ == '__main__':
-    try:
-        # Hard-coded sample values to ensure no external input is needed.
-        measurement_1 = 50.75
-        measurement_2 = 34.2
-
-        result = calculate_difference(measurement_1, measurement_2)
-        
-        print(f"Difference between {measurement_1} and {measurement_2}: {result}")
-    except TypeError as e:
-        # Handles cases where variables might not be numeric if logic changed later (defensive coding).
-        print(f"Error during calculation: A non-numeric value was detected.", file=sys.stderr)
-        sys.exit(1)
+    l1 = 15.5
+    l2 = 10.2
+    result = calculate_length_difference(l1, l2)
+    print(result)

@@ -1,15 +1,23 @@
-def compare_lengths(list1, list2):
-    if not list1 and not list2:
-        return 0
-    all_lengths = list1 + list2
-    if not all_lengths:
-        return 0
-    maximum = max(all_lengths)
-    minimum = min(all_lengths)
-    range_difference = maximum - minimum
-    return range_difference
+def compare_lengths_generator(length_a, length_b):
+    if length_a < length_b:
+        yield -1
+    elif length_a > length_b:
+        yield 1
+    else:
+        yield 0
+
+def compare_multiple_pairs(pairs):
+    for a, b in pairs:
+        result = next(compare_lengths_generator(a, b))
+        yield result
+
 if __name__ == '__main__':
-    list_a = [10, 20, 30]
-    list_b = [5, 15, 25]
-    result = compare_lengths(list_a, list_b)
-    print(result)
+    sample_pairs = [
+        (10, 5),
+        (3, 3),
+        (7, 12),
+        (100, 50),
+        (0, 1)
+    ]
+    results = list(compare_multiple_pairs(sample_pairs))
+    print(results)

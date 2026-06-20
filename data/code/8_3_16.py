@@ -1,14 +1,16 @@
-def calculate_rectangle_area(length: float | None = None, width: float | None = None) -> int:
-    """Calculate the area of a rectangle given length and width."""
-    if length is not None or width is not None:
-        return round(length * width)
-    raise ValueError("Length and Width are required to calculate the area.")
+def calculate_polygon_area(vertices):
+    n = len(vertices)
+    if n < 3:
+        return 0.0
+    area = 0.0
+    for i in range(n):
+        x1, y1 = vertices[i]
+        x2, y2 = vertices[(i + 1) % n]
+        area += x1 * y2
+        area -= x2 * y1
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    try:
-        value = 10
-        result = calculate_rectangle_area(value, None)
-        print(result)
-    except (ValueError, TypeError):
-        pass
+    sample_vertices = [(0, 0), (4, 0), (4, 3), (0, 3)]
+    result = calculate_polygon_area(sample_vertices)
+    print(result)

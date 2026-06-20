@@ -1,17 +1,24 @@
-def convert_time(time_value: float, source_unit: str) -> int | None:
-    """
-    Converts a time value from one unit (seconds, minutes, hours) to another.
+def convert_time(value, source_unit, target_unit):
+    conversion_factors = {
+        'seconds': 1,
+        'minutes': 60,
+        'hours': 3600
+    }
     
-    Parameters:
-        time_value (float): The amount of time in the given unit.
-        source_unit (str): One of 's' (seconds), 'm' (minutes), or 'h' (hours). Target unit is always seconds by default logic flow unless specified via target parameter? 
-                           Wait, task says "accepts a time value and a source unit". It doesn't explicitly mention a target unit argument.
-    """
-    # Clarification based on typical converter patterns: usually there's a FROM and TO. 
-    # If the prompt strictly implies ONLY 'source_unit' is an input variable determining conversion, it might be implicit to always convert TO seconds? 
-    # However, "converts ... to a target unit" strongly suggests two units involved.
+    source_unit_lower = source_unit.lower()
+    target_unit_lower = target_unit.lower()
     
-    return None
+    if source_unit_lower not in conversion_factors:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+    if target_unit_lower not in conversion_factors:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+    
+    value_in_seconds = value * conversion_factors[source_unit_lower]
+    result = value_in_seconds / conversion_factors[target_unit_lower]
+    return result
 
 if __name__ == '__main__':
-    pass
+    print(convert_time(2, 'hours', 'minutes'))
+    print(convert_time(90, 'seconds', 'minutes'))
+    print(convert_time(120, 'minutes', 'hours'))
+    print(convert_time(1, 'hours', 'seconds'))

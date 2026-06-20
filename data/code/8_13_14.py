@@ -1,35 +1,17 @@
 import math
 
-def convex_hull(points):
-    """
-    Compute the area of the smallest convex polygon enclosing all points (Convex Hull).
-    Uses Monotone Chain algorithm which is efficient O(n log n) and robust against collinear points on edges.
-    
-    Args:
-        points (List[Tuple[float, float]] or List[List[float]]): A list of 2D points represented as tuples or lists [x, y].
-        
-    Returns:
-        float: The area of the convex hull polygon. If all points are collinear or a single point exists, returns 0.0.
-    """
-    
-    # Sort points lexicographically (by x then by y)
-    sorted_points = sorted(points, key=lambda p: (p[0], p[1]))
-    
-    n = len(sorted_points)
-    
-    if n < 3:
-        return 0.0
-    
-    # Build lower hull
-    lower = []
-    for i in range(n):
-        while len(lower) >= 2 and cross_product([sorted_points[i-1], sorted_points[lower[-2]], sorted_points[i]]) <= 0:
-            lower.pop()
-        lower.append(sorted_points[i])
-    
-    # Build upper hull
-    k = len(lower) - 1  # index of the last point added to lower hull, we exclude it from consideration in this loop logic slightly differently than some implementations for strictness
-    upper = []
+def calculate_scaled_area(shape, base_dimension, scale_factor):
+    if shape == 'rectangle':
+        width, height = base_dimension
+        return (width * scale_factor) * (height * scale_factor)
+    elif shape == 'circle':
+        radius = base_dimension
+        return math.pi * (radius * scale_factor) ** 2
+    else:
+        raise ValueError("Unsupported shape")
 
 if __name__ == '__main__':
-    pass
+    rect_result = calculate_scaled_area('rectangle', (2, 3), 1.5)
+    circle_result = calculate_scaled_area('circle', 5, 0.5)
+    print(rect_result)
+    print(circle_result)

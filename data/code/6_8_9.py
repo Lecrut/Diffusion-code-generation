@@ -1,6 +1,8 @@
-# Calculate simple weight difference between two variables
+def calculate_weight_difference(weight1, weight2):
+    return abs(weight1 - weight2)
+
 if __name__ == '__main__':
-    var_a = 10
-    var_b = 5
-    result = abs(var_a - var_b)
+    w1 = 75.5
+    w2 = 82.3
+    result = calculate_weight_difference(w1, w2)
     print(result)

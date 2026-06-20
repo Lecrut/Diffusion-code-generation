@@ -1,20 +1,15 @@
-def convert_to_float(value):
-    """Convert a string to float."""
-    try:
-        return float(value)
-    except ValueError:
-        raise ValueError(f"Invalid numeric input: {value}")
+def weight_difference(weights):
+    if not weights:
+        return 0
+    max_weight = weights[0]
+    min_weight = weights[0]
+    for w in weights[1:]:
+        if w > max_weight:
+            max_weight = w
+        if w < min_weight:
+            min_weight = w
+    return max_weight - min_weight
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user interaction needed).
-    weight1_str = "70.5"
-    weight2_str = "68.3"
-
-    try:
-        weight1 = convert_to_float(weight1_str)
-        weight2 = convert_to_float(weight2_str)
-        difference = weight1 - weight2
-        print(difference)
-    except ValueError as e:
-        # Error handling for non-numeric input.
-        print(f"Error: {e}")
+    sample_weights = [3.5, 1.2, 7.8, 4.1, 2.3]
+    print(weight_difference(sample_weights))

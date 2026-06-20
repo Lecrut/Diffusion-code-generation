@@ -1,98 +1,98 @@
-import argparse
-from statistics import mean as calculate_mean, stdev as calculate_stdev
+from decimal import Decimal, getcontext
 
-def parse_volume_values(args):
-    """Parse command-line arguments into a list of float volume values."""
-    volumes = []
-    
-    # Handle the case where no specific argument is provided but --volumes flag exists with data
-    if args.volumes:
-        for vol in args.volumes.split(','):
-            try:
-                val = float(vol.strip())
-                volumes.append(val)
-            except ValueError:
-                print(f"Error: Invalid volume value '{vol}'. Please provide numeric values.")
-                return None
-    
-    # If no --volumes flag was used, the task forbids interactive prompts. 
-    # However, to satisfy "prompts the user... Ensure sample block runs without input",
-    # we rely on the hard-coded data in main for execution but structure parsing here.
-    
-    if not volumes:
-        print("Error: No volume values provided.")
-        return None
-    
-    return volumes
+getcontext().prec = 50
 
-def calculate_statistics(volumes):
-    """Calculate mean and standard deviation efficiently."""
-    try:
-        avg = calculate_mean(volumes)
+class VolumeMeasurement:
+    def __init__(self, value, unit):
+        if not isinstance(value, (int, float, Decimal)):
+            raise TypeError("Value must be numeric")
+        self.value = Decimal(str(value))
+        self.unit = unit.lower()
+        self._validate_unit()
+        self._ensure_valid_unit_for_conversion()
+
+    def _validate_unit(self):
+        valid_units = {"cubic centimeters", "cc", "cm3", "liters", "l", "milliliters", "ml", "gallons", "gal", "cubic meters", "m3"}
+        if self.unit not in valid_units:
+            raise ValueError(f"Invalid unit: {self.unit}")
+
+    def _ensure_valid_unit_for_conversion(self):
+        self.value = self._to_cubic_centimeters(self.value, self.unit)
+
+    @property
+    def value_in_cm3(self):
+        return self._to_cubic_centimeters(self.value, self.unit)
+
+    def _to_cubic_centimeters(self, val, unit):
+        conversions = {
+            "cubic centimeters": Decimal("1"),
+            "cc": Decimal("1"),
+            "cm3": Decimal("1"),
+            "liters": Decimal("1000"),
+            "l": Decimal("1000"),
+            "milliliters": Decimal("1"),
+            "ml": Decimal("1"),
+            "gallons": Decimal("3785.411784"),
+            "gal": Decimal("3785.411784"),
+            "cubic meters": Decimal("1000000"),
+            "m3": Decimal("1000000"),
+        }
+        return val * conversions[unit]
+
+    def convert_to(self, target_unit):
+        if target_unit == self.unit:
+            return Decimal(str(self.value))
         
-        # stdev requires at least two data points; if only one exists, it raises ValueError.
-        # We handle this edge case explicitly for robustness while maintaining efficiency.
-        if len(volumes) < 2:
-            std_dev = 0.0
-        else:
-            std_dev = calculate_stdev(volumes)
-            
-    except Exception as e:
-        print(f"Calculation error: {e}")
-        return None, None
-    
-    return avg, std_dev
+        if target_unit.lower() in {"cubic centimeters", "cc", "cm3", "milliliters", "ml"}:
+            val_cm3 = self._to_cubic_centimeters(self.value, self.unit)
+            return val_cm3
 
-def main():
-    """Main entry point for the CLI script."""
-    
-    # Create argument parser without required arguments to allow running with just sample data or flags.
-    parser = argparse.ArgumentParser(
-        description="Calculate arithmetic mean and standard deviation of volume values."
-    )
-    
-    # Allow passing multiple comma-separated volumes via command line if desired, 
-    # though the primary execution uses hard-coded samples per constraints.
-    parser.add_argument('--volumes', type=str, help='Comma-separated list of volume values (optional).')
-    
-    args = parser.parse_args()
-    
-    # Parse input data
-    raw_volumes = parse_volume_values(args)
-    
-    if raw_volumes is None:
-        return
-    
-    volumes = [float(v) for v in raw_volumes]
-    
-    # Perform calculations using the statistics module which uses efficient C implementations internally.
-    avg_vol, std_dev_vol = calculate_statistics(volumes)
-    
-    # Output results formatted clearly
-    print(f"Volume Statistics:")
-    print(f"Average (Mean): {avg_vol:.4f}")
-    if len(raw_volumes) >= 2:
-        print(f"Standard Deviation: {std_dev_vol:.4f}")
-    else:
-        print("Standard Deviation: N/A (requires at least two data points)")
+        val_cm3 = self._to_cubic_centimeters(self.value, self.unit)
+        
+        conversions = {
+            "cubic centimeters": Decimal("1"),
+            "cc": Decimal("1"),
+            "cm3": Decimal("1"),
+            "milliliters": Decimal("1"),
+            "ml": Decimal("1"),
+            "liters": Decimal("0.001"),
+            "l": Decimal("0.001"),
+            "gallons": Decimal("0.000264172052"),
+            "gal": Decimal("0.000264172052"),
+            "cubic meters": Decimal("0.000001"),
+            "m3": Decimal("0.000001"),
+        }
+        
+        factor = conversions.get(target_unit.lower())
+        if factor is None:
+            raise ValueError(f"Target unit {target_unit} not supported")
+            
+        return val_cm3 * factor
+
+    def add(self, other):
+        if not isinstance(other, VolumeMeasurement):
+            raise TypeError("Can only add VolumeMeasurement")
+        val_cm3 = self._to_cubic_centimeters(self.value, self.unit) + self._to_cubic_centimeters(other.value, other.unit)
+        return VolumeMeasurement(val_cm3, "cubic centimeters")
+
+    def subtract(self, other):
+        if not isinstance(other, VolumeMeasurement):
+            raise TypeError("Can only subtract VolumeMeasurement")
+        val_cm3 = self._to_cubic_centimeters(self.value, self.unit) - self._to_cubic_centimeters(other.value, other.unit)
+        return VolumeMeasurement(val_cm3, "cubic centimeters")
+
+    def __repr__(self):
+        return f"VolumeMeasurement({self.value}, '{self.unit}')"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or network access.
-    # These simulate a list of volume measurements in cubic meters.
-    SAMPLE_VOLUMES = "10, 25, 30, 45, 60"
+    vol1 = VolumeMeasurement(1.5, "liters")
+    vol2 = VolumeMeasurement(500, "milliliters")
+    vol3 = vol1.add(vol2)
     
-    # Simulate command-line argument passing for the sample data internally
-    args = argparse.Namespace(volumes=SAMPLE_VOLUMES)
+    print(vol3.convert_to("gallons"))
     
-    # Re-run parsing logic with our simulated arguments to generate output immediately.
-    raw_volumes = parse_volume_values(args)
+    vol4 = VolumeMeasurement(1, "cubic meters")
+    print(vol4.convert_to("liters"))
     
-    if raw_volumes is not None:
-        volumes = [float(v) for v in raw_volumes]
-        
-        avg_vol, std_dev_vol = calculate_statistics(volumes)
-        
-        print(f"Volume Statistics (Sample Data):")
-        print(f"Average (Mean): {avg_vol:.4f}")
-        if len(raw_volumes) >= 2:
-            print(f"Standard Deviation: {std_dev_vol:.4f}")
+    vol5 = VolumeMeasurement(10, "gallons")
+    print(vol5.convert_to("cubic centimeters"))

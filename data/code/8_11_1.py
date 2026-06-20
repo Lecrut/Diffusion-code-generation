@@ -1,27 +1,37 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    sum1 = 0.0
-    sum2 = 0.0
-    for i in range(n):
-        x_i, y_i = vertices[i]
-        x_next, y_next = vertices[(i + 1) % n]
-        sum1 += x_i * y_next
-        sum2 += y_i * x_next
-    area = 0.5 * (sum1 - sum2)
-    return area
+
+class GeometricShape:
+    def __init__(self, name: str, area: float) -> None:
+        self.name = name
+        self.area = area
+
+    def calculate_area(self) -> float:
+        return self.area
+
+    def scale_area(self, factor: float) -> float:
+        self.area = self.area * factor
+        return self.area
+
+class Circle(GeometricShape):
+    def __init__(self, radius: float) -> None:
+        if radius < 0:
+            raise ValueError("Radius cannot be negative")
+        self.radius = radius
+        super().__init__("Circle", math.pi * (radius ** 2))
+
+class Rectangle(GeometricShape):
+    def __init__(self, width: float, height: float) -> None:
+        if width < 0 or height < 0:
+            raise ValueError("Dimensions cannot be negative")
+        self.width = width
+        self.height = height
+        super().__init__("Rectangle", width * height)
+
 if __name__ == '__main__':
-    polygon1 = [(0, 0), (1, 0), (0, 1)]
-    area1 = calculate_polygon_area(polygon1)
-    print(f"Area of Polygon 1: {area1}")
-    polygon2 = [(2, 1), (4, 3), (1, 5), (0, 2)]
-    area2 = calculate_polygon_area(polygon2)
-    print(f"Area of Polygon 2: {area2}")
-    polygon3 = [(1.5, 2.5), (3.5, 1.5), (2.5, 4.5)]
-    area3 = calculate_polygon_area(polygon3)
-    print(f"Area of Polygon 3: {area3}")
-    polygon4 = [(0, 0), (10, 0), (10, 10), (0, 10)]
-    area4 = calculate_polygon_area(polygon4)
-    print(f"Area of Polygon 4: {area4}")
+    circle = Circle(5.0)
+    scaled_circle_area = circle.scale_area(2.0)
+    print(scaled_circle_area)
+
+    rectangle = Rectangle(4.0, 6.0)
+    scaled_rectangle_area = rectangle.scale_area(3.0)
+    print(scaled_rectangle_area)

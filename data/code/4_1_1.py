@@ -1,60 +1,56 @@
 class DistanceConverter:
+    METER = "meters"
+    KILOMETER = "kilometers"
+    MILE = "miles"
+
+    CONVERSION_TO_METERS = {
+        METER: 1.0,
+        KILOMETER: 1000.0,
+        MILE: 1609.344
+    }
+
     def __init__(self):
-        self.to_meter = 1.0
-        self.from_meter = 1.0
-    def convert_to_meter(self, value: float, unit: str) -> float:
-        if unit.lower() == 'm':
-            return value
-        elif unit.lower() == 'meter':
-            return value
-        elif unit.lower() == 'meters':
-            return value
-        elif unit.lower() == 'km':
-            return value * 1000.0
-        elif unit.lower() == 'kilometer':
-            return value * 1000.0
-        elif unit.lower() == 'kilometers':
-            return value * 1000.0
-        elif unit.lower() == 'mi':
-            return value * 1609.344
-        elif unit.lower() == 'mile':
-            return value * 1609.344
-        else:
-            raise ValueError(f"Unsupported unit: {unit}")
-    def convert_from_meter(self, value: float, unit: str) -> float:
-        if unit.lower() == 'm':
-            return value
-        elif unit.lower() == 'meter':
-            return value
-        elif unit.lower() == 'meters':
-            return value
-        elif unit.lower() == 'km':
-            return value / 1000.0
-        elif unit.lower() == 'kilometer':
-            return value / 1000.0
-        elif unit.lower() == 'kilometers':
-            return value / 1000.0
-        elif unit.lower() == 'mi':
-            return value / 1609.344
-        elif unit.lower() == 'mile':
-            return value / 1609.344
-        else:
-            raise ValueError(f"Unsupported unit: {unit}")
+        self.conversions = self.CONVERSION_TO_METERS
+
+    def validate_unit(self, unit):
+        if unit not in self.conversions:
+            valid_units = ", ".join(self.conversions.keys())
+            raise ValueError(f"Invalid unit '{unit}'. Valid units are: {valid_units}")
+
+    def convert(self, value, from_unit, to_unit):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"Value must be numeric, got {type(value).__name__}")
+        
+        self.validate_unit(from_unit)
+        self.validate_unit(to_unit)
+
+        meters = value * self.conversions[from_unit]
+        result = meters / self.conversions[to_unit]
+        return round(result, 6)
+
+    def meters_to_kilometers(self, meters):
+        return self.convert(meters, self.METER, self.KILOMETER)
+
+    def meters_to_miles(self, meters):
+        return self.convert(meters, self.METER, self.MILE)
+
+    def kilometers_to_meters(self, kilometers):
+        return self.convert(kilometers, self.KILOMETER, self.METER)
+
+    def kilometers_to_miles(self, kilometers):
+        return self.convert(kilometers, self.KILOMETER, self.MILE)
+
+    def miles_to_meters(self, miles):
+        return self.convert(miles, self.MILE, self.METER)
+
+    def miles_to_kilometers(self, miles):
+        return self.convert(miles, self.MILE, self.KILOMETER)
+
 if __name__ == '__main__':
     converter = DistanceConverter()
-    km_value = 2.5
-    meters_from_km = converter.convert_to_meter(km_value, 'km')
-    print(f"{km_value} km is equal to {meters_from_km} meters")
-    miles_value = 10.0
-    meters_from_mi = converter.convert_to_meter(miles_value, 'mi')
-    print(f"{miles_value} mi is equal to {meters_from_mi} meters")
-    meters_value = 5000.0
-    km_from_meters = converter.convert_from_meter(meters_value, 'm')
-    print(f"{meters_value} meters is equal to {km_from_meters} km")
-    km_to_mi = 10.0
-    miles_from_km = converter.convert_from_meter(km_to_mi * 1000.0, 'km')
-    print(f"{km_to_mi} km is equal to {miles_from_km} mi")
-    try:
-        converter.convert_to_meter(5.0, 'furlongs')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    print(converter.meters_to_kilometers(1500))
+    print(converter.kilometers_to_miles(5))
+    print(converter.miles_to_meters(1))
+    print(converter.convert(100, DistanceConverter.METER, DistanceConverter.MILE))
+    print(converter.convert(2000, DistanceConverter.KILOMETER, DistanceConverter.METER))
+    print(converter.convert(3, DistanceConverter.MILE, DistanceConverter.KILOMETER))

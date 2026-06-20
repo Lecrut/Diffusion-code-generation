@@ -1,71 +1,40 @@
-"""
-Module: distance_unit_converter.py
+class DistanceConverter:
+    MILES_TO_KM = 1.609344
+    KM_TO_MILES = 0.621371
 
-This script demonstrates how to correctly adjust distance units between miles 
-and kilometers using a specified conversion factor. It includes clear input handling 
-logic (simulated via hardcoded values) and formatted output, ensuring it runs as 
-a standalone module without external dependencies or interactive prompts.
-"""
+    def __init__(self):
+        self._conversion_cache = {}
 
-def convert_distance_miles_to_kilometers(miles: float, km_factor: float = 1.609344) -> float:
-    """
-    Convert a distance given in miles to kilometers using the provided conversion factor.
-
-    Args:
-        miles (float): The distance value in miles.
-        km_factor (float): The conversion factor from miles to kilometers 
-                          (default is 1 mile = 1.609344 km).
-
-    Returns:
-        float: The converted distance in kilometers, rounded to two decimal places.
-    """
-    return round(miles * km_factor, 2)
-
-def convert_distance_kilometers_to_miles(km_value: float, factor_inv: float = 0.621371) -> float:
-    """
-    Convert a distance given in kilometers to miles using the provided conversion factor.
-
-    Args:
-        km_value (float): The distance value in kilometers.
-        factor_inv (float): The inverse conversion factor from kilometers to 
-                           miles (default is 1 km = 0.621371 mi).
-
-    Returns:
-        float: The converted distance in miles, rounded to two decimal places.
-    """
-    return round(km_value * factor_inv, 2)
+    def convert(self, distance, from_unit, to_unit):
+        if not isinstance(distance, (int, float)):
+            raise TypeError("Distance must be a numeric value")
+        if distance < 0:
+            raise ValueError("Distance cannot be negative")
+        from_unit = from_unit.lower()
+        to_unit = to_unit.lower()
+        if from_unit not in ('miles', 'kilometers', 'km', 'mi', 'mile'):
+            raise ValueError("Unsupported from_unit")
+        if to_unit not in ('miles', 'kilometers', 'km', 'mi', 'mile'):
+            raise ValueError("Unsupported to_unit")
+        from_unit = 'mile' if from_unit in ('miles', 'mi', 'mile') else 'km'
+        to_unit = 'mile' if to_unit in ('miles', 'mi', 'mile') else 'km'
+        cache_key = (distance, from_unit, to_unit)
+        if cache_key in self._conversion_cache:
+            return self._conversion_cache[cache_key]
+        if from_unit == to_unit:
+            result = distance
+        elif from_unit == 'mile':
+            result = distance * self.MILES_TO_KM
+        else:
+            result = distance * self.KM_TO_MILES
+        result = round(result, 6)
+        self._conversion_cache[cache_key] = result
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes.
-    # No user input is required; this block runs completely offline and self-contained.
-
-    SAMPLE_MILES = 100.5
-    SAMPLE_KM_FACTOR = 1.609344
-    
-    SAMPLE_KILOMETERS = 250.75
-    SAMPLE_MI_FACTOR_INV = 0.621371
-
-    # Perform conversions using the specified factors
-    kilometers_result = convert_distance_miles_to_kilometers(SAMPLE_MILES, SAMPLE_KM_FACTOR)
-    miles_result = convert_distance_kilometers_to_miles(SAMPLE_KILOMETERS, SAMPLE_MI_FACTOR_INV)
-
-    # Format and print output clearly
-    print("Distance Conversion Results")
-    print("-" * 30)
-    
-    # Miles to Kilometers conversion example
-    print(f"Original Distance: {SAMPLE_MILES} miles")
-    print(f"Conversion Factor Used: {SAMPLE_KM_FACTOR}")
-    print(f"Converted Distance: {kilometers_result:.2f} kilometers\n")
-
-    # Kilometers to Miles conversion example
-    print(f"Original Distance: {SAMPLE_KILOMETERS} kilometers")
-    print(f"Inverse Conversion Factor Used: {SAMPLE_MI_FACTOR_INV}")
-    print(f"Converted Distance: {miles_result:.2f} miles")
-    
-    # Verification check (approximate)
-    expected_km_check = round(SAMPLE_MILES * SAMPLE_KM_FACTOR, 2)
-    if abs(kilometers_result - expected_km_check) < 0.01:
-        print(f"\nVerification Passed: {SAMPLE_MILES} miles correctly converts to ~{expected_km_check} km")
-    else:
-        print("\nNote: Minor floating-point discrepancies may occur due to rounding.")
+    converter = DistanceConverter()
+    print(converter.convert(10, 'miles', 'kilometers'))
+    print(converter.convert(10, 'kilometers', 'miles'))
+    print(converter.convert(5, 'mi', 'km'))
+    print(converter.convert(0, 'mile', 'km'))
+    print(converter.convert(100, 'km', 'km'))

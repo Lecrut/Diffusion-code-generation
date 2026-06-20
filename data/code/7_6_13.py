@@ -1,71 +1,131 @@
 import unittest
 from datetime import timedelta
 
-# Assuming previous development included these two functions:
-def seconds_to_timedelta(total_seconds):
-    """Convert a total number of seconds into a duration object."""
-    return timedelta(seconds=total_seconds)
+def hours_to_minutes(hours: float) -> float:
+    return hours * 60
 
-def days_from_now(days_offset, base_date=None):
-    """Return a date object representing 'days' days from now.
-    
-    If base_date is provided (as an int unix timestamp or datetime.date), use it as reference.
-    Otherwise uses current time. This function handles negative offsets correctly.
-    """
-    import time
-    if isinstance(days_offset, str):
-        try:
-            days_offset = float(days_offset)
-        except ValueError:
-            raise TypeError("days_offset must be a number or string representing an integer")
-    
-    reference_time = base_date
-    
-    # If no date provided and offset is valid int/float for timestamp
-    if base_date == 'now':
-        ref_ts = time.time()
-        target_ts = ref_ts + (int(days_offset) * 86400.0)
-        import datetime as dt_module
-        reference_time = dt_module.datetime.utcfromtimestamp(int(ref_ts))
+def hours_to_seconds(hours: float) -> float:
+    return hours * 3600
 
-    elif isinstance(reference_time, int): # Treat as Unix timestamp if it's clearly large or passed directly to be safe in simple context without complex check logic but assuming previous func returns a timedelta/datetime. 
-         pass 
+def minutes_to_hours(minutes: float) -> float:
+    return minutes / 60
 
-    from datetime import datetime
-    return reference_time + timedelta(days=int(days_offset))
+def minutes_to_seconds(minutes: float) -> float:
+    return minutes * 60
 
-class TimeConversionTests(unittest.TestCase):
+def seconds_to_hours(seconds: float) -> float:
+    return seconds / 3600
 
-    def test_seconds_to_timedelta_zero(self):
-        """Edge case: zero seconds should result in zero duration."""
-        result = seconds_to_timedelta(0)
-        self.assertEqual(result.total_seconds(), 0.0)
+def seconds_to_minutes(seconds: float) -> float:
+    return seconds / 60
 
-    def test_seconds_to_timedelta_positive_large(self):
-        """Test with large positive number of seconds (e.g., age of universe approx)."""
-        # Approximate seconds in the current epoch since big bang ~13.8 billion years
-        total_secs = int(4_290 * 1E6) 
-        result = seconds_to_timedelta(total_secs)
-        
-        expected_seconds = timedelta(hours=4, minutes=57).total_seconds() # Just a sanity check on format
-        
-    def test_days_from_now_zero(self):
-        """Edge case: zero offset should return same date (or now if no base provided)."""
-        result = days_from_now(0)
-        self.assertIsNotNone(result)
+def days_to_hours(days: int) -> int:
+    return days * 24
 
-    def test_days_from_now_negative(self):
-        """Test negative value representing a past date."""
-        # -1 day from reference. 
-        try:
-            current_ref_time = datetime.now()  # Using local now for simplicity as per logic
-        except NameError:
-            pass
-            
-        result = days_from_now(-365)
+def days_to_seconds(days: int) -> int:
+    return days * 86400
 
-    def test_days_from_now_large(self):
-        """Test with large positive offset."""
+def hours_to_days(hours: float) -> float:
+    return hours / 24
+
+class TestTimeConversion(unittest.TestCase):
+    def test_hours_to_minutes_basic(self):
+        self.assertEqual(hours_to_minutes(1), 60)
+
+    def test_hours_to_minutes_zero(self):
+        self.assertEqual(hours_to_minutes(0), 0)
+
+    def test_hours_to_minutes_large(self):
+        self.assertEqual(hours_to_minutes(1000), 60000)
+
+    def test_hours_to_seconds_basic(self):
+        self.assertEqual(hours_to_seconds(1), 3600)
+
+    def test_hours_to_seconds_zero(self):
+        self.assertEqual(hours_to_seconds(0), 0)
+
+    def test_hours_to_seconds_large(self):
+        self.assertEqual(hours_to_seconds(100), 360000)
+
+    def test_minutes_to_hours_basic(self):
+        self.assertEqual(minutes_to_hours(60), 1.0)
+
+    def test_minutes_to_hours_zero(self):
+        self.assertEqual(minutes_to_hours(0), 0.0)
+
+    def test_minutes_to_hours_large(self):
+        self.assertAlmostEqual(minutes_to_hours(3600), 60.0)
+
+    def test_minutes_to_seconds_basic(self):
+        self.assertEqual(minutes_to_seconds(1), 60)
+
+    def test_minutes_to_seconds_zero(self):
+        self.assertEqual(minutes_to_seconds(0), 0)
+
+    def test_minutes_to_seconds_large(self):
+        self.assertEqual(minutes_to_seconds(100), 6000)
+
+    def test_seconds_to_hours_basic(self):
+        self.assertEqual(seconds_to_hours(3600), 1.0)
+
+    def test_seconds_to_hours_zero(self):
+        self.assertEqual(seconds_to_hours(0), 0.0)
+
+    def test_seconds_to_hours_large(self):
+        self.assertAlmostEqual(seconds_to_hours(7200), 2.0)
+
+    def test_seconds_to_minutes_basic(self):
+        self.assertEqual(seconds_to_minutes(60), 1.0)
+
+    def test_seconds_to_minutes_zero(self):
+        self.assertEqual(seconds_to_minutes(0), 0.0)
+
+    def test_seconds_to_minutes_large(self):
+        self.assertAlmostEqual(seconds_to_minutes(120), 2.0)
+
+    def test_days_to_hours_basic(self):
+        self.assertEqual(days_to_hours(1), 24)
+
+    def test_days_to_hours_zero(self):
+        self.assertEqual(days_to_hours(0), 0)
+
+    def test_days_to_hours_large(self):
+        self.assertEqual(days_to_hours(10), 240)
+
+    def test_days_to_seconds_basic(self):
+        self.assertEqual(days_to_seconds(1), 86400)
+
+    def test_days_to_seconds_zero(self):
+        self.assertEqual(days_to_seconds(0), 0)
+
+    def test_days_to_seconds_large(self):
+        self.assertEqual(days_to_seconds(2), 172800)
+
+    def test_hours_to_days_basic(self):
+        self.assertEqual(hours_to_days(24), 1.0)
+
+    def test_hours_to_days_zero(self):
+        self.assertEqual(hours_to_days(0), 0.0)
+
+    def test_hours_to_days_large(self):
+        self.assertAlmostEqual(hours_to_days(48), 2.0)
+
+    def test_complex_conversion_chain(self):
+        self.assertAlmostEqual(hours_to_minutes(1.5), 90)
+        self.assertAlmostEqual(minutes_to_seconds(90), 5400)
+        self.assertAlmostEqual(seconds_to_hours(5400), 1.5)
+        self.assertAlmostEqual(hours_to_days(1.5), 0.0625)
+        self.assertAlmostEqual(days_to_hours(1), 24)
 
 if __name__ == '__main__':
-    pass
+    result1 = hours_to_minutes(2)
+    result2 = minutes_to_seconds(30)
+    result3 = seconds_to_hours(7200)
+    result4 = days_to_seconds(3)
+    result5 = hours_to_days(72)
+
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)
+    print(result5)

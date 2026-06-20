@@ -1,50 +1,41 @@
-import re
+def meters_to_feet(meters):
+    return meters * 3.28084
 
-def parse_distance(input_str):
-    """
-    Parses a string representing a distance with optional unit suffix.
-    
-    Supported units: m (meters), km (kilometers)
-    Returns float value in meters, or None if invalid format.
-    Raises ValueError for unparseable strings.
-    """
-    # Pattern to match number followed by optional 'km' or 'm'
-    pattern = r'^([\d.]+)\s*(?:km|m)?$'
-    
-    match = re.match(pattern, input_str.strip())
-    if not match:
-        return None
-    
-    try:
-        value = float(match.group(1))
-        
-        unit_suffix = match.group(2) or 'm'  # Default to meters
-        
-        if unit_suffix == 'km':
-            return value * 1000.0
-        elif unit_suffix == 'm':
-            return value
-        else:
-            raise ValueError(f"Unsupported unit suffix: {unit_suffix}")
-    except (ValueError, TypeError):
-        return None
+def feet_to_meters(feet):
+    return feet / 3.28084
 
-def process_distances(input_strings):
-    """
-    Processes a list of distance strings and returns values in meters.
-    
-    Args:
-        input_strings: List of strings representing distances
-        
-    Returns:
-        Tuple of (success_count, failed_indices) where success is count 
-        of successfully parsed inputs and failed_indices are indices that failed parsing
-    """
-    results = []
-    for idx, s in enumerate(input_strings):
-        result = parse_distance(s)
-        if result is not None:
-            results.append(result)
+def kilograms_to_pounds(kilograms):
+    return kilograms * 2.20462
+
+def pounds_to_kilograms(pounds):
+    return pounds / 2.20462
+
+def liters_to_gallons(liters):
+    return liters * 0.264172
+
+def gallons_to_liters(gallons):
+    return gallons / 0.264172
+
+def centimeters_to_inches(centimeters):
+    return centimeters / 2.54
+
+def inches_to_centimeters(inches):
+    return inches * 2.54
+
+def kilometers_to_miles(kilometers):
+    return kilometers * 0.621371
+
+def miles_to_kilometers(miles):
+    return miles / 0.621371
 
 if __name__ == '__main__':
-    pass
+    result = meters_to_feet(1.0)
+    print(result)
+    result = kilograms_to_pounds(1.0)
+    print(result)
+    result = liters_to_gallons(1.0)
+    print(result)
+    result = centimeters_to_inches(1.0)
+    print(result)
+    result = kilometers_to_miles(1.0)
+    print(result)

@@ -1,74 +1,84 @@
-import argparse
-import sys
-from statistics import mean, stdev
+class Volume:
+    def __init__(self, value, unit='cm3'):
+        self._cc = self._to_cm3(value, unit)
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Calculate arithmetic mean and standard deviation of volume values.")
-    
-    # Define a list of sample data points to use when no input is provided via command line or file.
-    SAMPLE_DATA = [10.5, 23.7, 45.8, 67.9, 89.1]
+    @staticmethod
+    def _to_cm3(value, unit):
+        if unit == 'cm3':
+            return float(value)
+        if unit == 'mL':
+            return float(value)
+        if unit == 'L':
+            return float(value) * 1000.0
+        if unit == 'gal':
+            return float(value) * 3785.411784
+        if unit == 'm3':
+            return float(value) * 1000000.0
+        raise ValueError("Unsupported unit")
 
-    parser.add_argument('--data', nargs='+', type=float, help='List of volume values separated by spaces.')
-    
-    # The --sample flag is used to force the use of hard-coded sample data instead of reading from stdin or args.
-    parser.add_argument('--sample', action="store_true", help="Use hard-coded sample values.")
+    def to_cm3(self):
+        return self._cc
 
-    return parser.parse_args()
+    def to_mL(self):
+        return self._cc
 
-def calculate_statistics(values):
-    """Efficiently calculates mean and standard deviation."""
-    if len(values) == 0:
-        raise ValueError("No data points provided for calculation.")
-    
-    n = float(len(values))
-    avg_val = sum(values, value=values[0]) / n
-    
-    # Efficient variance calculation using the computational formula to avoid intermediate sums of squares overflow/underflow issues.
-    sq_sum = 0.0
-    for v in values:
-        diff_sq = (v - avg_val) ** 2
-        sq_sum += diff_sq
-    
-    if len(values) < 2:
-        std_dev = 0.0
-    else:
-        variance = sq_sum / n
-        
-        # Sample standard deviation uses N-1 divisor; Population uses N. 
-        # Given the context of "list of volume values", we assume a sample unless specified otherwise, 
-        # but often in simple data processing without explicit statistical methodology requirements, 
-        # population std (N) is acceptable for descriptive stats of a fixed set.
-        # However, to be statistically rigorous as per standard library `stdev` behavior:
-        if len(values) > 1:
-            variance = sq_sum / (n - 1)
-        
-    return avg_val, stdev(values)
+    def to_L(self):
+        return self._cc / 1000.0
 
-def main():
-    args = parse_args()
+    def to_gal(self):
+        return self._cc / 3785.411784
 
-    # Determine the data source based on arguments.
-    # Priority: Command line arg --data -> Hard-coded sample (--sample flag or default if no other input).
-    
-    values_to_process = []
+    def to_m3(self):
+        return self._cc / 1000000.0
 
-    if args.data is not None and len(args.data) > 0:
-        values_to_process.extend(args.data)
-    elif args.sample:
-        values_to_process.extend(SAMPLE_DATA)
-    
-    # If neither command line data nor sample flag was used, default to the hard-coded samples 
-    # as per the requirement that "The sample block must run without user input".
-    if len(values_to_process) == 0 and not args.sample:
-        values_to_process = SAMPLE_DATA
+    def __add__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._cc + other._cc, 'cm3')
+        return Volume(self._cc + float(other), 'cm3')
 
-    try:
-        arithmetic_mean, std_deviation = calculate_statistics(values_to_process)
-        
-        print(f"Arithmetic Mean: {arithmetic_mean}")
-        print(f"Standard Deviation: {std_deviation}")
-    except ValueError as e:
-        print(f"Error during calculation: {e}", file=sys.stderr)
+    def __sub__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._cc - other._cc, 'cm3')
+        return Volume(self._cc - float(other), 'cm3')
+
+    def __mul__(self, other):
+        if isinstance(other, Volume):
+            raise TypeError("Cannot multiply two Volume objects")
+        return Volume(self._cc * float(other), 'cm3')
+
+    def __truediv__(self, other):
+        if isinstance(other, Volume):
+            if other._cc == 0:
+                raise ZeroDivisionError("Cannot divide by zero volume")
+            return self._cc / other._cc
+        if float(other) == 0:
+            raise ZeroDivisionError("Cannot divide by zero")
+        return Volume(self._cc / float(other), 'cm3')
+
+    def __eq__(self, other):
+        if isinstance(other, Volume):
+            return self._cc == other._cc
+        return self._cc == float(other)
+
+    def __repr__(self):
+        return f"Volume({self._cc} cm3)"
 
 if __name__ == '__main__':
-    main()
+    v1 = Volume(1, 'L')
+    v2 = Volume(1000, 'mL')
+    v3 = v1 + v2
+    print(v3.to_L())
+    v4 = Volume(1, 'gal')
+    print(v4.to_L())
+    v5 = Volume(1000000, 'cm3')
+    print(v5.to_m3())
+    v6 = Volume(1, 'm3')
+    print(v6.to_gal())
+    v7 = Volume(500, 'mL') * 2
+    print(v7.to_mL())
+    v8 = Volume(10, 'L') / Volume(2, 'L')
+    print(v8)
+    v9 = Volume(1, 'cm3') == Volume(1, 'mL')
+    print(v9)
+    v10 = Volume(1, 'm3') - Volume(1000, 'L')
+    print(v10.to_cm3())

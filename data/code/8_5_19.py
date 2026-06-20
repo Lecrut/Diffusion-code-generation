@@ -1,57 +1,21 @@
-import math
-
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple]): A list of tuples representing [x, y] coordinates 
-                               in order (clockwise or counter-clockwise).
-    
-    Returns:
-        float: The absolute area of the polygon.
-    
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided.
-        TypeError: If input is not a list of tuples with exactly two numeric elements.
-    """
-    if len(vertices) < 3:
-        raise ValueError("A polygon must have at least 3 vertices.")
-
-    n = len(vertices)
-    
-    # Validate vertex format and uniqueness check (basic)
-    for i, v in enumerate(vertices):
-        if not isinstance(v, tuple) or len(v) != 2:
-            raise TypeError(f"Vertex {i} must be a tuple of two numbers.")
-        try:
-            float(v[0])
-            float(v[1])
-        except (TypeError, ValueError):
-            raise TypeError(f"Coordinates at vertex {i} are not numeric.")
-
-    area = 0.5 * abs(
-        sum(vertices[i][0] * vertices[(i + 1) % n][1] - 
-                    vertices[i][1] * vertices[(i + 1) % n][0]) 
-        for i in range(n)
-    )
-    
-    return area
+def calculate_area(shape_type, **dimensions):
+    shape_type_lower = shape_type.lower()
+    if shape_type_lower == 'rectangle':
+        width = dimensions.get('width')
+        height = dimensions.get('height')
+        if width is None or height is None:
+            raise ValueError("Rectangle requires 'width' and 'height'.")
+        return width * height
+    elif shape_type_lower == 'circle':
+        radius = dimensions.get('radius')
+        if radius is None:
+            raise ValueError("Circle requires 'radius'.")
+        return 3.141592653589793 * (radius ** 2)
+    else:
+        raise ValueError(f"Unsupported shape type: {shape_type}")
 
 if __name__ == '__main__':
-    # Sample polygon: a square with vertices (0,0), (4,0), (4,4), (0,4)
-    sample_vertices = [(0, 0), (4, 0), (4, 4), (0, 4)]
-    
-    try:
-        area_result = calculate_polygon_area(sample_vertices)
-        print(f"Area of the polygon with vertices {sample_vertices}:")
-        print(f"{area_result:.2f}")
-        
-        # Additional test case: a triangle
-        sample_triangle = [(10, 5), (30, 7), (40, -8)]
-        area_tri = calculate_polygon_area(sample_triangle)
-        print(f"\nArea of the triangle with vertices {sample_triangle}:")
-        print(f"{area_tri:.2f}")
-        
-    except Exception as e:
-        print(f"An error occurred during calculation: {e}")
+    rect_area = calculate_area('rectangle', width=10, height=5)
+    print(rect_area)
+    circle_area = calculate_area('circle', radius=7)
+    print(circle_area)

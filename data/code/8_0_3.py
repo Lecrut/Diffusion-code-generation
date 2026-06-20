@@ -1,15 +1,21 @@
-def calculate_rectangle_area(width: float, height: float) -> float:
-    """Calculate the area of a rectangle given its width and height."""
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
     return width * height
 
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies.
-    sample_width = 5.0
-    sample_height = 3.0
-
+def parse_dimension(value):
     try:
-        area = calculate_rectangle_area(sample_width, sample_height)
-        print(f"The area of the rectangle with width {sample_width} and height {sample_height} is {area}.")
-    except Exception as e:
-        # Although basic arithmetic rarely fails here, this handles potential future edge cases.
-        print(f"An error occurred during calculation: {e}")
+        dimension = float(value)
+        if dimension < 0:
+            raise ValueError
+        return dimension
+    except (ValueError, TypeError):
+        raise ValueError(f"Invalid dimension: {value}")
+
+if __name__ == '__main__':
+    sample_width = 5.0
+    sample_height = 10.0
+    area = calculate_rectangle_area(sample_width, sample_height)
+    print(area)

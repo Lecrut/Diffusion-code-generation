@@ -1,21 +1,11 @@
-def compare_lengths(a, b):
-    diff = abs(a - b)
-    if a > b:
-        return (diff, "a is greater")
-    elif b > a:
-        return (diff, "b is greater")
-    else:
-        return (diff, "lengths are equal")
+def compare_lengths(length1, length2):
+    difference = length1 - length2
+    ratio = length1 / length2 if length2 != 0 else float('inf')
+    is_greater = length1 > length2
+    return difference, ratio, is_greater
+
 if __name__ == '__main__':
-    num1 = 10.5
-    num2 = 15.2
-    result1 = compare_lengths(num1, num2)
-    print(f"Comparing {num1} and {num2}: {result1}")
-    num3 = 7.0
-    num4 = 7.0
-    result2 = compare_lengths(num3, num4)
-    print(f"Comparing {num3} and {num4}: {result2}")
-    num5 = 20.1
-    num6 = 19.9
-    result3 = compare_lengths(num5, num6)
-    print(f"Comparing {num5} and {num6}: {result3}")
+    l1 = 10.5
+    l2 = 7.2
+    result = compare_lengths(l1, l2)
+    print(result)

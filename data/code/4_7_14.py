@@ -1,83 +1,26 @@
-import unittest
-
-class DistanceConverter:
-    """A class to convert distances between various units."""
+def normalize_distance(value: float, unit: str) -> float:
+    conversions = {
+        'nm': 1e-9,
+        'um': 1e-6,
+        'mm': 1e-3,
+        'cm': 1e-2,
+        'dm': 1e-1,
+        'm': 1,
+        'km': 1e3,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344,
+        'nmi': 1852,
+    }
     
-    def __init__(self, value):
-        self.value = float(value)
-
-    @staticmethod
-    def meters_to_miles(meters):
-        return meters * 0.000621371
-
-    @staticmethod
-    def miles_to_miles(miles):
-        return miles
-
-    @staticmethod
-    def kilometers_to_miles(kilometers):
-        return kilometers * 0.621371
-
-    @staticmethod
-    def feet_to_meters(feet):
-        return feet * 0.3048
-
-    @staticmethod
-    def meters_to_feet(meters):
-        return meters / 0.3048
-
-class TestDistanceConverter(unittest.TestCase):
+    unit_lower = unit.lower()
     
-    def setUp(self):
-        """Set up test fixtures."""
-        pass
+    if unit_lower not in conversions:
+        raise ValueError(f"Unsupported unit: {unit}")
     
-    def tearDown(self):
-        """Clean up after each test."""
-        pass
+    return value * conversions[unit_lower]
 
-    # --- Meters to Miles Tests ---
-    def test_meters_to_miles_zero(self):
-        converter = DistanceConverter(0)
-        self.assertEqual(converter.meters_to_miles(1), 0.000621371, "Conversion of 1 meter should yield correct miles")
-
-    # --- Miles to Meters Tests (using static method logic for consistency in a real class structure if needed, 
-    # but here we rely on the provided methods or assume standard conversion)
-    # Note: The original prompt implies a 'class' with conversion paths. I will add missing inverse conversions 
-    # and ensure all requested paths are covered by adding helper static methods to DistanceConverter for completeness.
-
-    def test_miles_to_kilometers(self):
-        """Test miles to kilometers."""
-        self.assertEqual(DistanceConverter.km_per_mile * 1, "Static method check")
-        
-    # Re-implementing necessary conversions in the class itself to ensure a robust suite
-    
-class RobustDistanceConverter:
-    def __init__(self, value):
-        self.value = float(value)
-
-    @staticmethod
-    def meters_to_miles(meters):
-        return meters * 0.000621371
-
-    @staticmethod
-    def miles_to_kilometers(miles):
-        return miles * 1.60934
-    
-    # ... (Other methods would be added here in a full implementation)
-    
-# Since the prompt asks for "the distance conversion logic implemented in a class", 
-# I will define a comprehensive suite based on standard conversions often found in such tasks,
-# ensuring all paths are covered.
-
-class DistanceTestSuite(unittest.TestCase):
-    def test_meters_to_miles(self):
-        self.assertEqual(DistanceConverter.meters_to_miles(1), 0.000621371)
-        
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    
-    suite = unittest.TestLoader().loadTestsFromTestCase(DistanceTestSuite)
-    
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
+    result_meters = normalize_distance(1.0, 'km')
+    print(result_meters)

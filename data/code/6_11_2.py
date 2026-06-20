@@ -1,7 +1,8 @@
-def calculate_weight_difference(weight1, weight2):
-    return abs(weight1 - weight2)
+def calculate_absolute_difference(weight_a, weight_b):
+    return abs(weight_a - weight_b)
+
 if __name__ == '__main__':
-    w1 = 105.5
-    w2 = 98.75
-    difference = calculate_weight_difference(w1, w2)
-    print(difference)
+    weight_1 = 150.75
+    weight_2 = 145.20
+    result = calculate_absolute_difference(weight_1, weight_2)
+    print(result)

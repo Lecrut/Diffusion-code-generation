@@ -1,20 +1,39 @@
-def convert_distance(value, from_unit, to_unit, factor):
-    if from_unit == to_unit:
+class DistanceConverter:
+    MILES_PER_KILOMETER = 0.621371192237
+    KILOMETERS_PER_MILE = 1.609344
+
+    def __init__(self):
+        self.miles_to_km = self.KILOMETERS_PER_MILE
+        self.km_to_miles = self.MILES_PER_KILOMETER
+
+    def _verify_numeric(self, value):
+        if isinstance(value, bool):
+            raise TypeError("Boolean values are not accepted as distance")
+        if not isinstance(value, (int, float)):
+            raise TypeError("Distance value must be a number")
+        if value < 0:
+            raise ValueError("Distance cannot be negative")
         return value
-    if from_unit == "miles" and to_unit == "kilometers":
-        return value * factor
-    elif from_unit == "kilometers" and to_unit == "miles":
-        return value / factor
-    else:
-        raise ValueError("Unsupported unit conversion")
+
+    def convert_miles_to_kilometers(self, miles):
+        valid_miles = self._verify_numeric(miles)
+        return valid_miles * self.miles_to_km
+
+    def convert_kilometers_to_miles(self, kilometers):
+        valid_km = self._verify_numeric(kilometers)
+        return valid_km * self.km_to_miles
+
 if __name__ == '__main__':
-    miles = 100.0
-    conversion_factor = 1.60934
-    target_unit = "kilometers"
+    converter = DistanceConverter()
+    result_kilometers = converter.convert_miles_to_kilometers(5)
+    result_miles = converter.convert_kilometers_to_miles(10)
+    print(result_kilometers)
+    print(result_miles)
     try:
-        result = convert_distance(miles, "miles", target_unit, conversion_factor)
-        print(f"Original distance in miles: {miles}")
-        print(f"Conversion factor (miles to km): {conversion_factor}")
-        print(f"Converted distance in kilometers: {result:.2f}")
-    except ValueError as e:
-        print(f"Error: {e}")
+        converter.convert_miles_to_kilometers("ten")
+    except TypeError as error:
+        print(error)
+    try:
+        converter.convert_kilometers_to_miles(-5)
+    except ValueError as error:
+        print(error)

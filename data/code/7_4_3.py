@@ -1,66 +1,141 @@
-import math
-def convert_to_seconds(value, unit):
-    if unit == 'year':
-        return value * 365.25 * 24 * 60 * 60
-    elif unit == 'month':
-        return value * 30.44 * 24 * 60 * 60
-    elif unit == 'day':
-        return value * 24 * 60 * 60
-    elif unit == 'hour':
-        return value * 60 * 60
-    elif unit == 'minute':
-        return value * 60
-    elif unit == 'second':
-        return value
-    else:
-        raise ValueError("Invalid unit specified")
-def convert_from_seconds(seconds, unit):
-    if unit == 'year':
-        return seconds / (365.25 * 24 * 60 * 60)
-    elif unit == 'month':
-        return seconds / (30.44 * 24 * 60 * 60)
-    elif unit == 'day':
-        return seconds / (24 * 60 * 60)
-    elif unit == 'hour':
-        return seconds / (60 * 60)
-    elif unit == 'minute':
-        return seconds / 60
-    elif unit == 'second':
-        return seconds
-    else:
-        raise ValueError("Invalid unit specified")
-def convert_time_units(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    seconds = convert_to_seconds(value, from_unit)
-    result = convert_from_seconds(seconds, to_unit)
-    return result
+class TimeConverter:
+    SECONDS_IN_MINUTE = 60
+    SECONDS_IN_HOUR = 3600
+    SECONDS_IN_DAY = 86400
+    SECONDS_IN_MONTH = 2629746
+    SECONDS_IN_YEAR = 31556952
+
+    def __init__(self):
+        self.units = {
+            'year': self.SECONDS_IN_YEAR,
+            'month': self.SECONDS_IN_MONTH,
+            'day': self.SECONDS_IN_DAY,
+            'hour': self.SECONDS_IN_HOUR,
+            'minute': self.SECONDS_IN_MINUTE,
+            'second': 1
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        from_unit = from_unit.lower()
+        to_unit = to_unit.lower()
+
+        if from_unit not in self.units:
+            raise ValueError(f"Invalid from_unit: {from_unit}")
+        if to_unit not in self.units:
+            raise ValueError(f"Invalid to_unit: {to_unit}")
+
+        if from_unit == to_unit:
+            return value
+
+        seconds = value * self.units[from_unit]
+        result = seconds / self.units[to_unit]
+        return result
+
+    def convert_to_dict(self, value, from_unit):
+        from_unit = from_unit.lower()
+        if from_unit not in self.units:
+            raise ValueError(f"Invalid from_unit: {from_unit}")
+
+        total_seconds = value * self.units[from_unit]
+        result = {}
+        for unit, factor in self.units.items():
+            result[unit] = total_seconds / factor
+        return result
+
+    def convert_from_dict(self, time_dict):
+        total_seconds = 0
+        for unit, value in time_dict.items():
+            unit = unit.lower()
+            if unit not in self.units:
+                raise ValueError(f"Invalid unit: {unit}")
+            total_seconds += value * self.units[unit]
+        return total_seconds
+
+    def format_time(self, seconds):
+        years = int(seconds // self.SECONDS_IN_YEAR)
+        remaining = seconds % self.SECONDS_IN_YEAR
+        months = int(remaining // self.SECONDS_IN_MONTH)
+        remaining %= self.SECONDS_IN_MONTH
+        days = int(remaining // self.SECONDS_IN_DAY)
+        remaining %= self.SECONDS_IN_DAY
+        hours = int(remaining // self.SECONDS_IN_HOUR)
+        remaining %= self.SECONDS_IN_HOUR
+        minutes = int(remaining // self.SECONDS_IN_MINUTE)
+        seconds = int(remaining % self.SECONDS_IN_MINUTE)
+
+        parts = []
+        if years:
+            parts.append(f"{years} year(s)")
+        if months:
+            parts.append(f"{months} month(s)")
+        if days:
+            parts.append(f"{days} day(s)")
+        if hours:
+            parts.append(f"{hours} hour(s)")
+        if minutes:
+            parts.append(f"{minutes} minute(s)")
+        if seconds:
+            parts.append(f"{seconds} second(s)")
+
+        if not parts:
+            return "0 seconds"
+
+        if len(parts) == 1:
+            return parts[0]
+
+        if len(parts) == 2:
+            return f"{parts[0]} and {parts[1]}"
+
+        last_part = parts.pop()
+        return ", ".join(parts) + f", and {last_part}"
+
+def convert_time(value, from_unit, to_unit):
+    converter = TimeConverter()
+    return converter.convert(value, from_unit, to_unit)
+
+def convert_time_to_all_units(value, from_unit):
+    converter = TimeConverter()
+    return converter.convert_to_dict(value, from_unit)
+
+def calculate_total_seconds(time_dict):
+    converter = TimeConverter()
+    return converter.convert_from_dict(time_dict)
+
+def format_duration(seconds):
+    converter = TimeConverter()
+    return converter.format_time(seconds)
+
 if __name__ == '__main__':
-    sample_years = 5
-    sample_months = 60
-    sample_days = 100
-    sample_hours = 48
-    sample_minutes = 30
-    sample_seconds = 123456789
-    print(f"--- Sample Conversions ---")
-    print(f"\n{sample_years} Years to Days: {convert_time_units(sample_years, 'year', 'day'):.2f}")
-    print(f"{sample_years} Years to Months: {convert_time_units(sample_years, 'year', 'month'):.2f}")
-    print(f"{sample_years} Years to Seconds: {convert_time_units(sample_years, 'year', 'second'):.0f}")
-    print(f"\n{sample_months} Months to Days: {convert_time_units(sample_months, 'month', 'day'):.2f}")
-    print(f"{sample_months} Months to Hours: {convert_time_units(sample_months, 'month', 'hour'):.2f}")
-    print(f"\n{sample_days} Days to Hours: {convert_time_units(sample_days, 'day', 'hour'):.2f}")
-    print(f"{sample_days} Days to Minutes: {convert_time_units(sample_days, 'day', 'minute'):.2f}")
-    print(f"\n{sample_hours} Hours to Minutes: {convert_time_units(sample_hours, 'hour', 'minute'):.2f}")
-    print(f"{sample_hours} Hours to Seconds: {convert_time_units(sample_hours, 'hour', 'second'):.0f}")
-    print(f"\n{sample_minutes} Minutes to Seconds: {convert_time_units(sample_minutes, 'minute', 'second'):.0f}")
-    print(f"\n{sample_seconds} Seconds to Minutes: {convert_time_units(sample_seconds, 'second', 'minute'):.0f}")
-    print(f"{sample_seconds} Seconds to Hours: {convert_time_units(sample_seconds, 'second', 'hour'):.0f}")
-    print(f"{sample_seconds} Seconds to Days: {convert_time_units(sample_seconds, 'second', 'day'):.0f}")
-    print(f"{sample_seconds} Seconds to Years: {convert_time_units(sample_seconds, 'second', 'year'):.2f}")
-    print("\n--- Mixed Unit Test ---")
-    test_value = 1
-    test_unit = 'day'
-    print(f"{test_value} {test_unit} to Hours: {convert_time_units(test_value, test_unit, 'hour'):.2f}")
-    test_value = 7200
-    test_unit = 'second'
-    print(f"{test_value} {test_unit} to Minutes: {convert_time_units(test_value, test_unit, 'minute'):.2f}")
+    converter = TimeConverter()
+
+    print("=== Direct Conversions ===")
+    print(f"1 year to days: {converter.convert(1, 'year', 'day')}")
+    print(f"30 days to months: {converter.convert(30, 'day', 'month')}")
+    print(f"1 hour to seconds: {converter.convert(1, 'hour', 'second')}")
+    print(f"7200 seconds to hours: {converter.convert(7200, 'second', 'hour')}")
+    print(f"0.5 months to days: {converter.convert(0.5, 'month', 'day')}")
+
+    print("\n=== Conversion to All Units ===")
+    result = converter.convert_to_dict(1, 'year')
+    print(f"1 year in all units: {result}")
+
+    result = converter.convert_to_dict(24, 'hour')
+    print(f"24 hours in all units: {result}")
+
+    print("\n=== Calculate Total Seconds ===")
+    time_dict = {'year': 1, 'month': 3, 'day': 15, 'hour': 6, 'minute': 30, 'second': 45}
+    total_seconds = converter.convert_from_dict(time_dict)
+    print(f"Total seconds for {time_dict}: {total_seconds}")
+
+    print("\n=== Format Duration ===")
+    print(f"3661 seconds: {converter.format_time(3661)}")
+    print(f"31556952 seconds (1 year): {converter.format_time(31556952)}")
+    print(f"0 seconds: {converter.format_time(0)}")
+    print(f"60 seconds: {converter.format_time(60)}")
+    print(f"3600 seconds: {converter.format_time(3600)}")
+
+    print("\n=== Using Standalone Functions ===")
+    print(f"Convert 2 hours to minutes: {convert_time(2, 'hour', 'minute')}")
+    print(f"All units for 1 day: {convert_time_to_all_units(1, 'day')}")
+    print(f"Total seconds: {calculate_total_seconds({'hour': 1, 'minute': 30})}")
+    print(f"Formatted 90 seconds: {format_duration(90)}")

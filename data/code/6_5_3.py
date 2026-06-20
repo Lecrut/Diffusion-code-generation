@@ -1,41 +1,24 @@
-def find_weight_difference(weights):
-    """
-    Calculate the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of float/int): A non-empty list of numerical values representing weights.
-        
-    Returns:
-        int or float: The absolute difference between the maximum and minimum weights.
-        
-    Raises:
-        ValueError: If the input list is empty.
-    """
-    if not weights:
-        raise ValueError("The list of weights cannot be empty.")
+class WeightDifferenceStore:
+    def __init__(self):
+        self._storage = {}
 
-    min_weight = max(weights)  # This runs in O(n) total (one pass for each operation) or can do single pass manually below
-    
-    # More explicit single-pass approach to guarantee strict O(n) without implicit overheads, 
-    # though built-in max/min are also optimized. Let's use a manual loop for clarity and control.
-    
-    current_min = float('inf')
-    current_max = float('-inf')
+    def store_pair(self, label, weight_a, weight_b):
+        self._storage[label] = (weight_a, weight_b)
 
-    for weight in weights:
-        if weight < current_min:
-            current_min = weight
-        if weight > current_max:
-            current_max = weight
-            
-    return abs(current_max - current_min)
+    def get_difference(self, label):
+        if label not in self._storage:
+            raise KeyError(f"No pair found with label: {label}")
+        weight_a, weight_b = self._storage[label]
+        return weight_a - weight_b
+
+    def has_pair(self, label):
+        return label in self._storage
 
 if __name__ == '__main__':
-    # Sample values hard-coded as per requirements (no user input, network, or files needed)
-    sample_weights = [10.5, 23.7, 45.2, 8.9, 60.1]
-
-    try:
-        diff = find_weight_difference(sample_weights)
-        print(f"Difference between heaviest and lightest weight: {diff}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    store = WeightDifferenceStore()
+    store.store_pair("sample_one", 150, 120)
+    store.store_pair("sample_two", 200, 250)
+    diff_one = store.get_difference("sample_one")
+    diff_two = store.get_difference("sample_two")
+    print(diff_one)
+    print(diff_two)

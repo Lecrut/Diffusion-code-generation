@@ -1,34 +1,37 @@
-import argparse
-
-def hours_to_minutes(h):
-    """Convert hours to minutes."""
-    return h * 60
-
-def minutes_to_hours(m):
-    """Convert minutes to hours."""
-    return m / 60
-
-def parse_arguments():
-    parser = argparse.ArgumentParser(description="Convert between hours and minutes.")
+def time_string_to_human_readable(time_str):
+    parts = time_str.split(':')
+    if len(parts) != 3:
+        raise ValueError("Invalid time format. Expected HH:MM:SS")
     
-    # Define two mutually exclusive groups for the conversion type
-    group_type = parser.add_mutually_exclusive_group(required=True)
-    group_type.add_argument('--hours', '-h', dest='input_value', help="Input value in hours")
-    group_type.add_argument('--minutes', '-m', dest='input_value', help="Input value in minutes")
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
     
-    # Define output units based on input type (implicitly handled by logic or explicit flag)
-    unit_out = parser.add_mutually_exclusive_group(required=True)
-    unit_out.add_argument('--to-minutes', '--min', choice=['minutes'], dest='output_unit')
-    unit_out.add_argument('--to-hours', '--hr', choice=['hours'], dest='output_unit')
-
-    # Add a general input_type flag to specify the starting unit if not using -h/-m directly on values, 
-    # but since argparse requires required args and we used mutually exclusive groups for inputs themselves,
-    # let's restructure slightly to fit "no interactive prompt" while still being robust.
+    total_seconds = hours * 3600 + minutes * 60 + seconds
     
-    return parser.parse_args()
-
-def main():
-    """Main function to handle conversion logic."""
+    days, remainder = divmod(total_seconds, 86400)
+    hours, remainder = divmod(remainder, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    
+    result_parts = []
+    if days > 0:
+        result_parts.append(f"{days} days" if days != 1 else "1 day")
+    if hours > 0:
+        result_parts.append(f"{hours} hours" if hours != 1 else "1 hour")
+    if minutes > 0:
+        result_parts.append(f"{minutes} minutes" if minutes != 1 else "1 minute")
+    if seconds > 0 or not result_parts:
+        result_parts.append(f"{seconds} seconds" if seconds != 1 else "1 second")
+    
+    return ", ".join(result_parts)
 
 if __name__ == '__main__':
-    pass
+    sample_input_1 = "00:00:00"
+    sample_input_2 = "01:30:15"
+    sample_input_3 = "25:45:30"
+    sample_input_4 = "100:00:05"
+    
+    print(time_string_to_human_readable(sample_input_1))
+    print(time_string_to_human_readable(sample_input_2))
+    print(time_string_to_human_readable(sample_input_3))
+    print(time_string_to_human_readable(sample_input_4))

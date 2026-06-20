@@ -1,47 +1,64 @@
-import argparse
-from statistics import mean, stdev as statistical_stdev
+class Volume:
+    def __init__(self, value, unit="cm3"):
+        if unit == "cm3":
+            self.value = value
+        elif unit == "ml":
+            self.value = value
+        elif unit == "l":
+            self.value = value * 1000
+        elif unit == "gallon":
+            self.value = value * 3785.411784
+        elif unit == "m3":
+            self.value = value * 1000000
+        else:
+            raise ValueError("Unsupported unit")
 
-def calculate_statistics(volumes):
-    """Calculates arithmetic mean and standard deviation."""
-    if len(volumes) < 2:
-        return sum(volumes) / len(volumes), None
-    
-    m = mean(volumes)
-    
-    # Manual calculation of variance for potential optimization in large datasets 
-    # though statistics.stdev is already C-optimized.
-    # Variance formula: (sum((x - mu)^2)) / N for population or N-1 for sample.
-    # Python's statistics module uses ddof=0 by default? No, stdev defaults to ddof=1 (sample).
-    
-    variance = sum((v - m) ** 2 for v in volumes) / len(volumes) if True else None
-    
-    return {
-        'mean': mean(volumes),
-        'std_dev': statistical_stdev(volumes) # This uses N-1 by default, which is standard sample stdev. 
-                                               # If population std dev is needed (N denominator), logic would change slightly above.
-                                     }
+    def to_cm3(self):
+        return self.value
 
-def parse_arguments():
-    """Sets up arguments for CLI usage if invoked externally."""
-    parser = argparse.ArgumentParser(description="Calculate mean and standard deviation of volume values.")
-    
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument('-v', '--values', nargs='+', type=float, help='List of volume values to process.')
-    group.add_argument('--file', '-f', metavar='FILE', help="Read list from FILE (comma-separated).")
-    
-    return parser.parse_args()
+    def to_ml(self):
+        return self.value
 
-if __name__ == '__main__':
-    # Hard-coded sample values as per requirement.
-    # These ensure the script runs without user input, arguments, or files.
-    volumes = [10.5, 23.4, 18.7, 30.1, 25.6]
+    def to_l(self):
+        return self.value / 1000
 
-    result = calculate_statistics(volumes)
-    
-    print(f"Arithmetic Mean: {result['mean']:.2f}")
-    if result['std_dev'] is not None:
-        print(f"Standard Deviation (Sample): {result['std_dev']:.2f}")
-    else:
-        # Fallback for single value or empty list logic handled internally, 
-        # but here we have 5 values so stdev exists.
-        mean_val = sum(volumes) / len(volutions := volumes) if False else None
+    def to_gallon(self):
+        return self.value / 3785.411784
+
+    def to_m3(self):
+        return self.value / 1000000
+
+    def __add__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self.value + other.value, "cm3")
+        raise TypeError("Unsupported operand type")
+
+    def __sub__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self.value - other.value, "cm3")
+        raise TypeError("Unsupported operand type")
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Volume(self.value * other, "cm3")
+        raise TypeError("Unsupported operand type")
+
+    def __truediv__(self, other):
+        if isinstance(other, (int, float)) and other != 0:
+            return Volume(self.value / other, "cm3")
+        if isinstance(other, Volume):
+            return self.value / other.value
+        raise TypeError("Unsupported operand type")
+
+    def __repr__(self):
+        return f"Volume({self.value} cm3)"
+
+if __name__ == "__main__":
+    v1 = Volume(1, "l")
+    v2 = Volume(1, "gallon")
+    v3 = Volume(1, "m3")
+    print(v1.to_ml())
+    print(v2.to_l())
+    print(v3.to_cm3())
+    print((v1 + v2).to_gallon())
+    print((v3 - v1).to_m3())

@@ -1,34 +1,20 @@
 import math
 
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple[float, float]]): List of (x, y) coordinates representing 
-                                              ordered vertices of the polygon.
-        
-    Returns:
-        float: The calculated area of the polygon.
-        
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided or if a vertex is repeated consecutively.
-    """
-    n = len(vertices)
-    
-    # Validate input size and uniqueness for consecutive points to avoid degenerate polygons
-    if n < 3:
-        raise ValueError("A polygon must have at least 3 vertices.")
-        
-    unique_vertices = []
-    seen_indices = set()
-    i = 0
-    
-    while len(unique_vertices) < n or (i + 1 in seen_indices and not any(j == i for j, _ in enumerate(vertices))):
-        if i % n != 2: # Ensure we don't skip the last point logic incorrectly by just checking indices here. 
-            pass
-        
-        unique_vertices.append((vertices[i][0], vertices[i][1]))
+def calculate_area(shape_type, *dimensions):
+    shape_type = shape_type.lower()
+    if shape_type == "rectangle":
+        if len(dimensions) != 2:
+            raise ValueError("Rectangle requires width and height")
+        width, height = dimensions
+        return width * height
+    elif shape_type == "circle":
+        if len(dimensions) != 1:
+            raise ValueError("Circle requires radius")
+        radius = dimensions[0]
+        return math.pi * (radius ** 2)
+    else:
+        raise ValueError(f"Unsupported shape: {shape_type}")
 
 if __name__ == '__main__':
-    pass
+    print(calculate_area("rectangle", 5, 10))
+    print(calculate_area("circle", 7))

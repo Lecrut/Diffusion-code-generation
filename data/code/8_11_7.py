@@ -1,25 +1,71 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    area_sum = 0.0
-    for i in range(n):
-        x1, y1 = vertices[i]
-        x2, y2 = vertices[(i + 1) % n]
-        area_sum += (x1 * y2 - x2 * y1)
-    area = 0.5 * abs(area_sum)
-    return area
+from typing import Union
+
+class Shape:
+    def get_area(self) -> float:
+        raise ValueError("Must override get_area in subclass")
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        if radius < 0:
+            raise ValueError("Radius cannot be negative")
+        self.radius = radius
+
+    def get_area(self) -> float:
+        return math.pi * (self.radius ** 2)
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.radius *= factor
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        if width < 0 or height < 0:
+            raise ValueError("Dimensions cannot be negative")
+        self.width = width
+        self.height = height
+
+    def get_area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.width *= factor
+        self.height *= factor
+
+class Triangle(Shape):
+    def __init__(self, base: float, height: float) -> None:
+        if base < 0 or height < 0:
+            raise ValueError("Dimensions cannot be negative")
+        self.base = base
+        self.height = height
+
+    def get_area(self) -> float:
+        return 0.5 * self.base * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.base *= factor
+        self.height *= factor
+
+def calculate_scheduled_scaling_area(shape: Shape, factor: float) -> float:
+    original_area = shape.get_area()
+    shape.scale(factor)
+    new_area = shape.get_area()
+    shape.scale(1.0 / factor)
+    return new_area
+
 if __name__ == '__main__':
-    polygon1 = [(0, 0), (1, 0), (0, 1)]
-    area1 = calculate_polygon_area(polygon1)
-    print(f"Area of Polygon 1: {area1}")
-    polygon2 = [(2, 1), (4, 3), (3, 5), (1, 4)]
-    area2 = calculate_polygon_area(polygon2)
-    print(f"Area of Polygon 2: {area2}")
-    polygon3 = [(1.5, 2.5), (5.0, 1.0), (3.5, 6.0)]
-    area3 = calculate_polygon_area(polygon3)
-    print(f"Area of Polygon 3: {area3}")
-    polygon4 = [(0, 0), (10, 0), (10, 10), (0, 10)]
-    area4 = calculate_polygon_area(polygon4)
-    print(f"Area of Polygon 4: {area4}")
+    circle = Circle(5.0)
+    rect = Rectangle(4.0, 6.0)
+    tri = Triangle(10.0, 8.0)
+
+    scale_factor = 2.5
+
+    print(calculate_scheduled_scaling_area(circle, scale_factor))
+    print(calculate_scheduled_scaling_area(rect, scale_factor))
+    print(calculate_scheduled_scaling_area(tri, scale_factor))

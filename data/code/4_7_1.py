@@ -1,27 +1,38 @@
-import unittest
-class DistanceConverter:
-    def convert_miles_to_km(self, miles):
-        return miles * 1.60934
-    def convert_km_to_miles(self, km):
-        return km / 1.60934
-class TestDistanceConverter(unittest.TestCase):
-    def setUp(self):
-        self.converter = DistanceConverter()
-    def test_miles_to_km_positive(self):
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(10), 16.0934)
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(0), 0.0)
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(1), 1.60934)
-    def test_miles_to_km_zero(self):
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(0), 0.0)
-    def test_miles_to_km_negative(self):
-        self.assertAlmostEqual(self.converter.convert_miles_to_km(-5), -8.0467)
-    def test_km_to_miles_positive(self):
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(16.0934), 10.0)
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(0), 0.0)
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(1), 0.621371)
-    def test_km_to_miles_zero(self):
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(0), 0.0)
-    def test_km_to_miles_negative(self):
-        self.assertAlmostEqual(self.converter.convert_km_to_miles(-16.0934), -10.0)
+class DistanceNormalizer:
+    def __init__(self):
+        self.conversion_factors = {
+            'meter': 1.0,
+            'm': 1.0,
+            'kilometer': 1000.0,
+            'km': 1000.0,
+            'centimeter': 0.01,
+            'cm': 0.01,
+            'millimeter': 0.001,
+            'mm': 0.001,
+            'inch': 0.0254,
+            'in': 0.0254,
+            'foot': 0.3048,
+            'ft': 0.3048,
+            'yard': 0.9144,
+            'yd': 0.9144,
+            'mile': 1609.344,
+            'mi': 1609.344,
+            'nautical_mile': 1852.0,
+            'nm': 1852.0,
+        }
+
+    def normalize(self, value, unit):
+        unit_key = unit.lower().replace(' ', '_').replace('-', '_')
+        if unit_key not in self.conversion_factors:
+            raise ValueError(f"Unknown unit: {unit}")
+        factor = self.conversion_factors[unit_key]
+        return value * factor
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    normalizer = DistanceNormalizer()
+    result1 = normalizer.normalize(5, 'km')
+    print(result1)
+    result2 = normalizer.normalize(100, 'in')
+    print(result2)
+    result3 = normalizer.normalize(3.5, 'mile')
+    print(result3)

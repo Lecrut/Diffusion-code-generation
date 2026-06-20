@@ -1,57 +1,48 @@
-import argparse
-
-def convert_time(hours: float, minutes: int) -> None:
-    """Convert a given time value to hours."""
-    print(f"{minutes} minutes is equal to {hours:.2f} hours.")
+def convert_time_string(time_string):
+    parts = time_string.split(':')
+    if len(parts) != 3:
+        raise ValueError("Time string must be in 'HH:MM:SS' format")
+    
+    try:
+        hours = int(parts[0])
+        minutes = int(parts[1])
+        seconds = int(parts[2])
+    except ValueError:
+        raise ValueError("Time components must be integers")
+    
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    
+    days = total_seconds // 86400
+    remaining = total_seconds % 86400
+    hours = remaining // 3600
+    remaining = remaining % 3600
+    minutes = remaining // 60
+    seconds = remaining % 60
+    
+    readable_parts = []
+    if days > 0:
+        readable_parts.append(f"{days} day{'s' if days != 1 else ''}")
+    if hours > 0:
+        readable_parts.append(f"{hours} hour{'s' if hours != 1 else ''}")
+    if minutes > 0:
+        readable_parts.append(f"{minutes} minute{'s' if minutes != 1 else ''}")
+    if seconds > 0 or not readable_parts:
+        readable_parts.append(f"{seconds} second{'s' if seconds != 1 else ''}")
+    
+    return ', '.join(readable_parts)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Convert between hours and minutes using sample values.")
+    sample_times = [
+        "00:00:00",
+        "01:02:03",
+        "23:59:59",
+        "25:00:00",
+        "48:30:15",
+        "00:00:01",
+        "12:30:45",
+        "99:99:99"
+    ]
     
-    # Define two separate sub-commands for conversion directions since we cannot use input().
-    converter1 = subparsers.add_parser("to-hours", help="Convert from minutes to hours")
-    converter2 = subparsers.add_parser("to-minutes", help="Convert from hours to minutes")
-
-    with_args_list: list[dict[str, int | float]] = []
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Time Converter CLI")
-    subparsers = parser.add_subparsers(dest='command', required=True)
-
-    # Command 1: Minutes to Hours
-    cmd_to_hours = subparsers.add_parser('minutes-to-hours')
-    # Argument for input minutes (required by argparse logic, but value is fixed in sample block per constraints if no args provided)
-    # However, the constraint "Never call ... argparse required arguments" usually implies avoiding --help or interactive loops. 
-    # To strictly adhere to "never use argparse required arguments", we will define an optional argument with a default value that satisfies execution without user input.
-    
-    parser.add_argument('input_time', type=float)
-
-if __name__ == '__main__':
-    args = parser.parse_args(['minutes-to-hours', 180]) # Hard-coded sample: 180 minutes
-    
-    hours = args.input_time / 60
-    print(f"{args.input_time} minutes is equal to {hours:.2f} hours.")
-
-# Second command block for Hours -> Minutes (also hard-coded)
-if __name__ == '__main__':
-    pass 
-
-# Correcting the structure above to be a single valid runnable module with two sample executions as requested.
-import argparse
-
-def main():
-    # Sample data: 180 minutes and 2.5 hours
-    
-    parser = argparse.ArgumentParser(description="Convert time units using predefined samples.")
-    
-    subparsers = parser.add_subparsers(dest='mode', required=True)
-    
-    # Mode 1: Minutes to Hours
-    p_m_to_h = subparsers.add_parser('minutes-to-hours')
-    p_m_to_h.set_defaults(func=convert_minutes_to_hours)
-
-    # Mode 2: Hours to Minutes
-    p_h_to_m = subparsers.add_parser('hours-to-minutes')
-    p_h_to_m.set_defaults(func=convert_hours_to_minutes)
-
-if __name__ == '__main__':
-    parser.parse_args(['minutes-to-hours', '180']) # Sample 1: Hard-coded input
+    for time_str in sample_times:
+        result = convert_time_string(time_str)
+        print(f"{time_str} -> {result}")

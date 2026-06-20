@@ -1,27 +1,62 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    sum1 = 0.0
-    sum2 = 0.0
-    for i in range(n):
-        x_i, y_i = vertices[i]
-        x_next, y_next = vertices[(i + 1) % n]
-        sum1 += x_i * y_next
-        sum2 += y_i * x_next
-    area = 0.5 * (sum1 - sum2)
-    return area
+from typing import List, Union, Optional
+
+class Shape:
+    def area(self) -> float:
+        raise ValueError("Base class should not be used directly")
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        self.radius = radius
+
+    def area(self) -> float:
+        return math.pi * self.radius ** 2
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.radius *= factor
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        self.width = width
+        self.height = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.width *= factor
+        self.height *= factor
+
+class Triangle(Shape):
+    def __init__(self, base: float, height: float) -> None:
+        self.base = base
+        self.height = height
+
+    def area(self) -> float:
+        return 0.5 * self.base * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.base *= factor
+        self.height *= factor
+
+def calculate_scaled_area(shape: Shape, factor: float) -> float:
+    scaled_shape = shape.__class__(*shape.__dict__.values())
+    scaled_shape.scale(factor)
+    return scaled_shape.area()
+
 if __name__ == '__main__':
-    sample_vertices1 = [(0, 0), (1, 0), (0, 1)]
-    area1 = calculate_polygon_area(sample_vertices1)
-    print(f"Area 1: {area1}")
-    sample_vertices2 = [(2, 1), (4, 5), (7, 3), (5, 0)]
-    area2 = calculate_polygon_area(sample_vertices2)
-    print(f"Area 2: {area2}")
-    sample_vertices3 = [(1.5, 2.5), (3.0, 1.0), (0.5, 4.0)]
-    area3 = calculate_polygon_area(sample_vertices3)
-    print(f"Area 3: {area3}")
-    sample_vertices4 = [(1.0, 1.0), (1.0, 1.000000000000001), (2.0, 1.0)]
-    area4 = calculate_polygon_area(sample_vertices4)
-    print(f"Area 4 (testing float stability): {area4}")
+    circle = Circle(5.0)
+    print(calculate_scaled_area(circle, 2.0))
+
+    rectangle = Rectangle(4.0, 6.0)
+    print(calculate_scaled_area(rectangle, 1.5))
+
+    triangle = Triangle(10.0, 8.0)
+    print(calculate_scaled_area(triangle, 0.5))

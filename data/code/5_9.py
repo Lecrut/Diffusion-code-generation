@@ -1,8 +1,13 @@
-import numpy as np
-def compare_signs(arr1, arr2):
-    return np.sign(arr1 - arr2)
+class LengthComparator:
+    def compare(self, length1, length2):
+        if length1 < length2:
+            result = "less than"
+        elif length1 > length2:
+            result = "greater than"
+        else:
+            result = "equal to"
+        return f"Length {length1} is {result} Length {length2}"
+
 if __name__ == '__main__':
-    array1 = np.array([10, 20, 30, 40, 50])
-    array2 = np.array([12, 18, 30, 45, 55])
-    result = compare_signs(array1, array2)
-    print(result)
+    comparator = LengthComparator()
+    print(comparator.compare(10, 20))

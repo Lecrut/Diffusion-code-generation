@@ -1,50 +1,60 @@
-import statistics
-
-def compare_length_lists(list_a: list[float], list_b: list[float]) -> dict[str, float]:
-    """
-    Compares two lists of length measurements to determine maximum and minimum lengths 
-    present in both lists combined, then calculates the overall range difference.
+def compare_lengths(seq1, seq2):
+    it1 = iter(seq1)
+    it2 = iter(seq2)
+    while True:
+        try:
+            next(it1)
+        except StopIteration:
+            len1_done = True
+            break
+    else:
+        len1_done = False
     
-    Args:
-        list_a (list[float]): First list of numerical values representing lengths.
-        list_b (list[float]): Second list of numerical values representing lengths.
-        
-    Returns:
-        dict[str, float]: A dictionary containing 'max_length', 'min_length', and 
-                         'range_difference'. If either input is empty or contains non-numeric 
-                         data that cannot be converted to float, a ValueError is raised.
+    while True:
+        try:
+            next(it2)
+        except StopIteration:
+            len2_done = True
+            break
+    else:
+        len2_done = False
     
-    Raises:
-        ValueError: If inputs are not lists of numeric values (floats).
-    """
-    # Validate inputs
-    if list_a == [] and list_b == []:
-        raise ValueError("At least one input list must contain data.")
+    if len1_done and len2_done:
+        return "equal"
+    elif len1_done:
+        return "second longer"
+    elif len2_done:
+        return "first longer"
+    else:
+        return "both ongoing"
 
-    combined = [x for x in list_a + list_b]
+def compare_lengths_generator(seq1, seq2):
+    it1 = iter(seq1)
+    it2 = iter(seq2)
     
     try:
-        max_length = float(max(combined))
-        min_length = float(min(combined))
-        
-        range_difference = abs(max_length - min_length)
-        
-        return {
-            'max_length': max_length,
-            'min_length': min_length,
-            'range_difference': range_difference
-        }
-    except ValueError:
-        raise ValueError("All elements in both lists must be numeric (float).")
+        next(it1)
+    except StopIteration:
+        len1_done = True
+    else:
+        len1_done = False
+    
+    try:
+        next(it2)
+    except StopIteration:
+        len2_done = True
+    else:
+        len2_done = False
+    
+    if len1_done and len2_done:
+        yield "equal"
+    elif len1_done:
+        yield "second longer"
+    elif len2_done:
+        yield "first longer"
+    else:
+        yield "both ongoing"
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements. No user input or external dependencies used.
-    
-    list_a = [10.5, 20.3, 15.7]
-    list_b = [8.9, 22.4, 16.1]
-
-    result = compare_length_lists(list_a, list_b)
-
-    print(f"Maximum length: {result['max_length']}")
-    print(f"Minimum length: {result['min_length']}")
-    print(f"Overall range difference: {result['range_difference']:.2f}")
+    for result in compare_lengths_generator([1, 2], [3, 4, 5]):
+        print(result)

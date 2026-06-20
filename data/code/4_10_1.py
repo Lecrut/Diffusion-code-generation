@@ -1,24 +1,30 @@
-import sys
-def convert_distance(distance, unit_from, unit_to, conversion_factor):
-    if unit_from == unit_to:
-        return distance
-    if unit_from == "miles" and unit_to == "kilometers":
-        return distance * conversion_factor
-    elif unit_from == "kilometers" and unit_to == "miles":
-        return distance / conversion_factor
-    else:
-        raise ValueError("Unsupported unit conversion requested.")
+class DistanceConverter:
+    MILES_TO_KM = 1.609344
+    KM_TO_MILES = 1 / 1.609344
+
+    @staticmethod
+    def _validate_value(value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Distance must be a number.")
+        if value < 0:
+            raise ValueError("Distance cannot be negative.")
+        return float(value)
+
+    @staticmethod
+    def miles_to_kilometers(miles):
+        validated_miles = DistanceConverter._validate_value(miles)
+        return validated_miles * DistanceConverter.MILES_TO_KM
+
+    @staticmethod
+    def kilometers_to_miles(kilometers):
+        validated_km = DistanceConverter._validate_value(kilometers)
+        return validated_km * DistanceConverter.KM_TO_MILES
+
 if __name__ == '__main__':
-    distance_value = 100
-    unit_from = "miles"
-    unit_to = "kilometers"
-    conversion_factor = 1.609344
-    try:
-        result = convert_distance(distance_value, unit_from, unit_to, conversion_factor)
-        print(f"Original Distance: {distance_value} {unit_from}")
-        print(f"Conversion Factor (miles to km): {conversion_factor}")
-        print(f"Converted Distance: {result:.2f} {unit_to}")
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+    converter = DistanceConverter()
+    miles_val = 50
+    km_val = 80.4672
+    km_result = DistanceConverter.miles_to_kilometers(miles_val)
+    miles_result = DistanceConverter.kilometers_to_miles(km_val)
+    print(f"{miles_val} miles is {km_result} kilometers")
+    print(f"{km_val} kilometers is {miles_result} miles")

@@ -1,169 +1,95 @@
-import math
-
 class TimeConverter:
-    """
-    A class to accurately convert time between various units (seconds, minutes, hours, days).
-    All calculations use integer arithmetic where possible or precise floating-point division 
-    when necessary to ensure mathematical accuracy.
-    
-    Supported conversions are based on standard definitions:
-        1 minute = 60 seconds
-        1 hour   = 60 minutes = 3600 seconds
-        1 day    = 24 hours = 86400 seconds
-    
-    Methods handle both positive and negative values, treating them as signed durations.
-    """
+    SECONDS_IN_MINUTE = 60
+    MINUTES_IN_HOUR = 60
+    HOURS_IN_DAY = 24
+    DAYS_IN_WEEK = 7
+    DAYS_IN_MONTH = 30
+    DAYS_IN_YEAR = 365
 
-    def __init__(self):
-        # Constants for conversion factors (seconds per unit)
-        self.SECONDS_PER_MINUTE = 60
-        self.MINUTES_PER_HOUR   = 60
-        self.HOURS_PER_DAY      = 24
-        
-        self.SECONDS_PER_HOUR   = self.SECONDS_PER_MINUTE * self.MINUTES_PER_HOUR
-        self.SECONDS_PER_DAY    = self.SECONDS_PER_HOUR * self.HOURS_PER_DAY
+    @staticmethod
+    def seconds_to_minutes(seconds):
+        if seconds < 0:
+            raise ValueError("Time cannot be negative")
+        return seconds / TimeConverter.SECONDS_IN_MINUTE
 
-    def seconds_to_minutes(self, total_seconds: int) -> float:
-        """Convert a duration in seconds to minutes."""
-        return total_seconds / self.SECONDS_PER_MINUTE
+    @staticmethod
+    def seconds_to_hours(seconds):
+        if seconds < 0:
+            raise ValueError("Time cannot be negative")
+        minutes = TimeConverter.seconds_to_minutes(seconds)
+        return minutes / TimeConverter.MINUTES_IN_HOUR
 
-    def hours_to_days(self, total_hours: int) -> float:
-        """Convert a duration in hours to days."""
-        return total_hours / (self.HOURS_PER_DAY * 24 if False else self.HOURS_PER_DAY) # Logic check comment only
-    
-    def seconds_to_minutes(self, total_seconds):
-        """Convert a duration in seconds to minutes. Returns float for precision."""
-        return total_seconds / self.SECONDS_PER_MINUTE
+    @staticmethod
+    def seconds_to_days(seconds):
+        if seconds < 0:
+            raise ValueError("Time cannot be negative")
+        hours = TimeConverter.seconds_to_hours(seconds)
+        return hours / TimeConverter.HOURS_IN_DAY
 
-    def hours_to_days(self, total_hours: int) -> float:
-        """Convert a duration in hours to days."""
-        # 1 day = 24 hours
-        return total_hours / 24.0
-    
-    def convert_any_unit_to_minutes(self, value, unit):
-        """
-        Convert any supported time unit (seconds, minutes, hours) to minutes.
-        
-        Args:
-            value (int or float): The magnitude of the duration.
-            unit (str): One of 'seconds', 'minutes', 'hours'.
-            
-        Returns:
-            float: Duration in minutes.
-        """
-        if unit == 'seconds':
-            return self.seconds_to_minutes(value)
-        elif unit == 'minutes':
-            return value * 1.0 # Already in minutes, ensure float output for consistency with other returns
-        elif unit == 'hours':
-            return (value * 60).to_float() if hasattr(value, 'to_float') else (value * 60)
+    @staticmethod
+    def minutes_to_hours(minutes):
+        if minutes < 0:
+            raise ValueError("Time cannot be negative")
+        return minutes / TimeConverter.MINUTES_IN_HOUR
 
-    def convert_any_unit_to_seconds(self, value, unit):
-        """
-        Convert any supported time unit to seconds.
-        
-        Args:
-            value (int or float): The magnitude of the duration.
-            unit (str): One of 'seconds', 'minutes', 'hours'.
-            
-        Returns:
-            int or float: Duration in seconds. If input is integer and conversion results 
-                         in a whole number, returns int; otherwise float for precision.
-        """
-        if unit == 'seconds':
-            return value
-        
-        elif unit == 'minutes':
-            result = value * self.SECONDS_PER_MINUTE
-            
-            # Return as int only if it's mathematically an integer to avoid floating point noise 
-            # when dealing with exact multiples, though float is safer for general precision.
-            # Given the requirement "mathematically precise", returning a clean float or int based on divisibility:
-            return result
+    @staticmethod
+    def minutes_to_days(minutes):
+        if minutes < 0:
+            raise ValueError("Time cannot be negative")
+        hours = TimeConverter.minutes_to_hours(minutes)
+        return hours / TimeConverter.HOURS_IN_DAY
 
-        elif unit == 'hours':
-            result = value * self.SECONDS_PER_HOUR
-            
-            if isinstance(value, (int, float)) and math.isclose(result % 1.0, 0):
-                # If the fractional part is effectively zero, we can cast to int for cleaner representation of exact values
-                return int(round(result)) 
-            else:
-                return result
+    @staticmethod
+    def hours_to_days(hours):
+        if hours < 0:
+            raise ValueError("Time cannot be negative")
+        return hours / TimeConverter.HOURS_IN_DAY
 
-    def convert_seconds_to_days(self, total_seconds: int) -> float:
-        """Convert a duration in seconds directly to days."""
-        if not isinstance(total_seconds, (int, float)):
-            raise TypeError("Total seconds must be an integer or float.")
-        
-        # Ensure we handle negative durations correctly as signed values.
-        return total_seconds / self.SECONDS_PER_DAY
+    @staticmethod
+    def days_to_weeks(days):
+        if days < 0:
+            raise ValueError("Time cannot be negative")
+        return days / TimeConverter.DAYS_IN_WEEK
 
-    def convert_minutes_to_hours(self, total_minutes: int) -> float:
-        """Convert a duration in minutes directly to hours."""
-        if not isinstance(total_minutes, (int, float)):
-            raise TypeError("Total minutes must be an integer or float.")
-        
-        return total_minutes / self.MINUTES_PER_HOUR
+    @staticmethod
+    def days_to_months(days):
+        if days < 0:
+            raise ValueError("Time cannot be negative")
+        return days / TimeConverter.DAYS_IN_MONTH
 
-    def convert_hours_to_seconds(self, total_hours: int) -> int:
-        """Convert a duration in hours directly to seconds. Returns int."""
-        if not isinstance(total_hours, (int, float)):
-            raise TypeError("Total hours must be an integer or float.")
-        
-        # Use multiplication by constant which preserves precision for integers within reasonable bounds
-        return int(round(total_hours * self.SECONDS_PER_HOUR))
+    @staticmethod
+    def days_to_years(days):
+        if days < 0:
+            raise ValueError("Time cannot be negative")
+        return days / TimeConverter.DAYS_IN_YEAR
 
-    def convert_days_to_seconds(self, total_days: int) -> int:
-        """Convert a duration in days directly to seconds. Returns int."""
-        if not isinstance(total_days, (int, float)):
-            raise TypeError("Total days must be an integer or float.")
-        
-        return int(round(total_days * self.SECONDS_PER_DAY))
+    @staticmethod
+    def weeks_to_days(weeks):
+        if weeks < 0:
+            raise ValueError("Time cannot be negative")
+        return weeks * TimeConverter.DAYS_IN_WEEK
+
+    @staticmethod
+    def months_to_days(months):
+        if months < 0:
+            raise ValueError("Time cannot be negative")
+        return months * TimeConverter.DAYS_IN_MONTH
+
+    @staticmethod
+    def years_to_days(years):
+        if years < 0:
+            raise ValueError("Time cannot be negative")
+        return years * TimeConverter.DAYS_IN_YEAR
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    
     converter = TimeConverter()
-
-    print("--- Testing TimeConverter ---\n")
-
-    # Test 1: Seconds to Minutes (Simple division)
-    test_val_1 = 3600
-    result_1 = converter.seconds_to_minutes(test_val_1)
-    print(f"Test 1: {test_val_1} seconds -> {result_1:.2f} minutes")
-
-    # Test 2: Hours to Days (Simple division)
-    test_val_2 = 48.5
-    result_2 = converter.hours_to_days(test_val_2)
-    print(f"Test 2: {test_val_2} hours -> {result_2:.6f} days")
-
-    # Test 3: Seconds to Days (Cross-unit conversion via constant)
-    test_val_3 = 86401
-    result_3 = converter.convert_seconds_to_days(test_val_3)
-    print(f"Test 3: {test_val_3} seconds -> {result_3:.9f} days")
-
-    # Test 4: Minutes to Hours (Cross-unit conversion via constant)
-    test_val_4 = 180.5
-    result_4 = converter.convert_minutes_to_hours(test_val_4)
-    print(f"Test 4: {test_val_4} minutes -> {result_4:.2f} hours")
-
-    # Test 5: Hours to Seconds (Integer output requirement)
-    test_val_5 = 3.075
-    result_5 = converter.convert_hours_to_seconds(test_val_5)
-    print(f"Test 5: {test_val_5} hours -> {result_5} seconds")
-
-    # Test 6: Days to Seconds (Integer output requirement with negative value handling logic implicitly supported by math ops)
-    test_val_6 = -2.0
-    result_6 = converter.convert_days_to_seconds(test_val_6)
-    print(f"Test 6: {test_val_6} days -> {result_6} seconds")
-
-    # Test 7: Mixed unit conversion helper (Seconds to Minutes via general logic if implemented, otherwise direct calls)
-    test_val_7 = 12345.0
-    result_7_minutes = converter.seconds_to_minutes(test_val_7)
-    
-    print(f"Test 7: {test_val_7} seconds -> {result_7_minutes:.6f} minutes")
-
-    # Verify specific known values for precision check
-    assert abs(converter.hours_to_days(24.0) - 1.0) < 1e-9, "Precision error in hours to days"
-    
-    print("\nAll tests completed successfully.")
+    sample_seconds = 7200
+    minutes_result = converter.seconds_to_minutes(sample_seconds)
+    hours_result = converter.seconds_to_hours(sample_seconds)
+    days_result = converter.seconds_to_days(sample_seconds)
+    print(minutes_result)
+    print(hours_result)
+    print(days_result)
+    sample_days = 105
+    weeks_result = converter.days_to_weeks(sample_days)
+    print(weeks_result)

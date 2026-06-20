@@ -1,28 +1,31 @@
-def calculate_area(length: float, width: float) -> float:
-    """
-    Calculates the area of a rectangle given its length and width.
-    
-    Parameters:
-        length (float): The length of the rectangle. Must be non-negative.
-        width (float): The width of the rectangle. Must be non-negative.
-    
-    Returns:
-        float: The calculated area of the rectangle.
-    
-    Raises:
-        ValueError: If either dimension is negative.
-    """
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative.")
-    return length * width
+import math
+
+class Shape:
+    def area(self):
+        return 0
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * (self.radius * self.radius)
+
+def display_shape_info(shape_instance, label):
+    result = shape_instance.area()
+    print(f"{label} Area: {result}")
 
 if __name__ == '__main__':
-    # Sample values for testing without any user input or external dependencies
-    sample_length = 5.0
-    sample_width = 3.7
-    
-    try:
-        area = calculate_area(sample_length, sample_width)
-        print(f"Area of rectangle with length {sample_length} and width {sample_width}: {area}")
-    except ValueError as ve:
-        print(f"Error calculating area: {ve}")
+    my_rect = Rectangle(12, 7)
+    my_circle = Circle(5)
+
+    display_shape_info(my_rect, "Rectangle")
+    display_shape_info(my_circle, "Circle")

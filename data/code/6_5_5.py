@@ -1,37 +1,30 @@
-def weight_difference(weights):
-    """
-    Calculates the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of float/int): List containing numerical values representing weights.
-        
-    Returns:
-        float or int: The difference between maximum and minimum weight, or None if input is empty.
-        
-    Time Complexity: O(n) - Single pass through the list to find min and max.
-    Space Complexity: O(1) - Only uses constant extra space for tracking min/max.
-    """
-    if not weights:
-        return None
-    
-    # Initialize min_val with infinity, max_val with negative infinity
-    min_val = float('inf')
-    max_val = float('-inf')
-    
-    # Single pass to find both minimum and maximum values simultaneously
-    for weight in weights:
-        if weight < min_val:
-            min_val = weight
-        elif weight > max_val:
-            max_val = weight
-            
-    return max_val - min_val
+class WeightPairManager:
+    def __init__(self):
+        self.pairs = {}
+
+    def store_pair(self, name, weight_a, weight_b):
+        self.pairs[name] = (weight_a, weight_b)
+
+    def get_difference(self, name):
+        if name not in self.pairs:
+            raise KeyError(f"Pair '{name}' not found")
+        weight_a, weight_b = self.pairs[name]
+        return weight_a - weight_b
+
+    def remove_pair(self, name):
+        if name in self.pairs:
+            del self.pairs[name]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files)
-    sample_weights = [10.5, 23.7, 45.2, 8.9, 67.3]
+    manager = WeightPairManager()
+    manager.store_pair("fruit_apple", 150, 120)
+    manager.store_pair("fruit_banana", 80, 90)
+    manager.store_pair("package_box", 2000, 1800)
     
-    result = weight_difference(sample_weights)
+    diff_apple = manager.get_difference("fruit_apple")
+    diff_banana = manager.get_difference("fruit_banana")
+    diff_box = manager.get_difference("package_box")
     
-    print(f"Weights: {sample_weights}")
-    print(f"Heaviest - Lightest Difference: {result}")
+    print(diff_apple)
+    print(diff_banana)
+    print(diff_box)

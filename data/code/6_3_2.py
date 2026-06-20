@@ -1,21 +1,16 @@
-def read_weight(value):
-    """Convert a string to float with error handling."""
-    try:
-        return float(value)
-    except ValueError as e:
-        raise RuntimeError(f"Invalid weight value '{value}': {e}") from e
+def weight_difference(weights):
+    if not weights:
+        raise ValueError("List must not be empty")
+    max_weight = weights[0]
+    min_weight = weights[0]
+    for w in weights:
+        if w > max_weight:
+            max_weight = w
+        if w < min_weight:
+            min_weight = w
+    return max_weight - min_weight
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access.
-    val1 = "75.5"
-    val2 = "80.3"
-
-    try:
-        weight_a = read_weight(val1)
-        weight_b = read_weight(val2)
-        difference = weight_a - weight_b
-        print(difference)
-    except RuntimeError as e:
-        # Print error message to stderr if input conversion fails, though inputs are hardcoded here.
-        import sys
-        print(f"Error: {e}", file=sys.stderr)
+    weights = [50, 10, 80, 30, 60]
+    result = weight_difference(weights)
+    print(result)

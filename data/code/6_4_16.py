@@ -1,28 +1,45 @@
-def weight_difference_generator(weight_pairs):
-    """
-    Generator function that yields the absolute difference between weights in each pair.
-    
-    Args:
-        weight_pairs (list of tuples/lists): List containing pairs of numbers representing weights.
-        
-    Yields:
-        float or int: The absolute difference between the two weights in a pair.
-    """
-    for pair in weight_pairs:
-        if len(pair) >= 2:
-            diff = abs(pair[0] - pair[1])
-            yield diff
+import unittest
 
+def calculate_weight_difference(original_weight, new_weight):
+    if new_weight > original_weight:
+        return new_weight - original_weight
+    elif new_weight < original_weight:
+        return -(original_weight - new_weight)
+    else:
+        return 0
+
+class TestWeightDifference(unittest.TestCase):
+
+    def test_positive_difference(self):
+        self.assertEqual(calculate_weight_difference(100, 110), 10)
+
+    def test_negative_difference(self):
+        self.assertEqual(calculate_weight_difference(110, 100), -10)
+
+    def test_zero_difference(self):
+        self.assertEqual(calculate_weight_difference(100, 100), 0)
+
+    def test_negative_original_weight(self):
+        self.assertEqual(calculate_weight_difference(-100, -90), 10)
+
+    def test_negative_new_weight(self):
+        self.assertEqual(calculate_weight_difference(-90, -100), -10)
+
+    def test_both_negative_weights(self):
+        self.assertEqual(calculate_weight_difference(-100, -110), -10)
+
+    def test_mixed_sign_weights(self):
+        self.assertEqual(calculate_weight_difference(-10, 10), 20)
+
+    def test_float_inputs(self):
+        self.assertAlmostEqual(calculate_weight_difference(100.5, 110.5), 10.0)
+
+    def test_zero_original_weight(self):
+        self.assertEqual(calculate_weight_difference(0, 5), 5)
+
+    def test_zero_new_weight(self):
+        self.assertEqual(calculate_weight_difference(5, 0), -5)
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, files, or network access needed)
-    sample_data = [
-        (5.0, 3.2),
-        (10, 7),
-        (2.5, 2.5),
-        (100, 98.6),
-        (42, 37),
-    ]
-
-    print("Weight Differences:")
-    for diff in weight_difference_generator(sample_data):
-        print(f"Difference: {diff}")
+    result = calculate_weight_difference(100, 110)
+    print(result)
+    unittest.main()

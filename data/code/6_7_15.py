@@ -1,34 +1,14 @@
-import json
-from typing import Dict, Tuple, Optional
+import argparse
 
-class WeightPairManager:
-    """
-    A dictionary-based solution to store multiple weight pairs 
-    and provide a function to quickly retrieve the difference between any two stored weights.
-    
-    Attributes:
-        data (Dict[Tuple[int, int], float]): Internal storage mapping tuple of indices to their calculated differences.
-    """
-
-    def __init__(self):
-        # Initialize an empty dictionary for storing pre-calculated differences based on index tuples
-        self.data = {}
-
-    def add_pair(self, weight1: int, weight2: int) -> None:
-        """
-        Adds a new pair of weights to the manager. The difference is calculated and stored 
-        under a tuple key representing (index_of_weight1, index_of_weight2).
-        
-        Args:
-            weight1 (int): First weight value.
-            weight2 (int): Second weight value.
-            
-        Note: This method assumes unique weights or handles duplicates by overwriting if the same pair exists.
-        """
-        # Create a canonical key for the pair to ensure uniqueness regardless of order
-        sorted_pair = tuple(sorted((weight1, weight2)))
-        
-        self.data[sorted_pair] = abs(weight1 - weight2)
+def calculate_difference(weight_a, weight_b):
+    return weight_a - weight_b
 
 if __name__ == '__main__':
-    pass
+    sample_weight_a = 150.0
+    sample_weight_b = 120.5
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--weight-a', type=float, required=False, default=sample_weight_a)
+    parser.add_argument('--weight-b', type=float, required=False, default=sample_weight_b)
+    args = parser.parse_args()
+    result = calculate_difference(args.weight_a, args.weight_b)
+    print(result)

@@ -1,45 +1,16 @@
 import math
 
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        vertices (list[tuple[float, float]]): List of [x, y] coordinates representing 
-                                              ordered vertices of the polygon.
-                                               The list should not be empty and must have at least 3 points.
-    
-    Returns:
-        float: The area of the polygon.
-    
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided or if any vertex is None/empty tuple.
-    """
-    n = len(vertices)
-    if n < 3:
-        raise ValueError("A polygon must have at least 3 vertices.")
-
-    for i, v in enumerate(vertices):
-        if not isinstance(v, (list, tuple)) or len(v) != 2:
-            raise ValueError(f"Invalid vertex format at index {i}. Expected [x, y] list/tuple.")
-    
-    area = 0.5 * abs(sum(
-        vertices[i][0] * vertices[(i + 1) % n][1] - 
-        vertices[i][1] * vertices[(i + 1) % n][0]
-    ) for i in range(n))
-
-    return area
+def calculate_area(shape_type: str, dimension1: float, dimension2: float = None) -> float:
+    if shape_type == "rectangle":
+        return dimension1 * dimension2
+    elif shape_type == "circle":
+        return math.pi * (dimension1 ** 2)
+    else:
+        raise ValueError(f"Unknown shape: {shape_type}")
 
 if __name__ == '__main__':
-    # Sample polygon: a simple square with side length 4, centered at origin.
-    sample_vertices = [
-        (2, -2),
-        (-2, -2),
-        (-2, 2),
-        (2, 2)
-    ]
-
-    area_result = calculate_polygon_area(sample_vertices)
+    rectangle_area = calculate_area("rectangle", 5, 10)
+    print(rectangle_area)
     
-    print(f"Area of polygon with vertices {sample_vertices}:")
-    print(f"{area_result}")
+    circle_area = calculate_area("circle", 7)
+    print(circle_area)

@@ -1,88 +1,42 @@
 import math
-from typing import List, Tuple
-
-def convex_hull_area(points: List[Tuple[float, float]]) -> float:
-    """
-    Calculates the area of the convex hull formed by a list of 2D points using 
-    Monotone Chain algorithm followed by the Shoelace formula.
-    
-    Args:
-        points: A list of (latitude, longitude) tuples
-        
-    Returns:
-        The total area enclosed by the convex hull in square degrees.
-        
-    Note: This calculates geometric area based on coordinate differences. 
-    For real-world distance calculations using WGS84 ellipsoid, a more complex projection would be needed.
-    """
-    
-    # Sort points lexicographically (by x then y) to ensure monotonic chain works correctly
-    sorted_points = sorted(points)
-    
-    if len(sorted_points) < 3:
-        return 0.0
-    
-    n = len(sorted_points)
-    
-    # Build lower hull
-    lower_hull = []
-    for p in sorted_points:
-        while len(lower_hull) >= 2 and cross_product(
-            [lower_hull[-1], lower_hull[-2]], 
-            [p, lower_hull[-2]]
-        ) < 0:
-            lower_hull.pop()
-        lower_hull.append(p)
-    
-    # Build upper hull
-    k = len(lower_hull) - 3  # Exclude the last point of sorted_points as it's already in lower_hull
-    
-    if n > 2 and k >= 1:
-        for p in reversed(sorted_points[1:n]):
-            while len(lower_hull) > k + 1 and cross_product(
-                [lower_hull[-1], lower_hull[-2]], 
-                [p, lower_hull[-2]]
-            ) < 0:
-                lower_hull.pop()
-        upper_hull = lower_hull
-    
-    # The convex hull is the combination of lower and upper hulls (excluding duplicate endpoints)
-    if len(lower_hull) <= k + 1:
-        return 0.0
-        
-    final_hull_points = []
-    
-    for p in lower_hull[:-2]:
-        final_hull_points.append(p[0])
-        final_hull_points.append(p[1])
-        
-    for i, p in enumerate(upper_hull):
-        if not (i == 0 and len(lower_hull) > k + 1 or 
-                i >= n - 2 and len(final_hull_points) <= 3 * n // 4): # Avoid duplicates at start/end of upper hull logic
-        
-            final_hull_points.append(p[0])
-            final_hull_points.append(p[1])
-
-    if len(final_hull_points) < 3:
-        return 0.0
-    
-    area = shoelace_area(final_hull_points)
-    
-    # Ensure positive result due to potential clockwise/counter-clockwise ordering variations during hull construction
-    return abs(area)
 
 def cross_product(o, a, b):
-    """Calculates the cross product of vectors OA and OB."""
     return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
-def shoelace_area(points: List[Tuple[float, float]]) -> float:
-    """Calculates the area of a polygon using the Shoelace formula."""
-    n = len(points)
-    
-    if n < 3 or points == []:
+def compute_convex_hull_area(points):
+    if len(points) < 3:
         return 0.0
     
-    # Ensure consistent ordering for calculation (counter-clockwise preferred by shoelace, but abs() handles sign)
+    unique_points = list(set(points))
+    if len(unique_points) < 3:
+        return 0.0
+    
+    unique_points.sort()
+    
+    lower = []
+    for p in unique_points:
+        while len(lower) >= 2 and cross_product(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    
+    upper = []
+    for p in reversed(unique_points):
+        while len(upper) >= 2 and cross_product(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    
+    hull = lower[:-1] + upper[:-1]
+    
+    area = 0.0
+    n = len(hull)
+    for i in range(n):
+        j = (i + 1) % n
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
+    
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    pass
+    sample_points = [(0, 0), (4, 0), (4, 4), (0, 4), (2, 2), (1, 2)]
+    result = compute_convex_hull_area(sample_points)
+    print(result)

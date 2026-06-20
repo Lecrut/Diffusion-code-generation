@@ -1,61 +1,35 @@
-"""Unit conversion module supporting Metric to Imperial and vice versa."""
-
-def convert_length(value: float, from_unit: str, to_unit: str) -> tuple[float, dict]:
-    """Convert a length value between metric and imperial units.
+def convert_distance(distance, target_unit):
+    if distance < 0:
+        raise ValueError("Distance cannot be negative")
     
-    Supported units: 'm', 'cm', 'km' (metric); 'ft', 'in', 'yd', 'mi' (imperial).
-    
-    Args:
-        value: The numeric value to convert.
-        from_unit: Source unit string ('m', 'cm', 'km', 'ft', 'in', 'yd', 'mi').
-        to_unit: Target unit string ('m', 'cm', 'km', 'ft', 'in', 'yd', 'mi').
-        
-    Returns:
-        A tuple containing the converted float value and a dictionary of factors used.
-    
-    Raises:
-        ValueError: If unsupported units are provided or conversion is invalid.
-    """
-    # Define base values relative to meters for metric, 
-    # relative to feet/centimeters depending on mix. Simplified strategy:
-    # Convert everything first to standard SI (meters), then to target.
-    
-    if from_unit.lower() in ('km', 'cm') and to_unit == from_unit.lower():
-        return value, {"factors": {}}
-
-    unit_factors_to_m = {'m': 1.0, 'km': 1e-3, 'cm': 1e2}
-    # For imperial, use feet as intermediate reference for consistency with meters in one step? 
-    # Actually simpler: convert everything to a common base (Meters or Feet), then to target.
-    
-    unit_factors_from_m = {'m': 1.0, 'km': 1e3, 'cm': 1e-2}
-    
-    imperial_base_to_meter_factor = {
-        'ft': 0.3048, 
-        'in': 0.0254, 
-        'yd': 0.9144, 
-        'mi': 1609.344 # meters per mile (approx)
+    conversion_factors = {
+        'km_to_m': 1000,
+        'm_to_km': 1 / 1000,
+        'm_to_cm': 100,
+        'cm_to_m': 1 / 100,
+        'mi_to_km': 1.60934,
+        'km_to_mi': 1 / 1.60934,
+        'ft_to_m': 0.3048,
+        'm_to_ft': 1 / 0.3048
     }
-
-    if from_unit.lower() not in ('m', 'cm', 'km') and to_unit.upper() == 'METRIC':
-        raise ValueError("Cannot directly convert Imperial metric without intermediate step.")
-
     
-    unit_lower = from_unit.lower().strip()
-    target_metric_base = {'ft': 0.3048, 'in': 0.3048/12, 'yd': 0.9144, 'mi': 1609.344} # m per unit
-
+    if target_unit not in conversion_factors:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
     
-    if from_unit.lower() in ('m', 'cm', 'km'):
-        meters = value * ( {'m': 1, 'cm': 0.01, 'km': 1000}[unit_lower] ) 
-        result_meters = value * ( {'m': 1, 'cm': 0.01, 'km': 1000} or 1 )[from_unit.lower()]
-        
-    # Re-implementation for clarity
+    factor = conversion_factors[target_unit]
     
-    base_metric_vals_to_factor_from_1m = {
-        "ft": 3.28084, 
-        "in": 39.3701, 
-        "yd": 3.28084 * 3, 
-        "mi": 5280 * 3.28084 # roughly
-    }
+    if factor == 0:
+        raise ZeroDivisionError("Conversion factor is zero")
+    
+    return distance * factor
 
 if __name__ == '__main__':
-    pass
+    sample_distance = 100
+    sample_target = 'm_to_km'
+    result = convert_distance(sample_distance, sample_target)
+    print(result)
+    
+    sample_distance_2 = 5
+    sample_target_2 = 'km_to_mi'
+    result_2 = convert_distance(sample_distance_2, sample_target_2)
+    print(result_2)

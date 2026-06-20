@@ -1,31 +1,46 @@
-import datetime
-def calculate_time_difference(dt1, dt2, unit):
-    if dt1 is None or dt2 is None:
-        raise ValueError("Both datetime objects must be provided.")
-    if unit.lower() == 'seconds':
-        diff = abs(dt1 - dt2).total_seconds()
-        return f"{diff:.2f} seconds"
-    elif unit.lower() == 'minutes':
-        diff = abs(dt1 - dt2).total_seconds() / 60
-        return f"{diff:.2f} minutes"
-    elif unit.lower() == 'hours':
-        diff = abs(dt1 - dt2).total_seconds() / 3600
-        return f"{diff:.2f} hours"
-    elif unit.lower() == 'days':
-        diff = abs(dt1 - dt2).total_seconds() / (60 * 60 * 24)
-        return f"{diff:.2f} days"
-    else:
-        raise ValueError("Unsupported unit. Please use 'seconds', 'minutes', 'hours', or 'days'.")
-if __name__ == '__main__':
-    start_time = datetime.datetime(2023, 10, 26, 10, 30, 0)
-    end_time = datetime.datetime(2023, 10, 28, 14, 45, 15)
-    time_unit = "hours"
-    try:
-        result = calculate_time_difference(start_time, end_time, time_unit)
-        print(f"Start Time: {start_time}")
-        print(f"End Time: {end_time}")
-        print(f"Time Difference in {time_unit}: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+from datetime import datetime, timedelta
+
+BASE_SECOND = 1
+BASE_MINUTE = 60
+BASE_HOUR = 3600
+BASE_DAY = 86400
+
+def calculate_time_difference(start: datetime, end: datetime, unit: str) -> float:
+    delta = end - start
+    total_seconds = abs(delta.total_seconds())
+    
+    if unit == "seconds":
+        return total_seconds
+    if unit == "minutes":
+        return total_seconds / BASE_MINUTE
+    if unit == "hours":
+        return total_seconds / BASE_HOUR
+    if unit == "days":
+        return total_seconds / BASE_DAY
+    if unit == "weeks":
+        return total_seconds / (BASE_DAY * 7)
+    raise ValueError("Unsupported unit")
+
+def decompose_timedelta(dt1: datetime, dt2: datetime) -> dict:
+    delta = abs(dt2 - dt1)
+    total_seconds = int(delta.total_seconds())
+    days = total_seconds // BASE_DAY
+    remaining = total_seconds % BASE_DAY
+    hours = remaining // BASE_HOUR
+    remaining = remaining % BASE_HOUR
+    minutes = remaining // BASE_MINUTE
+    seconds = remaining % BASE_MINUTE
+    return {"days": days, "hours": hours, "minutes": minutes, "seconds": seconds}
+
+if __name__ == "__main__":
+    start_dt = datetime(2023, 1, 1, 10, 30, 0)
+    end_dt = datetime(2023, 1, 15, 14, 45, 30)
+    
+    result_seconds = calculate_time_difference(start_dt, end_dt, "seconds")
+    print(result_seconds)
+    
+    result_days = calculate_time_difference(start_dt, end_dt, "days")
+    print(result_days)
+    
+    breakdown = decompose_timedelta(start_dt, end_dt)
+    print(breakdown)

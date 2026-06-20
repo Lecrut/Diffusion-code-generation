@@ -1,8 +1,8 @@
-# Calculate simple weight difference between two variables
-def main():
-    a = 105.47326981552573 # sample value 1
-    b = 92.42424775046308 # sample value 2
-    result = abs(a - b)   # simple weight difference using absolute value for non-negativity if needed, otherwise a-b
-    
+def calculate_weight_difference(weight1, weight2):
+    return abs(weight1 - weight2)
+
 if __name__ == '__main__':
-    main()
+    w1 = 75.5
+    w2 = 60.2
+    result = calculate_weight_difference(w1, w2)
+    print(result)

@@ -1,46 +1,27 @@
-import math
-def convert_time(time_value, source_unit, target_unit):
-    if source_unit == target_unit:
-        return time_value
-    if source_unit == 'seconds':
-        if target_unit == 'minutes':
-            return time_value / 60.0
-        elif target_unit == 'hours':
-            return time_value / 3600.0
-    elif source_unit == 'minutes':
-        if target_unit == 'seconds':
-            return time_value * 60.0
-        elif target_unit == 'hours':
-            return time_value / 60.0
-    elif source_unit == 'hours':
-        if target_unit == 'minutes':
-            return time_value * 60.0
-        elif target_unit == 'seconds':
-            return time_value * 3600.0
-    return None
+def convert_time(value, source_unit, target_unit):
+    units_to_seconds = {
+        'seconds': 1,
+        'minutes': 60,
+        'hours': 3600
+    }
+
+    if source_unit not in units_to_seconds or target_unit not in units_to_seconds:
+        raise ValueError("Invalid unit. Use 'seconds', 'minutes', or 'hours'.")
+
+    if value < 0:
+        raise ValueError("Time value cannot be negative.")
+
+    seconds = value * units_to_seconds[source_unit]
+    result = seconds / units_to_seconds[target_unit]
+
+    return result
+
 if __name__ == '__main__':
-    time = 3665
-    source = 'seconds'
-    target = 'minutes'
-    result1 = convert_time(time, source, target)
-    print(f"Converting {time} {source} to {target}: {result1}")
-    time = 180
-    source = 'minutes'
-    target = 'hours'
-    result2 = convert_time(time, source, target)
-    print(f"Converting {time} {source} to {target}: {result2}")
-    time = 7200
-    source = 'hours'
-    target = 'seconds'
-    result3 = convert_time(time, source, target)
-    print(f"Converting {time} {source} to {target}: {result3}")
-    time = 120
-    source = 'minutes'
-    target = 'seconds'
-    result4 = convert_time(time, source, target)
-    print(f"Converting {time} {source} to {target}: {result4}")
-    time = 3600
-    source = 'hours'
-    target = 'minutes'
-    result5 = convert_time(time, source, target)
-    print(f"Converting {time} {source} to {target}: {result5}")
+    result1 = convert_time(1, 'hours', 'minutes')
+    print(result1)
+
+    result2 = convert_time(90, 'minutes', 'seconds')
+    print(result2)
+
+    result3 = convert_time(3600, 'seconds', 'hours')
+    print(result3)

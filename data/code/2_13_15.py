@@ -1,54 +1,115 @@
-import argparse
-from statistics import mean, stdev
+class Volume:
+    def __init__(self, value, unit="cm3"):
+        self._base_value = self._convert_to_cm3(value, unit)
 
-def calculate_statistics(volumes):
-    """Calculate arithmetic mean and standard deviation efficiently."""
-    if len(volumes) < 2:
-        return None, None
-    
-    m = sum(volumes) / len(volumes)
-    
-    # Efficient calculation of variance using the computational formula
-    sq_sum = sum(x * x for x in volumes)
-    n = len(volumes)
-    var_sq = (sq_sum - (m ** 2) * n) / ((n - 1) * n) if n > 0 else 0
-    
-    std_dev = float(var_sq) ** 0.5 if var_sq >= 0 else 0.0
-    
-    return m, std_dev
+    @staticmethod
+    def _convert_to_cm3(value, unit):
+        conversions = {
+            "cm3": 1.0,
+            "ml": 1.0,
+            "l": 1000.0,
+            "m3": 1000000.0,
+            "gal": 3785.411784
+        }
+        if unit not in conversions:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * conversions[unit]
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculate mean and standard deviation of volume values.")
-    
-    # Define a list of sample volumes to use when no arguments are provided
-    default_values = [10.5, 20.3, 18.7, 25.1, 19.4]
-    
-    parser.add_argument(
-        '--volumes', 
-        nargs='+', 
-        type=float, 
-        help='List of volume values to process.'
-    )
-    
-    args = parser.parse_args()
-    
-    # If no arguments provided or empty list, use hard-coded sample values
-    if not args.volumes:
-        volumes = default_values.copy()
-    else:
-        try:
-            volumes = [float(x) for x in args.volumes]
-        except ValueError as e:
-            print(f"Error converting input to float: {e}")
-            return
-    
-    result_mean, result_std_dev = calculate_statistics(volumes)
-    
-    if result_mean is None:
-        print("Insufficient data points. Need at least 2 values.")
-    else:
-        print(f"Arithmetic Mean: {result_mean:.4f}")
-        print(f"Standard Deviation: {result_std_dev:.4f}" if result_std_dev != 0 else "Standard Deviation: N/A (only one value)")
+    def _convert_from_cm3(self, target_unit):
+        conversions = {
+            "cm3": 1.0,
+            "ml": 1.0,
+            "l": 1000.0,
+            "m3": 1000000.0,
+            "gal": 3785.411784
+        }
+        return self._base_value / conversions[target_unit]
 
-if __name__ == '__main__':
-    main()
+    def to_cm3(self):
+        return self._base_value
+
+    def to_ml(self):
+        return self._convert_from_cm3("ml")
+
+    def to_l(self):
+        return self._convert_from_cm3("l")
+
+    def to_m3(self):
+        return self._convert_from_cm3("m3")
+
+    def to_gal(self):
+        return self._convert_from_cm3("gal")
+
+    def __add__(self, other):
+        if not isinstance(other, Volume):
+            raise TypeError("Can only add Volume instances")
+        return Volume(self._base_value + other._base_value)
+
+    def __sub__(self, other):
+        if not isinstance(other, Volume):
+            raise TypeError("Can only subtract Volume instances")
+        return Volume(self._base_value - other._base_value)
+
+    def __mul__(self, scalar):
+        if not isinstance(scalar, (int, float)):
+            raise TypeError("Can only multiply by a number")
+        return Volume(self._base_value * scalar)
+
+    def __truediv__(self, scalar):
+        if not isinstance(scalar, (int, float)):
+            raise TypeError("Can only divide by a number")
+        if scalar == 0:
+            raise ZeroDivisionError("Division by zero")
+        return Volume(self._base_value / scalar)
+
+    def __repr__(self):
+        return f"Volume({self._base_value}, 'cm3')"
+
+    def __eq__(self, other):
+        if not isinstance(other, Volume):
+            return NotImplemented
+        return self._base_value == other._base_value
+
+    def __ne__(self, other):
+        if not isinstance(other, Volume):
+            return NotImplemented
+        return self._base_value != other._base_value
+
+    def __lt__(self, other):
+        if not isinstance(other, Volume):
+            return NotImplemented
+        return self._base_value < other._base_value
+
+    def __le__(self, other):
+        if not isinstance(other, Volume):
+            return NotImplemented
+        return self._base_value <= other._base_value
+
+    def __gt__(self, other):
+        if not isinstance(other, Volume):
+            return NotImplemented
+        return self._base_value > other._base_value
+
+    def __ge__(self, other):
+        if not isinstance(other, Volume):
+            return NotImplemented
+        return self._base_value >= other._base_value
+
+if __name__ == "__main__":
+    v1 = Volume(1, "l")
+    v2 = Volume(500, "ml")
+    v3 = v1 + v2
+    print(v3.to_ml())
+    
+    v4 = Volume(1, "m3")
+    print(v4.to_l())
+    
+    v5 = Volume(1000, "cm3")
+    v6 = Volume(1, "gal")
+    print(v6.to_cm3())
+    
+    v7 = Volume(10, "cm3") * 2
+    print(v7.to_cm3())
+    
+    v8 = Volume(100, "ml") / 2
+    print(v8.to_ml())

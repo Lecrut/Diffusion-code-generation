@@ -1,135 +1,79 @@
-"""
-General-purpose area calculation function for various 2D shapes.
-Accepts a dictionary specifying the shape type and its defining parameters.
-Supports: 'circle', 'rectangle', 'triangle' (right-angled), 'polygon'.
-For polygon, vertices are expected as a list of [x, y] tuples in counter-clockwise order.
+import math
+from itertools import combinations
 
-No user input, command-line arguments, or network access is used.
-"""
+def convex_hull_graham(points):
+    if len(points) < 3:
+        return points
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    def dist_sq(a, b):
+        return (a[0] - b[0])**2 + (a[1] - b[1])**2
+    p0 = min(points)
+    remaining = [p for p in points if p != p0]
+    def polar_angle_key(p):
+        dx, dy = p[0] - p0[0], p[1] - p0[1]
+        if dx == 0 and dy == 0:
+            return (math.pi, 0)
+        angle = math.atan2(dy, dx)
+        if angle < 0:
+            angle += 2 * math.pi
+        return (angle, dist_sq(p0, p))
+    remaining.sort(key=polar_angle_key)
+    hull = [p0]
+    for p in remaining:
+        while len(hull) > 1 and cross(hull[-2], hull[-1], p) <= 0:
+            hull.pop()
+        hull.append(p)
+    return hull
 
-def calculate_area(shape_data):
-    """
-    Calculate the area of a 2D shape based on provided parameters.
-    
-    Args:
-        shape_data (dict): Dictionary containing 'type' and relevant parameters.
-            Supported types:
-                - 'circle': {'radius': float} or {'diameter': float}
-                - 'rectangle': {'width': float, 'height': float}
-                - 'triangle': {'base': float, 'height': float} (right-angled)
-                - 'polygon': {'vertices': list of [x, y] tuples}
+def shoelace_area(hull_points):
+    n = len(hull_points)
+    if n < 3:
+        return 0.0
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += hull_points[i][0] * hull_points[j][1]
+        area -= hull_points[j][0] * hull_points[i][1]
+    return abs(area) / 2.0
 
-    Returns:
-        float: The calculated area.
+def haversine_distance(lat1, lon1, lat2, lon2):
+    R = 6371.0
+    lat1_rad = math.radians(lat1)
+    lat2_rad = math.radians(lat2)
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return R * c
 
-    Raises:
-        ValueError: If the shape type is unsupported or parameters are invalid.
-    """
-    
-    shape_type = shape_data.get('type')
-    
-    if not isinstance(shape_type, str):
-        raise ValueError("Shape 'type' must be a string.")
-        
-    valid_types = ['circle', 'rectangle', 'triangle', 'polygon']
-    if shape_type not in valid_types:
-        raise ValueError(f"Unsupported shape type. Must be one of {valid_types}.")
+def estimate_earth_area_ratio(hull_points):
+    if len(hull_points) < 3:
+        return 0.0
+    total_area = 0.0
+    n = len(hull_points)
+    for i in range(1, n - 1):
+        dist1 = haversine_distance(hull_points[0][0], hull_points[0][1], hull_points[i][0], hull_points[i][1])
+        dist2 = haversine_distance(hull_points[i][0], hull_points[i][1], hull_points[i+1][0], hull_points[i+1][1])
+        angle_i = math.radians(hull_points[i][1] - hull_points[0][1])
+        approx_area = 0.5 * dist1 * dist2 * math.sin(angle_i)
+        total_area += abs(approx_area)
+    return total_area
 
-    try:
-        if shape_type == 'circle':
-            radius_data = shape_data.get('radius') or shape_data.get('diameter')
-            if radius_data is None:
-                raise ValueError("Circle must have either 'radius' or 'diameter'.")
-            
-            r = radius_data / 2.0 if isinstance(radius_data, (int, float)) else radius_data ** 0.5
-            
-            return round(r * r * 3.141592653589793, 2)
-
-        elif shape_type == 'rectangle':
-            width = shape_data.get('width')
-            height = shape_data.get('height')
-            
-            if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
-                raise ValueError("Rectangle must have numeric 'width' and 'height'.")
-                
-            return round(abs(width) * abs(height), 2)
-
-        elif shape_type == 'triangle':
-            base = shape_data.get('base')
-            height_param = shape_data.get('height')
-            
-            if not isinstance(base, (int, float)) or not isinstance(height_param, (int, float)):
-                raise ValueError("Triangle must have numeric 'base' and 'height'.")
-                
-            return round(abs(base) * abs(height_param) / 2.0, 2)
-
-        elif shape_type == 'polygon':
-            vertices = shape_data.get('vertices')
-            
-            if not isinstance(vertices, list):
-                raise ValueError("Polygon must have a list of 'vertices'.")
-                
-            for v in vertices:
-                if not isinstance(v, (list, tuple)) or len(v) != 2:
-                    raise ValueError("Each vertex must be a [x, y] pair.")
-
-            area = 0.5 * abs(sum(vertices[i][0]*vertices[(i+1)%len(vertices)][1] - 
-                                   vertices[i][1]*vertices[(i+1)%len(vertices)][0] for i in range(len(vertices))))
-            
-            return round(area, 2)
-
-        else:
-            raise ValueError(f"Shape type '{shape_type}' not implemented.")
-
-    except Exception as e:
-        if isinstance(e, TypeError):
-            raise ValueError("Invalid parameter types provided for the shape calculation.") from None
-        elif isinstance(e, KeyError):
-            raise ValueError(f"Missing required parameters for {shape_type}.") from None
-        else:
-            raise
+def convex_hull_area(coords):
+    hull = convex_hull_graham(coords)
+    return shoelace_area(hull)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values (no user input or files)
-
-    samples = [
-        {'type': 'circle', 'radius': 5},
-        {'type': 'rectangle', 'width': 10, 'height': 7.5},
-        {'type': 'triangle', 'base': 8, 'height': 4},
-        {'type': 'polygon', 'vertices': [[0, 0], [2, 3], [-1, 1]]}
+    sample_coords = [
+        (52.5200, 13.4050),
+        (48.8566, 2.3522),
+        (51.5074, -0.1278),
+        (41.9028, 12.4964),
+        (34.0522, -118.2437),
+        (37.7749, -122.4194),
+        (35.6895, 139.6917),
+        (31.2304, 121.4737)
     ]
-
-    print("Area Calculations:")
-    for shape_data in samples:
-        try:
-            area = calculate_area(shape_data)
-            # Extract type name safely without relying on input() or args
-            result_str = f"{shape_data['type']} Area: {area}"
-            print(result_str)
-        except Exception as e:
-            error_msg = str(e).replace("Invalid parameter types provided for the shape calculation.", "")
-            if "Missing required parameters" in error_msg:
-                missing_key = list(shape_data.keys())[0] # Fallback logic, though specific keys are known
-                print(f"{shape_data['type']} Error: {error_msg}")
-            else:
-                print(f"{shape_data['type']} Error: {e}")
-
-    # Additional edge case test for diameter input instead of radius
-    extra_samples = [
-        {'type': 'circle', 'diameter': 10},
-        {'type': 'rectangle', 'width': -5, 'height': 3} # Negative dimensions handled by abs logic in original thought process but let's ensure robustness. The prompt says "valid parameters". Let's assume positive for geometry usually, but mathematically area is magnitude.*magnitude. I will stick to absolute values as per standard geometric definition unless specified otherwise.
-    ]
-
-    print("\nAdditional Tests:")
-    for shape_data in extra_samples:
-        try:
-            area = calculate_area(shape_data)
-            result_str = f"{shape_data['type']} Area: {area}"
-            print(result_str)
-        except Exception as e:
-            error_msg = str(e).replace("Invalid parameter types provided for the shape calculation.", "")
-            if "Missing required parameters" in error_msg:
-                missing_key = list(shape_data.keys())[0] 
-                print(f"{shape_data['type']} Error: {error_msg}")
-            else:
-                print(f"{shape_data['type']} Error: {e}")
+    area = convex_hull_area(sample_coords)
+    print(area)

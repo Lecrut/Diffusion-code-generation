@@ -1,18 +1,22 @@
-def polygon_area(vertices):
-    n = len(vertices)
-    area = 0.0
-    for i in range(n):
-        j = (i + 1) % n
-        area += vertices[i][0] * vertices[j][1]
-        area -= vertices[j][0] * vertices[i][1]
-    return abs(area) / 2.0
+def calculate_area(shape, dimensions):
+    if shape == 'rectangle':
+        length = dimensions[0]
+        width = dimensions[1]
+        return length * width
+    elif shape == 'circle':
+        radius = dimensions[0]
+        return 3.14159 * radius * radius
+    else:
+        raise ValueError("Unsupported shape type")
+
 if __name__ == '__main__':
-    sample_vertices = [
-        [2, 4],
-        [4, 6],
-        [6, 2],
-        [4, 0],
-        [2, 2]
+    sample_shapes = ['rectangle', 'circle']
+    sample_dimensions = [
+        [5, 10],
+        [7]
     ]
-    area = polygon_area(sample_vertices)
-    print(area)
+    for i in range(len(sample_shapes)):
+        shape = sample_shapes[i]
+        dimensions = sample_dimensions[i]
+        result = calculate_area(shape, dimensions)
+        print(f"Area of {shape} with dimensions {dimensions} is {result}")

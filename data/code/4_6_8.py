@@ -1,70 +1,138 @@
+import unittest
 import math
-def convert_distance(distance, from_unit, to_unit):
-    if from_unit == to_unit:
-        return distance
-    if from_unit == "m" and to_unit == "km":
-        return distance / 1000.0
-    elif from_unit == "km" and to_unit == "m":
-        return distance * 1000.0
-    elif from_unit == "cm" and to_unit == "m":
-        return distance / 100.0
-    elif from_unit == "m" and to_unit == "cm":
-        return distance * 100.0
-    elif from_unit == "in" and to_unit == "cm":
-        return distance * 2.54
-    elif from_unit == "cm" and to_unit == "in":
-        return distance / 2.54
-    elif from_unit == "mi" and to_unit == "km":
-        return distance * 1.60934
-    elif from_unit == "km" and to_unit == "mi":
-        return distance / 1.60934
-    else:
-        raise ValueError("Unsupported unit conversion.")
+
+class DistanceConverter:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit
+
+    def convert_to(self, target_unit):
+        if self.unit == target_unit:
+            return self.value
+        if self.unit == 'meters':
+            return self._from_meters(target_unit)
+        if self.unit == 'kilometers':
+            return self._from_kilometers(target_unit)
+        if self.unit == 'miles':
+            return self._from_miles(target_unit)
+        if self.unit == 'feet':
+            return self._from_feet(target_unit)
+        raise ValueError(f"Unsupported unit: {self.unit}")
+
+    def _to_meters(self):
+        if self.unit == 'meters':
+            return self.value
+        if self.unit == 'kilometers':
+            return self.value * 1000
+        if self.unit == 'miles':
+            return self.value * 1609.344
+        if self.unit == 'feet':
+            return self.value / 3.28084
+        raise ValueError(f"Unsupported unit: {self.unit}")
+
+    def _from_meters(self, target_unit):
+        if target_unit == 'meters':
+            return self.value
+        if target_unit == 'kilometers':
+            return self.value / 1000
+        if target_unit == 'miles':
+            return self.value / 1609.344
+        if target_unit == 'feet':
+            return self.value * 3.28084
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+
+    def _from_kilometers(self, target_unit):
+        meters = self.value * 1000
+        return self._from_meters(target_unit)
+
+    def _from_miles(self, target_unit):
+        meters = self.value * 1609.344
+        return self._from_meters(target_unit)
+
+    def _from_feet(self, target_unit):
+        meters = self.value / 3.28084
+        return self._from_meters(target_unit)
+
+class TestDistanceConverter(unittest.TestCase):
+    def test_same_unit(self):
+        converter = DistanceConverter(100, 'meters')
+        self.assertAlmostEqual(converter.convert_to('meters'), 100)
+
+        converter = DistanceConverter(5, 'kilometers')
+        self.assertAlmostEqual(converter.convert_to('kilometers'), 5)
+
+        converter = DistanceConverter(2, 'miles')
+        self.assertAlmostEqual(converter.convert_to('miles'), 2)
+
+        converter = DistanceConverter(10, 'feet')
+        self.assertAlmostEqual(converter.convert_to('feet'), 10)
+
+    def test_meters_to_kilometers(self):
+        converter = DistanceConverter(1000, 'meters')
+        self.assertAlmostEqual(converter.convert_to('kilometers'), 1)
+
+    def test_meters_to_miles(self):
+        converter = DistanceConverter(1609.344, 'meters')
+        self.assertAlmostEqual(converter.convert_to('miles'), 1)
+
+    def test_meters_to_feet(self):
+        converter = DistanceConverter(1, 'meters')
+        self.assertAlmostEqual(converter.convert_to('feet'), 3.28084, places=5)
+
+    def test_kilometers_to_meters(self):
+        converter = DistanceConverter(2.5, 'kilometers')
+        self.assertAlmostEqual(converter.convert_to('meters'), 2500)
+
+    def test_kilometers_to_miles(self):
+        converter = DistanceConverter(1, 'kilometers')
+        self.assertAlmostEqual(converter.convert_to('miles'), 0.621371, places=6)
+
+    def test_miles_to_meters(self):
+        converter = DistanceConverter(1, 'miles')
+        self.assertAlmostEqual(converter.convert_to('meters'), 1609.344)
+
+    def test_miles_to_kilometers(self):
+        converter = DistanceConverter(1, 'miles')
+        self.assertAlmostEqual(converter.convert_to('kilometers'), 1.609344)
+
+    def test_miles_to_feet(self):
+        converter = DistanceConverter(1, 'miles')
+        self.assertAlmostEqual(converter.convert_to('feet'), 5280)
+
+    def test_feet_to_meters(self):
+        converter = DistanceConverter(3.28084, 'feet')
+        self.assertAlmostEqual(converter.convert_to('meters'), 1, places=5)
+
+    def test_feet_to_kilometers(self):
+        converter = DistanceConverter(3280.84, 'feet')
+        self.assertAlmostEqual(converter.convert_to('kilometers'), 1, places=5)
+
+    def test_feet_to_miles(self):
+        converter = DistanceConverter(5280, 'feet')
+        self.assertAlmostEqual(converter.convert_to('miles'), 1)
+
+    def test_chain_conversion(self):
+        converter = DistanceConverter(1, 'miles')
+        result = converter.convert_to('kilometers')
+        converter2 = DistanceConverter(result, 'kilometers')
+        final = converter2.convert_to('meters')
+        self.assertAlmostEqual(final, 1609.344)
+
+    def test_invalid_unit_raise(self):
+        with self.assertRaises(ValueError):
+            DistanceConverter(10, 'invalid_unit').convert_to('meters')
+
+        with self.assertRaises(ValueError):
+            DistanceConverter(10, 'meters').convert_to('invalid_target')
+
 if __name__ == '__main__':
-    sample_distance = 100
-    sample_from_unit = "m"
-    sample_to_unit = "km"
-    try:
-        converted_value = convert_distance(sample_distance, sample_from_unit, sample_to_unit)
-        print(f"Input Distance: {sample_distance} {sample_from_unit}")
-        print(f"Converted Value: {converted_value} {sample_to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    print("-" * 20)
-    sample_distance_2 = 100
-    sample_from_unit_2 = "mi"
-    sample_to_unit_2 = "km"
-    try:
-        converted_value_2 = convert_distance(sample_distance_2, sample_from_unit_2, sample_to_unit_2)
-        print(f"Input Distance: {sample_distance_2} {sample_from_unit_2}")
-        print(f"Converted Value: {converted_value_2} {sample_to_unit_2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    print("-" * 20)
-    sample_distance_3 = 50
-    sample_from_unit_3 = "cm"
-    sample_to_unit_3 = "in"
-    try:
-        converted_value_3 = convert_distance(sample_distance_3, sample_from_unit_3, sample_to_unit_3)
-        print(f"Input Distance: {sample_distance_3} {sample_from_unit_3}")
-        print(f"Converted Value: {converted_value_3} {sample_to_unit_3}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    print("-" * 20)
-    sample_distance_4 = 10
-    sample_from_unit_4 = "m"
-    sample_to_unit_4 = "ft"
-    try:
-        converted_value_4 = convert_distance(sample_distance_4, sample_from_unit_4, sample_to_unit_4)
-        print(f"Input Distance: {sample_distance_4} {sample_from_unit_4}")
-        print(f"Converted Value: {converted_value_4} {sample_to_unit_4}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    converter = DistanceConverter(1.5, 'miles')
+    result_meters = converter.convert_to('meters')
+    result_km = converter.convert_to('kilometers')
+    print(f"{1.5} miles is {result_meters} meters")
+    print(f"{1.5} miles is {result_km} kilometers")
+    
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.loadTestsFromTestCase(TestDistanceConverter)
+    test_runner = unittest.TextTestRunner(verbosity=2)
+    test_runner.run(test_suite)

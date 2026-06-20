@@ -1,25 +1,33 @@
 import argparse
-def calculate_duration(start_time_str, end_time_str, unit):
-    start_time = float(start_time_str)
-    end_time = float(end_time_str)
-    duration = end_time - start_time
-    if unit == 'minutes':
-        result = duration / 60.0
-    elif unit == 'seconds':
-        result = duration
+from datetime import datetime
+
+def calculate_elapsed_time(start_time_str, end_time_str, unit='minutes'):
+    start = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S")
+    end = datetime.strptime(end_time_str, "%Y-%m-%d %H:%M:%S")
+    delta = end - start
+    total_seconds = delta.total_seconds()
+
+    if unit == 'seconds':
+        return total_seconds
+    elif unit == 'minutes':
+        return total_seconds / 60
+    elif unit == 'hours':
+        return total_seconds / 3600
+    elif unit == 'days':
+        return total_seconds / 86400
     else:
-        raise ValueError("Unsupported unit. Please use 'minutes' or 'seconds'.")
-    return result
+        raise ValueError(f"Unsupported unit: {unit}")
+
+def main():
+    parser = argparse.ArgumentParser(description="Calculate elapsed time between two timestamps.")
+    parser.add_argument('--start', type=str, default='2023-01-01 00:00:00', help='Start time in format YYYY-MM-DD HH:MM:SS')
+    parser.add_argument('--end', type=str, default='2023-01-01 01:30:45', help='End time in format YYYY-MM-DD HH:MM:SS')
+    parser.add_argument('--unit', type=str, default='minutes', choices=['seconds', 'minutes', 'hours', 'days'], help='Output unit')
+
+    args = parser.parse_args()
+
+    result = calculate_elapsed_time(args.start, args.end, args.unit)
+    print(result)
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Calculate elapsed time between start and end times.")
-    parser.add_argument("start_time", type=str, help="Start time in a numerical format.")
-    parser.add_argument("end_time", type=str, help="End time in a numerical format.")
-    parser.add_argument("unit", type=str, choices=['minutes', 'seconds'], help="Desired output unit ('minutes' or 'seconds').")
-    args = parser.parse_args(["100", "120", "minutes"])
-    try:
-        result = calculate_duration(args.start_time, args.end_time, args.unit)
-        print(f"Elapsed time: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    main()

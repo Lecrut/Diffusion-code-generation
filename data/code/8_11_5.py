@@ -1,25 +1,55 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    area_sum = 0.0
-    for i in range(n):
-        x1, y1 = vertices[i]
-        x2, y2 = vertices[(i + 1) % n]
-        area_sum += (x1 * y2 - x2 * y1)
-    area = 0.5 * abs(area_sum)
-    return area
+from typing import List
+
+class GeometricShape:
+    def __init__(self, area: float) -> None:
+        self.area = area
+
+    def get_area(self) -> float:
+        return self.area
+
+    def scale_area(self, factor: float) -> float:
+        self.area = self.area * factor
+        return self.area
+
+class Circle(GeometricShape):
+    def __init__(self, radius: float) -> None:
+        if radius <= 0:
+            raise ValueError("Radius must be positive")
+        area = math.pi * (radius ** 2)
+        super().__init__(area)
+        self.radius = radius
+
+    def __repr__(self) -> str:
+        return f"Circle(radius={self.radius}, area={self.get_area()})"
+
+class Rectangle(GeometricShape):
+    def __init__(self, width: float, height: float) -> None:
+        if width <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        area = width * height
+        super().__init__(area)
+        self.width = width
+        self.height = height
+
+    def __repr__(self) -> str:
+        return f"Rectangle(width={self.width}, height={self.height}, area={self.get_area()})"
+
+def calculate_total_area(shapes: List[GeometricShape]) -> float:
+    total = 0.0
+    for shape in shapes:
+        total += shape.get_area()
+    return total
+
 if __name__ == '__main__':
-    sample_vertices_1 = [(0, 0), (1, 0), (0, 1)]
-    area_1 = calculate_polygon_area(sample_vertices_1)
-    print(f"Area 1: {area_1}")
-    sample_vertices_2 = [(2, 1), (4, 5), (7, 3), (5, 0)]
-    area_2 = calculate_polygon_area(sample_vertices_2)
-    print(f"Area 2: {area_2}")
-    sample_vertices_3 = [(1.5, 2.5), (3.5, 1.5), (2.5, 4.5)]
-    area_3 = calculate_polygon_area(sample_vertices_3)
-    print(f"Area 3: {area_3}")
-    sample_vertices_4 = [(0, 0), (10, 0), (10, 10), (0, 10)]
-    area_4 = calculate_polygon_area(sample_vertices_4)
-    print(f"Area 4: {area_4}")
+    circle = Circle(5.0)
+    rectangle = Rectangle(4.0, 6.0)
+    
+    initial_area = circle.get_area()
+    print(initial_area)
+    
+    scaled_area = circle.scale_area(2.0)
+    print(scaled_area)
+    
+    total_area = calculate_total_area([circle, rectangle])
+    print(total_area)

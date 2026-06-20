@@ -1,55 +1,102 @@
-import argparse
-from statistics import mean, stdev
+class Volume:
+    def __init__(self, cubic_cm=0.0):
+        self._cc = float(cubic_cm)
 
-def calculate_mean(values):
-    """Calculates the arithmetic mean of a list of numbers."""
-    return sum(values) / len(values)
+    @property
+    def cubic_cm(self):
+        return self._cc
 
-def calculate_stdev(values):
-    """Calculates the standard deviation using efficient statistical formulas.
-    
-    Uses the formula: sqrt(sum((x - mean)^2 for x in values) / (n-1))
-    This avoids multiple passes over the data by computing intermediate sums first,
-    though Python's 'statistics' module is already implemented highly efficiently 
-    and optimized at a lower level than manual iteration.
-    
-    Args:
-        values: List of numerical values
-        
-    Returns:
-        The standard deviation or None if fewer than 2 elements exist.
-    """
-    return stdev(values)
+    @property
+    def liters(self):
+        return self._cc / 1000.0
 
-def parse_and_calculate(input_string):
-    """Parses a comma-separated string into floats and returns statistics."""
-    try:
-        raw_values = input_string.strip().split(',')
-        numeric_values = [float(x.strip()) for x in raw_values if x.strip()]
-        
-        if len(numeric_values) == 0:
-            return None, None
-            
-        m = calculate_mean(numeric_values)
-        s = calculate_stdev(numeric_values)
-        
-        return m, s
-        
-    except ValueError as e:
-        print(f"Error parsing input values: {e}")
-        return None, None
+    @property
+    def milliliters(self):
+        return self._cc
+
+    @property
+    def gallons(self):
+        return self._cc / 3785.411784
+
+    @property
+    def cubic_meters(self):
+        return self._cc / 1000000.0
+
+    def set_from_liters(self, liters):
+        self._cc = liters * 1000.0
+
+    def set_from_milliliters(self, ml):
+        self._cc = ml
+
+    def set_from_gallons(self, gallons):
+        self._cc = gallons * 3785.411784
+
+    def set_from_cubic_meters(self, m3):
+        self._cc = m3 * 1000000.0
+
+    def __add__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._cc + other._cc)
+        raise TypeError("Unsupported operand type for +")
+
+    def __sub__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._cc - other._cc)
+        raise TypeError("Unsupported operand type for -")
+
+    def __mul__(self, scalar):
+        return Volume(self._cc * scalar)
+
+    def __truediv__(self, scalar):
+        return Volume(self._cc / scalar)
+
+    def __eq__(self, other):
+        if isinstance(other, Volume):
+            return abs(self._cc - other._cc) < 1e-9
+        return False
+
+    def __repr__(self):
+        return f"Volume(cubic_cm={self._cc})"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or arguments.
-    # These represent volume measurements in liters for a batch process study.
-    SAMPLE_DATA = "10.5, 12.3, 9.8, 11.1, 10.9"
+    v1 = Volume(1500.0)
+    print(v1.liters)
+    print(v1.milliliters)
+    print(v1.gallons)
+    print(v1.cubic_meters)
 
-    mean_val, stdev_val = parse_and_calculate(SAMPLE_DATA)
+    v2 = Volume()
+    v2.set_from_liters(2.5)
+    print(v2.cubic_cm)
+    print(v2.milliliters)
 
-    print(f"The arithmetic mean is {mean_val:.4f}")
-    
-    if stdev_val:
-        print(f"The standard deviation is {stdev_val:.4f}")
-    else:
-        # Fallback for single value or invalid input edge cases handled in parse function
-        print("Could not calculate standard deviation.")
+    v3 = Volume()
+    v3.set_from_gallons(1.0)
+    print(v3.liters)
+    print(v3.cubic_meters)
+
+    v4 = Volume(100.0)
+    v5 = Volume(200.0)
+    v_sum = v4 + v5
+    print(v_sum.cubic_cm)
+
+    v_diff = v5 - v4
+    print(v_diff.cubic_cm)
+
+    v_scaled = v4 * 3.5
+    print(v_scaled.liters)
+
+    v_halved = v5 / 2.0
+    print(v_halved.milliliters)
+
+    v6 = Volume(500.0)
+    v7 = Volume(500.0)
+    print(v6 == v7)
+
+    v8 = Volume(500.0)
+    v9 = Volume(500.000000001)
+    print(v8 == v9)
+
+    v10 = Volume(1000.0)
+    v10.set_from_cubic_meters(0.001)
+    print(v10.cubic_cm)

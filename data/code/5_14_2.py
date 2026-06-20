@@ -1,15 +1,15 @@
-def length_difference(len1, len2):
-    if len1 >= len2:
-        return len1 - len2
+def compare_lengths(length_inches, length_centimeters):
+    inches_to_cm = 2.54
+    length1_cm = length_inches * inches_to_cm
+    length2_cm = length_centimeters
+
+    if length1_cm > length2_cm:
+        return f"{length_inches} inches ({length1_cm} cm) is greater than {length2_cm} cm"
+    elif length1_cm < length2_cm:
+        return f"{length2_cm} cm is greater than {length_inches} inches ({length1_cm} cm)"
     else:
-        return len2 - len1
+        return f"{length_inches} inches ({length1_cm} cm) is equal to {length2_cm} cm"
+
 if __name__ == '__main__':
-    a = 10
-    b = 4
-    print(length_difference(a, b))
-    x = 3
-    y = 7
-    print(length_difference(x, y))
-    p = 5
-    q = 5
-    print(length_difference(p, q))
+    result = compare_lengths(10, 25.4)
+    print(result)

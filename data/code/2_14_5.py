@@ -1,37 +1,40 @@
-import math
-class ScalableVolume:
-    def __init__(self, base_volume, scaling_factor):
-        self.base_volume = base_volume
-        self.scaling_factor = scaling_factor
-    def get_volume(self, multiplier):
-        return self.base_volume * multiplier * self.scaling_factor
-    def __repr__(self):
-        return f"ScalableVolume(base={self.base_volume}, factor={self.scaling_factor})"
-class VolumeStore:
-    def __init__(self):
-        self.volumes = []
-    def add_volume(self, base_volume, scaling_factor):
-        new_volume = ScalableVolume(base_volume, scaling_factor)
-        self.volumes.append(new_volume)
-    def retrieve_volume(self, index, multiplier):
-        if 0 <= index < len(self.volumes):
-            return self.volumes[index].get_volume(multiplier)
-        raise IndexError("Index out of bounds")
+LITER_TO_ML = 1000.0
+GALLON_TO_ML = 3785.411784
+CUBIC_INCH_TO_ML = 16.387064
+
+def convert_volumes_to_ml(measurements):
+    if not measurements:
+        return []
+    result = []
+    for value, unit in measurements:
+        if value < 0:
+            raise ValueError("Volume cannot be negative")
+        if value == 0:
+            result.append(0.0)
+            continue
+        unit_lower = unit.lower()
+        if unit_lower == "liters" or unit_lower == "liter":
+            converted = value * LITER_TO_ML
+        elif unit_lower == "gallons" or unit_lower == "gallon":
+            converted = value * GALLON_TO_ML
+        elif unit_lower == "cubic inches" or unit_lower == "cubic inch":
+            converted = value * CUBIC_INCH_TO_ML
+        else:
+            raise ValueError(f"Unsupported unit: {unit}")
+        result.append(converted)
+    return result
+
 if __name__ == '__main__':
-    store = VolumeStore()
-    store.add_volume(10.0, 2.0)
-    store.add_volume(5.5, 3.0)
-    store.add_volume(100.0, 1.5)
-    print("--- Stored Volumes ---")
-    for i, vol in enumerate(store.volumes):
-        print(f"Index {i}: {vol}")
-    print("\n--- Retrieved Volumes ---")
+    sample_data = [
+        (1.0, "liters"),
+        (0.0, "gallons"),
+        (2.5, "cubic inches"),
+        (0.5, "gallon"),
+        (100, "liter")
+    ]
     try:
-        result1 = store.retrieve_volume(0, 5.0)
-        print(f"Retrieving index 0 with multiplier 5.0: {result1}")
-        result2 = store.retrieve_volume(1, 2.5)
-        print(f"Retrieving index 1 with multiplier 2.5: {result2}")
-        result3 = store.retrieve_volume(2, 1.0)
-        print(f"Retrieving index 2 with multiplier 1.0: {result3}")
-    except IndexError as e:
+        ml_values = convert_volumes_to_ml(sample_data)
+        for original, unit in sample_data:
+            print(f"{original} {unit} = {ml_values[sample_data.index((original, unit))]:.4f} mL")
+    except ValueError as e:
         print(f"Error: {e}")

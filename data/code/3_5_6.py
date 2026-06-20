@@ -1,7 +1,13 @@
-def filter_temperatures(readings):
-    filtered_temps = [temp for temp in readings if temp >= 0]
-    return filtered_temps
+def celsius_to_fahrenheit(celsius):
+    return celsius * 1.8 + 32
+
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5.0 / 9.0
+
+def kelvin_to_celsius(kelvin):
+    return kelvin - 273.15
+
 if __name__ == '__main__':
-    sample_readings = [10.5, -5.2, 3.0, 0.0, -1.1, 15.7, -22.0, 4.5]
-    result = filter_temperatures(sample_readings)
-    print(result)
+    print(celsius_to_fahrenheit(0))
+    print(fahrenheit_to_celsius(32))
+    print(kelvin_to_celsius(273.15))

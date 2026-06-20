@@ -1,44 +1,24 @@
-import sys
+from typing import List, Dict, Any
 
-def celsius_to_fahrenheit(c: float) -> float:
-    """Convert a temperature value in Celsius to Fahrenheit."""
-    return (c * 9 / 5) + 32
+UNIT_FACTORS: Dict[str, Any] = {
+    "celsius_to_fahrenheit_multiplier": 9.0 / 5.0,
+    "celsius_to_fahrenheit_offset": 32.0
+}
 
-class TemperatureConverter:
-    def __init__(self):
-        self.readings = []
-
-    def validate_input(self, user_value: str) -> bool | float:
-        """Check if the input is a valid numeric value for Celsius."""
-        try:
-            celsius_val = float(user_value)
-            return True, celsius_val
-        except ValueError:
-            print("Error: Please enter a valid number (e.g., 25.5).")
-            return False
-
-    def process_reading(self, user_input: str):
-        """Process an input reading and store the result."""
-        is_valid, celsius_value = self.validate_input(user_input)
-        
-        if not is_valid:
-            print("Conversion skipped due to invalid input.")
-            return
-        
-        fahrenheit_value = celsius_to_fahrenheit(celsius_value)
-        self.readings.append((celsius_value, fahrenheit_value))
-
-def main():
-    """Main execution block."""
-    converter = TemperatureConverter()
-
-    # Hard-coded sample values as per requirement (no interactive prompts or stdin calls).
-    sample_temperatures = ["0", "15.6", "-40"]
-
-    print("Processing sample temperature readings...")
-    
-    for temp_str in sample_temperatures:
-        converter.process_reading(temp_str)
+def convert_temperature_values(celsius_values: List[float]) -> List[float]:
+    multiplier = UNIT_FACTORS["celsius_to_fahrenheit_multiplier"]
+    offset = UNIT_FACTORS["celsius_to_fahrenheit_offset"]
+    return [(c * multiplier) + offset for c in celsius_values]
 
 if __name__ == '__main__':
-    main()
+    sample_records = [
+        {"id": 1, "temp": -273.15},
+        {"id": 2, "temp": 0.0},
+        {"id": 3, "temp": 37.0},
+        {"id": 4, "temp": 100.0},
+        {"id": 5, "temp": 18.5}
+    ]
+    extracted_temps = [record["temp"] for record in sample_records]
+    converted_temps = convert_temperature_values(extracted_temps)
+    for original, converted in zip(extracted_temps, converted_temps):
+        print(f"{original} C = {converted} F")

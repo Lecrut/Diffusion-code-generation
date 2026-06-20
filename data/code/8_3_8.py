@@ -1,38 +1,24 @@
-def calculate_area(length: float, width: float) -> float:
-    """Calculate the area of a rectangle given length and width."""
-    try:
-        return length * width
-    except Exception as e:
-        print(f"Error during calculation: {e}")
-        raise
-
+def compute_polygon_area(vertices):
+    region_types = {
+        'triangle': 3,
+        'quadrilateral': 4,
+        'pentagon': 5
+    }
+    if len(vertices) < 3:
+        return 0.0
+    n = len(vertices)
+    cross_sum = 0
+    for i in range(n):
+        current_x = vertices[i][0]
+        current_y = vertices[i][1]
+        next_idx = (i + 1) % n
+        next_x = vertices[next_idx][0]
+        next_y = vertices[next_idx][1]
+        cross_sum += current_x * next_y
+        cross_sum -= next_x * current_y
+    area = abs(cross_sum) / 2.0
+    return area
 if __name__ == '__main__':
-    # Hard-coded sample values to avoid interactive input requirements
-    length = 5.0
-    width = 3.5
-
-    try:
-        area_result = calculate_area(length, width)
-        print(f"Rectangle dimensions (length={length}, width={width})")
-        print(f"Calculated Area: {area_result}")
-        
-        # Demonstrate ValueError handling with simulated non-numeric inputs in a clean way
-        def handle_non_numeric_input():
-            """Simulates input validation without using actual stdin."""
-            test_values = ['a', 10, 'invalid']
-            
-            for val in test_values:
-                try:
-                    area_val = calculate_area(val, width)
-                    print(f"Success with {val}: Area is {area_val}")
-                except ValueError as ve:
-                    print(f"ValueError handled correctly for input '{val}': Input was not numeric.")
-                except TypeError as te:
-                     # Catch cases where the try block fails before multiplication (e.g., 'a' * float) 
-                     if isinstance(val, str):
-                        raise f"{type(val).__name__}" from None
-        
-        handle_non_numeric_input()
-
-    except ValueError as ve:
-        print(f"Caught specific non-numeric input error: {ve}")
+    regular_hexagon = [(1, 0), (0.5, 0.866025), (-0.5, 0.866025), (-1, 0), (-0.5, -0.866025), (0.5, -0.866025)]
+    calculated_area = compute_polygon_area(regular_hexagon)
+    print(calculated_area)

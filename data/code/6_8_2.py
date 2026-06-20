@@ -1,9 +1,8 @@
-import math
-
-def calculate_weight_difference(var1: float, var2: float) -> float:
-    return abs(math.log(abs(var1 - var2))) if (var1 != 0 or var2 != 0) else None
+def calculate_weight_difference(weight1, weight2):
+    return abs(weight1 - weight2)
 
 if __name__ == '__main__':
-    a = 5.0
-    b = 3.0
-    print(calculate_weight_difference(a, b))
+    val1 = 150.5
+    val2 = 120.3
+    result = calculate_weight_difference(val1, val2)
+    print(result)

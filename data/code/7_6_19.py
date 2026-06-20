@@ -1,50 +1,66 @@
 import unittest
-from datetime import timedelta
 
-def convert_to_seconds(timedelta_obj):
-    """Convert a timedelta object to total seconds."""
-    return int(timedelta_obj.total_seconds())
+def seconds_to_hours_minutes_seconds(total_seconds):
+    if total_seconds < 0:
+        raise ValueError("Total seconds cannot be negative")
+    hours = total_seconds // 3600
+    remaining = total_seconds % 3600
+    minutes = remaining // 60
+    seconds = remaining % 60
+    return hours, minutes, seconds
+
+def hours_minutes_seconds_to_seconds(hours, minutes, seconds):
+    if hours < 0 or minutes < 0 or seconds < 0:
+        raise ValueError("Time components cannot be negative")
+    if minutes >= 60 or seconds >= 60:
+        raise ValueError("Minutes and seconds must be less than 60")
+    return (hours * 3600) + (minutes * 60) + seconds
 
 class TestTimeConversion(unittest.TestCase):
-    def test_positive_time(self):
-        td = timedelta(hours=1, minutes=30)
-        self.assertEqual(convert_to_seconds(td), 5400)
+    def test_zero_values(self):
+        self.assertEqual(seconds_to_hours_minutes_seconds(0), (0, 0, 0))
+        self.assertEqual(hours_minutes_seconds_to_seconds(0, 0, 0), 0)
 
-    def test_zero_time(self):
-        td = timedelta(seconds=0)
-        self.assertEqual(convert_to_seconds(td), 0)
+    def test_large_time_span(self):
+        hours, minutes, seconds = seconds_to_hours_minutes_seconds(86400)
+        self.assertEqual(hours, 24)
+        self.assertEqual(minutes, 0)
+        self.assertEqual(seconds, 0)
 
-    def test_negative_time(self):
-        td = timedelta(hours=-1, minutes=-30)
-        # Negative values should be handled correctly by total_seconds() via the implementation of positive time with negative hours/minutes.
-        self.assertEqual(convert_to_seconds(td), -5400)
+        total = hours_minutes_seconds_to_seconds(24, 0, 0)
+        self.assertEqual(total, 86400)
 
-    def test_large_time_span_positive(self):
-        large_td = timedelta(days=1, weeks=2, microseconds=999999)
-        expected_seconds = (7 * 24 + 365) * 3600 + 1*60*60 + int(999.999/1_000_000)*3600 # Wait, this logic is flawed in manual calc but let's rely on total_seconds() accuracy
-        self.assertEqual(convert_to_seconds(large_td), large_td.total_seconds())
+    def test_mixed_values(self):
+        self.assertEqual(seconds_to_hours_minutes_seconds(3661), (1, 1, 1))
+        self.assertEqual(hours_minutes_seconds_to_seconds(1, 1, 1), 3661)
 
-    def test_large_time_span_negative(self):
-        neg_td = timedelta(days=-5)
-        self.assertEqual(convert_to_seconds(neg_td), -432000)
+    def test_invalid_negative_input_seconds(self):
+        with self.assertRaises(ValueError):
+            seconds_to_hours_minutes_seconds(-1)
+
+    def test_invalid_large_minutes(self):
+        with self.assertRaises(ValueError):
+            hours_minutes_seconds_to_seconds(1, 60, 0)
+
+    def test_invalid_large_seconds(self):
+        with self.assertRaises(ValueError):
+            hours_minutes_seconds_to_seconds(0, 0, 60)
+
+    def test_exact_hour_boundary(self):
+        self.assertEqual(seconds_to_hours_minutes_seconds(7200), (2, 0, 0))
+        self.assertEqual(hours_minutes_seconds_to_seconds(2, 0, 0), 7200)
+
+    def test_exact_minute_boundary(self):
+        self.assertEqual(seconds_to_hours_minutes_seconds(120), (0, 2, 0))
+        self.assertEqual(hours_minutes_seconds_to_seconds(0, 2, 0), 120)
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestTimeConversion)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    # Additional inline execution to demonstrate edge cases as requested by "hard-coded sample values" logic, though the tests above cover them.
-    print("\n--- Manual Execution of Edge Cases ---")
-    
-    samples_test_cases = [
-        ("Zero Time", timedelta(seconds=0)),
-        ("One Second", timedelta(microseconds=1)), # 0 seconds in total_seconds() due to int conversion if microseconds are not handled, wait. 
-                                                      # Actually int(0) is 0. Let's use a larger value or check behavior.
-              # Correction: total_seconds returns float. int converts it. 
-        ("Large Positive", timedelta(days=10)),
-        ("Negative One Day", timedelta(hours=-24)),
-    ]
-
-    for name, td in samples_test_cases:
-        sec = convert_to_seconds(td)
-        print(f"{name}: {td} -> {sec} seconds")
+    result_1 = seconds_to_hours_minutes_seconds(0)
+    print(result_1)
+    result_2 = seconds_to_hours_minutes_seconds(90061)
+    print(result_2)
+    result_3 = hours_minutes_seconds_to_seconds(10, 0, 0)
+    print(result_3)
+    result_4 = hours_minutes_seconds_to_seconds(0, 0, 5)
+    print(result_4)
+    unittest.main()

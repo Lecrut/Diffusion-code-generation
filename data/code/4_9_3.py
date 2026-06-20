@@ -1,31 +1,12 @@
-import sys
-def convert_distance(distance, unit):
-    if unit == 'km':
-        if distance == 0:
-            return 0.0
-        elif distance == 1:
-            return 0.621371
-        else:
-            return distance * 0.621371
-    elif unit == 'mi':
-        if distance == 0:
-            return 0.0
-        elif distance == 1:
-            return 1.609344
-        else:
-            return distance * 1.609344
-    else:
-        return "Invalid unit specified."
+def convert_distance(value, unit):
+    if unit == "miles":
+        return value * 1.60934
+    if unit == "kilometers":
+        return value / 1.60934
+    raise ValueError(f"Unsupported unit: {unit}")
+
 if __name__ == '__main__':
-    sample_distance = 10
-    sample_unit = 'km'
-    converted_value = convert_distance(sample_distance, sample_unit)
-    print(f"Original Distance: {sample_distance} {sample_unit}")
-    if sample_unit == 'km':
-        miles = sample_distance * 0.621371
-        print(f"Converted to Miles: {miles:.4f}")
-    elif sample_unit == 'mi':
-        kilometers = sample_distance / 1.609344
-        print(f"Converted to Kilometers: {kilometers:.4f}")
-    else:
-        print(convert_distance(sample_distance, sample_unit))
+    miles_to_km = convert_distance(10, "miles")
+    km_to_miles = convert_distance(16.0934, "kilometers")
+    print(miles_to_km)
+    print(km_to_miles)

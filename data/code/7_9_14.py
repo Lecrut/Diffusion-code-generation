@@ -1,24 +1,23 @@
-import datetime
+from datetime import datetime, timedelta
 
-def calculate_time_difference(unit: str) -> dict:
-    """
-    Calculates the time difference between two arbitrary datetime objects.
+def calculate_time_difference(start: datetime, end: datetime) -> dict:
+    delta = end - start
+    total_seconds = int(delta.total_seconds())
     
-    Parameters:
-        unit (str): The desired output format ('days', 'hours', or 'minutes').
-        
-    Returns:
-        dict: A dictionary containing total seconds and a breakdown based on the specified unit.
-              Keys include 'total_seconds', 'unit_label', 'value_in_unit', 
-              plus additional fields for days, hours, minutes if applicable to avoid empty values.
+    days, remainder = divmod(total_seconds, 86400)
+    hours, remainder = divmod(remainder, 3600)
+    minutes, seconds = divmod(remainder, 60)
     
-    Raises:
-        ValueError: If an invalid unit is provided or input datetimes are None.
-    """
-
-# Define the sample datetime objects directly within this function as a self-contained example
-sample_start = datetime.datetime(2023, 10, 5, 14, 30)
-sample_end = datetime.datetime(2023, 10, 7, 9, 15, 30)
+    return {
+        "days": days,
+        "hours": hours,
+        "minutes": minutes,
+        "seconds": seconds
+    }
 
 if __name__ == '__main__':
-    pass
+    start_time = datetime(2023, 10, 1, 10, 30, 0)
+    end_time = datetime(2023, 10, 5, 14, 45, 30)
+    
+    result = calculate_time_difference(start_time, end_time)
+    print(result)

@@ -1,71 +1,43 @@
 import csv
-from pathlib import Path
+import os
+import tempfile
 
-def read_temperature_csv(filepath: str) -> list[float]:
-    """Read temperature readings from a CSV file and return as a list of floats."""
-    if not filepath:
-        raise FileNotFoundError("File path is empty.")
-    
-    # Construct full absolute path to handle relative paths safely, though we assume files are present per task constraints for sample.
-    abs_path = Path(filepath).resolve()
-
-    readings = []
+def calculate_average_temperature(csv_file_path):
+    temperatures = []
     try:
-        with open(abs_path, 'r', newline='', encoding='utf-8') as file:
-            reader = csv.reader(file)
-            
-            # Iterate over rows; handle missing header by trying to parse first row or skipping if empty headers.
-            # We assume the CSV contains at least one numeric column representing temperature.
-            for line_num, row in enumerate(reader):
+        with open(csv_file_path, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
                 try:
-                    value_str = next(row)[0].strip()  # Take the first non-empty cell
-                
-                    
-                    float(value_str)
-                    readings.append(float(value_str))
-                except (ValueError, IndexError, KeyError) as e:
-                    raise ValueError(f"Invalid data on line {line_num + 1}: Cannot parse '{value_str}' or missing column.") from e
-
+                    temp_value = float(row.get('temperature', 0))
+                    temperatures.append(temp_value)
+                except (ValueError, TypeError):
+                    continue
     except FileNotFoundError:
-        raise FileNotFoundError(f"The specified file does not exist at path: {filepath}.") from None
-    except PermissionError:
-        raise RuntimeError(f"No permission to read the file at path: {filepath}.") from None
-    except csv.Error as e:
-        raise ValueError(f"CSV parsing error on line containing data. Details: {e}") from e
+        return None
+    except IOError:
+        return None
+    except Exception:
+        return None
 
-    return readings
-
-def calculate_average(temperatures: list[float]) -> float:
-    """Calculate and return the average temperature."""
     if not temperatures:
-        raise ValueError("The provided list of temperatures is empty.")
-    
-    total = sum(temperatures)
-    count = len(temperatures)
-    avg_temp = total / count
+        return None
 
-    return avg_temp
-
-def main():
-    """Main execution block with hard-coded sample values to ensure the script runs without external dependencies."""
-    
-    # Hard-coded simulated data for demonstration, mimicking a CSV content like: "Temperature" and various floats.
-    csv_content_simulation_data = [15.2]
-
-    try:
-        avg_temp = calculate_average(csv_content_simulation_data)
-        
-        print(f"Calculated average temperature: {avg_temp:.2f}")
-        return 0
-        
-    except ValueError as e:
-        if "empty" in str(e).lower():
-            print("Error: No temperature data was provided.")
-            
-        else:
-            print(f"Invalid calculation error: {e}")
-
-        raise
+    return sum(temperatures) / len(temperatures)
 
 if __name__ == '__main__':
-    main()
+    temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False)
+    try:
+        writer = csv.DictWriter(temp_file, fieldnames=['timestamp', 'temperature', 'location'])
+        writer.writeheader()
+        writer.writerow({'timestamp': '2023-01-01 00:00:00', 'temperature': '22.5', 'location': 'Office'})
+        writer.writerow({'timestamp': '2023-01-01 01:00:00', 'temperature': '23.1', 'location': 'Office'})
+        writer.writerow({'timestamp': '2023-01-01 02:00:00', 'temperature': '21.9', 'location': 'Office'})
+        writer.writerow({'timestamp': '2023-01-01 03:00:00', 'temperature': 'invalid', 'location': 'Office'})
+        writer.writerow({'timestamp': '2023-01-01 04:00:00', 'temperature': '24.0', 'location': 'Office'})
+        temp_file.flush()
+        result = calculate_average_temperature(temp_file.name)
+        print(result)
+    finally:
+        temp_file.close()
+        os.unlink(temp_file.name)

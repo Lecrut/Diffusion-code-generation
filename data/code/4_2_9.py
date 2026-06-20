@@ -1,45 +1,31 @@
-import math
-def convert_distance(distance, unit):
-    conversions = {
-        'm': 1,
-        'km': 1000,
-        'mi': 1609.34,
-        'cm': 0.01,
-        'mm': 0.001,
-        'in': 0.0254,
-        'ft': 0.3048,
-        'yd': 0.9144,
-        'mile': 1609.34,
-        'kilometer': 1000,
-        'meter': 1,
-        'centimeter': 100,
-        'millimeter': 10,
-        'inch': 2.54,
-        'foot': 3.28084,
-        'yard': 3.28084
-    }
-    if unit not in conversions:
+def convert_distance(value, unit):
+    unit = unit.lower()
+    if unit == 'm':
+        meters = value
+    elif unit == 'km':
+        meters = value * 1000
+    elif unit == 'mi':
+        meters = value * 1609.344
+    elif unit == 'ft':
+        meters = value / 3.28084
+    elif unit == 'in':
+        meters = value / 39.3701
+    elif unit == 'cm':
+        meters = value / 100
+    else:
         raise ValueError(f"Unsupported unit: {unit}")
-    if distance == 0:
-        return {unit: 0 for other_unit in conversions.keys() if other_unit != unit}
-    result = {}
-    for target_unit, factor in conversions.items():
-        if target_unit == unit:
-            continue
-        if target_unit == 'mile' and unit == 'mi':
-            result[target_unit] = distance
-        elif target_unit == 'km' and unit == 'km':
-            result[target_unit] = distance
-        elif target_unit == 'm' and unit == 'm':
-            result[target_unit] = distance
-        else:
-            result[target_unit] = distance * factor
-    return result
+    
+    return {
+        'm': meters,
+        'km': meters / 1000,
+        'mi': meters / 1609.344,
+        'ft': meters * 3.28084,
+        'in': meters * 39.3701,
+        'cm': meters * 100
+    }
+
 if __name__ == '__main__':
-    distance_value = 10
-    unit_value = 'km'
-    converted_distances = convert_distance(distance_value, unit_value)
-    print(f"Original: {distance_value} {unit_value}")
-    print("Conversions:")
-    for unit, value in converted_distances.items():
-        print(f"{unit}: {value:.4f}")
+    sample_distance = 10
+    sample_unit = 'mi'
+    result = convert_distance(sample_distance, sample_unit)
+    print(result)

@@ -1,32 +1,51 @@
 class TimeConverter:
-    def __init__(self):
-        pass
-    def to_total_seconds(self, hours, minutes, seconds):
-        return (hours * 3600) + (minutes * 60) + seconds
-    def from_total_seconds(self, total_seconds):
+    def __init__(self, hours=0, minutes=0, seconds=0):
+        total_seconds = hours * 3600 + minutes * 60 + seconds
+        self.total_seconds = int(total_seconds)
+
+    def get_hours(self):
+        return self.total_seconds // 3600
+
+    def get_minutes(self):
+        return (self.total_seconds % 3600) // 60
+
+    def get_seconds(self):
+        return self.total_seconds % 60
+
+    def to_total_minutes(self):
+        return self.total_seconds / 60
+
+    def to_total_hours(self):
+        return self.total_seconds / 3600
+
+    def to_hms_string(self):
+        h = self.get_hours()
+        m = self.get_minutes()
+        s = self.get_seconds()
+        return f"{h:02d}:{m:02d}:{s:02d}"
+
+    @classmethod
+    def from_seconds(cls, total_seconds):
         hours = total_seconds // 3600
         remaining = total_seconds % 3600
         minutes = remaining // 60
         seconds = remaining % 60
-        return hours, minutes, seconds
-    def convert_to_hms(self, total_seconds):
-        hours = total_seconds // 3600
-        minutes = (total_seconds % 3600) // 60
-        seconds = total_seconds % 60
-        return hours, minutes, seconds
+        return cls(hours, minutes, seconds)
+
+    @classmethod
+    def from_minutes(cls, total_minutes):
+        total_seconds = int(total_minutes * 60)
+        return cls.from_seconds(total_seconds)
+
+    @classmethod
+    def from_hours(cls, total_hours):
+        total_seconds = int(total_hours * 3600)
+        return cls.from_seconds(total_seconds)
+
 if __name__ == '__main__':
-    converter = TimeConverter()
-    sample_h = 2
-    sample_m = 30
-    sample_s = 15
-    total_seconds = converter.to_total_seconds(sample_h, sample_m, sample_s)
-    print(f"Input: {sample_h}h, {sample_m}m, {sample_s}s")
-    print(f"Total seconds: {total_seconds}")
-    h, m, s = converter.from_total_seconds(total_seconds)
-    print(f"Converted back: {h}h, {m}m, {s}s")
-    h_out, m_out, s_out = converter.convert_to_hms(total_seconds)
-    print(f"Converted to HMS: {h_out}h, {m_out}m, {s_out}s")
-    sample_total_seconds = 7385
-    h_test, m_test, s_test = converter.from_total_seconds(sample_total_seconds)
-    print(f"\nTesting total seconds: {sample_total_seconds}")
-    print(f"Result: {h_test}h, {m_test}m, {s_test}s")
+    converter = TimeConverter(hours=2, minutes=45, seconds=30)
+    print(converter.to_hms_string())
+    print(converter.to_total_minutes())
+    print(converter.get_seconds())
+    new_converter = TimeConverter.from_seconds(5000)
+    print(new_converter.to_hms_string())

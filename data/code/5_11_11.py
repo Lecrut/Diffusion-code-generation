@@ -1,34 +1,18 @@
-def compare_lengths(a: float, b: float) -> tuple[float, str]:
-    """
-    Compares two floating-point numbers and returns their absolute difference
-    along with a description of which number is greater.
-
-    Args:
-        a (float): First input value representing length A.
-        b (float): Second input value representing length B.
-
-    Returns:
-        tuple[float, str]: A tuple containing the absolute difference between 
-                          the two values and a string indicating which one is larger.
-                          If they are equal, it returns 'Equal'.
-    """
-    diff = abs(a - b)
-    
-    if a > b:
-        greater_str = f"{a} is greater than {b}"
-    elif b > a:
-        greater_str = f"{b} is greater than {a}"
+def compare_measurements(first_measurement, second_measurement):
+    difference = first_measurement - second_measurement
+    if second_measurement == 0:
+        ratio = None
     else:
-        greater_str = "Equal"
-
-    return diff, greater_str
+        ratio = first_measurement / second_measurement
+    is_greater = first_measurement > second_measurement
+    return {
+        'difference': difference,
+        'ratio': ratio,
+        'is_greater': is_greater
+    }
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    val1 = 5.7
-    val2 = 3.2
-    
-    result_diff, result_desc = compare_lengths(val1, val2)
-    
-    print(f"Absolute difference: {result_diff}")
-    print(f"Comparison description: {result_desc}")
+    first_value = 10.5
+    second_value = 5.25
+    result = compare_measurements(first_value, second_value)
+    print(result)

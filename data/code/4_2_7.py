@@ -1,41 +1,29 @@
-import math
-def convert_distance(distance, unit):
-    conversions = {
-        'm': 1,
-        'km': 1000,
-        'mi': 1609.34,
+def convert_distance(value, unit):
+    supported_units = ['m', 'km', 'cm', 'mm', 'mi', 'yd', 'ft', 'in']
+    if unit not in supported_units:
+        raise ValueError(f"Unsupported unit: {unit}")
+    
+    meters = {
+        'm': 1.0,
+        'km': 1000.0,
         'cm': 0.01,
         'mm': 0.001,
-        'in': 39.3701,
-        'ft': 3.28084,
-        'yd': 1.09361,
+        'mi': 1609.344,
+        'yd': 0.9144,
+        'ft': 0.3048,
+        'in': 0.0254
     }
-    if unit not in conversions:
-        raise ValueError(f"Unsupported unit: {unit}")
-    if distance == 0:
-        return {unit: 0 for other_unit in conversions.keys() if other_unit != unit}
+    
+    base_value = value * meters[unit]
+    
     results = {}
-    for other_unit, factor in conversions.items():
-        if other_unit == unit:
-            continue
-        if factor == 0:
-            results[other_unit] = float('inf') if distance != 0 else 0
-            continue
-        if unit == 'm':
-            value = distance * factor
-        elif unit == 'km':
-            value = distance / factor
-        elif unit == 'mi':
-            value = distance / factor
-        else:
-            value = distance * factor
-        results[other_unit] = value
+    for u in supported_units:
+        results[u] = base_value / meters[u]
+    
     return results
+
 if __name__ == '__main__':
-    distance_value = 10
-    unit_value = 'km'
-    converted_distances = convert_distance(distance_value, unit_value)
-    print(f"Original Distance: {distance_value} {unit_value}")
-    print("Converted Distances:")
-    for unit, value in converted_distances.items():
-        print(f"{unit}: {value:.4f}")
+    sample_value = 1.0
+    sample_unit = 'mi'
+    output = convert_distance(sample_value, sample_unit)
+    print(output)

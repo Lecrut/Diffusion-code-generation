@@ -1,39 +1,36 @@
-class DistanceConverter:
-    def convert(self, distance, unit):
-        if not isinstance(distance, (int, float)):
-            raise TypeError("Distance must be a numeric value.")
-        if unit not in ['miles', 'kilometers']:
-            raise ValueError("Unit must be either 'miles' or 'kilometers'.")
-        if unit == 'miles':
-            if distance < 0:
-                raise ValueError("Distance cannot be negative.")
-            return distance * 1.609344
-        elif unit == 'kilometers':
-            if distance < 0:
-                raise ValueError("Distance cannot be negative.")
-            return distance / 1.609344
-        else:
-            return None
+def adjust_distance(distance, unit_type):
+    conversion_factors = {
+        'miles': 1.60934,
+        'km': 0.621371
+    }
+    
+    if unit_type not in conversion_factors:
+        raise ValueError("Unit must be 'miles' or 'km'")
+    
+    if unit_type == 'miles':
+        factor = conversion_factors[unit_type]
+        converted_value = distance * factor
+        new_unit = 'km'
+    else:
+        factor = conversion_factors[unit_type]
+        converted_value = distance * factor
+        new_unit = 'miles'
+    
+    result = {
+        'original_distance': distance,
+        'original_unit': unit_type,
+        'conversion_factor': factor,
+        'converted_distance': converted_value,
+        'new_unit': new_unit
+    }
+    
+    return result
+
 if __name__ == '__main__':
-    converter = DistanceConverter()
-    miles_value = 10
-    km_result = converter.convert(miles_value, 'kilometers')
-    print(f"{miles_value} miles is {km_result:.4f} kilometers")
-    km_value = 16.09344
-    miles_result = converter.convert(km_value, 'miles')
-    print(f"{km_value} kilometers is {miles_result:.4f} miles")
-    zero_miles = 0
-    km_zero = converter.convert(zero_miles, 'kilometers')
-    print(f"{zero_miles} miles is {km_zero:.4f} kilometers")
-    try:
-        converter.convert("abc", 'miles')
-    except TypeError as e:
-        print(f"Caught expected error for non-numeric input: {e}")
-    try:
-        converter.convert(5, 'furlongs')
-    except ValueError as e:
-        print(f"Caught expected error for invalid unit: {e}")
-    try:
-        converter.convert(-5, 'miles')
-    except ValueError as e:
-        print(f"Caught expected error for negative distance: {e}")
+    distance_to_adjust = 10.0
+    unit_to_adjust = 'miles'
+    
+    result = adjust_distance(distance_to_adjust, unit_to_adjust)
+    
+    print(f"Adjusted distance: {result['converted_distance']} {result['new_unit']}")
+    print(f"Conversion factor used: {result['conversion_factor']}")

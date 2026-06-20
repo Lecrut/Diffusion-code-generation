@@ -1,22 +1,26 @@
-import argparse
+class WeightCalculator:
+    def __init__(self):
+        self._history = []
 
-def parse_arguments():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description="Calculate weight difference.")
-    
-    # Create two optional floating point argument groups to allow either one or both weights
-    args_one_or_two = [argparse.ArgumentGroup(title='Weights')]
-    weight_1_group, weight_2_group = args_one_or_two[0].add_argument('--weight-1', '-w1')
-    weight_2_group.add_argument('--weight-2', '-w2')
+    def calculate_difference(self, weight1, weight2):
+        if not isinstance(weight1, (int, float)) or not isinstance(weight2, (int, float)):
+            raise TypeError("Weights must be numeric")
+        if weight1 < 0 or weight2 < 0:
+            raise ValueError("Weights cannot be negative")
+        difference = abs(weight1 - weight2)
+        self._history.append((weight1, weight2, difference))
+        return difference
 
-    
-def calculate_difference():
-    """Calculate the difference between the two weights."""
-    w1 = 5.5
-    w2 = 3.2
-    
-    # Ensure we are not using input(), sys.stdin, or interactive prompts as per constraints
-    return abs(w1 - w2)
+    def get_history(self):
+        return list(self._history)
+
+    def clear_history(self):
+        self._history = []
 
 if __name__ == '__main__':
-    args_one_or_two[0].parse_args()
+    calculator = WeightCalculator()
+    sample_weight_one = 85.75
+    sample_weight_two = 110.25
+    diff_result = calculator.calculate_difference(sample_weight_one, sample_weight_two)
+    print(diff_result)
+    print(calculator.calculate_difference(50.0, 50.0))

@@ -1,87 +1,100 @@
 import unittest
-from datetime import timedelta
 
-class TimeConversionFunctions:
-    """Module containing time conversion utility functions."""
+def seconds_to_hms(total_seconds):
+    if total_seconds < 0:
+        raise ValueError('Time cannot be negative')
+    hours = int(total_seconds) // 3600
+    remaining_seconds = int(total_seconds) % 3600
+    minutes = remaining_seconds // 60
+    seconds = remaining_seconds % 60
+    return (hours, minutes, seconds)
 
-    @staticmethod
-    def seconds_to_timedelta(total_seconds):
-        """Convert total seconds into a timedelta object."""
-        if not isinstance(total_seconds, (int, float)):
-            raise TypeError("Input must be an integer or float representing seconds.")
-        
-        # Handle negative values correctly for backward time calculation
-        return timedelta(seconds=total_seconds)
+def hms_to_seconds(hours, minutes, seconds):
+    if hours < 0 or minutes < 0 or seconds < 0:
+        raise ValueError('Time components cannot be negative')
+    if minutes >= 60 or seconds >= 60:
+        raise ValueError('Minutes and seconds must be less than 60')
+    return hours * 3600 + minutes * 60 + seconds
 
-    @staticmethod
-    def timedelta_to_seconds(td):
-        """Convert a timedelta object back to total seconds."""
-        if not isinstance(td, timedelta):
-            raise TypeError("Input must be a datetime.timedelta instance.")
-        
-        # Calculate total seconds including microseconds (scaled by 10^6)
-        return td.total_seconds()
+def format_time(total_seconds):
+    hours, minutes, seconds = seconds_to_hms(total_seconds)
+    return '{:02d}:{:02d}:{:02d}'.format(hours, minutes, seconds)
 
-    @staticmethod
-    def format_duration(seconds):
-        """Format duration into human-readable string HH:MM:SS.microseconds."""
-        if not isinstance(seconds, (int, float)):
-            raise TypeError("Input must be a number of seconds.")
-        
-        total = int(round(seconds))
-        hours = abs(total) // 3600
-        minutes = (abs(total) % 3600) // 60
-        secs = abs(total) % 60
-        
-        # Handle negative sign separately for formatting if needed, 
-        # but timedelta handles the math internally.
-        return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+class TestTimeConversion(unittest.TestCase):
 
-class TestTimeConversionFunctions(unittest.TestCase):
+    def test_seconds_to_hms_zero(self):
+        self.assertEqual(seconds_to_hms(0), (0, 0, 0))
 
-    def test_seconds_to_timedelta_zero(self):
-        """Test conversion of zero seconds."""
-        result = TimeConversionFunctions.seconds_to_timedelta(0)
-        self.assertEqual(result.total_seconds(), 0.0)
-        
-    def test_seconds_to_timedelta_positive_large(self):
-        """Test conversion with a large positive time span (years worth)."""
-        # Approximate one year in seconds: 365 * 24 * 60 * 60 = 31,536,000
-        years_seconds = 31_536_000.75
-        result = TimeConversionFunctions.seconds_to_timedelta(years_seconds)
-        
-        expected_hours = int(years_seconds / 3600) + (int((years_seconds % 3600)) // 60) * 60 # Simplified check logic below
-        
-        self.assertEqual(result.total_seconds(), years_seconds, "Large positive span conversion failed")
+    def test_seconds_to_hms_one_second(self):
+        self.assertEqual(seconds_to_hms(1), (0, 0, 1))
 
-    def test_seconds_to_timedelta_negative(self):
-        """Test conversion with negative seconds."""
-        result = TimeConversionFunctions.seconds_to_timedelta(-31536)  # -1 year roughly
-        expected_total = timedelta(seconds=-31536).total_seconds()
-        
-        self.assertEqual(result.total_seconds(), expected_total, "Negative span conversion failed")
+    def test_seconds_to_hms_one_minute(self):
+        self.assertEqual(seconds_to_hms(60), (0, 1, 0))
 
-    def test_seconds_to_timedelta_float_precision(self):
-        """Test float input precision handling."""
-        result = TimeConversionFunctions.seconds_to_timedelta(0.75)
-        # timedelta constructor accepts floats but stores as int seconds + microseconds internally logic varies slightly by version, 
-        # total_seconds() returns the exact float value back usually or scaled integer depending on implementation details in standard lib.
-        self.assertEqual(result.total_seconds(), 0.75)
+    def test_seconds_to_hms_one_hour(self):
+        self.assertEqual(seconds_to_hms(3600), (1, 0, 0))
 
-    def test_timedelta_to_seconds_zero(self):
-        """Test conversion of zero timedelta."""
-        td = timedelta(0, microseconds=0) # Explicitly zero
-        result = TimeConversionFunctions.timedelta_to_seconds(td)
-        
-        self.assertEqual(result, 0.0, "Zero timedelta conversion failed")
+    def test_seconds_to_hms_complex_time(self):
+        self.assertEqual(seconds_to_hms(3661), (1, 1, 1))
 
-    def test_timedelta_to_seconds_large(self):
-        """Test conversion of large timedelta."""
-        td = timedelta(days=100, hours=59, minutes=59, seconds=59, microseconds=999_999)
-        
-        expected_total_seconds = 86400 * 100 + 3599.999999 # days to sec + rest
-        
-        result = TimeConversionFunctions.timedelta_to_seconds(td)
+    def test_seconds_to_hms_large_time(self):
+        self.assertEqual(seconds_to_hms(100000), (27, 46, 40))
 
+    def test_seconds_to_hms_negative_raises(self):
+        with self.assertRaises(ValueError):
+            seconds_to_hms(-1)
+
+    def test_hms_to_seconds_zero(self):
+        self.assertEqual(hms_to_seconds(0, 0, 0), 0)
+
+    def test_hms_to_seconds_one_hour(self):
+        self.assertEqual(hms_to_seconds(1, 0, 0), 3600)
+
+    def test_hms_to_seconds_complex_time(self):
+        self.assertEqual(hms_to_seconds(2, 30, 45), 9045)
+
+    def test_hms_to_seconds_large_time(self):
+        self.assertEqual(hms_to_seconds(100, 50, 30), 360330)
+
+    def test_hms_to_seconds_negative_raises(self):
+        with self.assertRaises(ValueError):
+            hms_to_seconds(-1, 0, 0)
+        with self.assertRaises(ValueError):
+            hms_to_seconds(0, -1, 0)
+        with self.assertRaises(ValueError):
+            hms_to_seconds(0, 0, -1)
+
+    def test_hms_to_seconds_invalid_minutes_raises(self):
+        with self.assertRaises(ValueError):
+            hms_to_seconds(0, 60, 0)
+
+    def test_hms_to_seconds_invalid_seconds_raises(self):
+        with self.assertRaises(ValueError):
+            hms_to_seconds(0, 0, 60)
+
+    def test_round_trip_conversion(self):
+        test_cases = [0, 1, 60, 3600, 3661, 100000, 86400, 864000]
+        for seconds in test_cases:
+            h, m, s = seconds_to_hms(seconds)
+            self.assertEqual(hms_to_seconds(h, m, s), seconds)
+
+    def test_format_time_zero(self):
+        self.assertEqual(format_time(0), '00:00:00')
+
+    def test_format_time_one_second(self):
+        self.assertEqual(format_time(1), '00:00:01')
+
+    def test_format_time_one_hour(self):
+        self.assertEqual(format_time(3600), '01:00:00')
+
+    def test_format_time_complex_time(self):
+        self.assertEqual(format_time(3661), '01:01:01')
+
+    def test_format_time_large_time(self):
+        self.assertEqual(format_time(100000), '27:46:40')
 if __name__ == '__main__':
-    pass
+    unittest.main(argv=[''], exit=False, verbosity=2)
+    print(seconds_to_hms(0))
+    print(seconds_to_hms(3661))
+    print(hms_to_seconds(2, 30, 45))
+    print(format_time(86400))

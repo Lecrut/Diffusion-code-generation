@@ -1,53 +1,91 @@
-import argparse
-from math import sqrt
+class Volume:
+    LITERS_TO_CC = 1000.0
+    MILLILITERS_TO_CC = 1.0
+    GALLONS_TO_CC = 3785.411784
+    CUBIC_METERS_TO_CC = 1000000.0
 
-def calculate_mean(values):
-    """Calculate the arithmetic mean of a list of numbers."""
-    return sum(values) / len(values) if values else 0.0
+    def __init__(self, cc=0.0):
+        self.cc = float(cc)
 
-def calculate_standard_deviation(values, mean=None):
-    """Calculate the standard deviation of a list of numbers efficiently.
+    def __repr__(self):
+        return f'Volume(cc={self.cc})'
 
-    Uses the two-pass algorithm (or Welford's online method logic via variance formula)
-    to minimize intermediate rounding errors and maximize efficiency.
-    
-    Args:
-        values: List of numerical values.
-        mean: Optional pre-calculated mean for potential reuse, but we calculate it here 
-              as per standard practice unless passed explicitly in a complex pipeline.
-              
-    Returns:
-        The population standard deviation (dividing by N) or sample standard deviation 
-        (dividing by N-1). Given the context of "volume values", population SD is usually 
-        implied for a complete dataset, but we will use Sample Standard Deviation (N-1) 
-        as it's more common in statistical analysis unless specified otherwise.
-    """
-    n = len(values)
-    if n < 2:
-        return 0.0
+    def __eq__(self, other):
+        if isinstance(other, Volume):
+            return abs(self.cc - other.cc) < 1e-09
+        return False
 
-    # Calculate mean first to ensure accuracy for the variance calculation
-    m = calculate_mean(values)
+    def __add__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self.cc + other.cc)
+        return NotImplemented
 
-    # Efficiently calculate sum of squared differences from the mean
-    sq_diff_sum = sum((x - m) ** 2 for x in values)
+    def __sub__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self.cc - other.cc)
+        return NotImplemented
 
-    if n > 1:
-        return sqrt(sq_diff_sum / (n - 1))
-    
-    return 0.0
+    def __mul__(self, factor):
+        if isinstance(factor, (int, float)):
+            return Volume(self.cc * factor)
+        return NotImplemented
 
-def main():
-    """Main entry point with hard-coded sample data."""
-    # Hard-coded sample volume values as per requirements to avoid user input/args/prompting
-    sample_volumes = [5, 4, 8, 3, 6]
+    def __rmul__(self, factor):
+        return self.__mul__(factor)
 
-    mean_value = calculate_mean(sample_volumes)
-    std_deviation = calculate_standard_deviation(sample_volumes, mean_value)
+    def __truediv__(self, divisor):
+        if isinstance(divisor, (int, float)):
+            if divisor == 0:
+                raise ZeroDivisionError('Cannot divide volume by zero')
+            return Volume(self.cc / divisor)
+        return NotImplemented
 
-    print(f"Sample Volumes: {sample_volumes}")
-    print(f"Arithmetic Mean: {mean_value:.4f}")
-    print(f"Standard Deviation (N-1): {std_deviation:.4f}")
+    def to_liters(self):
+        return self.cc / self.LITERS_TO_CC
 
+    def to_milliliters(self):
+        return self.cc / self.MILLILITERS_TO_CC
+
+    def to_gallons(self):
+        return self.cc / self.GALLONS_TO_CC
+
+    def to_cubic_meters(self):
+        return self.cc / self.CUBIC_METERS_TO_CC
+
+    @classmethod
+    def from_liters(cls, liters):
+        return cls(liters * cls.LITERS_TO_CC)
+
+    @classmethod
+    def from_milliliters(cls, milliliters):
+        return cls(milliliters * cls.MILLILITERS_TO_CC)
+
+    @classmethod
+    def from_gallons(cls, gallons):
+        return cls(gallons * cls.GALLONS_TO_CC)
+
+    @classmethod
+    def from_cubic_meters(cls, cubic_meters):
+        return cls(cubic_meters * cls.CUBIC_METERS_TO_CC)
 if __name__ == '__main__':
-    main()
+    v1 = Volume.from_liters(1.5)
+    v2 = Volume.from_milliliters(500.0)
+    v3 = Volume.from_gallons(1.0)
+    v4 = Volume.from_cubic_meters(0.001)
+    print(f'Volume 1 (1.5 liters): {v1.to_liters()} liters')
+    print(f'Volume 1 (1.5 liters): {v1.to_milliliters()} milliliters')
+    print(f'Volume 1 (1.5 liters): {v1.to_gallons()} gallons')
+    print(f'Volume 1 (1.5 liters): {v1.to_cubic_meters()} cubic meters')
+    print(f'Volume 2 (500 ml): {v2.to_liters()} liters')
+    print(f'Volume 2 (500 ml): {v2.to_gallons()} gallons')
+    print(f'Volume 3 (1 gallon): {v3.to_liters()} liters')
+    print(f'Volume 3 (1 gallon): {v3.to_milliliters()} milliliters')
+    print(f'Volume 4 (0.001 m3): {v4.to_liters()} liters')
+    v_sum = v1 + v2
+    print(f'Sum of v1 and v2: {v_sum.to_liters()} liters')
+    v_diff = v3 - v4
+    print(f'Difference of v3 and v4: {v_diff.to_liters()} liters')
+    v_scaled = v1 * 2.5
+    print(f'v1 scaled by 2.5: {v_scaled.to_liters()} liters')
+    v_divided = v1 / 3.0
+    print(f'v1 divided by 3: {v_divided.to_milliliters()} milliliters')

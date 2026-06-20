@@ -1,132 +1,33 @@
 class DistanceConverter:
-    """Handles conversions between meters, kilometers, and miles with type safety."""
+    METERS_TO_KM = 0.001
+    METERS_TO_MILES = 0.000621371
+    KM_TO_METERS = 1000.0
+    KM_TO_MILES = 0.621371
+    MILES_TO_METERS = 1609.344
+    MILES_TO_KM = 1.609344
 
-    def __init__(self):
-        self._conversion_factors = {
-            'meters_to_kilometers': 0.001,
-            'kilometers_to_miles': 0.621371,
-            'meters_to_miles': 0.000621371,
-        }
+    def __init__(self, value, unit):
+        if unit not in ("meters", "kilometers", "miles"):
+            raise ValueError("Unit must be 'meters', 'kilometers', or 'miles'")
+        self.value = float(value)
+        self.unit = unit
 
-    def _validate_input(self, value: float | int) -> None:
-        """Ensure the input is a valid numeric type."""
-        if not isinstance(value, (int, float)):
-            raise TypeError(f"Expected number or str with 'm', 'km' or 'mi'. Got {type(value).__name__}")
+    def to_meters(self):
+        if self.unit == "meters":
+            return self.value
+        if self.unit == "kilometers":
+            return self.value * self.KM_TO_METERS
+        return self.value * self.MILES_TO_METERS
 
-    def convert_meters_to_kilometers(self, meters: int | float) -> float:
-        """Convert distance from meters to kilometers."""
-        self._validate_input(meters)
-        return meters * self._conversion_factors['meters_to_kilometers']
+    def to_kilometers(self):
+        meters = self.to_meters()
+        return meters * self.METERS_TO_KM
 
-    def convert_km_to_miles(self, km: int | float) -> float:
-        """Convert distance from kilometers to miles."""
-        self._validate_input(km)
-        return km * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_miles(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_str(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
-
-    def meters_to_mi(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to miles."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value))) * self._conversion_factors['kilometers_to_miles']
-
-    def meters_to_km(self, value: str):
-        """Parse a string like '100 m', '2.5 km' or '3 mi' and convert to kilometers."""
-        if isinstance(value, int) or isinstance(value, float):
-            return self.convert_meters_to_kilometers(int(float(value)))
+    def to_miles(self):
+        meters = self.to_meters()
+        return meters * self.METERS_TO_MILES
 
 if __name__ == '__main__':
-    pass
+    converter = DistanceConverter(1, "kilometers")
+    print(converter.to_meters())
+    print(converter.to_miles())

@@ -1,77 +1,49 @@
-import argparse
+def convert_distance(value, source_unit):
+    if not isinstance(value, (int, float)):
+        raise TypeError('Value must be a number')
+    if not isinstance(source_unit, str):
+        raise TypeError('Source unit must be a string')
+    source_unit = source_unit.lower().strip()
+    if source_unit not in ('meters', 'km', 'kilometers', 'miles', 'ft', 'feet'):
+        raise ValueError(f'Unsupported unit: {source_unit}')
+    if value < 0:
+        raise ValueError('Distance cannot be negative')
+    if source_unit in ('meters', 'm'):
+        meters = float(value)
+    elif source_unit in ('km', 'kilometers'):
+        meters = float(value) * 1609.344
+    elif source_unit in ('miles',):
+        meters = float(value) * 1609.344
+    elif source_unit in ('ft', 'feet'):
+        meters = float(value) * 0.3048
+    else:
+        meters = float(value)
+    return round(meters, 6)
 
-def convert_distance(distance: float, from_unit: str, to_unit: str) -> tuple[float, bool]:
-    """
-    Converts a distance value between metric units (km, m, cm).
-    
-    Args:
-        distance: The numerical distance value.
-        from_unit: Source unit ('km', 'm', or 'cm').
-        to_unit: Target unit ('km', 'm', or 'cm').
-        
-    Returns:
-        A tuple containing the converted distance and a boolean indicating success.
-    """
-    
-    # Define conversion factors relative to meters (1 km = 1000 m, 1 cm = 0.01 m)
-    unit_factors = {
-        'km': 1000,
-        'm': 1,
-        'cm': 0.01
-    }
+def to_meters(value, source_unit):
+    return convert_distance(value, source_unit)
 
-    # Validate input units against allowed set and convert to meters first
-    if from_unit not in unit_factors or to_unit not in unit_factors:
-        return distance, False
-    
-    try:
-        value_in_meters = distance * unit_factors[from_unit]
-        
-        # Convert from meters to target unit
-        converted_value = value_in_meters / unit_factors[to_unit]
-        return converted_value, True
-        
-    except (TypeError, ZeroDivisionError):
-        return 0.0, False
+def to_kilometers(value, source_unit):
+    meters = convert_distance(value, source_unit)
+    return round(meters / 1609.344, 6)
 
+def to_miles(value, source_unit):
+    meters = convert_distance(value, source_unit)
+    return round(meters / 1609.344, 6)
+
+def to_feet(value, source_unit):
+    meters = convert_distance(value, source_unit)
+    return round(meters / 0.3048, 6)
 if __name__ == '__main__':
-    
-    parser = argparse.ArgumentParser(description='Convert distances between metric units.')
-    # Define arguments without making them required to satisfy constraints
-    
-    distance_arg = parser.add_argument(
-        'distance', 
-        type=float, 
-        help='The numerical value of the distance'
-    )
-    
-    from_unit_arg = parser.add_argument(
-        '--from-unit', 
-        default=None, 
-        choices=['km', 'm', 'cm'], 
-        help='Source unit (default: km)'
-    )
-    
-    to_unit_arg = parser.add_argument(
-        '--to-unit', 
-        default=None, 
-        choices=['km', 'm', 'cm'], 
-        help='Target unit (default: m)'
-    )
-    
-    args = parser.parse_args()
-
-    # Hard-coded sample values for demonstration as per task requirements
-    
-    if not args.from_unit or not args.to_unit:
-        
-        distance_sample = 5.0
-        
-        from_unit_val = 'km' if not args.from_unit else args.from_unit
-        to_unit_val = 'm' if not args.to_unit else args.to_unit
-        
-        converted_value, is_success = convert_distance(distance_sample, from_unit_val, to_unit_val)
-
-        
-        print(f"Input: {distance_sample} {from_unit_val}")
-        print(f"Output: {converted_value:.4f} {to_unit_val}" if is_success else f"Error: Invalid unit combination")
+    result_meters = convert_distance(1000, 'meters')
+    print(result_meters)
+    result_kilometers = to_kilometers(1000, 'meters')
+    print(result_kilometers)
+    result_miles = to_miles(1000, 'meters')
+    print(result_miles)
+    result_feet = to_feet(1000, 'meters')
+    print(result_feet)
+    result_miles_from_km = to_miles(5, 'km')
+    print(result_miles_from_km)
+    result_feet_from_miles = to_feet(1, 'miles')
+    print(result_feet_from_miles)

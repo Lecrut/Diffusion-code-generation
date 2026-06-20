@@ -1,29 +1,59 @@
 import math
-def calculate_polygon_area(vertices):
-    n = len(vertices)
-    if n < 3:
-        return 0.0
-    sum1 = 0.0
-    sum2 = 0.0
-    for i in range(n):
-        x_i, y_i = vertices[i]
-        x_next, y_next = vertices[(i + 1) % n]
-        sum1 += x_i * y_next
-        sum2 += y_i * x_next
-    area = 0.5 * (sum1 - sum2)
-    if area < 0:
-        area = -area
-    return area
+from typing import List
+
+class Shape:
+    def area(self) -> float:
+        raise RuntimeError("Subclass must implement area")
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Factor must be positive")
+
+    def scaled_area(self, factor: float) -> float:
+        original_area = self.area()
+        return original_area * (factor ** 2)
+
+class Triangle(Shape):
+    def __init__(self, base: float, height: float) -> None:
+        if base <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.base = base
+        self.height = height
+
+    def area(self) -> float:
+        return 0.5 * self.base * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.base *= factor
+        self.height *= factor
+
+class Square(Shape):
+    def __init__(self, side: float) -> None:
+        if side <= 0:
+            raise ValueError("Side must be positive")
+        self.side = side
+
+    def area(self) -> float:
+        return self.side ** 2
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.side *= factor
+
+def process_shapes(shapes: List[Shape], factor: float) -> List[float]:
+    results = []
+    for shape in shapes:
+        results.append(shape.scaled_area(factor))
+    return results
+
 if __name__ == '__main__':
-    sample_vertices_1 = [(0, 0), (1, 0), (0, 1)]
-    area_1 = calculate_polygon_area(sample_vertices_1)
-    print(f"Area 1: {area_1}")
-    sample_vertices_2 = [(2, 1), (4, 5), (7, 3), (5, 0)]
-    area_2 = calculate_polygon_area(sample_vertices_2)
-    print(f"Area 2: {area_2}")
-    sample_vertices_3 = [(1.5, 2.5), (3.5, 1.5), (2.5, 4.5)]
-    area_3 = calculate_polygon_area(sample_vertices_3)
-    print(f"Area 3: {area_3}")
-    sample_vertices_4 = [(0, 0), (10, 0), (10, 10), (0, 10)]
-    area_4 = calculate_polygon_area(sample_vertices_4)
-    print(f"Area 4: {area_4}")
+    triangle = Triangle(10.0, 5.0)
+    square = Square(4.0)
+    shapes = [triangle, square]
+    factor = 2.5
+    areas = process_shapes(shapes, factor)
+    print(areas[0])
+    print(areas[1])
+    triangle.scale(3.0)
+    print(triangle.area())

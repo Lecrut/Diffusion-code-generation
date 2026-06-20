@@ -1,105 +1,42 @@
-#!/usr/bin/env python3
-"""
-Module to read distance inputs from standard input (or simulated via hardcoded data),
-validate their format, convert all distances to meters, and print the results.
-This script is designed to be run without user interaction or external dependencies.
-"""
+def meters_to_feet(meters):
+    return meters * 3.28084
 
-def parse_distance(value: str) -> float | None:
-    """
-    Parses a string representing a distance in any common unit (meters, km, miles).
-    
-    Expected formats:
-        - Integer: '10', '-5'
-        - Decimal with optional negative sign: '3.14', '-2.5e-6'
-        
-    Returns float value or None if the format is invalid.
-    """
+def feet_to_meters(feet):
+    return feet / 3.28084
 
-def convert_to_meters(value: str) -> tuple[float | None, list[str]]:
-    """
-    Converts a distance string to meters and validates its numeric format.
-    
-    Args:
-        value (str): The input string representing a distance.
-        
-    Returns:
-        A tuple containing:
-            - float or None: Meters if conversion succeeds, otherwise None.
-            - list[str]: List of descriptive error messages if validation fails.
-            
-    Example:
-        >>> convert_to_meters("5km")
-        (None, ['Input must be a valid number'])
-        
-        Note: The original requirement asks to validate format and convert 
-              all provided distances. Since the prompt strictly forbids interactive 
-              input() calls but requires reading from standard input logic within the module,
-              we implement validation based on numeric literal recognition for robustness.
-    """
+def kilograms_to_pounds(kg):
+    return kg * 2.20462
 
-def parse_and_validate_input(raw_data: list[str]) -> dict[float | None]:
-    """
-    Parses and validates a list of raw distance strings into meters.
+def pounds_to_kilograms(pounds):
+    return pounds / 2.20462
 
-    Args:
-        raw_data (list[str]): List of input string values.
-        
-    Returns:
-        A dictionary mapping original index to converted meter value or error status.
-    """
+def celsius_to_fahrenheit(celsius):
+    return (celsius * 9/5) + 32
 
-def main():
-    # Simulating reading from standard input with hardcoded sample values as required
-    # This ensures no user interaction, network access, or pre-existing files are needed at runtime.
-    
-    simulated_stdin_data = [
-        "10", 
-        "-3.5e-6", 
-        "2km",   # Note: Strict adherence to 'numeric format' implies we only accept raw numbers here for robustness as per typical CLI distance converters without external library dependencies like km2m which are non-standard in this context unless imported.
-                # To remain fully self-contained and avoid missing imports (like math or re) that might be considered "external",
-                # we strictly validate against numeric literals found at the start of strings to ensure maximum robustness 
-                # without assuming knowledge of suffixes like 'km' being part of the standard input format.
-                # If a value starts with a letter, it is rejected as invalid per strict numeric requirement unless regex allows prefixes (which requires import).
-    ]
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5/9
 
-    results = {}
-    
-    for idx, val_str in enumerate(simulated_stdin_data):
-        parsed_value = None
-        error_msgs: list[str] = []
-        
-        # Robust validation without external imports by attempting direct float conversion after stripping whitespace
-        try: 
-            stripped_val = val_str.strip() if val_str else ""
-            parsed_float = float(stripped_val)
-            converted_meters = parsed_float  # Assuming input unit is meters for base numbers or strictly numeric inputs
-            
-            results[idx] = {
-                "original": val_str,
-                "meters": converted_meters,
-                "valid": True 
-            }
+def kilometers_to_miles(km):
+    return km * 0.621371
 
-        except ValueError: 
-            error_msgs.append("Input format invalid (must be a number)")
-            
-    # If any input is not a raw number but expected units (like 'km'), this script currently rejects it
-    # to ensure strict robustness without external libraries, as parsing "2.5" from "2.5km" requires string processing or imports 
-    # which were constrained by avoiding sys/stdin/argparse and keeping dependencies minimal for a single module run.
+def miles_to_kilometers(miles):
+    return miles / 0.621371
 
-    print("Conversion Results:")
-    if results:
-        idx = 0
-        for entry in sorted(results.items()):
-            val, res_data = entry[1], entry[2] 
-            meter_val = res_data.get('meters', 'N/A') or "ERROR"
-            
-            # Formatting the output string
-            status_str = f"[{idx}] {val['original']} -> Meters: {meter_val}" if val else "[Error]"
-            print(status_str)
+if __name__ == '__main__':
+    sample_meters = 100
+    sample_feet = 328.084
+    sample_kg = 70
+    sample_pounds = 154.3234
+    sample_celsius = 25
+    sample_fahrenheit = 77
+    sample_km = 10
+    sample_miles = 6.21371
 
-    idx += 1
-
-if __name__ == '__main__': 
-    main()
+    print(meters_to_feet(sample_meters))
+    print(feet_to_meters(sample_feet))
+    print(kilograms_to_pounds(sample_kg))
+    print(pounds_to_kilograms(sample_pounds))
+    print(celsius_to_fahrenheit(sample_celsius))
+    print(fahrenheit_to_celsius(sample_fahrenheit))
+    print(kilometers_to_miles(sample_km))
+    print(miles_to_kilometers(sample_miles))

@@ -1,22 +1,16 @@
-import sys
-
-def safe_float(value):
-    """Convert a string to float with error handling."""
-    try:
-        return float(value)
-    except ValueError as e:
-        raise TypeError(f"Invalid numeric input '{value}': {e}") from e
+def calculate_weight_difference(weights):
+    if not weights:
+        return 0
+    min_weight = weights[0]
+    max_weight = weights[0]
+    for weight in weights:
+        if weight < min_weight:
+            min_weight = weight
+        elif weight > max_weight:
+            max_weight = weight
+    return max_weight - min_weight
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction
-    weight1 = "75.5"
-    weight2 = "80.0"
-
-    try:
-        w1 = safe_float(weight1)
-        w2 = safe_float(weight2)
-        difference = w1 - w2
-        print(difference)
-    except TypeError as e:
-        # Print error message but do not exit with non-zero status per general script style unless specified
-        print(f"Error: {e}", file=sys.stderr)
+    sample_weights = [10, 25, 5, 40, 15]
+    result = calculate_weight_difference(sample_weights)
+    print(result)

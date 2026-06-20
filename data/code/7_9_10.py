@@ -1,85 +1,52 @@
-"""
-Module: datetime_difference_calculator
+import datetime
 
-A production-ready script to calculate the time difference between two arbitrary 
-datetime objects and output the result in user-specified units (days, hours, minutes).
-
-This module avoids interactive input, command-line arguments, or network access.
-It includes a self-contained main block with hard-coded sample values for testing.
-"""
-
-from datetime import datetime
-
-def calculate_time_difference(start: datetime, end: datetime) -> float:
-    """
-    Calculate the total time difference in seconds between two datetime objects.
+def calculate_time_difference(start_time, end_time, unit):
+    if start_time > end_time:
+        raise ValueError("Start time must be before or equal to end time")
     
-    Args:
-        start (datetime): The starting datetime object.
-        end (datetime): The ending datetime object.
-        
-    Returns:
-        float: Total duration in seconds if end is after start, otherwise negative value.
-               If inputs are None or invalid types, raises TypeError.
-    """
-    try:
-        return (end - start).total_seconds()
-    except Exception as e:
-        raise TypeError(f"Invalid datetime objects provided: {e}")
-
-def format_duration(seconds: float) -> str:
-    """
-    Format the total seconds into a human-readable string containing days, hours, 
-    and remaining minutes.
+    delta = end_time - start_time
+    total_seconds = int(delta.total_seconds())
     
-    Args:
-        seconds (float): Total duration in seconds.
-        
-    Returns:
-        str: Formatted time difference as "X day(s), Y hour(s), Z minute(s)".
-             Uses pluralization for units where appropriate.
-    """
-    days = int(seconds // 86400)
-    remaining_seconds = (seconds % 86400)
-    
-    hours = int(remaining_seconds // 3600)
-    remaining_seconds %= 3600
-    
-    minutes = int(remaining_seconds / 60)
-    
-    result_parts = []
-    
-    if days > 0:
-        unit_str = "day" + ("s" if days != 1 else "")
-        result_parts.append(f"{days} {unit_str}")
-        
-    if hours > 0 or (hours == 0 and minutes > 0):
-        unit_str = "hour" + ("s" if hours != 1 else "")
-        result_parts.append(f"{hours} {unit_str}")
-        
-    if minutes > 0:
-        unit_str = "minute" + ("s" if minutes != 1 else "")
-        result_parts.append(f"{minutes} {unit_str}")
-    
-    return ", ".join(result_parts)
+    if unit == 'days':
+        return total_seconds // 86400
+    elif unit == 'hours':
+        return total_seconds // 3600
+    elif unit == 'minutes':
+        return total_seconds // 60
+    elif unit == 'seconds':
+        return total_seconds
+    elif unit == 'hours_and_minutes':
+        hours = total_seconds // 3600
+        remaining_minutes = (total_seconds % 3600) // 60
+        return f"{hours} hours and {remaining_minutes} minutes"
+    elif unit == 'days_and_hours':
+        days = total_seconds // 86400
+        remaining_hours = (total_seconds % 86400) // 3600
+        return f"{days} days and {remaining_hours} hours"
+    elif unit == 'days_hours_minutes':
+        days = total_seconds // 86400
+        remaining_seconds_after_days = total_seconds % 86400
+        hours = remaining_seconds_after_days // 3600
+        remaining_minutes = (remaining_seconds_after_days % 3600) // 60
+        return f"{days} days, {hours} hours, and {remaining_minutes} minutes"
+    else:
+        raise ValueError("Unsupported unit. Choose from 'days', 'hours', 'minutes', 'seconds', 'hours_and_minutes', 'days_and_hours', or 'days_hours_minutes'")
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
+    start_dt = datetime.datetime(2023, 10, 1, 8, 30, 0)
+    end_dt = datetime.datetime(2023, 10, 3, 14, 45, 30)
     
-    start_time = datetime(2023, 5, 17, 8, 30, 45)
-    end_time = datetime(2023, 6, 1, 9, 15, 30)
+    result_days = calculate_time_difference(start_dt, end_dt, 'days')
+    print(result_days)
     
-    try:
-        total_seconds = calculate_time_difference(start_time, end_time)
-        
-        formatted_output = format_duration(total_seconds)
-        
-        print(f"Time Difference Calculation:")
-        print(f"Start Time: {start_time}")
-        print(f"End Time:   {end_time}")
-        print("-" * 30)
-        print(f"Total Duration (seconds): {total_seconds:.2f}s")
-        print(f"Formatted Output:         {formatted_output}")
-        
-    except TypeError as e:
-        print(f"Error during calculation: {e}")
+    result_hours = calculate_time_difference(start_dt, end_dt, 'hours')
+    print(result_hours)
+    
+    result_minutes = calculate_time_difference(start_dt, end_dt, 'minutes')
+    print(result_minutes)
+    
+    result_hm = calculate_time_difference(start_dt, end_dt, 'hours_and_minutes')
+    print(result_hm)
+    
+    result_dhm = calculate_time_difference(start_dt, end_dt, 'days_hours_minutes')
+    print(result_dhm)

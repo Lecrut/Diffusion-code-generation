@@ -1,31 +1,65 @@
-import math
+class DistanceConverter:
+    def __init__(self):
+        self.km_to_meters = 1000.0
+        self.miles_to_meters = 1609.344
+        self.feet_to_meters = 0.3048
+        self.inches_to_meters = 0.0254
+        self.centimeters_to_meters = 0.01
+        self.yards_to_meters = 0.9144
+        self.kilometers_to_meters = 1000.0
+        self.meters_to_meters = 1.0
+        
+        self.units_to_factor = {
+            "km": self.kilometers_to_meters,
+            "kilometer": self.kilometers_to_meters,
+            "kilometers": self.kilometers_to_meters,
+            "m": self.meters_to_meters,
+            "meter": self.meters_to_meters,
+            "meters": self.meters_to_meters,
+            "mi": self.miles_to_meters,
+            "mile": self.miles_to_meters,
+            "miles": self.miles_to_meters,
+            "ft": self.feet_to_meters,
+            "foot": self.feet_to_meters,
+            "feet": self.feet_to_meters,
+            "in": self.inches_to_meters,
+            "inch": self.inches_to_meters,
+            "inches": self.inches_to_meters,
+            "cm": self.centimeters_to_meters,
+            "centimeter": self.centimeters_to_meters,
+            "centimeters": self.centimeters_to_meters,
+            "yd": self.yards_to_meters,
+            "yard": self.yards_to_meters,
+            "yards": self.yards_to_meters
+        }
 
-def convert_distance(distance_value: float, target_unit: str) -> dict:
-    """
-    Converts a given distance value from meters to various units 
-    using precise floating-point arithmetic and handles potential errors gracefully.
+    def convert(self, value, from_unit, to_unit):
+        from_lower = from_unit.lower().strip()
+        to_lower = to_unit.lower().strip()
+        
+        if from_lower not in self.units_to_factor:
+            raise ValueError(f"Unsupported source unit: {from_unit}")
+        if to_lower not in self.units_to_factor:
+            raise ValueError(f"Unsupported target unit: {to_unit}")
+        
+        if value < 0:
+            raise ValueError("Distance cannot be negative")
+            
+        meters = value * self.units_to_factor[from_lower]
+        result = meters / self.units_to_factor[to_lower]
+        return result
+
+def main():
+    converter = DistanceConverter()
     
-    Args:
-        distance_value (float): The distance in meters to be converted.
-        target_unit (str): The unit to convert 'distance' into ('km', 'miles').
-
-    Returns:
-        dict: A dictionary containing the conversion result with keys 'converted_distance', 
-              'original_units', and 'target_units'. Raises an exception if invalid input is provided, 
-              except for division by zero which returns a sentinel error message.
+    result_km_to_miles = converter.convert(10, "km", "mi")
+    print(f"10 km = {result_km_to_miles} mi")
     
-    Note: This function does not accept any interactive prompt or network access."""
-
-    # Define base units (meters) to target conversion factors
-    unit_conversions = {
-        'km': 1 / 1000,
-        'miles': 1 / 1609.344
-    }
+    result_miles_to_km = converter.convert(6.21371, "mi", "km")
+    print(f"6.21371 mi = {result_miles_to_km} km")
     
-    if distance_value == float('inf') or math.isnan(distance_value):
-        return {'error': "Distance value must be a valid finite number."}
-
-    # Check for invalid input types by attempting arithmetic implicitly in dict creation
+    result_ft_to_cm = converter.convert(1, "ft", "cm")
+    print(f"1 ft = {result_ft_to_cm} cm")
 
 if __name__ == '__main__':
-    pass
+    main()

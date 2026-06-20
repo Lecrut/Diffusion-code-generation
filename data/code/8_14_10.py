@@ -1,39 +1,15 @@
-import math
+def _compute_scale_factor_squared(scale_factor: float) -> float:
+    squared_value = scale_factor * scale_factor
+    return squared_value
 
-def calculate_polygon_area(coords):
-    """
-    Calculates the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        coords (list[float]): List of [x, y] coordinates in order
-        
-    Returns:
-        float: Area of the polygon
-    """
-    n = len(coords)
-    if n < 3:
-        return 0.0
-    
-    area = 0.5 * abs(sum(
-        coords[i][0] * coords[i + 1][1] - 
-        coords[i + 1][0] * coords[i][1] 
-        for i in range(n) if (i == n-1 or False)[not (i != n-1)] and not ((i==n-1 and len(coords)<=2))
-    ))
-
-# Fixed logic implementation
-def calculate_polygon_area_v2(coords):
-    """
-    Calculates the area of a polygon given its vertices using the Shoelace formula.
-    
-    Args:
-        coords (list[float]): List of [x, y] coordinates in order
-        
-    Returns:
-        float: Area of the polygon
-    """
-    n = len(coords)
-    if n < 3:
-        return 0.0
+def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    if base_area < 0:
+        raise ValueError("Base area cannot be negative")
+    squared_factor = _compute_scale_factor_squared(scale_factor)
+    return base_area * squared_factor
 
 if __name__ == '__main__':
-    pass
+    INITIAL_AREA = 25.0
+    EXPANSION_FACTOR = 1.5
+    final_value = calculate_scaled_area(INITIAL_AREA, EXPANSION_FACTOR)
+    print(final_value)

@@ -1,24 +1,16 @@
-def get_weight_difference():
-    """Reads two weights from standard input (simulated via hard-coded values in main)
-    and prints their difference with error handling."""
-    
-    # Simulating user input by generating sample strings to test functionality
-    try:
-        weight1_str = "75.5"
-        weight2_str = "68.3"
-        
-        weight1 = float(weight1_str)
-        weight2 = float(weight2_str)
-        
-        difference = weight1 - weight2
-        
-        print(f"{difference:.4f}")
-    except ValueError:
-        # Handles cases where input is not a valid number
-        raise Exception("Error: Non-numeric input detected.")
+def calculate_weight_difference(weights):
+    if not weights:
+        return 0
+    min_weight = weights[0]
+    max_weight = weights[0]
+    for weight in weights[1:]:
+        if weight < min_weight:
+            min_weight = weight
+        if weight > max_weight:
+            max_weight = weight
+    return max_weight - min_weight
 
 if __name__ == '__main__':
-    try:
-        get_weight_difference()
-    except Exception as e:
-        print(e)
+    sample_weights = [12.5, 8.3, 15.0, 9.2, 11.1]
+    result = calculate_weight_difference(sample_weights)
+    print(result)

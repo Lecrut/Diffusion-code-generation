@@ -1,36 +1,18 @@
-import math
-
-def calculate_polygon_area(vertices):
-    """
-    Calculate the area of a polygon given a list of vertices.
-    
-    Args:
-        vertices (list[tuple]): A list of (x, y) tuples representing the 
-                                ordered vertices of the polygon.
-            
-    Returns:
-        float: The calculated area of the polygon.
-        
-    Raises:
-        ValueError: If fewer than 3 unique vertices are provided.
-    
-    Formula Used: Shoelace formula
-    Area = |(x1y2 + x2y3 + ... + xn-1yn - (y1xn + ynxn+1))| / 2
-    
-    Note: The list is assumed to be closed, meaning the first vertex 
-         should match the last one for a valid calculation.
-"""
-
-    if len(vertices) < 3 or any(not isinstance(v, tuple) or not all(isinstance(coord, (int, float)) 
-                                                               for coord in v) for v in vertices):
-        raise ValueError("Vertices must be at least three and consist of numeric coordinate tuples.")
-
-    # Ensure the polygon is closed by appending the first vertex to the end if it's not already there.
-    # However, standard Shoelace implementations often assume an open list where the last point 
-    # connects back implicitly or requires explicit closure. The formula used below handles both:
-    # It sums cross products of adjacent points including wrapping around from (x_n-1, y_n-1) to (x_0, y_0).
-
-    n = len(vertices)
+def calculate_area(shape, *dimensions):
+    if shape == "rectangle":
+        if len(dimensions) != 2:
+            raise ValueError("Rectangle requires exactly 2 dimensions (width and height)")
+        return dimensions[0] * dimensions[1]
+    elif shape == "circle":
+        if len(dimensions) != 1:
+            raise ValueError("Circle requires exactly 1 dimension (radius)")
+        import math
+        return math.pi * (dimensions[0] ** 2)
+    else:
+        raise ValueError("Unsupported shape type. Use 'rectangle' or 'circle'.")
 
 if __name__ == '__main__':
-    pass
+    sample_rectangle_area = calculate_area("rectangle", 5, 10)
+    print(sample_rectangle_area)
+    sample_circle_area = calculate_area("circle", 3)
+    print(sample_circle_area)

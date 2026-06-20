@@ -1,27 +1,11 @@
-import math
+class WeightCalculator:
+    def __init__(self, weight1, weight2):
+        self.weight1 = weight1
+        self.weight2 = weight2
 
-def calculate_weight_difference(a: float, b: float) -> float:
-    """
-    Calculate the absolute difference between two floating-point numbers.
-    
-    This function uses Python's built-in abs() and subtraction operations,
-    which are highly optimized in CPython for basic arithmetic on floats.
-    No external libraries or complex logic is used to ensure maximum efficiency.
-
-    Args:
-        a (float): The first number.
-        b (float): The second number.
-
-    Returns:
-        float: The absolute difference between a and b.
-    """
-    return abs(a - b)
+    def calculate_difference(self):
+        return abs(self.weight1 - self.weight2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input or external dependencies
-    val1 = 5.732
-    val2 = 2.498
-    
-    result = calculate_weight_difference(val1, val2)
-    
-    print(f"Absolute difference between {val1} and {val2}: {result}")
+    calculator = WeightCalculator(100, 85)
+    print(calculator.calculate_difference())

@@ -1,14 +1,17 @@
-import math
+class LengthComparator:
+    def __init__(self):
+        self.length1 = 10.0001
+        self.length2 = 10.0002
+        self.epsilon = 0.00005
 
-def get_length_measurements():
-    """Returns a list of two numeric length measurements."""
-    return [10, 5]
+    def are_equal_within_epsilon(self):
+        difference = abs(self.length1 - self.length2)
+        return difference <= self.epsilon
 
-def validate_numeric_input(values):
-    """Validates that all inputs are numbers and returns the cleaned values."""
-    for val in values:
-        if not isinstance(val, (int, float)):
-            raise TypeError(f"Input '{val}' is not a numeric type.")
+    def absolute_difference(self):
+        return abs(self.length1 - self.length2)
 
 if __name__ == '__main__':
-    pass
+    comparator = LengthComparator()
+    print(comparator.are_equal_within_epsilon())
+    print(comparator.absolute_difference())

@@ -1,52 +1,32 @@
-import unittest
-class DistanceConverter:
-    def convert_miles_to_km(self, miles):
-        return miles * 1.60934
-    def convert_km_to_miles(self, km):
-        return km / 1.60934
-class TestDistanceConverter(unittest.TestCase):
-    def setUp(self):
-        self.converter = DistanceConverter()
-        self.tolerance = 1e-5
-    def test_miles_to_km_positive(self):
-        miles = 10.0
-        expected_km = 16.0934
-        result = self.converter.convert_miles_to_km(miles)
-        self.assertAlmostEqual(result, expected_km, delta=self.tolerance)
-    def test_miles_to_km_zero(self):
-        miles = 0.0
-        expected_km = 0.0
-        result = self.converter.convert_miles_to_km(miles)
-        self.assertAlmostEqual(result, expected_km, delta=self.tolerance)
-    def test_miles_to_km_small_value(self):
-        miles = 1.0
-        expected_km = 1.60934
-        result = self.converter.convert_miles_to_km(miles)
-        self.assertAlmostEqual(result, expected_km, delta=self.tolerance)
-    def test_miles_to_km_negative(self):
-        miles = -5.0
-        expected_km = -8.0467
-        result = self.converter.convert_miles_to_km(miles)
-        self.assertAlmostEqual(result, expected_km, delta=self.tolerance)
-    def test_km_to_miles_positive(self):
-        km = 16.0934
-        expected_miles = 10.0
-        result = self.converter.convert_km_to_miles(km)
-        self.assertAlmostEqual(result, expected_miles, delta=self.tolerance)
-    def test_km_to_miles_zero(self):
-        km = 0.0
-        expected_miles = 0.0
-        result = self.converter.convert_km_to_miles(km)
-        self.assertAlmostEqual(result, expected_miles, delta=self.tolerance)
-    def test_km_to_miles_small_value(self):
-        km = 1.60934
-        expected_miles = 1.0
-        result = self.converter.convert_km_to_miles(km)
-        self.assertAlmostEqual(result, expected_miles, delta=self.tolerance)
-    def test_km_to_miles_large_value(self):
-        km = 100.0
-        expected_miles = 62.137119
-        result = self.converter.convert_km_to_miles(km)
-        self.assertAlmostEqual(result, expected_miles, delta=self.tolerance)
+def normalize_to_meters(value, unit):
+    unit = unit.lower().strip()
+    if unit in ('m', 'meter', 'meters'):
+        return value
+    elif unit in ('km', 'kilometer', 'kilometers'):
+        return value * 1000.0
+    elif unit in ('cm', 'centimeter', 'centimeters'):
+        return value * 0.01
+    elif unit in ('mm', 'millimeter', 'millimeters'):
+        return value * 0.001
+    elif unit in ('mi', 'mile', 'miles'):
+        return value * 1609.344
+    elif unit in ('yd', 'yard', 'yards'):
+        return value * 0.9144
+    elif unit in ('ft', 'feet', 'foot'):
+        return value * 0.3048
+    elif unit in ('in', 'inch', 'inches'):
+        return value * 0.0254
+    elif unit in ('nm', 'nanometer', 'nanometers'):
+        return value * 1e-9
+    elif unit in ('um', 'micrometer', 'micrometers', 'µm'):
+        return value * 1e-6
+    else:
+        raise ValueError(f"Unknown unit: {unit}")
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print(normalize_to_meters(1, 'km'))
+    print(normalize_to_meters(100, 'cm'))
+    print(normalize_to_meters(5, 'mi'))
+    print(normalize_to_meters(12, 'in'))
+    print(normalize_to_meters(1, 'm'))
+    print(normalize_to_meters(1000, 'nm'))

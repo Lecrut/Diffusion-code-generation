@@ -1,34 +1,12 @@
-class LengthComparator:
-    def compare(self, length1_value, unit1, length2_value, unit2):
-        """
-        Compares two length measurements by converting them to a common base (meters).
-        
-        Supported units: 'cm', 'mm', 'km' (case-insensitive)
-        Conversion factors relative to meters: 1 cm = 0.01 m, 1 mm = 0.001 m, 1 km = 1000 m
-        
-        Returns a string indicating the relationship between the two lengths.
-        """
-        # Define conversion factors for supported units
-        conversions = {
-            'cm': 0.01,
-            'mm': 0.001,
-            'km': 1000
-        }
-
-        def to_meters(value, unit):
-            unit_lower = unit.lower()
-            if unit_lower not in conversions:
-                raise ValueError(f"Unsupported length unit: {unit}. Supported units are cm, mm, km.")
-            return value * conversions[unit_lower]
-
-        # Convert both lengths to meters for comparison
-        val1_meters = to_meters(length1_value, unit1)
-        val2_meters = to_meters(length2_value, unit2)
-
-        if abs(val1_meters - val2_meters) < 0.00001: # Float tolerance
-            return f"Equal (within {val1_meters:.6f} and {val2_meters:.6f})"
-        elif val1_meters > val2_meters:
-            difference = val1_meters - val2_meters
+def get_larger_value_meters(val1_m, val2_m):
+    val1_cm = val1_m * 100
+    val2_cm = val2_m * 100
+    if val1_cm > val2_cm:
+        return val1_m
+    return val2_m
 
 if __name__ == '__main__':
-    pass
+    sample_val1 = 1.5
+    sample_val2 = 1.4
+    result = get_larger_value_meters(sample_val1, sample_val2)
+    print(result)

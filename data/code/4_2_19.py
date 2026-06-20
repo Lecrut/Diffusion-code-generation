@@ -1,27 +1,32 @@
-import math
-
-def convert_distance(distance: float, unit: str) -> dict:
-    """
-    Convert a given distance into all supported units (meters, kilometers, miles).
+def convert_distance(value: float, unit: str) -> dict:
+    meters = 0.0
+    if unit == 'm':
+        meters = value
+    elif unit == 'km':
+        meters = value * 1000.0
+    elif unit == 'mi':
+        meters = value * 1609.344
+    elif unit == 'ft':
+        meters = value * 0.3048
+    elif unit == 'in':
+        meters = value * 0.0254
+    else:
+        raise ValueError(f"Unsupported unit: {unit}")
     
-    Args:
-        distance (float): The numerical value of the distance.
-        unit (str): The source unit as a string ('m', 'km', or 'mi').
-
-    Returns:
-        dict: A dictionary containing equivalent distances in meters, kilometers, and miles.
-              Keys are lowercase strings; values are floats rounded to 6 decimal places.
-    
-    Supported units mapping factor relative to meters (base_meters):
-        - m   : base_meters = 1           # Conversion from input is identity if unit matches
-        - km  : base_meters = 0.001       # Input in kilometers -> multiply by 0.001 to get meters? No, correct logic:
-                                         # To convert FROM source TO target (meters):
-                                         #    If input 'km': distance * 1000 = meters
-                                         #    If input 'mi': distance * 1609.344 = meters
-    
-        - mi : base_meters ≈ 5280 * 3 feet conversion... wait, let's use precise constants to be efficient and accurate."""
-
-    # Define exact conversion factors from each unit TO METERS
+    return {
+        'm': meters,
+        'km': meters / 1000.0,
+        'mi': meters / 1609.344,
+        'ft': meters / 0.3048,
+        'in': meters / 0.0254
+    }
 
 if __name__ == '__main__':
-    pass
+    sample_value = 1.0
+    sample_unit = 'mi'
+    result = convert_distance(sample_value, sample_unit)
+    print(f"{sample_value} {sample_unit} = {result}")
+    sample_value2 = 5.0
+    sample_unit2 = 'km'
+    result2 = convert_distance(sample_value2, sample_unit2)
+    print(f"{sample_value2} {sample_unit2} = {result2}")

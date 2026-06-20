@@ -1,44 +1,39 @@
 def convert_time(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    seconds = 0
-    if from_unit == "seconds":
-        seconds = value
-    elif from_unit == "minutes":
-        seconds = value * 60
-    elif from_unit == "hours":
-        seconds = value * 3600
-    elif from_unit == "days":
-        seconds = value * 86400
-    elif from_unit == "weeks":
-        seconds = value * 604800
-    elif from_unit == "milliseconds":
-        seconds = value / 1000.0
-    elif from_unit == "microseconds":
-        seconds = value / 1000000.0
-    else:
-        raise ValueError("Unsupported 'from_unit'")
-    if to_unit == "seconds":
-        return seconds
-    elif to_unit == "minutes":
-        return seconds / 60.0
-    elif to_unit == "hours":
-        return seconds / 3600.0
-    elif to_unit == "days":
-        return seconds / 86400.0
-    elif to_unit == "weeks":
-        return seconds / 604800.0
-    elif to_unit == "milliseconds":
-        return seconds * 1000.0
-    elif to_unit == "microseconds":
-        return seconds * 1000000.0
-    else:
-        raise ValueError("Unsupported 'to_unit'")
+    units_to_seconds = {
+        'second': 1,
+        'minute': 60,
+        'hour': 3600,
+        'day': 86400,
+        'week': 604800,
+        'month': 2592000,
+        'year': 31536000
+    }
+    
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    
+    if from_unit_lower not in units_to_seconds:
+        raise ValueError(f"Unsupported from_unit: {from_unit}")
+    if to_unit_lower not in units_to_seconds:
+        raise ValueError(f"Unsupported to_unit: {to_unit}")
+    
+    seconds = value * units_to_seconds[from_unit_lower]
+    result = seconds / units_to_seconds[to_unit_lower]
+    
+    return result
+
 if __name__ == '__main__':
-    print(convert_time(3600, "seconds", "minutes"))
-    print(convert_time(120, "minutes", "hours"))
-    print(convert_time(86400, "hours", "days"))
-    print(convert_time(1, "days", "hours"))
-    print(convert_time(5000, "milliseconds", "seconds"))
-    print(convert_time(1000, "seconds", "milliseconds"))
-    print(convert_time(10, "minutes", "seconds"))
+    result1 = convert_time(1, 'hour', 'minute')
+    print(result1)
+    
+    result2 = convert_time(24, 'day', 'second')
+    print(result2)
+    
+    result3 = convert_time(1, 'year', 'month')
+    print(result3)
+    
+    result4 = convert_time(3600, 'second', 'hour')
+    print(result4)
+    
+    result5 = convert_time(1.5, 'week', 'day')
+    print(result5)

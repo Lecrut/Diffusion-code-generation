@@ -1,45 +1,46 @@
-import numpy as np
+class LengthComparator:
+    def __init__(self, unit_conversion_rates=None):
+        self.unit_conversion_rates = unit_conversion_rates or {
+            'm': 1.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'km': 1000.0,
+            'in': 0.0254,
+            'ft': 0.3048,
+            'yd': 0.9144,
+            'mi': 1609.344
+        }
 
-def sign_diff_array(arr1: np.ndarray, arr2: np.ndarray) -> np.ndarray:
-    """
-    Computes an array of signs representing the difference between corresponding 
-    elements in two input arrays.
-    
-    The result is -1 where arr1 < arr2, 0 where they are equal, and 1 where arr1 > arr2.
-    
-    Parameters:
-        arr1 (np.ndarray): First array of length measurements.
-        arr2 (np.ndarray): Second array of length measurements.
-        
-    Returns:
-        np.ndarray: Array of signs (-1, 0, or 1) corresponding to the difference 
-                    between elements in arr1 and arr2.
-    
-    Raises:
-        ValueError: If input arrays do not have matching dimensions.
-    """
-    if len(arr1) != len(arr2):
-        raise ValueError(f"Arrays must be of equal length, got {len(arr1)} and {len(arr2)}.")
+    def compare(self, value1, unit1, value2, unit2):
+        if unit1 not in self.unit_conversion_rates:
+            raise ValueError(f"Unsupported unit: {unit1}")
+        if unit2 not in self.unit_conversion_rates:
+            raise ValueError(f"Unsupported unit: {unit2}")
 
-    diff = arr1 - arr2
-    
-    # Use np.sign for high performance vectorized operation instead of conditional logic
-    return np.sign(diff.astype(float))
+        meters1 = value1 * self.unit_conversion_rates[unit1]
+        meters2 = value2 * self.unit_conversion_rates[unit2]
+
+        difference = meters1 - meters2
+
+        if difference > 0:
+            return f"{value1} {unit1} is greater than {value2} {unit2}"
+        elif difference < 0:
+            return f"{value1} {unit1} is less than {value2} {unit2}"
+        else:
+            return f"{value1} {unit1} is equal to {value2} {unit2}"
+
+    def get_meters(self, value, unit):
+        if unit not in self.unit_conversion_rates:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return value * self.unit_conversion_rates[unit]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as requested, no user input or external dependencies.
-    
-    length_measurements_a = np.array([10.5, 23.7, 45.0, 67.8])
-    length_measurements_b = np.array([10.0, 23.0, 45.0, 69.0])
-
-    result = sign_diff_array(length_measurements_a, length_measurements_b)
-
-    print("Input Array A:", length_measurements_a)
-    print("Input Array B:", length_measurements_b)
-    print("Sign of Difference (A - B):", result)
-    
-    # Verification breakdown:
-    # 10.5 - 10.0 = 0.5 -> Positive (1)
-    # 23.7 - 23.0 = 0.7 -> Positive (1)
-    # 45.0 - 45.0 = 0.0   -> Zero (0)
-    # 67.8 - 69.0 = -1.2 -> Negative (-1)
+    comparator = LengthComparator()
+    result1 = comparator.compare(1, 'm', 100, 'cm')
+    print(result1)
+    result2 = comparator.compare(1, 'ft', 1, 'm')
+    print(result2)
+    result3 = comparator.compare(2.5, 'km', 2500, 'm')
+    print(result3)
+    meters_from_miles = comparator.get_meters(1, 'mi')
+    print(meters_from_miles)

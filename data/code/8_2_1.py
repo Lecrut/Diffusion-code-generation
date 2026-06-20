@@ -1,21 +1,18 @@
-class Shape:
-    def calculate_area(self):
-        raise NotImplementedError("Subclasses must implement calculate_area method")
-class Rectangle(Shape):
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-    def calculate_area(self):
-        return self.length * self.width
-class Circle(Shape):
-    def __init__(self, radius):
-        self.radius = radius
-    def calculate_area(self):
-        return 3.14159 * self.radius * self.radius
+import numpy as np
+
+def bounding_box_area(coordinates):
+    arr = np.array(coordinates)
+    x_min = arr[:, 0].min()
+    y_min = arr[:, 1].min()
+    x_max = arr[:, 0].max()
+    y_max = arr[:, 1].max()
+    width = x_max - x_min
+    height = y_max - y_min
+    if width < 0 or height < 0:
+        return 0
+    return float(width * height)
+
 if __name__ == '__main__':
-    rectangle = Rectangle(10, 5)
-    circle = Circle(7)
-    rectangle_area = rectangle.calculate_area()
-    circle_area = circle.calculate_area()
-    print(f"Rectangle Area: {rectangle_area}")
-    print(f"Circle Area: {circle_area}")
+    coords = [(0, 0), (1, 1), (2, 3), (4, 2)]
+    result = bounding_box_area(coords)
+    print(result)

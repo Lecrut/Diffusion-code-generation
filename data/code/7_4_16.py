@@ -1,100 +1,143 @@
-import math
+def seconds_to_minutes(seconds):
+    return seconds / 60
 
-class TimeUnitConverter:
-    def __init__(self):
-        # Constants defining standard conversions (average approximations)
-        self.DAYS_PER_YEAR = 365.2425  # Average length of a year including leap years
-        self.MONTHS_PER_YEAR = 12
-        # Approximate average days per month: 30.44 (matches annual average / 12)
-        # Using exactly this ensures consistency when converting Year <-> Month directly via Days
-        self.DAYS_PER_MONTH_AVG = self.DAYS_PER_YEAR / self.MONTHS_PER_YEAR
-        
-    def to_seconds(self, value: float, unit: str) -> float:
-        """Convert a time value from any standard unit to seconds."""
-        
-        if unit.lower() == 'year':
-            return abs(value) * (60 * 60 * 24 * self.DAYS_PER_YEAR)
-        elif unit.lower() in ('month', 'mo'):
-            # Uses the calculated average days per month for consistency with Year->Month conversion logic.
-            seconds_per_day = 86400
-            return abs(value) * (seconds_per_day * self.DAYS_PER_MONTH_AVG)
-        elif unit.lower() == 'day':
-            return abs(value) * (60 * 60 * 24)
-        elif unit.lower() in ('hour', 'hr'):
-            return abs(value) * (60 * 60)
-        elif unit.lower() == 'minute' or unit.lower() == 'min':
-            return abs(value) * 60
-        elif unit.lower().startswith('sec') or unit.lower().endswith('_second') or unit.lower() in ('s', 'seconds'):
-            # Normalize variations like "secs", "secondday" (unlikely but safe), strictly sec/s/seconds. 
-            # The pattern check handles standard inputs: seconds, s, secs.
-            return abs(value) * 1.0
-            
-        raise ValueError(f"Unsupported unit for conversion to/from base: {unit}")
+def seconds_to_hours(seconds):
+    return seconds / 3600
 
-    def from_seconds(self, value: float, unit: str) -> dict:
-        """Convert seconds into a dictionary of time units (approximate values)."""
-        
-        # Define multipliers relative to 1 second based on the input unit scale
-        if unit.lower() == 'year':
-            multiplier = self.DAYS_PER_YEAR * 60 * 60 * 24
-            
-        elif unit.lower() in ('month', 'mo'):
-            # Calculate average days per month for consistency
-            avg_days_per_month = self.DAYS_PER_YEAR / self.MONTHS_PER_YEAR
-            seconds_in_unit = avg_days_per_month * 86400
-            multiplier = seconds_in_unit
-            
-        elif unit.lower() == 'day':
-            multiplier = 86400
-        elif unit.lower().startswith('hour') or unit.lower() in ('hr', 'hours'):
-            multiplier = 3600
-        elif unit.lower() == 'minute' or unit.lower() in ('min', 'minutes'):
-            multiplier = 60
-            
-        else: # Default to seconds if no specific input scale provided (or generic 'sec')
-            multiplier = 1
+def seconds_to_days(seconds):
+    return seconds / 86400
 
-        
-        total_seconds = abs(value) / multiplier
-        
-        components = {
-            'years':      round(total_seconds // (self.DAYS_PER_YEAR * 86400),     2) + ('.f' if False else '') # Force float for clean display logic below if needed, but simple div is fine. 
-                          # Wait, let's rewrite the calculation to be cleaner and strictly correct.
-        }
+def seconds_to_years(seconds):
+    return seconds / 31557600
 
-        # Recalculate cleanly based on total_seconds derived from input unit scale
-        
-        years = round(total_seconds / (self.DAYS_PER_YEAR * 86400), 2) if abs(value) > self.DAYS_PER_YEAR*86400 else None
-        months = round(total_seconds / ((self.DAYS_PER_YEAR/self.MONTHS_PER_YEAR)*86400), 2) 
-        days   = int(round(total_seconds // (86400))) if not years or False and abs(value) > self.DAYS_PER_YEAR*86400 else None # Simplified: just convert everything to base units then split
-        
-        # Clean logic implementation
-        sec_in_year  = self.DAYS_PER_YEAR * 24 * 3600
-        sec_in_month = (self.DAYS_PER_YEAR / 12) * 24 * 3600
-        day_sec      = 86400
-        
-        years_val   = total_seconds / sec_in_year
-        months_val  = total_seconds / sec_in_month
-        days_val    = total_seconds / day_sec
+def seconds_to_months(seconds):
+    return seconds / 2629800
 
-        # Return components rounded to reasonable precision. If the value is huge, show smaller units.
-        result = {
-            "years":      round(years_val, 2),
-            "months":     round(months_val, 2),
-            "days":       int(days_val) if days_val.is_integer() else round(days_val, 1), # Keep fractional day for precision unless integer
-            "hours":      (total_seconds % day_sec) / 3600,
-            "minutes":    ((total_seconds % day_sec) % 3600) / 60,
-            "seconds":    round(total_seconds - int((int(days_val)*86400 + float(hours_val*3600) + minutes_val/1.0))) # Avoid complex modulo arithmetic errors with floats
-            
-        }
-        
-        return result
+def minutes_to_seconds(minutes):
+    return minutes * 60
 
-def get_conversion_summary():
-    """Returns a summary of conversion factors."""
-    conv = TimeUnitConverter()
-    
-    factors = {}
+def minutes_to_hours(minutes):
+    return minutes / 60
+
+def minutes_to_days(minutes):
+    return minutes / 1440
+
+def minutes_to_years(minutes):
+    return minutes / 525960
+
+def minutes_to_months(minutes):
+    return minutes / 43830
+
+def hours_to_seconds(hours):
+    return hours * 3600
+
+def hours_to_minutes(hours):
+    return hours * 60
+
+def hours_to_days(hours):
+    return hours / 24
+
+def hours_to_years(hours):
+    return hours / 8766
+
+def hours_to_months(hours):
+    return hours / 730.5
+
+def days_to_seconds(days):
+    return days * 86400
+
+def days_to_minutes(days):
+    return days * 1440
+
+def days_to_hours(days):
+    return days * 24
+
+def days_to_years(days):
+    return days / 365.25
+
+def days_to_months(days):
+    return days / 30.44
+
+def months_to_seconds(months):
+    return months * 2629800
+
+def months_to_minutes(months):
+    return months * 43830
+
+def months_to_hours(months):
+    return months * 730.5
+
+def months_to_days(months):
+    return months * 30.44
+
+def months_to_years(months):
+    return months / 12
+
+def years_to_seconds(years):
+    return years * 31557600
+
+def years_to_minutes(years):
+    return years * 525960
+
+def years_to_hours(years):
+    return years * 8766
+
+def years_to_days(years):
+    return years * 365.25
+
+def years_to_months(years):
+    return years * 12
+
+def convert_time(value, from_unit, to_unit):
+    if from_unit == 'seconds':
+        if to_unit == 'minutes': return seconds_to_minutes(value)
+        elif to_unit == 'hours': return seconds_to_hours(value)
+        elif to_unit == 'days': return seconds_to_days(value)
+        elif to_unit == 'years': return seconds_to_years(value)
+        elif to_unit == 'months': return seconds_to_months(value)
+        elif to_unit == 'seconds': return value
+    elif from_unit == 'minutes':
+        if to_unit == 'seconds': return minutes_to_seconds(value)
+        elif to_unit == 'hours': return minutes_to_hours(value)
+        elif to_unit == 'days': return minutes_to_days(value)
+        elif to_unit == 'years': return minutes_to_years(value)
+        elif to_unit == 'months': return minutes_to_months(value)
+        elif to_unit == 'minutes': return value
+    elif from_unit == 'hours':
+        if to_unit == 'seconds': return hours_to_seconds(value)
+        elif to_unit == 'minutes': return hours_to_minutes(value)
+        elif to_unit == 'days': return hours_to_days(value)
+        elif to_unit == 'years': return hours_to_years(value)
+        elif to_unit == 'months': return hours_to_months(value)
+        elif to_unit == 'hours': return value
+    elif from_unit == 'days':
+        if to_unit == 'seconds': return days_to_seconds(value)
+        elif to_unit == 'minutes': return days_to_minutes(value)
+        elif to_unit == 'hours': return days_to_hours(value)
+        elif to_unit == 'years': return days_to_years(value)
+        elif to_unit == 'months': return days_to_months(value)
+        elif to_unit == 'days': return value
+    elif from_unit == 'months':
+        if to_unit == 'seconds': return months_to_seconds(value)
+        elif to_unit == 'minutes': return months_to_minutes(value)
+        elif to_unit == 'hours': return months_to_hours(value)
+        elif to_unit == 'days': return months_to_days(value)
+        elif to_unit == 'years': return months_to_years(value)
+        elif to_unit == 'months': return value
+    elif from_unit == 'years':
+        if to_unit == 'seconds': return years_to_seconds(value)
+        elif to_unit == 'minutes': return years_to_minutes(value)
+        elif to_unit == 'hours': return years_to_hours(value)
+        elif to_unit == 'days': return years_to_days(value)
+        elif to_unit == 'months': return years_to_months(value)
+        elif to_unit == 'years': return value
 
 if __name__ == '__main__':
-    pass
+    print(convert_time(3600, 'seconds', 'hours'))
+    print(convert_time(1, 'hours', 'seconds'))
+    print(convert_time(1, 'years', 'days'))
+    print(convert_time(1, 'days', 'years'))
+    print(convert_time(30, 'days', 'months'))
+    print(convert_time(1, 'months', 'days'))
+    print(convert_time(1000, 'seconds', 'minutes'))
+    print(convert_time(60, 'minutes', 'seconds'))

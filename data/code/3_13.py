@@ -1,12 +1,16 @@
-class TemperatureConverter:
-    def convert_all(self, celsius_readings):
-        fahrenheit_readings = []
-        for celsius in celsius_readings:
-            fahrenheit = (celsius * 9/5) + 32
-            fahrenheit_readings.append(fahrenheit)
-        return fahrenheit_readings
+def kelvin_to_celsius(kelvin_values):
+    results = []
+    for k in kelvin_values:
+        try:
+            k = float(k)
+            if k < 0:
+                raise ValueError("Temperature in Kelvin cannot be negative")
+            c = k - 273.15
+            results.append(c)
+        except (ValueError, TypeError):
+            results.append(None)
+    return results
+
 if __name__ == '__main__':
-    converter = TemperatureConverter()
-    celsius_temps = [0, 10, 20, 25, 30]
-    fahrenheit_temps = converter.convert_all(celsius_temps)
-    print(fahrenheit_temps)
+    sample_temps = [300, 0, 273.15, -10, 'invalid', 1000]
+    print(kelvin_to_celsius(sample_temps))

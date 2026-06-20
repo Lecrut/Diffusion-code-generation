@@ -1,27 +1,15 @@
-class TemperatureConverter:
-    def convert_all(self, celsius_readings):
-        """
-        Converts a list of Celsius temperatures to Fahrenheit.
-        
-        Args:
-            celsius_readings (list[float]): A list containing temperature values in degrees Celsius.
-            
-        Returns:
-            list[float]: A new list with corresponding temperature values converted to Fahrenheit.
-            
-        Formula used: F = C * 9/5 + 32
-        
-        Note: This method does not modify the input list but returns a newly created one, 
-        adhering to functional behavior within an object-oriented context for clarity and immutability safety.
-        """
-        fahrenheit_readings = [celsius_reading * (9 / 5) + 32 for celsius_reading in celsius_readings]
-        return fahrenheit_readings
+def kelvin_to_celsius(temperatures):
+    results = []
+    for temp in temperatures:
+        if not isinstance(temp, (int, float)):
+            raise TypeError(f"Expected numeric type, got {type(temp).__name__}")
+        if temp < 0:
+            raise ValueError("Temperature in Kelvin cannot be negative")
+        celsius = temp - 273.15
+        results.append(celsius)
+    return results
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements, no user input or external dependencies.
-    sample_celsius = [0, 18, 56, -40, 273.15]
-
-    converter = TemperatureConverter()
-    converted_temperatures = converter.convert_all(sample_celsius)
-
-    print("Celsius to Fahrenheit Conversion Results:")
+    k_temps = [0, 273.15, 373.15, 1000]
+    c_temps = kelvin_to_celsius(k_temps)
+    print(c_temps)

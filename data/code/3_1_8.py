@@ -1,38 +1,9 @@
 def calculate_average_temperature(temperatures):
-    """
-    Calculate the arithmetic mean of a list of temperature readings.
-    
-    Args:
-        temperatures (list[float]): A list containing float values representing temperature readings.
-        
-    Returns:
-        float: The average temperature as a floating-point number.
-        
-    Raises:
-        ValueError: If the input list is empty or contains non-numeric elements.
-    """
-    if not isinstance(temperatures, list):
-        raise TypeError("Input must be a list.")
-    
-    if len(temperatures) == 0:
-        return None
-    
-    for temp in temperatures:
-        try:
-            float(temp)
-        except (TypeError, ValueError):
-            raise ValueError(f"Invalid temperature value encountered: {temp}")
-
-    total = sum(float(t) for t in temperatures if isinstance(t, (int, float)))
-    
-    average = total / len(temperatures)
-    return average
+    if not temperatures:
+        return 0.0
+    return sum(temperatures) / len(temperatures)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    # No user input, command-line arguments, or external dependencies are used.
-    sample_readings = [20.5, 19.8, 22.3, 21.0, 18.7]
-
-    average_temp = calculate_average_temperature(sample_readings)
-
-    print(f"Average temperature: {average_temp}")
+    sample_readings = [20.5, 22.0, 19.5, 21.0, 23.5]
+    result = calculate_average_temperature(sample_readings)
+    print(result)

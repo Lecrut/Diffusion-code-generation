@@ -1,66 +1,57 @@
 import math
 
-def calculate_area(shape_type: str, parameters: dict) -> float:
-    """
-    Calculates the area of a 2D shape based on type-specific parameters provided in a dictionary.
+def calculate_convex_hull_area(coordinates):
+    n = len(coordinates)
+    if n < 3:
+        return 0.0
+
+    min_x = n - 1
+    for i in range(n):
+        if coordinates[i][0] < coordinates[min_x][0]:
+            min_x = i
+
+    pivot = coordinates[min_x]
     
-    Supported shapes and required keys (lowercase):
-        - 'rectangle': {'width', 'height'}
-        - 'circle': {'radius'}
-        - 'triangle_base_height': {'base', 'height'}
-        - 'triangle_sides_a_b_c': {'a', 'b', 'c'} (uses Heron's formula)
+    def cross_product(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+    def angle_key(point):
+        dx = point[0] - pivot[0]
+        dy = point[1] - pivot[1]
+        return math.atan2(dy, dx)
+
+    points = coordinates[:min_x] + coordinates[min_x+1:]
+    points.sort(key=angle_key)
     
-    Args:
-        shape_type (str): The type of the 2D shape. Must be one of the supported types.
-        parameters (dict): A dictionary containing the necessary keys to define the shape and its properties.
+    if not points:
+        return 0.0
 
-    Returns:
-        float: The calculated area of the shape.
-        
-    Raises:
-        ValueError: If an unsupported shape_type is provided or if required/invalid parameters are missing.
-    """
+    hull = [pivot]
     
-    # Handle Rectangle Area = width * height
-    if shape_type == 'rectangle':
-        return parameters['width'] * parameters['height']
+    for p in points:
+        while len(hull) > 1 and cross_product(hull[-2], hull[-1], p) <= 0:
+            hull.pop()
+        hull.append(p)
 
-    # Handle Circle Area = pi * r^2
-    elif shape_type == 'circle':
-        radius_sq = math.pow(parameters['radius'], 2)
-        area = math.pi * radius_sq
-        return area if isinstance(radius_sq, (int, float)) else None
+    if len(hull) < 3:
+        return 0.0
 
-    # Handle Triangle Base and Height Area = 0.5 * base * height
-    elif shape_type == 'triangle_base_height':
-        half_bp_h = parameters['base'] * parameters['height'] / 2.0
-        return half_bp_h if isinstance(half_bp_h, (int, float)) else None
+    area = 0.0
+    m = len(hull)
+    for i in range(m):
+        j = (i + 1) % m
+        area += hull[i][0] * hull[j][1]
+        area -= hull[j][0] * hull[i][1]
 
-    # Handle Triangle Sides (a,b,c) Area via Heron's Formula: sqrt(s*(s-a)*(s-b)*(s-c)) where s=(a+b+c)/2
-    elif shape_type == 'triangle_sides_a_b_c':
-        a = parameters.get('a')
-        b = parameters.get('b')
-        c = parameters.get('c')
-
-        if any(x not in (int, float) for x in [a, b, c] or any(x < 0 for x in [a, b, c])):
-            return None
-            
-        half_sides_sum_bc_a_b_c = a + b + c / 2.0
-        s = parameters.get('s') if 's' not in shape_type.split('_')[1:] else (half_sides_sum_bc_a_b_c)
-
-    # For triangle sides, we calculate semi-perimeter manually since the input is explicitly named this way.
-    elif shape_type == 'triangle_sides': 
-        a = parameters.get('a')
-        b = parameters.get('b')
-        c = parameters.get('c')
-        
-        if any(isinstance(x, (int | float)) and x < 0 for x in [parameters['a'], parameters['b'], parameters['c']]):
-            return None
-        
-        s = sum([float(a), float(b), float(c)]) / 2.0
-    
-    # Ensure we have the correct structure for Heron's formula generally applied to 'triangle_sides_a_b_c' or similar logic if needed. 
-    # Letting the specific string match handle this cleanly:
+    return abs(area) / 2.0
 
 if __name__ == '__main__':
-    pass
+    sample_coordinates = [
+        (0.0, 0.0),
+        (0.0, 1.0),
+        (1.0, 1.0),
+        (1.0, 0.0),
+        (0.5, 0.5)
+    ]
+    result = calculate_convex_hull_area(sample_coordinates)
+    print(result)

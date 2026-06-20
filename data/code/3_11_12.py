@@ -1,27 +1,57 @@
-def convert_temp(celsius_list):
-    """
-    Converts a list of temperature readings from Celsius to Fahrenheit.
+import argparse
+import csv
+import io
+import sys
+
+def celsius_to_fahrenheit(celsius_value):
+    return (celsius_value * 9 / 5) + 32
+
+def convert_temperature_file(input_path, output_path):
+    try:
+        with open(input_path, 'r', newline='', encoding='utf-8') as infile:
+            reader = csv.DictReader(infile)
+            if reader.fieldnames is None:
+                raise ValueError("Input file is empty or has no header.")
+            if 'celsius' not in reader.fieldnames:
+                raise ValueError("Input CSV must contain a 'celsius' column.")
+            
+            rows = []
+            for row in reader:
+                raw_val = row['celsius'].strip()
+                if not raw_val:
+                    continue
+                try:
+                    val = float(raw_val)
+                except ValueError:
+                    raise ValueError(f"Invalid numeric value in celsius column: '{row['celsius']}'")
+                
+                f_val = celsius_to_fahrenheit(val)
+                row['fahrenheit'] = f_val
+                rows.append(row)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File not found: {input_path}")
+    except Exception as e:
+        raise RuntimeError(f"Error processing file: {e}")
+
+    header = None
+    if rows:
+        header = list(rows[0].keys())
     
-    The conversion formula is: F = (C * 9/5) + 32
+    with open(output_path, 'w', newline='', encoding='utf-8') as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=header)
+        writer.writeheader()
+        writer.writerows(rows)
     
-    This function uses a list comprehension for efficiency and readability.
-    
-    Args:
-        celsius_list (list[float]): A list containing temperature values in degrees Celsius.
-        
-    Returns:
-        list[float]: A new list with the corresponding temperatures converted to Fahrenheit.
-    """
-    return [(c * 9 / 5) + 32 for c in celsius_list]
+    return len(rows)
+
+def main():
+    parser = argparse.ArgumentParser(description='Batch convert temperature data from Celsius to Fahrenheit.')
+    parser.add_argument('input_file', help='Path to input CSV file')
+    parser.add_argument('output_file', help='Path to output CSV file')
+    args = parser.parse_args()
+
+    count = convert_temperature_file(args.input_file, args.output_file)
+    print(count)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, no files, no network)
-    sample_celsius = [0, 18.5, -40, 100, 37.2]
-    
-    converted_fahrenheit = convert_temp(sample_celsius)
-    
-    # Output the results to verify functionality without external dependencies
-    print("Celsius -> Fahrenheit Conversion Results:")
-    for c_val in sample_celsius:
-        f_val = (c_val * 9 / 5) + 32
-        print(f"{c_val}°C is {f_val:.1f}°F")
+    main()

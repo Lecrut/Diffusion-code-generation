@@ -1,17 +1,12 @@
-import csv
+class TemperatureConverter:
+    def convert_all(self, celsius_readings):
+        def celsius_to_fahrenheit(c):
+            return c * 9.0 / 5.0 + 32.0
 
-def celsius_to_fahrenheit(c):
-    """Convert a temperature in Celsius to Fahrenheit."""
-    return (c * 9/5) + 32
-
-def process_temperature_data(input_file, output_file):
-    """Read temperatures from CSV, convert them, and write to new CSV file.
-
-    Args:
-        input_file (str): Path to the source CSV file containing temperature data.
-                          Expected columns: at least one numeric column representing Celsius.
-        output_file (str): Path where the converted Fahrenheit values will be saved.
-    """
+        return [celsius_to_fahrenheit(c) for c in celsius_readings]
 
 if __name__ == '__main__':
-    pass
+    converter = TemperatureConverter()
+    sample_celsius = [0, 100, 37, -40, 25]
+    fahrenheit_results = converter.convert_all(sample_celsius)
+    print(fahrenheit_results)

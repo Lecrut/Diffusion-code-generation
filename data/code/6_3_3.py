@@ -1,25 +1,16 @@
-import sys
-
-def parse_weight(value):
-    """Parse a weight value from string to float."""
-    try:
-        return float(value)
-    except ValueError:
-        raise ValueError(f"Error: '{value}' is not a valid number.")
+def weight_difference(weights):
+    if not weights:
+        return 0
+    min_weight = weights[0]
+    max_weight = weights[0]
+    for weight in weights:
+        if weight < min_weight:
+            min_weight = weight
+        elif weight > max_weight:
+            max_weight = weight
+    return max_weight - min_weight
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per instructions (no user input, no args)
-    weight1_str = "75.5"
-    weight2_str = "68.3"
-
-    try:
-        weight1 = parse_weight(weight1_str)
-        weight2 = parse_weight(weight2_str)
-        
-        difference = weight1 - weight2
-        
-        print(f"{weight1} and {weight2}: Difference is {difference}")
-    
-    except ValueError as e:
-        # Error handling for non-numeric input or other value-related errors
-        sys.stdout.write(str(e)) + "\n"
+    sample_weights = [10, 25, 5, 40, 15]
+    result = weight_difference(sample_weights)
+    print(result)

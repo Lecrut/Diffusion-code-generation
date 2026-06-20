@@ -1,27 +1,28 @@
 import math
-def normalize_distance(distance, original_unit):
-    if original_unit == "meter":
-        return distance
-    elif original_unit == "kilometer":
-        return distance * 1000.0
-    elif original_unit == "centimeter":
-        return distance / 100.0
-    elif original_unit == "millimeter":
-        return distance / 1000.0
-    else:
-        raise ValueError("Unsupported unit")
+
+def convert_distance(value, from_unit, to_unit):
+    if from_unit == to_unit:
+        return value
+    if (from_unit == 'km' and to_unit == 'miles') or (from_unit == 'kilometers' and to_unit == 'miles'):
+        return value / 1.609344
+    if (from_unit == 'miles' and to_unit == 'km') or (from_unit == 'miles' and to_unit == 'kilometers'):
+        return value * 1.609344
+    raise ValueError("Unsupported unit conversion")
+
+def format_result(value, unit):
+    return round(value, 4)
+
 if __name__ == '__main__':
-    distances = [
-        (10.0, "meter"),
-        (2.5, "kilometer"),
-        (500.0, "centimeter"),
-        (1234.56, "millimeter"),
-        (0.003, "kilometer")
-    ]
-    print("--- Distance Normalization ---")
-    for distance, unit in distances:
-        try:
-            normalized = normalize_distance(distance, unit)
-            print(f"Original: {distance} {unit} -> Normalized: {normalized} meters")
-        except ValueError as e:
-            print(f"Error processing {distance} {unit}: {e}")
+    test_value = 10
+    test_from = 'km'
+    test_to = 'miles'
+    result = convert_distance(test_value, test_from, test_to)
+    formatted_result = format_result(result, test_to)
+    print(formatted_result)
+    
+    test_value_2 = 50
+    test_from_2 = 'miles'
+    test_to_2 = 'kilometers'
+    result_2 = convert_distance(test_value_2, test_from_2, test_to_2)
+    formatted_result_2 = format_result(result_2, test_to_2)
+    print(formatted_result_2)

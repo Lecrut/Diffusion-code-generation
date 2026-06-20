@@ -1,100 +1,63 @@
-import math
+import numpy as np
 
-# Predefined conversion factors to base unit (cubic meters) per liter/deciliter etc.
-# Note: Inputs like 10.0 in 'water' are assumed to be in liters as a common default 
-# when not specified otherwise, but the function is robust enough if you adjust keys or pass explicit units.
-# For this task, we assume values are in Liters unless they end with specific unit suffixes handled internally.
-CONVERSION_FACTORS = {
-    'liter': 0.001,       # 1 liter to cubic meters
-    'ml': 1e-6,           # 1 milliliter to cubic meters
-}
+class EfficientVolumeStore:
+    def __init__(self):
+        self._data = {}
+        self._scales = {}
 
-def standardize_volume(volume_dict):
-    """
-    Converts a dictionary of volume measurements into a list of tuples 
-    containing (original_label, standardized_value_in_cubic_meters).
-    
-    Args:
-        volume_dict (dict): A dictionary where keys are labels and values are float amounts.
-                            Assumption: Values represent Liters unless key suffix indicates otherwise (e.g., 'ml').
-                            
-    Returns:
-        list of tuples: [(label, value_in_cubic_meters), ...]
+    def add_volume(self, identifier, shape, factor=1.0):
+        data = np.zeros(shape, dtype=np.float64)
+        self._data[identifier] = data
+        self._scales[identifier] = factor
 
-    Raises:
-        ValueError: If a conversion factor is missing for the provided unit format.
-    """
-    standardized_data = []
-    
-    # Default assumed unit if no suffix or unknown suffix exists; adjustable via config dict extension in production
-    DEFAULT_UNIT_KEY = 'liter'
-    
-    processed_values = {}
+    def set_volume_data(self, identifier, array):
+        if identifier not in self._data:
+            raise KeyError("Identifier not found")
+        self._data[identifier][:] = array
 
-    for label, value in volume_dict.items():
-        if not isinstance(value, (int, float)):
-            raise TypeError(f"Value for key '{label}' must be a numeric type.")
-            
-        # Heuristic to detect unit suffix
-        val_str = f"{value:.2f}"  # Normalize display briefly; actual logic uses string formatting on keys often
-        
-        # Check if label contains common non-base units like 'ml', 'gal', etc. - keeping simple here with given constraints:
-        has_unit_suffix = False
-        
-        for suffix, factor in CONVERSION_FACTORS.items():
-            if str(suffix) in label.lower() or '.' in val_str and any(x in val_str for x in ['m', 'l']): 
-                # Simple string check logic adjusted to handle both key names like "water" -> assume liter default unless specified otherwise. 
-                # To strictly follow task without complex heuristics failing silently:
-                
-                pass 
-        
-        # Robust approach given the prompt's example {'water': 10.0}: Assume unit is 'liter' by default unless explicitly handled differently in real world, but here we map directly assuming input units are Liters as implied by typical volume dict examples without explicit suffixes. 
-        if value <= 0:
-            raise ValueError(f"Volume for key '{label}' must be positive.")
+    def get_volume(self, identifier, scale_factor=1.0):
+        if identifier not in self._data:
+            raise KeyError("Identifier not found")
+        base_scale = self._scales[identifier]
+        total_scale = base_scale * scale_factor
+        return self._data[identifier] * total_scale
 
-        # Apply conversion factor based on assumed default unit (liter) or custom extension logic if added later.
-        # Here we assume all inputs are in Liters as per common context unless a specific suffix is passed and handled by extending CONVERSION_FACTORS with 'ml', etc., dynamically checked below:
-        
-        detected_unit = None
-        
-        for sub_label, factor in CONVERSION_FACTORS.items():
-            if str(sub_label) in label.lower() or any(c == m[0] + '-' + m[-1].lower().strip('s') and c in str(m[0]) for m in [(sub_label,)]): 
-                # Fallback to direct mapping logic: assume 'water' -> liter, 'sand' -> liter unless suffix matches.
-                pass
+    def update_scale(self, identifier, new_factor):
+        if identifier not in self._scales:
+            raise KeyError("Identifier not found")
+        self._scales[identifier] = new_factor
 
-        # Simplified final assumption: All inputs are treated as Liters (base unit multiplier 0.001) unless a specific rule exists elsewhere.
-        # For robustness in this strict environment without external configs: 
-        factor_to_use = CONVERSION_FACTORS.get(DEFAULT_UNIT_KEY, 0.001)
+    def remove_volume(self, identifier):
+        if identifier in self._data:
+            del self._data[identifier]
+            del self._scales[identifier]
 
-        converted_value = value * factor_to_use
-        
-        processed_values[label] = converted_value
-            
-    return list(processed_values.items())
+    def list_identifiers(self):
+        return list(self._data.keys())
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements: no user input, CLI args, or network access needed.
-    sample_inputs = [
-        {'water': 10.0},          # Assume liters -> cubic meters
-        {'sand': 5.5},            # Assume liters -> cubic meters
-        {'ocean_cubic_meters': 2e6} # Already in base unit? We'll still apply conversion if we treat it as liter incorrectly, 
-                                   # but logically the function works for any numeric input assuming uniform scaling.
-    ]
+    store = EfficientVolumeStore()
 
-    for i, data_input in enumerate(sample_inputs):
-        try:
-            result = standardize_volume(data_input)
-            print(f"Test case {i+1}:")
-            for key, val in result:
-                formatted_val = f"{val:.6f}"
-                print(f"  {key} -> {formatted_value}") # Variable name mismatch here corrected below
-            
-            # Correction for actual printing variable usage inside loop
-            for key, val in result:
-                 if not (isinstance(val, float)): 
-                    continue
-            formatted_val = f"{val:.6f}"
+    store.add_volume("cube1", (10, 10, 10), factor=2.0)
+    store.add_volume("sphere1", (5, 5, 5), factor=0.5)
 
-        except Exception as e:
-            print(f"Error processing {data_input}:")
-            print(e)
+    cube_data = np.ones((10, 10, 10)) * 3.0
+    store.set_volume_data("cube1", cube_data)
+
+    sphere_data = np.ones((5, 5, 5)) * 4.0
+    store.set_volume_data("sphere1", sphere_data)
+
+    result_cube = store.get_volume("cube1")
+    print(result_cube[0, 0, 0])
+
+    result_sphere = store.get_volume("sphere1", scale_factor=2.0)
+    print(result_sphere[0, 0, 0])
+
+    store.update_scale("cube1", 5.0)
+    result_cube_updated = store.get_volume("cube1")
+    print(result_cube_updated[0, 0, 0])
+
+    print(store.list_identifiers())
+
+    store.remove_volume("sphere1")
+    print(store.list_identifiers())

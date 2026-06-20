@@ -1,25 +1,73 @@
 import unittest
+
+def seconds_to_hms(total_seconds):
+    if not isinstance(total_seconds, (int, float)):
+        raise TypeError("Input must be a number")
+    if total_seconds < 0:
+        raise ValueError("Input must be non-negative")
+    
+    total_seconds = int(total_seconds)
+    hours = total_seconds // 3600
+    remaining_seconds = total_seconds % 3600
+    minutes = remaining_seconds // 60
+    seconds = remaining_seconds % 60
+    return (hours, minutes, seconds)
+
+def hms_to_seconds(hours, minutes, seconds):
+    if not all(isinstance(x, (int, float)) for x in [hours, minutes, seconds]):
+        raise TypeError("All inputs must be numbers")
+    if any(x < 0 for x in [hours, minutes, seconds]):
+        raise ValueError("All inputs must be non-negative")
+    
+    return hours * 3600 + minutes * 60 + seconds
+
 class TestTimeConversion(unittest.TestCase):
-    def test_seconds_to_minutes(self):
-        self.assertEqual(self.convert_seconds_to_minutes(0), 0.0)
-        self.assertEqual(self.convert_seconds_to_minutes(60), 1.0)
-        self.assertEqual(self.convert_seconds_to_minutes(3600), 60.0)
-        self.assertEqual(self.convert_seconds_to_minutes(3661), 61.01666666666666)
-    def test_minutes_to_seconds(self):
-        self.assertEqual(self.convert_minutes_to_seconds(0), 0.0)
-        self.assertEqual(self.convert_minutes_to_seconds(60), 60.0)
-        self.assertEqual(self.convert_minutes_to_seconds(120), 120.0)
-        self.assertEqual(self.convert_minutes_to_seconds(90.5), 5450.0)
-    def test_large_time_spans(self):
-        self.assertEqual(self.convert_seconds_to_minutes(86400), 1440.0)
-        self.assertEqual(self.convert_seconds_to_minutes(3600 * 24 * 365), 25516800.0)
-        self.assertEqual(self.convert_minutes_to_seconds(3600 * 24 * 365), 31536000.0)
-    def test_zero_values(self):
-        self.assertEqual(self.convert_seconds_to_minutes(0), 0.0)
-        self.assertEqual(self.convert_minutes_to_seconds(0), 0.0)
+    
+    def test_seconds_to_hms_basic(self):
+        self.assertEqual(seconds_to_hms(3661), (1, 1, 1))
+    
+    def test_seconds_to_hms_zero(self):
+        self.assertEqual(seconds_to_hms(0), (0, 0, 0))
+    
+    def test_seconds_to_hms_large(self):
+        self.assertEqual(seconds_to_hms(86400), (24, 0, 0))
+    
+    def test_seconds_to_hms_large_span(self):
+        self.assertEqual(seconds_to_hms(1000000), (277, 46, 40))
+    
+    def test_seconds_to_hms_negative(self):
+        with self.assertRaises(ValueError):
+            seconds_to_hms(-1)
+    
+    def test_seconds_to_hms_invalid_type(self):
+        with self.assertRaises(TypeError):
+            seconds_to_hms("abc")
+    
+    def test_hms_to_seconds_basic(self):
+        self.assertEqual(hms_to_seconds(1, 1, 1), 3661)
+    
+    def test_hms_to_seconds_zero(self):
+        self.assertEqual(hms_to_seconds(0, 0, 0), 0)
+    
+    def test_hms_to_seconds_large(self):
+        self.assertEqual(hms_to_seconds(24, 0, 0), 86400)
+    
+    def test_hms_to_seconds_large_span(self):
+        self.assertEqual(hms_to_seconds(277, 46, 40), 1000000)
+    
+    def test_hms_to_seconds_negative(self):
+        with self.assertRaises(ValueError):
+            hms_to_seconds(-1, 0, 0)
+    
+    def test_hms_to_seconds_invalid_type(self):
+        with self.assertRaises(TypeError):
+            hms_to_seconds("a", 0, 0)
+
 if __name__ == '__main__':
-    def convert_seconds_to_minutes(seconds):
-        return seconds / 60.0
-    def convert_minutes_to_seconds(minutes):
-        return minutes * 60.0
-    unittest.main(argv=['first-arg-action', 'excite'], exit=False)
+    print(seconds_to_hms(3661))
+    print(seconds_to_hms(0))
+    print(seconds_to_hms(86400))
+    print(hms_to_seconds(1, 1, 1))
+    print(hms_to_seconds(0, 0, 0))
+    print(hms_to_seconds(24, 0, 0))
+    unittest.main()

@@ -1,65 +1,63 @@
-class UnitConverter:
-    @staticmethod
-    def to_metric(value, unit):
-        if unit.lower() in ['meter', 'm', 'kilogram', 'kg', 'liter', 'l']:
-            if unit.lower() in ['meter', 'm']:
-                return value                                                           
-            elif unit.lower() in ['kilogram', 'kg']:
-                return value
-            elif unit.lower() in ['liter', 'l']:
-                return value
-        return None
-    @staticmethod
-    def to_imperial(value, unit):
-        if unit.lower() in ['foot', 'ft']:
-            return value * 0.3048
-        elif unit.lower() in ['pound', 'lb']:
-            return value * 0.453592
-        elif unit.lower() in ['gallon', 'gal']:
-            return value * 3.78541
-    @staticmethod
-    def convert(value, from_unit, to_unit):
-        if from_unit == to_unit:
-            return value
-        if from_unit.lower() in ['meter', 'm', 'kilogram', 'kg', 'liter', 'l']:
-            if to_unit.lower() in ['foot', 'ft']:
-                return value * 3.28084
-            elif to_unit.lower() in ['pound', 'lb']:
-                return value * 2.20462
-            elif to_unit.lower() in ['gallon', 'gal']:
-                return value * 0.264172
-        if from_unit.lower() in ['foot', 'ft']:
-            if to_unit.lower() in ['meter', 'm']:
-                return value / 0.3048
-            elif to_unit.lower() in ['pound', 'lb']:
-                return value * 16.0184
-        if from_unit.lower() in ['pound', 'lb']:
-            if to_unit.lower() in ['foot', 'ft']:
-                return value / 16.0184
-            elif to_unit.lower() in ['meter', 'm']:
-                return value / 0.453592
-        if from_unit.lower() in ['gallon', 'gal']:
-            if to_unit.lower() in ['liter', 'l']:
-                return value * 3.78541
-        return None
+def convert_distance(value, from_unit, to_unit):
+    if value is None or from_unit is None or to_unit is None:
+        raise ValueError("Arguments cannot be None")
+    
+    if not isinstance(value, (int, float)):
+        raise TypeError("Value must be a number")
+        
+    if not isinstance(from_unit, str) or not isinstance(to_unit, str):
+        raise TypeError("Units must be strings")
+
+    to_meters = {
+        'm': 1.0,
+        'meter': 1.0,
+        'meters': 1.0,
+        'km': 1000.0,
+        'kilometer': 1000.0,
+        'kilometers': 1000.0,
+        'cm': 0.01,
+        'centimeter': 0.01,
+        'centimeters': 0.01,
+        'mm': 0.001,
+        'millimeter': 0.001,
+        'millimeters': 0.001,
+        'mi': 1609.344,
+        'mile': 1609.344,
+        'miles': 1609.344,
+        'in': 0.0254,
+        'inch': 0.0254,
+        'inches': 0.0254,
+        'ft': 0.3048,
+        'foot': 0.3048,
+        'feet': 0.3048,
+        'yd': 0.9144,
+        'yard': 0.9144,
+        'yards': 0.9144
+    }
+
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+
+    if from_unit_lower not in to_meters:
+        raise ValueError(f"Unknown source unit: {from_unit}")
+    if to_unit_lower not in to_meters:
+        raise ValueError(f"Unknown target unit: {to_unit}")
+
+    meters = value * to_meters[from_unit_lower]
+    
+    if to_meters[to_unit_lower] == 0:
+        raise ZeroDivisionError("Cannot convert to a unit with zero magnitude")
+
+    result = meters / to_meters[to_unit_lower]
+    
+    if result == 0.0 and value != 0.0:
+        if abs(result) < 1e-15:
+             return 0.0
+             
+    return result
+
 if __name__ == '__main__':
-    sample_value = 10
-    print("--- Length Conversion (Meter to Foot) ---")
-    meter_value = 10.0
-    foot_result = UnitConverter.convert(meter_value, 'meter', 'foot')
-    print(f"{meter_value} meters is {foot_result:.4f} feet")
-    print("\n--- Mass Conversion (Kilogram to Pound) ---")
-    kg_value = 5.0
-    pound_result = UnitConverter.convert(kg_value, 'kg', 'lb')
-    print(f"{kg_value} kg is {pound_result:.4f} lb")
-    print("\n--- Volume Conversion (Liter to Gallon) ---")
-    liter_value = 10.0
-    gallon_result = UnitConverter.convert(liter_value, 'l', 'gal')
-    print(f"{liter_value} l is {gallon_result:.4f} gal")
-    print("\n--- Direct Conversion Example (Foot to Meter) ---")
-    foot_value = 10.0
-    meter_result = UnitConverter.convert(foot_value, 'ft', 'm')
-    print(f"{foot_value} ft is {meter_result:.4f} m")
-    print("\n--- Identity Conversion Example ---")
-    identity_result = UnitConverter.convert(5.0, 'm', 'm')
-    print(f"5.0 m is {identity_result} m")
+    print(convert_distance(100, 'm', 'km'))
+    print(convert_distance(1, 'mile', 'meter'))
+    print(convert_distance(5.5, 'ft', 'cm'))
+    print(convert_distance(0, 'm', 'km'))

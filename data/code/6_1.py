@@ -1,7 +1,18 @@
-def calculate_weight_difference(a: float, b: float) -> float:
-    return abs(a - b)
+class WeightCalculator:
+    def __init__(self):
+        self.weights = []
+
+    def add_weight(self, weight):
+        self.weights.append(weight)
+
+    def calculate_difference(self, weight1, weight2):
+        return abs(weight1 - weight2)
+
 if __name__ == '__main__':
-    weight1 = 10.5
-    weight2 = 5.2
-    difference = calculate_weight_difference(weight1, weight2)
-    print(difference)
+    calculator = WeightCalculator()
+    w1 = 50.5
+    w2 = 30.2
+    calculator.add_weight(w1)
+    calculator.add_weight(w2)
+    result = calculator.calculate_difference(w1, w2)
+    print(result)

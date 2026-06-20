@@ -1,16 +1,20 @@
-import argparse
+class WeightCalculator:
+    def __init__(self, weight1, weight2):
+        if not isinstance(weight1, (int, float)) or not isinstance(weight2, (int, float)):
+            raise TypeError("Weights must be numeric")
+        self.weight1 = weight1
+        self.weight2 = weight2
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculate the difference between two weights.")
-    
-    # Define non-required arguments with defaults to avoid interactive prompts or errors on missing input
-    weight1_arg = parser.add_argument('--weight-1', type=float, default=0.5)
-    weight2_arg = parser.add_argument('--weight-2', type=float, default=1.0)
-    
-    args = parser.parse_args()
-    
-    difference = abs(args.weight1 - args.weight2)
-    print(f"{difference:.4f}")
+    def get_weight1(self):
+        return self.weight1
+
+    def get_weight2(self):
+        return self.weight2
+
+    def calculate_difference(self):
+        return abs(self.weight1 - self.weight2)
 
 if __name__ == '__main__':
-    main()
+    calculator = WeightCalculator(100.5, 75.2)
+    result = calculator.calculate_difference()
+    print(result)

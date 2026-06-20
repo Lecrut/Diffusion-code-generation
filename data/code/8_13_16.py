@@ -1,54 +1,38 @@
 import math
 
-def convex_hull_area(points):
-    """
-    Computes the area of the smallest convex polygon enclosing a given set of 2D points.
-    
-    Uses the Monotone Chain algorithm which is O(n log n) efficient and robust against 
-    collinear point handling (though it includes them in boundary, they don't affect area calculation).
-    
-    Args:
-        points (list[tuple[float, float]]): List of 2D points as tuples. Duplicate or redundant points are handled gracefully.
-        
-    Returns:
-        float: The area of the convex hull polygon.
-    """
-    # Remove duplicates and sort by x-coordinate, then y-coordinate
-    unique_points = sorted(set(points))
-    
-    if len(unique_points) < 3:
+class Shape:
+    def __init__(self, base_dimension, height=None):
+        self.base_dimension = base_dimension
+        self.height = height
+
+    def get_base_area(self):
         return 0.0
 
-    def cross(o, a, b):
-        """Compute the cross product of vectors OA and OB."""
-        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    def calculate_scaled_area(self, scale_factor):
+        base_area = self.get_base_area()
+        return base_area * (scale_factor ** 2)
 
-    # Build lower hull
-    lower = []
-    for p in unique_points:
-        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
-            lower.pop()
-        lower.append(p)
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        super().__init__(width, height)
 
-    # Build upper hull
-    upper = []
-    for p in reversed(unique_points):
-        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
-            upper.pop()
-        upper.append(p)
+    def get_base_area(self):
+        return self.base_dimension * self.height
 
-    # Concatenate lower and upper to get full hull, removing the last point of each half 
-    # because it's repeated at the start/end (e.g., first point is also last in circular buffer logic if needed, but here we just join).
-    # Actually Monotone chain usually constructs: lower + reversed(lower[:-1]) or similar.
-    # Standard construction: hull = lower[:-1] + upper[:-1] to avoid duplication of start/end points.
-    
-    hull = lower[:-1] + upper[:-1]
+class Circle(Shape):
+    def __init__(self, radius):
+        super().__init__(radius)
 
-    if len(hull) < 3:
-        return 0.0
-    
-    # Compute area using the shoelace formula
-    n = len(hull)
+    def get_base_area(self):
+        return math.pi * (self.base_dimension ** 2)
 
 if __name__ == '__main__':
-    pass
+    rect = Rectangle(10, 5)
+    circle = Circle(3)
+    scale_factor = 2.5
+
+    rect_scaled = rect.calculate_scaled_area(scale_factor)
+    circle_scaled = circle.calculate_scaled_area(scale_factor)
+
+    print(rect_scaled)
+    print(circle_scaled)

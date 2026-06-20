@@ -1,23 +1,12 @@
-import sys
-def convert_time_to_seconds(time_str):
-    try:
-        parts = time_str.split(':')
-        if len(parts) != 3:
-            raise ValueError("Time format incorrect")
-        h = int(parts[0])
-        m = int(parts[1])
-        s = int(parts[2])
-        total_seconds = h * 3600 + m * 60 + s
-        return total_seconds
-    except ValueError:
-        return None
+def time_to_seconds(time_string):
+    parts = time_string.split(':')
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
+    total_seconds = (hours * 3600) + (minutes * 60) + seconds
+    return total_seconds
+
 if __name__ == '__main__':
-    sample_times = [
-        '1:30:45',
-        '0:05:00',
-        '2:15:30',
-        '10:00:00'
-    ]
-    for time_input in sample_times:
-        seconds = convert_time_to_seconds(time_input)
-        print(f"Input: {time_input}, Seconds: {seconds}")
+    sample_input = '1:30:45'
+    result = time_to_seconds(sample_input)
+    print(result)

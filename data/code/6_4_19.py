@@ -1,28 +1,49 @@
-def weight_difference_generator(weight_pairs):
-    """
-    Generator function that yields the absolute difference between weights in each pair.
-    
-    Args:
-        weight_pairs (list of tuples or lists): List containing pairs of numerical values representing weights.
-        
-    Yields:
-        float: The absolute difference between the two weights in a pair.
-    """
-    for pair in weight_pairs:
-        if len(pair) != 2:
-            raise ValueError(f"Each element must be a pair, got {len(pair)} elements.")
-        yield abs(pair[0] - pair[1])
+import unittest
+
+def calculate_weight_difference(weight1, weight2):
+    if not isinstance(weight1, (int, float)) or not isinstance(weight2, (int, float)):
+        raise TypeError("Weights must be numbers")
+    return abs(weight1 - weight2)
+
+class TestCalculateWeightDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_weight_difference(10, 5), 5)
+
+    def test_negative_inputs(self):
+        self.assertEqual(calculate_weight_difference(-10, -5), 5)
+
+    def test_mixed_signs(self):
+        self.assertEqual(calculate_weight_difference(-5, 5), 10)
+
+    def test_equal_weights(self):
+        self.assertEqual(calculate_weight_difference(5, 5), 0)
+
+    def test_float_weights(self):
+        self.assertAlmostEqual(calculate_weight_difference(5.5, 2.2), 3.3)
+
+    def test_negative_float_weights(self):
+        self.assertAlmostEqual(calculate_weight_difference(-5.5, -2.2), 3.3)
+
+    def test_zero_weights(self):
+        self.assertEqual(calculate_weight_difference(0, 0), 0)
+
+    def test_large_weights(self):
+        self.assertEqual(calculate_weight_difference(1000000, 500000), 500000)
+
+    def test_type_error_string(self):
+        with self.assertRaises(TypeError):
+            calculate_weight_difference("10", 5)
+
+    def test_type_error_none(self):
+        with self.assertRaises(TypeError):
+            calculate_weight_difference(None, 5)
+
+    def test_reversed_order(self):
+        self.assertEqual(calculate_weight_difference(5, 10), 5)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files needed)
-    sample_pairs = [
-        (5.2, 3.8),
-        (10.0, 7.5),
-        (2.4, 9.1),
-        (15.6, 15.6),
-        (0.1, 0.9)
-    ]
-
-    print("Weight differences:")
-    for diff in weight_difference_generator(sample_pairs):
-        print(f"{diff:.2f}")
+    print(calculate_weight_difference(10, 5))
+    print(calculate_weight_difference(-10, -5))
+    print(calculate_weight_difference(-5, 5))
+    print(calculate_weight_difference(5.5, 2.2))
+    unittest.main(exit=False, verbosity=2)

@@ -1,52 +1,33 @@
-"""
-Shape Area Calculator Module
+import math
+import time
 
-This module defines a system to calculate areas of geometric shapes (rectangle, circle)
-based on user input parameters such as width/height or radius. 
-It uses conditional logic to determine which calculation method to apply.
+def calculate_rectangle_areas(count, width, height):
+    results = [width * height for _ in range(count)]
+    return results
 
-No external libraries are required. The main execution block contains hard-coded sample values.
-"""
+def calculate_circle_areas(count, radius):
+    results = [math.pi * radius * radius for _ in range(count)]
+    return results
 
-def get_rectangle_area(width: float, height: float) -> float:
-    """Calculate the area of a rectangle given its width and height."""
-    return width * height
+def benchmark(func, count, *args):
+    start = time.perf_counter()
+    func(count, *args)
+    end = time.perf_counter()
+    return end - start
 
-def get_circle_area(radius: float) -> float:
-    """Calculate the area of a circle given its radius using PI constant."""
-    import math
-    return math.pi * (radius ** 2)
+if __name__ == '__main__':
+    n = 10000
+    w = 10.0
+    h = 5.0
+    r = 3.0
 
-class ShapeAreaCalculator:
-    def __init__(self):
-        self.shapes = {
-            "rectangle": {"dimensions_needed": ["width", "height"], "calc_func": get_rectangle_area},
-            "circle": {"dimensions_needed": ["radius"], "calc_func": get_circle_area}
-        }
+    rect_time = benchmark(calculate_rectangle_areas, n, w, h)
+    circ_time = benchmark(calculate_circle_areas, n, r)
 
-    def calculate(self, shape_type: str) -> float:
-        """Calculate the area based on shape type and dimensions."""
-        if shape_type not in self.shapes:
-            return 0.0
-        
-        dim_map = {
-            "rectangle": {"width": 1.5, "height": 2.5}, # Hardcoded sample values for rectangle
-            "circle": {"radius": 3.0}                     # Hardcoded sample value for circle
-        }
-
-        area_func = self.shapes[shape_type]["calc_func"]
-        
-        if shape_type == "rectangle":
-            width = dim_map["width"]["value"] if isinstance(dim_map["width"], dict) and "value" in dim_map["width"] else 1.5
-            
-        elif shape_type == "circle":
-            radius = dim_map["radius"]["value"] if isinstance(dim_map["radius"], dict) and "value" in dim_map["radius"] else 3.0
-
-        
-        return area_func(width, height) if hasattr(area_func, '__self__') or len(self.shapes[shape_type]["dimensions_needed"]) == 2 else \
-               area_func(radius)
-
-if __name__ == "__main__":
-    calculator = ShapeAreaCalculator()
-    
-    # Sample data hardcoded as per requirements - no input(), sys.stdin, or args used.
+    print(f"Rectangle Area Calculation Time: {rect_time:.6f} seconds")
+    print(f"Circle Area Calculation Time: {circ_time:.6f} seconds")
+    print(f"Ratio (Rect/Circle): {rect_time / circ_time:.4f}")
+    sample_rect_area = calculate_rectangle_areas(1, w, h)[0]
+    sample_circle_area = calculate_circle_areas(1, r)[0]
+    print(f"Sample Rectangle Area: {sample_rect_area}")
+    print(f"Sample Circle Area: {sample_circle_area}")

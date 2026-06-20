@@ -1,20 +1,24 @@
-# Script to compare two length measurements using conditional statements
-
-def main():
-    # Define sample variables for length measurements (in meters)
-    length_a = 150
-    length_b = 87
+def compare_length_lists(list_a, list_b):
+    if not list_a and not list_b:
+        return {"max_length": 0, "min_length": 0, "range_difference": 0}
     
-    # Calculate the difference between the lengths
-    diff = length_a - length_b
+    all_lengths = list_a + list_b
     
-    # Conditional statement to print a formatted comparison sentence
-    if length_a > length_b:
-        print(f"Length A is longer than Length B by {diff} units")
-    elif length_b > length_a:
-        print(f"Length B is longer than Length A by {-diff} units")
-    else:
-        print("Both lengths are equal.")
+    if not all_lengths:
+        return {"max_length": 0, "min_length": 0, "range_difference": 0}
+    
+    max_val = max(all_lengths)
+    min_val = min(all_lengths)
+    range_diff = max_val - min_val
+    
+    return {
+        "max_length": max_val,
+        "min_length": min_val,
+        "range_difference": range_diff
+    }
 
 if __name__ == '__main__':
-    main()
+    sample_list_1 = [10.5, 20.3, 5.1, 15.0]
+    sample_list_2 = [12.2, 8.7, 25.0, 5.1]
+    result = compare_length_lists(sample_list_1, sample_list_2)
+    print(result)

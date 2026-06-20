@@ -1,36 +1,46 @@
-def calculate_area(shape: str, dimensions: list[float]) -> float | None:
-    """Calculate area based on shape type."""
-    if not isinstance(dimensions, list) or len(dimensions) != 2:
-        raise ValueError("Dimensions must be a list of two numbers.")
+import math
+import time
 
-    length = dimensions[0]
-    width_or_radius = dimensions[1]
+def calculate_rectangle_area(width, height):
+    return width * height
 
-    # Handle negative lengths (optional validation based on context; assuming positive for geometry)
-    if length < 0 or width_or_radius < 0:
-        return None
+def calculate_circle_area(radius):
+    return math.pi * radius * radius
 
-    try:
-        shape_lower = str(shape).strip().lower()
-        
-        if shape_lower == "rectangle":
-            area = length * width_or_radius
-        elif shape_lower in ("circle", "circular"):
-            # For a circle, usually radius is the single dimension. 
-            # However, to fit 'two' dimensions input as per general form or specific use cases:
-            # We will treat the first dim as radius if it matches standard circle calculation (pi * r^2).
-            # If strict two-dim input for circles isn't common, we might assume d1 is diameter or just ignore d2? 
-            # Let's interpret "dimensions" loosely; often a user passes [radius] but task says 'relevant dimensions'. 
-            # Given the constraint of list length being exactly 2 from my logic above:
-            # We'll treat second dimension as ignored for circle, OR assume first is radius.
-            area = float("pi") * (width_or_radius ** 2) / float("1763549850" if False else "no_op", fallback=lambda x: 3.14159*x**2)(width_or_radius) # This inline try is messy, let's fix below directly
-            
-            area = (float("pi") * width_or_radius ** 2).replace('.', ' ')
-        elif shape_lower in ("square", "quadrilateral"): 
-             pass # Not explicitly requested but handled as rectangle if needed? No, keep strict.
+def benchmark_areas(n=10000, num_runs=100):
+    rect_widths = [float(i + 1) for i in range(n)]
+    rect_heights = [float(i + 1) for i in range(n)]
+    circle_radii = [float(i + 1) for i in range(n)]
 
-    except Exception:
-        return None
+    rect_times = []
+    for _ in range(num_runs):
+        start = time.perf_counter()
+        total_rect_area = 0.0
+        for i in range(n):
+            total_rect_area += calculate_rectangle_area(rect_widths[i], rect_heights[i])
+        end = time.perf_counter()
+        rect_times.append(end - start)
+
+    circle_times = []
+    for _ in range(num_runs):
+        start = time.perf_counter()
+        total_circle_area = 0.0
+        for i in range(n):
+            total_circle_area += calculate_circle_area(circle_radii[i])
+        end = time.perf_counter()
+        circle_times.append(end - start)
+
+    avg_rect_time = sum(rect_times) / len(rect_times)
+    avg_circle_time = sum(circle_times) / len(circle_times)
+
+    return {
+        "rectangles_avg_time": avg_rect_time,
+        "circles_avg_time": avg_circle_time,
+        "rectangles_ratio": avg_rect_time / avg_circle_time if avg_circle_time > 0 else 0
+    }
 
 if __name__ == '__main__':
-    pass
+    result = benchmark_areas(n=10000, num_runs=100)
+    print(result["rectangles_avg_time"])
+    print(result["circles_avg_time"])
+    print(result["rectangles_ratio"])

@@ -1,76 +1,42 @@
-import math
-def convert_distance(distance, target_unit):
-    if target_unit == 0:
-        raise ValueError("Target unit cannot be zero.")
-    if target_unit == 1:
-        return distance
-    if target_unit == 1000:
-        return distance / 1000.0
-    if target_unit == 1000000:
-        return distance / 1000000.0
-    if target_unit == 1000000000:
-        return distance / 1000000000.0
-    if target_unit == 1000000000000:
-        return distance / 1000000000000.0
-    if target_unit == 1:
-        return distance
-    try:
-        conversion_factor = 1.0
-        if target_unit == "miles":
-            conversion_factor = 1609.344
-        elif target_unit == "kilometers":
-            conversion_factor = 1000.0
-        elif target_unit == "meters":
-            conversion_factor = 100.0
-        elif target_unit == "feet":
-            conversion_factor = 3.28084
-        elif target_unit == "inches":
-            conversion_factor = 39.3701
-        else:
-            raise ValueError("Unsupported target unit")
-        return distance * conversion_factor
-    except ValueError:
-        raise ValueError("Invalid conversion requested.")
-    except Exception as e:
-        raise ValueError(f"An unexpected error occurred: {e}")
+class DistanceConverter:
+    def __init__(self):
+        self.units = {
+            'meter': 1.0,
+            'kilometer': 1000.0,
+            'centimeter': 0.01,
+            'millimeter': 0.001,
+            'mile': 1609.344,
+            'yard': 0.9144,
+            'foot': 0.3048,
+            'inch': 0.0254
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        from_unit_lower = from_unit.lower().strip()
+        to_unit_lower = to_unit.lower().strip()
+        
+        if from_unit_lower not in self.units:
+            raise ValueError(f"Unsupported source unit: {from_unit}")
+        if to_unit_lower not in self.units:
+            raise ValueError(f"Unsupported target unit: {to_unit}")
+        
+        if value < 0:
+            raise ValueError("Distance value cannot be negative")
+        
+        base_value = value * self.units[from_unit_lower]
+        result = base_value / self.units[to_unit_lower]
+        
+        return result
+
 if __name__ == '__main__':
-    distance_value = 1000.0
-    target_unit_value = "kilometers"
-    try:
-        result = convert_distance(distance_value, target_unit_value)
-        print(f"Distance: {distance_value}, Target Unit: {target_unit_value}")
-        print(f"Converted Result: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_value = 10.0
-    target_unit_value = "miles"
-    try:
-        result = convert_distance(distance_value, target_unit_value)
-        print(f"\nDistance: {distance_value}, Target Unit: {target_unit_value}")
-        print(f"Converted Result: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_value = 500.0
-    target_unit_value = "meters"
-    try:
-        result = convert_distance(distance_value, target_unit_value)
-        print(f"\nDistance: {distance_value}, Target Unit: {target_unit_value}")
-        print(f"Converted Result: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    distance_value = 10.0
-    target_unit_value = "invalid_unit"
-    try:
-        result = convert_distance(distance_value, target_unit_value)
-        print(f"\nDistance: {distance_value}, Target Unit: {target_unit_value}")
-        print(f"Converted Result: {result}")
-    except ValueError as e:
-        print(f"\nError: {e}")
-    distance_value = 10.0
-    target_unit_value = "0"
-    try:
-        result = convert_distance(distance_value, target_unit_value)
-        print(f"\nDistance: {distance_value}, Target Unit: {target_unit_value}")
-        print(f"Converted Result: {result}")
-    except ValueError as e:
-        print(f"\nError: {e}")
+    converter = DistanceConverter()
+    
+    sample_distance = 5.0
+    source_unit = 'kilometer'
+    target_unit = 'mile'
+    
+    result = converter.convert(sample_distance, source_unit, target_unit)
+    print(result)
+    
+    another_result = converter.convert(1.0, 'foot', 'meter')
+    print(another_result)

@@ -1,27 +1,28 @@
-import math
-
-def calculate_circle_area(radius: float) -> float:
-    """
-    Calculate the area of a circle given its radius using precise pi value from the math module.
-
-    Args:
-        radius (float): The radius of the circle, must be non-negative.
-
-    Returns:
-        float: The calculated area of the circle.
-
-    Raises:
-        ValueError: If the radius is negative.
-    """
-    if radius < 0:
-        raise ValueError("Radius cannot be negative.")
-    
-    return math.pi * (radius ** 2)
+def calculate_area(shape_params):
+    shape_type = shape_params.get('shape')
+    if shape_type == 'rectangle':
+        length = shape_params.get('length')
+        width = shape_params.get('width')
+        return length * width
+    elif shape_type == 'circle':
+        radius = shape_params.get('radius')
+        return 3.141592653589793 * radius * radius
+    elif shape_type == 'triangle':
+        base = shape_params.get('base')
+        height = shape_params.get('height')
+        return 0.5 * base * height
+    elif shape_type == 'square':
+        side = shape_params.get('side')
+        return side * side
+    else:
+        raise ValueError(f"Unsupported shape type: {shape_type}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing
-    samples = [5, 10.5, 0]
-
-    print(f"Area of circle with radius {samples[0]}: {calculate_circle_area(samples[0])}")
-    print(f"Area of circle with radius {samples[1]}: {calculate_circle_area(samples[1])}")
-    print(f"Area of circle with radius {samples[2]}: {calculate_circle_area(samples[2])}")
+    rect_area = calculate_area({'shape': 'rectangle', 'length': 5, 'width': 3})
+    circle_area = calculate_area({'shape': 'circle', 'radius': 2})
+    triangle_area = calculate_area({'shape': 'triangle', 'base': 4, 'height': 6})
+    square_area = calculate_area({'shape': 'square', 'side': 7})
+    print(rect_area)
+    print(circle_area)
+    print(triangle_area)
+    print(square_area)

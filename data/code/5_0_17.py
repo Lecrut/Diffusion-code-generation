@@ -1,15 +1,12 @@
-def calculate_difference(value1: float, value2: float) -> float:
-    """Calculate the difference between two length measurements."""
-    return value1 - value2
+def calculate_length_difference(length1, length2):
+    if not isinstance(length1, (int, float)):
+        raise TypeError(f"length1 must be a number, got {type(length1).__name__}")
+    if not isinstance(length2, (int, float)):
+        raise TypeError(f"length2 must be a number, got {type(length2).__name__}")
+    if length1 < 0 or length2 < 0:
+        raise ValueError("Lengths cannot be negative")
+    return abs(length1 - length2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or command-line arguments.
-    measurement_a = 50.75
-    measurement_b = 34.2
-
-    try:
-        result = calculate_difference(measurement_a, measurement_b)
-        print(f"Difference between {measurement_a} and {measurement_b}: {result}")
-    except TypeError as e:
-        # Handles cases where inputs are not numeric (though this block is guarded by type hints in practice).
-        print(f"Error: Non-numeric input detected. Details - {e}")
+    result = calculate_length_difference(10.5, 5.3)
+    print(result)

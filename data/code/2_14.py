@@ -1,39 +1,33 @@
-import math
-class ScalableVolumeStore:
-    def __init__(self):
-        self.base_volumes = {}
-    def store_volume(self, name, volume):
-        if name not in self.base_volumes:
-            self.base_volumes[name] = volume
-    def get_volume(self, name):
-        if name in self.base_volumes:
-            return self.base_volumes[name]
-        return None
-    def scale_volume(self, name, factor):
-        if name in self.base_volumes:
-            new_volume = self.base_volumes[name] * factor
-            self.base_volumes[name] = new_volume
-            return new_volume
-        return None
-    def get_scaled_volume(self, name, factor):
-        if name in self.base_volumes:
-            return self.base_volumes[name] * factor
-        return None
+LITER_TO_MILLILITER = 1000.0
+GALLON_TO_MILLILITER = 3785.411784
+CUBIC_INCH_TO_MILLILITER = 16.387064
+
+def convert_to_milliliters(volumes):
+    converted = []
+    for value, unit in volumes:
+        if value < 0:
+            converted.append(0.0)
+        elif value == 0:
+            converted.append(0.0)
+        else:
+            if unit == "liters":
+                converted.append(value * LITER_TO_MILLILITER)
+            elif unit == "gallons":
+                converted.append(value * GALLON_TO_MILLILITER)
+            elif unit == "cubic_inches":
+                converted.append(value * CUBIC_INCH_TO_MILLILITER)
+            else:
+                converted.append(0.0)
+    return converted
+
 if __name__ == '__main__':
-    store = ScalableVolumeStore()
-    store.store_volume("A", 10.0)
-    store.store_volume("B", 5.5)
-    print(f"Base volume A: {store.get_volume('A')}")
-    print(f"Base volume B: {store.get_volume('B')}")
-    factor1 = 2.0
-    scaled_a = store.scale_volume("A", factor1)
-    print(f"Scaled volume A by {factor1}: {scaled_a}")
-    print(f"Current volume A: {store.get_volume('A')}")
-    factor2 = 1.5
-    scaled_b = store.get_scaled_volume("B", factor2)
-    print(f"Scaled volume B by {factor2}: {scaled_b}")
-    print(f"Current volume B: {store.get_volume('B')}")
-    factor3 = 3.0
-    scaled_a_again = store.get_scaled_volume("A", factor3)
-    print(f"Scaled volume A by {factor3}: {scaled_a_again}")
-    print(f"Current volume A: {store.get_volume('A')}")
+    sample_volumes = [
+        (1.0, "liters"),
+        (0.5, "gallons"),
+        (10.0, "cubic_inches"),
+        (0.0, "liters"),
+        (-5.0, "gallons"),
+        (2.5, "cubic_inches")
+    ]
+    result = convert_to_milliliters(sample_volumes)
+    print(result)

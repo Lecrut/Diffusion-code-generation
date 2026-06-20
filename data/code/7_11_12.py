@@ -1,83 +1,75 @@
-import math
+from fractions import Fraction
+from decimal import Decimal, getcontext
+
+getcontext().prec = 50
 
 class TimeConverter:
-    """
-    A class to accurately convert time between various units (seconds, minutes, hours, days).
-    All calculations use integer arithmetic where possible or precise floating-point division 
-    when necessary to ensure mathematical accuracy.
-    
-    Supported conversions are based on standard relationships:
-        60 seconds = 1 minute
-        60 minutes = 1 hour
-        24 hours = 1 day
-    
-    Methods support conversion from a source unit to any target unit within the supported set 
-    ('seconds', 'minutes', 'hours', 'days'). Negative values are handled by preserving sign.
-    """
+    UNITS = {
+        'second': 1,
+        'minute': 60,
+        'hour': 3600,
+        'day': 86400,
+        'week': 604800,
+        'month': 2629746,
+        'year': 31556952
+    }
 
     def __init__(self):
-        pass
+        self._cache = {}
 
-    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
-        """
-        Converts a time value from one unit to another with high precision.
-        
-        Parameters:
-            value (float): The time value in the source unit.
-            from_unit (str): Source unit ('seconds', 'minutes', 'hours', 'days').
-            to_unit (str): Target unit ('seconds', 'minutes', 'hours', 'days').
-            
-        Returns:
-            float: The converted time value in the target unit.
-            
-        Raises:
-            ValueError: If units are invalid or source and target units are identical.
-        """
-        valid_units = {'seconds': 1, 'minutes': 60, 'hours': 3600, 'days': 86400}
+    def _get_factor(self, unit):
+        unit_lower = unit.lower()
+        if unit_lower in self.UNITS:
+            return Fraction(self.UNITS[unit_lower])
+        raise ValueError(f"Unknown unit: {unit}")
 
-        if from_unit not in valid_units or to_unit not in valid_units:
-            raise ValueError(f"Invalid unit. Must be one of {list(valid_units.keys())}")
+    def convert(self, value, from_unit, to_unit):
+        from_factor = self._get_factor(from_unit)
+        to_factor = self._get_factor(to_unit)
         
-        if from_unit == to_unit:
-            return value
+        value_in_seconds = Fraction(value) * from_factor
+        result = value_in_seconds / to_factor
         
-        # Convert source to seconds first (base unit), then convert to target
-        base_seconds = value * valid_units[from_unit]
-        result_in_target = base_seconds / valid_units[to_unit]
+        cache_key = (value, from_unit.lower(), to_unit.lower())
+        self._cache[cache_key] = result
         
-        return result_in_target
+        return float(result)
+
+    def convert_precise(self, value, from_unit, to_unit):
+        from_factor = self._get_factor(from_unit)
+        to_factor = self._get_factor(to_unit)
+        
+        value_in_seconds = Decimal(value) * Decimal(from_factor)
+        result = value_in_seconds / Decimal(to_factor)
+        
+        return float(result)
+
+    def get_supported_units(self):
+        return list(self.UNITS.keys())
+
+    def clear_cache(self):
+        self._cache.clear()
 
 if __name__ == '__main__':
     converter = TimeConverter()
-
-    # Sample test cases with hard-coded values, no user input required
     
-    # Test 1: Seconds to Minutes (exact)
-    seconds_to_minutes_result = converter.convert(3600.0, 'seconds', 'minutes')
+    seconds_to_minutes = converter.convert(3600, 'second', 'minute')
+    print(seconds_to_minutes)
     
-    # Test 2: Hours to Days (fractional day)
-    hours_to_days_result = converter.convert(25.0, 'hours', 'days')
+    hours_to_days = converter.convert(48, 'hour', 'day')
+    print(hours_to_days)
     
-    # Test 3: Minutes to Seconds (exact)
-    minutes_to_seconds_result = converter.convert(145.75, 'minutes', 'seconds')
+    days_to_hours = converter.convert(1, 'day', 'hour')
+    print(days_to_hours)
     
-    # Test 4: Days to Hours (exact)
-    days_to_hours_result = converter.convert(0.25, 'days', 'hours')
+    weeks_to_seconds = converter.convert(1, 'week', 'second')
+    print(weeks_to_seconds)
     
-    # Test 5: Negative value handling - Minutes to Seconds
-    negative_minutes_to_seconds_result = converter.convert(-180.0, 'minutes', 'seconds')
-
-    print(f"3600 seconds -> {seconds_to_minutes_result} minutes")
-    print(f"25 hours -> {hours_to_days_result:.4f} days")
-    print(f"145.75 minutes -> {minutes_to_seconds_result} seconds")
-    print(f"0.25 days -> {days_to_hours_result} hours")
-    print(f"-180 minutes -> {negative_minutes_to_seconds_result} seconds")
-
-    # Verify expected outputs for clarity in the run block
-    assert abs(seconds_to_minutes_result - 60) < 1e-9, "3600s != 60m"
-    assert abs(hours_to_days_result - (25/24)) < 1e-9, f"25h != {25/24}d"
-    assert minutes_to_seconds_result == 8745.0, "145.75min != 8745s"
-    assert days_to_hours_result == 6.0, "0.25d != 6h"
-    assert negative_minutes_to_seconds_result == -10800.0, "-180m != -10800s"
-
-    print("All sample conversions completed successfully.")
+    precise_years_to_days = converter.convert_precise(1, 'year', 'day')
+    print(precise_years_to_days)
+    
+    precise_minutes_to_hours = converter.convert_precise(90, 'minute', 'hour')
+    print(precise_minutes_to_hours)
+    
+    supported = converter.get_supported_units()
+    print(supported)

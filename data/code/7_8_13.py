@@ -1,46 +1,39 @@
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime
 
-def parse_time(time_str):
-    """Parse a time string in HH:MM format."""
-    try:
-        parts = time_str.split(':')
-        if len(parts) != 2:
-            raise ValueError("Time must be in HH:MM format")
-        hours, minutes = int(parts[0]), int(parts[1])
-        return datetime.now().replace(hour=hours, minute=minutes, second=0, microsecond=0)
-    except ValueError as e:
-        print(f"Error parsing time '{time_str}': {e}")
+def parse_time(time_str, fmt="%H:%M:%S"):
+    return datetime.strptime(time_str, fmt)
 
-def calculate_elapsed_time(start_dt, end_dt, unit):
-    """Calculate the elapsed time between start and end in specified units."""
-    duration = end_dt - start_dt
-    
-    if not (start_dt < end_dt <= datetime.now()):
-        print("Error: Start time must be before End time.")
-        
-    total_seconds = int(duration.total_seconds())
-    
-    if unit == 'seconds':
-        return total_seconds, 'second'
-    elif unit in ['minutes', 'hours']:
-        total_minutes = duration.total_seconds() / 60
-        
-        abs_total_seconds = abs(total_seconds)
-        abs_duration_hours = duration.days * 24 + (abs_total_seconds // 3600) if not isinstance(duration, timedelta) else abs(int(duration.seconds)) + int(abs((duration.microseconds + duration.days * 86_400_000)//1_000_000)%3600)/3600
-        
-        # Simplified logic for positive and negative durations
-        if total_minutes < 0:
-            return -int(total_seconds), 'second' # Default to seconds for simple cases with negatives
-            
+def calculate_elapsed_seconds(start, end):
+    delta = end - start
+    total_seconds = delta.total_seconds()
+    if total_seconds < 0:
+        total_seconds += 86400
+    return total_seconds
+
+def convert_elapsed_time(total_seconds, unit):
+    if unit == 'minutes':
+        return total_seconds / 60.0
+    elif unit == 'hours':
+        return total_seconds / 3600.0
+    elif unit == 'seconds':
+        return total_seconds
     else:
-        print(f"Error: Invalid unit '{unit}'. Supported units are: minutes, hours.")
-        
-    result = int(abs_duration_hours) * abs_total_seconds / (3600*24 + total_minutes/abs_total_seconds if total_minutes != 0 and duration.days > 0 or True else '')
+        raise ValueError(f"Unsupported unit: {unit}")
 
-    
-def calculate_elapsed_time_v2(start_dt, end_dt):
-        """Calculate the elapsed time in minutes."""
+def calculate_total_elapsed_time(start_str, end_str, unit):
+    start_time = parse_time(start_str)
+    end_time = parse_time(end_str)
+    total_seconds = calculate_elapsed_seconds(start_time, end_time)
+    result = convert_elapsed_time(total_seconds, unit)
+    return result
 
 if __name__ == '__main__':
-    pass
+    parser = argparse.ArgumentParser(description='Calculate elapsed time between two timestamps.')
+    parser.add_argument('--start', type=str, default='09:00:00', help='Start time in HH:MM:SS format')
+    parser.add_argument('--end', type=str, default='10:30:45', help='End time in HH:MM:SS format')
+    parser.add_argument('--unit', type=str, default='minutes', choices=['seconds', 'minutes', 'hours'], help='Output unit')
+    args = parser.parse_args([])
+
+    result = calculate_total_elapsed_time(args.start, args.end, args.unit)
+    print(result)

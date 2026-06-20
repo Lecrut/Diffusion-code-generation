@@ -1,76 +1,38 @@
 import argparse
 from datetime import datetime
+import time
 
-def parse_time(time_str):
-    """Parses a time string in HH:MM format."""
-    try:
-        return datetime.strptime(time_str, "%H:%M")
-    except ValueError:
-        raise argparse.ArgumentTypeError(f"Invalid time format '{time_str}'. Use 'HH:MM'.")
+def parse_time(time_string):
+    return datetime.strptime(time_string, "%Y-%m-%d %H:%M:%S")
 
-def calculate_elapsed_time(start_time, end_time, unit):
-    """Calculates the elapsed time between start and end."""
-    if start_time > end_time:
-        return 0
-    
-    delta = end_time - start_time
-    total_seconds = int(delta.total_seconds())
-    
-    # Convert based on desired unit (default to minutes)
-    if unit.lower() == 'minutes':
-        elapsed_minutes = total_seconds // 60
-    elif unit.lower() in ['hours', 'h']:
-        elapsed_hours = total_seconds / 3600
+def calculate_elapsed(start_time_str, end_time_str, unit):
+    start_dt = parse_time(start_time_str)
+    end_dt = parse_time(end_time_str)
+    delta = end_dt - start_dt
+    total_seconds = delta.total_seconds()
+    if unit == "minutes":
+        return total_seconds / 60
+    elif unit == "hours":
+        return total_seconds / 3600
+    elif unit == "days":
+        return total_seconds / 86400
+    elif unit == "seconds":
+        return total_seconds
     else:
-        raise argparse.ArgumentTypeError(f"Unsupported unit '{unit}'. Supported units are minutes, hours.")
-    
-    return elapsed_minutes
+        raise ValueError("Unsupported unit")
 
-def get_parser():
-    """Creates and returns the argument parser."""
-    parser = argparse.ArgumentParser(
-        description="Calculate total elapsed time between two times."
-    )
-    
-    # Non-interactive start time input via command line or sample block
-    parser.add_argument("start_time", type=parse_time, help="Start time in HH:MM format")
-    parser.add_argument("end_time", type=parse_time, help="End time in HH:MM format")
-    parser.add_argument(
-        "--unit", "-u", 
-        default='minutes', 
-        choices=['minutes', 'hours'],
-        help="Desired output unit (default: minutes)"
-    )
-    
-    return parser
+def main():
+    parser = argparse.ArgumentParser(description="Calculate elapsed time between two timestamps.")
+    parser.add_argument("start_time", type=str, help="Start time in YYYY-MM-DD HH:MM:SS format")
+    parser.add_argument("end_time", type=str, help="End time in YYYY-MM-DD HH:MM:SS format")
+    parser.add_argument("unit", type=str, help="Output unit: minutes, hours, days, or seconds")
+    args = parser.parse_args()
+    result = calculate_elapsed(args.start_time, args.end_time, args.unit)
+    print(result)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or network access.
-    start_str = "09:30"
-    end_str = "17:45"
-    desired_unit = 'minutes'
-
-    try:
-        parser = get_parser()
-        
-        # Parse arguments from command line if provided, otherwise use defaults for testing.
-        args = parser.parse_args([])
-        
-        start_time = parse_time(start_str)
-        end_time = parse_time(end_str)
-        
-        elapsed_minutes = calculate_elapsed_time(start_time, end_time, desired_unit)
-
-    except SystemExit:
-        # argparse exits with code 2 on error; this block handles the sample execution gracefully.
-        pass
-    
-    else:
-        print(f"Elapsed time from {start_str} to {end_str}:")
-        if desired_unit == 'minutes':
-            print(f"{elapsed_minutes:.0f} minutes")
-        elif desired_unit == 'hours':
-            # Recalculate hours for display consistency in sample block logic
-            total_seconds = int((parse_time(end_str) - parse_time(start_str)).total_seconds())
-            elapsed_hours = total_seconds / 3600
-            print(f"{elapsed_hours:.2f} hours")
+    sample_start = "2023-10-01 10:00:00"
+    sample_end = "2023-10-01 12:30:00"
+    sample_unit = "minutes"
+    result = calculate_elapsed(sample_start, sample_end, sample_unit)
+    print(result)

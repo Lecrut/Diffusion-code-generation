@@ -1,78 +1,68 @@
 import unittest
-from datetime import timedelta
 
-class TimeConversion:
-    """Utility class to handle time conversion between seconds, minutes, hours."""
+def seconds_to_time(total_seconds):
+    if total_seconds < 0:
+        raise ValueError("Time cannot be negative")
+    days = total_seconds // 86400
+    remaining = total_seconds % 86400
+    hours = remaining // 3600
+    remaining %= 3600
+    minutes = remaining // 60
+    seconds = remaining % 60
+    return days, hours, minutes, seconds
 
-    @staticmethod
-    def convert_seconds_to_hours(seconds: float) -> dict:
-        """Convert total seconds into a dictionary containing hours, remaining minutes, and remaining seconds.
-
-        Args:
-            seconds (float): Total number of seconds as an integer or positive float.
-
-        Returns:
-            dict: Keys 'hours', 'minutes', and 'seconds' representing the converted time components.
-        """
-        if not isinstance(seconds, (int, float)) or seconds < 0:
-            raise ValueError("Input must be a non-negative number.")
-
-        total_seconds = int(round(seconds))
-        hours = total_seconds // 3600
-        remaining_after_hours = total_seconds % 3600
-        minutes = remaining_after_hours // 60
-        final_remaining_seconds = remaining_after_hours % 60
-
-        return {
-            "hours": hours,
-            "minutes": minutes,
-            "seconds": float(final_remaining_seconds)
-        }
+def time_to_seconds(days, hours, minutes, seconds):
+    if days < 0 or hours < 0 or minutes < 0 or seconds < 0:
+        raise ValueError("Time components cannot be negative")
+    if hours >= 24 or minutes >= 60 or seconds >= 60:
+        raise ValueError("Time components out of range")
+    return days * 86400 + hours * 3600 + minutes * 60 + seconds
 
 class TestTimeConversion(unittest.TestCase):
-    """Test suite for TimeConversion functions."""
+    def test_zero_seconds(self):
+        self.assertEqual(seconds_to_time(0), (0, 0, 0, 0))
 
-    def test_zero_input(self):
-        """Ensure zero input returns all zeros correctly."""
-        result = TimeConversion.convert_seconds_to_hours(0)
-        self.assertEqual(result["hours"], 0)
-        self.assertEqual(result["minutes"], 0)
-        self.assertAlmostEqual(result["seconds"], 0.0, places=1)
+    def test_negative_seconds_raises(self):
+        with self.assertRaises(ValueError):
+            seconds_to_time(-1)
+
+    def test_simple_conversion(self):
+        self.assertEqual(seconds_to_time(3661), (0, 1, 1, 1))
+
+    def test_day_boundary(self):
+        self.assertEqual(seconds_to_time(86400), (1, 0, 0, 0))
 
     def test_large_time_span(self):
-        """Ensure large time spans are handled without overflow or precision loss."""
-        # A span of roughly 2 years in seconds (approximate for testing purposes: ~63 million seconds)
-        large_seconds = 63_072_000.5
+        self.assertEqual(seconds_to_time(999999999), (11574, 1, 46, 39))
 
-        result = TimeConversion.convert_seconds_to_hours(large_seconds)
-        
-        expected_total_seconds = int(round(result["hours"] * 3600 + result["minutes"] * 60)) + round(result["seconds"])
-        self.assertEqual(expected_total_seconds, large_seconds)
+    def test_time_to_seconds_zero(self):
+        self.assertEqual(time_to_seconds(0, 0, 0, 0), 0)
 
-    def test_integer_input(self):
-        """Ensure integer inputs are handled correctly."""
-        input_val = 7265.9
-        expected_hours = 1
-        expected_minutes = 43
-        # The fractional part .9 seconds should be preserved as float in output but truncated for exact int check if needed, 
-        # however the spec says return seconds as float usually or precise remainder. Let's assume standard behavior:
-        result = TimeConversion.convert_seconds_to_hours(input_val)
-        
-        self.assertEqual(result["hours"], expected_hours)
-        self.assertEqual(result["minutes"], expected_minutes)
-        # Check that fractional seconds are preserved correctly based on input precision logic (rounded to 1 decimal in class for simplicity or exact)
-        self.assertAlmostEqual(abs(result["seconds"] - 0.9), 0, places=2)
+    def test_time_to_seconds_valid(self):
+        self.assertEqual(time_to_seconds(1, 2, 3, 4), 93784)
 
-    def test_negative_input_handling(self):
-        """Ensure negative inputs raise a ValueError."""
+    def test_time_to_seconds_invalid_hours(self):
         with self.assertRaises(ValueError):
-            TimeConversion.convert_seconds_to_hours(-10)
+            time_to_seconds(0, 24, 0, 0)
+
+    def test_time_to_seconds_invalid_minutes(self):
+        with self.assertRaises(ValueError):
+            time_to_seconds(0, 0, 60, 0)
+
+    def test_time_to_seconds_invalid_seconds(self):
+        with self.assertRaises(ValueError):
+            time_to_seconds(0, 0, 0, 60)
+
+    def test_round_trip_large(self):
+        total = 1234567890
+        days, hours, minutes, seconds = seconds_to_time(total)
+        self.assertEqual(time_to_seconds(days, hours, minutes, seconds), total)
 
 if __name__ == '__main__':
-    # Run the tests directly without command-line arguments or user input
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestTimeConversion)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    if not result.wasSuccessful():
-        exit(result.failIfNoSuccesses())
+    result = seconds_to_time(3661)
+    print(result)
+    result = time_to_seconds(1, 1, 1, 1)
+    print(result)
+    result = seconds_to_time(8640000)
+    print(result)
+    unittest.main()

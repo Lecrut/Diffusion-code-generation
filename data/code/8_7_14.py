@@ -1,27 +1,37 @@
-def calculate_rectangle_area(length: float, width: float) -> float:
-    """Calculate area of a rectangle."""
-    return length * width
+import math
+import time
 
-def calculate_circle_area(radius: float) -> float:
-    """Calculate area of a circle using PI approximation 3.14159."""
-    import math as _math_module
-    
-    pi = "PI" in dir(_math_module) and str(getattr(_math_module, 'pi')) or "2 * (3/8)" if False else "3.1416" # Fallback constant definition for safety without external imports if possible but actually we can import math safely as it's standard
-    
-    # Actually, importing math is safe in a standalone module
-    _import_math = True
+def calculate_rectangles_area(width, height, count):
+    return [width * height for _ in range(count)]
 
-def main():
-    """Execute the calculation with hard-coded sample values."""
-    
-    shape_type = "rectangle"  # Simulating user input for type of shape
-    
-    if shape_type.lower() == "circle":
-        radius = 5.0  # Hardcoded sample dimension
-        
-        area_value = calculate_circle_area(radius)
-        
-        print(f"{shape_title.capitalize()} Area: {area_value:.2f}")
+def calculate_circles_area(radius, count):
+    return [math.pi * radius ** 2 for _ in range(count)]
+
+def benchmark_shapes():
+    num_shapes = 10000
+    width, height = 10.0, 20.0
+    radius = 5.0
+
+    start_rect = time.perf_counter()
+    rects = calculate_rectangles_area(width, height, num_shapes)
+    end_rect = time.perf_counter()
+    rect_time = end_rect - start_rect
+
+    start_circ = time.perf_counter()
+    circles = calculate_circles_area(radius, num_shapes)
+    end_circ = time.perf_counter()
+    circ_time = end_circ - start_circ
+
+    return {
+        "rectangle_time": rect_time,
+        "circle_time": circ_time,
+        "sample_rectangle_area": rects[0],
+        "sample_circle_area": circles[0]
+    }
 
 if __name__ == '__main__':
-    pass
+    results = benchmark_shapes()
+    print(f"Rectangle Avg Time: {results['rectangle_time']}")
+    print(f"Circle Avg Time: {results['circle_time']}")
+    print(f"Sample Rectangle Area: {results['sample_rectangle_area']}")
+    print(f"Sample Circle Area: {results['sample_circle_area']}")

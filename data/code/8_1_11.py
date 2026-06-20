@@ -1,34 +1,33 @@
-from typing import Union
+import math
 
-def calculate_area(length: float, width: float) -> float:
-    """
-    Calculate the area of a rectangle given its length and width.
+PI = 3.141592653589793
 
-    Args:
-        length (float): The length of the rectangle.
-        width (float): The width of the rectangle.
+class Shape:
+    def area(self):
+        return 0
 
-    Returns:
-        float: The calculated area as the product of length and width.
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
 
-    Raises:
-        TypeError: If either length or width is not a numeric type.
-        ValueError: If either length or width is negative.
-    """
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Both length and width must be numbers.")
+    def area(self):
+        return self.width * self.height
 
-    if length < 0 or width < 0:
-        raise ValueError("Length and width cannot be negative.")
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
 
-    return length * width
+    def area(self):
+        return PI * self.radius * self.radius
+
+def print_area(shape, name):
+    result = shape.area()
+    print(f"{name}: {result}")
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    sample_length = 5.0
-    sample_width = 3.0
-    
-    area_result = calculate_area(sample_length, sample_width)
-    
-    print(f"Area of rectangle with length {sample_length} and width {sample_width}:")
-    print(f"{area_result}")
+    rect_instance = Rectangle(4, 7)
+    circle_instance = Circle(3)
+    print_area(rect_instance, "RectangleArea")
+    print_area(circle_instance, "CircleArea")

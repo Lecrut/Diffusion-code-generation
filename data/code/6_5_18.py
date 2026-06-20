@@ -1,38 +1,20 @@
-def weight_difference(weights):
-    """
-    Calculates the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of float/int): List containing numerical values representing weights.
-        
-    Returns:
-        float or int: The difference between the maximum and minimum value in the list.
-                      Raises ValueError if the input is empty.
-                      
-    Time Complexity: O(n) - Single pass through the list to find min and max.
-    Space Complexity: O(1) - Only uses constant extra space for tracking min/max.
-    """
-    if not weights:
-        raise ValueError("The weight list cannot be empty.")
+class WeightPairStore:
+    def __init__(self):
+        self.pairs = {}
 
-    # Initialize both minimum and maximum with the first element
-    current_min = float('inf')
-    current_max = float('-inf')
+    def add_pair(self, first_weight, second_weight):
+        self.pairs[first_weight] = second_weight
 
-    for w in weights:
-        if w < current_min:
-            current_min = w
-        elif w > current_max:
-            current_max = w
-            
-    return current_max - current_min
+    def get_difference(self, first_weight):
+        if first_weight not in self.pairs:
+            raise KeyError("Weight pair not found")
+        return abs(first_weight - self.pairs[first_weight])
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, no files)
-    sample_weights = [85.2, 40.1, 92.7, 35.6, 88.9]
-
-    try:
-        diff = weight_difference(sample_weights)
-        print(f"The difference between the heaviest and lightest weight is: {diff}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    store = WeightPairStore()
+    store.add_pair(100, 150)
+    store.add_pair(80, 120)
+    store.add_pair(200, 210)
+    print(store.get_difference(100))
+    print(store.get_difference(80))
+    print(store.get_difference(200))

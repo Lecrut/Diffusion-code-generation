@@ -1,24 +1,29 @@
-def weight_difference(weights):
-    if not weights:
-        return 0
-    heaviest = weights[0]
-    lightest = weights[0]
-    for weight in weights:
-        if weight > heaviest:
-            heaviest = weight
-        if weight < lightest:
-            lightest = weight
-    return heaviest - lightest
+class WeightPairStore:
+    def __init__(self):
+        self._pairs = {}
+
+    def add_pair(self, name, weight_a, weight_b):
+        self._pairs[name] = (weight_a, weight_b)
+
+    def get_difference(self, name):
+        if name not in self._pairs:
+            raise KeyError(f"Pair '{name}' not found")
+        weight_a, weight_b = self._pairs[name]
+        return weight_a - weight_b
+
+    def retrieve_pair(self, name):
+        if name not in self._pairs:
+            raise KeyError(f"Pair '{name}' not found")
+        return self._pairs[name]
+
 if __name__ == '__main__':
-    sample_weights1 = [10, 5, 20, 15]
-    result1 = weight_difference(sample_weights1)
-    print(result1)
-    sample_weights2 = [3, 1, 4, 1, 5, 9, 2, 6]
-    result2 = weight_difference(sample_weights2)
-    print(result2)
-    sample_weights3 = [100]
-    result3 = weight_difference(sample_weights3)
-    print(result3)
-    sample_weights4 = []
-    result4 = weight_difference(sample_weights4)
-    print(result4)
+    store = WeightPairStore()
+    store.add_pair("item_a", 100, 85)
+    store.add_pair("item_b", 200, 150)
+    store.add_pair("item_c", 30, 45)
+    diff_a = store.get_difference("item_a")
+    diff_b = store.get_difference("item_b")
+    diff_c = store.get_difference("item_c")
+    print(diff_a)
+    print(diff_b)
+    print(diff_c)

@@ -1,27 +1,17 @@
-import math
-def normalize_distance(distance, unit):
-    if unit == "m":
-        return distance
-    elif unit == "km":
-        return distance * 1000
-    elif unit == "cm":
-        return distance / 100
-    elif unit == "mm":
-        return distance / 1000
-    else:
-        raise ValueError("Unsupported unit")
+def convert_distance(value, from_unit, to_unit):
+    if from_unit == to_unit:
+        return value
+    if from_unit == 'km' and to_unit == 'miles':
+        return value * 0.621371
+    if from_unit == 'miles' and to_unit == 'km':
+        return value / 0.621371
+    raise ValueError("Unsupported unit conversion")
+
 if __name__ == '__main__':
-    distances = [
-        (10.5, "m"),
-        (2.5, "km"),
-        (500.0, "cm"),
-        (1234.56, "mm"),
-        (3.14159, "m")
-    ]
-    print("--- Distance Normalization ---")
-    for distance, unit in distances:
-        try:
-            normalized = normalize_distance(distance, unit)
-            print(f"Input: {distance} {unit} -> Normalized: {normalized} m")
-        except ValueError as e:
-            print(f"Error processing {distance} {unit}: {e}")
+    km_value = 100
+    miles_result = convert_distance(km_value, 'km', 'miles')
+    print(miles_result)
+
+    miles_value = 50
+    km_result = convert_distance(miles_value, 'miles', 'km')
+    print(km_result)

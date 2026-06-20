@@ -1,20 +1,25 @@
-def calculate_area(length: float, width: float) -> float:
-    """Calculates the area of a rectangle given its length and width."""
-    return length * width
+def calculate_polygon_area(vertices):
+    count = len(vertices)
+    if count < 3:
+        return 0.0
+    cross_sum = 0.0
+    for index in range(count):
+        next_index = (index + 1) % count
+        current_x = vertices[index][0]
+        current_y = vertices[index][1]
+        next_x = vertices[next_index][0]
+        next_y = vertices[next_index][1]
+        term_1 = current_x * next_y
+        term_2 = next_x * current_y
+        cross_sum += term_1
+        cross_sum -= term_2
+    magnitude = abs(cross_sum)
+    return magnitude / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input is required.
-    # These simulate reading dimensions from standard input in case inputs were provided, 
-    # but they are fixed for this runnable module requirement.
-    
-    length = 5.0
-    width = 10.0
-    
-    try:
-        area_result = calculate_area(length, width)
-        print(f"Area of rectangle with dimensions {length}x{width}: {area_result}")
-    except ValueError as e:
-        # This block handles potential issues if the calculation logic were to raise 
-        # an exception based on input types (though fixed floats won't trigger it).
-        # Included per requirement structure for robustness demonstration.
-        print(f"An error occurred during area calculation: {e}")
+    irregular_polygon = [(-2, 1), (3, 4), (5, -2), (1, -5), (-3, -1)]
+    area_value = calculate_polygon_area(irregular_polygon)
+    print(area_value)
+    triangle_test = [(1, 1), (4, 5), (7, 1)]
+    triangle_area = calculate_polygon_area(triangle_test)
+    print(triangle_area)

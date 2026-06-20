@@ -1,34 +1,24 @@
-def find_weight_difference(weights):
-    """
-    Calculates the difference between the heaviest and lightest weight in a list.
-    
-    Args:
-        weights (list of float/int): List containing numeric weight values.
-        
-    Returns:
-        float or int: The absolute difference between maximum and minimum weights.
-                      If input is empty, returns 0.
-                      
-    Complexity: O(n) time, where n is the number of elements in the list.
-                         Only requires one pass to find min and max values simultaneously.
-    """
-    if not weights:
-        return 0
-    
-    minimum = float('inf')
-    maximum = float('-inf')
-    
-    for weight in weights:
-        if weight < minimum:
-            minimum = weight
-        elif weight > maximum:
-            maximum = weight
-            
-    # Calculate absolute difference (though max will always be >= min)
-    return abs(maximum - minimum)
+class WeightPairStore:
+    def __init__(self):
+        self.pairs = {}
+
+    def add_pair(self, key, weight1, weight2):
+        self.pairs[key] = (weight1, weight2)
+
+    def get_difference(self, key):
+        if key not in self.pairs:
+            raise KeyError(f"Key {key} not found in weight pairs.")
+        weight1, weight2 = self.pairs[key]
+        return weight1 - weight2
 
 if __name__ == '__main__':
-    sample_weights = [5.2, 10.8, 3.4, 7.9, 5.2]
-    
-    result = find_weight_difference(sample_weights)
-    print(f"Difference: {result}")
+    store = WeightPairStore()
+    store.add_pair('pair1', 10.5, 8.2)
+    store.add_pair('pair2', 5.0, 3.5)
+    store.add_pair('pair3', 100, 75)
+    diff1 = store.get_difference('pair1')
+    diff2 = store.get_difference('pair2')
+    diff3 = store.get_difference('pair3')
+    print(diff1)
+    print(diff2)
+    print(diff3)

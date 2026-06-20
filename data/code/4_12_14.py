@@ -1,33 +1,43 @@
-def adjust_distance(distance: float, from_unit: str) -> tuple[float, dict]:
-    """
-    Adjusts a distance value to the opposite unit (km <-> miles).
-    
-    Args:
-        distance (float): The numerical distance value.
-        from_unit (str): The current unit ('miles' or 'km').
-        
-    Returns:
-        tuple[float, dict]: A tuple containing the adjusted distance and 
-                           a dictionary showing the conversion factor used.
-                           
-    Examples:
-        adjust_distance(10, 'miles') -> (16.09344, {'factor': 1.60934})
-        adjust_distance(50, 'km') -> (31.06856, {'factor': 0.621371})
-    """
-    
-    # Define conversion factors to kilometers first for consistency
-    factor_to_km = {
-        "miles": 1.60934,      # miles * 1.60934 = km
-        "km": 1.0               # identity
-    }
-    
-    factor_from_other = {}
-    
-    if from_unit == 'miles':
-        adjusted_distance = distance * factor_to_km['miles']
-        # To get miles back, we divide by the forward factor or multiply by its reciprocal
-        factor_back = 1.0 / factor_to_km["miles"]
-        label_label_display_text: dict[str, str]
+class DistanceConverter:
+    MILE_TO_KM = 1.60934
+    KM_TO_METER = 1000.0
+    MILE_TO_METER = MILE_TO_KM * KM_TO_METER
+
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit.upper()
+
+    def _to_meters(self):
+        if self.unit == 'MILE':
+            return self.value * self.MILE_TO_METER
+        elif self.unit == 'KM':
+            return self.value * self.KM_TO_METER
+        elif self.unit == 'METER':
+            return self.value
+        else:
+            raise ValueError(f"Unsupported unit: {self.unit}")
+
+    def convert_to(self, target_unit):
+        target_unit = target_unit.upper()
+        meters = self._to_meters()
+        if target_unit == 'MILE':
+            return meters / self.MILE_TO_METER
+        elif target_unit == 'KM':
+            return meters / self.KM_TO_METER
+        elif target_unit == 'METER':
+            return meters
+        else:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
 
 if __name__ == '__main__':
-    pass
+    d1 = DistanceConverter(1, 'mile')
+    print(d1.convert_to('km'))
+    print(d1.convert_to('meter'))
+
+    d2 = DistanceConverter(1000, 'meter')
+    print(d2.convert_to('mile'))
+    print(d2.convert_to('km'))
+
+    d3 = DistanceConverter(5, 'km')
+    print(d3.convert_to('mile'))
+    print(d3.convert_to('meter'))

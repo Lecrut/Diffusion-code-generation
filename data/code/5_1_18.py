@@ -1,36 +1,15 @@
-def compare_lengths(a: float, b: float) -> tuple[int]:
-    """
-    Compares two floating-point numbers and returns a tuple indicating their relationship.
-    
-    Args:
-        a (float): First number to compare.
-        b (float): Second number to compare.
-        
-    Returns:
-        tuple[int]: A tuple where the first element is 1 if a > b, 
-                    -1 if a < b, and 0 if they are equal.
-    
-    Note: This function uses direct comparison operators as requested.
-          It does not perform any input validation beyond type checking at runtime.
-    """
+def compare_lengths(a, b):
     if a > b:
-        return (1,)
+        return ("greater", a, b)
     elif a < b:
-        return (-1,)
+        return ("less", a, b)
     else:
-        return (0,)
+        return ("equal", a, b)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies.
-    val_a = 3.5
-    val_b = 2.7
-    
-    result = compare_lengths(val_a, val_b)
-    
-    print(f"Comparing {val_a} and {val_b}:")
-    if result[0] == 1:
-        print("First length is greater.")
-    elif result[0] == -1:
-        print("Second length is greater.")
-    else:
-        print("Lengths are equal.")
+    result = compare_lengths(5.5, 3.2)
+    print(result)
+    result2 = compare_lengths(1.0, 2.0)
+    print(result2)
+    result3 = compare_lengths(4.0, 4.0)
+    print(result3)

@@ -1,42 +1,25 @@
-import math
-
-def calculate_rectangle_area(width: float, height: float) -> None:
-    """
-    Calculate and print the area of a rectangle given its width and height.
-    
-    Args:
-        width (float): The length of the width side of the rectangle. Must be non-negative.
-        height (float): The length of the height side of the rectangle. Must be non-negative.
-        
-    Prints:
-        A formatted string containing the dimensions and calculated area to standard output.
-        
-    Raises:
-        ValueError: If either width or height is negative.
-        TypeError: If inputs are not numeric types (int, float).
-    """
-    # Input validation for type check
-    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
-        raise TypeError("Both dimensions must be numbers.")
-
-    # Input validation for value check
+def calculate_rectangle_area(length, width):
+    if not isinstance(length, (int, float)):
+        raise TypeError('Length must be a number.')
+    if not isinstance(width, (int, float)):
+        raise TypeError('Width must be a number.')
+    if length < 0:
+        raise ValueError('Length must be non-negative.')
     if width < 0:
-        raise ValueError("Width cannot be negative.")
-    
-    if height < 0:
-        raise ValueError("Height cannot be negative.")
+        raise ValueError('Width must be non-negative.')
+    return length * width
 
-    area = width * height
-    
-    print(f"Dimensions - Width: {width}, Height: {height}")
-    print(f"The area of the rectangle is: {area:.2f} square units")
-
+def main():
+    sample_lengths = [5, 10, 0, -5, 7.5]
+    sample_widths = [3, 2, 4, 2, 3.0]
+    results = []
+    for length, width in zip(sample_lengths, sample_widths):
+        try:
+            area = calculate_rectangle_area(length, width)
+            results.append(f'Length: {length}, Width: {width} -> Area: {area}')
+        except (ValueError, TypeError) as e:
+            results.append(f'Length: {length}, Width: {width} -> Error: {str(e)}')
+    for result in results:
+        print(result)
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration, ensuring no user input or external dependencies.
-    SAMPLE_WIDTH = 5.0
-    SAMPLE_HEIGHT = 10.0
-    
-    try:
-        calculate_rectangle_area(SAMPLE_WIDTH, SAMPLE_HEIGHT)
-    except (ValueError, TypeError) as error:
-        print(f"An error occurred during calculation: {error}")
+    main()

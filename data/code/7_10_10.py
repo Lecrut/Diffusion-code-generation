@@ -1,77 +1,45 @@
-import math
-def convert_duration(value, unit):
-    if unit == 'seconds':
-        seconds = value
-        minutes = seconds / 60
-        hours = seconds / 3600
-        days = seconds / 86400
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
+class TimeConverter:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit.lower()
+        self.valid_units = ['seconds', 'minutes', 'hours', 'days']
+        
+        if self.unit not in self.valid_units:
+            raise ValueError(f"Unit must be one of {self.valid_units}")
+        if not isinstance(value, (int, float)) or value < 0:
+            raise ValueError("Value must be a non-negative number")
+
+    def _to_seconds(self, value, unit):
+        conversions = {
+            'seconds': 1,
+            'minutes': 60,
+            'hours': 3600,
+            'days': 86400
         }
-    elif unit == 'minutes':
-        seconds = value * 60
-        minutes = value
-        hours = value / 60
-        days = value / (60 * 24)
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
+        return value * conversions[unit]
+
+    def convert(self):
+        base_seconds = self._to_seconds(self.value, self.unit)
+        result = {}
+        conversions = {
+            'seconds': 1,
+            'minutes': 60,
+            'hours': 3600,
+            'days': 86400
         }
-    elif unit == 'hours':
-        seconds = value * 3600
-        minutes = value * 60
-        hours = value
-        days = value / 24
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    elif unit == 'days':
-        seconds = value * 86400
-        minutes = value * 86400 / 60
-        hours = value * 24
-        days = value
-        return {
-            "seconds": seconds,
-            "minutes": minutes,
-            "hours": hours,
-            "days": days
-        }
-    else:
-        raise ValueError("Invalid unit specified. Must be 'seconds', 'minutes', 'hours', or 'days'.")
+        
+        for unit_name, divisor in conversions.items():
+            if unit_name == self.unit:
+                result[unit_name] = self.value
+            else:
+                converted_val = base_seconds / divisor
+                if converted_val.is_integer():
+                    result[unit_name] = int(converted_val)
+                else:
+                    result[unit_name] = round(converted_val, 4)
+        return result
+
 if __name__ == '__main__':
-    sample_value = 7200
-    sample_unit = 'seconds'
-    try:
-        results = convert_duration(sample_value, sample_unit)
-        print(f"Input Value: {sample_value} {sample_unit}")
-        print("Conversion Results:")
-        print(f"Seconds: {results['seconds']:.2f}")
-        print(f"Minutes: {results['minutes']:.2f}")
-        print(f"Hours: {results['hours']:.2f}")
-        print(f"Days: {results['days']:.2f}")
-        sample_value_2 = 30
-        sample_unit_2 = 'minutes'
-        results_2 = convert_duration(sample_value_2, sample_unit_2)
-        print("\n--- Second Sample ---")
-        print(f"Input Value: {sample_value_2} {sample_unit_2}")
-        print("Conversion Results:")
-        print(f"Seconds: {results_2['seconds']:.2f}")
-        print(f"Minutes: {results_2['minutes']:.2f}")
-        print(f"Hours: {results_2['hours']:.2f}")
-        print(f"Days: {results_2['days']:.2f}")
-        sample_value_3 = 2
-        sample_unit_3 = 'years'
-        print("\n--- Error Handling Sample ---")
-        convert_duration(sample_value_3, sample_unit_3)
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    converter = TimeConverter(2.5, 'hours')
+    output = converter.convert()
+    print(output)

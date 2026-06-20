@@ -1,31 +1,40 @@
-import math
+import csv
+import os
 
-def celsius_to_kelvin(celsius: float) -> float:
-    """Convert temperature from Celsius to Kelvin."""
-    return celsius + 273.15
-
-# Predefined set of sensor inputs (hard-coded sample values in Celsius)
-SENSOR_DATA = [
-    {"id": "S001", "location": "North Hallway", "reading_c": -4.5},
-    {"id": "S002", "location": "Server Room A", "reading_c": 38.2},
-    {"id": "S003", "location": "Office Lobby", "reading_c": 21.7},
-    {"id": "S004", "location": "Warehouse B", "reading_c": -15.3},
-    {"id": "S005", "location": "Lab Zone C", "reading_c": 68.9}
-]
-
-def format_table(data_list):
-    """Print a neatly formatted table of sensor data with Kelvin conversion."""
-    print(f"{'ID':<12} {'Location':<24} {'Celsius (°C)':>10} {'Kelvin (K)'>15}")
-    print("-" * 65)
-
-    for item in data_list:
-        c = item["reading_c"]
-        k = celsius_to_kelvin(c)
-        
-        # Format Celsius with one decimal place, Kelvin with one decimal place
-        line = f"{item['id']:<12} {item['location']:<24} {c:>8.1f} {k:9.1f}"
-        print(line)
+def convert_celsius_to_fahrenheit(input_path, output_path):
+    with open(input_path, mode='r', newline='') as infile:
+        reader = csv.DictReader(infile)
+        fieldnames = reader.fieldnames
+        rows = []
+        for row in reader:
+            celsius = float(row['celsius'])
+            fahrenheit = (celsius * 9 / 5) + 32
+            row['fahrenheit'] = fahrenheit
+            rows.append(row)
+    with open(output_path, mode='w', newline='') as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames + ['fahrenheit'])
+        writer.writeheader()
+        writer.writerows(rows)
+    return rows
 
 if __name__ == '__main__':
-    # Process the predefined data and display results
-    format_table(SENSOR_DATA)
+    input_data = [
+        {'celsius': '0'},
+        {'celsius': '100'},
+        {'celsius': '37'}
+    ]
+    input_file = 'temp_input.csv'
+    output_file = 'temp_output.csv'
+    with open(input_file, mode='w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['celsius'])
+        writer.writeheader()
+        writer.writerows(input_data)
+    try:
+        result = convert_celsius_to_fahrenheit(input_file, output_file)
+        for row in result:
+            print(row)
+    finally:
+        if os.path.exists(input_file):
+            os.remove(input_file)
+        if os.path.exists(output_file):
+            os.remove(output_file)
