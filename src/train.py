@@ -576,7 +576,7 @@ class DiffCoderTrainer:
 
 
 def main():
-    torch.backends.cudnn.enabled = True
+    torch.backends.cudnn.enabled = False
     load_dotenv()
     
     if torch.cuda.is_available():
