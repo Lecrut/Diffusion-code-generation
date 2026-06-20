@@ -36468,3 +36468,1847 @@ if __name__ == '__main__':
     sample_string = ""  apple , banana , orange  , grape ""
     result = split_and_strip_tokens(sample_string)
     print(result)",True,True,False,,2,2924,8_4_2.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(text):
+    return [token.strip() for token in text.split(',')]
+
+if __name__ == '__main__':
+    sample_input = ""apple,  banana , cherry""
+    result = split_and_strip(sample_input)
+    print(result)",True,True,False,,3,2925,8_4_3.py
+8,1,Split text by commas,"Implement a highly optimized Python function that splits a CSV-formatted string by commas, handling edge cases where adjacent commas produce empty strings, and returns only meaningful segments.","def split_csv(csv_string):
+    result = []
+    current_segment = []
+    in_quotes = False
+    escape_next = False
+
+    for char in csv_string:
+        if escape_next:
+            current_segment.append(char)
+            escape_next = False
+        elif char == '\\' and in_quotes:
+            current_segment.append(char)
+            escape_next = True
+        elif char == '""':
+            in_quotes = not in_quotes
+            current_segment.append(char)
+        elif char == ',' and not in_quotes:
+            segment = ''.join(current_segment).strip()
+            if segment:
+                result.append(segment)
+            current_segment = []
+        else:
+            current_segment.append(char)
+
+    segment = ''.join(current_segment).strip()
+    if segment:
+        result.append(segment)
+
+    return result
+
+if __name__ == '__main__':
+    sample1 = ""apple,banana,cherry""
+    sample2 = ""apple,,cherry""
+    sample3 = ""apple, \""banana, berry\"", cherry""
+    sample4 = "",,""
+    sample5 = ""hello""
+    sample6 = ""\""quoted,value\"",normal,another \""quoted\""""
+
+    print(split_csv(sample1))
+    print(split_csv(sample2))
+    print(split_csv(sample3))
+    print(split_csv(sample4))
+    print(split_csv(sample5))
+    print(split_csv(sample6))",True,True,False,,16,2926,8_1_16.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split("","")]
+
+if __name__ == '__main__':
+    sample = ""  hello , world , python  ""
+    print(split_and_strip(sample))",True,True,False,,4,2927,8_4_4.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip_tokens(input_string: str) -> list:
+    return [token.strip() for token in input_string.split(',')]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana , cherry , date  ""
+    result = split_and_strip_tokens(sample_text)
+    print(result)",True,True,False,,5,2928,8_4_5.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split(',')]
+if __name__ == '__main__':
+    sample = ' hello , world , python '
+    result = split_and_strip(sample)
+    print(result)",True,True,False,,6,2929,8_4_6.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(string):
+    return list(filter(lambda s: s.strip(), string.split(',')))
+
+if __name__ == '__main__':
+    sample = ""apple, , banana, , cherry""
+    result = split_and_filter(sample)
+    print(result)",True,True,False,,4,2930,8_3_4.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda x: x.strip() != '', s.split(',')))
+
+if __name__ == '__main__':
+    sample_string = ""apple, ,banana, ,cherry, , ,date""
+    result = split_and_filter(sample_string)
+    print(result)",True,True,False,,5,2931,8_3_5.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda x: x.strip(), s.split(',')))
+
+if __name__ == '__main__':
+    sample = ""apple, ,banana,,cherry, , ""
+    result = split_and_filter(sample)
+    print(result)",True,True,False,,6,2932,8_3_6.py
+8,1,Split text by commas,"Implement a highly optimized Python function that splits a CSV-formatted string by commas, handling edge cases where adjacent commas produce empty strings, and returns only meaningful segments.","def split_csv_string(s):
+    if not s:
+        return []
+    
+    segments = []
+    current = []
+    i = 0
+    n = len(s)
+    
+    while i < n:
+        char = s[i]
+        if char == ',':
+            if current:
+                segments.append(''.join(current))
+                current = []
+        else:
+            current.append(char)
+        i += 1
+    
+    if current:
+        segments.append(''.join(current))
+    
+    return segments
+
+if __name__ == '__main__':
+    sample = ""a,,b,,,c""
+    result = split_csv_string(sample)
+    print(result)",True,True,False,,17,2933,8_1_17.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split(',')]
+
+if __name__ == '__main__':
+    print(split_and_strip(""hello, world, python""))",True,True,False,,7,2934,8_4_7.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda x: x.strip(), s.split(',')))
+
+if __name__ == '__main__':
+    result = split_and_filter(""a, b, , c, , d,  "")
+    print(result)",True,True,False,,7,2935,8_3_7.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split(',')]
+if __name__ == '__main__':
+    sample_string = '  hello , world , python  '
+    result = split_and_strip(sample_string)
+    print(result)",True,True,False,,8,2936,8_4_8.py
+8,1,Split text by commas,"Implement a highly optimized Python function that splits a CSV-formatted string by commas, handling edge cases where adjacent commas produce empty strings, and returns only meaningful segments.","def split_csv_meaningful(csv_string):
+    if not csv_string:
+        return []
+    segments = csv_string.split(',')
+    return [segment for segment in segments if segment]
+
+if __name__ == '__main__':
+    sample_input = ""apple,,banana,,orange,,,""
+    result = split_csv_meaningful(sample_input)
+    print(result)",True,True,False,,18,2937,8_1_18.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip_tokens(text):
+    return [token.strip() for token in text.split(',')]
+
+if __name__ == '__main__':
+    sample_input = ""apple, banana, cherry, date""
+    result = split_and_strip_tokens(sample_input)
+    print(result)",True,True,False,,9,2938,8_4_9.py
+8,1,Split text by commas,"Implement a highly optimized Python function that splits a CSV-formatted string by commas, handling edge cases where adjacent commas produce empty strings, and returns only meaningful segments.","def split_csv_meaningful(csv_string):
+    if not csv_string:
+        return []
+    return [segment for segment in csv_string.split(',') if segment]
+if __name__ == '__main__':
+    sample_csv = 'apple,,banana,orange,,grape,,,'
+    result = split_csv_meaningful(sample_csv)
+    print(result)",True,True,False,,19,2939,8_1_19.py
+8,1,Split text by commas,"Implement a highly optimized Python function that splits a CSV-formatted string by commas, handling edge cases where adjacent commas produce empty strings, and returns only meaningful segments.","import re
+
+def split_csv_meaningful(s):
+    if not isinstance(s, str):
+        raise TypeError(""Input must be a string"")
+    parts = s.split(',')
+    return [part for part in parts if part.strip()]
+
+if __name__ == '__main__':
+    sample_csv = ""apple,,banana,  ,cherry,,""
+    result = split_csv_meaningful(sample_csv)
+    print(result)",True,True,False,,20,2940,8_1_20.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    parts = text.split(',')
+    return [part.strip() for part in parts]
+
+if __name__ == '__main__':
+    sample_text = ""  hello , world , python  ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,1,2941,8_5_1.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    parts = s.split(',')
+    result = list(filter(lambda x: x.strip() != '', parts))
+    return result
+
+if __name__ == '__main__':
+    sample_string = 'a, , b, ,c, d '
+    result = split_and_filter(sample_string)
+    print(result)",True,True,False,,8,2942,8_3_8.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda x: x.strip() != '', s.split(',')))
+
+if __name__ == '__main__':
+    sample_input = ""apple, banana, ,  ,orange, ,grape""
+    print(split_and_filter(sample_input))",True,True,False,,9,2943,8_3_9.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda x: x.strip(), s.split(',')))
+
+if __name__ == '__main__':
+    sample = ""apple, , banana,  , cherry""
+    print(split_and_filter(sample))",True,True,False,,10,2944,8_3_10.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(text: str) -> list[str]:
+    return [token.strip() for token in text.split("","") if token.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  hello , world , python ,  ""
+    result = split_and_strip(sample_input)
+    print(result)",True,True,False,,10,2945,8_4_10.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_trim(text: str) -> list:
+    if not text:
+        return []
+    parts = text.split(',')
+    trimmed = [part.strip() for part in parts]
+    return trimmed
+
+if __name__ == '__main__':
+    sample_text = ""  hello , world ,  python ""
+    result = split_and_trim(sample_text)
+    print(result)",True,True,False,,2,2946,8_5_2.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(input_string):
+    parts = input_string.split(',')
+    result = list(filter(lambda x: x.strip() != '', parts))
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""a, b,, c, , d""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,11,2947,8_3_11.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(text):
+    return list(filter(lambda s: s.strip() != """", text.split("","")))
+
+if __name__ == '__main__':
+    sample_input = ""apple, ,banana,,  ,cherry, , ""
+    result = split_and_filter(sample_input)
+    print(result)",True,True,False,,12,2948,8_3_12.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def process_comma_separated_string(input_text):
+    raw_parts = input_text.split(',')
+    cleaned_parts = []
+    for part in raw_parts:
+        stripped_value = part.strip()
+        cleaned_parts.append(stripped_value)
+    return cleaned_parts
+
+if __name__ == '__main__':
+    test_data = ""  dog , cat , elephant , giraffe  ""
+    output_list = process_comma_separated_string(test_data)
+    print(output_list)",True,True,False,,11,2949,8_4_11.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    parts = text.split(',')
+    stripped_parts = [part.strip() for part in parts]
+    return stripped_parts
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana ,  cherry ,  date  ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,3,2950,8_5_3.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana ,  orange ,  grape  ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,4,2951,8_5_4.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda part: part.strip(), s.split(',')))
+
+if __name__ == '__main__':
+    sample = ""apple, , banana,  , cherry""
+    result = split_and_filter(sample)
+    print(result)",True,True,False,,13,2952,8_3_13.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana ,  cherry  , date""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,5,2953,8_5_5.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    return [part.strip() for part in parts]
+
+if __name__ == '__main__':
+    sample_text = ""  apple  , banana , cherry  ,  date ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,6,2954,8_5_6.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana ,  cherry ,date  ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,7,2955,8_5_7.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(string: str) -> list:
+    return [token.strip() for token in string.split(',') if token.strip()]
+
+if __name__ == '__main__':
+    result = split_and_strip(""  hello , world ,  python  "")
+    print(result)",True,True,False,,12,2956,8_4_12.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s: str) -> list[str]:
+    return [token.strip() for token in s.split(',')]
+
+if __name__ == '__main__':
+    sample_string = ""  apple , banana ,  cherry  , date ""
+    result = split_and_strip(sample_string)
+    print(result)",True,True,False,,13,2957,8_4_13.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split(',')]
+if __name__ == '__main__':
+    sample_string = '  hello , world ,  python  ,  test  '
+    result = split_and_strip(sample_string)
+    print(result)",True,True,False,,14,2958,8_4_14.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_trim(text):
+    parts = text.split(',')
+    trimmed_parts = [part.strip() for part in parts]
+    return trimmed_parts
+
+if __name__ == '__main__':
+    sample_text = ""  apple,  banana ,cherry ,  ""
+    result = split_and_trim(sample_text)
+    print(result)",True,True,False,,8,2959,8_5_8.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_string(s):
+    return list(filter(lambda x: x.strip(), s.split(',')))
+
+if __name__ == '__main__':
+    result = split_string('a, b, , c,  ,d')
+    print(result)",True,True,False,,14,2960,8_3_14.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split(',')]
+
+if __name__ == '__main__':
+    sample_string = ""hello, world, foo , bar""
+    result = split_and_strip(sample_string)
+    print(result)",True,True,False,,15,2961,8_4_15.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip_text(text):
+    parts = text.split(',')
+    return [part.strip() for part in parts]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana  ,  orange  , grape  ""
+    result = split_and_strip_text(sample_text)
+    print(result)",True,True,False,,9,2962,8_5_9.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_clean_text(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    cleaned_parts = [part.strip() for part in parts]
+    return cleaned_parts
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana ,  cherry  , date ""
+    result = split_and_clean_text(sample_text)
+    print(result)",True,True,False,,10,2963,8_5_10.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    parts = s.split(',')
+    result = list(filter(lambda part: part.strip(), parts))
+    return result
+
+if __name__ == '__main__':
+    sample_string = ""apple, ,banana,,cherry, ,date""
+    print(split_and_filter(sample_string))",True,True,False,,15,2964,8_3_15.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text: str) -> list:
+    raw_parts = text.split(',')
+    cleaned_parts = []
+    for segment in raw_parts:
+        cleaned_parts.append(segment.strip())
+    return cleaned_parts
+
+if __name__ == '__main__':
+    sample_input = ""  red , green ,  blue , yellow  , purple""
+    output_list = split_and_strip(sample_input)
+    print(output_list)",True,True,False,,11,2965,8_5_11.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_text = "" apple , banana , cherry ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,12,2966,8_5_12.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split("","")]
+
+if __name__ == ""__main__"":
+    result = split_and_strip(""  hello , world  ,  python  "")
+    print(result)",True,True,False,,16,2967,8_4_16.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip_tokens(s):
+    if not s:
+        return []
+    return [token.strip() for token in s.split(',')]
+
+if __name__ == '__main__':
+    sample_string = ""  apple , banana , orange  , grape  ""
+    result = split_and_strip_tokens(sample_string)
+    print(result)",True,True,False,,17,2968,8_4_17.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(text):
+    return list(filter(lambda s: s.strip(), text.split(',')))
+
+if __name__ == '__main__':
+    result = split_and_filter(""apple, , banana, , ,cherry , date"")
+    print(result)",True,True,False,,16,2969,8_3_16.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip(s):
+    return [token.strip() for token in s.split(',')]
+
+if __name__ == '__main__':
+    sample_string = ""  hello ,  world , foo ,bar  ""
+    result = split_and_strip(sample_string)
+    print(result)",True,True,False,,18,2970,8_4_18.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    parts = text.split(',')
+    cleaned = [part.strip() for part in parts]
+    return cleaned
+
+if __name__ == '__main__':
+    sample_text = ""apple, banana ,cherry , date""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,13,2971,8_5_13.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    parts = s.split(',')
+    result = list(filter(lambda x: x.strip(), parts))
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, , banana, , ,cherry, ""
+    filtered_result = split_and_filter(sample_input)
+    print(filtered_result)",True,True,False,,17,2972,8_3_17.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip_tokens(text: str) -> list:
+    return [token.strip() for token in text.split(',')]
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana  , cherry  , date ""
+    result = split_and_strip_tokens(sample_input)
+    print(result)",True,True,False,,19,2973,8_4_19.py
+8,4,Split text by commas,"Develop a Python function that accepts a string, splits it by commas, and returns a list of stripped tokens, ensuring the code is concise and follows PEP 8 guidelines.","def split_and_strip_tokens(text):
+    return [token.strip() for token in text.split(',')]
+
+if __name__ == '__main__':
+    sample_string = ""apple,  banana ,  cherry  , date""
+    result = split_and_strip_tokens(sample_string)
+    print(result)",True,True,False,,20,2974,8_4_20.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana ,  cherry  ,  date ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,14,2975,8_5_14.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_comma_string(s):
+    parts = s.split(',')
+    return [part.strip() for part in parts if part.strip()]
+
+if __name__ == '__main__':
+    sample1 = ""  apple , banana ,  , cherry ""
+    sample2 = "",,,,""
+    sample3 = ""hello""
+    sample4 = """"
+    print(split_comma_string(sample1))
+    print(split_comma_string(sample2))
+    print(split_comma_string(sample3))
+    print(split_comma_string(sample4))",True,True,False,,1,2976,8_6_1.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_clean(input_string):
+    if not input_string:
+        return []
+    return [part.strip() for part in input_string.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample_data = ""  apple ,banana,,orange,  grape , kiwi  , ""
+    result = split_and_clean(sample_data)
+    print(result)",True,True,False,,2,2977,8_6_2.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_by_comma(input_str):
+    return [part.strip() for part in input_str.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana ,, orange  ,  ,grape""
+    result = split_by_comma(sample)
+    print(result)",True,True,False,,3,2978,8_6_3.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(input_string):
+    return list(filter(lambda s: s.strip(), input_string.split(',')))
+
+if __name__ == '__main__':
+    sample_input = ""apple,, banana, ,orange, ""
+    result = split_and_filter(sample_input)
+    print(result)",True,True,False,,18,2979,8_3_18.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(text):
+    return list(filter(lambda s: s.strip() != """", text.split("","")))
+
+if __name__ == ""__main__"":
+    sample_data = ""apple,  , banana, , orange, , , grapefruit""
+    result = split_and_filter(sample_data)
+    print(result)",True,True,False,,19,2980,8_3_19.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_trim(text):
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_text = "" apple,  banana,cherry , date""
+    result = split_and_trim(sample_text)
+    print(result)",True,True,False,,15,2981,8_5_15.py
+8,3,Split text by commas,Write an efficient Python function that splits a string by commas and filters out any empty strings or whitespace-only strings from the result using filter and lambda.,"def split_and_filter(s):
+    return list(filter(lambda x: x.strip(), s.split(',')))
+
+if __name__ == '__main__':
+    sample = ""apple, banana, , cherry,  , date""
+    print(split_and_filter(sample))",True,True,False,,20,2982,8_3_20.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_strip(text: str) -> list[str]:
+    return [s.strip() for s in text.split(',') if s.strip()]
+
+if __name__ == '__main__':
+    result = split_and_strip(""  hello , world ,  , foo "")
+    print(result)",True,True,False,,4,2983,8_6_4.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_text = "" apple , banana ,cherry , ""
+    output = split_and_strip(sample_text)
+    print(output)",True,True,False,,16,2984,8_5_16.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, , banana,  orange,  , grape ""
+    print(split_and_filter(sample_input))",True,True,False,,1,2985,8_7_1.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_clean(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = ""  hello , world , , python  , , java  ""
+    result = split_and_clean(sample)
+    print(result)",True,True,False,,5,2986,8_6_5.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_clean(input_string):
+    return [part.strip() for part in input_string.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = "" apple , banana , , cherry , date , ""
+    print(split_and_clean(sample))",True,True,False,,6,2987,8_6_6.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not text:
+        return []
+    results = []
+    parts = text.split(',')
+    for part in parts:
+        cleaned = part.strip()
+        if cleaned:
+            results.append(cleaned)
+    return results
+
+if __name__ == '__main__':
+    sample_input = ""  apple,  banana , , orange,  , grape  ""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,2,2988,8_7_2.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text: str) -> list:
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, , banana, ,cherry, , , date""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,3,2989,8_7_3.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(s):
+    return [segment.strip() for segment in s.split(',') if segment.strip()]
+
+if __name__ == '__main__':
+    sample_string = ""apple, , banana,  cherry , , date""
+    result = split_and_filter(sample_string)
+    print(result)",True,True,False,,4,2990,8_7_4.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip_text(text):
+    parts = text.split(',')
+    stripped_parts = [part.strip() for part in parts]
+    return stripped_parts
+
+if __name__ == '__main__':
+    sample_text = ""  apple, banana ,  cherry, date  ""
+    result = split_and_strip_text(sample_text)
+    print(result)",True,True,False,,17,2991,8_5_17.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    if not text:
+        return []
+    return [part.strip() for part in text.split(',')]
+
+if __name__ == '__main__':
+    sample_input = ""  apple  , banana ,  cherry  , date ""
+    result = split_and_strip(sample_input)
+    print(result)",True,True,False,,18,2992,8_5_18.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def split_and_strip(text):
+    parts = text.split(',')
+    return [part.strip() for part in parts]
+
+if __name__ == '__main__':
+    sample_text = "" apple , banana , cherry ""
+    result = split_and_strip(sample_text)
+    print(result)",True,True,False,,19,2993,8_5_19.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","import re
+
+def split_comma_string(s: str) -> list:
+    return [x.strip() for x in re.split(r',\s*', s) if x.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  hello , world , foo ,  bar , ""
+    result = split_comma_string(sample_input)
+    print(result)",True,True,False,,7,2994,8_6_7.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter_csv(input_str):
+    parts = input_str.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana,,  ,cherry  , ,date ""
+    output = split_and_filter_csv(sample_input)
+    print(output)",True,True,False,,5,2995,8_7_5.py
+8,5,Split text by commas,"Construct a Python function that splits a text string by commas and removes leading and trailing whitespace from each part, utilizing the split and strip methods effectively.","def process_text(text: str) -> list[str]:
+    parts = text.split(',')
+    result = [part.strip() for part in parts]
+    return result
+
+if __name__ == '__main__':
+    sample_text = ""  apple, banana ,  cherry  ""
+    processed = process_text(sample_text)
+    print(processed)",True,True,False,,20,2996,8_5_20.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"import re
+
+def split_and_clean_string(s):
+    if not isinstance(s, str):
+        return []
+    parts = s.split(',')
+    cleaned = [part.strip() for part in parts if part.strip()]
+    return cleaned
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana , , grape ,  orange ""
+    result = split_and_clean_string(sample_input)
+    print(result)",True,True,False,,1,2997,8_8_1.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(s):
+    parts = s.split(',')
+    stripped_parts = [part.strip() for part in parts]
+    filtered_parts = [part for part in stripped_parts if part]
+    return filtered_parts
+
+if __name__ == '__main__':
+    sample = ""apple, banana,,  cherry , date""
+    result = split_and_filter(sample)
+    print(result)",True,True,False,,6,2998,8_7_6.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_strip(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample_string = ""apple,  banana ,  , cherry,  , date  , , ""
+    result = split_and_strip(sample_string)
+    print(result)",True,True,False,,8,2999,8_6_8.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter_string(text):
+    split_result = text.split(',')
+    stripped_result = [item.strip() for item in split_result]
+    filtered_result = [item for item in stripped_result if item]
+    return filtered_result
+if __name__ == '__main__':
+    sample_string = 'apple, banana, , orange,  , grapefruit'
+    result = split_and_filter_string(sample_string)
+    print(result)",True,True,False,,7,3000,8_7_7.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    if not s:
+        return []
+    parts = s.split(',')
+    cleaned = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            cleaned.append(stripped)
+    return cleaned
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana , , orange ,  , grape ""
+    result = split_and_clean(sample_input)
+    print(result)",True,True,False,,2,3001,8_8_2.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample = ""apple, banana , , cherry,  , date""
+    result = split_and_clean(sample)
+    print(result)",True,True,False,,3,3002,8_8_3.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(input_string):
+    if not input_string:
+        return []
+    segments = input_string.split(',')
+    return [segment.strip() for segment in segments if segment.strip()]
+
+if __name__ == '__main__':
+    sample_data = ""apple,  banana, , orange,  , grapefruit, , kiwi, lime""
+    result = split_and_filter(sample_data)
+    print(result)",True,True,False,,8,3003,8_7_8.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not isinstance(text, str):
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple, , banana,  orange, ,grape, ""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,9,3004,8_7_9.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    return [segment.strip() for segment in text.split(',') if segment.strip()]
+
+if __name__ == '__main__':
+    sample = ""apple, , banana, cherry,, , date""
+    result = split_and_filter(sample)
+    print(result)",True,True,False,,10,3005,8_7_10.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, , banana, , cherry, ""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,11,3006,8_7_11.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_csv_string(text: str) -> list:
+    if not text:
+        return []
+    
+    parts = text.split(',')
+    result = []
+    
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+            
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  hello , world ,  python , , coding ""
+    output = split_csv_string(sample_input)
+    print(output)",True,True,False,,9,3007,8_6_9.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(input_string):
+    parts = input_string.split(',')
+    return [part.strip() for part in parts if part.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""apple, banana , ,orange,grape , ""
+    result = split_and_clean(sample_input)
+    print(result)",True,True,False,,4,3008,8_8_4.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""  apple , banana , , orange , , , grape ""
+    output = split_and_filter(sample_data)
+    print(output)",True,True,False,,12,3009,8_7_12.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(text):
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_text = ""apple, banana, ,  cherry ,date, ,grape""
+    cleaned_list = split_and_clean(sample_text)
+    print(cleaned_list)",True,True,False,,5,3010,8_8_5.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_clean(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  hello , world ,  , foo , bar  , ,  ""
+    print(split_and_clean(sample_input))",True,True,False,,10,3011,8_6_10.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""apple, , banana,  ,cherry,  date  ,,""
+    output = split_and_filter(sample_data)
+    print(output)",True,True,False,,13,3012,8_7_13.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    parts = s.split(',')
+    cleaned = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            cleaned.append(stripped)
+    return cleaned
+
+if __name__ == '__main__':
+    sample = ""apple, banana, , cherry,  date ,,""
+    result = split_and_clean(sample)
+    print(result)",True,True,False,,6,3013,8_8_6.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample = ""apple, banana, , cherry , , date""
+    result = split_and_clean(sample)
+    print(result)",True,True,False,,7,3014,8_8_7.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not isinstance(text, str):
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple,  banana , ,orange, , , grape ""
+    output_list = split_and_filter(sample_input)
+    print(output_list)",True,True,False,,14,3015,8_7_14.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string"")
+    segments = text.split(',')
+    result = []
+    for segment in segments:
+        stripped = segment.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple,  banana , , cherry,  ,  date ""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,15,3016,8_7_15.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not isinstance(text, str):
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample = ""  apple , , banana  ,,, cherry , ""
+    output = split_and_filter(sample)
+    print(output)",True,True,False,,16,3017,8_7_16.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_comma_delimited(input_string):
+    return [s.strip() for s in input_string.split(',') if s.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana,,  cherry , ,date ""
+    result = split_comma_delimited(sample_input)
+    print(result)",True,True,False,,11,3018,8_6_11.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean_string(input_string: str) -> list:
+    items = input_string.split(',')
+    cleaned_items = [item.strip() for item in items if item.strip()]
+    return cleaned_items
+
+if __name__ == '__main__':
+    test_string = ""  apple, , banana, , ,  cherry , date ""
+    result = split_and_clean_string(test_string)
+    print(result)",True,True,False,,8,3019,8_8_8.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def parse_comma_separated(input_string):
+    if not input_string:
+        return []
+    
+    parts = input_string.split(',')
+    result = []
+    
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+            
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, banana,, cherry , ,date""
+    output = parse_comma_separated(sample_input)
+    print(output)",True,True,False,,17,3020,8_7_17.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(comma_separated_string):
+    result = []
+    parts = comma_separated_string.split(',')
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana,, cherry , ,date ""
+    output = split_and_clean(sample_input)
+    print(output)",True,True,False,,9,3021,8_8_9.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string"")
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana , , orange , , ,grape ""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,18,3022,8_7_18.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","COMMA_DELIM = ','
+
+WHITESPACE = ' \t\n\r'
+
+def extract_clean_parts(text):
+    raw_segments = text.split(COMMA_DELIM)
+    cleaned_parts = []
+    for segment in raw_segments:
+        stripped = segment.strip(WHITESPACE)
+        if stripped:
+            cleaned_parts.append(stripped)
+    return cleaned_parts
+
+if __name__ == '__main__':
+    test_input_1 = ""  red , green,  , blue,  ""
+    test_input_2 = "",,,,""
+    test_input_3 = ""single_item""
+    test_input_4 = """"
+    test_input_5 = ""  ,  ,  ""
+    print(extract_clean_parts(test_input_1))
+    print(extract_clean_parts(test_input_2))
+    print(extract_clean_parts(test_input_3))
+    print(extract_clean_parts(test_input_4))
+    print(extract_clean_parts(test_input_5))",True,True,False,,12,3023,8_6_12.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana,  , cherry ,  date  ""
+    print(split_and_clean(sample))",True,True,False,,10,3024,8_8_10.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def parse_strings(input_string):
+    if not input_string:
+        return []
+    return [s.strip() for s in input_string.split(',') if s.strip()]
+
+if __name__ == '__main__':
+    sample_data = ""  apple  , banana , ,  orange  ,  , grape ""
+    result = parse_strings(sample_data)
+    print(result)",True,True,False,,13,3025,8_6_13.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean_string(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana,  ,cherry,  ""
+    result = split_and_clean_string(sample)
+    print(result)",True,True,False,,11,3026,8_8_11.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(text):
+    if not text:
+        return []
+    result = []
+    for item in text.split(','):
+        cleaned = item.strip()
+        if cleaned:
+            result.append(cleaned)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana , , cherry ,  , date ""
+    print(split_and_clean(sample_input))",True,True,False,,12,3027,8_8_12.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana,  cherry,  , date  ""
+    print(split_and_clean(sample))",True,True,False,,13,3028,8_8_13.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(csv_string):
+    if not csv_string:
+        return []
+    
+    parts = csv_string.split(',')
+    result = []
+    
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+            
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, , banana, ,cherry, , ""
+    output = split_and_filter(sample_input)
+    print(output)",True,True,False,,19,3029,8_7_19.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_csv(input_string):
+    return [part.strip() for part in input_string.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    result = split_csv(""  hello , world , , foo ,  "")
+    print(result)",True,True,False,,14,3030,8_6_14.py
+8,7,Split text by commas,"Implement a Python utility function that splits a string by commas and filters out empty results, ensuring the output list contains only valid, stripped text segments.","def split_and_filter(text):
+    if not text:
+        return []
+    segments = text.split(',')
+    result = []
+    for segment in segments:
+        stripped = segment.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana,, ,cherry , , date ""
+    print(split_and_filter(sample_text))
+    empty_text = "",,,  ,  ""
+    print(split_and_filter(empty_text))
+    mixed_text = ""red, green,  ,blue, ,yellow""
+    print(split_and_filter(mixed_text))",True,True,False,,20,3031,8_7_20.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_by_comma(input_string):
+    return [part.strip() for part in input_string.split(',') if part.strip()]
+if __name__ == '__main__':
+    sample_input = '  apple, banana ,  cherry ,  ,date  ,  elderberry,  '
+    result = split_by_comma(sample_input)
+    print(result)",True,True,False,,15,3032,8_6_15.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_strip(input_string):
+    if not input_string:
+        return []
+    parts = input_string.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""apple,  banana , ,  orange,  grape  ,kiwi, ,lemon""
+    output_list = split_and_strip(sample_data)
+    print(output_list)",True,True,False,,16,3033,8_6_16.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_strip(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = "" apple , banana ,, cherry , orange ""
+    result = split_and_strip(sample)
+    print(result)",True,True,False,,17,3034,8_6_17.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(input_str):
+    return [item.strip() for item in input_str.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  hello , , world ,  python  ,  ""
+    result = split_and_clean(sample_input)
+    print(result)",True,True,False,,14,3035,8_8_14.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(text):
+    if not isinstance(text, str):
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_text = ""  hello , world ,  , python ,  ""
+    values = split_and_trim(sample_text)
+    print(values)",True,True,False,,1,3036,8_9_1.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_clean(text):
+    return [part.strip() for part in text.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    result = split_and_clean("" apple, banana ,orange,, ,grape "")
+    print(result)",True,True,False,,18,3037,8_6_18.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean_string(text):
+    result = []
+    for segment in text.split(','):
+        cleaned = segment.strip()
+        if cleaned:
+            result.append(cleaned)
+    return result
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana,  , orange , ,  grape  ""
+    print(split_and_clean_string(sample_text))",True,True,False,,15,3038,8_8_15.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim_comma_string(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = "" apple , banana , , cherry ,  ""
+    result = split_and_trim_comma_string(sample)
+    print(result)",True,True,False,,2,3039,8_9_2.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(text):
+    result = []
+    for item in text.split(','):
+        cleaned = item.strip()
+        if cleaned:
+            result.append(cleaned)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana, , orange , , grape  ""
+    output = split_and_clean(sample_input)
+    print(output)",True,True,False,,16,3040,8_8_16.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","import re
+
+def split_and_strip(input_string):
+    return [part.strip() for part in input_string.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    result = split_and_strip("" hello , world , , foo , bar "")
+    print(result)",True,True,False,,19,3041,8_6_19.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"import re
+
+def split_and_clean(csv_string):
+    if not csv_string:
+        return []
+    parts = csv_string.split(',')
+    return [part.strip() for part in parts if part.strip()]
+
+if __name__ == '__main__':
+    sample = "" hello , world , , test , , ""
+    result = split_and_clean(sample)
+    print(result)",True,True,False,,17,3042,8_8_17.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_by_comma(input_string):
+    if not isinstance(input_string, str):
+        raise TypeError(""Input must be a string"")
+    parts = input_string.split(',')
+    return [part.strip() for part in parts if part.strip()]
+
+if __name__ == '__main__':
+    sample_input = "" apple , banana , , cherry ,  date  ""
+    result = split_by_comma(sample_input)
+    print(result)",True,True,False,,3,3043,8_9_3.py
+8,6,Split text by commas,"Write a Python function that takes a string input, splits it by the comma delimiter, and returns a list of non-empty, stripped substrings, optimized for performance.","def split_and_clean_string(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana,,  cherry , , date  ""
+    result = split_and_clean_string(sample_input)
+    print(result)",True,True,False,,20,3044,8_6_20.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana,,  cherry ,  ""
+    result = split_and_clean(sample)
+    print(result)",True,True,False,,18,3045,8_8_18.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"def split_and_clean(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample_string = ""  apple , banana , , cherry ,  , kiwi ""
+    result = split_and_clean(sample_string)
+    print(result)",True,True,False,,19,3046,8_8_19.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(s):
+    if not s:
+        return []
+    parts = s.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_string = ""  apple, banana , , orange,  , grape  ""
+    output_list = split_and_trim(sample_string)
+    print(output_list)",True,True,False,,1,3047,8_10_1.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(string_input):
+    if not string_input:
+        return []
+    parts = string_input.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""  apple , banana  ,  orange  , , grape ""
+    output_list = split_and_trim(sample_data)
+    print(output_list)",True,True,False,,2,3048,8_10_2.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_by_comma(s):
+    if not isinstance(s, str):
+        raise TypeError(""Input must be a string"")
+    parts = s.split(',')
+    trimmed = [part.strip() for part in parts]
+    return trimmed
+
+if __name__ == '__main__':
+    sample1 = ""  apple , banana ,  cherry ""
+    sample2 = ""one,two,,four, ""
+    sample3 = """"
+    sample4 = ""   ""
+    print(split_by_comma(sample1))
+    print(split_by_comma(sample2))
+    print(split_by_comma(sample3))
+    print(split_by_comma(sample4))",True,True,False,,3,3049,8_10_3.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_trimmed_commas(input_string):
+    if not isinstance(input_string, str):
+        raise TypeError(""Input must be a string"")
+    parts = input_string.split(',')
+    result = [part.strip() for part in parts if part.strip()]
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple ,  banana, ,  cherry , ,date ""
+    result = split_trimmed_commas(sample_input)
+    print(result)",True,True,False,,4,3050,8_9_4.py
+8,8,Split text by commas,Generate a Python function that splits a given string by commas and cleans up the resulting list by stripping whitespace and removing empty entries in a single pass.,"import re
+
+def split_and_clean(input_string):
+    return [part.strip() for part in re.split(r',', input_string) if part.strip()]
+
+if __name__ == '__main__':
+    sample_input = "" apple, banana, , cherry , ,date ""
+    result = split_and_clean(sample_input)
+    print(result)",True,True,False,,20,3051,8_8_20.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_string_by_commas(text):
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string"")
+    parts = text.split(',')
+    trimmed_parts = [part.strip() for part in parts]
+    result = [part for part in trimmed_parts if part]
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  apple ,  banana  ,  orange ,  , grape  ""
+    output = split_string_by_commas(sample_input)
+    print(output)",True,True,False,,5,3052,8_9_5.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def split_and_filter(csv_string):
+    parts = csv_string.split(',')
+    return [part for part in parts if part]
+
+if __name__ == '__main__':
+    sample_data = ""apple,banana,,cherry,,date,""
+    result = split_and_filter(sample_data)
+    print(result)",True,True,False,,1,3053,8_11_1.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(string_value):
+    if not string_value:
+        return []
+    parts = string_value.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample = ""  apple , banana,, cherry ,  ,date  ""
+    values = split_and_trim(sample)
+    print(values)",True,True,False,,4,3054,8_10_4.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(string):
+    return [part.strip() for part in string.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    result = split_and_trim('  hello , world ,  ,  foo  ')
+    print(result)",True,True,False,,6,3055,8_9_6.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(data: str) -> list:
+    parts = data.split(',')
+    result = []
+    for part in parts:
+        if part != '':
+            result.append(part)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""apple,banana,,orange,,grape,,""
+    filtered_items = process_csv_string(sample_data)
+    print(filtered_items)",True,True,False,,2,3056,8_11_2.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(s):
+    if not isinstance(s, str):
+        return []
+    parts = s.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample1 = "" apple , banana , cherry , ""
+    sample2 = ""  ,  , orange,   grape  ,  ""
+    sample3 = """"
+    sample4 = ""single_item""
+    sample5 = "",,,,""
+    print(split_and_trim(sample1))
+    print(split_and_trim(sample2))
+    print(split_and_trim(sample3))
+    print(split_and_trim(sample4))
+    print(split_and_trim(sample5))",True,True,False,,5,3057,8_10_5.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(data):
+    return [item for item in data.split(',') if item]
+
+if __name__ == '__main__':
+    sample_data = ""apple,,banana,,cherry,,,""
+    result = process_csv_string(sample_data)
+    print(result)",True,True,False,,3,3058,8_11_3.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim_string(s):
+    parts = s.split(',')
+    trimmed = [part.strip() for part in parts]
+    filtered = [item for item in trimmed if item]
+    return filtered
+
+if __name__ == '__main__':
+    sample1 = "" apple , banana , cherry ""
+    sample2 = ""one,two,,four, ""
+    sample3 = ""   ,   ,  ""
+    sample4 = """"
+    print(split_and_trim_string(sample1))
+    print(split_and_trim_string(sample2))
+    print(split_and_trim_string(sample3))
+    print(split_and_trim_string(sample4))",True,True,False,,6,3059,8_10_6.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(input_string):
+    if not input_string:
+        return []
+    return [part.strip() for part in input_string.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample_data = ""  apple, banana , cherry,  ,  date  , , fig ""
+    result = split_and_trim(sample_data)
+    print(result)",True,True,False,,7,3060,8_10_7.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_by_comma(input_string):
+    if not isinstance(input_string, str):
+        raise TypeError(""Input must be a string"")
+    raw_parts = input_string.split(',')
+    trimmed_parts = [part.strip() for part in raw_parts]
+    return trimmed_parts
+
+if __name__ == '__main__':
+    sample_values = [
+        ""apple, banana, cherry"",
+        "" apple ,banana, cherry "",
+        ""one,,three"",
+        ""single"",
+        ""  , ,  "",
+        ""a,b,c,d,e"",
+        """"
+    ]
+    for value in sample_values:
+        result = split_by_comma(value)
+        print(result)",True,True,False,,8,3061,8_10_8.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_csv(s):
+    if not isinstance(s, str):
+        return []
+    parts = s.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_string = ""  hello , world ,  python , ,  ,code ,  ""
+    print(split_csv(sample_string))",True,True,False,,7,3062,8_9_7.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(text):
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        stripped = part.strip()
+        if stripped:
+            result.append(stripped)
+    return result
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana, , cherry , kiwi  , ""
+    output = split_and_trim(sample_text)
+    print(output)",True,True,False,,9,3063,8_10_9.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_data: str) -> list:
+    raw_parts = csv_data.split(',')
+    result = [part for part in raw_parts if part != '']
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""apple,,banana,,cherry,""
+    filtered_values = process_csv_string(sample_data)
+    print(filtered_values)",True,True,False,,4,3064,8_11_4.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(s):
+    if not isinstance(s, str):
+        raise TypeError(""Input must be a string"")
+    return [part.strip() for part in s.split("","") if part.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  apple , banana ,  cherry ,  ""
+    result = split_and_trim(sample_input)
+    print(result)",True,True,False,,8,3065,8_9_8.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_data: str) -> list:
+    parts = csv_data.split(',')
+    return [part for part in parts if part != '']
+
+if __name__ == '__main__':
+    data = ""apple,banana,,cherry,,date""
+    result = process_csv_string(data)
+    print(result)",True,True,False,,5,3066,8_11_5.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_by_comma(s):
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    samples = [
+        ""apple, banana, cherry"",
+        ""  orange , grape ,, kiwi  "",
+        "","",
+        ""single"",
+        ""   "",
+        ""one,two,three,four""
+    ]
+    for sample in samples:
+        print(split_by_comma(sample))",True,True,False,,10,3067,8_10_10.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(input_string):
+    parts = input_string.split(',')
+    return [part.strip() for part in parts if part.strip()]
+
+if __name__ == '__main__':
+    sample_text = ""  apple , banana , ,orange ,  grape  , , kiwi ""
+    result = split_and_trim(sample_text)
+    print(result)",True,True,False,,9,3068,8_9_9.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(s):
+    if s is None:
+        return []
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample_string = ""  apple , banana, ,cherry , , date  ""
+    result = split_and_trim(sample_string)
+    print(result)",True,True,False,,10,3069,8_9_10.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def filter_csv_string(csv_string):
+    parts = csv_string.split(',')
+    return [part for part in parts if part != '']
+
+if __name__ == '__main__':
+    sample_csv = ""apple,,banana,,cherry,,date,,elderberry""
+    result = filter_csv_string(sample_csv)
+    print(result)",True,True,False,,6,3070,8_11_6.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(input_string):
+    if not isinstance(input_string, str):
+        raise TypeError(""Input must be a string"")
+    parts = input_string.split(',')
+    trimmed_parts = [part.strip() for part in parts]
+    non_empty_parts = [part for part in trimmed_parts if part]
+    return non_empty_parts
+
+if __name__ == '__main__':
+    sample_input = ""apple, banana, , cherry,  grape , orange,""
+    result = split_and_trim(sample_input)
+    print(result)",True,True,False,,11,3071,8_9_11.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(string_value):
+    if not string_value:
+        return []
+    parts = string_value.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_data = "" apple , banana , , orange , , kiwi ""
+    output = split_and_trim(sample_data)
+    print(output)",True,True,False,,12,3072,8_9_12.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample_input = ""  hello , world ,  , python ,  test  ""
+    result = split_and_trim(sample_input)
+    print(result)",True,True,False,,13,3073,8_9_13.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_comma_separated(input_string):
+    if not input_string:
+        return []
+    parts = input_string.split(',')
+    result = [part.strip() for part in parts if part.strip()]
+    return result
+
+if __name__ == '__main__':
+    test_input = ""apple, banana, , cherry ,date,""
+    output = split_comma_separated(test_input)
+    print(output)",True,True,False,,11,3074,8_10_11.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_data):
+    parts = csv_data.split(',')
+    return [part for part in parts if part]
+
+if __name__ == '__main__':
+    sample_data = ""apple,,banana, ,cherry,,""
+    result = process_csv_string(sample_data)
+    print(result)",True,True,False,,7,3075,8_11_7.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(s):
+    if not s:
+        return []
+    parts = s.split(',')
+    result = [part.strip() for part in parts if part.strip()]
+    return result
+
+if __name__ == '__main__':
+    test_string = "" apple , banana , , cherry ,  date  ,  , fig ""
+    print(split_and_trim(test_string))
+    empty_string = """"
+    print(split_and_trim(empty_string))
+    whitespace_string = ""   ,  ,  ""
+    print(split_and_trim(whitespace_string))
+    normal_string = ""a,b,c""
+    print(split_and_trim(normal_string))",True,True,False,,12,3076,8_10_12.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_csv(text):
+    if not isinstance(text, str):
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  hello , world , , foo , ""
+    output = split_csv(sample_input)
+    print(output)",True,True,False,,14,3077,8_9_14.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(input_string: str) -> list:
+    if not input_string:
+        return []
+    parts = input_string.split(',')
+    result = [part.strip() for part in parts if part.strip()]
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""  hello ,  world  , , foo  ,  bar  ,  ""
+    result = split_and_trim(sample_input)
+    print(result)",True,True,False,,13,3078,8_10_13.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim_string(input_string: str) -> list:
+    return [substring.strip() for substring in input_string.split(',') if substring.strip()]
+
+if __name__ == '__main__':
+    sample_data = ""  apple, banana , cherry , , date  ""
+    result = split_and_trim_string(sample_data)
+    print(result)",True,True,False,,15,3079,8_9_15.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_string):
+    return [item for item in csv_string.split(',') if item]
+if __name__ == '__main__':
+    sample_csv = 'apple,,banana,orange,,grape,pear'
+    result = process_csv_string(sample_csv)
+    print(result)",True,True,False,,8,3080,8_11_8.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(s):
+    parts = s.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_string = ""  apple , banana , , cherry ,  date ""
+    result = split_and_trim(sample_string)
+    print(result)",True,True,False,,16,3081,8_9_16.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_by_comma(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana ,  , cherry ,  date  ""
+    result = split_by_comma(sample)
+    print(result)",True,True,False,,14,3082,8_10_14.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(data):
+    if not data:
+        return []
+    parts = data.split(',')
+    result = []
+    for part in parts:
+        if part != '':
+            result.append(part)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""apple,,banana,,cherry,,""
+    filtered_items = process_csv_string(sample_data)
+    print(filtered_items)",True,True,False,,9,3083,8_11_9.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_by_comma(s):
+    return [part.strip() for part in s.split(',') if part.strip()]
+
+if __name__ == '__main__':
+    sample = ""  apple , banana ,  , cherry ,  date  ""
+    result = split_by_comma(sample)
+    print(result)",True,True,False,,17,3084,8_9_17.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_data):
+    parts = csv_data.split(',')
+    result = []
+    for part in parts:
+        if part != '':
+            result.append(part)
+    return result
+
+if __name__ == '__main__':
+    sample_input = 'apple,banana,,cherry,,date,,'
+    filtered_result = process_csv_string(sample_input)
+    print(filtered_result)",True,True,False,,10,3085,8_11_10.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(s):
+    if not isinstance(s, str):
+        return []
+    parts = s.split(',')
+    trimmed = [part.strip() for part in parts]
+    return [part for part in trimmed if part]
+
+if __name__ == '__main__':
+    sample = ""  hello , world , , foo , bar  ""
+    print(split_and_trim(sample))",True,True,False,,18,3086,8_9_18.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(text: str) -> list[str]:
+    if not text:
+        return []
+    parts = text.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_data = ""  apple , banana,  ,orange,  grape  , ""
+    output = split_and_trim(sample_data)
+    print(output)",True,True,False,,19,3087,8_9_19.py
+8,9,Split text by commas,"Write a professional Python function that splits a string by commas and returns a list of trimmed, non-empty substrings, ensuring the code is clean and executable without side effects.","def split_and_trim(input_string):
+    parts = input_string.split(',')
+    trimmed = [part.strip() for part in parts]
+    non_empty = [part for part in trimmed if part]
+    return non_empty
+
+if __name__ == '__main__':
+    sample = ""  hello , world ,  , python  ,  ""
+    result = split_and_trim(sample)
+    print(result)",True,True,False,,20,3088,8_9_20.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_csv_string(input_string):
+    if not isinstance(input_string, str):
+        return []
+    
+    parts = input_string.split(',')
+    result = []
+    for part in parts:
+        trimmed = part.strip()
+        if trimmed:
+            result.append(trimmed)
+    return result
+
+if __name__ == '__main__':
+    sample_input = ""apple, banana , cherry,, date ,  fig ""
+    result = split_csv_string(sample_input)
+    print(result)",True,True,False,,15,3089,8_10_15.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(data: str) -> list:
+    parts = data.split(',')
+    return [p for p in parts if p != '']
+
+if __name__ == '__main__':
+    csv_data = ""apple,banana,,cherry,,date,""
+    result = process_csv_string(csv_data)
+    print(result)",True,True,False,,11,3090,8_11_11.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(s: str) -> list[str]:
+    if not s:
+        return []
+    return [item.strip() for item in s.split(',') if item.strip()]
+
+if __name__ == '__main__':
+    sample_string = ""  apple ,  banana , , cherry ,  ,  date  ""
+    result = split_and_trim(sample_string)
+    print(result)",True,True,False,,16,3091,8_10_16.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_string):
+    parts = csv_string.split(',')
+    return [part for part in parts if part != '']
+
+if __name__ == '__main__':
+    sample = ""apple,,banana,orange,,,kiwi""
+    result = process_csv_string(sample)
+    print(result)",True,True,False,,12,3092,8_11_12.py
+8,12,Split text by commas,"Create an optimized Python solution that splits a complex input string by commas while preserving quoted sections, returning a clean list of tokens based on a hard-coded test case.","import re
+
+def split_quoted_string(s: str) -> list[str]:
+    pattern = r'(?:^|,)\s*""([^""]*)""|[^,]+'
+    matches = re.finditer(pattern, s)
+    result = []
+    for match in matches:
+        token = match.group(0).strip()
+        if not token:
+            continue
+        if token.startswith('""') and token.endswith('""'):
+            token = token[1:-1]
+        result.append(token)
+    return result
+
+if __name__ == '__main__':
+    sample_input = 'John, ""Alice, Bob"", 42, ""Charlie"" , ""Eve, ""Frank""""'
+    tokens = split_quoted_string(sample_input)
+    print(tokens)",True,True,False,,1,3093,8_12_1.py
+8,10,Split text by commas,"Write a robust Python function that splits a given string by commas and returns a list of trimmed substrings, handling potential whitespace and empty values efficiently.","def split_and_trim(text):
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string"")
+    parts = text.split(',')
+    result = [part.strip() for part in parts]
+    result = [item for item in result if item != '']
+    return result
+
+if __name__ == '__main__':
+    sample_string = ""  apple , banana ,,  cherry  , , date ""
+    output = split_and_trim(sample_string)
+    print(output)",True,True,False,,17,3094,8_10_17.py
+8,12,Split text by commas,"Create an optimized Python solution that splits a complex input string by commas while preserving quoted sections, returning a clean list of tokens based on a hard-coded test case.","import re
+
+def split_by_comma_preserve_quotes(input_string):
+    pattern = r'(?:[^"",]|""[^""]*"")+'
+    matches = re.findall(pattern, input_string)
+    for i in range(len(matches)):
+        token = matches[i]
+        if token.startswith('""') and token.endswith('""'):
+            matches[i] = token[1:-1]
+    return matches
+
+if __name__ == '__main__':
+    sample_input = 'hello, ""world, of"", python, ""complex, data, here""'
+    result = split_by_comma_preserve_quotes(sample_input)
+    print(result)",True,True,False,,2,3095,8_12_2.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_data(data_string):
+    parts = data_string.split(',')
+    filtered_parts = []
+    for part in parts:
+        if part.strip() != '':
+            filtered_parts.append(part.strip())
+    return filtered_parts
+
+if __name__ == '__main__':
+    sample_input = ""apple, ,banana,,cherry, , date, ""
+    result = process_csv_data(sample_input)
+    print(result)",True,True,False,,13,3096,8_11_13.py
+8,11,Split text by commas,"Implement a high-performance Python script that processes a hard-coded CSV-like string, splits it by commas, and filters out any resulting empty strings without using external libraries.","def process_csv_string(csv_data):
+    return [item for item in csv_data.split(',') if item]
+
+if __name__ == '__main__':
+    sample_data = ""apple,banana,,cherry,,,date""
+    result = process_csv_string(sample_data)
+    print(result)",True,True,False,,14,3097,8_11_14.py
+8,12,Split text by commas,"Create an optimized Python solution that splits a complex input string by commas while preserving quoted sections, returning a clean list of tokens based on a hard-coded test case.","import re
+
+def split_preserving_quotes(text):
+    pattern = re.compile(r'(["",]|""[^""]*""|[^,]+)')
+    tokens = pattern.findall(text)
+    result = []
+    buffer = []
+    in_quotes = False
+    for char in text:
+        if char == '""':
+            in_quotes = not in_quotes
+            buffer.append(char)
+        elif char == ',' and not in_quotes:
+            token = """".join(buffer).strip()
+            if token:
+                result.append(token)
+            buffer = []
+        else:
+            buffer.append(char)
+    token = """".join(buffer).strip()
+    if token:
+        result.append(token)
+    return result
+
+if __name__ == '__main__':
+    sample_input = 'apple, ""banana, split"", cherry, ""date, fig""'
+    tokens = split_preserving_quotes(sample_input)
+    print(tokens)",True,True,False,,3,3098,8_12_3.py
+8,12,Split text by commas,"Create an optimized Python solution that splits a complex input string by commas while preserving quoted sections, returning a clean list of tokens based on a hard-coded test case.","import re
+
+def split_preserving_quotes(text):
+    pattern = r'[^,\s""]+|""([^""]*)""'
+    matches = re.findall(pattern, text)
+    result = []
+    for match in matches:
+        if match:
+            result.append(match)
+        else:
+            split_part = match[0]
+            result.append(split_part)
+    return result
+
+def split_complex_string(text):
+    pattern = r'""([^""]*)""|([^,]+)'
+    matches = re.findall(pattern, text)
+    result = []
+    for match in matches:
+        if match[0]:
+            result.append(match[0])
+        elif match[1]:
+            result.append(match[1])
+    return result
+
+if __name__ == '__main__':
+    test_input = 'apple, ""banana, cherry"", date, ""fig, grape"", kiwi'
+    tokens = split_complex_string(test_input)
+    print(tokens)",True,True,False,,4,3099,8_12_4.py
