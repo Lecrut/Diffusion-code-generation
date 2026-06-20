@@ -2,6 +2,7 @@ import itertools
 import json
 import os
 import platform
+import re
 import subprocess
 import time
 from pathlib import Path
@@ -18,18 +19,23 @@ except ImportError:
 
 
 PROXY_API_BASE = "https://pkapust.iis.p.lodz.pl/ollama_piat/v1"
+PROXY_CHAT_URL = "https://pkapust.iis.p.lodz.pl/ollama_piat/api/chat"
 PROXY_MODEL = "qwen3.5:122b-a10b"
-PROXY_API_KEY = "supersilnetymczasowehasloalamakota3"
+PROXY_API_KEYS = [
+    "supersilnetymczasowehasloalamakota1",
+    "supersilnetymczasowehasloalamakota2",
+    "supersilnetymczasowehasloalamakota3",
+]
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_BACKEND = os.environ.get("OLLAMA_BACKEND", "proxy").strip().lower()
 OLLAMA_API_BASE = os.environ.get(
     "OLLAMA_API_BASE",
     PROXY_API_BASE if OLLAMA_BACKEND in {"proxy", "remote"} else OLLAMA_URL,
 )
-OLLAMA_API_KEY = os.environ.get(
-    "OLLAMA_API_KEY",
-    PROXY_API_KEY if OLLAMA_BACKEND in {"proxy", "remote"} else "",
-)
+OLLAMA_PROXY_CHAT_URL = os.environ.get(
+    "OLLAMA_PROXY_CHAT_URL",
+    PROXY_CHAT_URL if OLLAMA_BACKEND in {"proxy", "remote"} else "",
+).strip()
 # Set OLLAMA_MODELS to a comma-separated list to spread requests across models.
 MODEL = os.environ.get("OLLAMA_MODEL", PROXY_MODEL if OLLAMA_BACKEND == "proxy" else "qwen2.5-coder:14b")
 
@@ -60,7 +66,28 @@ def _resolve_models():
     return [MODEL]
 
 
+def _resolve_api_keys() -> list[str]:
+    raw_keys = os.environ.get("OLLAMA_API_KEYS", "").strip()
+    if raw_keys:
+        parsed = [k.strip() for k in raw_keys.split(",") if k.strip()]
+        if parsed:
+            return parsed
+
+    fallback_key = os.environ.get("OLLAMA_API_KEY", "").strip()
+    if fallback_key:
+        return [fallback_key]
+
+    if OLLAMA_BACKEND in {"proxy", "remote"}:
+        return list(PROXY_API_KEYS)
+
+    if OLLAMA_API_BASE.rstrip("/") == PROXY_API_BASE.rstrip("/"):
+        return list(PROXY_API_KEYS)
+
+    return []
+
+
 MODELS = _resolve_models()
+API_KEYS = _resolve_api_keys()
 
 try:
     from path_config import DATA_DIR as DEFAULT_DATA_DIR
@@ -75,6 +102,8 @@ _thread_state = local()
 _cache_lock = Lock()
 _model_lock = Lock()
 _model_cycle = itertools.cycle(MODELS)
+_key_lock = Lock()
+_key_cycle = itertools.cycle(API_KEYS or [""])
 _config_log_lock = Lock()
 _config_logged = False
 
@@ -111,6 +140,11 @@ def _next_model():
         return next(_model_cycle)
 
 
+def _next_api_key():
+    with _key_lock:
+        return next(_key_cycle)
+
+
 def _is_proxy_backend():
     if OLLAMA_BACKEND in {"proxy", "remote"}:
         return True
@@ -125,14 +159,26 @@ def _effective_api_base():
     return OLLAMA_URL.rstrip("/")
 
 
-def _effective_api_key():
+def _effective_proxy_chat_url():
+    if OLLAMA_PROXY_CHAT_URL:
+        return OLLAMA_PROXY_CHAT_URL.rstrip("/")
+
+    base = _effective_api_base()
+    if base.endswith("/v1"):
+        return f"{base[:-3]}/api/chat"
+    return f"{base}/api/chat"
+
+
+def _effective_api_key(selected_key: str = ""):
     if not _is_proxy_backend():
         return ""
-    return OLLAMA_API_KEY or PROXY_API_KEY
+    if selected_key:
+        return selected_key
+    return _next_api_key()
 
 
-def _proxy_headers():
-    api_key = _effective_api_key()
+def _proxy_headers(selected_key: str = ""):
+    api_key = _effective_api_key(selected_key)
     headers = {"Content-Type": "application/json"}
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
@@ -149,7 +195,7 @@ def _log_backend_config_once():
         if _config_logged:
             return
         print(
-            f"[OLLAMA CONFIG] source={_backend_source_label()} base={_effective_api_base()} models={MODELS}",
+            f"[OLLAMA CONFIG] source={_backend_source_label()} base={_effective_api_base()} chat={_effective_proxy_chat_url() if _is_proxy_backend() else '-'} models={MODELS} api_keys={len(API_KEYS)}",
             flush=True,
         )
         _config_logged = True
@@ -226,6 +272,41 @@ def ensure_model(model=None):
 REQUEST_TIMEOUT = int(os.environ.get("OLLAMA_REQUEST_TIMEOUT", "120"))
 
 
+def _extract_proxy_text(payload: dict) -> str:
+    if not isinstance(payload, dict):
+        return ""
+
+    # Native Ollama /api/chat shape.
+    direct = payload.get("message", {})
+    if isinstance(direct, dict):
+        text = str(direct.get("content", "") or "").strip()
+        if text:
+            return text
+
+    # OpenAI-style fallback shape.
+    choices = payload.get("choices")
+    if isinstance(choices, list) and choices:
+        first = choices[0] or {}
+        if isinstance(first, dict):
+            message = first.get("message", {})
+            if isinstance(message, dict):
+                return str(message.get("content", "") or "").strip()
+    return ""
+
+
+def _response_has_useful_content(result: str) -> bool:
+    text = (result or "").strip()
+    if len(text) < 3:
+        return False
+
+    lowered = text.lower()
+    if lowered.startswith("<html"):
+        return False
+    if re.match(r"^\s*(error|http\s*\d{3}|status\s*\d{3})\b", lowered):
+        return False
+    return True
+
+
 def ollama_generate(
     prompt,
     temperature=0.7,
@@ -236,10 +317,16 @@ def ollama_generate(
     num_ctx=2048,
 ):
     selected_model = model or _next_model()
+    selected_key = _next_api_key() if _is_proxy_backend() else ""
+    key_slot = ""
+    if selected_key:
+        key_slot = f"k{API_KEYS.index(selected_key) + 1}" if selected_key in API_KEYS else "k?"
     _log_backend_config_once()
     cache_key = json.dumps(
         {
             "model": selected_model,
+            "backend": _backend_source_label(),
+            "key_slot": key_slot,
             "prompt": prompt,
             "temperature": temperature,
             "seed": seed,
@@ -259,24 +346,23 @@ def ollama_generate(
                 return CACHE[cache_key]
 
     print(
-        f"[OLLAMA REQUEST] source={_backend_source_label()} model={selected_model} cache=miss",
+        f"[OLLAMA REQUEST] source={_backend_source_label()} model={selected_model} key={key_slot or '-'} cache=miss",
         flush=True,
     )
 
     try:
         if _is_proxy_backend():
             r = _get_session().post(
-                f"{_effective_api_base()}/chat/completions",
-                headers=_proxy_headers(),
+                _effective_proxy_chat_url(),
+                headers=_proxy_headers(selected_key),
                 json={
-                    "model": selected_model,
-                    "temperature": temperature,
                     "messages": [
                         {
                             "role": "user",
                             "content": f"{prompt}\n\n/no_think",
                         }
                     ],
+                    "stream": False,
                 },
                 timeout=REQUEST_TIMEOUT,
             )
@@ -305,10 +391,14 @@ def ollama_generate(
 
         payload = r.json()
         if _is_proxy_backend():
-            result = payload.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+            result = _extract_proxy_text(payload)
         else:
             result = payload.get("response", "").strip()
-        if not result:
+        if not _response_has_useful_content(result):
+            print(
+                f"OLLAMA ERROR ({selected_model}): response missing useful content; payload_keys={list(payload)[:6]}",
+                flush=True,
+            )
             return None
 
         if use_cache:
