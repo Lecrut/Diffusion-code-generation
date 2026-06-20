@@ -1,6 +1,0 @@
-def is_larger(a, b):
-    return a > b
-if __name__ == '__main__':
-    print(is_larger(10, 5))
-    print(is_larger(3.5, 4.2))
-    print(is_larger(-1, -2))

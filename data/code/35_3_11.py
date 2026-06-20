@@ -1,7 +1,0 @@
-def count_vowels(text: str) -> int:
-    return sum(1 for char in text.lower() if char in 'aeiou')
-
-if __name__ == '__main__':
-    samples = ["Hello World", "AEIOU", "", "Python3"]
-    for s in samples:
-        print(f"'{s}' -> {count_vowels(s)}")

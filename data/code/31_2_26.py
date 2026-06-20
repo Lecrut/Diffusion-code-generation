@@ -1,7 +1,0 @@
-def is_palindrome(s):
-    return s == s[::-1]
-
-if __name__ == '__main__':
-    sample_input = "radar"
-    result = is_palindrome(sample_input)
-    print(result)

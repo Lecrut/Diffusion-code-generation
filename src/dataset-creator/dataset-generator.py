@@ -22,10 +22,10 @@ except ImportError:
     DEFAULT_DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
 
-NUM_TOPICS = int(os.environ.get("DATASET_NUM_TOPICS", "50"))
-INSTR_PER_TOPIC = int(os.environ.get("DATASET_INSTR_PER_TOPIC", "5"))
-VARIANTS_PER_INSTR = int(os.environ.get("DATASET_VARIANTS_PER_INSTR", "3"))
-ATTEMPTS_PER_INSTR = int(os.environ.get("DATASET_ATTEMPTS_PER_INSTR", "60"))
+NUM_TOPICS = int(os.environ.get("DATASET_NUM_TOPICS", "500"))
+INSTR_PER_TOPIC = int(os.environ.get("DATASET_INSTR_PER_TOPIC", "25"))
+VARIANTS_PER_INSTR = int(os.environ.get("DATASET_VARIANTS_PER_INSTR", "20"))
+ATTEMPTS_PER_INSTR = int(os.environ.get("DATASET_ATTEMPTS_PER_INSTR", "100"))
 MAX_WORKERS = int(os.environ.get("DATASET_GENERATOR_WORKERS", "3"))
 AUTO_COMMIT_ENABLED = os.environ.get("DATASET_GENERATOR_AUTO_COMMIT", "0").lower() in {
     "1",

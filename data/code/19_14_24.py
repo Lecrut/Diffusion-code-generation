@@ -1,6 +1,0 @@
-any_truthy = lambda lst: any(lst)
-if __name__ == '__main__':
-    sample_list_1 = [0, False, None, '']
-    sample_list_2 = [0, False, None, 'hello']
-    print(any_truthy(sample_list_1))
-    print(any_truthy(sample_list_2))

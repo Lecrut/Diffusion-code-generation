@@ -1,8 +1,0 @@
-def are_equal(item1, item2):
-    return item1 == item2
-if __name__ == '__main__':
-    print(are_equal(42, 42))
-    print(are_equal('hello', 'world'))
-    print(are_equal([1, 2, 3], [1, 2, 3]))
-    print(are_equal('test', 'test'))
-    print(are_equal(100, '100'))

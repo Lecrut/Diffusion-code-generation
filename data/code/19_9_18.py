@@ -1,1 +1,0 @@
-if __name__ == '__main__': result = True if (10 < 25 and 30 < 50) else False; print(f"Result: {result}")

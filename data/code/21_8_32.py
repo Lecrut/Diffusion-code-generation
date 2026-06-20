@@ -1,7 +1,0 @@
-def sort_by_descending(numbers):
-    return sorted(numbers, reverse=True)
-
-if __name__ == '__main__':
-    sample_values = [34, 7, 23, 32, 5, 62]
-    sorted_list = sort_by_descending(sample_values)
-    print(sorted_list)

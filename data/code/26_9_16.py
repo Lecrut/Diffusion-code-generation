@@ -1,3 +1,0 @@
-result = lambda x, y: x > y
-if __name__ == '__main__':
-    print(result(5, 3))

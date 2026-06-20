@@ -1,1 +1,0 @@
-if __name__ == '__main__': print('Repeat an action many times now' * 50)

@@ -1,2 +1,0 @@
-from math import isclose as fp_is_close; values = [fp_is_close(3.14159265, 3.1415927), fp_is_close(float('nan'), float('nan')), fp_is_close(0.0, -0.0)]
-if __name__ == '__main__': print("Equality checks:", values)

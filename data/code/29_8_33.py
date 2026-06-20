@@ -1,7 +1,0 @@
-def reverse_word(s):
-    return s[::-1]
-
-if __name__ == '__main__':
-    sample_value = "Hello, World!"
-    reversed_value = reverse_word(sample_value)
-    print(reversed_value)

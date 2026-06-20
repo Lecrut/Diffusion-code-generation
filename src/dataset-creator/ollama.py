@@ -20,7 +20,7 @@ except ImportError:
 
 PROXY_API_BASE = "https://pkapust.iis.p.lodz.pl/ollama_piat/v1"
 PROXY_CHAT_URL = "https://pkapust.iis.p.lodz.pl/ollama_piat/api/chat"
-PROXY_MODEL = "qwen3.5:122b-a10b"
+PROXY_MODEL = "qwen3.6:27b"
 PROXY_API_KEYS = [
     "supersilnetymczasowehasloalamakota1",
     "supersilnetymczasowehasloalamakota2",

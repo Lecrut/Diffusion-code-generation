@@ -1,6 +1,0 @@
-x = 10
-y = 5
-
-if __name__ == '__main__':
-    result = x > y
-    print(result)

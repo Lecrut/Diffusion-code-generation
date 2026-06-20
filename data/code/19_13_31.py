@@ -1,7 +1,0 @@
-def is_even(n):
-    return n % 2 == 0
-
-if __name__ == '__main__':
-    sample_values = [10, 7, -4, 3, 0]
-    results = {value: is_even(value) for value in sample_values}
-    print(results)

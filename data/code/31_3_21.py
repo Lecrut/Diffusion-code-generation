@@ -1,4 +1,0 @@
-is_palindrome = lambda s: s == s[::-1]
-if __name__ == '__main__':
-    print(is_palindrome('racecar'))
-    print(is_palindrome('hello'))

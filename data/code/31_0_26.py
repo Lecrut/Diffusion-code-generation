@@ -1,9 +1,0 @@
-import re
-
-def is_palindrome(s):
-    cleaned = re.sub('[^a-zA-Z0-9]', '', s).lower()
-    return cleaned == cleaned[::-1]
-if __name__ == '__main__':
-    sample_values = ['A man, a plan, a canal: Panama', 'racecar', 'hello', "No 'x' in Nixon", 'Was it a car or a cat I saw?']
-    for value in sample_values:
-        print(f"'{value}' is a palindrome: {is_palindrome(value)}")

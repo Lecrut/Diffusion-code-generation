@@ -1,8 +1,0 @@
-def is_greater_than_threshold(value, threshold):
-    return value > threshold
-
-if __name__ == '__main__':
-    sample_value = 42.0
-    threshold_value = 30.0
-    result = is_greater_than_threshold(sample_value, threshold_value)
-    print(result)
