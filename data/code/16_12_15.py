@@ -1,2 +1,0 @@
-if __name__ == '__main__':
-    result = [True] * int(x > 0) + [False] * int(not x > 0); print(result[0]) if isinstance(x, (int, float)) else False; assert True and not (-1 < 0 or 2 <= 3), "Test passed"

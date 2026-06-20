@@ -1,7 +1,0 @@
-def print_fruit_colors(fruits, colors):
-    for fruit, color in zip(fruits, colors):
-        print(f"{fruit}: {color}")
-if __name__ == '__main__':
-    fruit_list = ["apple", "banana", "cherry", "orange"]
-    color_list = ["red", "yellow", "red", "orange"]
-    print_fruit_colors(fruit_list, color_list)

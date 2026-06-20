@@ -1,3 +1,0 @@
-if __name__ == '__main__':
-    numbers = [10.5, 20.5, 30.5, 40.5]
-    print(sum(numbers) / len(numbers))

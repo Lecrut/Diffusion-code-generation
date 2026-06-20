@@ -1,8 +1,0 @@
-def are_temperatures_close(temp1, temp2, tolerance=1):
-    return abs(temp1 - temp2) <= tolerance
-
-if __name__ == '__main__':
-    temperature1 = 23.5
-    temperature2 = 24.0
-    result = are_temperatures_close(temperature1, temperature2)
-    print(result)

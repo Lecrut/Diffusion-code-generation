@@ -1,1 +1,0 @@
-if __name__ == '__main__': print("Even:" if isinstance(num := 42) in (int, float) else "Not int/float"), num % 2 == 0 or not type(num).numerator.is_integer() and num - round(num) != 0
