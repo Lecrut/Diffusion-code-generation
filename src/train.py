@@ -445,14 +445,28 @@ class DiffCoderTrainer:
             max_prompt_len=self.config.max_prompt_len, max_code_len=self.config.max_code_len
         )
         
-        self.train_loader = DataLoader(
-            self.train_dataset, batch_size=self.config.batch_size, shuffle=True,
-            num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
-        )
-        self.val_loader = DataLoader(
-            self.val_dataset, batch_size=self.config.batch_size, shuffle=False,
-            num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
-        )
+        train_loader_kwargs = {
+            "batch_size": self.config.batch_size,
+            "shuffle": True,
+            "num_workers": self.config.num_workers,
+            "pin_memory": True,
+            "collate_fn": collate_fn,
+            "persistent_workers": self.config.num_workers > 0,
+        }
+        val_loader_kwargs = {
+            "batch_size": self.config.batch_size,
+            "shuffle": False,
+            "num_workers": self.config.num_workers,
+            "pin_memory": True,
+            "collate_fn": collate_fn,
+            "persistent_workers": self.config.num_workers > 0,
+        }
+        if self.config.num_workers > 0:
+            train_loader_kwargs["prefetch_factor"] = self.config.prefetch_factor
+            val_loader_kwargs["prefetch_factor"] = self.config.prefetch_factor
+
+        self.train_loader = DataLoader(self.train_dataset, **train_loader_kwargs)
+        self.val_loader = DataLoader(self.val_dataset, **val_loader_kwargs)
 
         self.sample_pairs = []
         rng = random.Random(42)
@@ -530,7 +544,9 @@ class DiffCoderTrainer:
             callbacks=[best_checkpoint_callback, last_checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback, curriculum_callback],
             logger=loggers if loggers else True,
             precision="16-mixed" if torch.cuda.is_available() else 32,
-            gradient_clip_val=1.0
+            gradient_clip_val=1.0,
+            limit_train_batches=self.config.limit_train_batches,
+            limit_val_batches=self.config.limit_val_batches,
         )
 
         ckpt_to_resume = None
@@ -560,21 +576,25 @@ class DiffCoderTrainer:
 
 
 def main():
-    torch.backends.cudnn.enabled = False
+    torch.backends.cudnn.enabled = True
     load_dotenv()
     
     if torch.cuda.is_available():
         # torch.backends.cuda.matmul.allow_tf32 = True
         # torch.backends.cudnn.allow_tf32 = True
         torch.set_float32_matmul_precision("high")
+        torch.backends.cudnn.benchmark = True
 
     class Config:
         max_prompt_len = 96
         max_code_len = 512
-        batch_size = 4
-        accumulation_steps = 8
-        num_workers = 3
-        epochs = 1500 
+        batch_size = int(os.getenv("BATCH_SIZE", "8"))
+        accumulation_steps = int(os.getenv("ACCUMULATION_STEPS", "4"))
+        num_workers = int(os.getenv("NUM_WORKERS", "5"))
+        prefetch_factor = int(os.getenv("PREFETCH_FACTOR", "2"))
+        epochs = int(os.getenv("EPOCHS", "1500"))
+        limit_train_batches = float(os.getenv("LIMIT_TRAIN_BATCHES", "1.0"))
+        limit_val_batches = float(os.getenv("LIMIT_VAL_BATCHES", "1.0"))
         val_split = 0.05
         early_stopping_patience = 120 
         hidden_dim = 512
