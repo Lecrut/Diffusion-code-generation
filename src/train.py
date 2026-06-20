@@ -590,7 +590,7 @@ def main():
         max_code_len = 512
         batch_size = int(os.getenv("BATCH_SIZE", "8"))
         accumulation_steps = int(os.getenv("ACCUMULATION_STEPS", "4"))
-        num_workers = int(os.getenv("NUM_WORKERS", "5"))
+        num_workers = int(os.getenv("NUM_WORKERS", "4"))
         prefetch_factor = int(os.getenv("PREFETCH_FACTOR", "2"))
         epochs = int(os.getenv("EPOCHS", "1500"))
         limit_train_batches = float(os.getenv("LIMIT_TRAIN_BATCHES", "1.0"))
