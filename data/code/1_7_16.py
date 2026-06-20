@@ -1,104 +1,80 @@
-import math
+import functools
 
-class WeightValidationException(Exception):
-    """Base exception for weight validation errors."""
-    pass
+MIN_VALID_WEIGHT = 0.0
+MAX_VALID_WEIGHT = 2000.0
 
-class InvalidDataTypeError(WeightValidationException):
-    """Raised when input is not a valid numeric type (int or float)."""
-    pass
+class WeightTypeException(TypeError):
+    def __init__(self, value):
+        self.value = value
+        if isinstance(value, bool):
+            super().__init__("Weight cannot be a boolean value.")
+        else:
+            super().__init__("Weight must be a numeric type (int or float), not {}.".format(type(value).__name__))
 
-class ImpossibleValueError(WeightValidationException):
-    """Raised when the provided value is physically impossible (<= 0)."""
-    pass
+class WeightValueException(ValueError):
+    def __init__(self, value):
+        self.value = value
+        if value < MIN_VALID_WEIGHT:
+            super().__init__("Weight cannot be negative. Received: {}.".format(value))
+        else:
+            super().__init__("Weight exceeds maximum allowed limit of {}. Received: {}.".format(MAX_VALID_WEIGHT, value))
 
-def validate_weight(func):
-    """Decorator that validates and normalizes weight inputs.
-
-    Validates:
-        - Input must be int or float.
-        - Value must be strictly positive (> 0).
-    
-    Normalization:
-        - Converts floats to integers if they are whole numbers (e.g., 5.0 -> 5).
-        - Rounds other valid decimals up to the nearest integer for consistency 
-          in this specific design, though typically weight might need rounding rules.
-          Here we round half-up to ensure minimal representation error is handled gracefully.
-
-    Throws:
-        InvalidDataTypeError if input type is not numeric.
-        ImpossibleValueError if value <= 0.
-    
-    Args:
-        func (callable): The function to decorate.
-        
-    Returns:
-        callable: A wrapped version of the original function with validation logic.
-    """
-
+def normalize_weight_input(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        # Extract weight argument; assume it's the first positional arg based on common patterns
-        if not args or len(args) == 0:
-            raise WeightValidationException("No weight provided.")
+        if not args:
+            raise WeightTypeException("Missing required weight argument.")
         
-        raw_weight = args[0]
-
-        try:
-            numeric_value = float(raw_weight)
-            
-            # Check for impossible values (must be > 0)
-            if numeric_value <= 0:
-                raise ImpossibleValueError(f"Weight must be positive, got {raw_weight}.")
-                
-            # Normalize to integer if it's a whole number
-            normalized_int = int(round(numeric_value))
-            
-        except TypeError as e:
-            raise InvalidDataTypeError(
-                f"Invalid data type for weight. Expected numeric (int/float), "
-                f"got {type(raw_weight).__name__}."
-            ) from e
-
-        # Re-raise impossible value errors if they occurred during conversion logic implicitly handled above, 
-        # but explicitly check again after rounding to be safe against edge cases like -0.1 becoming 0
-        if normalized_int <= 0:
-             raise ImpossibleValueError(f"Normalized weight {normalized_int} is not positive.")
-
-        args = (normalized_int,) + args[1:]
+        weight_candidate = args[0]
         
-        return func(*args, **kwargs)
-
+        if isinstance(weight_candidate, bool):
+            raise WeightTypeException(weight_candidate)
+        
+        if not isinstance(weight_candidate, (int, float)):
+            raise WeightTypeException(weight_candidate)
+        
+        if weight_candidate < MIN_VALID_WEIGHT or weight_candidate > MAX_VALID_WEIGHT:
+            raise WeightValueException(weight_candidate)
+        
+        normalized_val = float(weight_candidate)
+        new_args = (normalized_val,) + args[1:]
+        return func(*new_args, **kwargs)
     return wrapper
 
-@validate_weight
-def calculate_mass(weight):
-    """Calculates mass based on a normalized weight."""
-    # Example logic: Mass = Weight * 2.0 kg/unit
-    return f"Mass calculated for {weight} unit(s): {weight * 2.0:.1f} kg."
+@normalize_weight_input
+def calculate_bmi(weight_kg, height_m=1.75):
+    if height_m <= 0:
+        raise ValueError("Height must be positive")
+    return weight_kg / (height_m ** 2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
+    valid_weight = 75
+    try:
+        bmi_result = calculate_bmi(valid_weight)
+        print(bmi_result)
+    except (WeightTypeException, WeightValueException) as e:
+        print(e)
+
+    invalid_negative_weight = -10
+    try:
+        calculate_bmi(invalid_negative_weight)
+    except (WeightTypeException, WeightValueException) as e:
+        print(e)
+
+    invalid_type_weight = "sixty"
+    try:
+        calculate_bmi(invalid_type_weight)
+    except (WeightTypeException, WeightValueException) as e:
+        print(e)
     
-    test_cases = [
-        ("Valid integer", 5),
-        ("Valid float (whole)", 10.0),
-        ("Valid float (decimal)", 23.7),
-        ("Invalid string", "ten"),
-        ("Impossible zero", 0),
-        ("Impossible negative", -5),
-    ]
+    invalid_bool_weight = True
+    try:
+        calculate_bmi(invalid_bool_weight)
+    except (WeightTypeException, WeightValueException) as e:
+        print(e)
 
-    print("Running weight validation tests...\n")
-
-    for description, value in test_cases:
-        try:
-            result = calculate_mass(value)
-            status = f"SUCCESS -> {result}"
-        except InvalidDataTypeError as e:
-            status = f"ERROR (Invalid Data Type): {e}"
-        except ImpossibleValueError as e:
-            status = f"ERROR (Impossible Value): {e}"
-
-        print(f"{description} ({value!r}):")
-        print(status)
-        print("-" * 40)
+    invalid_large_weight = 2500.5
+    try:
+        calculate_bmi(invalid_large_weight)
+    except (WeightTypeException, WeightValueException) as e:
+        print(e)

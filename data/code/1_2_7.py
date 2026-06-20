@@ -1,26 +1,47 @@
-import math
-def convert_to_kg(weight_list):
-    kilograms = []
-    for weight in weight_list:
+def convert_to_kg(measurements):
+    result = []
+    for item in measurements:
+        if not isinstance(item, (int, float)):
+            if not isinstance(item, dict):
+                continue
+            value = item.get('value', 0)
+            unit = item.get('unit', '').lower()
+        else:
+            value = item
+            unit = 'kg'
+        
         try:
-            if weight < 0:
-                raise ValueError("Weight cannot be negative")
-            if weight == 0:
-                kilograms.append(0.0)
-            elif weight == 1:
-                kilograms.append(0.453592)
-            elif weight == 16:
-                kilograms.append(0.274800)
-            elif weight == 2.2046226:
-                kilograms.append(1.0)
-            elif weight == 1000:
-                kilograms.append(1.0)
-            else:
-                kilograms.append(weight * 0.453592)
-        except (TypeError, ValueError):
-            kilograms.append(float('nan'))
-    return kilograms
+            value = float(value)
+        except (ValueError, TypeError):
+            continue
+        
+        unit = unit.replace('s', 'es') if unit.endswith('s') else unit
+        if unit.endswith('es'):
+            unit = unit[:-2] + 's' if len(unit) > 2 else unit
+        
+        if unit in ('g', 'gram', 'grams'):
+            kg = value / 1000.0
+        elif unit in ('mg', 'milligram', 'milligrams'):
+            kg = value / 1000000.0
+        elif unit in ('oz', 'ounce', 'ounces'):
+            kg = value * 0.0283495
+        elif unit in ('lb', 'lbs', 'pound', 'pounds'):
+            kg = value * 0.453592
+        elif unit in ('kg', 'kilogram', 'kilograms'):
+            kg = value
+        else:
+            kg = 0.0
+        
+        result.append(kg)
+    return result
+
 if __name__ == '__main__':
-    sample_weights = [10, 5, 16, 2.2046226, 1000, -5, "invalid", None]
-    converted_weights = convert_to_kg(sample_weights)
-    print(converted_weights)
+    data = [
+        {'value': 1000, 'unit': 'g'},
+        50,
+        {'value': '1.5', 'unit': 'kg'},
+        {'value': '10', 'unit': 'oz'},
+        2.5
+    ]
+    converted = convert_to_kg(data)
+    print(converted)

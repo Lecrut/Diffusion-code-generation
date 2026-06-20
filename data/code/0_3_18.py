@@ -1,40 +1,47 @@
-class UnitConverter:
-    """A class to handle conversions between meters, feet, and kilometers."""
-    
-    # Conversion factors stored as class constants (relative to meters)
-    METERS_PER_FOOT = 0.3048
-    KILOMETERS_PER_METER = 1e-3
-    
-    def convert_meters_to_feet(self, value: float) -> float:
-        """Convert distance in meters to feet."""
-        return self.METERS_PER_FOOT * value
+def convert_length(length_str, target_unit):
+    unit_map = {
+        'm': 1.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'km': 1000.0,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344
+    }
 
-    def convert_meters_to_kilometers(self, value: float) -> float:
-        """Convert distance in meters to kilometers."""
-        return self.KILOMETERS_PER_METER * value
+    try:
+        value = float(length_str)
+    except (ValueError, TypeError):
+        raise ValueError("Invalid length value")
+
+    if target_unit not in unit_map:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+
+    source_unit = None
+    for unit, factor in unit_map.items():
+        if length_str.lower().endswith(unit):
+            try:
+                numeric_part = length_str[:-len(unit)].strip()
+                if numeric_part == '':
+                    raise ValueError()
+                value = float(numeric_part)
+                source_unit = unit
+                break
+            except ValueError:
+                continue
+
+    if source_unit is None:
+        raise ValueError("Could not determine source unit from string")
+
+    if source_unit not in unit_map:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+
+    meters = value * unit_map[source_unit]
+    result = meters / unit_map[target_unit]
+    return result
 
 if __name__ == '__main__':
-    converter = UnitConverter()
-    
-    # Sample values - no interactive input
-    sample_meters_1 = 50.234       # A short distance in meters
-    sample_feet = 200              # An approximate length in feet (approx 60m)
-    sample_km = 0.75               # A medium run distance
-    
-    print("UnitConverter - Conversion Results")
-    
-    # Convert the first meter value to other units
-    converted_ft_1 = converter.convert_meters_to_feet(sample_meters_1)
-    converted_km_1 = converter.convert_meters_to_kilometers(sample_meters_1)
-    print(f"{sample_meters_1:.4f} meters is equivalent to:")
-    print(f"  {converted_ft_1:.2f} feet")
-    print(f"  {converted_km_1:.6f} kilometers\n")
-
-    # Demonstrate conversion from the other units back (using constants)
-    print("--- Reverse Conversions using Constants ---")
-    
-    ft_to_m = sample_feet / converter.METERS_PER_FOOT
-    km_to_m = sample_km / converter.KILOMETERS_PER_METER
-    
-    print(f"{sample_feet} feet is equivalent to {ft_to_m:.2f} meters.")
-    print(f"{sample_km} kilometers is equivalent to {km_to_m * 1000:.4f} meters (or approx {converter.METERS_PER_FOOT * km_to_m / converter.KILOMETERS_PER_METER**(-3)} feet).")
+    print(convert_length("10m", 'ft'))
+    print(convert_length("5.5km", 'mi'))
+    print(convert_length("100cm", 'in'))

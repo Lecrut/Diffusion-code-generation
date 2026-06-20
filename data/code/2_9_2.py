@@ -1,33 +1,33 @@
-import unittest
-def calculate_volume_box(length, width, height):
-    return length * width * height
-def calculate_volume_cylinder(radius, height):
-    import math
-    return math.pi * (radius ** 2) * height
-class TestVolumeCalculations(unittest.TestCase):
-    def test_calculate_volume_box_positive(self):
-        self.assertEqual(calculate_volume_box(2, 3, 4), 24)
-        self.assertEqual(calculate_volume_box(10, 10, 10), 1000)
-    def test_calculate_volume_box_zero_input(self):
-        self.assertEqual(calculate_volume_box(0, 5, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 0, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 5, 0), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 0), 0)
-    def test_calculate_volume_box_negative_input(self):
-        self.assertEqual(calculate_volume_box(-2, 3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, -3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, 3, -4), -24)
-        self.assertEqual(calculate_volume_box(-2, -3, -4), -24)
-    def test_calculate_volume_cylinder_positive(self):
-        expected_pi_val = 3.1415926535
-        self.assertAlmostEqual(calculate_volume_cylinder(1, 1), expected_pi_val)
-        self.assertAlmostEqual(calculate_volume_cylinder(2, 5), math.pi * 4 * 5)
-    def test_calculate_volume_cylinder_zero_input(self):
-        self.assertEqual(calculate_volume_cylinder(0, 10), 0)
-        self.assertEqual(calculate_volume_cylinder(5, 0), 0)
-        self.assertEqual(calculate_volume_cylinder(0, 0), 0)
-    def test_calculate_volume_cylinder_negative_input(self):
-        self.assertAlmostEqual(calculate_volume_cylinder(-1, 10), -10 * math.pi)
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 10), 0)
+import os
+import tempfile
+
+def calculate_total_volume(file_path):
+    total = 0.0
+    try:
+        with open(file_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    value = float(line)
+                    total += value
+                except ValueError:
+                    continue
+        return total
+    except FileNotFoundError:
+        return 0.0
+    except IOError:
+        return 0.0
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_data = ["10.5", "20.3", "invalid", "5.0", "error", "14.2"]
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as temp_file:
+        temp_path = temp_file.name
+        for item in sample_data:
+            temp_file.write(item + '\n')
+    
+    result = calculate_total_volume(temp_path)
+    print(f"{result}")
+    
+    os.remove(temp_path)

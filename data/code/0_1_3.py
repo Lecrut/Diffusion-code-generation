@@ -1,47 +1,48 @@
-def convert_length(length: float, unit: str) -> float:
-    conversion_factors = {
-        'm': 1.0,
-        'ft': 0.3048,
-        'in': 0.0254,
-        'km': 1000.0,
-        'mi': 1609.34
-    }
-    if unit not in conversion_factors:
-        raise ValueError(f"Unsupported unit type: {unit}")
-    if unit == 'm':
-        return length
-    elif unit == 'ft':
-        return length * 0.3048
-    elif unit == 'in':
-        return length * 0.0254
-    elif unit == 'km':
-        return length * 1000.0
-    elif unit == 'mi':
-        return length * 1609.34
-    else:
-        return length
+class UnitConverter:
+    METERS_TO_FEET = 3.28084
+    FEET_TO_METERS = 0.3048
+    METERS_TO_KILOMETERS = 0.001
+    KILOMETERS_TO_METERS = 1000
+
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit
+
+    def convert_to_feet(self):
+        if self.unit == 'meters':
+            return self.value * UnitConverter.METERS_TO_FEET
+        elif self.unit == 'kilometers':
+            meters = self.value * UnitConverter.KILOMETERS_TO_METERS
+            return meters * UnitConverter.METERS_TO_FEET
+        elif self.unit == 'feet':
+            return self.value
+
+    def convert_to_meters(self):
+        if self.unit == 'meters':
+            return self.value
+        elif self.unit == 'feet':
+            return self.value * UnitConverter.FEET_TO_METERS
+        elif self.unit == 'kilometers':
+            return self.value * UnitConverter.KILOMETERS_TO_METERS
+
+    def convert_to_kilometers(self):
+        if self.unit == 'meters':
+            return self.value * UnitConverter.METERS_TO_KILOMETERS
+        elif self.unit == 'feet':
+            meters = self.value * UnitConverter.FEET_TO_METERS
+            return meters * UnitConverter.METERS_TO_KILOMETERS
+        elif self.unit == 'kilometers':
+            return self.value
+
 if __name__ == '__main__':
-    length_m = 10.0
-    unit_m = 'm'
-    result_m = convert_length(length_m, unit_m)
-    print(f"Converting {length_m} {unit_m} to: {result_m}")
-    length_ft = 10.0
-    unit_ft = 'ft'
-    result_ft = convert_length(length_ft, unit_ft)
-    print(f"Converting {length_ft} {unit_ft} to: {result_ft}")
-    length_in = 12.0
-    unit_in = 'in'
-    result_in = convert_length(length_in, unit_in)
-    print(f"Converting {length_in} {unit_in} to: {result_in}")
-    length_km = 5.0
-    unit_km = 'km'
-    result_km = convert_length(length_km, unit_km)
-    print(f"Converting {length_km} {unit_km} to: {result_km}")
-    length_mi = 1.0
-    unit_mi = 'mi'
-    result_mi = convert_length(length_mi, unit_mi)
-    print(f"Converting {length_mi} {unit_mi} to: {result_mi}")
-    try:
-        convert_length(10.0, 'mi')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    converter_meters = UnitConverter(100, 'meters')
+    print(converter_meters.convert_to_feet())
+    print(converter_meters.convert_to_kilometers())
+    
+    converter_kilometers = UnitConverter(5, 'kilometers')
+    print(converter_kilometers.convert_to_meters())
+    print(converter_kilometers.convert_to_feet())
+    
+    converter_feet = UnitConverter(10, 'feet')
+    print(converter_feet.convert_to_meters())
+    print(converter_feet.convert_to_kilometers())

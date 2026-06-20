@@ -1,21 +1,23 @@
-def length_converter(length: float) -> None:
-    """Converts a given length to miles and kilometers based on standard conversion factors."""
-    
-    # Conversion constants
-    KILOMETER_PER_MILE = 1.60934
-    
-    # Perform conversions
-    kilometers = length * KILOMETER_PER_MILE
-    miles = length / KILOMETER_PER_MILE
-    
-    # Format output to two decimal places using f-string formatting
-    print(f"Length: {length} units")
-    print(f"Miles: {miles:.2f}")
-    print(f"Kilometers: {kilometers:.2f}")
+class LengthConverter:
+    METERS_PER_FOOT = 0.3048
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit == to_unit:
+            return value
+        if from_unit.lower() == 'meters':
+            if to_unit.lower() == 'feet':
+                return value / self.METERS_PER_FOOT
+            else:
+                raise ValueError("Unsupported target unit")
+        elif from_unit.lower() == 'feet':
+            if to_unit.lower() == 'meters':
+                return value * self.METERS_PER_FOOT
+            else:
+                raise ValueError("Unsupported target unit")
+        else:
+            raise ValueError("Unsupported source unit")
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration without interactive input
-    samples = [1, 5.5, 10]
-    
-    for length in samples:
-        length_converter(length)
+    converter = LengthConverter()
+    print(converter.convert(1.0, 'meters', 'feet'))
+    print(converter.convert(1.0, 'feet', 'meters'))

@@ -1,26 +1,25 @@
-class UnitConverter:
-    METER_TO_FOOT = 3.28084
-    FOOT_TO_METER = 1 / 3.28084
-    METER_TO_KILOMETER = 1 / 1000
-    KILOMETER_TO_METER = 1000
-    def meters_to_feet(self, meters):
-        return meters * self.METER_TO_FOOT
-    def feet_to_meters(self, feet):
-        return feet * self.FOOT_TO_METER
-    def meters_to_kilometers(self, meters):
-        return meters * self.METER_TO_KILOMETER
-    def kilometers_to_meters(self, kilometers):
-        return kilometers * self.KILOMETER_TO_METER
+def convert_length(value, from_unit, to_unit):
+    units_to_meters = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344,
+    }
+
+    if from_unit not in units_to_meters or to_unit not in units_to_meters:
+        raise ValueError("Unsupported unit code provided.")
+
+    if from_unit == to_unit:
+        return value
+
+    value_in_meters = value * units_to_meters[from_unit]
+    result = value_in_meters / units_to_meters[to_unit]
+    return result
+
 if __name__ == '__main__':
-    converter = UnitConverter()
-    meters_value = 10
-    feet_value = 32.8084
-    kilometers_value = 5
-    meters_to_feet_result = converter.meters_to_feet(meters_value)
-    feet_to_meters_result = converter.feet_to_meters(feet_value)
-    meters_to_kilometers_result = converter.meters_to_kilometers(meters_value)
-    kilometers_to_meters_result = converter.kilometers_to_meters(kilometers_value)
-    print(f"Conversion of {meters_value} meters to feet: {meters_to_feet_result}")
-    print(f"Conversion of {feet_value} feet to meters: {feet_to_meters_result}")
-    print(f"Conversion of {meters_value} meters to kilometers: {meters_to_kilometers_result}")
-    print(f"Conversion of {kilometers_value} kilometers to meters: {kilometers_to_meters_result}")
+    result = convert_length(100, 'm', 'ft')
+    print(result)

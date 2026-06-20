@@ -1,14 +1,18 @@
-def convert_length(length_miles):
-    """Converts a length given in miles to both kilometers and meters."""
-    km = length_miles * 1.60934
-    return round(km, 2)
+class LengthConverter:
+    METERS_PER_FOOT = 0.3048
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit == to_unit:
+            return value
+        if from_unit == 'meters' and to_unit == 'feet':
+            return value / self.METERS_PER_FOOT
+        if from_unit == 'feet' and to_unit == 'meters':
+            return value * self.METERS_PER_FOOT
+        raise ValueError(f"Unsupported units: {from_unit} to {to_unit}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements
-    samples = [5.0, 10.5, 25]
-
-    for miles in samples:
-        kilometers = convert_length(miles)
-        
-        print(f"Input (miles): {miles}")
-        print(f"Miles to Kilometers: {kilometers:.2f} km")
+    converter = LengthConverter()
+    print(converter.convert(1, 'meters', 'feet'))
+    print(converter.convert(3.28084, 'feet', 'meters'))
+    print(converter.convert(100, 'feet', 'meters'))
+    print(converter.convert(30.48, 'meters', 'feet'))

@@ -1,49 +1,38 @@
-import unittest
-def calculate_volume_box(length, width, height):
-    return length * width * height
-def calculate_volume_cylinder(radius, height):
-    import math
-    return math.pi * (radius ** 2) * height
-class TestVolumeCalculations(unittest.TestCase):
-    def test_calculate_volume_box_positive(self):
-        self.assertEqual(calculate_volume_box(2, 3, 4), 24)
-        self.assertEqual(calculate_volume_box(10, 10, 10), 1000)
-        self.assertEqual(calculate_volume_box(1, 1, 1), 1)
-    def test_calculate_volume_box_zero(self):
-        self.assertEqual(calculate_volume_box(0, 5, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 0, 10), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 10), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 0), 0)
-    def test_calculate_volume_box_negative(self):
-        self.assertEqual(calculate_volume_box(-2, 3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, -3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, 3, -4), -24)
-        self.assertEqual(calculate_volume_box(-2, -3, 4), 24)
-    def test_calculate_volume_cylinder_positive(self):
-        radius = 3
-        height = 5
-        expected = math.pi * (3 ** 2) * 5
-        self.assertAlmostEqual(calculate_volume_cylinder(radius, height), expected)
-        radius = 1
-        height = 10
-        expected = math.pi * (1 ** 2) * 10
-        self.assertAlmostEqual(calculate_volume_cylinder(radius, height), expected)
-    def test_calculate_volume_cylinder_zero(self):
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 10), 0.0)
-        self.assertAlmostEqual(calculate_volume_cylinder(5, 0), 0.0)
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 0), 0.0)
-    def test_calculate_volume_cylinder_negative(self):
-        radius = -3
-        height = 5
-        expected = math.pi * ((-3) ** 2) * 5
-        self.assertAlmostEqual(calculate_volume_cylinder(radius, height), expected)
-        radius = 3
-        height = -5
-        expected = math.pi * (3 ** 2) * (-5)
-        self.assertAlmostEqual(calculate_volume_cylinder(radius, height), expected)
-        radius = -3
-        height = -5
-        expected = math.pi * ((-3) ** 2) * (-5)
-        self.assertAlmostEqual(calculate_volume_cylinder(radius, height), expected)
+import os
+import tempfile
+
+def calculate_total_volume(file_path):
+    total_volume = 0.0
+    errors = []
+    
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    
+    for line_num, line in enumerate(lines, start=1):
+        stripped_line = line.strip()
+        if not stripped_line:
+            continue
+        try:
+            value = float(stripped_line)
+            total_volume += value
+        except ValueError:
+            errors.append(line_num)
+    
+    return total_volume, errors
+
+def main():
+    content = "10.5\n20.0\ninvalid\n30.5\n"
+    
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as temp_file:
+        temp_file.write(content)
+        temp_path = temp_file.name
+    
+    try:
+        total, errors = calculate_total_volume(temp_path)
+        print(total)
+        print(errors)
+    finally:
+        os.unlink(temp_path)
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    main()

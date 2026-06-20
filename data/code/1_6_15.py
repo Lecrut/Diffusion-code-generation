@@ -1,31 +1,24 @@
 class WeightConverter:
-    def __init__(self, value):
-        self.value = value  # Store original value in base unit (assumed to be pounds internally if not specified)
-    
-    def convert_to_kg(self):
-        """Convert weight from pounds to kilograms."""
-        return round(self.value * 0.45359237, 6)
+    def __init__(self, value, unit='lbs'):
+        self._value = float(value)
+        self._unit = unit.lower()
+        self._units = {'lbs': 1.0, 'kg': 0.453592}
+
+    def convert(self, new_unit):
+        new_unit = new_unit.lower()
+        if new_unit not in self._units:
+            raise ValueError(f"Unsupported unit: {new_unit}")
+        value_in_lbs = self._value / self._units[self._unit]
+        self._value = value_in_lbs * self._units[new_unit]
+        self._unit = new_unit
+
+    def get_weight(self):
+        return self._value, self._unit
 
 if __name__ == '__main__':
-    # Sample hard-coded values without user input or CLI arguments
-    
-    # Example 1: Convert a specific stored value (stored as lbs) to kg
-    sample_weight_lbs = 10.0 
-    converter_sample_1 = WeightConverter(sample_weight_lbs)
-    
-    result_kg_1 = converter_sample_1.convert_to_kg()
-    print(f"Stored weight ({sample_weight_lbs} lbs) converted to: {result_kg_1} kg")
-
-    # Example 2: Another dynamic conversion for a different value
-    sample_weight_lbs_2 = 50.5 
-    converter_sample_2 = WeightConverter(sample_weight_lbs_2)
-    
-    result_kg_2 = converter_sample_2.convert_to_kg()
-    print(f"Stored weight ({sample_weight_lbs_2} lbs) converted to: {result_kg_2} kg")
-
-    # Example 3: Very large value conversion
-    sample_weight_lbs_3 = 1000.89 
-    converter_sample_3 = WeightConverter(sample_weight_lbs_3)
-    
-    result_kg_3 = converter_sample_3.convert_to_kg()
-    print(f"Stored weight ({sample_weight_lbs_3} lbs) converted to: {result_kg_3} kg")
+    w = WeightConverter(150, 'lbs')
+    w.convert('kg')
+    print(w.get_weight())
+    w2 = WeightConverter(70, 'kg')
+    w2.convert('lbs')
+    print(w2.get_weight())

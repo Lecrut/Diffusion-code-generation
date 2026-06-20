@@ -1,9 +1,22 @@
-def inches_to_centimeters(inches: float) -> float:
-    """Convert a length given in inches to centimeters with mathematical precision."""
-    return inches * 2.54
+def meters_to_yards(meters):
+    return meters * 1.09361
+
+def process_lengths_from_file(filename):
+    with open(filename, 'r') as file:
+        lengths = [float(line.strip()) for line in file if line.strip()]
+    return [meters_to_yards(length) for length in lengths]
 
 if __name__ == '__main__':
-    sample_inches = [1, 12, 36]
-    for inch_value in sample_inches:
-        cm_value = inches_to_centimeters(inch_value)
-        print(f"{inch_value} inches is exactly {cm_value} centimeters")
+    import os
+    import tempfile
+    sample_data = [1.0, 5.0, 10.5, 25.0]
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as temp_file:
+        for value in sample_data:
+            temp_file.write(str(value) + '\n')
+        temp_filename = temp_file.name
+    try:
+        results = process_lengths_from_file(temp_filename)
+        for original, converted in zip(sample_data, results):
+            print(f"{original} meters = {converted} yards")
+    finally:
+        os.remove(temp_filename)

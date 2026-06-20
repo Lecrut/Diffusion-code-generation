@@ -1,82 +1,53 @@
-def parse_volume_line(line):
-    """
-    Parses a single line from volume data file.
-    
-    Args:
-        line (str): A string containing numeric value, whitespace, or text to ignore.
-        
-    Returns:
-        float | None: The parsed floating-point number if successful, 
-                     otherwise returns None indicating an error that should be handled externally.
-    """
-    try:
-        # Strip whitespace and attempt conversion
-        cleaned_line = line.strip()
-        volume_value = float(cleaned_line)
-        
-        # Check for empty or non-numeric strings after stripping (e.g., just spaces, "abc")
-        if not cleaned_line.replace("-", "").replace(".", "", "").isdigit():
-            return None
-            
-        return volume_value
-        
-    except ValueError:
-        return None
+class VolumeCalculator:
+    UNIT_CONVERSION_TO_LITERS = {
+        'ml': 0.001,
+        'l': 1.0,
+        'gal': 3.78541,
+        'qt': 0.946353,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'fl_oz': 0.0295735,
+        'm3': 1000.0,
+        'cm3': 0.001,
+        'in3': 0.0163871,
+        'ft3': 28.3168,
+    }
 
-def calculate_total_volume(file_content):
-    """
-    Calculates the total sum of numeric volumes from a string file content.
-    
-    Args:
-        file_content (str): The raw text content as if read from a file.
-        
-    Returns:
-        float or int: Sum of all successfully parsed volume values, 
-                     defaulting to 0 if no valid numbers are found.
-    """
-    total_volume = 0
-    
-    for line in file_content.splitlines():
-        value = parse_volume_line(line)
-        # Gracefully skip lines with potential conversion errors or invalid data
-        if value is not None:
-            total_volume += value
-            
-    return total_volume
+    def __init__(self):
+        self.volumes = []
+
+    def add_volume(self, value: float, unit: str) -> None:
+        lower_unit = unit.lower().strip()
+        if lower_unit not in self.UNIT_CONVERSION_TO_LITERS:
+            raise ValueError(f"Unsupported unit: {unit}")
+        self.volumes.append((value, lower_unit))
+
+    def add_volumes(self, volumes: list[tuple[float, str]]) -> None:
+        for value, unit in volumes:
+            self.add_volume(value, unit)
+
+    def get_total(self, target_unit: str) -> float:
+        lower_target = target_unit.lower().strip()
+        if lower_target not in self.UNIT_CONVERSION_TO_LITERS:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
+
+        total_in_liters = sum(
+            value * self.UNIT_CONVERSION_TO_LITERS[unit]
+            for value, unit in self.volumes
+        )
+
+        result = total_in_liters / self.UNIT_CONVERSION_TO_LITERS[lower_target]
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values representing typical volume measurement file content
-    raw_file_content = """15.5 liters
- 20 grams (converted later as density factor, but treating standalone numbers here) -> treated as text skip or number based on value
-    
-   -10 
-+3.7 kg
-   
-invalid_text_abc
-
-4.2 ml"""
-    
-    # Extract numeric values specifically to avoid needing an explicit converter for mixed units in this simple script
-    lines = raw_file_content.splitlines()
-    parsed_values = []
-    
-    print("Processing volume measurements from sample data...")
-    
-    try:
-        current_sum = calculate_total_volume(raw_file_content)
-        
-        if isinstance(current_sum, float):
-            print(f"Total Volume Sum (including potential negatives/decimals): {current_sum} units")
-            
-        else: 
-            # Handle case where all lines might have been filtered out or initial logic differs slightly
-             total = 0.0
-            
-    finally:
-        pass
-    
-    # Re-calculate strictly to ensure output is always present and clear based on the core task requirement of summing floats
-    valid_sum = calculate_total_volume(raw_file_content)
-    
-    if isinstance(valid_sum, float):
-            print(f"Calculated Total Volume from Sample Data: {valid_sum}")
+    calculator = VolumeCalculator()
+    calculator.add_volumes([
+        (1000, 'ml'),
+        (1, 'l'),
+        (1, 'gal'),
+        (500, 'cm3'),
+    ])
+    total_liters = calculator.get_total('l')
+    total_gallons = calculator.get_total('gal')
+    print(total_liters)
+    print(total_gallons)

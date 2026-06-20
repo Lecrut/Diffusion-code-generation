@@ -1,36 +1,22 @@
 class VolumeManager:
     def __init__(self):
         self.volumes = {}
-    def store_volume(self, name, volume):
-        if not isinstance(name, str) or not isinstance(volume, (int, float)):
-            raise TypeError("Name must be a string and volume must be a number.")
-        self.volumes[name] = volume
-    def add_volume(self, name, volume):
-        if not isinstance(name, str) or not isinstance(volume, (int, float)):
-            raise TypeError("Name must be a string and volume must be a number.")
-        if name in self.volumes:
-            self.volumes[name] += volume
+
+    def store(self, key, value):
+        self.volumes[key] = value
+
+    def add(self, key, amount):
+        if key in self.volumes:
+            self.volumes[key] += amount
         else:
-            self.volumes[name] = volume
-    def retrieve_volume(self, name):
-        return self.volumes.get(name)
+            self.volumes[key] = amount
+
+    def get(self, key):
+        return self.volumes.get(key, 0.0)
+
 if __name__ == '__main__':
     manager = VolumeManager()
-    manager.store_volume("RoomA", 150.5)
-    manager.store_volume("Kitchen", 30.0)
-    manager.store_volume("LivingRoom", 450.75)
-    print("Initial Volumes:")
-    print(f"RoomA: {manager.retrieve_volume('RoomA')}")
-    print(f"Kitchen: {manager.retrieve_volume('Kitchen')}")
-    print(f"LivingRoom: {manager.retrieve_volume('LivingRoom')}")
-    manager.add_volume("RoomA", 25.25)
-    print("\nVolumes after adding to RoomA:")
-    print(f"RoomA: {manager.retrieve_volume('RoomA')}")
-    manager.add_volume("Kitchen", 10.5)
-    print("\nVolumes after adding to Kitchen:")
-    print(f"Kitchen: {manager.retrieve_volume('Kitchen')}")
-    manager.add_volume("Bedroom", 120.0)
-    print("\nVolumes after adding new entry:")
-    print(f"Bedroom: {manager.retrieve_volume('Bedroom')}")
-    print("\nFinal Volume Dictionary:")
-    print(manager.volumes)
+    manager.store('tank_a', 100.5)
+    manager.add('tank_a', 50.0)
+    result = manager.get('tank_a')
+    print(result)

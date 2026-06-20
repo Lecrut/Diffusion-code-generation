@@ -1,24 +1,27 @@
 class WeightManager:
     def __init__(self):
-        self.weights = {}
-    def store_weight(self, name, weight):
-        self.weights[name] = weight
-    def get_weight(self, name):
-        return self.weights.get(name)
-    def update_weight(self, name, new_weight):
-        if name in self.weights:
-            self.weights[name] = new_weight
-        else:
-            self.store_weight(name, new_weight)
+        self._weights = {}
+
+    def store_measurement(self, person_id, weight):
+        self._weights[person_id] = weight
+
+    def get_measurement(self, person_id):
+        return self._weights.get(person_id)
+
+    def update_measurement(self, person_id, weight):
+        if person_id in self._weights:
+            self._weights[person_id] = weight
+            return True
+        return False
+
+    def get_all_measurements(self):
+        return dict(self._weights)
+
 if __name__ == '__main__':
     manager = WeightManager()
-    manager.store_weight("Alice", 65.5)
-    manager.store_weight("Bob", 82.1)
-    manager.store_weight("Charlie", 70.0)
-    print("Alice's weight:", manager.get_weight("Alice"))
-    print("Bob's weight:", manager.get_weight("Bob"))
-    print("David's weight (non-existent):", manager.get_weight("David"))
-    manager.update_weight("Alice", 66.0)
-    print("Alice's updated weight:", manager.get_weight("Alice"))
-    manager.update_weight("Eve", 55.5)
-    print("Eve's weight:", manager.get_weight("Eve"))
+    manager.store_measurement("user_001", 75.5)
+    manager.store_measurement("user_002", 82.0)
+    print(manager.get_measurement("user_001"))
+    print(manager.update_measurement("user_001", 74.2))
+    print(manager.get_measurement("user_001"))
+    print(manager.get_all_measurements())

@@ -1,38 +1,38 @@
-def inches_to_cm(inches: float) -> float:
-    """
-    Converts a length given in inches to centimeters with mathematical precision.
-    
-    The conversion factor is exactly 2.54 cm per inch.
-    
-    Args:
-        inches (float): Length value in inches. Must be non-negative or negative if handling signed measurements appropriately, 
-                       but typically lengths are positive floats.
-    
-    Returns:
-        float: Equivalent length in centimeters.
-    
-    Examples:
-        >>> convert(1)
-        2.54
-        >>> convert(-0.378)
-        -0.96012
-    
-    Raises:
-        TypeError: If the input is not a numeric type (int or float).
-    """
-    if not isinstance(inches, (int, float)):
-        raise TypeError("Input must be an integer or float representing inches.")
+def convert_meters_to_yards(meters_list):
+    meters_to_yards_factor = 1.09361
+    return [m * meters_to_yards_factor for m in meters_list]
 
-    # Conversion factor defined by international agreement for precision.
-    INCH_TO_CM = 2.54
-    
-    return inches * INCH_TO_CM
+def read_lengths_from_file(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    lengths = []
+    for line in lines:
+        line = line.strip()
+        if line:
+            lengths.append(float(line))
+    return lengths
+
+def process_lengths(input_filename, output_values):
+    meters = read_lengths_from_file(input_filename)
+    yards = convert_meters_to_yards(meters)
+    for m, y in zip(meters, yards):
+        output_values.append((m, y))
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without interactive input.
+    sample_data = [100, 50, 0.5, 1.8288]
     
-    test_cases = [0, 1, -378/100]
-
-    for inch_val in test_cases:
-        cm_val = inches_to_cm(inch_val)
-        print(f"{inch_val} inches is equal to {cm_val} centimeters.")
+    import tempfile
+    import os
+    
+    temp_file = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt')
+    for length in sample_data:
+        temp_file.write(f"{length}\n")
+    temp_file.close()
+    
+    result_list = []
+    process_lengths(temp_file.name, result_list)
+    
+    for m, y in result_list:
+        print(y)
+    
+    os.unlink(temp_file.name)

@@ -1,48 +1,37 @@
-import re
-from typing import Union, Tuple
+import math
 
-# Supported units grouped by category (length)
-LENGTH_UNITS = {
-    "m": 1.0,      # meter
-    "km": 1_000.0, # kilometer
-    "cm": 0.01,    # centimeter
-    "mm": 0.001,   # millimeter
-    "micrometer": 1e-6,
-    "nanometer": 1e-9,
-}
-
-# Reverse mapping for target unit lookup (unit_name -> conversion factor to meter)
-UNIT_TO_METER = {v: k for k, v in LENGTH_UNITS.items()}
-
-def parse_unit_string(unit_str: str) -> Tuple[str, float]:
-    """
-    Parse a string like '5m', '10km' into value and unit.
-    
-    Args:
-        unit_str (str): String containing numeric value followed by optional unit suffix.
+def convert_measurements(measurements, unit):
+    meters_list = []
+    feet_list = []
+    for value in measurements:
+        if unit == 'kilometers':
+            meters = value * 1000
+        elif unit == 'meters':
+            meters = value
+        elif unit == 'centimeters':
+            meters = value / 100
+        elif unit == 'millimeters':
+            meters = value / 1000
+        elif unit == 'miles':
+            meters = value * 1609.344
+        elif unit == 'yards':
+            meters = value * 0.9144
+        elif unit == 'feet':
+            meters = value / 3.28084
+        elif unit == 'inches':
+            meters = value / 39.3701
+        else:
+            raise ValueError(f"Unsupported unit: {unit}")
         
-    Returns:
-        tuple: (value in meters, original_unit_name)
-
-    Raises:
-        ValueError: If the format is invalid or unsupported units are used.
-    """
-    if not isinstance(unit_str, str):
-        raise TypeError("Input must be a string.")
+        feet = meters / 0.3048
+        meters_list.append(meters)
+        feet_list.append(feet)
     
-    # Normalize case for unit suffixes but keep value as float (allow negative/decimal values)
-    match = re.match(r'^([+-]?\d*\.?\d+)\s*(.*)$', unit_str.strip())
-    if not match:
-        raise ValueError("Invalid format. Expected number followed by optional unit.")
-
-    try:
-        value = float(match.group(1))
-    except ValueError as e:
-        raise ValueError(f"Cannot convert '{match.group(1)}' to a numeric value") from e
-    
-    raw_unit_str = match.group(2).strip().lower() if match.group(2) else ""
-
-    # Determine base unit name and suffix for parsing logic later (e.g., 'km', 'm')
+    return meters_list, feet_list
 
 if __name__ == '__main__':
-    pass
+    samples = [1.5, 2.0, 3.75]
+    unit = 'kilometers'
+    meters, feet = convert_measurements(samples, unit)
+    print(meters)
+    print(feet)

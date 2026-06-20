@@ -1,48 +1,77 @@
-import argparse
-from statistics import mean, stdev
+class Volume:
+    BASE_UNIT = "cc"
 
-def parse_volume_list():
-    """Parses a list of volume values from command-line arguments."""
-    parser = argparse.ArgumentParser(description="Calculate arithmetic mean and standard deviation of volumes.")
-    
-    # Using optional argument to avoid requiring input via stdin or prompts
-    args = parser.parse_args()
+    CONVERSIONS_TO_CC = {
+        "liters": 1000.0,
+        "milliliters": 1.0,
+        "gallons": 3785.411784,
+        "cubic_meters": 1000000.0,
+        "cubic_centimeters": 1.0
+    }
 
-    if not hasattr(args, 'volumes') or len(args.volumes) == 0:
-        return None
-    
-    try:
-        values = [float(v) for v in args.volumes]
-        # Ensure at least two numbers exist to calculate standard deviation
-        if len(values) < 2:
-            raise ValueError("At least two volume values are required.")
-        
-        avg_volume = mean(values)
-        std_deviation = stdev(values)
+    def __init__(self, value, unit="cubic_centimeters"):
+        if unit not in self.CONVERSIONS_TO_CC:
+            raise ValueError("Unsupported unit")
+        self._value_cc = value * self.CONVERSIONS_TO_CC[unit]
 
-        return {
-            'values': values,
-            'mean': avg_volume,
-            'std_deviation': std_deviation
-        }
-    except (ValueError, TypeError):
-        raise ValueError("All volume values must be valid numbers.")
+    def to(self, unit):
+        if unit not in self.CONVERSIONS_TO_CC:
+            raise ValueError("Unsupported unit")
+        return self._value_cc / self.CONVERSIONS_TO_CC[unit]
+
+    def __add__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._value_cc + other._value_cc, "cubic_centimeters")
+        raise TypeError("Unsupported operand type")
+
+    def __sub__(self, other):
+        if isinstance(other, Volume):
+            return Volume(self._value_cc - other._value_cc, "cubic_centimeters")
+        raise TypeError("Unsupported operand type")
+
+    def __mul__(self, factor):
+        if isinstance(factor, (int, float)):
+            return Volume(self._value_cc * factor, "cubic_centimeters")
+        raise TypeError("Unsupported operand type")
+
+    def __rmul__(self, factor):
+        return self.__mul__(factor)
+
+    def __truediv__(self, factor):
+        if isinstance(factor, (int, float)):
+            return Volume(self._value_cc / factor, "cubic_centimeters")
+        raise TypeError("Unsupported operand type")
+
+    def __eq__(self, other):
+        if isinstance(other, Volume):
+            return abs(self._value_cc - other._value_cc) < 1e-9
+        return False
+
+    def __repr__(self):
+        return f"Volume({self.to('cubic_centimeters')} cc)"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    # Simulating command-line arguments for demonstration purposes within this block.
-    sample_volumes = [10, 25, 30, 45, 60]
+    v1 = Volume(1, "liters")
+    v2 = Volume(500, "milliliters")
+    v3 = Volume(1, "gallons")
 
-    result_data = parse_volume_list()
-    
-    if result_data is None:
-        print("Error: No volume values provided.")
-    else:
-        volumes = result_data['values']
-        avg_vol = result_data['mean']
-        std_dev = result_data['std_deviation']
+    print(v1.to("milliliters"))
+    print(v2.to("liters"))
+    print(v3.to("cubic_meters"))
 
-        # Output results efficiently without interactive prompts.
-        print(f"Volume Values: {volumes}")
-        print(f"Arithmetic Mean: {avg_vol:.2f}")
-        print(f"Standard Deviation: {std_dev:.2f}")
+    v_sum = v1 + v2
+    print(v_sum.to("milliliters"))
+
+    v_diff = v1 - v2
+    print(v_diff.to("cubic_centimeters"))
+
+    v_scaled = v1 * 2.5
+    print(v_scaled.to("liters"))
+
+    v_div = v3 / 2
+    print(v_div.to("milliliters"))
+
+    print(v1 == Volume(1000, "milliliters"))
+    print(v1 == v2)
+
+    print(repr(v1))

@@ -1,12 +1,7 @@
-def find_outliers(weights, lower_bound, upper_bound):
-    outliers = []
-    for weight in weights:
-        if weight < lower_bound or weight > upper_bound:
-            outliers.append(weight)
-    return outliers
+def find_out_of_range_weights(weights, low=50, high=200):
+    return [w for w in weights if w < low or w > high]
+
 if __name__ == '__main__':
-    data = [45, 55, 150, 200, 210, 30, 199, 250, 49, 201]
-    lower = 50
-    upper = 200
-    result = find_outliers(data, lower, upper)
-    print(result)
+    sample_weights = [45, 50, 120, 200, 205, 75, 99, 210, 5, 150]
+    outliers = find_out_of_range_weights(sample_weights)
+    print(outliers)

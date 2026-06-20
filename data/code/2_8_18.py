@@ -1,44 +1,76 @@
-import csv
+def calculate_sphere_volume(radius):
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    if radius == 0:
+        return 0.0
+    return (4.0 / 3.0) * 3.141592653589793 * (radius ** 3)
 
-def scale_volume(input_file: str, output_file: str, factor: float) -> None:
-    """
-    Reads a CSV file containing item names and volumes, scales the volume by a given factor,
-    and writes the results to a new CSV file.
-    
-    Args:
-        input_file (str): Path to the input CSV file.
-        output_file (str): Path to the output CSV file.
-        factor (float): The scaling factor for volumes.
-    """
-    scaled_data = []
+def calculate_cylinder_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height cannot be negative")
+    if radius == 0 or height == 0:
+        return 0.0
+    return 3.141592653589793 * (radius ** 2) * height
 
-    with open(input_file, 'r', newline='', encoding='utf-8') as infile:
-        reader = csv.DictReader(infile)
-        
-        # Ensure all column names are lowercase to handle case sensitivity in sample data
-        fieldnames_lower = {key.lower(): value for key, value in zip(reader.fieldnames or [], [])}
+def calculate_cone_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height cannot be negative")
+    if radius == 0 or height == 0:
+        return 0.0
+    return (1.0 / 3.0) * 3.141592653589793 * (radius ** 2) * height
 
-        with open(output_file, 'w', newline='', encoding='utf-8') as outfile:
-            writer = csv.DictWriter(outfile, delimiter=',', extraactions=[], 
-                                    quoting=csv.QUOTE_MINIMAL)
-            
-            if fieldnames_lower and reader.fieldnames[0].lower():
-                output_field_names = [field.lower() for field in reader.fieldnames]
-                
-                with open(output_file, 'w', newline='', encoding='utf-8') as outfile:
-                    writer = csv.DictWriter(outfile, delimiter=',', extraactions=[], 
-                                            quoting=csv.QUOTE_MINIMAL)
-                    
-                    # Write header (converted to lowercase names for consistency if needed, or original case preserved here based on sample logic)
-                    # To strictly follow standard CSV behavior without assuming specific column order changes unless defined:
-                    writer.writeheader()
+import unittest
 
-                    for row in reader:
-                        new_row = {}
-                        
-                        # Copy all fields from the input row to a temporary structure first
-                        temp_data = {k.lower(): v if isinstance(v, float) else str(float(v)) 
-                                     for k, v in row.items()}
+class TestVolumeCalculations(unittest.TestCase):
+    def test_sphere_positive_radius(self):
+        self.assertAlmostEqual(calculate_sphere_volume(1), 4.1887902047863905)
+        self.assertAlmostEqual(calculate_sphere_volume(5), 523.5987755982989)
+
+    def test_sphere_zero_radius(self):
+        self.assertEqual(calculate_sphere_volume(0), 0.0)
+
+    def test_sphere_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_sphere_volume(-1)
+
+    def test_cylinder_positive_radius_height(self):
+        self.assertAlmostEqual(calculate_cylinder_volume(1, 1), 3.141592653589793)
+        self.assertAlmostEqual(calculate_cylinder_volume(3, 5), 141.3716694115407)
+
+    def test_cylinder_zero_radius(self):
+        self.assertEqual(calculate_cylinder_volume(0, 5), 0.0)
+
+    def test_cylinder_zero_height(self):
+        self.assertEqual(calculate_cylinder_volume(3, 0), 0.0)
+
+    def test_cylinder_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(-2, 5)
+
+    def test_cylinder_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(2, -5)
+
+    def test_cone_positive_radius_height(self):
+        self.assertAlmostEqual(calculate_cone_volume(1, 1), 1.0471975511965976)
+        self.assertAlmostEqual(calculate_cone_volume(3, 5), 47.1238898038469)
+
+    def test_cone_zero_radius(self):
+        self.assertEqual(calculate_cone_volume(0, 5), 0.0)
+
+    def test_cone_zero_height(self):
+        self.assertEqual(calculate_cone_volume(3, 0), 0.0)
+
+    def test_cone_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(-2, 5)
+
+    def test_cone_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(2, -5)
 
 if __name__ == '__main__':
-    pass
+    print(calculate_sphere_volume(2))
+    print(calculate_cylinder_volume(2, 4))
+    print(calculate_cone_volume(2, 4))
+    unittest.main()

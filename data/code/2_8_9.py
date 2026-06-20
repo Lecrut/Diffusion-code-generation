@@ -1,81 +1,100 @@
-import csv
+import unittest
+import math
 
-def scale_volumes(input_file: str, output_file: str, factor: float) -> None:
-    """
-    Reads a CSV file with item names and volumes, scales the volumes by the given factor,
-    and writes the results to a new CSV file.
+def calculate_cube_volume(side: float) -> float:
+    if side < 0:
+        raise ValueError("Side length must be non-negative")
+    return side ** 3
 
-    Args:
-        input_file (str): Path to the input CSV file containing 'item_name' and 'volume'.
-        output_file (str): Path to the output CSV file where scaled data will be saved.
-        factor (float): The scaling factor for volumes.
-    """
-    try:
-        with open(input_file, mode='r', newline='', encoding='utf-8') as infile:
-            reader = csv.DictReader(infile)
+def calculate_sphere_volume(radius: float) -> float:
+    if radius < 0:
+        raise ValueError("Radius must be non-negative")
+    return (4 / 3) * math.pi * (radius ** 3)
 
-            # Verify expected columns exist
-            if 'item_name' not in reader.fieldnames or 'volume' not in reader.fieldnames:
-                raise ValueError("Input CSV must contain 'item_name' and 'volume' columns.")
+def calculate_cylinder_volume(radius: float, height: float) -> float:
+    if radius < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return math.pi * (radius ** 2) * height
 
-            with open(output_file, mode='w', newline='', encoding='utf-8') as outfile:
-                writer = csv.DictWriter(outfile, fieldnames=['item_name', 'scaled_volume'])
-                
-                for row in reader:
-                    try:
-                        original_volume = float(row['volume'])
-                        scaled_value = original_volume * factor
-                        
-                        # Write output with a key named 'scaled_volume' as per task logic
-                        writer.writerow({
-                            'item_name': row['item_name'],
-                            'scaled_volume': f"{scaled_value:.6f}"  # Format for consistency
-                        })
-                    except ValueError:
-                        raise ValueError(f"Invalid volume value found in row {row}: '{row['volume']}'")
+def calculate_cone_volume(radius: float, height: float) -> float:
+    if radius < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return (1 / 3) * math.pi * (radius ** 2) * height
 
-    except FileNotFoundError:
-        print(f"Error: Input file '{input_file}' not found.")
-        exit(1)
+class TestVolumeFunctions(unittest.TestCase):
+
+    def test_cube_volume_positive(self):
+        self.assertAlmostEqual(calculate_cube_volume(2), 8)
+
+    def test_cube_volume_zero(self):
+        self.assertAlmostEqual(calculate_cube_volume(0), 0)
+
+    def test_cube_volume_negative(self):
+        with self.assertRaises(ValueError):
+            calculate_cube_volume(-1)
+
+    def test_sphere_volume_positive(self):
+        expected = (4 / 3) * math.pi * (2 ** 3)
+        self.assertAlmostEqual(calculate_sphere_volume(2), expected)
+
+    def test_sphere_volume_zero(self):
+        self.assertAlmostEqual(calculate_sphere_volume(0), 0)
+
+    def test_sphere_volume_negative(self):
+        with self.assertRaises(ValueError):
+            calculate_sphere_volume(-1)
+
+    def test_cylinder_volume_positive(self):
+        expected = math.pi * (1 ** 2) * 5
+        self.assertAlmostEqual(calculate_cylinder_volume(1, 5), expected)
+
+    def test_cylinder_volume_zero_radius(self):
+        self.assertAlmostEqual(calculate_cylinder_volume(0, 5), 0)
+
+    def test_cylinder_volume_zero_height(self):
+        self.assertAlmostEqual(calculate_cylinder_volume(1, 0), 0)
+
+    def test_cylinder_volume_zero_both(self):
+        self.assertAlmostEqual(calculate_cylinder_volume(0, 0), 0)
+
+    def test_cylinder_volume_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(-1, 5)
+
+    def test_cylinder_volume_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(1, -5)
+
+    def test_cone_volume_positive(self):
+        expected = (1 / 3) * math.pi * (1 ** 2) * 5
+        self.assertAlmostEqual(calculate_cone_volume(1, 5), expected)
+
+    def test_cone_volume_zero_radius(self):
+        self.assertAlmostEqual(calculate_cone_volume(0, 5), 0)
+
+    def test_cone_volume_zero_height(self):
+        self.assertAlmostEqual(calculate_cone_volume(1, 0), 0)
+
+    def test_cone_volume_zero_both(self):
+        self.assertAlmostEqual(calculate_cone_volume(0, 0), 0)
+
+    def test_cone_volume_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(-1, 5)
+
+    def test_cone_volume_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(1, -5)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external files.
-    # We create a temporary in-memory structure to simulate reading, but since the task 
-    # requires processing an existing file format and outputting to one, we will use 
-    # standard library features to generate a minimal valid CSV string on the fly if needed?
-    # However, strict adherence says "Do not include ... pre-existing files". 
-    # To satisfy this while providing runnable code that processes data:
-    # We can define the input content directly in memory and write it to a temp file path 
-    # or simply process a string buffer. But the task asks for reading a CSV file.
-    
-    # Since we cannot rely on pre-existing files, let's create them dynamically within this block?
-    # No, "pre-existing files" usually refers to dependencies like config.json in project root.
-    # Creating temporary files during execution is generally acceptable unless forbidden explicitly.
-    # To be safest and most robust without any file I/O dependency at all (except the output):
-    
-    import tempfile
-    
-    sample_data_content = """item_name,volume
-Apple,100
-Banana,250
-Cherry,75"""
+    cube_res = calculate_cube_volume(3)
+    sphere_res = calculate_sphere_volume(2)
+    cylinder_res = calculate_cylinder_volume(3, 5)
+    cone_res = calculate_cone_volume(3, 5)
 
-    input_filename = "sample_input.csv"
-    output_filename = "scaled_output.csv"
-    scaling_factor = 2.5
+    print(cube_res)
+    print(sphere_res)
+    print(cylinder_res)
+    print(cone_res)
 
-    # Create a temporary file to hold the sample data so we can read it as requested 
-    # without requiring an external pre-existing file in the environment.
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp_input:
-        tmp_input.write(sample_data_content)
-        temp_path = tmp_input.name
-
-    try:
-        scale_volumes(temp_path, output_filename, scaling_factor)
-        
-        # Print confirmation of success (optional but good for verification)
-        print(f"Processing complete. Output written to {output_filename}")
-    finally:
-        import os
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
+    unittest.main()

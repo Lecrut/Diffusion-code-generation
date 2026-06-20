@@ -1,45 +1,35 @@
-import math
-def convert_length(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    if from_unit == "m":
-        if to_unit == "cm":
-            return value * 100
-        elif to_unit == "km":
-            return value / 1000
-        elif to_unit == "mm":
-            return value * 1000
-    elif from_unit == "cm":
-        if to_unit == "m":
-            return value / 100
-        elif to_unit == "mm":
-            return value * 10
-    elif from_unit == "km":
-        if to_unit == "m":
-            return value * 1000
-        elif to_unit == "cm":
-            return value * 100000
-        elif to_unit == "mm":
-            return value * 1000000
-    raise ValueError("Unsupported unit conversion")
+import sys
+import io
+
+def convert_lengths(lengths, unit):
+    km_to_m = 1000.0
+    m_to_ft = 3.28084
+
+    results = []
+    for length in lengths:
+        if unit.lower() == 'km':
+            meters = length * km_to_m
+        elif unit.lower() == 'm':
+            meters = length
+        elif unit.lower() == 'ft':
+            meters = length / m_to_ft
+        else:
+            meters = None
+
+        if meters is not None:
+            feet = meters * m_to_ft
+        else:
+            feet = None
+
+        results.append((meters, feet))
+
+    return results
+
 if __name__ == '__main__':
-    length = 10
-    from_unit = "m"
-    to_unit = "cm"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"Converting {length} {from_unit} to {to_unit}: {result}")
-    length = 5
-    from_unit = "km"
-    to_unit = "m"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"Converting {length} {from_unit} to {to_unit}: {result}")
-    length = 20
-    from_unit = "cm"
-    to_unit = "mm"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"Converting {length} {from_unit} to {to_unit}: {result}")
-    length = 10
-    from_unit = "m"
-    to_unit = "m"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"Converting {length} {from_unit} to {to_unit}: {result}")
+    sample_lengths = [1.5, 3.0, 7.25, 10.0]
+    sample_unit = 'km'
+
+    converted = convert_lengths(sample_lengths, sample_unit)
+
+    for length, (meters, feet) in zip(sample_lengths, converted):
+        print(f"{length} {sample_unit} = {meters:.4f} m = {feet:.4f} ft")

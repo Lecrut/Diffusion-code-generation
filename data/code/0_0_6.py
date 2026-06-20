@@ -1,45 +1,40 @@
-"""
-Module to convert length from meters to feet.
+def convert_length(value: float, from_unit: str, to_unit: str) -> float:
+    unit_to_meters = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'mi': 1609.344,
+        'yd': 0.9144,
+        'ft': 0.3048,
+        'in': 0.0254
+    }
 
-This module provides a function to perform the conversion between 
-meters (SI unit of length) and feet (Imperial/US Customary unit).
-The conversion factor is approximately 3.28084 feet per meter.
-"""
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
 
-def meters_to_feet(meters: float) -> float:
-    """
-    Convert a distance given in meters to its equivalent in feet.
+    if from_unit_lower not in unit_to_meters:
+        raise ValueError(f"Unsupported source unit: {from_unit}")
+    if to_unit_lower not in unit_to_meters:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
 
-    Args:
-        meters (float): The length value in meters. Must be non-negative 
-                       for physical distances, though the function will 
-                       return negative results if input is negative.
+    value_in_meters = value * unit_to_meters[from_unit_lower]
+    converted_value = value_in_meters / unit_to_meters[to_unit_lower]
 
-    Returns:
-        float: The converted length in feet.
-
-    Example:
-        >>> print(meters_to_feet(1))
-        3.28084
-    """
-    # Conversion factor: 1 meter = 3.28084 feet (approximate)
-    FEET_PER_METER = 3.28084
-    
-    return meters * FEET_PER_METER
+    return converted_value
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the conversion function.
-    
-    # Sample input: Convert standard human height (~1.75m) to feet
-    sample_height_meters = 1.75
-    
-    result_feet = meters_to_feet(sample_height_meters)
-    
-    print(f"{sample_height_meters} meters is equal to {result_feet:.2f} feet.")
+    result1 = convert_length(1, 'mi', 'km')
+    print(result1)
 
-    # Additional test case: Convert a standard car length (~4m) 
-    sample_car_length_meters = 4.0
-    
-    result_car_feet = meters_to_feet(sample_car_length_meters)
-    
-    print(f"{sample_car_length_meters} meters is equal to {result_car_feet:.2f} feet.")
+    result2 = convert_length(100, 'cm', 'in')
+    print(result2)
+
+    result3 = convert_length(5.5, 'ft', 'm')
+    print(result3)
+
+    result4 = convert_length(10, 'km', 'mi')
+    print(result4)
+
+    result5 = convert_length(24, 'in', 'cm')
+    print(result5)

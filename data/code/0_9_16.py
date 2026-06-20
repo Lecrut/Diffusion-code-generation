@@ -1,21 +1,23 @@
-import re
-from typing import Union, Dict
-
-# Conversion factors relative to meters (positive values)
-LENGTH_CONVERSION_FACTORS: Dict[str, float] = {
-    "meters": 1.0,
-    "kilometers": 1e-3,
-    "centimeters": 100.0,
-    "millimeters": 1e3,
-    "micrometers": 1e6,
-    "nanometers": 1e9,
-    "inches": 25400.0 / (1/100), # inches to meters * meters per inch -> actually: 1 meter = 39.37 in, so factor is m/inch? No.
-    # Correction logic below using a clean dictionary approach instead of inline math errors above.
-}
-
-# Re-defining with correct factors relative to Meters (value represents how many target units are in ONE unit)
-# Actually, standard way: 1 meter = X meters_target * factor -> no.
-# Let's define: To convert from 'source' to 'target': value_in_source * factor(source_to_meters) / factor(target_to_meters)
+def convert_lengths(lengths, from_unit):
+    meters = []
+    feet = []
+    for length in lengths:
+        if from_unit.lower() == "kilometers":
+            length_in_meters = length * 1000
+        elif from_unit.lower() == "miles":
+            length_in_meters = length * 1609.344
+        elif from_unit.lower() == "feet":
+            length_in_meters = length * 0.3048
+        else:
+            length_in_meters = length
+        length_in_feet = length_in_meters / 0.3048
+        meters.append(length_in_meters)
+        feet.append(length_in_feet)
+    return meters, feet
 
 if __name__ == '__main__':
-    pass
+    sample_lengths = [1.0, 5.5, 10.0]
+    source_unit = "kilometers"
+    meters_results, feet_results = convert_lengths(sample_lengths, source_unit)
+    for original, in_meters, in_feet in zip(sample_lengths, meters_results, feet_results):
+        print(f"{original} {source_unit} = {in_meters} meters = {in_feet} feet")

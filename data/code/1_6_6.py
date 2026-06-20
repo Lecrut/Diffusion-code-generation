@@ -1,30 +1,27 @@
-class WeightConverter:
-    def __init__(self):
-        self.weight = 0.0
-        self.unit = "lb"
-    def set_weight(self, value, unit):
-        self.weight = value
+class Weight:
+    def __init__(self, value, unit):
+        self.value = value
         self.unit = unit
-    def convert_to_kg(self):
-        if self.unit == "lb":
-            return self.weight * 0.453592
-        elif self.unit == "kg":
-            return self.weight
+
+    def change_unit(self, new_unit):
+        if self.unit == new_unit:
+            return
+        if self.unit == 'lb' and new_unit == 'kg':
+            self.value = self.value * 0.45359237
+            self.unit = new_unit
+        elif self.unit == 'kg' and new_unit == 'lb':
+            self.value = self.value / 0.45359237
+            self.unit = new_unit
         else:
-            raise ValueError("Unsupported unit")
-    def convert_to_lb(self):
-        if self.unit == "lb":
-            return self.weight
-        elif self.unit == "kg":
-            return self.weight / 0.453592
-        else:
-            raise ValueError("Unsupported unit")
+            raise ValueError('Unsupported conversion')
+
+    def get_weight(self):
+        return self.value
+
 if __name__ == '__main__':
-    converter = WeightConverter()
-    converter.set_weight(150, "lb")
-    print(f"Original weight: {converter.weight} {converter.unit}")
-    kg_value = converter.convert_to_kg()
-    print(f"Converted weight in kg: {kg_value}")
-    converter.set_weight(75, "kg")
-    lb_value = converter.convert_to_lb()
-    print(f"Converted weight in lb: {lb_value}")
+    sample_weight = Weight(100, 'lb')
+    print(sample_weight.get_weight())
+    sample_weight.change_unit('kg')
+    print(sample_weight.get_weight())
+    sample_weight.change_unit('lb')
+    print(sample_weight.get_weight())

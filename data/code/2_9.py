@@ -1,33 +1,38 @@
-import unittest
-def calculate_volume_box(length, width, height):
-    return length * width * height
-def calculate_volume_cylinder(radius, height):
-    import math
-    return math.pi * (radius ** 2) * height
-class TestVolumeCalculations(unittest.TestCase):
-    def test_calculate_volume_box_positive(self):
-        self.assertEqual(calculate_volume_box(2, 3, 4), 24)
-        self.assertEqual(calculate_volume_box(1, 1, 1), 1)
-        self.assertEqual(calculate_volume_box(10, 2, 5), 100)
-    def test_calculate_volume_box_zero(self):
-        self.assertEqual(calculate_volume_box(0, 5, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 0, 10), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 0), 0)
-    def test_calculate_volume_box_negative(self):
-        self.assertEqual(calculate_volume_box(-2, 3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, -3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, 3, -4), -24)
-        self.assertEqual(calculate_volume_box(-2, -3, -4), -24)
-    def test_calculate_volume_cylinder_positive(self):
-        expected_pi_val = 3.1415926535
-        self.assertAlmostEqual(calculate_volume_cylinder(1, 1), expected_pi_val)
-        self.assertAlmostEqual(calculate_volume_cylinder(2, 5), 31.415926535 * 5)
-    def test_calculate_volume_cylinder_zero(self):
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 5), 0.0)
-        self.assertAlmostEqual(calculate_volume_cylinder(5, 0), 0.0)
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 0), 0.0)
-    def test_calculate_volume_cylinder_negative(self):
-        self.assertAlmostEqual(calculate_volume_cylinder(-1, 5), 15.7079632679)                  
-        self.assertAlmostEqual(calculate_volume_cylinder(2, -5), -31.415926535)                  
+import tempfile
+import os
+
+def calculate_total_volume_from_file(file_path):
+    total_volume = 0.0
+    try:
+        with open(file_path, 'r') as f:
+            for line in f:
+                stripped_line = line.strip()
+                if not stripped_line:
+                    continue
+                try:
+                    volume = float(stripped_line)
+                    total_volume += volume
+                except ValueError:
+                    continue
+    except FileNotFoundError:
+        raise
+    except IOError:
+        raise
+    return total_volume
+
+def run_sample():
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+        tmp.write("10.5\n")
+        tmp.write("20.3\n")
+        tmp.write("invalid\n")
+        tmp.write("5.2\n")
+        tmp_file = tmp.name
+
+    try:
+        result = calculate_total_volume_from_file(tmp_file)
+        return result
+    finally:
+        os.unlink(tmp_file)
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print(run_sample())

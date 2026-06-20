@@ -1,33 +1,37 @@
-def convert_length(length: float, unit: str) -> float:
-    conversion_factors = {
-        'm': 1.0,
-        'ft': 0.3048,
-        'in': 0.0254,
-        'km': 1000.0,
-        'mi': 1609.34
-    }
-    if unit in conversion_factors:
-        return length * conversion_factors[unit]
-    else:
-        raise ValueError(f"Unknown unit type: {unit}")
+class UnitConverter:
+    METER_TO_FOOT = 3.28084
+    FOOT_TO_METER = 0.3048
+    METER_TO_KILOMETER = 0.001
+    KILOMETER_TO_METER = 1000
+
+    def meters_to_feet(self, meters):
+        return meters * UnitConverter.METER_TO_FOOT
+
+    def feet_to_meters(self, feet):
+        return feet * UnitConverter.FOOT_TO_METER
+
+    def meters_to_kilometers(self, meters):
+        return meters * UnitConverter.METER_TO_KILOMETER
+
+    def kilometers_to_meters(self, kilometers):
+        return kilometers * UnitConverter.KILOMETER_TO_METER
+
+    def feet_to_kilometers(self, feet):
+        meters = self.feet_to_meters(feet)
+        return self.meters_to_kilometers(meters)
+
+    def kilometers_to_feet(self, kilometers):
+        meters = self.kilometers_to_meters(kilometers)
+        return self.meters_to_feet(meters)
+
 if __name__ == '__main__':
-    length_m = 10.0
-    unit_m = 'm'
-    converted_m = convert_length(length_m, unit_m)
-    print(f"{length_m} {unit_m} is equal to {converted_m}")
-    length_ft = 5.0
-    unit_ft = 'ft'
-    converted_ft = convert_length(length_ft, unit_ft)
-    print(f"{length_ft} {unit_ft} is equal to {converted_ft}")
-    length_in = 12.0
-    unit_in = 'in'
-    converted_in = convert_length(length_in, unit_in)
-    print(f"{length_in} {unit_in} is equal to {converted_in}")
-    length_km = 2.5
-    unit_km = 'km'
-    converted_km = convert_length(length_km, unit_km)
-    print(f"{length_km} {unit_km} is equal to {converted_km}")
-    try:
-        convert_length(10.0, 'mi')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    converter = UnitConverter()
+    sample_meters = 100
+    sample_feet = 328.084
+    sample_kilometers = 1.5
+    print(converter.meters_to_feet(sample_meters))
+    print(converter.feet_to_meters(sample_feet))
+    print(converter.meters_to_kilometers(sample_meters))
+    print(converter.kilometers_to_meters(sample_kilometers))
+    print(converter.feet_to_kilometers(sample_feet))
+    print(converter.kilometers_to_feet(sample_kilometers))

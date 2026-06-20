@@ -1,33 +1,51 @@
+class WeightRecord:
+    def __init__(self, date, weight):
+        self.date = date
+        self.weight = weight
+
 class WeightTracker:
-    def __init__(self, name):
-        self.name = name
-        self.weights = []
-    def add_weight(self, weight):
-        self.weights.append(weight)
-    def calculate_statistics(self):
-        if not self.weights:
-            return {
-                "name": self.name,
-                "total_weights": 0,
-                "average_weight": 0,
-                "count": 0
-            }
-        total = sum(self.weights)
-        count = len(self.weights)
-        average = total / count
-        return {
-            "name": self.name,
-            "total_weights": total,
-            "average_weight": average,
-            "count": count
-        }
+    def __init__(self):
+        self.records = []
+
+    def add_weight(self, date, weight):
+        if weight < 0:
+            raise ValueError("Weight cannot be negative")
+        record = WeightRecord(date, weight)
+        self.records.append(record)
+        return record
+
+    def get_average_weight(self):
+        if not self.records:
+            return 0.0
+        total = sum(r.weight for r in self.records)
+        return total / len(self.records)
+
+    def get_min_weight(self):
+        if not self.records:
+            return 0.0
+        return min(r.weight for r in self.records)
+
+    def get_max_weight(self):
+        if not self.records:
+            return 0.0
+        return max(r.weight for r in self.records)
+
+    def get_latest_weight(self):
+        if not self.records:
+            return 0.0
+        return self.records[-1].weight
+
+    def get_count(self):
+        return len(self.records)
+
 if __name__ == '__main__':
-    tracker = WeightTracker("Alice")
-    sample_weights = [65.5, 68.0, 70.5, 72.0, 69.5]
-    for weight in sample_weights:
-        tracker.add_weight(weight)
-    statistics = tracker.calculate_statistics()
-    print(f"--- Weight Tracking Statistics for {statistics['name']} ---")
-    print(f"Total number of entries: {statistics['count']}")
-    print(f"Total weight recorded: {statistics['total_weights']:.2f}")
-    print(f"Average weight: {statistics['average_weight']:.2f}")
+    tracker = WeightTracker()
+    tracker.add_weight("2023-01-01", 75.5)
+    tracker.add_weight("2023-01-02", 75.2)
+    tracker.add_weight("2023-01-03", 74.8)
+    avg = tracker.get_average_weight()
+    min_w = tracker.get_min_weight()
+    max_w = tracker.get_max_weight()
+    latest = tracker.get_latest_weight()
+    count = tracker.get_count()
+    print(f"Average: {avg}, Min: {min_w}, Max: {max_w}, Latest: {latest}, Count: {count}")

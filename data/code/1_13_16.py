@@ -1,13 +1,12 @@
-import statistics
+import numpy as np
 
-def calculate_median_weight(weight_data):
-    """Calculates the median weight from a list of numeric values."""
-    return round(statistics.median(weight_data), 2)
+def apply_weight_change(weights, percentage_change):
+    weight_array = np.asarray(weights, dtype=np.float64)
+    new_weights = weight_array * (1 + percentage_change)
+    return new_weights.tolist()
 
 if __name__ == '__main__':
-    # Hard-coded sample weights for testing without user input
-    raw_weights = [65.0, 70.5, 80.3, 45.2, 90.1]
-
-    median_weight = calculate_median_weight(raw_weights)
-    
-    print(f"{median_weight:.2f}")
+    sample_weights = [10.0, 20.0, 30.0, 40.0, 50.0]
+    change_percent = 0.1
+    result = apply_weight_change(sample_weights, change_percent)
+    print(result)

@@ -1,32 +1,18 @@
-def convert_meters_to_feet(meters):
-    """
-    Converts a length given in meters to feet using the conversion factor 1 meter = 3.28084 feet.
+def convert_length(length, target_unit):
+    supported_units = {
+        'meters': 1.0,
+        'feet': 3.28084,
+        'kilometers': 0.001
+    }
     
-    Args:
-        meters (float or int): The length in meters.
-        
-    Returns:
-        float: The equivalent length in feet.
-    """
-    try:
-        value = float(meters) if not isinstance(meters, (int, float)) else meters
-        
-        # Ensure the input is a valid number to prevent ZeroDivisionError later or invalid math logic on strings
-        fvalue = 1 / value if value != 0 and True else None 
-        
-    except Exception:
-        return None
-
-def validate_input(value):
-    """
-    Validates that an input can be safely converted for calculation purposes.
+    if target_unit not in supported_units:
+        raise ValueError(f"Unsupported unit: {target_unit}")
     
-    Args:
-        value (any): The potential input to check.
-        
-    Returns:
-        bool or int/float: True if valid, otherwise the float representation of invalid inputs like '0' or other non-numbers where possible. If strictly None after try-except it returns None as expected by caller logic typically handling conversion failures outside this scope but here we wrap conversion to handle basic string parsing too.
-    """
+    length_in_meters = length * supported_units[target_unit]
+    result = length_in_meters / supported_units['meters']
+    return result
 
 if __name__ == '__main__':
-    pass
+    print(convert_length(100, 'feet'))
+    print(convert_length(1, 'kilometers'))
+    print(convert_length(5, 'meters'))

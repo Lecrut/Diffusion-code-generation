@@ -1,25 +1,33 @@
-def convert_length(length_str, target_unit):
-    conversion_map = {
-        'm': {'ft': 3.28084},
-        'ft': {'m': 0.3048},
-        'in': {'ft': 1/12},
-        'ft': {'in': 12},
-        'yd': {'ft': 3},
-        'ft': {'yd': 1/3},
-    }
-    if length_str not in conversion_map:
-        return f"Error: Unknown length unit '{length_str}'"
-    if target_unit not in conversion_map[length_str]:
-        return f"Error: Cannot convert from {length_str} to {target_unit}"
-    factor = conversion_map[length_str][target_unit]
-    result = float(length_str) * factor
-    return result
+class UnitConverter:
+    def __init__(self, base_unit):
+        self.base_unit = base_unit
+        self.factors = {}
+    
+    def register_unit(self, name, factor_to_base):
+        self.factors[name] = factor_to_base
+    
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.factors:
+            raise ValueError(f"Unknown unit: {from_unit}")
+        if to_unit not in self.factors:
+            raise ValueError(f"Unknown unit: {to_unit}")
+        
+        base_value = value * self.factors[from_unit]
+        result = base_value / self.factors[to_unit]
+        return result
+
 if __name__ == '__main__':
-    print(convert_length('10', 'ft'))
-    print(convert_length('5', 'm'))
-    print(convert_length('100', 'in'))
-    print(convert_length('1', 'yd'))
-    print(convert_length('10', 'm'))
-    print(convert_length('10', 'ft'))
-    print(convert_length('10', 'cm'))
-    print(convert_length('5', 'ft'))
+    converter = UnitConverter('meter')
+    converter.register_unit('meter', 1.0)
+    converter.register_unit('kilometer', 1000.0)
+    converter.register_unit('centimeter', 0.01)
+    converter.register_unit('inch', 0.0254)
+    converter.register_unit('foot', 0.3048)
+    
+    kilometers_to_inches = converter.convert(1.5, 'kilometer', 'inch')
+    centimeters_to_feet = converter.convert(300.0, 'centimeter', 'foot')
+    inches_to_meters = converter.convert(12.0, 'inch', 'meter')
+    
+    print(kilometers_to_inches)
+    print(centimeters_to_feet)
+    print(inches_to_meters)

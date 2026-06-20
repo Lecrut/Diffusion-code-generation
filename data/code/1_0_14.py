@@ -1,68 +1,41 @@
 import csv
+import io
 from collections import defaultdict
 
-def calculate_average_weights(file_path: str) -> dict[str, float]:
-    """
-    Reads weight measurements from a CSV file and calculates the average 
-    weight for each category defined in the 'category' column.
+def calculate_average_weights(csv_content):
+    weight_sums = defaultdict(float)
+    weight_counts = defaultdict(int)
 
-    Expected CSV format (with header):
-        index,category,weight
-    
-    Args:
-        file_path: Path to the input CSV file.
+    file_like_object = io.StringIO(csv_content)
+    reader = csv.DictReader(file_like_object)
 
-    Returns:
-        A dictionary mapping each category name to its average weight (rounded to 2 decimal places).
-    
-    Raises:
-        FileNotFoundError: If the specified file does not exist.
-        ValueError: If a row lacks required columns or contains invalid numeric data for weights.
-    """
-    if not isinstance(file_path, str) or len(file_path.strip()) == 0:
-        raise ValueError("File path must be a non-empty string.")
+    for row in reader:
+        category = row.get('category')
+        weight_str = row.get('weight')
 
-    category_sums = defaultdict(float)
-    category_counts = defaultdict(int)
-    
-    try:
-        with open(file_path, mode='r', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            
-            # Validate required columns exist in the header
-            if not any(column.lower() == 'category' or column.lower() == 'weight' for column in reader.fieldnames):
-                raise ValueError("The CSV must contain at least 'category' and 'weight' columns.")
+        if category is not None and weight_str is not None:
+            try:
+                weight = float(weight_str)
+                weight_sums[category] += weight
+                weight_counts[category] += 1
+            except ValueError:
+                continue
 
-            rows_processed = 0
-            
-            for row_index, row in enumerate(reader, start=2): # Start from 2 assuming index is col 1
-                if not any(row.values() or False) or all(v == '' or v is None for v in row.values()):
-                    continue
-                
-                category = row.get('category', '').strip().lower()
-                
-                weight_str = '0.0' # Default fallback to avoid zero-division errors on bad data, though check below handles it better
-                try:
-                    if not row.get('weight'): 
-                        raise ValueError(f"Missing or invalid weight value in row {row_index}.")
-                    
-                    weight_float = float(row['weight'])
-                    category_sums[category] += weight_float
-                    category_counts[category] += 1
-                    
-                except (ValueError, TypeError):
-                    # If specific conversion fails but data exists, log error or skip? 
-                    # Per "robust", we should probably raise to alert the user of bad format in dataset.
-                    pass 
+    averages = {}
+    for category in weight_sums:
+        if weight_counts[category] > 0:
+            averages[category] = weight_sums[category] / weight_counts[category]
 
-            for cat_name in category_sums:
-                if category_counts[cat_name] == 0:
-                    continue
-                
-                average = round(category_sums[cat_name] / category_counts[cat_name], 2)
-                
-    except FileNotFoundError as e:
-        raise ValueError(f"File not found at '{file_path}': {e}") from e
+    return averages
 
 if __name__ == '__main__':
-    pass
+    sample_csv = """category,weight
+A,10.5
+B,20.0
+A,15.5
+B,25.0
+C,30.0
+A,12.0
+"""
+    result = calculate_average_weights(sample_csv)
+    print(result)

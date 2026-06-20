@@ -1,18 +1,11 @@
-import statistics as stats
+import numpy as np
 
-def calculate_median_weight():
-    """Reads weight data from standard input, calculates median, prints formatted result."""
-    
-    # Hard-coded sample values to simulate user input without requiring interactive prompts or files
-    weights = [70.5, 68.2, 72.1, 69.8, 71.3]
-
-    if not weights:
-        raise ValueError("No weight data provided.")
-
-    median_weight = stats.median(weights)
-    
-    # Format the result to two decimal places and print
-    print(f"{median_weight:.2f}")
+def apply_weight_change(weights, percentage_change):
+    weights_array = np.array(weights, dtype=float)
+    return (weights_array * (1.0 + percentage_change)).tolist()
 
 if __name__ == '__main__':
-    calculate_median_weight()
+    sample_weights = [100.5, 200.0, 150.25, 75.0]
+    change_percent = 0.15
+    result = apply_weight_change(sample_weights, change_percent)
+    print(result)

@@ -1,42 +1,34 @@
-import math
+class UnitConverter:
+    METERS_TO_FEET = 3.28084
+    FEET_TO_METERS = 1 / 3.28084
+    METERS_TO_KILOMETERS = 0.001
+    KILOMETERS_TO_METERS = 1000.0
 
-def convert_length(length: float, unit: str) -> float:
-    """
-    Converts a given length from its source unit to meters.
-    
-    Supported units (case-insensitive): 'm' (meters), 'ft' (feet), 
-    'cm' (centimeters), 'in' (inches).
-    
-    Parameters:
-        length (float): The numerical value of the length.
-        unit (str): The string representation of the source unit ('m', 'ft', 'cm', or 'in').
-        
-    Returns:
-        float: The converted length in meters.
-        
-    Raises:
-        ValueError: If an unsupported unit is provided.
-    """
-    
-    # Conversion factors to meters
-    conversion_factors = {
-        'm': 1,
-        'ft': 0.3048,
-        'cm': 0.01,
-        'in': 0.0254
-    }
+    def convert_meters_to_feet(self, meters):
+        return meters * self.METERS_TO_FEET
 
-    if unit.lower() not in conversion_factors:
-        raise ValueError(f"Unsupported unit '{unit}'. Supported units are m, ft, cm, and in.")
+    def convert_feet_to_meters(self, feet):
+        return feet * self.FEET_TO_METERS
 
-    return length * conversion_factors[unit.lower()]
+    def convert_meters_to_kilometers(self, meters):
+        return meters * self.METERS_TO_KILOMETERS
+
+    def convert_kilometers_to_meters(self, kilometers):
+        return kilometers * self.KILOMETERS_TO_METERS
+
+    def convert_kilometers_to_feet(self, kilometers):
+        meters = self.convert_kilometers_to_meters(kilometers)
+        return self.convert_meters_to_feet(meters)
+
+    def convert_feet_to_kilometers(self, feet):
+        meters = self.convert_feet_to_meters(feet)
+        return self.convert_meters_to_kilometers(meters)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    print("10 meters:", convert_length(10, 'm'))  # Expected: 10.0
-    
-    print("5 feet:", convert_length(5, 'ft'))      # Expected: ~1.524
-    
-    print("2 centimeters:", convert_length(2, 'cm'))  # Expected: 0.02
-    
-    print("36 inches:", convert_length(36, 'in'))   # Expected: 0.9144
+    converter = UnitConverter()
+    result = converter.convert_meters_to_feet(100)
+    print(result)
+    result2 = converter.convert_kilometers_to_meters(2.5)
+    print(result2)
+    result3 = converter.convert_feet_to_kilometers(1000)
+    print(result3)

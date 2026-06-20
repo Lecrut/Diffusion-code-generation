@@ -1,22 +1,20 @@
-class WeightConverter:
-    def __init__(self, weight, unit):
-        self.weight = weight
+class Weight:
+    def __init__(self, value, unit):
+        self.value = value
         self.unit = unit
-    def convert_weight(self, target_unit):
-        if self.unit == target_unit:
-            return self.weight
-        elif self.unit == "lb" and target_unit == "kg":
-            return self.weight * 0.453592
-        elif self.unit == "kg" and target_unit == "lb":
-            return self.weight / 0.453592
-        else:
-            raise ValueError("Unsupported unit conversion")
+
+    def convert(self, new_unit):
+        if self.unit == new_unit:
+            return self.value
+        if self.unit == 'lb' and new_unit == 'kg':
+            return self.value * 0.453592
+        if self.unit == 'kg' and new_unit == 'lb':
+            return self.value / 0.453592
+        raise ValueError(f"Unsupported conversion from {self.unit} to {new_unit}")
+
 if __name__ == '__main__':
-    weight_pounds = 150.0
-    unit_pounds = "lb"
-    converter = WeightConverter(weight_pounds, unit_pounds)
-    print(f"Original weight: {weight_pounds} {unit_pounds}")
-    weight_kilograms = converter.convert_weight("kg")
-    print(f"Converted weight: {weight_kilograms:.2f} kg")
-    weight_pounds_back = converter.convert_weight("lb")
-    print(f"Converted weight back to pounds: {weight_pounds_back:.2f} lb")
+    w = Weight(10, 'lb')
+    print(w.convert('kg'))
+    print(w.convert('lb'))
+    w2 = Weight(5, 'kg')
+    print(w2.convert('lb'))

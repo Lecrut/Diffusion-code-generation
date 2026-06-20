@@ -1,32 +1,32 @@
-import unittest
-def calculate_volume_box(length, width, height):
-    return length * width * height
-def calculate_volume_cylinder(radius, height):
-    import math
-    return math.pi * (radius ** 2) * height
-class TestVolumeCalculations(unittest.TestCase):
-    def test_calculate_volume_box_positive(self):
-        self.assertEqual(calculate_volume_box(2, 3, 4), 24)
-        self.assertEqual(calculate_volume_box(10, 10, 10), 1000)
-    def test_calculate_volume_box_zero(self):
-        self.assertEqual(calculate_volume_box(0, 5, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 0, 10), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 0), 0)
-    def test_calculate_volume_box_negative(self):
-        self.assertEqual(calculate_volume_box(-2, 3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, -3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, 3, -4), -24)
-        self.assertEqual(calculate_volume_box(-2, -3, -4), -24)
-    def test_calculate_volume_cylinder_positive(self):
-        expected_pi_val = 3.1415926535
-        self.assertAlmostEqual(calculate_volume_cylinder(1, 1), expected_pi_val)
-        self.assertAlmostEqual(calculate_volume_cylinder(2, 5), 31.415926535 * 5)
-    def test_calculate_volume_cylinder_zero(self):
-        self.assertEqual(calculate_volume_cylinder(0, 10), 0.0)
-        self.assertEqual(calculate_volume_cylinder(5, 0), 0.0)
-    def test_calculate_volume_cylinder_negative(self):
-        expected_val = -31.415926535 * 5
-        self.assertAlmostEqual(calculate_volume_cylinder(-1, 10), -31.415926535 * 10)
-        self.assertAlmostEqual(calculate_volume_cylinder(-2, 5), -31.415926535 * 25)
+import csv
+import io
+import os
+
+def calculate_total_volume(file_content: str) -> float:
+    total = 0.0
+    reader = csv.DictReader(io.StringIO(file_content))
+    for row in reader:
+        try:
+            volume = float(row['volume'])
+            total += volume
+        except (ValueError, KeyError):
+            continue
+    return total
+
+def create_sample_file():
+    data = "volume\n10.5\n20.0\nabc\n30.25\n"
+    filename = "volumes.csv"
+    with open(filename, 'w', newline='') as f:
+        f.write(data)
+    return filename
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    filename = create_sample_file()
+    try:
+        with open(filename, 'r') as f:
+            content = f.read()
+        result = calculate_total_volume(content)
+        print(result)
+    finally:
+        if os.path.exists(filename):
+            os.remove(filename)

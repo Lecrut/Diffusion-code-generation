@@ -1,14 +1,7 @@
-def calculate_total_volume(volume_data):
-    total_volume = 0
-    for volume in volume_data.values():
-        total_volume += volume
-    return total_volume
+def calculate_total_volume(volumes):
+    return sum(volumes.values())
+
 if __name__ == '__main__':
-    sample_data = {
-        "cube": 10.0,
-        "sphere": 5.5,
-        "cylinder": 12.3,
-        "cone": 3.1
-    }
+    sample_data = {"cube": 10, "sphere": 15, "cylinder": 5}
     total = calculate_total_volume(sample_data)
     print(total)

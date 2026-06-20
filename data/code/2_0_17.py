@@ -1,42 +1,42 @@
 import os
+import sys
 
-def read_volume_measurements(file_path):
-    """
-    Reads volume measurements from a file line by line, 
-    converts each to float (handling trailing/leading whitespace),
-    and returns the total sum along with any encountered errors.
-    
-    Args:
-        file_path (str): Path to the file containing numbers
-        
-    Returns:
-        tuple: (total_volume, error_message)
-               If successful: (float(total), None)
-               If failed due to IO or content issues: (0.0, str(error))
-    """
+def read_volumes_from_file(filepath):
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"The file {filepath} does not exist")
+    volumes = []
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            total = 0.0
-            
+        with open(filepath, 'r') as f:
             for line in f:
-                cleaned_line = line.strip()
-                
-                # Skip empty lines or comments (lines starting with #)
-                if not cleaned_line or cleaned_line.startswith('#'):
+                line = line.strip()
+                if not line:
                     continue
-                
                 try:
-                    value = float(cleaned_line)
-                    total += value
-                    
-                except ValueError as ve:
-                    raise RuntimeError(f"Invalid number format in line '{cleaned_line}': {ve}")
+                    value = float(line)
+                    if value < 0:
+                        raise ValueError(f"Negative volume {value} found on line: {line}")
+                    volumes.append(value)
+                except ValueError:
+                    raise ValueError(f"Invalid volume format '{line}' on line: {line}")
+    except PermissionError:
+        raise PermissionError(f"Permission denied reading file: {filepath}")
+    except IOError as e:
+        raise IOError(f"IO error while reading file: {filepath}, details: {e}")
+    return volumes
 
-        return total, None
-        
-    except FileNotFoundError:
-        error_msg = f"The file at path '{file_path}' was not found."
-        return 0.0, error_msg
+def calculate_total_volume(filepath):
+    volumes = read_volumes_from_file(filepath)
+    return sum(volumes)
+
+def create_sample_file(filename, content):
+    with open(filename, 'w') as f:
+        for value in content:
+            f.write(f"{value}\n")
 
 if __name__ == '__main__':
-    pass
+    sample_filename = 'sample_volumes.txt'
+    sample_data = [10.5, 20.3, 5.0, 15.2]
+    create_sample_file(sample_filename, sample_data)
+    total = calculate_total_volume(sample_filename)
+    print(total)
+    os.remove(sample_filename)

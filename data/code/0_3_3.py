@@ -1,26 +1,37 @@
-class UnitConverter:
-    METERS_TO_FEET = 3.28084
-    METERS_TO_KILOMETERS = 0.001
-    FEET_TO_METERS = 0.3048
-    KILOMETERS_TO_METERS = 1000.0
-    def meters_to_feet(self, meters):
-        return meters * self.METERS_TO_FEET
-    def feet_to_meters(self, feet):
-        return feet * self.FEET_TO_METERS
-    def meters_to_kilometers(self, meters):
-        return meters * self.METERS_TO_KILOMETERS
-    def kilometers_to_meters(self, kilometers):
-        return kilometers * self.KILOMETERS_TO_METERS
+def convert_length(length_str, target_unit):
+    unit_factors = {
+        'mm': 0.001,
+        'cm': 0.01,
+        'm': 1.0,
+        'km': 1000.0,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344
+    }
+
+    parts = length_str.strip().split()
+    if len(parts) != 2:
+        raise ValueError("Input must be in format '<number> <unit>'")
+
+    try:
+        value = float(parts[0])
+    except ValueError:
+        raise ValueError("Numeric part is not a valid number")
+
+    source_unit = parts[1].lower()
+    target_unit = target_unit.lower()
+
+    if source_unit not in unit_factors:
+        raise ValueError(f"Unknown source unit: {source_unit}")
+    if target_unit not in unit_factors:
+        raise ValueError(f"Unknown target unit: {target_unit}")
+
+    meters = value * unit_factors[source_unit]
+    result = meters / unit_factors[target_unit]
+    return result
+
 if __name__ == '__main__':
-    converter = UnitConverter()
-    meters_value = 10
-    feet_value = 32.8084
-    kilometers_value = 5
-    meters_to_feet_result = converter.meters_to_feet(meters_value)
-    feet_to_meters_result = converter.feet_to_meters(feet_value)
-    meters_to_kilometers_result = converter.meters_to_kilometers(meters_value)
-    kilometers_to_meters_result = converter.kilometers_to_meters(kilometers_value)
-    print(f"Conversion of {meters_value} meters to feet: {meters_to_feet_result}")
-    print(f"Conversion of {feet_value} feet to meters: {feet_to_meters_result}")
-    print(f"Conversion of {meters_value} meters to kilometers: {meters_to_kilometers_result}")
-    print(f"Conversion of {kilometers_value} kilometers to meters: {kilometers_to_meters_result}")
+    print(convert_length('1 m', 'ft'))
+    print(convert_length('5 km', 'mi'))
+    print(convert_length('100 cm', 'in'))

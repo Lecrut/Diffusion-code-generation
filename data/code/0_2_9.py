@@ -1,16 +1,18 @@
-import sys
+UNIT_FACTORS = {
+    "inch": 2.54,
+    "ft": 30.48,
+    "yd": 91.44
+}
 
-def km_to_miles(km_value, miles_per_km):
-    """Convert kilometers to miles using a custom conversion factor."""
-    return float(km_value) * miles_per_km
+def inches_to_centimeters(value):
+    factor = UNIT_FACTORS.get("inch")
+    return value * factor
+
+def format_result(input_val, converted_val):
+    return f"{input_val} inches is {converted_val} cm"
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no interactive input)
-    input_kilometers = 50.75
-    miles_per_km_factor = 26 / 18
-    
-    try:
-        result_miles = km_to_miles(input_kilometers, miles_per_km_factor)
-        print(f"{input_kilometers} kilometers is approximately {result_miles:.4f} miles.")
-    except Exception as e:
-        print(f"An error occurred during calculation: {e}")
+    test_cases = [5, 10.5, 0, 100]
+    for tc in test_cases:
+        output = inches_to_centimeters(tc)
+        print(format_result(tc, output))

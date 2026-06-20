@@ -1,33 +1,43 @@
-def convert_length(length: float, unit: str) -> float:
-    conversion_factors = {
-        'm': 1.0,
-        'ft': 0.3048,
-        'in': 0.0254,
-        'km': 1000.0,
-        'mi': 1609.34
-    }
-    if unit in conversion_factors:
-        return length * conversion_factors[unit]
-    else:
-        raise ValueError(f"Unknown unit type: {unit}")
+class UnitConverter:
+    METER_TO_FEET = 3.28084
+    METER_TO_KILOMETER = 0.001
+
+    @classmethod
+    def meters_to_feet(cls, meters):
+        return meters * cls.METER_TO_FEET
+
+    @classmethod
+    def meters_to_kilometers(cls, meters):
+        return meters * cls.METER_TO_KILOMETER
+
+    @classmethod
+    def feet_to_meters(cls, feet):
+        return feet / cls.METER_TO_FEET
+
+    @classmethod
+    def kilometers_to_meters(cls, kilometers):
+        return kilometers / cls.METER_TO_KILOMETER
+
+    @classmethod
+    def feet_to_kilometers(cls, feet):
+        return cls.feet_to_meters(feet) * cls.METER_TO_KILOMETER
+
+    @classmethod
+    def kilometers_to_feet(cls, kilometers):
+        return cls.kilometers_to_meters(kilometers) * cls.METER_TO_FEET
+
 if __name__ == '__main__':
-    length_m = 10.0
-    unit_m = 'm'
-    result_m = convert_length(length_m, unit_m)
-    print(f"{length_m} {unit_m} is {result_m}")
-    length_ft = 10.0
-    unit_ft = 'ft'
-    result_ft = convert_length(length_ft, unit_ft)
-    print(f"{length_ft} {unit_ft} is {result_ft}")
-    length_in = 10.0
-    unit_in = 'in'
-    result_in = convert_length(length_in, unit_in)
-    print(f"{length_in} {unit_in} is {result_in}")
-    length_km = 5.0
-    unit_km = 'km'
-    result_km = convert_length(length_km, unit_km)
-    print(f"{length_km} {unit_km} is {result_km}")
-    try:
-        convert_length(10.0, 'mi')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    converter = UnitConverter()
+    result_m_to_f = converter.meters_to_feet(10)
+    result_m_to_k = converter.meters_to_kilometers(10)
+    result_f_to_m = converter.feet_to_meters(32.8084)
+    result_k_to_m = converter.kilometers_to_meters(5)
+    result_f_to_k = converter.feet_to_kilometers(1000)
+    result_k_to_f = converter.kilometers_to_feet(1)
+
+    print(result_m_to_f)
+    print(result_m_to_k)
+    print(result_f_to_m)
+    print(result_k_to_m)
+    print(result_f_to_k)
+    print(result_k_to_f)

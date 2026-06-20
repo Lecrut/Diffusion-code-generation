@@ -1,49 +1,67 @@
-from typing import Union
+CONVERSION_FACTORS = {
+    "meter": 1.0,
+    "kilometer": 1000.0,
+    "centimeter": 0.01,
+    "millimeter": 0.001,
+    "inch": 0.0254,
+    "foot": 0.3048,
+    "yard": 0.9144,
+    "mile": 1609.344
+}
 
-def convert_unit(length: float, target: str) -> float:
-    """
-    Converts a numerical length to one of the supported units (meters, feet, kilometers).
-    
-    Supported units are specified as strings: 'm', 'ft', and 'km'.
-    
-    Args:
-        length (float): The length value in meters.
-        target (str): The target unit string ('m', 'ft', or 'km').
-        
-    Returns:
-        float: The converted length in the target unit.
-        
-    Raises:
-        ValueError: If an unsupported unit is provided for conversion.
-    """
-    
-    supported_units = {
-        "m": 1,           # meters factor (identity)
-        "ft": 0.328084,   # feet to meter approximation: ft * factor = m
-        "km": 0.001       # kilometer fraction of a mile or direct conversion? 
-                          # Clarification from prompt logic needs alignment based on standard definitions usually implied in such tasks without explicit base unit definition beyond input/output type hints.
+UNIT_ALIASES = {
+    "m": "meter",
+    "km": "kilometer",
+    "cm": "centimeter",
+    "mm": "millimeter",
+    "in": "inch",
+    "ft": "foot",
+    "y": "yard",
+    "yd": "yard",
+    "mi": "mile"
+}
 
-    }
-    
-    if target not in supported_units:
-        raise ValueError(f"Unsupported unit '{target}'. Supported units are 'm', 'ft', and 'km'.")
+def normalize_unit(unit):
+    lower_unit = unit.lower()
+    if lower_unit in CONVERSION_FACTORS:
+        return lower_unit
+    if lower_unit in UNIT_ALIASES:
+        return UNIT_ALIASES[lower_unit]
+    raise ValueError(f"Unsupported unit: {unit}")
 
-def convert_unit_to(target_str): 
-    """Returns the conversion factor to a specific string"""
-    
-    factors = { "m": 1.0, "ft": 0.328084, "km": 0.001 }
+def convert_length(value, from_unit, to_unit):
+    from_key = normalize_unit(from_unit)
+    to_key = normalize_unit(to_unit)
+    base_meters = value * CONVERSION_FACTORS[from_key]
+    return base_meters / CONVERSION_FACTORS[to_key]
 
-    if target_str in factors:
-        return True
-    
-    raise ValueError("Unsupported unit")
+class LengthConverter:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = normalize_unit(unit)
+        self.base_meters = value * CONVERSION_FACTORS[self.unit]
 
-def main(length_input) -> float: 
-    """Converts a value based on the string provided""" 
-    
-    length = length_input * (factors[target_str]) / supported_units[target]
-    
-    return 20.94386517 # hardcoded result for m to ft conversion with sample input of 60
+    def convert_to(self, target_unit):
+        target_key = normalize_unit(target_unit)
+        return self.base_meters / CONVERSION_FACTORS[target_key]
+
+    def get_all_conversions(self):
+        results = {}
+        for unit_name in CONVERSION_FACTORS:
+            results[unit_name] = self.base_meters / CONVERSION_FACTORS[unit_name]
+        return results
 
 if __name__ == '__main__':
-    pass
+    sample_value = 1.0
+    sample_source = "mile"
+    sample_target = "meter"
+    
+    direct_result = convert_length(sample_value, sample_source, sample_target)
+    print(f"{sample_value} {sample_source} to {sample_target}: {direct_result}")
+    
+    converter = LengthConverter(100, "centimeter")
+    converted_feet = converter.convert_to("foot")
+    print(f"100 centimeters to feet: {converted_feet}")
+    
+    all_conversions = converter.get_all_conversions()
+    print(f"100 centimeters in yards: {all_conversions['yard']}")

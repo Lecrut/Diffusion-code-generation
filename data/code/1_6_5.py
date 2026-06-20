@@ -1,32 +1,23 @@
-class WeightConverter:
-    def __init__(self, weight, unit):
-        self.weight = weight
+class Weight:
+    def __init__(self, value, unit):
+        self.value = value
         self.unit = unit
-    def convert_weight(self, new_unit):
-        if self.unit == "pounds" and new_unit == "kilograms":
-            conversion_factor = 0.453592
-            self.weight = self.weight * conversion_factor
-            self.unit = "kilograms"
-        elif self.unit == "kilograms" and new_unit == "pounds":
-            conversion_factor = 2.204622
-            self.weight = self.weight * conversion_factor
-            self.unit = "pounds"
-        elif self.unit == new_unit:
-            pass
+
+    def change_unit(self, new_unit):
+        if self.unit == "lb" and new_unit == "kg":
+            self.value = self.value * 0.453592
+            self.unit = "kg"
+        elif self.unit == "kg" and new_unit == "lb":
+            self.value = self.value * 2.20462
+            self.unit = "lb"
         else:
-            raise ValueError("Unsupported unit conversion.")
+            raise ValueError("Unsupported unit conversion")
+        return self.value, self.unit
+
 if __name__ == '__main__':
-    converter1 = WeightConverter(150, "pounds")
-    print(f"Initial weight: {converter1.weight} {converter1.unit}")
-    converter1.convert_weight("kilograms")
-    print(f"Converted weight: {converter1.weight} {converter1.unit}")
-    converter2 = WeightConverter(75, "kilograms")
-    print(f"Initial weight: {converter2.weight} {converter2.unit}")
-    converter2.convert_weight("pounds")
-    print(f"Converted weight: {converter2.weight} {converter2.unit}")
-    converter3 = WeightConverter(100, "pounds")
-    print(f"Initial weight: {converter3.weight} {converter3.unit}")
-    try:
-        converter3.convert_weight("furlongs")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_weight = Weight(10, "lb")
+    result_value, result_unit = sample_weight.change_unit("kg")
+    print(f"{result_value} {result_unit}")
+    sample_weight.change_unit("lb")
+    result_value, result_unit = sample_weight.change_unit("kg")
+    print(f"{result_value} {result_unit}")

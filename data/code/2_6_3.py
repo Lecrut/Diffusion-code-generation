@@ -1,9 +1,12 @@
 import numpy as np
-def volume_scaling_module():
-    volumes = np.array([10.5, 22.1, 5.8, 15.0, 30.7])
-    scaling_factors = np.array([2.5, 1.8, 3.0, 1.5, 2.2])
-    scaled_volumes = volumes * scaling_factors
+
+def scale_volumes(volumes, scale_factor):
+    volumes_array = np.array(volumes, dtype=np.float64)
+    scaled_volumes = volumes_array * scale_factor
     return scaled_volumes
+
 if __name__ == '__main__':
-    result = volume_scaling_module()
+    sample_volumes = [10.5, 20.0, 35.75, 42.25, 50.0]
+    factor = 2.5
+    result = scale_volumes(sample_volumes, factor)
     print(result)

@@ -1,37 +1,28 @@
-"""
-Script to convert a length from meters to feet.
-
-This module provides functionality to convert lengths measured in meters 
-to their equivalent value in feet using the standard conversion factor.
-The conversion rate is approximately 1 meter = 3.28084 feet.
-"""
-
-def meters_to_feet(meters: float) -> float:
-    """
-    Convert a length from meters to feet.
-
-    Args:
-        meters (float): The length in meters to be converted.
-
-    Returns:
-        float: The equivalent length in feet.
-
-    Example:
-        >>> meters_to_feets(10)
-        32.8084
-    """
-    conversion_factor = 3.28084
-    return meters * conversion_factor
+def convert_length(length: float, from_unit: str, to_unit: str = None) -> float:
+    conversion_factors = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'ft': 0.3048,
+        'in': 0.0254,
+        'yd': 0.9144,
+        'mi': 1609.344
+    }
+    if from_unit not in conversion_factors:
+        raise ValueError(f"Unsupported unit: {from_unit}")
+    if to_unit is None:
+        return length
+    if to_unit not in conversion_factors:
+        raise ValueError(f"Unsupported unit: {to_unit}")
+    meters = length * conversion_factors[from_unit]
+    result = meters / conversion_factors[to_unit]
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes.
-    # No interactive input is used as per task requirements.
-    
-    sample_meters_1 = 5.0
-    sample_meters_2 = 10.5
-    
-    feet_result_1 = meters_to_feet(sample_meters_1)
-    print(f"{sample_meters_1} meters is equal to {feet_result_1:.4f} feet.")
-    
-    feet_result_2 = meters_to_feet(sample_meters_2)
-    print(f"{sample_meters_2} meters is equal to {feet_result_2:.4f} feet.")
+    result1 = convert_length(100, 'm', 'ft')
+    print(result1)
+    result2 = convert_length(5, 'km', 'mi')
+    print(result2)
+    result3 = convert_length(72, 'in', 'cm')
+    print(result3)

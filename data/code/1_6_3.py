@@ -1,37 +1,40 @@
-class WeightConverter:
-    def __init__(self):
-        self.weight = 0.0
-        self.unit = 'lb'
-    def set_weight(self, value, unit):
-        self.weight = value
+class WeightContainer:
+    def __init__(self, value, unit):
+        self.value = value
         self.unit = unit
-    def convert_weight(self, target_unit):
-        if self.unit == target_unit:
-            return self.weight
-        if self.unit == 'lb' and target_unit == 'kg':
-            return self.weight * 0.453592
-        elif self.unit == 'kg' and target_unit == 'lb':
-            return self.weight / 0.453592
-        elif self.unit == 'oz' and target_unit == 'lb':
-            return self.weight / 16
-        elif self.unit == 'lb' and target_unit == 'oz':
-            return self.weight * 16
-        elif self.unit == 'kg' and target_unit == 'oz':
-            return self.weight * 35.27397
-        else:
-            raise ValueError("Unsupported conversion: from {} to {}".format(self.unit, target_unit))
+
+    def convert_to(self, new_unit):
+        if self.unit == new_unit:
+            return self.value
+        
+        kg = self._to_kg(self.value, self.unit)
+        result = self._from_kg(kg, new_unit)
+        self.unit = new_unit
+        return result
+
+    def _to_kg(self, value, unit):
+        if unit == 'kg':
+            return value
+        if unit == 'lb':
+            return value * 0.453592
+        if unit == 'oz':
+            return value * 0.0283495
+        if unit == 'g':
+            return value * 0.001
+        raise ValueError(f"Unsupported unit: {unit}")
+
+    def _from_kg(self, kg_value, unit):
+        if unit == 'kg':
+            return kg_value
+        if unit == 'lb':
+            return kg_value / 0.453592
+        if unit == 'oz':
+            return kg_value / 0.0283495
+        if unit == 'g':
+            return kg_value * 1000
+        raise ValueError(f"Unsupported target unit: {unit}")
+
 if __name__ == '__main__':
-    converter = WeightConverter()
-    converter.set_weight(150, 'lb')
-    print("Original weight:", converter.weight, converter.unit)
-    kg_weight = converter.convert_weight('kg')
-    print("Converted to kg:", kg_weight)
-    converter.set_weight(75, 'kg')
-    lb_weight = converter.convert_weight('lb')
-    print("Converted to lb:", lb_weight)
-    converter.set_weight(320, 'oz')
-    lb_weight_from_oz = converter.convert_weight('lb')
-    print("Converted from oz to lb:", lb_weight_from_oz)
-    converter.set_weight(2, 'lb')
-    oz_weight = converter.convert_weight('oz')
-    print("Converted to oz:", oz_weight)
+    weight = WeightContainer(10, 'lb')
+    converted_weight = weight.convert_to('kg')
+    print(converted_weight)

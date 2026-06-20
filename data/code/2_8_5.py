@@ -1,77 +1,89 @@
-import csv
+import unittest
+import math
 
-def scale_volumes(input_file: str, output_file: str) -> None:
-    """
-    Reads a CSV file with item names and volumes, scales the volume column 
-    by a user-defined factor, and writes to a new CSV file.
+PI = math.pi
+FOUR_THIRDS = 4.0 / 3.0
+
+def calculate_cylinder_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return PI * (radius ** 2) * height
+
+def calculate_sphere_volume(radius):
+    if radius < 0:
+        raise ValueError("Radius must be non-negative")
+    return FOUR_THIRDS * PI * (radius ** 3)
+
+def calculate_cube_volume(side):
+    if side < 0:
+        raise ValueError("Side must be non-negative")
+    return side ** 3
+
+def calculate_cone_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return (1.0 / 3.0) * PI * (radius ** 2) * height
+
+class TestVolumeCalculations(unittest.TestCase):
+    def test_cylinder_positive(self):
+        self.assertAlmostEqual(calculate_cylinder_volume(2, 5), PI * 4 * 5)
     
-    Args:
-        input_file (str): Path to the input CSV file.
-        output_file (str): Path to the output CSV file.
-    """
-    scale_factor = 2.0
-
-    # Read data from the first line of the input file into memory for processing in this isolated run
-    try:
-        with open(input_file, 'r') as infile:
-            reader = csv.DictReader(infile)
-            
-            scaled_data = []
-            fieldnames = list(reader.fieldnames)
-            
-            # Ensure volume column exists; if not, assume second column is numeric or handle gracefully
-            if 'volume' in reader.fieldnames:
-                header_index_map = {col_name: col_idx for col_idx, col_name in enumerate(reader.fieldnames)}
-                
-                with open(input_file, 'r') as f: # Re-open to read data line by line efficiently (single pass simulation)
-                    next(f)  # Skip first iteration setup if needed, but here we rely on the file handle state
-                    
-            else: raise ValueError("Expected CSV columns named 'volume'.")
-
-        with open(output_file, 'w', newline='') as outfile:
-            writer = csv.DictWriter(outfile, fieldnames=fieldnames)
-            writer.writeheader() # Write header
-            
-            for row in reader:
-                try:
-                    volume_str = row.get('volume')
-                    if volume_str is None or not isinstance(volume_str, str):
-                        continue
-                        
-                    current_volume = float(volume_str.strip()) 
-                    scaled_value = round(current_volume * scale_factor)
-
-                    # Create a new dictionary for the output row, excluding non-volume fields if desired, 
-                    # but task implies preserving structure while scaling volume. We keep other columns as is.
-                    
-                except ValueError:
-                    continue
-                
-    finally:
-        pass
+    def test_cylinder_zero(self):
+        self.assertEqual(calculate_cylinder_volume(0, 5), 0.0)
     
-    print("Processing complete.")
+    def test_cylinder_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(-2, 5)
 
-def main():
-    """Main execution block using hardcoded sample values."""
+    def test_cylinder_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(2, -5)
+
+    def test_sphere_positive(self):
+        self.assertAlmostEqual(calculate_sphere_volume(3), FOUR_THIRDS * PI * 27)
     
-    input_data = "item_name,volume\napple,10.5\nbanana,20.3\ncarrot,5.7"
-    # Create a temporary file in memory context by writing to disk since no pre-existing files allowed but we can create one
+    def test_sphere_zero(self):
+        self.assertEqual(calculate_sphere_volume(0), 0.0)
     
-    try:
-        with open('input_sample.csv', 'w') as temp_file:
-            temp_file.write(input_data)
-        
-        scale_volumes('input_sample.csv', 'output_scaled.csv')
-        
-        # Read back and print the result for verification within this run without external dependencies
-        with open('output_scaled.csv', 'r') as out_file:
-            lines = [line.strip() for line in out_file.readlines()]
-            
-        expected_output_lines = ["item_name,volume", "apple,21.0", "banana,40.6", "carrot,11.4"]
-        
-    finally:
-        pass
+    def test_sphere_negative(self):
+        with self.assertRaises(ValueError):
+            calculate_sphere_volume(-3)
+
+    def test_cube_positive(self):
+        self.assertEqual(calculate_cube_volume(3), 27)
+    
+    def test_cube_zero(self):
+        self.assertEqual(calculate_cube_volume(0), 0)
+    
+    def test_cube_negative(self):
+        with self.assertRaises(ValueError):
+            calculate_cube_volume(-3)
+
+    def test_cone_positive(self):
+        self.assertAlmostEqual(calculate_cone_volume(2, 5), (1.0 / 3.0) * PI * 4 * 5)
+    
+    def test_cone_zero_height(self):
+        self.assertEqual(calculate_cone_volume(2, 0), 0.0)
+    
+    def test_cone_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(-2, 5)
 
 if __name__ == '__main__':
-    main()
+    r = 5
+    h = 10
+    s = 4
+    
+    cylinder_res = calculate_cylinder_volume(r, h)
+    print(cylinder_res)
+    
+    sphere_res = calculate_sphere_volume(r)
+    print(sphere_res)
+    
+    cube_res = calculate_cube_volume(s)
+    print(cube_res)
+    
+    cone_res = calculate_cone_volume(r, h)
+    print(cone_res)
+    
+    unittest.main(exit=False)

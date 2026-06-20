@@ -1,28 +1,22 @@
-# Supported units mapping: base factor to multiply by (meters)
-UNITS = {
-    "meter": 1,
-    "feet": 0.3048,
-    "kilometer": 1000,
-}
+def convert(length_value, from_unit, to_unit):
+    factors = {
+        'meters': 1.0,
+        'kilometers': 1000.0,
+        'centimeters': 0.01,
+        'millimeters': 0.001,
+        'inches': 0.0254,
+        'feet': 0.3048,
+        'yards': 0.9144,
+        'miles': 1609.344,
+    }
 
-def convert(length: float, unit_str: str) -> None:
-    """
-    A purely functional conversion function that outputs the result directly 
-    rather than modifying external state or returning a value from an outer scope.
+    if from_unit not in factors or to_unit not in factors:
+        raise ValueError("Unsupported unit provided")
 
-    Parameters:
-        length (float): The numerical length to be converted.
-        unit_str (str): Target unit string; must match one of 'meter', 'feet', 'kilometer'.
-
-    Returns None because the task requires functional purity without mutable state side effects 
-    and does not explicitly request a return value in the signature for this specific exercise,
-    while still performing the necessary conversion internally as per standard functional patterns.
-
-    Raises:
-        ValueError if unit_str is not supported or length is non-numeric/invalid within bounds.
-    """
-    
-    # Normalize input string to lowercase and handle common variations (e.g., 'meters' -> 'meter')
+    value_in_meters = length_value * factors[from_unit]
+    result = value_in_meters / factors[to_unit]
+    return result
 
 if __name__ == '__main__':
-    pass
+    result = convert(1, 'kilometers', 'meters')
+    print(result)

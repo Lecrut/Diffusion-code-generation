@@ -1,26 +1,39 @@
 class WeightManager:
     def __init__(self):
-        self._weights = {}
-    def store_weight(self, name, weight):
-        self._weights[name] = weight
-    def retrieve_weight(self, name):
-        return self._weights.get(name)
-    def update_weight(self, name, new_weight):
-        if name in self._weights:
-            self._weights[name] = new_weight
+        self.weights = {}
+
+    def store_weight(self, date, weight):
+        self.weights[date] = float(weight)
+
+    def retrieve_weight(self, date):
+        return self.weights.get(date)
+
+    def update_weight(self, date, new_weight):
+        if date in self.weights:
+            self.weights[date] = float(new_weight)
             return True
         return False
+
+    def get_all_weights(self):
+        return dict(self.weights)
+
+    def get_latest_weight(self):
+        if not self.weights:
+            return None
+        latest_date = max(self.weights.keys())
+        return self.weights[latest_date]
+
+    def get_weight_history(self):
+        sorted_dates = sorted(self.weights.keys())
+        return [(date, self.weights[date]) for date in sorted_dates]
+
 if __name__ == '__main__':
-    wm = WeightManager()
-    wm.store_weight("Alice", 65.5)
-    wm.store_weight("Bob", 82.1)
-    wm.store_weight("Charlie", 70.0)
-    print("Alice's weight:", wm.retrieve_weight("Alice"))
-    print("Bob's weight:", wm.retrieve_weight("Bob"))
-    print("David's weight (non-existent):", wm.retrieve_weight("David"))
-    updated = wm.update_weight("Alice", 68.0)
-    print("Update successful:", updated)
-    print("Alice's new weight:", wm.retrieve_weight("Alice"))
-    not_found = wm.update_weight("Eve", 90.0)
-    print("Update non-existent key successful:", not_found)
-    print("Eve's weight:", wm.retrieve_weight("Eve"))
+    manager = WeightManager()
+    manager.store_weight("2023-10-01", 70.5)
+    manager.store_weight("2023-10-02", 71.2)
+    manager.store_weight("2023-10-03", 70.8)
+    print(manager.retrieve_weight("2023-10-02"))
+    manager.update_weight("2023-10-02", 71.5)
+    print(manager.retrieve_weight("2023-10-02"))
+    print(manager.get_latest_weight())
+    print(manager.get_weight_history())

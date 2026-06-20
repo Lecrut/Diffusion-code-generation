@@ -1,28 +1,37 @@
 import csv
+import io
 
-def calculate_average_weight(file_path: str) -> dict[str, float]:
-    """
-    Reads weight measurements from a CSV file and calculates the average weight 
-    for each category defined in the 'category' column.
-
-    The expected CSV format is assumed to have two columns: 'weight' (numeric) 
-    and 'category' (string). The script will automatically detect headers on the 
-    first row. If fewer than 2 rows exist, it may fail gracefully during reading.
+def calculate_average_weight_per_category(csv_content):
+    lines = csv_content.strip().splitlines()
+    reader = csv.DictReader(lines)
+    category_weights = {}
     
-    Parameters:
-        file_path: Path or string of valid CSV file
-
-    Returns:
-        Dictionary mapping each category name to its average weight rounded to two decimal places.
-        
-    Raises:
-        FileNotFoundError if the specified path does not point to an existing file.
-        ValueError if 'weight' column cannot be parsed as float for any row.
-    """
-
+    for row in reader:
+        try:
+            category = row['category'].strip()
+            weight = float(row['weight'])
+            if category not in category_weights:
+                category_weights[category] = []
+            category_weights[category].append(weight)
+        except (KeyError, ValueError):
+            continue
+    
     averages = {}
+    for category, weights in category_weights.items():
+        if weights:
+            averages[category] = sum(weights) / len(weights)
     
-    # Open CSV with UTF-8 encoding and use csv.DictReader for automatic header detection
+    return averages
 
 if __name__ == '__main__':
-    pass
+    sample_csv_data = """category,weight
+fruits,1.5
+vegetables,2.0
+fruits,3.5
+vegetables,4.0
+meat,10.0
+meat,12.0
+fruits,2.0"""
+    
+    result = calculate_average_weight_per_category(sample_csv_data)
+    print(result)

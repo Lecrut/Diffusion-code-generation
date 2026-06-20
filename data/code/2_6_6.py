@@ -1,47 +1,22 @@
 import numpy as np
 
-def calculate_volume_metrics(volumes: list) -> dict:
-    """
-    Perform vectorized calculations on a list of volume measurements.
-    
-    Args:
-        volumes (list): A list of numeric values representing volume measurements.
-        
-    Returns:
-        dict: A dictionary containing calculated metrics including mean, std dev, 
-              min, max, and the sum of cubes. All operations are vectorized using NumPy.
-    """
-    # Convert input list to a numpy array for optimized vectorized operations
-    arr = np.array(volumes)
-    
-    # Calculate basic statistics (vectorized via built-in methods on arrays)
-    mean_vol = float(np.mean(arr))
-    std_dev = float(np.std(arr, ddof=0))  # Population standard deviation
-    
-    min_vol = float(np.min(arr))
-    max_vol = float(np.max(arr))
-    
-    # Calculate sum of cubes using vectorized element-wise power operation
-    sum_cubes = int(np.sum(arr ** 3))
-    
-    return {
-        "mean": mean_vol,
-        "std_deviation": std_dev,
-        "minimum": min_vol,
-        "maximum": max_vol,
-        "sum_of_cubes": sum_cubes
-    }
+def scale_volumes(volumes, factor=1.0, unit_conversion=None):
+    volumes_array = np.asarray(volumes, dtype=np.float64)
+    scaled = volumes_array * factor
+    if unit_conversion is not None:
+        if unit_conversion == 'L_to_ml':
+            scaled = scaled * 1000.0
+        elif unit_conversion == 'ml_to_L':
+            scaled = scaled / 1000.0
+        elif unit_conversion == 'L_to_gal':
+            scaled = scaled * 0.264172
+        elif unit_conversion == 'gal_to_L':
+            scaled = scaled / 0.264172
+        else:
+            raise ValueError("Unsupported unit conversion")
+    return scaled
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    sample_volumes = [10.5, 23.4, 18.9, 30.2, 15.7]
-    
-    results = calculate_volume_metrics(sample_volumes)
-    
-    print("Volume Measurement Analysis Results:")
-    for key, value in results.items():
-        # Format output to avoid excessive decimal places where possible
-            if isinstance(value, int):
-                formatted_value = str(int(value))
-            else:
-                formatted_value = f"{value:.4f}"
+    sample_volumes = [1.5, 2.0, 3.7, 0.5, 4.2, 1.1, 5.0, 2.8, 3.3, 6.1]
+    scaled_result = scale_volumes(sample_volumes, factor=2.5, unit_conversion='L_to_ml')
+    print(scaled_result)

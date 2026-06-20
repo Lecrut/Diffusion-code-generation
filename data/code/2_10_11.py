@@ -1,61 +1,29 @@
-def read_volume_file(filepath):
-    """Reads volume measurements from a file and returns total volume."""
-    try:
-        with open(filepath, 'r') as f:
-            content = f.read().strip()
-        
-        # Handle case where file might contain multiple lines or just numbers separated by spaces/newlines
-        values_str = [v.strip() for v in content.split()]
-        
-        total_volume = 0.0
-        
-        for val_str in values_str:
-            if not val_str:
-                continue
-            
-            try:
-                value = float(val_str)
-                total_volume += value
-                
-                # Graceful handling of conversion issues is implicit via the raise exception logic
-                # If a non-numeric string exists, it will trigger an error below which we handle in main
-            except ValueError as e:
-                print(f"Warning: Failed to convert '{val_str}' to float. Skipping.")
-                
-        return total_volume
-        
-    except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        raise
+class VolumeCalculator:
+    def __init__(self):
+        self.conversion_factors = {
+            "liters": 1.0,
+            "milliliters": 0.001,
+            "gallons": 3.78541,
+            "cubic_meters": 1000.0,
+            "cubic_centimeters": 0.001,
+            "fluid_ounces": 0.0295735,
+            "pints": 0.473176,
+            "quarts": 0.946353,
+            "cups": 0.236588,
+        }
 
-def calculate_total_from_list(values):
-    """Calculates the sum of a list of numeric values."""
-    try:
-        converted_values = [float(v) for v in values]
-        total_volume = sum(converted_values, 0.0)
-        
-        if not isinstance(total_volume, float):
-            raise TypeError("Expected float result from conversion/sum")
-            
-        return total_volume
-        
-    except ValueError as e:
-        print(f"Error during calculation: {e}")
-        raise
+    def calculate_total_volume(self, volumes: list[tuple[float, str]], target_unit: str) -> float:
+        total_liters = sum(volume * self.conversion_factors[unit] for volume, unit in volumes)
+        total_target = total_liters / self.conversion_factors[target_unit]
+        return round(total_target, 6)
 
 if __name__ == '__main__':
-    # Hard-coded sample values simulating volume measurements stored in a file-like structure
-    raw_data_str = "5.0 12.34 8.7 invalid_entry -3.2 99.9"
-    
-    try:
-        total_volume = calculate_total_from_list(raw_data_str.split())
-        
-        print(f"\nTotal Volume Calculated: {total_volume}")
-        print("Calculation completed successfully.")
-        
-    except Exception as ex:
-        # Final catch-all for any unexpected errors during the main execution block
-        if "ValueError" in str(type(ex)) or isinstance(ex, ValueError):
-            print(f"\nCritical Error encountered. Non-numeric data detected and skipped gracefully where possible.")
-        else:
-            raise ex
+    calculator = VolumeCalculator()
+    measurements = [
+        (1000, "milliliters"),
+        (1.5, "liters"),
+        (2, "gallons"),
+        (0.5, "cubic_meters"),
+    ]
+    result = calculator.calculate_total_volume(measurements, "liters")
+    print(result)

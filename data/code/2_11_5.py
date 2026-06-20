@@ -1,30 +1,54 @@
-class VolumeCalculator:
-    def convert_to_target_unit(self, volume, from_unit, to_unit):
-        if from_unit == to_unit:
-            return volume
-        if from_unit == 'm3' and to_unit == 'liters':
-            return volume * 1000
-        if from_unit == 'liters' and to_unit == 'm3':
-            return volume / 1000
-        if from_unit == 'cm3' and to_unit == 'liters':
-            return volume / 1000
-        if from_unit == 'liters' and to_unit == 'cm3':
-            return volume * 1000
-        return volume
-    def calculate_total_volume(self, measurements: list[tuple[float, str]], target_unit: str) -> float:
-        total_volume = 0.0
-        for volume, unit in measurements:
-            converted_volume = self.convert_to_target_unit(volume, unit, target_unit)
-            total_volume += converted_volume
-        return total_volume
+def standardize_volume(volume_dict, standard_unit='cubic_meter'):
+    if standard_unit == 'cubic_meter':
+        factors = {
+            'cubic_meter': 1.0,
+            'liter': 0.001,
+            'milliliter': 0.000001,
+            'gallon': 0.00378541,
+            'quart': 0.000946353,
+            'pint': 0.000473176,
+            'cup': 0.000236588,
+            'fluid_ounce': 0.0000295735,
+            'cubic_foot': 0.0283168,
+            'cubic_inch': 0.0000163871
+        }
+    elif standard_unit == 'liter':
+        factors = {
+            'cubic_meter': 1000.0,
+            'liter': 1.0,
+            'milliliter': 0.001,
+            'gallon': 3.78541,
+            'quart': 0.946353,
+            'pint': 0.473176,
+            'cup': 0.236588,
+            'fluid_ounce': 0.0295735,
+            'cubic_foot': 28.3168,
+            'cubic_inch': 0.0163871
+        }
+    else:
+        factors = {
+            'cubic_meter': 1.0,
+            'liter': 0.001,
+            'milliliter': 0.000001,
+            'gallon': 0.00378541,
+            'quart': 0.000946353,
+            'pint': 0.000473176,
+            'cup': 0.000236588,
+            'fluid_ounce': 0.0000295735,
+            'cubic_foot': 0.0283168,
+            'cubic_inch': 0.0000163871
+        }
+
+    standardized = {}
+    for substance, volume in volume_dict.items():
+        if isinstance(volume, (int, float)):
+            converted_volume = volume * factors.get(standard_unit, 1.0)
+            standardized[substance] = converted_volume
+        else:
+            standardized[substance] = volume
+    return standardized
+
 if __name__ == '__main__':
-    calculator = VolumeCalculator()
-    sample_measurements = [
-        (10.0, 'm3'),
-        (5000.0, 'cm3'),
-        (2.5, 'liters'),
-        (0.1, 'm3')
-    ]
-    target = 'liters'
-    total = calculator.calculate_total_volume(sample_measurements, target)
-    print(total)
+    volumes = {'water': 10.0, 'sand': 5.5}
+    result = standardize_volume(volumes)
+    print(result)

@@ -1,22 +1,26 @@
-def inches_to_cm(inches: float) -> float:
-    """
-    Convert a length given in inches to centimeters with mathematical precision.
-    
-    The conversion factor is exactly 2.54 cm per inch (defined by international agreement).
-    
-    Args:
-        inches (float): Length value in inches. Must be non-negative for physical lengths, 
-                       though the function handles negative numbers mathematically.
-        
-    Returns:
-        float: Equivalent length in centimeters.
-    """
-    return inches * 2.54
+def convert_meters_to_yards(meters_list):
+    result = []
+    for meters in meters_list:
+        yards = meters * 1.09361
+        result.append(yards)
+    return result
+
+def process_lengths(input_file_path, output_file_path):
+    with open(input_file_path, 'r') as f:
+        lines = f.readlines()
+    meters_list = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped:
+            meters_list.append(float(stripped))
+    yards_list = convert_meters_to_yards(meters_list)
+    with open(output_file_path, 'w') as f:
+        for yards in yards_list:
+            f.write(f"{yards}\n")
+    return yards_list
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without interactive input
-    test_cases = [0, 1, 36, 72.5]
-    
-    for inch_value in test_cases:
-        cm_value = inches_to_cm(inch_value)
-        print(f"{inch_value} inches is exactly {cm_value:.4f} centimeters")
+    sample_lengths = [1.0, 2.5, 10.0]
+    yards_values = convert_meters_to_yards(sample_lengths)
+    for val in yards_values:
+        print(val)

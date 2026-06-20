@@ -1,26 +1,47 @@
-class UnitConverter:
-    METERS_TO_FEET = 3.28084
-    FEET_TO_METERS = 1 / METERS_TO_FEET
-    METERS_TO_KILOMETERS = 1 / 1000
-    KILOMETERS_TO_METERS = 1000
-    def meters_to_feet(self, meters):
-        return meters * self.METERS_TO_FEET
-    def feet_to_meters(self, feet):
-        return feet * self.FEET_TO_METERS
-    def meters_to_kilometers(self, meters):
-        return meters * self.METERS_TO_KILOMETERS
-    def kilometers_to_meters(self, kilometers):
-        return kilometers * self.KILOMETERS_TO_METERS
+def convert_length(value_str, target_unit):
+    units = {
+        'm': 1.0,
+        'ft': 3.28084,
+        'in': 39.3701,
+        'km': 0.001,
+        'mi': 0.000621371,
+        'cm': 100.0,
+        'mm': 1000.0,
+        'yd': 1.09361,
+        'nm': 1000000000.0,
+    }
+    
+    parts = value_str.split()
+    if len(parts) != 2:
+        raise ValueError("Input must be in the format 'number unit' (e.g., '5 m')")
+    
+    try:
+        number = float(parts[0])
+    except ValueError:
+        raise ValueError(f"First part '{parts[0]}' is not a valid number")
+    
+    source_unit = parts[1].strip().lower()
+    
+    if source_unit not in units:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+    if target_unit not in units:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+    
+    value_in_meters = number / units[source_unit]
+    converted_value = value_in_meters * units[target_unit]
+    
+    return converted_value
+
 if __name__ == '__main__':
-    converter = UnitConverter()
-    meters_value = 10
-    feet_value = 32.8084
-    kilometers_value = 5
-    meters_to_feet_result = converter.meters_to_feet(meters_value)
-    feet_to_meters_result = converter.feet_to_meters(feet_value)
-    meters_to_kilometers_result = converter.meters_to_kilometers(meters_value)
-    kilometers_to_meters_result = converter.kilometers_to_meters(kilometers_value)
-    print(f"10 meters is equal to {meters_to_feet_result:.4f} feet")
-    print(f"{feet_value} feet is equal to {feet_to_meters_result:.4f} meters")
-    print(f"10 meters is equal to {meters_to_kilometers_result:.4f} kilometers")
-    print(f"5 kilometers is equal to {kilometers_to_meters_result:.4f} meters")
+    sample_input = "10 ft"
+    target = "m"
+    result = convert_length(sample_input, target)
+    print(result)
+    sample_input_2 = "1 m"
+    target_2 = "in"
+    result_2 = convert_length(sample_input_2, target_2)
+    print(result_2)
+    sample_input_3 = "5 km"
+    target_3 = "mi"
+    result_3 = convert_length(sample_input_3, target_3)
+    print(result_3)

@@ -1,29 +1,21 @@
-def meters_to_feet(meters: float) -> float:
-    """
-    Converts a length given in meters to feet.
+def convert_length(length, target_unit):
+    supported_units = {'meters': 1, 'feet': 0.3048, 'kilometers': 1000}
     
-    Conversion factor: 1 meter = 3.28084 feet
+    if target_unit not in supported_units:
+        raise ValueError(f"Unsupported unit: {target_unit}")
     
-    Args:
-        meters (float): The length in meters.
-        
-    Returns:
-        float: The equivalent length in feet.
-    """
-    if not isinstance(meters, (int, float)):
-        raise TypeError("Input must be a numeric value.")
+    meters = length * supported_units[target_unit]
     
-    return meters * 3.28084
+    conversion_factors = {
+        'meters': 1.0 / supported_units['meters'],
+        'feet': 1.0 / supported_units['feet'],
+        'kilometers': 1.0 / supported_units['kilometers']
+    }
+    
+    result = meters * conversion_factors[target_unit]
+    return result
 
 if __name__ == '__main__':
-    # Sample test cases without interactive input
-    
-    try:
-        sample_meters = [10.5, -2.0, 0]
-        
-        for val in sample_meters:
-            feet_value = meters_to_feet(val)
-            print(f"{val} meters is equal to {feet_value:.4f} feet")
-            
-    except Exception as e:
-        print(f"An error occurred during processing: {e}")
+    print(convert_length(10, 'meters'))
+    print(convert_length(10, 'feet'))
+    print(convert_length(10, 'kilometers'))

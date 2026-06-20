@@ -1,33 +1,18 @@
-import math
-
-def meters_to_feet(meters: float) -> float:
-    """
-    Converts a length from meters to feet using the standard conversion factor.
-    
-    The formula used is: feet = meters * 3.28084
-    
-    Args:
-        meters (float): The length in meters.
-        
-    Returns:
-        float: The equivalent length in feet, rounded to two decimal places.
-    """
-    if not isinstance(meters, (int, float)):
-        raise ValueError("Input must be a numeric value.")
-    
-    conversion_factor = 3.28084
-    return round(meters * conversion_factor, 2)
+def convert_length(value, unit):
+    if unit == 'meters':
+        return value
+    elif unit == 'feet':
+        return value * 3.28084
+    elif unit == 'kilometers':
+        return value / 1000.0
+    else:
+        raise ValueError("Unsupported unit: {}".format(unit))
 
 if __name__ == '__main__':
-    # Sample values for testing without interactive input
-    sample_meters_values = [1, 5.5, -2]
-
-    print("Converting meters to feet...")
-    
-    for meters in sample_meters_values:
-        try:
-            feet = meters_to_feet(meters)
-            result_string = f"{meters} meters is equal to {feet} feet"
-            print(result_string)
-        except ValueError as ve:
-            print(f"Error processing input '{meters}': {ve}")
+    print(convert_length(1, 'meters'))
+    print(convert_length(1, 'feet'))
+    print(convert_length(1000, 'kilometers'))
+    try:
+        convert_length(1, 'miles')
+    except ValueError as e:
+        print(e)

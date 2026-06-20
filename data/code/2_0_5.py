@@ -1,35 +1,34 @@
 import os
-def calculate_total_volume(filepath):
+import tempfile
+
+def calculate_total_volume(file_path):
     total_volume = 0.0
+    with open(file_path, 'r') as f:
+        for line in f:
+            stripped = line.strip()
+            if not stripped:
+                continue
+            try:
+                volume = float(stripped)
+                total_volume += volume
+            except ValueError:
+                raise ValueError(f"Invalid volume measurement in file: {stripped}")
+    return total_volume
+
+def main():
+    sample_data = "10.5\n20.3\n15.2\ninvalid\n"
+    
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+        tmp.write(sample_data)
+        tmp_path = tmp.name
+
     try:
-        with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume = float(line.strip())
-                    total_volume += volume
-                except ValueError:
-                    continue
-        return total_volume
-    except FileNotFoundError:
-        return None
-    except IOError:
-        return None
-if __name__ == '__main__':
-    sample_filename = "volume_data.txt"
-    try:
-        with open(sample_filename, 'w') as f:
-            f.write("10.5\n")
-            f.write("22.1\n")
-            f.write("5.0\n")
-            f.write("invalid_data\n")
-            f.write("1.4\n")
-        result = calculate_total_volume(sample_filename)
-        if result is not None:
-            print(f"Total volume calculated: {result}")
-        else:
-            print("Error: Could not read or process the file.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        total = calculate_total_volume(tmp_path)
+        print(total)
+    except ValueError:
+        print(0)
     finally:
-        if os.path.exists(sample_filename):
-            os.remove(sample_filename)
+        os.unlink(tmp_path)
+
+if __name__ == '__main__':
+    main()

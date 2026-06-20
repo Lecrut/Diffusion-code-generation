@@ -1,37 +1,42 @@
-import unittest
-def calculate_volume_box(length, width, height):
-    return length * width * height
-def calculate_volume_cylinder(radius, height):
-    import math
-    return math.pi * (radius ** 2) * height
-class TestVolumeCalculations(unittest.TestCase):
-    def test_calculate_volume_box_positive(self):
-        self.assertEqual(calculate_volume_box(2, 3, 4), 24)
-        self.assertEqual(calculate_volume_box(10, 10, 10), 1000)
-    def test_calculate_volume_box_zero_input(self):
-        self.assertEqual(calculate_volume_box(0, 5, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 0, 10), 0)
-        self.assertEqual(calculate_volume_box(5, 5, 0), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 0), 0)
-    def test_calculate_volume_box_negative_input(self):
-        self.assertEqual(calculate_volume_box(-2, 3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, -3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, 3, -4), -24)
-        self.assertEqual(calculate_volume_box(-2, -3, 4), 24)
-    def test_calculate_volume_cylinder_positive(self):
-        expected_volume = math.pi * (1**2) * 5
-        self.assertAlmostEqual(calculate_volume_cylinder(1, 5), expected_volume)
-        self.assertAlmostEqual(calculate_volume_cylinder(2, 10), 40 * math.pi)
-    def test_calculate_volume_cylinder_zero_input(self):
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 10), 0.0)
-        self.assertAlmostEqual(calculate_volume_cylinder(5, 0), 0.0)
-        self.assertAlmostEqual(calculate_volume_cylinder(0, 0), 0.0)
-    def test_calculate_volume_cylinder_negative_input(self):
-        expected_volume = math.pi * (-2**2) * 10
-        self.assertAlmostEqual(calculate_volume_cylinder(-2, 10), expected_volume)
-        expected_volume = math.pi * (3**2) * (-5)
-        self.assertAlmostEqual(calculate_volume_cylinder(3, -5), -45 * math.pi)
-        expected_volume = math.pi * (-1**2) * (-2)
-        self.assertAlmostEqual(calculate_volume_cylinder(-1, -2), 2 * math.pi)
+import tempfile
+import os
+
+def parse_volume_lines(text_content):
+    accumulated_volume = 0.0
+    parsed_count = 0
+    error_count = 0
+    lines = text_content.splitlines()
+    for raw_line in lines:
+        clean_line = raw_line.strip()
+        if not clean_line:
+            continue
+        try:
+            numeric_value = float(clean_line)
+            accumulated_volume += numeric_value
+            parsed_count += 1
+        except ValueError:
+            error_count += 1
+    return accumulated_volume, parsed_count, error_count
+
+def sum_volumes_from_file(filepath):
+    try:
+        with open(filepath, 'r') as file_handle:
+            content = file_handle.read()
+        total, count, errors = parse_volume_lines(content)
+        return total
+    except FileNotFoundError:
+        raise
+    except IOError:
+        raise
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_content = "10.5\n20.0\ninvalid_entry\n30.25\n-5.0\n\nhello\n45.5"
+    temporary_file_descriptor, temporary_path = tempfile.mkstemp(suffix='.txt')
+    try:
+        with os.fdopen(temporary_file_descriptor, 'w') as temp_file:
+            temp_file.write(sample_content)
+        
+        computed_total = sum_volumes_from_file(temporary_path)
+        print(computed_total)
+    finally:
+        os.unlink(temporary_path)

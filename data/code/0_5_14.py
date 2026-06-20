@@ -1,54 +1,39 @@
-def convert_length(length_str: str, target_unit_code: str) -> float:
-    """
-    Converts a length string from an implicit base unit (meters) to a specified 
-    target unit using predefined conversion factors in meters as the common reference.
+import math
 
-    Args:
-        length_str (str): String representation of the length value (e.g., "5").
-                          The input is assumed to be already parsed into floats or ints 
-                          by this function's caller if necessary, but it will attempt float parsing internally.
-        target_unit_code (str): A single character code representing the desired output unit ('k', 'm', 'ft').
+UNIT_DEFS = {
+    'meter': {'factor': 1.0, 'offset': 0.0},
+    'kilometer': {'factor': 1000.0, 'offset': 0.0},
+    'centimeter': {'factor': 0.01, 'offset': 0.0},
+    'millimeter': {'factor': 0.001, 'offset': 0.0},
+    'inch': {'factor': 0.0254, 'offset': 0.0},
+    'foot': {'factor': 0.3048, 'offset': 0.0},
+    'mile': {'factor': 1609.344, 'offset': 0.0},
+    'celsius': {'factor': 1.0, 'offset': 0.0},
+    'fahrenheit': {'factor': 5.0/9.0, 'offset': 32.0},
+}
 
-    Returns:
-        float: The converted length value as a floating-point number in the requested unit.
+class Converter:
+    def __init__(self, from_unit, to_unit):
+        self.from_unit = from_unit
+        self.to_unit = to_unit
+        self.from_def = UNIT_DEFS[from_unit]
+        self.to_def = UNIT_DEFS[to_unit]
 
-    Raises:
-        ValueError: If input string cannot be parsed or if an unsupported unit is provided.
-        TypeError: If inputs are not of expected types (str).
-    """
-    
-    # Mapping of target unit codes to conversion factors relative to meters
-    UNIT_FACTORS = {
-        'k': 1_000,   # Kilometers -> multiply by 1000
-        'm': 1.0,     # Meters (base)
-        'ft': 3.28084, # Feet (multiply meters by this factor to get feet)
-    }
+    def convert(self, value):
+        base_value = (value - self.from_def['offset']) * self.from_def['factor']
+        result = (base_value / self.to_def['factor']) + self.to_def['offset']
+        return result
 
-    if not isinstance(length_str, str):
-        raise TypeError(f"length must be a string, got {type(length_str).__name__}")
-    
-    try:
-        value = float(length_str)
-    except ValueError as e:
-        raise ValueError(f"Invalid length string '{length_str}': {e}")
-
-    if not isinstance(target_unit_code, str):
-        target_unit_code = str(target_unit_code)
-        
-    code = target_unit_code.strip()
-    
-    # Validate unit code format (expecting single character for simplicity per task example 'm' to 'ft')
-    valid_units = set(UNIT_FACTORS.keys())
-    if len(code) != 1 or code not in valid_units:
-        raise ValueError(f"Unsupported target_unit_code '{code}'. Supported units are {valid_units}.")
-
-    
-    # Base unit is assumed to be meters for all conversions in this implementation.
-    # If the input were meant to be a different base, additional logic would require 
-    # a 'source' parameter which was omitted per task constraints focusing on target mapping flexibility.
-    
-    factor = UNIT_FACTORS[code]
-    return value * factor
+def convert_value(from_unit, to_unit, value):
+    converter = Converter(from_unit, to_unit)
+    return converter.convert(value)
 
 if __name__ == '__main__':
-    pass
+    res1 = convert_value('kilometer', 'mile', 5.0)
+    print(res1)
+    
+    res2 = convert_value('fahrenheit', 'celsius', 212.0)
+    print(res2)
+    
+    res3 = convert_value('foot', 'meter', 10.0)
+    print(res3)

@@ -1,41 +1,26 @@
 import numpy as np
 
-def calculate_volume_efficiency(volumes: np.ndarray) -> tuple[float, float]:
-    """
-    Performs vectorized calculations on an array of volume measurements.
-    
-    Calculates two key metrics efficiently using NumPy's broadcasting and built-in 
-    functions to demonstrate high performance for scaling operations:
-    1. Total Volume Sum (scalar)
-    2. Coefficient of Variation (CV), a standardized measure of dispersion,
-       calculated as std_dev / mean * 100% to express variability relative to the mean.
+class VolumeScaler:
+    def __init__(self, unit_multiplier):
+        self.unit_multiplier = unit_multiplier
 
-    Args:
-        volumes (np.ndarray): Input array containing volume measurements.
+    def scale_volumes(self, measurements):
+        input_array = np.array(measurements, dtype=np.float64)
+        if input_array.size == 0:
+            return np.array([], dtype=np.float64)
+        return input_array * self.unit_multiplier
 
-    Returns:
-        tuple[float, float]: A tuple containing (total_volume, cv_percentage).
-    
-    Note: This function assumes input is a valid numeric numpy array with at least 
-    one element greater than zero to avoid division by zero in CV calculation.
-    """
-    total = np.sum(volumes)
-    mean_val = np.mean(volumes)
-
-    if mean_val == 0:
-        cv = float('inf')
-    else:
-        std_dev = np.std(volumes, ddof=0)
-        cv = (std_dev / mean_val) * 100.0
-    
-    return total, cv
+    def calculate_total_volume(self, measurements):
+        input_array = np.array(measurements, dtype=np.float64)
+        if input_array.size == 0:
+            return 0.0
+        return np.sum(input_array)
 
 if __name__ == '__main__':
-    # Hard-coded sample volume measurements for demonstration purposes.
-    # Represents liters of fluid in multiple containers or batches.
-    sample_volumes = np.array([10.5, 23.7, 45.2, 89.1, 67.3], dtype=float)
-
-    total_vol, cv_val = calculate_volume_efficiency(sample_volumes)
-
-    print(f"Total Volume: {total_vol:.2f} liters")
-    print(f"Coefficient of Variation (CV): {cv_val:.4f}%")
+    sample_measurements = [10.5, 20.3, 15.75, 8.2, 30.0]
+    scaler = VolumeScaler(1.60934)
+    scaled_volumes = scaler.scale_volumes(sample_measurements)
+    total_scaled_volume = scaler.calculate_total_volume(sample_measurements)
+    total_scaled_volume_scaled = np.sum(scaled_volumes)
+    print(scaled_volumes)
+    print(total_scaled_volume_scaled)

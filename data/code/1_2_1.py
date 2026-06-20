@@ -1,43 +1,30 @@
-import math
-def convert_to_kg(weight_list):
-    kilograms = []
-    for weight in weight_list:
+import json
+
+def convert_to_kilograms(measurements):
+    conversion_factors = {'kg': 1.0, 'g': 0.001, 'lb': 0.45359237, 'oz': 0.028349523125, 'ton': 907.18474, 't': 1000.0}
+    results = []
+    for measurement in measurements:
         try:
-            if weight <= 0:
-                raise ValueError("Weight must be positive")
-            if weight == 1:
-                pass
-            if isinstance(weight, tuple) and len(weight) == 2:
-                value, unit = weight
-                if unit.lower() == 'kg':
-                    kilograms.append(value)
-                elif unit.lower() == 'lb':
-                    kilograms.append(value * 0.453592)
-                elif unit.lower() == 'g':
-                    kilograms.append(value / 1000)
-                else:
-                    raise ValueError(f"Unknown unit: {unit}")
-            elif isinstance(weight, (int, float)):
-                kilograms.append(weight * 0.453592)
-            else:
-                raise TypeError("Invalid weight format")
-        except (ValueError, TypeError, AttributeError) as e:
-            print(f"Error processing weight {weight}: {e}")
-            kilograms.append(None)
-    return kilograms
+            if not isinstance(measurement, dict):
+                raise TypeError('Each measurement must be a dictionary.')
+            if 'value' not in measurement or 'unit' not in measurement:
+                raise ValueError("Measurement must contain 'value' and 'unit'.")
+            value = measurement['value']
+            unit = measurement['unit']
+            if not isinstance(value, (int, float)):
+                raise TypeError('Value must be a number.')
+            if not isinstance(unit, str):
+                raise TypeError('Unit must be a string.')
+            unit_lower = unit.lower().strip()
+            if unit_lower not in conversion_factors:
+                raise ValueError(f'Unknown unit: {unit}')
+            kg_value = value * conversion_factors[unit_lower]
+            results.append(kg_value)
+        except Exception as e:
+            print(f'Error processing measurement {measurement}: {e}')
+            results.append(None)
+    return results
 if __name__ == '__main__':
-    sample_weights = [
-        (75, 'kg'),
-        (150, 'lb'),
-        (5000, 'g'),
-        10,                                   
-        "invalid_data",
-        (2.5, 'ton')
-    ]
-    results = convert_to_kg(sample_weights)
-    print("Original Measurements:")
-    for item in sample_weights:
-        print(item)
-    print("\nConverted Measurements (in kg):")
-    for result in results:
-        print(result)
+    samples = [{'value': 1000, 'unit': 'g'}, {'value': 5, 'unit': 'lb'}, {'value': 10, 'unit': 'kg'}, {'value': -5, 'unit': 'kg'}, {'value': 'abc', 'unit': 'kg'}, {'value': 10, 'unit': 'invalid_unit'}]
+    output = convert_to_kilograms(samples)
+    print(output)

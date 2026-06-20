@@ -1,23 +1,10 @@
-import statistics
+import numpy as np
 
-def calculate_median_weight():
-    """
-    Reads weight data from standard input (simulated via hardcoded values),
-    calculates the median, and prints it formatted to two decimal places.
-    Since no interactive input is allowed during execution, sample data is used directly.
-    
-    Sample weights: 65.0, 72.3, 81.5, 94.2, 58.7
-    """
-    # Hardcoded sample values to simulate standard input without user interaction
-    weight_data = [65.0, 72.3, 81.5, 94.2, 58.7]
-
-    try:
-        median_weight = statistics.median(weight_data)
-        print(f"{median_weight:.2f}")
-    except Exception as e:
-        # In a real scenario with input(), this might handle parsing errors, 
-        # but here we just ensure the script runs cleanly without crashing on valid data.
-        pass
-
+def apply_percentage_change(weights, percentage_change):
+    weight_array = np.asarray(weights, dtype=float)
+    return (weight_array * (1 + percentage_change)).tolist()
 if __name__ == '__main__':
-    calculate_median_weight()
+    sample_weights = [100, 200, 300, 400, 500]
+    change = 0.1
+    result = apply_percentage_change(sample_weights, change)
+    print(result)

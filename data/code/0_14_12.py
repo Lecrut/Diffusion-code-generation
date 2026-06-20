@@ -1,61 +1,40 @@
-def convert_length(length, unit):
-    """
-    Converts a numerical length to kilometers based on the target unit string.
-    
-    Supported units: 'meters', 'feet', 'kilometers'.
-    
-    Args:
-        length (float or int): The numerical value of the length in any supported unit.
-        unit (str): The target unit for conversion ('km').
-        
-    Returns:
-        float: The converted length in kilometers, rounded to 4 decimal places.
-        
-    Raises:
-        ValueError: If the provided unit string is not supported or if input types are incorrect.
-    """
-    
-    # Define conversion factors from each source unit to meters first
-    # Then convert everything to target (kilometers) directly
-    
-    valid_units = ['meters', 'feet']  # Source units that can be converted TO kilometers
-    unsupported_unit_error_msg = f"Unsupported unit: {unit}. Supported units are: {' '.join(valid_units)}."
-    
-    if not isinstance(length, (int, float)):
-        raise ValueError(f"Incorrect input type for length. Expected int or float, got {type(length).__name__}")
+UNIT_FACTORS = {
+    'meters': 1.0,
+    'kilometers': 1000.0,
+    'centimeters': 0.01,
+    'millimeters': 0.001,
+    'inches': 0.0254,
+    'feet': 0.3048,
+    'yards': 0.9144,
+    'miles': 1609.344,
+}
 
-    try:
-        
-        # Determine the conversion factor from source unit to target unit (kilometers)
-        # 1 meter = 0.001 kilometers
-        # 1 foot ≈ 0.0003048 kilometers
-        
-        if unit == 'meters':
-            return round(length * 0.001, 4)
-            
-        elif unit == 'feet':
-            return round(length * 0.0003048, 4)
-            
-        else:
-            raise ValueError(unsupported_unit_error_msg)
+VALID_UNITS = set(UNIT_FACTORS.keys())
 
-    except Exception as e:
-        # Re-raise any unexpected errors with a clear message if needed, 
-        # but the logic above handles specific cases explicitly.
-        raise
+def convert_length(value, from_unit, to_unit):
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+    if from_unit not in VALID_UNITS or to_unit not in VALID_UNITS:
+        raise ValueError("Invalid unit. Must be one of: {}".format(', '.join(sorted(VALID_UNITS))))
+    if not isinstance(value, (int, float)):
+        raise TypeError("Value must be a number")
+    meters = value * UNIT_FACTORS[from_unit]
+    result = meters / UNIT_FACTORS[to_unit]
+    return result
 
 if __name__ == '__main__':
-    
-    # Sample test values
-    sample_cases = [
-        (100, 'meters'),       # 100 meters -> km
-        (3280.84, 'feet'),     # 3280.84 feet approx equals 1 mile (~1.6km)
-        (-50, 'meters'),      # Negative length test
+    sample_values = [
+        (1.0, 'meters', 'kilometers'),
+        (1.0, 'kilometers', 'meters'),
+        (1.0, 'meters', 'centimeters'),
+        (1.0, 'meters', 'millimeters'),
+        (1.0, 'meters', 'inches'),
+        (1.0, 'meters', 'feet'),
+        (1.0, 'meters', 'yards'),
+        (1.0, 'meters', 'miles'),
+        (1.0, 'miles', 'kilometers'),
+        (6.0, 'feet', 'meters'),
     ]
-
-    for val, u in sample_cases:
-        try:
-            result = convert_length(val, u)
-            print(f"{val} {u} -> {result} km")
-        except ValueError as ve:
-            print(f"Error converting {val} {u}: {ve}")
+    for value, from_u, to_u in sample_values:
+        result = convert_length(value, from_u, to_u)
+        print("{:.6f} {} = {:.6f} {}".format(value, from_u, result, to_u))

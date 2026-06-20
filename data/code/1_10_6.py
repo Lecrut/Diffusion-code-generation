@@ -1,73 +1,48 @@
 import csv
-from statistics import mean as calculate_average
+import io
 
-def process_weight_file(filename):
-    """
-    Reads weight measurements from a CSV file, converts values to floats,
-    calculates the average weight with error handling.
+def calculate_average_weight(csv_data):
+    reader = csv.reader(io.StringIO(csv_data))
+    header = next(reader, None)
+    if header is None:
+        raise ValueError("CSV data is empty")
 
-    Args:
-        filename (str): Path to the input CSV file.
-    
-    Returns:
-        float or None: The calculated average weight if successful, else None.
-    """
+    weight_column_index = None
+    for col_idx, col_name in enumerate(header):
+        if col_name.strip().lower() == 'weight':
+            weight_column_index = col_idx
+            break
+
+    if weight_column_index is None:
+        raise ValueError("No 'weight' column found in CSV header")
+
     weights = []
+    for row_num, row in enumerate(reader, start=2):
+        if not row:
+            continue
+        if weight_column_index >= len(row):
+            continue
+        weight_str = row[weight_column_index].strip()
+        if not weight_str:
+            continue
+        try:
+            weight_value = float(weight_str)
+            weights.append(weight_value)
+        except ValueError:
+            continue
 
-    try:
-        with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
-            reader = csv.reader(csvfile)
-            
-            for row_num, row in enumerate(reader):
-                # Skip empty rows or malformed lines that don't have enough columns
-                if not row or len(row) == 0:
-                    continue
-                
-                try:
-                    weight_value = float(row[0])
-                    weights.append(weight_value)
-                except ValueError:
-                    print(f"Warning: Skipping non-numeric entry at line {row_num + 2}: '{row[0]}'")
+    if not weights:
+        raise ValueError("No valid weight values found")
 
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
-        return None
-    except csv.Error as e:
-        print(f"CSV Error reading file: {e}")
-        return None
-    
-    if len(weights) == 0:
-        return None
-
-    average_weight = calculate_average(weights)
+    average_weight = sum(weights) / len(weights)
     return average_weight
 
 if __name__ == '__main__':
-    # Hard-coded sample data for testing without external files or user input.
-    
-    csv_data_str = """weight,measurement_type,date
-75.2,kilograms,2023-10-01
-68.5,pounds,2023-10-05
-invalid_entry,kilograms,2023-10-10
-79.8,kilograms,2023-10-15"""
-
-    # Create a temporary file path for the sample data logic (simulating reading from disk)
-    temp_filename = "sample_weights.csv"
-    
-    try:
-        # Write the hardcoded CSV string to a temporary file first 
-        # so the main function can read it as if loading an external resource.
-        with open(temp_filename, 'w', encoding='utf-8') as f:
-            f.write(csv_data_str)
-
-        result = process_weight_file(temp_filename)
-        
-        print(f"Calculated Average Weight: {result}")
-    finally:
-        # Cleanup temporary file to keep the environment clean for subsequent runs.
-        try:
-            import os
-            if os.path.exists(temp_filename):
-                os.remove(temp_filename)
-        except Exception:
-            pass  # Ignore cleanup errors as they are non-critical in this isolated context.
+    sample_csv = """name,weight,age
+Alice,55.5,30
+Bob,60.2,25
+Charlie,invalid,35
+Diana,70.0,28
+Eve,58.3,32"""
+    result = calculate_average_weight(sample_csv)
+    print(result)

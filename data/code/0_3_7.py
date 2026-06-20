@@ -1,39 +1,49 @@
-class UnitConverter:
-    # Conversion factors to meters (1 unit = X meters)
-    METERS_PER_METER = 1.0
-    METERS_PER_FEET = 0.3048
-    METERS_PER_KILOMETER = 1000.0
+import re
+
+def convert_length(value_str, target_unit):
+    unit_map = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'ft': 0.3048,
+        'in': 0.0254,
+        'yd': 0.9144,
+        'mi': 1609.344,
+    }
     
-    def convert_to_meters(self, value: float, from_unit: str) -> float:
-        """Convert a given length to meters based on the source unit."""
-        if from_unit == 'm':
-            return value * self.METERS_PER_METER
-        elif from_unit == 'ft':
-            return value * self.METERS_PER_FEET
-        elif from_unit == 'km':
-            return value * self.METERS_PER_KILOMETER
-        else:
-            raise ValueError(f"Unsupported unit for conversion: {from_unit}")
-
-    def convert_to_feet(self, meters_value: float) -> float:
-        """Convert a length in meters to feet."""
-        return meters_value / self.METERS_PER_FEET
-
-    def convert_to_kilometers(self, meters_value: float) -> float:
-        """Convert a length in meters to kilometers."""
-        return meters_value / self.METERS_PER_KILOMETER
+    value_str = value_str.strip()
+    if not value_str:
+        raise ValueError("Input string is empty")
+    
+    pattern = r'^([+-]?\d*\.?\d+)\s*([a-zA-Z]+)$'
+    match = re.match(pattern, value_str)
+    
+    if not match:
+        raise ValueError("Invalid format. Expected format like '10.5 m'")
+    
+    value = float(match.group(1))
+    source_unit = match.group(2).lower()
+    
+    if source_unit not in unit_map:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+    
+    target_unit_lower = target_unit.strip().lower()
+    if target_unit_lower not in unit_map:
+        raise ValueError(f"Unsupported target unit: {target_unit_lower}")
+    
+    value_in_meters = value * unit_map[source_unit]
+    result = value_in_meters / unit_map[target_unit_lower]
+    
+    return result
 
 if __name__ == '__main__':
-    converter = UnitConverter()
+    sample_input = "10.5 ft"
+    target = "m"
+    converted_value = convert_length(sample_input, target)
+    print(converted_value)
     
-    # Sample conversions using hard-coded values
-    sample_meters = 10.5
-    
-    print(f"Original value: {sample_meters} m")
-    print(f"In feet: {converter.convert_to_feet(sample_meters):.4f}")
-    print(f"In kilometers: {converter.convert_to_kilometers(sample_meters):.6f}")
-    
-    # Convert from other units to meters as a demonstration
-    sample_feet = 30.0
-    converted_from_ft = converter.convert_to_meters(sample_feet, 'ft')
-    print(f"\nConverted {sample_feet} ft to meters: {converted_from_ft:.4f}")
+    sample_input_2 = "100 cm"
+    target_2 = "in"
+    converted_value_2 = convert_length(sample_input_2, target_2)
+    print(converted_value_2)

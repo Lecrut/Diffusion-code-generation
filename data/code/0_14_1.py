@@ -1,28 +1,74 @@
-def convert_length(length: float, unit: str) -> float:
-    conversions = {
-        "meters": length,
-        "feet": length * 3.28084,
-        "kilometers": length * 1000.0
+import sys
+
+class UnitConverter:
+    BASE_FACTORS = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344
     }
-    supported_units = set(conversions.keys())
-    if unit in supported_units:
-        return conversions[unit]
-    else:
-        raise ValueError(f"Unsupported unit: {unit}")
+
+    VALID_UNITS = frozenset(BASE_FACTORS.keys())
+
+    def __init__(self):
+        self._cache = {}
+
+    def convert(self, value: float, source: str, target: str) -> float:
+        source = source.lower()
+        target = target.lower()
+        
+        if source not in self.VALID_UNITS:
+            raise ValueError(f"Invalid source unit: {source}")
+        if target not in self.VALID_UNITS:
+            raise ValueError(f"Invalid target unit: {target}")
+        
+        cache_key = (source, target)
+        if cache_key not in self._cache:
+            self._cache[cache_key] = self.BASE_FACTORS[source] / self.BASE_FACTORS[target]
+        
+        factor = self._cache[cache_key]
+        return value * factor
+
+    def batch_convert(self, conversions: list) -> list:
+        results = []
+        for item in conversions:
+            val, src, tgt = item
+            res = self.convert(val, src, tgt)
+            results.append(res)
+        return results
+
+def run_demo():
+    converter = UnitConverter()
+    
+    test_cases = [
+        (1.0, 'm', 'ft'),
+        (1.0, 'mi', 'km'),
+        (12.0, 'in', 'cm'),
+        (5280.0, 'ft', 'mi'),
+        (1000.0, 'm', 'km'),
+        (2.54, 'cm', 'in')
+    ]
+    
+    print("Converting single values:")
+    for val, src, tgt in test_cases:
+        res = converter.convert(val, src, tgt)
+        print(f"{val} {src} = {res} {tgt}")
+    
+    print("\nRunning batch conversions:")
+    batch_tests = [
+        (10.0, 'yd', 'm'),
+        (1.0, 'km', 'mi'),
+        (100.0, 'mm', 'in')
+    ]
+    batch_results = converter.batch_convert(batch_tests)
+    
+    for i, res in enumerate(batch_results):
+        original = batch_tests[i]
+        print(f"Batch {i+1}: {original[0]} {original[1]} = {res} {original[2]}")
+
 if __name__ == '__main__':
-    length_m = 10.0
-    unit_m = "meters"
-    result_m = convert_length(length_m, unit_m)
-    print(f"{length_m} meters is {result_m} in {unit_m}")
-    length_ft = 10.0
-    unit_ft = "feet"
-    result_ft = convert_length(length_ft, unit_ft)
-    print(f"{length_ft} meters is {result_ft} in {unit_ft}")
-    length_km = 5.0
-    unit_km = "kilometers"
-    result_km = convert_length(length_km, unit_km)
-    print(f"{length_km} meters is {result_km} in {unit_km}")
-    try:
-        convert_length(10.0, "miles")
-    except ValueError as e:
-        print(f"Caught expected error: {e}")
+    run_demo()

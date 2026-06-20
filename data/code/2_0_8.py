@@ -1,33 +1,43 @@
-def calculate_total_volume(filepath):
+import csv
+import tempfile
+import os
+
+def calculate_total_volume_from_file(filepath):
     total_volume = 0.0
     try:
-        with open(filepath, 'r') as file:
-            for line in file:
+        with open(filepath, 'r') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if not row:
+                    continue
                 try:
-                    volume_str = line.strip()
-                    if volume_str:
-                        volume = float(volume_str)
-                        total_volume += volume
-                except ValueError:
+                    volume_value = float(row[0])
+                    total_volume += volume_value
+                except (ValueError, IndexError):
                     continue
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return None
+        raise FileNotFoundError(f"The file {filepath} was not found.")
+    except PermissionError:
+        raise PermissionError(f"Permission denied to read {filepath}.")
     except IOError as e:
-        print(f"Error reading file {filepath}: {e}")
-        return None
+        raise IOError(f"An error occurred while reading the file: {e}")
     return total_volume
+
 if __name__ == '__main__':
-    sample_filename = "volume_data.txt"
+    sample_data = [
+        "10.5",
+        "20.3",
+        "invalid",
+        "5.2"
+    ]
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as tmp_file:
+        for line in sample_data:
+            tmp_file.write(line + '\n')
+        temp_filepath = tmp_file.name
+    
     try:
-        with open(sample_filename, 'w') as f:
-            f.write("10.5\n")
-            f.write("22.7\n")
-            f.write("5.0\n")
-            f.write("invalid_data\n")
-            f.write("30.1\n")
-        result = calculate_total_volume(sample_filename)
-        if result is not None:
-            print(f"Total volume calculated: {result}")
-    except Exception as e:
-        print(f"An unexpected error occurred during setup or execution: {e}")
+        total = calculate_total_volume_from_file(temp_filepath)
+        print(total)
+    finally:
+        os.unlink(temp_filepath)

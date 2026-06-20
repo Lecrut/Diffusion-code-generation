@@ -1,30 +1,25 @@
+class VolumeStats:
+    def __init__(self, data):
+        self._data = list(data)
+
+    def calculate_average_volume(self):
+        if not self._data:
+            return 0.0
+        return sum(self._data) / len(self._data)
+
+    def get_sum(self):
+        return sum(self._data)
+
+    def get_count(self):
+        return len(self._data)
+
 def calculate_average_volume(volumes):
-    """
-    Calculates the arithmetic mean of a list of volume measurements.
-    
-    Args:
-        volumes (list[float]): A list containing numeric volume values.
-        
-    Returns:
-        float or None: The average volume if the list is non-empty, 
-                      otherwise returns None to avoid division by zero errors.
-    """
-    if not volumes:
-        return None
-    
-    # Using sum() and len() which are implemented in C for maximum efficiency
-    total_volume = sum(volumes)
-    count = len(volumes)
-    
-    return total_volume / count
+    stats = VolumeStats(volumes)
+    return stats.calculate_average_volume()
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files needed)
-    sample_volumes = [10.5, 20.3, 15.7, 30.2, 45.8]
-    
-    result = calculate_average_volume(sample_volumes)
-    
-    if result is not None:
-        print(f"The average volume of {sample_volumes} is {result}")
-    else:
-        print("No volumes provided to calculate the average.")
+    sample_volumes = [12.5, 24.0, 18.5, 32.0, 28.0]
+    stats = VolumeStats(sample_volumes)
+    print(calculate_average_volume(sample_volumes))
+    print(stats.get_sum())
+    print(stats.get_count())

@@ -1,35 +1,28 @@
-def meters_to_feet(meters: float) -> float:
-    """
-    Converts a length given in meters to feet.
+def convert_length(length, target_unit):
+    supported_units = {
+        'meters': 1.0,
+        'feet': 3.28084,
+        'kilometers': 0.001
+    }
     
-    Conversion factor: 1 meter = 3.28084 feet
+    if target_unit not in supported_units:
+        raise ValueError(f"Unsupported unit: {target_unit}")
     
-    Args:
-        meters (float): The length in meters.
-        
-    Returns:
-        float: The equivalent length in feet.
-    """
-    FEET_PER_METER = 3.28084
-    return meters * FEET_PER_METER
-
-def main():
-    # Sample values for testing as required by the task constraints
-    sample_values = [1, 5, -2]
-    
-    print("Converting sample meter values to feet.")
-    print("-" * 30)
-    
-    try:
-        for meters in sample_values:
-            if isinstance(meters, (int, float)):
-                converted_feet = meters_to_feet(meters)
-                print(f"{meters} meters is equal to {converted_feet:.2f} feet.")
-            else:
-                raise ValueError("Sample value must be a valid number")
-    except Exception as e:
-        # Handle potential runtime errors gracefully even with hardcoded values (e.g., type mismatch)
-        print(f"An error occurred during conversion: {str(e)}")
+    converted_value = length * supported_units[target_unit]
+    return converted_value
 
 if __name__ == '__main__':
-    main()
+    sample_length = 100
+    sample_unit = 'feet'
+    result = convert_length(sample_length, sample_unit)
+    print(result)
+    
+    sample_length_2 = 5
+    sample_unit_2 = 'kilometers'
+    result_2 = convert_length(sample_length_2, sample_unit_2)
+    print(result_2)
+    
+    sample_length_3 = 0.5
+    sample_unit_3 = 'meters'
+    result_3 = convert_length(sample_length_3, sample_unit_3)
+    print(result_3)

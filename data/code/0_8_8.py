@@ -1,25 +1,18 @@
-import math
+class LengthConverter:
+    def __init__(self):
+        self.factors = {
+            'meters': 1.0,
+            'feet': 3.28084
+        }
 
-def convert_length_to_miles_and_kilometers(length: float) -> tuple[float, float]:
-    """
-    Converts a length in feet to miles and kilometers.
-    
-    Args:
-        length (float): The input length value.
-        
-    Returns:
-        tuple: A tuple containing the converted values for miles and kilometers.
-               Both values are rounded to two decimal places.
-               
-    Notes:
-        1 mile = 5280 feet
-        1 kilometer ≈ 3280.84 feet (or more precisely, 1 km = 1000 meters)
-    """
-    # Conversion factors relative to feet
-    conversion_to_miles_factor = length / 5280
-    conversion_to_kilometers_factor = (length * 0.3048)
-
-    return round(conversion_to_miles_factor, 2), round(conversion_to_kilometers_factor, 2)
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.factors or to_unit not in self.factors:
+            raise ValueError("Unsupported unit")
+        meters = value / self.factors[from_unit]
+        result = meters * self.factors[to_unit]
+        return result
 
 if __name__ == '__main__':
-    pass
+    converter = LengthConverter()
+    print(converter.convert(100, 'meters', 'feet'))
+    print(converter.convert(10, 'feet', 'meters'))

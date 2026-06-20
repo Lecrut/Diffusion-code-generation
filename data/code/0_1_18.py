@@ -1,69 +1,40 @@
-import math
+class UnitConverter:
+    METERS_TO_FEET = 3.28084
+    METERS_TO_KILOMETERS = 0.001
+    FEET_TO_METERS = 1 / 3.28084
+    KILOMETERS_TO_METERS = 1000
 
-def convert_length(value: float, unit_from: str) -> tuple[float, str]:
-    """
-    Converts a length value from one unit to another meters and returns 
-    (value_in_meters, source_unit_str).
-    
-    Supported units in input: 'm', 'km', 'cm', 'mm', 'ft', 'in'.
-    All conversions are normalized to base SI meter first.
+    @classmethod
+    def meters_to_feet(cls, meters):
+        return meters * cls.METERS_TO_FEET
 
-    Args:
-        value (float): The length value to convert.
-        unit_from (str): The source unit ('m', 'km', 'cm', 'mm', 'ft', 'in').
+    @classmethod
+    def meters_to_kilometers(cls, meters):
+        return meters * cls.METERS_TO_KILOMETERS
 
-    Returns:
-        tuple[float, str]: A tuple containing the converted length in meters 
-                           and the original input unit string for reference.
-    
-    Raises:
-        ValueError: If an unsupported unit is provided.
-    """
-    # Conversion factors to meters (1 unit = X meters)
-    conversion_factors_to_meters = {
-        'm': 1,
-        'km': 1_000,
-        'cm': 0.01,
-        'mm': 0.001,
-        'ft': 0.3048,
-        'in': 0.0254
-    }
+    @classmethod
+    def feet_to_meters(cls, feet):
+        return feet * cls.FEET_TO_METERS
 
-    if unit_from not in conversion_factors_to_meters:
-        raise ValueError(f"Unsupported unit '{unit_from}'. Supported units are {list(conversion_factors_to_meters.keys())}")
+    @classmethod
+    def kilometers_to_meters(cls, kilometers):
+        return kilometers * cls.KILOMETERS_TO_METERS
 
-    meters = value * conversion_factors_to_meters[unit_from]
-    
-    return (meters, f"{value} {unit_from}" if isinstance(value, int) or type(value).__name__ != 'numpy.float64' else str(value))
+    @classmethod
+    def feet_to_kilometers(cls, feet):
+        meters = cls.feet_to_meters(feet)
+        return cls.meters_to_kilometers(meters)
+
+    @classmethod
+    def kilometers_to_feet(cls, kilometers):
+        meters = cls.kilometers_to_meters(kilometers)
+        return cls.meters_to_feet(meters)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [
-        ('5', 'm'),      # 5 meters -> (5.0 m)
-        ('10 km', None), # Actually the input expects float for value based on type hint, 
-                         # but let's assume user passed int/float as per typical usage of value: float in func def.
-                         # Correction to align with function signature which takes numeric types explicitly?
-                         # Re-reading task: "accepts a length and a unit type". Usually implies numbers for length.
-                         # Let's use standard floats/integers for the first argument as per typical usage of convert_length(value, unit).
-    ]
-
-    # Adjusted sample list to strictly follow function signature (value=float/unit_from=str)
-    test_cases = [
-        {'val': 5.0, 'unit': 'm', 'expected_meters': 5.0},
-        {'val': 1000, 'unit': 'km', 'expected_meters': 1_000_000.0},
-        {'val': 254, 'unit': 'cm', 'expected_meters': 2.54},
-        {'val': 3.281, 'unit': 'ft', 'expected_meters': 1.0}, # Approximate foot to meter conversion
-    ]
-
-    for case in test_cases:
-        res = convert_length(case['val'], case['unit'])
-        if abs(res[0] - case['expected_meters']) < 0.001:
-            print(f"Test passed for {case['val']} {case['unit']}: Result is {res[0]} meters.")
-        else:
-            print(f"Test FAILED for {case['val']} {case['unit']}: Expected ~{case['expected_meters']}, got {res[0]}.")
-
-    # Demonstration of error handling
-    try:
-        convert_length(1, 'yard')
-    except ValueError as e:
-        print(f"Caught expected error for unsupported unit 'yard': {e}")
+    converter = UnitConverter()
+    print(converter.meters_to_feet(1))
+    print(converter.meters_to_kilometers(1500))
+    print(converter.feet_to_meters(10))
+    print(converter.kilometers_to_meters(5))
+    print(converter.feet_to_kilometers(3280.84))
+    print(converter.kilometers_to_feet(1.60934))

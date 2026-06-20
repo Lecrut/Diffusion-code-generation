@@ -1,33 +1,40 @@
-def convert_length(length: float, unit: str) -> float:
-    conversion_factors = {
-        'm': 1.0,
-        'ft': 0.3048,
-        'in': 0.0254,
-        'km': 1000.0,
-        'mi': 1609.34
-    }
-    if unit in conversion_factors:
-        return length * conversion_factors[unit]
-    else:
-        raise ValueError(f"Unsupported unit type: {unit}")
+class UnitConverter:
+    METERS_TO_FEET = 3.28084
+    METERS_TO_KILOMETERS = 0.001
+    FEET_TO_METERS = 1.0 / METERS_TO_FEET
+    KILOMETERS_TO_METERS = 1.0 / METERS_TO_KILOMETERS
+
+    @classmethod
+    def meters_to_feet(cls, meters):
+        return meters * cls.METERS_TO_FEET
+
+    @classmethod
+    def feet_to_meters(cls, feet):
+        return feet * cls.FEET_TO_METERS
+
+    @classmethod
+    def meters_to_kilometers(cls, meters):
+        return meters * cls.METERS_TO_KILOMETERS
+
+    @classmethod
+    def kilometers_to_meters(cls, kilometers):
+        return kilometers * cls.KILOMETERS_TO_METERS
+
+    @classmethod
+    def feet_to_kilometers(cls, feet):
+        meters = cls.feet_to_meters(feet)
+        return cls.meters_to_kilometers(meters)
+
+    @classmethod
+    def kilometers_to_feet(cls, kilometers):
+        meters = cls.kilometers_to_meters(kilometers)
+        return cls.meters_to_feet(meters)
+
 if __name__ == '__main__':
-    length_m = 10.0
-    unit_m = 'm'
-    result_m = convert_length(length_m, unit_m)
-    print(f"{length_m} {unit_m} is {result_m}")
-    length_ft = 5.0
-    unit_ft = 'ft'
-    result_ft = convert_length(length_ft, unit_ft)
-    print(f"{length_ft} {unit_ft} is {result_ft}")
-    length_in = 100.0
-    unit_in = 'in'
-    result_in = convert_length(length_in, unit_in)
-    print(f"{length_in} {unit_in} is {result_in}")
-    length_km = 2.5
-    unit_km = 'km'
-    result_km = convert_length(length_km, unit_km)
-    print(f"{length_km} {unit_km} is {result_km}")
-    try:
-        convert_length(10.0, 'lightyear')
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    converter = UnitConverter()
+    print(converter.meters_to_feet(100))
+    print(converter.feet_to_meters(328.084))
+    print(converter.meters_to_kilometers(1500))
+    print(converter.kilometers_to_meters(2.5))
+    print(converter.feet_to_kilometers(1000))
+    print(converter.kilometers_to_feet(5))

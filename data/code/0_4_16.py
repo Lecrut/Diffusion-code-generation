@@ -1,29 +1,50 @@
-def inches_to_cm(inches: float) -> float:
-    """
-    Converts a length given in inches to centimeters with mathematical precision.
-    
-    Args:
-        inches (float): The length value in inches. Must be non-negative.
-        
-    Returns:
-        float: The equivalent length in centimeters, rounded to the nearest integer 
-              if necessary based on floating-point representation for display purposes.
-              However, internally uses exact multiplication by 2.54.
+import tempfile
+import os
 
-    Note:
-        One inch is exactly defined as 0.0254 meters or 2.54 centimeters.
-        The conversion formula is: cm = inches * 2.54
-    """
-    if inches < 0:
-        raise ValueError("Input length cannot be negative.")
-    
-    # Using the exact definition of an inch in terms of centimeters
-    return round(inches * 2.54, 1)
+YARDS_PER_METER = 1.09361
+
+class LengthConverter:
+    def __init__(self, factor=YARDS_PER_METER):
+        self.factor = factor
+
+    def convert(self, meters):
+        return meters * self.factor
+
+    def convert_batch(self, meters_list):
+        return [self.convert(m) for m in meters_list]
+
+def create_temp_file(values):
+    fd, path = tempfile.mkstemp(suffix='.txt')
+    try:
+        with os.fdopen(fd, 'w') as f:
+            for val in values:
+                f.write(f"{val}\n")
+        return path
+    except Exception:
+        os.close(fd)
+        raise
+
+def read_and_convert(filepath, converter):
+    results = []
+    with open(filepath, 'r') as f:
+        for line in f:
+            cleaned = line.strip()
+            if not cleaned:
+                continue
+            try:
+                val = float(cleaned)
+                results.append(converter.convert(val))
+            except ValueError:
+                continue
+    return results
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [36, 70, 18, 29]
-
-    for inch_val in samples:
-        cm_val = inches_to_cm(inch_val)
-        print(f"{inch_val} inches is {cm_val} centimeters")
+    sample_meters = [10, 25.5, 100, 0.5, 75]
+    file_path = create_temp_file(sample_meters)
+    try:
+        converter = LengthConverter(YARDS_PER_METER)
+        output_values = read_and_convert(file_path, converter)
+        for orig, conv in zip(sample_meters, output_values):
+            print(f"{orig} meters equals {conv} yards")
+    finally:
+        os.remove(file_path)

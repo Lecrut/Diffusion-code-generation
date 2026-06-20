@@ -1,20 +1,11 @@
-import statistics
+import numpy as np
 
-def main():
-    # Hard-coded sample weights to ensure no external input is required
-    weight_data = [70.5, 68.2, 71.3, 69.8, 72.1]
-    
-    # Calculate the median using the built-in statistics module
-    try:
-        median_weight = statistics.median(weight_data)
-        
-        # Print the result formatted to two decimal places
-        print(f"{median_weight:.2f}")
-    except ValueError as e:
-        if len(weight_data) == 0:
-            print("Error: No data points provided.")
-        else:
-            raise
+def apply_percentage_change(weights, percentage_change):
+    weights_array = np.array(weights)
+    return (weights_array * (1 + percentage_change)).tolist()
 
 if __name__ == '__main__':
-    main()
+    sample_weights = [100.5, 200.0, 50.25, 75.5]
+    change_percentage = 0.1
+    result = apply_percentage_change(sample_weights, change_percentage)
+    print(result)

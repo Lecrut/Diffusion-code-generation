@@ -1,61 +1,69 @@
-"""
-Module: WeightValidatorDecorator
+import functools
 
-This module provides a decorator to validate and normalize weight inputs.
-It throws specific exceptions for invalid data types, non-positive values, or unrealistic weights.
-"""
+MAX_KG = 500
+MIN_KG = 0.01
 
-class ValidationError(Exception):
-    """Base exception for validation errors."""
-    pass
-
-class TypeValidationError(ValidationError):
-    """Raised when the input is not of an expected numeric type (int or float)."""
+class WeightTypeException(Exception):
     def __init__(self, value):
         self.value = value
-        super().__init__(f"Invalid data type: {type(value).__name__}. Expected int or float.")
+        super().__init__("Weight must be a numeric type, not {}".format(type(value).__name__))
 
-class NegativeWeightError(ValidationError):
-    """Raised when the weight is negative."""
+class WeightRangeException(Exception):
     def __init__(self, value):
         self.value = value
-        super().__init__(f"We cannot have a negative weight: {value}")
+        super().__init__("Weight {} is out of allowed range ({:.2f} to {:.2f} kg)".format(value, MIN_KG, MAX_KG))
 
-class ImpossibleWeightError(ValidationError):
-    """Raised when the weight exceeds realistic biological limits (e.g., > 1000 kg)."""
-    def __init__(self, value):
-        self.value = value
-        super().__init__(f"Impossible weight detected: {value} kg. Human body mass typically does not exceed this.")
+def normalize_weight(value):
+    if isinstance(value, bool):
+        raise WeightTypeException(value)
+    if not isinstance(value, (int, float)):
+        raise WeightTypeException(value)
+    normalized = float(value)
+    if normalized <= 0:
+        raise WeightRangeException(normalized)
+    if normalized > MAX_KG:
+        raise WeightRangeException(normalized)
+    return normalized
 
-def validate_weight(func):
-    """
-    Decorator to automatically validate and normalize weight input for a function.
+def weight_validator(func):
+    @functools.wraps(func)
+    def decorator(*args, **kwargs):
+        if not args:
+            raise WeightTypeException("missing weight argument")
+        raw_weight = args[0]
+        clean_weight = normalize_weight(raw_weight)
+        new_args = (clean_weight,) + args[1:]
+        return func(*new_args, **kwargs)
+    return decorator
 
-    Validation rules:
-    1. Input must be an instance of int or float.
-    2. Weight cannot be negative (or zero, as per biological context).
-    3. Weight should not exceed 1000 kg.
+@weight_validator
+def calculate_shipping_cost(weight):
+    rate = 0.05
+    base_fee = 5.0
+    return base_fee + (weight * rate)
 
-    Normalization: 
-    - Converts input to a float for uniform handling if it was already numeric but had minor type differences.
-
-    Args:
-        func (callable): The function whose arguments are to be validated.
-
-    Returns:
-        callable: The wrapped decorator function.
-
-    Raises:
-        TypeValidationError: If the argument is not int or float.
-        NegativeWeightError: If the weight < 0.
-        ImpossibleWeightError: If the weight > 1000.
-    """
-    def wrapper(*args, **kwargs):
-        # Find all arguments that look like weights (first positional arg usually)
-        # For this implementation, we assume the first argument of any function wrapped is a weight.
-        
-        if args:
-            raw_weight = args[0]
+@weight_validator
+def log_weight_entry(weight, description):
+    return "Logged: {} kg for {}".format(weight, description)
 
 if __name__ == '__main__':
-    pass
+    print(calculate_shipping_cost(150))
+    print(calculate_shipping_cost(250.5))
+    try:
+        calculate_shipping_cost(-10)
+    except WeightRangeException as e:
+        print(e)
+    try:
+        calculate_shipping_cost("heavy")
+    except WeightTypeException as e:
+        print(e)
+    try:
+        calculate_shipping_cost(True)
+    except WeightTypeException as e:
+        print(e)
+    print(log_weight_entry(12.5, "package_a"))
+    print(log_weight_entry(500, "package_b"))
+    try:
+        log_weight_entry(501, "package_c")
+    except WeightRangeException as e:
+        print(e)

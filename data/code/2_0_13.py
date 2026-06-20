@@ -1,78 +1,43 @@
 import os
+import tempfile
+import sys
 
-def read_volume_file(file_path):
-    """
-    Reads volume measurements from a file line by line, parses floats,
-    and returns the total sum along with any encountered errors or skipped lines.
-    
-    Args:
-        file_path (str): Path to the file containing numeric values.
-        
-    Returns:
-        tuple: (total_volume, error_messages) where error_messages is a list of strings.
-               If an exception occurs during reading, total_volume will be 0 and errors populated.
-    """
-    if not os.path.exists(file_path):
-        return None, [f"File '{file_path}' does not exist."]
-
+def read_and_calculate_volume(file_path):
+    total_volume = 0.0
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            total_volume = 0.0
-            error_messages = []
-            
-            for line_num, line in enumerate(f, start=1):
-                stripped_line = line.strip()
-                
-                # Skip empty lines or comments (lines starting with #)
-                if not stripped_line or stripped_line.startswith('#'):
+        with open(file_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
                     continue
-                
                 try:
-                    value = float(stripped_line)
-                    total_volume += value
-                except ValueError as e:
-                    error_messages.append(f"Line {line_num}: Invalid number '{stripped_line}' - {e}")
-
-            return total_volume, error_messages
-            
-    except PermissionError:
-        return None, [f"Permission denied to read file '{file_path}'."]
+                    volume = float(line)
+                    if volume < 0:
+                        raise ValueError("Negative volume")
+                    total_volume += volume
+                except ValueError:
+                    continue
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file {file_path} does not exist.")
     except IOError as e:
-        return None, [f"I/O error while reading file '{file_path}': {e}"]
+        raise IOError(f"Error reading file {file_path}: {e}")
+    return total_volume
 
-def calculate_total_volume(volume_data):
-    """
-    Calculates the total volume from a list of individual measurements.
-    
-    Args:
-        volume_data (list[float]): List of float values representing volumes.
-        
-    Returns:
-        float: Sum of all volumes, rounded to 4 decimal places for cleanliness.
-               If empty input is provided, returns 0.0.
-    """
-    if not isinstance(volume_data, list):
-        raise TypeError("Input must be a list.")
-    
-    total = sum(volume_data)
-    return round(total, 4)
+def create_sample_file(file_path, volumes):
+    with open(file_path, 'w') as f:
+        for v in volumes:
+            f.write(f"{v}\n")
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without external files or user input.
-    # Simulating reading from a file by creating an in-memory dataset that mimics the output structure of read_volume_file logic but simplified 
-    # to demonstrate calculation and error handling on valid data directly, as per robustness requirements.
+    sample_volumes = [10.5, 20.3, 5.2, -1.0, 15.0, "invalid", 25.5]
     
-    # Sample volume measurements (simulated content)
-    sample_measurements = [10.5, 20.3, -5.7, "invalid", 40.9]
-
+    temp_fd, temp_path = tempfile.mkstemp(suffix='.txt')
+    os.close(temp_fd)
+    
     try:
-        total_volume = calculate_total_volume(sample_measurements)
-        
-        if not isinstance(total_volume, float):
-            print("Error in calculation.")
-        else:
-            print(f"Total Volume Calculated: {total_volume}")
-            
-    except Exception as e:
-        error_msg = f"A runtime exception occurred during volume processing: {e}"
-        print(error_msg)
+        create_sample_file(temp_path, sample_volumes)
+        total = read_and_calculate_volume(temp_path)
+        print(total)
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)

@@ -1,23 +1,9 @@
-def inches_to_cm(inches: float) -> float:
-    """
-    Convert a length given in inches to centimeters.
-    
-    The conversion factor is defined as exactly 2.54 cm per inch, which 
-    provides the required mathematical precision for this task.
-    
-    Args:
-        inches (float): Length value in inches. Should be non-negative.
-        
-    Returns:
-        float: Equivalent length in centimeters.
-    """
-    return inches * 2.54
+import math
+
+def convert_meters_to_yards(meters_list):
+    return [m * 1.09361 for m in meters_list]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the conversion function
-    sample_inches = [1, 12, 36]
-    
-    print("Inches to Centimeters Conversion Results:")
-    for inch_val in sample_inches:
-        cm_value = inches_to_cm(inch_val)
-        print(f"{inch_val} inches is exactly {cm_value} centimeters")
+    sample_lengths = [1.0, 2.5, 100.0, 0.5]
+    result = convert_meters_to_yards(sample_lengths)
+    print(result)

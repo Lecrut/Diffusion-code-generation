@@ -1,18 +1,33 @@
-import sys
+import csv
+import io
 
-def calculate_volume_data():
-    """Calculates total and average volume from a list of measurements."""
-    volumes = [10, 25, 30]
-    
-    if not volumes:
-        return None
-    
-    total_volume = sum(volumes)
-    count = len(volumes)
-    average_volume = total_volume / count
-    
-    print(f"Total Volume: {total_volume}")
-    print(f"Average Volume: {average_volume:.2f}")
+class DataPipeline:
+    def __init__(self, csv_content, factor):
+        self.csv_content = csv_content
+        self.factor = factor
+
+    def process(self):
+        output_buffer = io.StringIO()
+        reader = csv.DictReader(io.StringIO(self.csv_content))
+        fieldnames = reader.fieldnames
+        
+        writer = csv.DictWriter(output_buffer, fieldnames=fieldnames)
+        writer.writeheader()
+        
+        for row in reader:
+            try:
+                original_volume = float(row['volume'])
+                scaled_volume = original_volume * self.factor
+                row['volume'] = scaled_volume
+            except (ValueError, KeyError):
+                continue
+            writer.writerow(row)
+        
+        return output_buffer.getvalue()
 
 if __name__ == '__main__':
-    calculate_volume_data()
+    sample_csv = "name,volume\nApple,10\nBanana,20\nCherry,5"
+    scaling_factor = 2.5
+    pipeline = DataPipeline(sample_csv, scaling_factor)
+    result = pipeline.process()
+    print(result)

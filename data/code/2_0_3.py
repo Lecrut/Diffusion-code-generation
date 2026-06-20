@@ -1,33 +1,44 @@
-def calculate_total_volume(filepath):
-    total_volume = 0.0
-    try:
-        with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume_str = line.strip()
-                    if volume_str:
-                        volume = float(volume_str)
-                        total_volume += volume
-                except ValueError:
-                    continue
-    except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return None
-    except IOError:
-        print(f"Error: Could not read file at {filepath}")
-        return None
-    return total_volume
+import os
+import tempfile
+
+class VolumeCalculator:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def calculate_total_volume(self):
+        total_volume = 0.0
+        try:
+            with open(self.file_path, 'r') as file:
+                for line in file:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        volume_value = float(line)
+                        total_volume += volume_value
+                    except ValueError:
+                        continue
+            return total_volume
+        except FileNotFoundError:
+            return 0.0
+        except PermissionError:
+            return 0.0
+        except Exception:
+            return 0.0
+
 if __name__ == '__main__':
-    sample_filename = "volume_data.txt"
-    try:
-        with open(sample_filename, 'w') as f:
-            f.write("10.5\n")
-            f.write("22.3\n")
-            f.write("5.0\n")
-            f.write("invalid_data\n")
-            f.write("1.25\n")
-        total = calculate_total_volume(sample_filename)
-        if total is not None:
-            print(f"Total volume calculated: {total}")
-    except Exception as e:
-        print(f"An unexpected error occurred during setup or execution: {e}")
+    temp_dir = tempfile.mkdtemp()
+    sample_file_path = os.path.join(temp_dir, "volumes.txt")
+    with open(sample_file_path, 'w') as f:
+        f.write("10.5\n")
+        f.write("20.0\n")
+        f.write("5.5\n")
+        f.write("invalid_line\n")
+        f.write("30.0\n")
+    
+    calculator = VolumeCalculator(sample_file_path)
+    result = calculator.calculate_total_volume()
+    print(result)
+    
+    os.remove(sample_file_path)
+    os.rmdir(temp_dir)

@@ -1,89 +1,59 @@
-import time
-
 class WeightManager:
-    """A class to manage weight measurements efficiently using an internal dictionary."""
-
     def __init__(self):
-        self._weights = {}  # Internal storage key-value pairs (id, value)
-    
-    def add_weight(self, person_id: str, weight_value: float, timestamp: time.time | None = None) -> int:
-        """Add a new weight measurement.
-        
-        Args:
-            person_id (str): Unique identifier for the person.
-            weight_value (float): The measured weight in kg.
-            timestamp (time.time | None, optional): Optional specific timestamp. Defaults to current time if not provided.
-            
-        Returns:
-            int: A generated unique ID for this measurement record.
-        """
-        self._weights[person_id] = {
-            "value": weight_value,
-            "timestamp": timestamp or time.time(),
-            "_id_counter": len(self._weights) + 1 if not hasattr(WeightManager, '_counter') else getattr(WeightManager, '_counter', 0) + 1
-        }
-        
-        # Increment global counter for unique ID generation per class instance if needed
-        WeightManager._counter = self._weights.get("global_counter", 0) + 1
-        
-        return WeightManager._counter
-    
-    def get_weight(self, person_id: str) -> float | None:
-        """Retrieve the most recent weight measurement for a specific person.
-        
-        Args:
-            person_id (str): Unique identifier for the person.
-            
-        Returns:
-            float | None: The latest recorded weight if found, otherwise None.
-        """
-        return self._weights.get(person_id)["value"]
-    
-    def update_weight(self, person_id: str, new_value: float) -> bool:
-        """Update an existing or create a record for the given person with a new measurement time efficiency optimized.
-        
-        Args:
-            person_id (str): Unique identifier for the person.
-            new_value (float): The updated weight value in kg.
-            
-        Returns:
-            bool: True if update was successful, False otherwise.
-        """
-        self._weights[person_id]["value"] = new_value
-        return True
+        self._weights = {}
 
-# Run sample tests to demonstrate functionality without user input
+    def store_weight(self, identifier, weight):
+        if not isinstance(identifier, str) or not identifier:
+            raise ValueError("Identifier must be a non-empty string")
+        if not isinstance(weight, (int, float)):
+            raise ValueError("Weight must be a number")
+        self._weights[identifier] = float(weight)
+
+    def get_weight(self, identifier):
+        if identifier not in self._weights:
+            raise KeyError(f"No weight found for identifier: {identifier}")
+        return self._weights[identifier]
+
+    def update_weight(self, identifier, new_weight):
+        if identifier not in self._weights:
+            raise KeyError(f"Identifier not found: {identifier}")
+        if not isinstance(new_weight, (int, float)):
+            raise ValueError("New weight must be a number")
+        self._weights[identifier] = float(new_weight)
+
+    def delete_weight(self, identifier):
+        if identifier not in self._weights:
+            raise KeyError(f"Identifier not found: {identifier}")
+        del self._weights[identifier]
+
+    def list_weights(self):
+        return dict(self._weights)
+
+    def has_weight(self, identifier):
+        return identifier in self._weights
+
 if __name__ == '__main__':
     manager = WeightManager()
+    manager.store_weight("user1", 70.5)
+    manager.store_weight("user2", 85.2)
+    manager.store_weight("user3", 62.8)
     
-    # Initialize counter for ID generation within the class scope during this session context if necessary, 
-    # though typically classes manage their own state. For strict isolation in a script:
-    getattr(WeightManager, '_counter', 0)
-
-    print("Adding initial weights...")
-    manager.add_weight("person_1", 75.5)
+    retrieved_weight = manager.get_weight("user1")
+    print(f"Retrieved weight for user1: {retrieved_weight}")
     
-    id_2 = manager.add_weight("person_2", 82.3)
-    weight_manager_id_counter = int(id_2) # Capture the generated ID logic implicitly
+    manager.update_weight("user1", 71.0)
+    updated_weight = manager.get_weight("user1")
+    print(f"Updated weight for user1: {updated_weight}")
     
-    print(f"Added person_2 with internal tracking: {weight_manager_id_counter}")
-
-    print("\nRetrieving weights...")
-    w1 = manager.get_weight("person_1")
-    w2 = manager.get_weight("person_3")  # Person who hasn't been added yet
+    all_weights = manager.list_weights()
+    print(f"All weights: {all_weights}")
     
-    print(f"Weight of person_1: {w1} kg")
+    has_user1 = manager.has_weight("user1")
+    print(f"Has user1: {has_user1}")
     
-    if not isinstance(w2, float):
-        print(f"Weight of person_3: None (not recorded)")
-
-    print("\nUpdating weights...")
-    manager.update_weight("person_1", 76.0) 
-    result = manager.update_weight("non_existent_person", 90.0) # Creates a new record
+    has_user4 = manager.has_weight("user4")
+    print(f"Has user4: {has_user4}")
     
-    w_updated = manager.get_weight("person_1")
-    
-    print(f"Updated weight of person_1: {w_updated} kg")
-
-    if not isinstance(result, bool):
-        pass
+    manager.delete_weight("user2")
+    weights_after_delete = manager.list_weights()
+    print(f"Weights after deleting user2: {weights_after_delete}")

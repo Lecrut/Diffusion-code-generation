@@ -1,33 +1,26 @@
 def parse_volumes(volume_string):
-    volumes = []
-    if not volume_string:
-        return volumes
-    volume_list = volume_string.split(',')
-    for item in volume_list:
-        item = item.strip()
-        if not item:
+    if not isinstance(volume_string, str):
+        raise TypeError("Input must be a string")
+    
+    parts = volume_string.split(',')
+    result = []
+    
+    for part in parts:
+        stripped = part.strip()
+        if stripped == '':
             continue
         try:
-            volume = float(item)
-            volumes.append(volume)
+            value = float(stripped)
+            result.append(value)
         except ValueError:
-            print(f"Error: Could not convert '{item}' to a float.")
-            continue
-    return volumes
+            raise ValueError(f"Invalid volume value: '{stripped}'")
+            
+    return result
+
 if __name__ == '__main__':
-    sample_input_1 = "10.5,20,33.14"
-    sample_input_2 = "5,hello,12.9"
-    sample_input_3 = ""
-    sample_input_4 = "1,2,three,4.5"
-    result_1 = parse_volumes(sample_input_1)
-    print(f"Input: '{sample_input_1}'")
-    print(f"Result: {result_1}\n")
-    result_2 = parse_volumes(sample_input_2)
-    print(f"Input: '{sample_input_2}'")
-    print(f"Result: {result_2}\n")
-    result_3 = parse_volumes(sample_input_3)
-    print(f"Input: '{sample_input_3}'")
-    print(f"Result: {result_3}\n")
-    result_4 = parse_volumes(sample_input_4)
-    print(f"Input: '{sample_input_4}'")
-    print(f"Result: {result_4}\n")
+    sample_data = "10.5, 20.0, abc, 30.75"
+    try:
+        parsed = parse_volumes(sample_data)
+        print(parsed)
+    except ValueError as e:
+        print(f"Error: {e}")

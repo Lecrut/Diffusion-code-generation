@@ -1,33 +1,36 @@
 class WeightTracker:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
         self.weights = []
+
     def add_weight(self, weight):
+        if not isinstance(weight, (int, float)):
+            raise ValueError("Weight must be a number")
         self.weights.append(weight)
-    def calculate_statistics(self):
+
+    def get_stats(self):
         if not self.weights:
-            return {
-                "name": self.name,
-                "total_weight": 0,
-                "average_weight": 0,
-                "count": 0
-            }
-        total_weight = sum(self.weights)
-        count = len(self.weights)
-        average_weight = total_weight / count
+            return {"count": 0, "min": None, "max": None, "average": None, "total": 0}
         return {
-            "name": self.name,
-            "total_weight": total_weight,
-            "average_weight": average_weight,
-            "count": count
+            "count": len(self.weights),
+            "min": min(self.weights),
+            "max": max(self.weights),
+            "average": sum(self.weights) / len(self.weights),
+            "total": sum(self.weights)
         }
+
+    def display_stats(self):
+        stats = self.get_stats()
+        print(f"Entries: {stats['count']}")
+        print(f"Min: {stats['min']}")
+        print(f"Max: {stats['max']}")
+        print(f"Average: {stats['average']:.2f}")
+        print(f"Total: {stats['total']}")
+
 if __name__ == '__main__':
-    tracker = WeightTracker("Alice")
-    sample_weights = [65.5, 66.0, 65.8, 67.1, 66.5]
-    for weight in sample_weights:
-        tracker.add_weight(weight)
-    statistics = tracker.calculate_statistics()
-    print(f"--- Weight Tracking Statistics for {statistics['name']} ---")
-    print(f"Total recorded weights: {statistics['count']}")
-    print(f"Total weight: {statistics['total_weight']:.2f}")
-    print(f"Average weight: {statistics['average_weight']:.2f}")
+    tracker = WeightTracker()
+    tracker.add_weight(70.5)
+    tracker.add_weight(72.0)
+    tracker.add_weight(68.5)
+    tracker.add_weight(75.0)
+    tracker.display_stats()
+    print(tracker.get_stats()['average'])

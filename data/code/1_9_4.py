@@ -1,33 +1,43 @@
 class WeightTracker:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
         self.weights = []
+
     def add_weight(self, weight):
+        if not isinstance(weight, (int, float)) or weight < 0:
+            raise ValueError("Weight must be a non-negative number")
         self.weights.append(weight)
-    def calculate_stats(self):
+
+    def get_statistics(self):
         if not self.weights:
             return {
-                "name": self.name,
-                "total_weights": 0,
-                "average_weight": 0,
-                "count": 0
+                "count": 0,
+                "min": None,
+                "max": None,
+                "average": None
             }
-        total = sum(self.weights)
         count = len(self.weights)
-        average = total / count
+        minimum = min(self.weights)
+        maximum = max(self.weights)
+        average = sum(self.weights) / count
         return {
-            "name": self.name,
-            "total_weights": total,
-            "average_weight": average,
-            "count": count
+            "count": count,
+            "min": minimum,
+            "max": maximum,
+            "average": average
         }
+
+    def get_weight_list(self):
+        return list(self.weights)
+
 if __name__ == '__main__':
-    tracker = WeightTracker("Alice")
-    sample_weights = [65.5, 68.0, 70.5, 72.0, 75.5]
-    for weight in sample_weights:
-        tracker.add_weight(weight)
-    stats = tracker.calculate_stats()
-    print(f"Weight Tracking Statistics for {stats['name']}:")
-    print(f"Total recorded weights: {stats['total_weights']}")
-    print(f"Number of entries: {stats['count']}")
-    print(f"Average weight: {stats['average_weight']:.2f}")
+    tracker = WeightTracker()
+    tracker.add_weight(150.5)
+    tracker.add_weight(148.2)
+    tracker.add_weight(152.0)
+    tracker.add_weight(149.7)
+    stats = tracker.get_statistics()
+    print(f"Count: {stats['count']}")
+    print(f"Min: {stats['min']}")
+    print(f"Max: {stats['max']}")
+    print(f"Average: {stats['average']}")
+    print(f"All Weights: {tracker.get_weight_list()}")

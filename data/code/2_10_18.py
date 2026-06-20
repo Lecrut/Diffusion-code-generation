@@ -1,52 +1,43 @@
-def read_volume_from_file(filename):
-    """Reads volume measurements from a file and returns total volume."""
-    try:
-        with open(filename, 'r') as f:
-            content = f.read().strip()
-            
-            # Handle case where file might contain comments or empty lines
-            if not content:
-                return 0.0
-            
-            parts = [line.strip() for line in content.split('\n')]
-            volumes = []
-            
-            for part in parts:
-                try:
-                    vol_str = part.replace(',', '.') # Handle European comma decimals
-                    volume_value = float(vol_str)
-                    if not isinstance(volume_value, (int, float)):
-                        raise ValueError(f"Invalid conversion to float: {part}")
-                    volumes.append(volume_value)
-                except ValueError as e:
-                    print(f"Warning: Skipping invalid entry '{part}': {e}", file=__import__('sys').stderr)
-            return sum(volumes) if volumes else 0.0
-            
-    except FileNotFoundError:
-        raise Exception(f"File not found: {filename}")
+class VolumeCalculator:
+    UNIT_FACTORS = {
+        "ml": 1.0,
+        "l": 1000.0,
+        "us_fl_oz": 29.5735,
+        "gal": 3785.41,
+        "cup": 236.588,
+        "pt": 473.176,
+        "qt": 946.353,
+        "m3": 1000000.0,
+        "cm3": 1.0
+    }
 
-def main():
-    # Hard-coded sample values to simulate reading from a file without external dependencies
-    filename = "sample_volumes.txt"
-    
-    try:
-        total_volume = read_volume_from_file(filename)
+    def calculate_total(self, measurements: list, target_unit: str) -> float:
+        if target_unit not in self.UNIT_FACTORS:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
         
-        print("Total Volume Calculated:")
-        print(f"{total_volume:.2f}")
-    except Exception as e:
-        # Graceful handling of errors, though sample data is self-contained here
-        if filename == "sample_volumes.txt":
-            # For the specific hard-coded scenario below, we simulate file existence by creating a string representation in memory logic or just raising an error that mimics it. 
-            # However, since we cannot create files dynamically without user input/args per constraints (no pre-existing files), 
-            # and the task says "sample block must run... No pre-existing files", we will simulate reading from a list directly to ensure execution succeeds immediately.
-            
-            sample_data = [10.5, 20.3, -5.7]
-            total_volume = sum(sample_data)
-            print("Total Volume Calculated (Sample Data):")
-            print(f"{total_volume:.2f}")
-        else:
-            raise
+        base_ml_values = [
+            value * self.UNIT_FACTORS[unit] 
+            for value, unit in measurements
+            if unit in self.UNIT_FACTORS
+        ]
+        
+        total_base_ml = sum(base_ml_values)
+        return total_base_ml / self.UNIT_FACTORS[target_unit]
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    samples = [
+        (100, "ml"),
+        (1, "l"),
+        (32, "us_fl_oz"),
+        (2, "cup"),
+        (0.5, "gal")
+    ]
+    calculator = VolumeCalculator()
+    result = calculator.calculate_total(samples, "ml")
+    print(f"Total volume in ml: {result}")
+    
+    result_gal = calculator.calculate_total(samples, "gal")
+    print(f"Total volume in gal: {result_gal}")
+    
+    result_l = calculator.calculate_total(samples, "l")
+    print(f"Total volume in l: {result_l}")

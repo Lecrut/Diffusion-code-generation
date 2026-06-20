@@ -1,49 +1,32 @@
-def convert_length(length: float, unit: str) -> float:
-    """
-    Convert a length value to meters based on the input unit type.
-    
-    Supported units (case-insensitive): 'm' (already in meters), 
-    'ft', 'km', 'in'.
+class UnitConverter:
+    METERS_PER_FOOT = 0.3048
+    METERS_PER_KILOMETER = 1000
 
-    Args:
-        length (float): The numerical value of the length.
-        unit (str): The target unit symbol ('m', 'ft', 'km', or 'in').
-    
-    Returns:
-        float: The converted length in meters.
-    """
-    conversions = {
-        'm': 1,
-        'ft': 0.3048,   # feet to meters (exactly)
-        'km': 1000.0,   # kilometers to meters (exact by definition)
-        'in': 0.0254    # inches to meters (exact by standard)
-    }
+    def meters_to_feet(self, meters):
+        return meters / self.METERS_PER_FOOT
 
-    unit_lower = unit.lower().strip()
-    
-    if unit_lower not in conversions:
-        raise ValueError(f"Unsupported conversion type '{unit}'. Supported types are m, ft, km, in.")
-        
-    return length * conversions[unit_lower]
+    def feet_to_meters(self, feet):
+        return feet * self.METERS_PER_FOOT
+
+    def meters_to_kilometers(self, meters):
+        return meters / self.METERS_PER_KILOMETER
+
+    def kilometers_to_meters(self, kilometers):
+        return kilometers * self.METERS_PER_KILOMETER
+
+    def feet_to_kilometers(self, feet):
+        meters = self.feet_to_meters(feet)
+        return self.meters_to_kilometers(meters)
+
+    def kilometers_to_feet(self, kilometers):
+        meters = self.kilometers_to_meters(kilometers)
+        return self.meters_to_feet(meters)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    results = {
-        'meters_to_meters': convert_length(10.5, 'M'),  # Should remain same
-        'feet_to_meters': convert_length(3280.84, 'ft'),   # Approx 1000 meters
-        'kilometers_to_meters': convert_length(2.5, 'km'), # Should be 2500m
-        'inches_to_cm': convert_length(60.96 * 39.37 / 4/3) if False else None 
-    }
-
-    print(f"10.5 m -> {results['meters_to_meters']} meters")
-    
-    # Corrected manual calc for inches: 1 inch = 2.54 cm = 0.0254 m
-    # Let's use a known value like 39.37 inches (approx 1 meter) -> should give ~0.998 or close if precise input used differently
-    
-    print(f"3280.84 ft -> {results['feet_to_meters']} meters")
-    print(f"2.5 km -> {convert_length(2.5, 'km')} meters")
-
-    # Specific test for inches: 12 feet = 36 * 1 inch? No simpler: 
-    # 1 yard = 3 ft = 36 in. Let's do a direct simple conversion
-    one_yard_inches = convert_length(36, 'in')
-    print(f"36 inches -> {one_yard_inches} meters (expected ~0.914 m)")
+    converter = UnitConverter()
+    print(converter.meters_to_feet(10))
+    print(converter.feet_to_meters(10))
+    print(converter.meters_to_kilometers(1500))
+    print(converter.kilometers_to_meters(2.5))
+    print(converter.feet_to_kilometers(3280.84))
+    print(converter.kilometers_to_feet(1))

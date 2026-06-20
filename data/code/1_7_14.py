@@ -1,111 +1,54 @@
-import math
-from typing import Any
+import functools
 
-class WeightValidationError(Exception):
-    """Base exception for weight validation errors."""
-    pass
+INVALID_WEIGHT_TYPE_MSG = "Weight must be a numeric type (int or float), not {}."
+IMPOSSIBLE_WEIGHT_MSG = "Weight value {} is impossible (must be 0.0 to 500.0)."
+MIN_VALID_WEIGHT = 0.0
+MAX_VALID_WEIGHT = 500.0
 
-class InvalidDataTypeError(WeightValidationError):
-    """Raised when input is not a numeric type (int or float)."""
-    pass
+class WeightTypeError(TypeError):
+    def __init__(self, value):
+        if isinstance(value, type):
+            super().__init__(INVALID_WEIGHT_TYPE_MSG.format(value.__name__))
+        else:
+            super().__init__(INVALID_WEIGHT_TYPE_MSG.format(type(value).__name__))
 
-class NegativeWeightError(WeightValidationError):
-    """Raised when the input value represents an impossible negative weight."""
-    pass
+class ImpossibleWeightError(ValueError):
+    def __init__(self, value):
+        super().__init__(IMPOSSIBLE_WEIGHT_MSG.format(value))
 
-def normalize_weight(value: Any) -> float:
-    """
-    Validates and normalizes a weight input.
-
-    Args:
-        value: The input to validate as int or float, must be positive (or zero).
-
-    Returns:
-        The validated numeric weight value as a float.
-
-    Raises:
-        InvalidDataTypeError: If the value is not an instance of int or float.
-        NegativeWeightError: If the value is negative or NaN/Inf.
-    """
-    if not isinstance(value, (int, float)):
-        raise InvalidDataTypeError(f"Invalid data type for weight '{value}'. Expected a number.")
-
-    normalized_value = float(value)
-
-    # Check for Non-Finite values like NaN or Infinity which are mathematically impossible as physical weights in this context.
-    if not math.isfinite(normalized_value):
-        raise InvalidDataTypeError(f"Non-finite value {normalized_value} is invalid for weight.")
-
-    if normalized_value < 0:
-        raise NegativeWeightError(f"Weight cannot be negative: {value}.")
-
-    return normalized_value
-
-def validate_weight(value: Any) -> float:
-    """
-    Decorator-like factory that wraps a function to automatically handle input validation.
-
-    This can be used as `@validate_weight` decorator or called manually on functions/methods.
-    
-    When applied via the '@' syntax, it will wrap any target method/function provided in arguments and return 
-    its original callable with an injected first argument for normalization (if the function signature is compatible), 
-    otherwise if a string target name is passed it acts as a higher-order decorator factory that wraps specific functions.
-    
-    Note: Since standard Python decorators work directly on functions, this implementation provides two modes via `apply`.
-    If used with '@validate_weight' syntax directly without arguments in the user's mental model of typical usage, 
-    usually one would pass an optional inner function or string name if they wanted to use it as a higher-order wrapper factory.
-    
-    However, strictly adhering to "decorator for a function", we interpret this as creating a utility that acts like:
-        @validate_weight(func) -> returns decorated func where the first arg is auto-normalized
-    
-    But since standard python '@validator' expects `@validator`, let's create an adapter. 
-    
-    To strictly follow the prompt "Design and implement A decorator", we will provide an implementation of a generic higher-order function that can be used via:
-        @validate_weight(lambda f, name="my_func": ...)
+def normalize_weight_decorator(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        if not args:
+            raise WeightTypeError(type(None))
         
-    Actually, to make it most useful as requested ("automatically validates"), let's create a standard decorator factory 
-    where the user passes the function directly or we use introspection on `__name__` if no arguments are passed? No, that breaks signature. 
-    
-    Let's implement: A higher-order function that wraps ANY target method/function and applies normalization to its first argument automatically.
-    
-    Usage:
-        @validate_weight
-        def my_func(weight): ... 
-        # Works by capturing 'self' in Python if it detects __func__, otherwise we handle single args specially? No, simpler is best.)
+        raw_weight = args[0]
         
-    Revised Design for strict "A decorator":
-    We will define `decorator_validate` that takes a function object and returns the wrapped version.
-    
-    Usage: @validate_weight(function) works via apply() or just standard usage where user passes func directly to it if needed? 
-    Actually, Python decorators are usually single-line annotations like @validator(func). Let's do that. 
-    BUT to make it "automatically" work for a generic function class method context (like 'self'), we will detect if the first arg is 'self'.
-    
-    If self_detected: normalize inner args else normalizing outer args."""
-    
-    def decorator(target_func):
-        """Decorator factory that wraps target_func with validation logic."""
-
-        name = getattr(target_func, '__name__', 'unknown')
+        if isinstance(raw_weight, bool):
+            raise WeightTypeError(raw_weight)
         
-        @functools.wraps(target_func)
-        def wrapper(*args, **kwargs):
-            try:
-                # Check if it's a class method (self argument detected as first arg in args list) or standalone function.
-                has_self = len(args) > 0 and type(args[0]).__name__ == 'method' if hasattr(type(target_func), '__bases__') else False
-                
-                normalized_args_list, kwargs_to_use = [], []
+        if not isinstance(raw_weight, (int, float)):
+            raise WeightTypeError(raw_weight)
+        
+        if raw_weight < MIN_VALID_WEIGHT or raw_weight > MAX_VALID_WEIGHT:
+            raise ImpossibleWeightError(raw_weight)
+        
+        normalized_value = float(raw_weight)
+        return func(normalized_value)
+    
+    return wrapper
 
-                # Simple heuristic: If the first argument is 'self', pass it through without normalization (assuming weight is second arg)
-                # OR we assume the FIRST numeric-like arg should be validated. 
-                
-                # To keep this robust and simple as per task "validates ... input":
-                # We will try to validate any positional args that look like weights or just the first one if it's a number? 
-                # That might break existing code where 'self' is checked.
-                
-                pass
-
-            except:
-                return target_func(*args, **kwargs)
+@normalize_weight_decorator
+def calculate_bmi(weight):
+    height = 1.75
+    return weight / (height ** 2)
 
 if __name__ == '__main__':
-    pass
+    test_values = [75.5, 0, 500, "invalid", True, -10, 600]
+    
+    for value in test_values:
+        try:
+            result = calculate_bmi(value)
+            print("Input: {}, Result: {:.2f}".format(value, result))
+        except (WeightTypeError, ImpossibleWeightError) as e:
+            print("Input: {}, Error: {}".format(repr(value), str(e)))

@@ -1,14 +1,15 @@
-def filter_positive_weights(weight_strings):
+def filter_valid_weights(weight_strings):
     valid_weights = []
-    for weight_str in weight_strings:
+    for s in weight_strings:
         try:
-            weight = float(weight_str)
-            if weight > 0:
-                valid_weights.append(weight)
-        except ValueError:
+            value = float(s)
+            if value > 0:
+                valid_weights.append(value)
+        except (ValueError, TypeError):
             continue
     return valid_weights
+
 if __name__ == '__main__':
-    sample_weights = ["10.5", "20", "invalid", "-5.2", "0", "33.1"]
-    result = filter_positive_weights(sample_weights)
+    sample_data = ["10.5", "-3.2", "abc", "0", "25", "12.3kg", "45.67", "", "50"]
+    result = filter_valid_weights(sample_data)
     print(result)

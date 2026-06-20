@@ -1,42 +1,76 @@
 import functools
-def validate_and_normalize_weight(func):
+
+class WeightInputError(ValueError):
+    def __init__(self, msg):
+        self.msg = msg
+        super().__init__(msg)
+
+class WeightTypeMismatchError(WeightInputError):
+    def __init__(self, value):
+        self.value = value
+        super().__init__(f"Weight must be numeric, got {type(value).__name__}")
+
+class WeightOutOfRangeError(WeightInputError):
+    def __init__(self, value):
+        self.value = value
+        super().__init__(f"Weight {value} is out of range [0.001, 500.0]")
+
+def safe_to_weight(func):
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight_input = args[0]
+    def wrapper(weight_input):
+        if isinstance(weight_input, bool):
+            raise WeightTypeMismatchError(weight_input)
         if not isinstance(weight_input, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight_input).__name__}")
-        if weight_input < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight_input * 1.0                                
-        result = func(*([normalized_weight] + list(args[1:])), **kwargs)
-        return result
+            raise WeightTypeMismatchError(weight_input)
+        
+        val = float(weight_input)
+        
+        if val < 0.001 or val > 500.0:
+            raise WeightOutOfRangeError(val)
+            
+        return func(val)
     return wrapper
-@validate_and_normalize_weight
-def calculate_area(weight, length):
-    return weight * length
+
+@safeto_weight
+def convert_weight_to_stones(weight_kg):
+    return round(weight_kg / 6.35029, 3)
+
+def calculate_bmi(weight_kg, height_m):
+    if weight_kg <= 0 or height_m <= 0:
+        raise ValueError("Physical dimensions must be positive")
+    return round(weight_kg / (height_m ** 2), 2)
+
+@safe_to_weight
+def get_weighted_score(weight_kg, base_score):
+    factor = 0.1 * weight_kg
+    return base_score * (1 + factor)
+
 if __name__ == '__main__':
-    print("--- Test Case 1: Valid Input ---")
+    stones = convert_weight_to_stones(80)
+    print(f"80kg is {stones} stones")
+
+    bmi = calculate_bmi(80, 1.8)
+    print(f"BMI for 80kg/1.8m is {bmi}")
+
+    score = get_weighted_score(75, 100)
+    print(f"Weighted score for 75kg is {score}")
+
     try:
-        result1 = calculate_area(10.5, 5)
-        print(f"Result 1: {result1}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 1: {e}")
-    print("\n--- Test Case 2: Negative Weight (Invalid Value) ---")
+        convert_weight_to_stones(-5)
+    except WeightOutOfRangeError as e:
+        print(f"Caught: {e}")
+
     try:
-        result2 = calculate_area(-2.0, 10)
-        print(f"Result 2: {result2}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 2: {e}")
-    print("\n--- Test Case 3: Invalid Data Type (String) ---")
+        convert_weight_to_stones("heavy")
+    except WeightTypeMismatchError as e:
+        print(f"Caught: {e}")
+
     try:
-        result3 = calculate_area("ten", 5)
-        print(f"Result 3: {result3}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 3: {e}")
-    print("\n--- Test Case 4: Missing Argument (Implicitly tested by decorator structure, but testing explicit failure) ---")
+        convert_weight_to_stones(True)
+    except WeightTypeMismatchError as e:
+        print(f"Caught: {e}")
+
     try:
-        calculate_area(None, 5)
-    except (TypeError, ValueError) as e:
-        print(f"Error 4: {e}")
+        calculate_bmi(0, 1.8)
+    except ValueError as e:
+        print(f"Caught: {e}")

@@ -1,69 +1,35 @@
-import re
+class VolumeCalculator:
+    def __init__(self, target_unit: str = "liters") -> None:
+        self.conversion_factors = {
+            "milliliters": 0.001,
+            "liters": 1.0,
+            "cubic_meters": 1000.0,
+            "gallons": 3.78541,
+            "quarts": 0.946353,
+            "pints": 0.473176,
+            "cups": 0.236588,
+            "fluid_ounces": 0.0295735,
+        }
+        self.target_unit = target_unit.lower()
 
-def parse_volume_file(filename):
-    """
-    Reads volume measurements from a file, calculates total volume,
-    and handles potential float conversion errors gracefully.
-    
-    Args:
-        filename (str): Path to the input file containing volume data.
+    def calculate_total_volume(self, volumes: list, units: list) -> float:
+        if len(volumes) != len(units):
+            raise ValueError("Volumes and units lists must be of the same length.")
         
-    Returns:
-        tuple: (total_volume, error_count) where total_volume is the sum of valid volumes 
-               and error_count is the number of lines that failed parsing.
-    """
-    total_volume = 0.0
-    error_count = 0
-    
-    try:
-        with open(filename, 'r') as f:
-            for line in f:
-                # Strip whitespace and empty lines
-                stripped_line = line.strip()
-                if not stripped_line:
-                    continue
-                
-                # Attempt to parse the volume from the string
-                try:
-                    value = float(stripped_line)
-                    total_volume += value
-                except ValueError as e:
-                    error_count += 1
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
-    except IOError as e:
-        print(f"Error reading file: {e}")
-
-def main():
-    """
-    Main function to run the script with hard-coded sample values.
-    Simulates a file input by creating temporary data in memory and processing it directly,
-    ensuring no user interaction or external dependencies are required.
-    """
-    
-    # Hard-coded sample volume measurements (simulating file content)
-    samples = [10.5, 20.3, "invalid", 30.7, "", -5.2] 
-    
-    total_volume = sum(samples) if all(isinstance(x, float) for x in samples) else 0.0
-    
-    # Simulate error handling by manually counting invalid entries
-    try:
-        valid_sum = 0.0
-        error_count = 0
+        if self.target_unit not in self.conversion_factors:
+            raise ValueError(f"Unsupported target unit: {self.target_unit}")
         
-        for item in samples:
-            stripped_item = str(item).strip() if isinstance(item, (int, float)) else str(item)
-            
-            try:
-                value = float(stripped_item)
-                valid_sum += value
-            except ValueError:
-                error_count += 1
-                
-    finally:
-        print(f"Total Volume Calculated: {valid_sum}")
-        if error_count > 0:
-            print(f"Gross Error Count (unparseable lines): {error_count}")
+        total_liters = sum(
+            vol * self.conversion_factors.get(unit.lower(), 0)
+            for vol, unit in zip(volumes, units)
+        )
+        
+        result = total_liters / self.conversion_factors[self.target_unit]
+        return result
 
 if __name__ == '__main__':
-    main()
+    calculator = VolumeCalculator(target_unit="gallons")
+    volumes = [500, 2, 1.5, 100]
+    units = ["milliliters", "liters", "cubic_meters", "fluid_ounces"]
+    total = calculator.calculate_total_volume(volumes, units)
+    print(total)

@@ -1,43 +1,43 @@
-def standardize_volume(input_dict: dict, conversion_factors: list) -> float:
-    """
-    Converts all values in a dictionary to cubic meters using predefined factors.
-    
-    Args:
-        input_dict (dict): A dictionary where keys are material names and 
-                          values represent volume measurements in arbitrary units.
-        conversion_factors (list[float]): List of conversion factors for each item,
-                                          corresponding 1-to-1 with the items in input_dict order.
-                                          The factor indicates how many target base units per input unit.
+class VolumeStore:
+    def __init__(self):
+        self._base_volumes = {}
+        self._scaling_factors = []
+        self._factor_map = {}
 
-    Returns:
-        float: Sum of all volumes converted to cubic meters, or None if inputs are invalid.
-    
-    Raises:
-        TypeError: If conversion_factors is not a list or its length doesn't match the number of items in input_dict.
-    """
-    if not isinstance(input_dict, dict):
-        return None
-    
-    # Use sorted keys for deterministic processing and ensure matching order with factors
-    materials = [k for k in sorted(input_dict.keys())]
-    
-    try:
-        factor_list = []
-        
-        # Assume conversion_factors list is provided as a separate argument 
-        # representing factors per material (e.g., water=0.0623, sand=0.41) based on typical unit conversions if needed,
-        # but here we strictly follow the task requirement of passing predefined factors via the list.
-        
-        if len(conversion_factors) != 1: 
-            return None
-            
-    except Exception:
-        return None
-    
-    try:
-        factor_list = []
-    except TypeError:
-        raise ValueError("Conversion factors must be a valid Python object.")
+    def add_volume(self, name, value):
+        if name in self._base_volumes:
+            raise ValueError(f"Volume '{name}' already exists.")
+        self._base_volumes[name] = value
+
+    def set_scale_factor(self, name, factor):
+        if name not in self._base_volumes:
+            raise ValueError(f"Volume '{name}' does not exist.")
+        self._factor_map[name] = factor
+        if factor not in self._scaling_factors:
+            self._scaling_factors.append(factor)
+
+    def get_scaled_volume(self, name):
+        if name not in self._base_volumes:
+            raise KeyError(f"Volume '{name}' not found.")
+        base = self._base_volumes[name]
+        factor = self._factor_map.get(name, 1.0)
+        return base * factor
+
+    def get_all_scaled(self):
+        result = {}
+        for name in self._base_volumes:
+            result[name] = self.get_scaled_volume(name)
+        return result
 
 if __name__ == '__main__':
-    pass
+    store = VolumeStore()
+    store.add_volume("water", 100.0)
+    store.add_volume("oil", 50.0)
+    store.set_scale_factor("water", 2.5)
+    store.set_scale_factor("oil", 1.0)
+    
+    water_volume = store.get_scaled_volume("water")
+    print(water_volume)
+    
+    all_volumes = store.get_all_scaled()
+    print(all_volumes)

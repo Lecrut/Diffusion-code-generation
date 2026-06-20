@@ -1,41 +1,43 @@
-import sys
+CONVERSION_TO_METERS = {
+    "meter": 1.0,
+    "m": 1.0,
+    "kilometer": 1000.0,
+    "km": 1000.0,
+    "centimeter": 0.01,
+    "cm": 0.01,
+    "millimeter": 0.001,
+    "mm": 0.001,
+    "micrometer": 1e-6,
+    "um": 1e-6,
+    "nanometer": 1e-9,
+    "nm": 1e-9,
+    "inch": 0.0254,
+    "in": 0.0254,
+    "foot": 0.3048,
+    "ft": 0.3048,
+    "yard": 0.9144,
+    "yd": 0.9144,
+    "mile": 1609.344,
+    "mi": 1609.344,
+    "nautical_mile": 1852.0,
+    "nmi": 1852.0,
+}
 
-def meters_to_yards(meters: float) -> float:
-    """Convert a length in meters to yards."""
-    return meters * 0.9144
+def convert_length(value, source_unit, target_unit):
+    source_unit = source_unit.lower()
+    target_unit = target_unit.lower()
+    
+    if source_unit not in CONVERSION_TO_METERS:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+    if target_unit not in CONVERSION_TO_METERS:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+    
+    meters = value * CONVERSION_TO_METERS[source_unit]
+    result = meters / CONVERSION_TO_METERS[target_unit]
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements (no interactive input)
-    file_content = [3, 5.5, 10]
-    
-    try:
-        with open('input.txt', 'r') as f:
-            lines = f.read().strip()
-            
-            if not lines:
-                print("Input file is empty.")
-                sys.exit(0)
-
-            # Parse the list of lengths from the input string (assumed space-separated or newline separated)
-            try:
-                meters_list = [float(x.strip()) for x in lines.split()]
-            except ValueError as e:
-                print(f"Error parsing input data: {e}")
-                sys.exit(1)
-
-        # Process and store results if needed, though task implies printing directly or to a file. 
-        # Assuming the script reads from 'input.txt' but uses hard-coded fallback for testing logic flow?
-        # Re-reading requirement: "reads a list of lengths from a file". The sample block should demonstrate this behavior without interactive input.
-        
-        if len(meters_list) > 0:
-            print("Equivalent lengths in yards:")
-            for meters_val in meters_list:
-                print(f"{meters_val} meters = {round(meters_to_yards(meters_val), 4)} yards")
-
-    except FileNotFoundError as e:
-        # In a real scenario, this would be the case if 'input.txt' is missing. 
-        # Since we are required to have an `if __name__ == '__main__':` block with hard-coded sample values 
-        # and no interactive input, we simulate reading from file using our list or handle the error gracefully
-        print(f"File not found: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    print(convert_length(5, "feet", "meters"))
+    print(convert_length(1, "mile", "kilometers"))
+    print(convert_length(100, "cm", "m"))
+    print(convert_length(12, "inches", "feet"))

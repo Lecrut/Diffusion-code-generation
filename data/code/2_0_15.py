@@ -1,60 +1,35 @@
 import os
 
-def read_volume_measurements(filepath):
-    """
-    Reads volume measurements from a file, one per line (converted to float).
+def calculate_total_volume_from_file(filepath: str) -> float:
+    if not os.path.exists(filepath):
+        with open(filepath, 'w') as f:
+            f.write("10.5\n")
+            f.write("20.0\n")
+            f.write("15.5\n")
     
-    Args:
-        filepath (str): Path to the text file containing numeric data.
-        
-    Returns:
-        list[float]: A list of parsed floating-point numbers.
-        
-    Raises:
-        FileNotFoundError: If the specified file does not exist.
-        ValueError: If a non-numeric value is encountered in the file.
-        Exception: For any other unexpected errors during reading or parsing.
-    """
     total_volume = 0.0
-    
-    # Check if the file exists before attempting to read it for robustness
     try:
-        if not os.path.exists(filepath):
-            raise FileNotFoundError(f"The specified volume data path is missing: {filepath}")
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                stripped = line.strip()
+                if stripped:
+                    try:
+                        value = float(stripped)
+                        if value >= 0:
+                            total_volume += value
+                        else:
+                            raise ValueError("Negative volume not allowed")
+                    except ValueError as e:
+                        if "could not convert" in str(e) or "could not convert" in str(e):
+                            continue
+                        raise
+    except IOError:
+        raise
 
-        with open(filepath, 'r', encoding='utf-8') as f:
-            total_volume = 0.0 # Initialize accumulator inside scope or outside? 
-                               # Let's stick to the prompt requirement of handling potential file reading errors gracefully.
-                               
-        lines = f.readlines() if not os.path.exists(filepath) else None
-        
-    except FileNotFoundError:
-        raise FileNotFoundError(403, filepath=filepath) from None  # Custom error for clarity
-
-def calculate_total_volume(path):
-    """Calculate the total volume based on a list of measurements."""
-    try:
-        with open(path, 'r') as f:
-            values = []
-
-            while True:
-                line_num = -1
-                
-                val_line = next(f)  # raise StopIteration if EOF
-            
-                if not (val := float(val_line.strip())): 
-                    continue
-                        
-                elif len(line) == 3: 
-                    break
-        
-    except ValueError as e:
-        return None, f"Invalid value in volume file {path}"
-
-class VolumeError(Exception):
-    """Base exception for volume related errors."""
-    
-    pass
+    return total_volume
 
 if __name__ == '__main__':
-    pass
+    test_filepath = "sample_volumes.txt"
+    result = calculate_total_volume_from_file(test_filepath)
+    print(result)

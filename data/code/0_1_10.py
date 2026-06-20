@@ -1,59 +1,43 @@
-def convert_length(length: float, unit_type: str) -> float:
-    """
-    Converts a length value from one metric/imperial unit to meters.
-    
-    Supported units (case-insensitive): 'm', 'ft'
-    
-    Args:
-        length (float): The numerical value of the length.
-        unit_type (str): The target or source unit ('m' for meters, 'ft' for feet).
-        
-    Returns:
-        float: The converted length in meters if converting to/from meters; 
-               otherwise returns 0.0 as no conversion is defined between arbitrary units other than these two.
-    
-    Note: This function currently supports direct input/output in the specified unit system,
-            effectively returning the value normalized to a standard representation based on the provided type.
-            To demonstrate utility, it converts feet to meters and vice versa when both are involved implicitly 
-            by normalizing inputs where necessary for demonstration purposes if mixed logic were extended later.
-            
-    For this specific implementation scope:
-        - If unit_type is 'm', returns length directly (already in base).
-        - If unit_type is 'ft', converts feet to meters using 1 ft = 0.3048 m.
-    
-    Raises:
-        ValueError: If an unsupported unit type is provided.
-    """
-    conversion_factors = {
-        "m": 1,
-        "ft": 0.3048
-    }
+class UnitConverter:
+    FEET_PER_METER = 3.28084
+    METERS_PER_KILOMETER = 1000.0
+    METERS_PER_FOOT = 1.0 / FEET_PER_METER
+    KILOMETERS_PER_METER = 1.0 / METERS_PER_KILOMETER
 
-    if unit_type.lower() not in conversion_factors:
-        raise ValueError(f"Unsupported unit type '{unit_type}'. Supported units are 'm' and 'ft'.")
+    def __init__(self, value, source_unit):
+        self.value = value
+        self.source_unit = source_unit.lower()
+        self.meters = self._to_meters()
 
-    return length * conversion_factors[unit_type.lower()]
+    def _to_meters(self):
+        if self.source_unit == 'meters':
+            return self.value
+        elif self.source_unit == 'feet':
+            return self.value * self.METERS_PER_FOOT
+        elif self.source_unit == 'kilometers':
+            return self.value * self.METERS_PER_KILOMETER
+        else:
+            raise ValueError("Unsupported unit")
 
-if __name__ == "__main__":
-    # Sample test cases with hard-coded values (no interactive input)
-    
-    # Test case 1: Convert meters to base representation (identity operation effectively)
-    result_meters = convert_length(5, "m")
-    print(f"Converted {result_meters} m -> {result_meters}")
+    def to_feet(self):
+        return self.meters * self.FEET_PER_METER
 
-    # Test case 2: Convert feet to meters
-    result_feet_to_meter = convert_length(10, "ft")
-    expected_value_10_ft_in_m = 3.048
-    assert abs(result_feet_to_meter - expected_value_10_ft_in_m) < 1e-6
+    def to_kilometers(self):
+        return self.meters * self.KILOMETERS_PER_METER
 
-    # Test case 3: Convert negative feet to meters (valid operation)
-    result_neg_ft = convert_length(-5, "ft")
-    print(f"Converted {result_neg_ft} ft -> {result_neg_ft}")
+    def to_meters(self):
+        return self.meters
 
-    # Test case 4: Invalid unit handling demonstration (commented out execution for clarity in output control if needed elsewhere, but here we just show logic)
-    try:
-        convert_length(10, "km")
-    except ValueError as e:
-        print(f"Caught expected error for invalid unit '{e}'")
+if __name__ == '__main__':
+    converter = UnitConverter(100, 'meters')
+    print(converter.to_feet())
+    print(converter.to_kilometers())
+    print(converter.to_meters())
 
-    # Final summary of operations performed above without printing extra debug info beyond the required outputs
+    converter2 = UnitConverter(1, 'kilometers')
+    print(converter2.to_feet())
+    print(converter2.to_meters())
+
+    converter3 = UnitConverter(10, 'feet')
+    print(converter3.to_kilometers())
+    print(converter3.to_meters())

@@ -1,30 +1,38 @@
-class VolumeCalculator:
-    def convert_to_target(self, volume, from_unit, to_unit):
-        if from_unit == to_unit:
-            return volume
-        if from_unit == 'm3' and to_unit == 'liters':
-            return volume * 1000
-        if from_unit == 'liters' and to_unit == 'm3':
-            return volume / 1000
-        if from_unit == 'cm3' and to_unit == 'liters':
-            return volume / 1000
-        if from_unit == 'liters' and to_unit == 'cm3':
-            return volume * 1000
-        return volume
-    def calculate_total_volume(self, measurements: list[tuple[float, str]], target_unit: str) -> float:
-        total_volume = 0.0
-        for volume, unit in measurements:
-            converted_volume = self.convert_to_target(volume, unit, target_unit)
-            total_volume += converted_volume
-        return total_volume
+CONVERSION_TO_CUBIC_METERS = {
+    'liters': 0.001,
+    'milliliters': 1e-6,
+    'gallons': 0.00378541,
+    'cubic_feet': 0.0283168,
+    'cubic_meters': 1.0,
+    'water': 1.0,
+    'sand': 1.0
+}
+
+def standardize_volume(volumes, base_unit='cubic_meters'):
+    standardized = {}
+    for substance, volume in volumes.items():
+        unit = get_unit_for_substance(substance)
+        if unit in CONVERSION_TO_CUBIC_METERS:
+            converted_to_base = volume * CONVERSION_TO_CUBIC_METERS[unit]
+            standardized[substance] = converted_to_base
+        else:
+            standardized[substance] = volume
+    return standardized
+
+def get_unit_for_substance(substance):
+    if substance in CONVERSION_TO_CUBIC_METERS:
+        return substance
+    for unit in CONVERSION_TO_CUBIC_METERS:
+        if substance.endswith(unit):
+            return unit
+    return 'liters'
+
 if __name__ == '__main__':
-    calculator = VolumeCalculator()
-    sample_measurements = [
-        (1.5, 'm3'),
-        (5000.0, 'cm3'),
-        (2.5, 'liters'),
-        (0.01, 'm3')
-    ]
-    target = 'liters'
-    total = calculator.calculate_total_volume(sample_measurements, target)
-    print(total)
+    sample_volumes = {
+        'water': 10.0,
+        'sand': 5.5,
+        'oil_in_liters': 200.0,
+        'gas_in_gallons': 50.0
+    }
+    result = standardize_volume(sample_volumes)
+    print(result)

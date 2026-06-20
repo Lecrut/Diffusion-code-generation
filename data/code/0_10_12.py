@@ -1,81 +1,40 @@
-"""
-Module to convert length from meters to feet.
-
-This script defines a function to perform the conversion using the standard 
-conversion factor (1 meter = 3.28084 feet) and includes error handling 
-for invalid numeric inputs. It also provides an interactive mode via command line arguments 
-to demonstrate usage with sample values without requiring user interaction during execution.
-"""
-
-def meters_to_feet(meters: float) -> float:
-    """
-    Convert a length from meters to feet.
-
-    Args:
-        meters (float): The length in meters to convert.
-
-    Returns:
-        float: The equivalent length in feet, rounded to 4 decimal places for clarity.
+def convert_length(length: float, target_unit: str) -> float:
+    METERS_TO_FEET = 3.28084
+    METERS_TO_KM = 0.001
     
-    Raises:
-        ValueError: If the input is not a valid number or if it's negative.
-    """
-    conversion_factor = 3.28084
+    def to_meters(val: float, unit: str) -> float:
+        if unit == "meters":
+            return val
+        elif unit == "feet":
+            return val / METERS_TO_FEET
+        elif unit == "kilometers":
+            return val / METERS_TO_KM
+        else:
+            raise ValueError(f"Unsupported unit: {unit}")
     
-    # Check if meters is None (though type hint suggests float)
-    if meters is None:
-        raise TypeError("Input cannot be None.")
-
-    result = meters * conversion_factor
-    return round(result, 4)
-
-def main():
-    """
-    Main execution block.
+    def from_meters(val: float, unit: str) -> float:
+        if unit == "meters":
+            return val
+        elif unit == "feet":
+            return val * METERS_TO_FEET
+        elif unit == "kilometers":
+            return val * METERS_TO_KM
+        else:
+            raise ValueError(f"Unsupported unit: {unit}")
     
-    Demonstrates the functionality using hard-coded sample values 
-    to ensure no interactive input is required during script execution.
-    This satisfies the requirement for an `if __name__ == '__main__':` block 
-    with non-interactive samples while showing how user input would be handled in a real scenario.
-    """
-    
-    # Simulating graceful handling of potential input errors by testing invalid cases first, then valid ones.
-    test_cases = [
-        "invalid_input",  # String instead of number (will raise ValueError)
-        "-50",            # Negative value (valid conversion but physically odd for some contexts; handled as per math rules here unless explicitly forbidden)
-        "123456789",      # Very large integer string
-    ]
-
-    print("Running sample tests with potential error scenarios...")
-    
-    for test_input in test_cases:
-        try:
-            if not isinstance(test_input, str):
-                raise TypeError(f"Unexpected type {type(test_input).__name__}")
-                
-            value = float(test_input)
-            
-            # Additional check to ensure we don't convert physically impossible scenarios like negative meters 
-            # unless explicitly requested (the prompt implies general length conversion).
-            if value < 0:
-                print(f"\nInput '{test_input}' resulted in a negative length.")
-                
-        except ValueError as ve:
-            print(f"Error converting input '{test_input}': {ve}")
-            
-    # Successful sample conversions using hard-coded valid values
-    samples = [1.6, 50, -2] 
-    print("\n--- Valid Sample Conversions ---")
-    
-    for m in samples:
-        try:
-            feet_value = meters_to_feet(m)
-            print(f"{m} meters is approximately {feet_value} feet.")
-            
-        except ValueError as ve:
-            # This block should technically not be reached given the sample list, 
-            # but it demonstrates robust error handling for valid strings that aren't numbers.
-            print(f"Error processing value '{m}': {ve}")
+    meters_value = to_meters(length, target_unit)
+    return from_meters(meters_value, "meters") if target_unit == "meters" else from_meters(meters_value, target_unit)
 
 if __name__ == '__main__':
-    main()
+    sample_length = 100.0
+    sample_unit = "feet"
+    result = convert_length(sample_length, sample_unit)
+    print(result)
+    sample_length_2 = 5.0
+    sample_unit_2 = "kilometers"
+    result_2 = convert_length(sample_length_2, sample_unit_2)
+    print(result_2)
+    try:
+        convert_length(10, "inches")
+    except ValueError as e:
+        print(str(e))

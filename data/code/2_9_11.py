@@ -1,43 +1,47 @@
-import unittest
+import tempfile
+import os
 
-class TestVolumeCalculation(unittest.TestCase):
-    """Unit tests for volume calculation functions ensuring 100% coverage including edge cases."""
+def parse_volumes_from_content(content):
+    valid_values = []
+    lines = content.split('\n')
+    for line in lines:
+        cleaned = line.strip()
+        if not cleaned:
+            continue
+        try:
+            value = float(cleaned)
+            valid_values.append(value)
+        except ValueError:
+            continue
+    return valid_values
 
-    def test_cube_volume_positive(self):
-        side = 5
-        expected = 125
-        result = calculate_cube(side)
-        self.assertEqual(result, expected)
+def compute_total_volume(values):
+    if not values:
+        return 0.0
+    return sum(values)
 
-    def test_cube_volume_zero(self):
-        side = 0
-        expected = 0
-        result = calculate_cube(side)
-        self.assertEqual(result, expected)
+class VolumeAnalyzer:
+    def __init__(self, raw_content):
+        self.raw_content = raw_content
+        self.parsed_data = parse_volumes_from_content(raw_content)
 
-    def test_cube_volume_negative(self):
-        # Negative inputs should raise a ValueError or handle as per specification (assumed error for physical volume)
-        side = -3
-        with self.assertRaises(ValueError):
-            calculate_cube(side)
+    def get_valid_entries(self):
+        return self.parsed_data
 
-    def test_sphere_volume_positive(self):
-        radius = 2.0
-        expected_val = (4/3) * (3.141592653589793) ** (-1) * ((radius**3)) * 3 # Simplified: ~33.51
-        result = calculate_sphere(radius)
-        self.assertAlmostEqual(result, expected_val, places=5)
-
-    def test_sphere_volume_zero(self):
-        radius = 0
-        expected = 0.0
-        result = calculate_sphere(radius)
-        self.assertEqual(result, expected)
-
-    def test_sphere_volume_negative(self):
-        # Negative inputs should raise a ValueError or handle as per specification (assumed error for physical volume)
-        radius = -1.5
-        with self.assertRaises(ValueError):
-            calculate_sphere(radius)
+    def calculate_sum(self):
+        return compute_total_volume(self.parsed_data)
 
 if __name__ == '__main__':
-    pass
+    sample_data = """10.5
+20.0
+invalid_input
+30.25
+-5.0
+empty_line_here
+
+15.5"""
+    analyzer = VolumeAnalyzer(sample_data)
+    entries = analyzer.get_valid_entries()
+    total = analyzer.calculate_sum()
+    print(entries)
+    print(total)

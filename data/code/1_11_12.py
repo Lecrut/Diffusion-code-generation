@@ -1,116 +1,60 @@
 class WeightManager:
-    """
-    A class to manage weight measurements efficiently using a dictionary.
+    __STORAGE_KEY = '_internal_data'
+    __INVALID_TYPE_ERROR = 'Value must be a numeric type'
     
-    Attributes:
-        data (dict): Internal storage for weights, where keys are unique identifiers 
-                     and values are the recorded weights.
-        
-    Methods:
-        add_weight(identifier, measurement): Adds or updates a weight record.
-        get_weight(identifier): Retrieves a specific weight by identifier.
-        remove_weight(identifier): Removes a weight record by identifier.
-        list_weights(): Returns all current measurements as a dictionary copy.
-    
-    Time Complexity: O(1) for add, get, and remove operations on average due to hash map usage.
-    """
-
     def __init__(self):
-        self.data = {}
+        self.__dict__[self.__STORAGE_KEY] = {}
 
-    def add_weight(self, identifier: str, measurement: float) -> None:
-        """
-        Adds a new weight record or updates an existing one if the identifier exists.
-        
-        Args:
-            identifier (str): Unique key for the weight entry.
-            measurement (float): The numerical value of the weight.
-            
-        Raises:
-            TypeError: If 'identifier' is not a string or 'measurement' is not numeric.
-        """
-        if not isinstance(identifier, str):
-            raise TypeError("Identifier must be a string.")
-        if not isinstance(measurement, (int, float)):
-            raise TypeError("Measurement must be an integer or float.")
+    def __get_storage(self):
+        return self.__dict__[self.__STORAGE_KEY]
 
-        self.data[identifier] = measurement
+    def __validate_weight(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(self.__INVALID_TYPE_ERROR)
+        if isinstance(value, float) and value != value:
+            raise ValueError('Weight cannot be NaN')
 
-    def get_weight(self, identifier: str) -> float | None:
-        """
-        Retrieves the weight associated with the given identifier.
-        
-        Args:
-            identifier (str): The key to look up in the dictionary.
-            
-        Returns:
-            float or None: The recorded weight if found, otherwise None.
-            
-        Raises:
-            TypeError: If 'identifier' is not a string.
-        """
-        if not isinstance(identifier, str):
-            raise TypeError("Identifier must be a string.")
+    def add_entry(self, identifier, value):
+        self.__validate_weight(value)
+        storage = self.__get_storage()
+        storage[identifier] = float(value)
+        return True
 
-        return self.data.get(identifier)
+    def fetch_entry(self, identifier):
+        storage = self.__get_storage()
+        return storage.get(identifier)
 
-    def remove_weight(self, identifier: str) -> bool:
-        """
-        Removes the weight record associated with the given identifier.
-        
-        Args:
-            identifier (str): The key to delete from the dictionary.
-            
-        Returns:
-            bool: True if a record was removed and it existed; False otherwise.
-            
-        Raises:
-            TypeError: If 'identifier' is not a string.
-        """
-        if not isinstance(identifier, str):
-            raise TypeError("Identifier must be a string.")
+    def modify_entry(self, identifier, value):
+        self.__validate_weight(value)
+        storage = self.__get_storage()
+        if identifier in storage:
+            storage[identifier] = float(value)
+            return True
+        return False
 
-        return self.data.pop(identifier, None) is not None
+    def remove_entry(self, identifier):
+        storage = self.__get_storage()
+        if identifier in storage:
+            del storage[identifier]
+            return True
+        return False
 
-    def list_weights(self) -> dict[str, float]:
-        """
-        Returns a copy of all current weight measurements.
-        
-        Returns:
-            dict[str, float]: A shallow copy of the internal data dictionary.
-        """
-        return self.data.copy()
+    def fetch_record(self, identifier):
+        return self.fetch_entry(identifier)
+
+    def get_record_count(self):
+        return len(self.__get_storage())
+
+    def get_all_records(self):
+        return dict(self.__get_storage())
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    
-    manager = WeightManager()
-
-    # Add initial measurements
-    manager.add_weight("user_001", 75.5)
-    manager.add_weight("user_002", 82.3)
-    
-    # Update an existing measurement (simulating a new reading for user_001)
-    manager.add_weight("user_001", 76.2)
-
-    print("--- Weight Manager Operations ---")
-    
-    # Retrieve specific weight
-    retrieved = manager.get_weight("user_001")
-    print(f"Weight of 'user_001': {retrieved}")
-
-    # List all weights
-    all_weights = manager.list_weights()
-    print("\nAll recorded weights:")
-    for user, weight in all_weights.items():
-        print(f"- {user}: {weight} kg")
-
-    # Remove a specific entry to test removal logic (though we keep it visible above)
-    # Let's remove 'user_002' instead of the updated one to show deletion capability clearly
-    removed = manager.remove_weight("user_002")
-    print(f"\nRemoved user_002: {removed}")
-
-    final_list = manager.list_weights()
-    print("\nFinal state:")
-    for user, weight in final_list.items():
-        print(f"- {user}: {weight} kg")
+    mgr = WeightManager()
+    mgr.add_entry('entry_alpha', 100.5)
+    mgr.add_entry('entry_beta', 200.75)
+    print(mgr.fetch_record('entry_alpha'))
+    print(mgr.modify_entry('entry_alpha', 102.0))
+    print(mgr.fetch_record('entry_alpha'))
+    print(mgr.get_record_count())
+    print(mgr.remove_entry('entry_beta'))
+    print(mgr.get_all_records())

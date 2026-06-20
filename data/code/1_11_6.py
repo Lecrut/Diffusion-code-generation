@@ -1,30 +1,43 @@
 class WeightManager:
     def __init__(self):
         self.weights = {}
-    def store_weight(self, name, weight):
-        self.weights[name] = weight
-    def retrieve_weight(self, name):
-        return self.weights.get(name)
-    def update_weight(self, name, new_weight):
-        if name in self.weights:
-            self.weights[name] = new_weight
-        else:
-            self.weights[name] = new_weight
+
+    def store(self, date, weight):
+        self.weights[date] = weight
+
+    def retrieve(self, date):
+        return self.weights.get(date)
+
+    def update(self, date, weight):
+        if date in self.weights:
+            self.weights[date] = weight
+            return True
+        return False
+
+    def get_all(self):
+        return self.weights.copy()
+
+    def delete(self, date):
+        if date in self.weights:
+            del self.weights[date]
+            return True
+        return False
+
 if __name__ == '__main__':
     manager = WeightManager()
-    manager.store_weight("Alice", 65.5)
-    manager.store_weight("Bob", 82.1)
-    manager.store_weight("Charlie", 70.0)
-    print("Initial weights:")
-    print("Alice:", manager.retrieve_weight("Alice"))
-    print("Bob:", manager.retrieve_weight("Bob"))
-    print("Charlie:", manager.retrieve_weight("Charlie"))
-    manager.update_weight("Alice", 66.0)
-    print("\nUpdated weights:")
-    print("Alice:", manager.retrieve_weight("Alice"))
-    print("Bob:", manager.retrieve_weight("Bob"))
-    print("Charlie:", manager.retrieve_weight("Charlie"))
-    manager.update_weight("David", 95.5)
-    print("\nWeights after adding David:")
-    print("David:", manager.retrieve_weight("David"))
-    print("Alice:", manager.retrieve_weight("Alice"))
+    manager.store('2023-01-01', 70.5)
+    manager.store('2023-01-02', 71.0)
+    manager.store('2023-01-03', 70.8)
+
+    print(manager.retrieve('2023-01-01'))
+    print(manager.retrieve('2023-01-02'))
+
+    manager.update('2023-01-02', 71.5)
+    print(manager.retrieve('2023-01-02'))
+
+    print(manager.get_all())
+
+    manager.delete('2023-01-03')
+    print(manager.get_all())
+
+    print(manager.retrieve('2023-01-03'))

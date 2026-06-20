@@ -1,119 +1,67 @@
-import time
-
 class WeightManager:
-    """
-    A class to manage weight measurements with efficient storage, retrieval, 
-    and update capabilities using an internal dictionary.
-    
-    Attributes:
-        data (dict): Internal dictionary storing weights indexed by date strings.
-        
-    Methods:
-        add_weight(date_str, value): Adds or updates a weight measurement for the given date.
-        get_weight(date_str): Retrieves the weight for a specific date.
-        delete_weight(date_str): Removes a weight entry for a specific date.
-        list_weights(): Returns all stored weights as a dictionary copy.
-    """
-
     def __init__(self):
-        self.data = {}
+        self._recordings = {}
+        self._sorted_dates = []
 
-    def add_weight(self, date_str: str, value: float) -> None:
-        """
-        Adds or updates an existing weight measurement for the specified date string.
-        
-        Args:
-            date_str (str): The date key to store under (e.g., '2023-10-05').
-            value (float): The numerical weight value associated with the date.
-            
-        Raises:
-            ValueError: If date_str is not a string or value is not numeric.
-        """
-        if not isinstance(date_str, str) or not isinstance(value, (int, float)):
-            raise ValueError("Invalid input types for add_weight.")
-        
-        self.data[date_str] = value
+    def _validate_weight(self, weight):
+        if not isinstance(weight, (int, float)):
+            raise TypeError("Weight must be a numeric value")
+        if weight < 0:
+            raise ValueError("Weight cannot be negative")
+        return float(weight)
 
-    def get_weight(self, date_str: str) -> float | None:
-        """
-        Retrieves the weight measurement stored under a specific date string.
-        
-        Args:
-            date_str (str): The key to look up in the dictionary.
-            
-        Returns:
-            float or None: The weight value if found, otherwise None.
-        """
-        return self.data.get(date_str)
-
-    def delete_weight(self, date_str: str) -> bool:
-        """
-        Removes a weight measurement entry for the specified date string.
-        
-        Args:
-            date_str (str): The key to remove from the dictionary.
-            
-        Returns:
-            bool: True if an entry was deleted or did not exist; False otherwise.
-                  Note: In Python, delete returns None on absence in older versions 
-                  but we return a boolean for clarity here indicating success of operation logic.
-        """
-        # If key exists and is removed, consider it successful deletion attempt
-        if date_str in self.data:
-            del self.data[date_str]
-            return True
-        else:
+    def store_weight(self, date, weight):
+        if date in self._recordings:
             return False
+        value = self._validate_weight(weight)
+        self._recordings[date] = value
+        self._insert_sorted_date(date)
+        return True
 
-    def list_weights(self) -> dict[str, float]:
-        """
-        Returns a copy of all stored weight measurements.
-        
-        Returns:
-            dict: A shallow copy of the internal data dictionary to prevent external modification affecting state.
-        """
-        return self.data.copy()
+    def _insert_sorted_date(self, date):
+        dates = self._sorted_dates
+        left, right = 0, len(dates)
+        while left < right:
+            mid = (left + right) // 2
+            if dates[mid] < date:
+                left = mid + 1
+            else:
+                right = mid
+        dates.insert(left, date)
+
+    def retrieve_weight(self, date):
+        return self._recordings.get(date)
+
+    def update_weight(self, date, weight):
+        if date not in self._recordings:
+            return False
+        value = self._validate_weight(weight)
+        self._recordings[date] = value
+        return True
+
+    def get_historical_weight(self, date):
+        return self.retrieve_weight(date)
+
+    def get_latest_weight(self):
+        if not self._sorted_dates:
+            return None
+        latest_date = self._sorted_dates[-1]
+        return self._recordings[latest_date]
+
+    def remove_entry(self, date):
+        if date not in self._recordings:
+            return False
+        del self._recordings[date]
+        self._sorted_dates.remove(date)
+        return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values execution without user input or network access
-    
     manager = WeightManager()
-
-    # Sample Data Entry
-    dates_and_weights = [
-        ('2023-10-01', 65.5),
-        ('2023-10-08', 64.8),
-        ('2023-10-15', 67.2),
-        ('2023-10-22', 66.9)
-    ]
-
-    for date, weight in dates_and_weights:
-        manager.add_weight(date, weight)
-
-    # Retrieve specific weights
-    print("Weight on 2023-10-08:", manager.get_weight('2023-10-08'))
-    
-    # Update an existing entry (simulated by adding again with same date logic in this simple implementation)
-    new_value = 65.0
-    manager.add_weight('2023-10-08', new_value)
-
-    print("Updated Weight on 2023-10-08:", manager.get_weight('2023-10-08'))
-
-    # Delete an entry
-    deleted = manager.delete_weight('2023-10-05')
-    
-    try:
-        weight_05 = manager.get_weight('2023-10-05')
-        print(f"Weight on 2023-10-05 (should be None): {weight_05}")
-    except Exception as e:
-        # Fallback if get returns None explicitly instead of raising, though logic above says it won't raise here.
-        pass
-
-    # List all remaining weights
-    print("All stored weights:", manager.list_weights())
-    
-    # Verify time efficiency by checking length operations (O(1) average for dict access/update)
-    start_time = time.time()
-    _ = [manager.get_weight(d[0]) for d in dates_and_weights]
-    end_time = time.time()
-    print(f"Time taken to retrieve {len(dates_and_weights)} items: {(end_time - start_time)*1000:.2f} ms")
+    manager.store_weight("2023-05-01", 80.0)
+    manager.store_weight("2023-05-05", 79.5)
+    manager.store_weight("2023-05-02", 80.2)
+    manager.update_weight("2023-05-02", 79.8)
+    print(manager.get_latest_weight())
+    print(manager.retrieve_weight("2023-05-05"))
+    print(manager.remove_entry("2023-05-01"))
+    print(manager.get_latest_weight())

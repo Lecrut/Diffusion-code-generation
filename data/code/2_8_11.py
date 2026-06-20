@@ -1,46 +1,67 @@
-import csv
+import unittest
+import math
 
-def scale_volumes(input_file: str, output_file: str, factor: float) -> None:
-    """
-    Reads a CSV file with item names and volumes, scales the volumes by the given factor,
-    and writes the results to an output CSV file.
-    
-    Args:
-        input_file (str): Path to the input CSV file containing 'item_name' and 'volume'.
-        output_file (str): Path to write the scaled data.
-        factor (float): The scaling multiplier for volumes.
+def calculate_volume(length, width, height):
+    if length <= 0 or width <= 0 or height <= 0:
+        raise ValueError("Dimensions must be positive")
+    return length * width * height
 
-    Raises:
-        FileNotFoundError: If the input CSV file does not exist.
-        ValueError: If volume values cannot be converted to floats or if required columns are missing.
-    """
-    rows_processed = 0
-    
-    with open(input_file, 'r', newline='', encoding='utf-8') as infile:
-        reader = csv.DictReader(infile)
-        
-        # Validate header presence for item_name and volume (defaulting column index based on common patterns if keys are missing or generic names used)
-        # Assuming standard headers or checking existence dynamically. 
-        # For robustness in a script, we check specific expected strings from row 0 or use first available numeric col if unknown structure occurs strictly per CSV spec but usually DictReader handles named columns.
-        # Given the task implies "item names" and "volumes", we assume column headers are present. If not provided explicitly as keys 'item_name'/'volume', this logic might need adjustment, 
-        # but standard practice assumes valid CSV structure with at least two columns if no header check fails otherwise it crashes on first empty row or bad data type immediately upon parsing float().
-        
-        fieldnames = reader.fieldnames
-        expected_columns_to_match_set = {'item_name', 'volume'}
-        
-        actual_keys = set(fieldnames)
+def calculate_sphere_volume(radius):
+    if radius <= 0:
+        raise ValueError("Radius must be positive")
+    return (4.0 / 3.0) * math.pi * (radius ** 3)
 
-    # Check headers to ensure we have the right columns
-    if not fieldnames:
-        raise ValueError("Input CSV file has no header row.")
-    
-    # Try matching exact keys or fallback index based on common patterns (e.g. col 0=items, col 1=volumes). 
-    # Since DictReader returns dicts by column name, we must rely on column names provided in the file OR generic indices if headers are not standard strings. 
-    # However, without knowing specific header casing, a safe fallback is: find numeric columns for volume and first string/numeric for item?
-    # Let's assume the user-defined structure or strict keys 'item_name'/'volume'. If they don't exist in file but generic names were expected by prompt implication of "containing...", 
-    # we will search for indices where one column is purely numeric (for volume) and another exists. 
-    
-    # Re-implementing to support both named columns ('name', 'vol') or similar variations if strict dict keys fail:
+class TestVolumeCalculations(unittest.TestCase):
+    def test_normal_cuboid_volume(self):
+        result = calculate_volume(2, 3, 4)
+        self.assertEqual(result, 24)
+
+    def test_zero_length_cuboid(self):
+        with self.assertRaises(ValueError):
+            calculate_volume(0, 3, 4)
+
+    def test_negative_length_cuboid(self):
+        with self.assertRaises(ValueError):
+            calculate_volume(-1, 3, 4)
+
+    def test_zero_width_cuboid(self):
+        with self.assertRaises(ValueError):
+            calculate_volume(2, 0, 4)
+
+    def test_negative_width_cuboid(self):
+        with self.assertRaises(ValueError):
+            calculate_volume(2, -1, 4)
+
+    def test_zero_height_cuboid(self):
+        with self.assertRaises(ValueError):
+            calculate_volume(2, 3, 0)
+
+    def test_negative_height_cuboid(self):
+        with self.assertRaises(ValueError):
+            calculate_volume(2, 3, -1)
+
+    def test_normal_sphere_volume(self):
+        result = calculate_sphere_volume(3)
+        expected = (4.0 / 3.0) * math.pi * 27
+        self.assertAlmostEqual(result, expected)
+
+    def test_zero_radius_sphere(self):
+        with self.assertRaises(ValueError):
+            calculate_sphere_volume(0)
+
+    def test_negative_radius_sphere(self):
+        with self.assertRaises(ValueError):
+            calculate_sphere_volume(-1)
 
 if __name__ == '__main__':
-    pass
+    print(calculate_volume(5, 10, 2))
+    try:
+        calculate_volume(0, 5, 5)
+    except ValueError as e:
+        print(e)
+    try:
+        calculate_sphere_volume(-5)
+    except ValueError as e:
+        print(e)
+    print(calculate_sphere_volume(1))
+    unittest.main()

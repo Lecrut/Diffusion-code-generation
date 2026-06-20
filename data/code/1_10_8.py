@@ -1,51 +1,35 @@
 import csv
-from typing import List, Optional
+import io
 
-def parse_float(value: str) -> float:
-    """Attempt to convert a string value to a floating-point number."""
-    try:
-        return float(value.strip())
-    except ValueError as e:
-        raise TypeError(f"Invalid weight entry '{value}': {e}") from e
-
-def calculate_average(weights: List[float]) -> Optional[float]:
-    """Calculate the average of non-empty weights, handling division by zero."""
-    if not weights or all(w == 0 for w in weights):
-        return None
-    
-    total = sum(weights)
-    count = len([w for w in weights if abs(w) > 1e-9])  # Exclude near-zero entries to avoid false zeros
-    average = total / max(count, 1)
-    
-    return round(average, 2)
-
-def read_weight_file(filepath: str) -> List[float]:
-    """Read weight data from a CSV file and validate numeric conversions."""
-    weights = []
-    
-    with open(filepath, 'r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        
-        for row_num, row in enumerate(reader):
-            if not row or all(cell.strip() == '' for cell in row):
+def parse_weights_from_csv(csv_text):
+    parsed_values = []
+    text_stream = io.StringIO(csv_text)
+    reader = csv.reader(text_stream)
+    for row in reader:
+        for item in row:
+            cleaned_item = item.strip()
+            if not cleaned_item:
                 continue
-                
-            weight_strs = [cell.strip() for cell in row]
-            
-            # Ensure there's at least one non-empty value per processed line
-            valid_entries = []
-            invalid_count = 0
-            
-            for entry in weight_strs:
-                if not entry:
-                    continue
-                    
-                try:
-                    val = parse_float(entry)
-                    weights.append(val)
-                except TypeError as e:
-                    # Log error but don't stop processing (robustness requirement)
-                    print(f"Warning: Skipping invalid value at line {row_num + 1}: '{entry}' ({e})")
+            try:
+                numeric_value = float(cleaned_item)
+                parsed_values.append(numeric_value)
+            except ValueError:
+                continue
+    return parsed_values
+
+def compute_average(numbers):
+    if not numbers:
+        return 0.0
+    total_sum = sum(numbers)
+    count = len(numbers)
+    return total_sum / count
+
+def process_weight_data(csv_data):
+    valid_weights = parse_weights_from_csv(csv_data)
+    average_value = compute_average(valid_weights)
+    return average_value
 
 if __name__ == '__main__':
-    pass
+    sample_csv_content = "id,weight,status\n1,70.5,ok\n2,abc,error\n3,65.2,ok\n4,,skip\n5,80.1,ok"
+    result = process_weight_data(sample_csv_content)
+    print(result)

@@ -1,34 +1,46 @@
-def convert_length(input_string: str, target_unit_code: str) -> float | None:
-    """
-    Converts a length string to the specified target unit using predefined conversion factors.
-    
-    Parameters:
-        input_string (str): A string representing a numeric value with its current unit attached 
-                            or separated by space/tab. Examples: "5 m", "100cm".
-        target_unit_code (str): The code of the desired output unit (e.g., 'm', 'ft').
+class UnitConverter:
+    def __init__(self, base_unit, conversion_factors):
+        self.base_unit = base_unit
+        self.conversion_factors = conversion_factors
+        self.conversion_factors[base_unit] = 1.0
 
-    Returns:
-        float | None: The converted length as a number, if successful; otherwise, returns None 
-                     along with an error message accessible via a global registry or print statement.
-    
-    Raises:
-        ValueError: If no conversion is supported for the target unit provided.
-    """
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.conversion_factors:
+            raise ValueError(f"Unit {from_unit} is not recognized")
+        if to_unit not in self.conversion_factors:
+            raise ValueError(f"Unit {to_unit} is not recognized")
 
-    # Define base units and their conversion to meters (1 meter = 3.28084 feet)
-    UNIT_TO_METERS = {
-        'm': 1.0,      # Meters
-        'cm': 0.01,    # Centimeters
-        'mm': 0.001,   # Millimeters
-        'ft': 3.28084, # Feet (value represents feet per meter for direct comparison logic)
-                    # Actually redefining: we want input meters * factor = output in target units? 
-                    # Let's standardize: All inputs converted to meters first, then to target.
-        'in': 39.3701, # Inches (since 1 m ≈ 39.37 inches) -> Wait this is wrong direction too.
-    }
+        factor_from = self.conversion_factors[from_unit]
+        factor_to = self.conversion_factors[to_unit]
 
-    # Correct approach: Define factors relative to base unit Meters
-    # Value in input units * factor = value in meters? 
-    # No: Input_Value_in_X_units * (Conversion_to_Meters_for_1_unit_of_X) = Value_In_Meters
+        base_value = value * factor_from
+        result = base_value / factor_to
+
+        return result
 
 if __name__ == '__main__':
-    pass
+    conversion_factors = {
+        'meters': 1.0,
+        'kilometers': 1000.0,
+        'centimeters': 0.01,
+        'miles': 1609.34,
+        'feet': 0.3048,
+        'inches': 0.0254
+    }
+
+    converter = UnitConverter('meters', conversion_factors)
+
+    result1 = converter.convert(5, 'kilometers', 'miles')
+    print(result1)
+
+    result2 = converter.convert(100, 'miles', 'kilometers')
+    print(result2)
+
+    result3 = converter.convert(1, 'miles', 'feet')
+    print(result3)
+
+    result4 = converter.convert(12, 'inches', 'meters')
+    print(result4)
+
+    result5 = converter.convert(500, 'centimeters', 'kilometers')
+    print(result5)

@@ -1,98 +1,44 @@
-"""
-Optimized Volume Calculator Module
+CONVERSION_FACTORS = {
+    'cubic_meter': 1.0,
+    'cubic_centimeter': 1.0e-6,
+    'liter': 1.0e-3,
+    'milliliter': 1.0e-6,
+    'cubic_foot': 0.0283168,
+    'cubic_inch': 1.63871e-5,
+    'gallon_us': 0.00378541,
+    'quart_us': 9.46353e-4,
+    'pint_us': 4.73176e-4,
+    'fluid_ounce_us': 2.95735e-5
+}
 
-This module provides a class to calculate total volume across different units,
-converting everything to a specified target unit using efficient list comprehension.
-"""
-
-from typing import List, Union
-
-class VolumeCalculator:
-    """A utility class for calculating aggregate volumes from mixed units."""
-
-    # Conversion factors relative to cubic meters (m^3)
-    CONVERSION_FACTORS = {
-        "cubic_meter": 1.0,
-        "cubic_centimeter": 1e-6,
-        "cubic_kilometer": 1e9,
-        "litre": 0.001,
-        "millilitre": 1e-6,
-    }
-
-    def __init__(self):
-        """Initialize the VolumeCalculator instance."""
-        pass
-
-    def calculate_total_volume(
-        self,
-        measurements: List[Union[int, float]],
-        target_unit: str = "cubic_meter"
-    ) -> Union[float, int]:
-        """
-        Calculate the total volume from a list of measurements in various units.
-
-        Args:
-            measurements (List): A list where each element is either:
-                - An integer or float representing a quantity with an implied unit index offset if passed as tuple/list [value, unit]. 
-                  However, based on standard input patterns and the constraint to accept 'a list of volume measurements',
-                  we assume the input format requires explicit pairing for clarity in mixed units scenarios.
-                  *Correction*: To strictly adhere to "list of volume measurements (in various units)" without forcing tuple unpacking logic that might break simple float lists, 
-                  this implementation assumes a specific structured input often used in such problems: `[(value1, unit1), (value2, unit2)]`.
-                  
-                  If the user provides just floats, it defaults to cubic meters. To handle "various units" explicitly as requested without complex parsing assumptions that break simple lists, 
-                  we assume the list contains tuples of `(quantity, unit_name)`.
-
-            target_unit (str): The desired output unit (e.g., "cubic_meter", "litre"). Defaults to "cubic_meter".
-            
-        Returns:
-            float or int: Total volume converted to the specified `target_unit`, rounded to 6 decimal places for consistency.
-            
-        Raises:
-            ValueError: If a measurement contains an unknown unit string not in CONVERSION_FACTORS.
+def standardize_volume(measurements: dict, base_unit: str = 'cubic_meter') -> dict:
+    if base_unit not in CONVERSION_FACTORS:
+        raise ValueError(f"Unsupported base unit: {base_unit}")
+    
+    base_factor = CONVERSION_FACTORS[base_unit]
+    standardized = {}
+    
+    for key, value in measurements.items():
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"Value for {key} must be a number, got {type(value).__name__}")
         
-        Example:
-            >>> calc = VolumeCalculator()
-            >>> result = calc.calculate_total_volume([(10, "litre"), (5, "cubic_centimeter")], target_unit="m^3")
-            # Returns 0.010006...
-        """
-
-        if not measurements:
-            return 0.0
-
-        total_meters = []
-
-        for val in measurements:
-            # Handle potential tuple/list input (value, unit) or simple float/int assuming cubic meter
-            try:
-                value = int(val[0]) if isinstance(val, list) else int(val)
-                unit_key = str(val[1]).lower() if len(val) > 1 and not isinstance(val, (int, float)) else "cubic_meter"
-                
-                # Fallback logic for simple numeric inputs to ensure robustness against pure number lists
-                if isinstance(val, (int, float)):
-                    unit_key = "cubic_meter"
-
-            except TypeError:
-                raise ValueError("Measurements must be integers/floats or tuples/lists of [value, 'unit_name']")
-
-        # Efficient list comprehension to convert all values to cubic meters first
-        converted_to_m3 = []
+        unit = key.split('_')[-1] if '_' in key else 'unknown'
         
-        for item in measurements:
-            try:
-                quantity = float(item[0]) if isinstance(item, (list, tuple)) else float(item)
-                unit_str = str(item[1]).lower() if len(item) > 2 or not isinstance(item, (int, float)) else "cubic_meter" # Adjusted logic for robustness
-                
-                # Re-evaluating input structure based on common problem patterns: 
-                # Usually inputs are tuples like [value, unit]
-                
-                value = quantity
-                if hasattr(item, '__len__') and len(item) > 1:
-                    pass # It's a tuple/list
-                else:
-                     raise ValueError("Input item must be structured as (quantity, 'unit_name')")
-
-            except Exception:
-                 raise ValueError(f"Invalid measurement format: {item}")
+        if unit not in CONVERSION_FACTORS:
+            raise ValueError(f"Unknown unit: {unit} in key '{key}'")
+        
+        conversion_factor = CONVERSION_FACTORS[unit]
+        standardized_value = value * conversion_factor / base_factor
+        standardized[key] = standardized_value
+    
+    return standardized
 
 if __name__ == '__main__':
-    pass
+    sample_data = {
+        'water_cubic_meter': 2.5,
+        'sand_liters': 1500.0,
+        'oil_gallon_us': 50.0,
+        'gravel_cubic_foot': 100.0
+    }
+    result = standardize_volume(sample_data, 'cubic_meter')
+    print(result)

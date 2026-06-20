@@ -1,30 +1,32 @@
-class WeightConverter:
-    def __init__(self, weight, unit):
-        self.weight = weight
+class Weight:
+    def __init__(self, value, unit="pounds"):
+        self.value = value
         self.unit = unit
-    def convert_weight(self, new_unit):
-        if self.unit == new_unit:
-            return self.weight
-        elif self.unit == "lbs" and new_unit == "kg":
-            converted_weight = self.weight * 0.453592
-            self.unit = "kg"
-            return converted_weight
-        elif self.unit == "kg" and new_unit == "lbs":
-            converted_weight = self.weight / 0.453592
-            self.unit = "lbs"
-            return converted_weight
+
+    def to_kilograms(self):
+        if self.unit == "pounds":
+            return self.value * 0.453592
+        elif self.unit == "kilograms":
+            return self.value
         else:
-            return self.weight
+            raise ValueError("Unsupported unit for conversion to kilograms")
+
+    def convert(self, target_unit):
+        if target_unit == self.unit:
+            return self
+        if self.unit == "pounds" and target_unit == "kilograms":
+            new_value = self.value * 0.453592
+            self.value = new_value
+            self.unit = target_unit
+        elif self.unit == "kilograms" and target_unit == "pounds":
+            new_value = self.value / 0.453592
+            self.value = new_value
+            self.unit = target_unit
+        else:
+            raise ValueError("Unsupported conversion")
+        return self
+
 if __name__ == '__main__':
-    converter1 = WeightConverter(150, "lbs")
-    print(f"Original weight: {converter1.weight} {converter1.unit}")
-    result1 = converter1.convert_weight("kg")
-    print(f"Converted weight: {result1} {converter1.unit}")
-    converter2 = WeightConverter(75, "kg")
-    print(f"Original weight: {converter2.weight} {converter2.unit}")
-    result2 = converter2.convert_weight("lbs")
-    print(f"Converted weight: {result2} {converter2.unit}")
-    converter3 = WeightConverter(200, "lbs")
-    print(f"Original weight: {converter3.weight} {converter3.unit}")
-    result3 = converter3.convert_weight("lbs")
-    print(f"No conversion needed: {result3} {converter3.unit}")
+    w = Weight(10, "pounds")
+    w.convert("kilograms")
+    print(w.value, w.unit)

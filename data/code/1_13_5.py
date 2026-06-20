@@ -1,17 +1,13 @@
-import statistics
+import numpy as np
 
-def main():
-    # Hard-coded sample weight data as a list of floats
-    weights = [65.4, 70.2, 68.9, 71.3, 69.5]
+def apply_weight_change(weights, percentage_change):
+    if percentage_change == 0:
+        return weights
+    factor = 1 + percentage_change
+    return weights * factor
 
-    # Calculate the median using the statistics module
-    if len(weights) == 0:
-        result = None
-    else:
-        result = statistics.median(weights)
-
-    # Print the result formatted to two decimal places (or "None" for empty list)
-    print(f"{result:.2f}" if result is not None else "None")
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    sample_weights = np.array([10.0, 20.0, 30.0, 40.0, 50.0])
+    change_percentage = 0.10
+    result = apply_weight_change(sample_weights, change_percentage)
+    print(result)

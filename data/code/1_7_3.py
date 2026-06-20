@@ -1,43 +1,44 @@
-import functools
 def validate_and_normalize_weight(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight_input = args[0]
-        if not isinstance(weight_input, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight_input).__name__}")
-        if weight_input < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight_input * 1.0                                            
-        result = func(*([normalized_weight] + list(args[1:])), **kwargs)
-        return result
+    def wrapper(weight_value):
+        if not isinstance(weight_value, (int, float)):
+            raise TypeError(f"Weight must be a number, got {type(weight_value).__name__}")
+        if weight_value < 0:
+            raise ValueError(f"Weight cannot be negative, got {weight_value}")
+        normalized = float(weight_value)
+        return func(normalized)
     return wrapper
+
 @validate_and_normalize_weight
-def calculate_area(weight, length):
-    return weight * length
+def process_weight(weight):
+    return weight * 2.2
+
 if __name__ == '__main__':
-    print("--- Test Case 1: Valid Input ---")
     try:
-        result1 = calculate_area(10.5, 2.0)
-        print(f"Result 1: {result1}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 1: {e}")
-    print("\n--- Test Case 2: Negative Weight (Invalid Value) ---")
+        result1 = process_weight(70)
+        print(result1)
+    except Exception as e:
+        print(e)
+
     try:
-        result2 = calculate_area(-5.0, 3.0)
-        print(f"Result 2: {result2}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 2: {e}")
-    print("\n--- Test Case 3: Invalid Data Type (String) ---")
+        result2 = process_weight(0)
+        print(result2)
+    except Exception as e:
+        print(e)
+
     try:
-        result3 = calculate_area("ten", 2.0)
-        print(f"Result 3: {result3}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 3: {e}")
-    print("\n--- Test Case 4: Missing Argument (Implicit Test via decorator structure) ---")
+        result3 = process_weight(-5)
+        print(result3)
+    except Exception as e:
+        print(e)
+
     try:
-        result4 = calculate_area(10.0)
-        print(f"Result 4: {result4}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 4: {e}")
+        result4 = process_weight("100")
+        print(result4)
+    except Exception as e:
+        print(e)
+
+    try:
+        result5 = process_weight(120.5)
+        print(result5)
+    except Exception as e:
+        print(e)

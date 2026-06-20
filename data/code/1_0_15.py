@@ -1,57 +1,49 @@
 import csv
-from pathlib import Path
+import os
+import tempfile
 
-def calculate_category_averages(input_file: str, output_file: str) -> dict[str, float]:
-    """
-    Reads weight measurements from a CSV file and calculates the average weight 
-    for each category. The input CSV is expected to have headers 'category' and 'weight'.
-
-    Args:
-        input_file (str): Path to the input CSV file.
-        output_file (str): Path where results will be written as JSON or text summary.
-    
-    Returns:
-        dict[str, float]: A dictionary mapping each category's name to its average weight.
-    """
-    averages = {}
-
-    # Ensure input path exists to provide a clear error message early on
-    file_path = Path(input_file)
-    if not file_path.exists():
-        raise FileNotFoundError(f"The specified file '{input_file}' was not found.")
-
-    with open(file_path, mode='r', encoding='utf-8') as csvfile:
+def calculate_average_weights(csv_path: str) -> dict:
+    category_sums = {}
+    category_counts = {}
+    with open(csv_path, newline='', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
-        
         for row in reader:
-            category_name = row.get('category', '').strip()
-            weight_str = row.get('weight').strip()
-
-            # Skip rows with missing data or invalid numeric values
-            if not category_name or not weight_str:
-                continue
-            
+            category = row['category'].strip()
             try:
-                weight_value = float(weight_str)
-            except ValueError:
-                continue  # Skip non-numeric weights
-
-            if category_name in averages:
-                averages[category_name] += weight_value
+                weight = float(row['weight'].strip())
+            except (ValueError, KeyError):
+                continue
+            if category in category_sums:
+                category_sums[category] += weight
+                category_counts[category] += 1
             else:
-                averages[category_name] = weight_value
-    
-    # Calculate final averages with a default of 0.0 for categories that might be missing (though unlikely here)
-    calculated_averages = {cat: total / count if isinstance(total, float) and count > 0 else cat 
-                           for cat, (total, count) in zip(averages.keys(), [sum([x[1] or x]) for _ in averages.values()])}
+                category_sums[category] = weight
+                category_counts[category] = 1
+    averages = {}
+    for category in category_sums:
+        if category_counts[category] > 0:
+            averages[category] = category_sums[category] / category_counts[category]
+    return averages
 
-    # Correction logic to properly compute means based on collected totals
-    final_averages = {}
-    temp_totals = []
-    
-    # Re-process the dictionary keys/values correctly as Python 3.7+ preserves insertion order
-    if not averages:
-        return final_averages
-
+def create_sample_csv() -> str:
+    fd, path = tempfile.mkstemp(suffix='.csv', text=True)
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write('category,weight\n')
+            f.write('Apple,150.5\n')
+            f.write('Apple,160.0\n')
+            f.write('Apple,145.5\n')
+            f.write('Banana,120.0\n')
+            f.write('Banana,130.0\n')
+            f.write('Orange,200.0\n')
+    except Exception:
+        os.close(fd)
+        raise
+    return path
 if __name__ == '__main__':
-    pass
+    sample_csv_path = create_sample_csv()
+    try:
+        result = calculate_average_weights(sample_csv_path)
+        print(result)
+    finally:
+        os.unlink(sample_csv_path)

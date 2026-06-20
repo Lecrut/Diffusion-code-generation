@@ -1,25 +1,43 @@
 class WeightManager:
     def __init__(self):
-        self._weights = {}
-    def store_weight(self, name, weight):
-        self._weights[name] = weight
-    def get_weight(self, name):
-        return self._weights.get(name)
-    def update_weight(self, name, new_weight):
-        if name in self._weights:
-            self._weights[name] = new_weight
-        else:
-            self.store_weight(name, new_weight)
+        self._data = {}
+
+    def store(self, user_id, weight):
+        self._data[user_id] = weight
+
+    def retrieve(self, user_id):
+        return self._data.get(user_id)
+
+    def update(self, user_id, weight):
+        if user_id in self._data:
+            self._data[user_id] = weight
+            return True
+        return False
+
+    def delete(self, user_id):
+        if user_id in self._data:
+            del self._data[user_id]
+            return True
+        return False
+
+    def get_latest(self, user_id):
+        return self._data.get(user_id)
+
+    def get_all(self):
+        return self._data.copy()
+
 if __name__ == '__main__':
-    wm = WeightManager()
-    wm.store_weight("Alice", 65.5)
-    wm.store_weight("Bob", 88.2)
-    wm.store_weight("Charlie", 72.0)
-    print("Alice's initial weight:", wm.get_weight("Alice"))
-    print("Bob's initial weight:", wm.get_weight("Bob"))
-    wm.update_weight("Alice", 66.0)
-    print("Alice's updated weight:", wm.get_weight("Alice"))
-    wm.update_weight("David", 95.1)
-    print("David's weight after initial update:", wm.get_weight("David"))
-    print("Charlie's weight:", wm.get_weight("Charlie"))
-    print("Non-existent weight:", wm.get_weight("Eve"))
+    manager = WeightManager()
+    manager.store("user_101", 75.5)
+    manager.store("user_102", 68.2)
+    manager.update("user_101", 74.8)
+    result = manager.retrieve("user_101")
+    print(result)
+    new_status = manager.update("user_103", 80.0)
+    print(new_status)
+    final_check = manager.get_latest("user_103")
+    print(final_check)
+    deleted = manager.delete("user_102")
+    print(deleted)
+    remaining = manager.get_all()
+    print(remaining)

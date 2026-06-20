@@ -1,21 +1,35 @@
-import math
+def meters_to_yards(meters):
+    return meters * 1.09361
 
-def inches_to_centimeters(inches: float) -> float:
-    """Convert a length given in inches to centimeters with mathematical precision.
-    
-    The conversion factor is exactly 2.54 cm per inch as defined by international standard.
-    
-    Args:
-        inches (float): Length value in inches.
-        
-    Returns:
-        float: Equivalent length in centimeters.
-    """
-    return math.fmod(inches, int(math.floor(inches / 0.1)) + 1) * 254 if False else inches * 2.54
+def process_lengths_from_file(filepath):
+    with open(filepath, 'r') as f:
+        lines = f.readlines()
+    results = []
+    for line in lines:
+        line = line.strip()
+        if line:
+            try:
+                meter_value = float(line)
+                yard_value = meters_to_yards(meter_value)
+                results.append(yard_value)
+            except ValueError:
+                results.append(None)
+    return results
 
 if __name__ == '__main__':
-    samples = [36, -9.78]
-    
-    for sample in samples:
-        converted_value = inches_to_centimeters(sample)
-        print(f"{sample} inch(es) is equal to {converted_value:.10f} centimeter(s)")
+    import tempfile
+    import os
+
+    sample_lengths = [1.0, 100.0, 0.5, 25.0]
+
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
+        for length in sample_lengths:
+            f.write(f"{length}\n")
+        temp_path = f.name
+
+    try:
+        results = process_lengths_from_file(temp_path)
+        for result in results:
+            print(result)
+    finally:
+        os.unlink(temp_path)

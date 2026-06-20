@@ -1,33 +1,41 @@
 class VolumeManager:
     def __init__(self):
         self.volumes = {}
-    def store_volume(self, name, volume):
-        if not isinstance(name, str) or not isinstance(volume, (int, float)):
-            raise TypeError("Name must be a string and volume must be a number.")
-        self.volumes[name] = volume
+
     def add_volume(self, name, volume):
-        if not isinstance(name, str) or not isinstance(volume, (int, float)):
-            raise TypeError("Name must be a string and volume must be a number.")
-        if name in self.volumes:
-            self.volumes[name] += volume
-        else:
-            self.volumes[name] = volume
+        if not isinstance(name, str) or not name:
+            raise ValueError("Name must be a non-empty string")
+        if not isinstance(volume, (int, float)):
+            raise ValueError("Volume must be a number")
+        if volume < 0:
+            raise ValueError("Volume cannot be negative")
+        self.volumes[name] = float(volume)
+
+    def store_volume(self, name, volume):
+        self.add_volume(name, volume)
+
     def retrieve_volume(self, name):
-        return self.volumes.get(name)
+        if name in self.volumes:
+            return self.volumes[name]
+        return None
+
+    def get_all_volumes(self):
+        return dict(self.volumes)
+
+    def remove_volume(self, name):
+        if name in self.volumes:
+            del self.volumes[name]
+            return True
+        return False
+
 if __name__ == '__main__':
     manager = VolumeManager()
-    manager.store_volume("RoomA", 15.5)
-    manager.store_volume("Kitchen", 10.0)
-    manager.store_volume("LivingRoom", 25.75)
-    print("Initial Volumes:")
-    print("RoomA:", manager.retrieve_volume("RoomA"))
-    print("Kitchen:", manager.retrieve_volume("Kitchen"))
-    print("LivingRoom:", manager.retrieve_volume("LivingRoom"))
-    manager.add_volume("RoomA", 5.0)
-    manager.add_volume("Kitchen", 2.5)
-    print("\nVolumes after adding:")
-    print("RoomA:", manager.retrieve_volume("RoomA"))
-    print("Kitchen:", manager.retrieve_volume("Kitchen"))
-    print("LivingRoom:", manager.retrieve_volume("LivingRoom"))
-    print("\nRetrieving non-existent volume:")
-    print("Bedroom:", manager.retrieve_volume("Bedroom"))
+    manager.add_volume("cylinder", 150.5)
+    manager.add_volume("sphere", 300.0)
+    manager.add_volume("cube", 125.0)
+    print(manager.retrieve_volume("cylinder"))
+    print(manager.retrieve_volume("sphere"))
+    print(manager.retrieve_volume("nonexistent"))
+    print(manager.get_all_volumes())
+    manager.remove_volume("cube")
+    print(manager.get_all_volumes())

@@ -1,43 +1,71 @@
 import functools
+
+class WeightValidationError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+class WeightDataTypeError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
 def validate_and_normalize_weight(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight_input = args[0]
-        if not isinstance(weight_input, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight_input).__name__}")
-        if weight_input < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight_input * 1.0                                
-        result = func(*([normalized_weight] + list(args[1:])), **kwargs)
-        return result
+            raise WeightDataTypeError("Function requires at least one argument for weight")
+        weight = args[0]
+        if not isinstance(weight, (int, float)):
+            raise WeightDataTypeError("Weight must be a number, got {}".format(type(weight).__name__))
+        if isinstance(weight, bool):
+            raise WeightDataTypeError("Weight must be a number, got bool")
+        if weight < 0:
+            raise WeightValidationError("Weight cannot be negative")
+        if weight == 0:
+            raise WeightValidationError("Weight must be greater than zero")
+        normalized_weight = float(weight)
+        if normalized_weight > 10000:
+            raise WeightValidationError("Weight exceeds maximum allowed limit of 10000")
+        args = (normalized_weight,) + args[1:]
+        return func(*args, **kwargs)
     return wrapper
-@validate_and_normalize_weight
-def calculate_area(weight, length):
-    return weight * length
+
+def process_weight(weight_kg):
+    return weight_kg * 2.20462
+
+def calculate_bmi(weight_kg, height_m):
+    return weight_kg / (height_m ** 2)
+
 if __name__ == '__main__':
-    print("--- Test Case 1: Valid Input ---")
+    result1 = process_weight(70)
+    print(result1)
+    
+    result2 = process_weight(85.5)
+    print(result2)
+    
     try:
-        result1 = calculate_area(10.5, 2)
-        print(f"Result 1: {result1}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 1: {e}")
-    print("\n--- Test Case 2: Invalid Type (String) ---")
+        process_weight(-5)
+    except WeightValidationError as e:
+        print(e)
+    
     try:
-        result2 = calculate_area("ten", 2)
-        print(f"Result 2: {result2}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 2: {e}")
-    print("\n--- Test Case 3: Impossible Value (Negative) ---")
+        process_weight("heavy")
+    except WeightDataTypeError as e:
+        print(e)
+    
     try:
-        result3 = calculate_area(-5, 10)
-        print(f"Result 3: {result3}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 3: {e}")
-    print("\n--- Test Case 4: Missing Argument ---")
+        process_weight(0)
+    except WeightValidationError as e:
+        print(e)
+    
     try:
-        result4 = calculate_area(5)
-        print(f"Result 4: {result4}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 4: {e}")
+        process_weight(15000)
+    except WeightValidationError as e:
+        print(e)
+    
+    try:
+        process_weight(True)
+    except WeightDataTypeError as e:
+        print(e)
+    
+    bmi_result = calculate_bmi(70, 1.75)
+    print(bmi_result)

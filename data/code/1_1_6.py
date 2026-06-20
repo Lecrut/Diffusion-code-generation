@@ -1,24 +1,32 @@
 class WeightManager:
     def __init__(self):
-        self.weights = {}
-    def store_weight(self, name, weight):
-        self.weights[name] = weight
-    def get_weight(self, name):
-        return self.weights.get(name)
-    def update_weight(self, name, new_weight):
-        if name in self.weights:
-            self.weights[name] = new_weight
-        else:
-            self.store_weight(name, new_weight)
+        self._weights = {}
+
+    def store_weight(self, date_str, weight_value):
+        self._weights[date_str] = weight_value
+
+    def retrieve_weight(self, date_str):
+        return self._weights.get(date_str)
+
+    def update_weight(self, date_str, weight_value):
+        if date_str in self._weights:
+            self._weights[date_str] = weight_value
+            return True
+        return False
+
+    def get_all_weights(self):
+        return dict(self._weights)
+
 if __name__ == '__main__':
     manager = WeightManager()
-    manager.store_weight("Alice", 65.5)
-    manager.store_weight("Bob", 82.1)
-    manager.store_weight("Charlie", 70.0)
-    print("Alice's weight:", manager.get_weight("Alice"))
-    print("Bob's weight:", manager.get_weight("Bob"))
-    print("David's weight (not found):", manager.get_weight("David"))
-    manager.update_weight("Alice", 66.0)
-    print("Alice's updated weight:", manager.get_weight("Alice"))
-    manager.update_weight("Eve", 55.5)
-    print("Eve's weight:", manager.get_weight("Eve"))
+    manager.store_weight("2023-01-01", 75.5)
+    manager.store_weight("2023-01-02", 76.0)
+    
+    retrieved = manager.retrieve_weight("2023-01-01")
+    print(f"Retrieved weight: {retrieved}")
+    
+    updated = manager.update_weight("2023-01-01", 75.0)
+    print(f"Update successful: {updated}")
+    
+    all_weights = manager.get_all_weights()
+    print(f"All weights: {all_weights}")

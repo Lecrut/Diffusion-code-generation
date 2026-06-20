@@ -1,38 +1,25 @@
-"""
-Module to convert length from meters to feet.
-
-This script defines a function to perform the conversion using the standard factor 
-(1 meter = 3.28084 feet) and includes an example usage block in the main section.
-"""
-
-def meters_to_feet(meters: float) -> float:
-    """
-    Convert a length given in meters to its equivalent in feet.
-
-    Args:
-        meters (float): The length value in meters.
-
-    Returns:
-        float: The converted length in feet.
-    
-    Example:
-        >>> meters_to_feet(1)
-        3.28084
-    
-    Note:
-        The conversion factor used is exactly 3.28084 (approximation of 
-        the international foot definition relative to the meter).
-    """
-    feet_per_meter = 3.28084
-    return meters * feet_per_meter
+def convert_length(value: float, unit: str) -> float:
+    unit = unit.lower()
+    if unit == 'm' or unit == 'meter' or unit == 'meters':
+        return value
+    if unit == 'ft' or unit == 'foot' or unit == 'feet':
+        return value * 0.3048
+    if unit == 'in' or unit == 'inch' or unit == 'inches':
+        return value * 0.0254
+    if unit == 'yd' or unit == 'yard' or unit == 'yards':
+        return value * 0.9144
+    if unit == 'km' or unit == 'kilometer' or unit == 'kilometers':
+        return value * 1000.0
+    if unit == 'mi' or unit == 'mile' or unit == 'miles':
+        return value * 1609.34
+    if unit == 'cm' or unit == 'centimeter' or unit == 'centimeters':
+        return value * 0.01
+    if unit == 'mm' or unit == 'millimeter' or unit == 'millimeters':
+        return value * 0.001
+    raise ValueError(f"Unsupported unit: {unit}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes
-    sample_meters_1 = 5.0
-    sample_meters_2 = 10.0
-    
-    result_1 = meters_to_feet(sample_meters_1)
-    print(f"{sample_meters_1} meters is equal to {result_1:.4f} feet.")
-    
-    result_2 = meters_to_feet(sample_meters_2)
-    print(f"{sample_meters_2} meters is equal to {result_2:.4f} feet.")
+    print(convert_length(10.0, 'ft'))
+    print(convert_length(5.5, 'm'))
+    print(convert_length(1.0, 'mi'))
+    print(convert_length(100.0, 'cm'))

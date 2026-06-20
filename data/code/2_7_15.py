@@ -1,28 +1,26 @@
-import statistics
+import csv
+import io
 
-def calculate_volumes():
-    """
-    Calculates total and average volume from a list of measurements.
-    
-    Returns:
-        tuple: (total_volume, average_volume)
-    """
-    volumes = [10, 25, 30]
-    
-    if not volumes:
-        return None, None
-    
-    total_volume = sum(volumes)
-    average_volume = statistics.mean(volumes)
-    
-    return total_volume, average_volume
-
+def scale_volumes(csv_content, scale_factor):
+    input_stream = io.StringIO(csv_content)
+    reader = csv.reader(input_stream)
+    header = next(reader)
+    output_rows = [header]
+    for row in reader:
+        if len(row) >= 2:
+            try:
+                item_name = row[0]
+                original_volume = float(row[1])
+                scaled_volume = original_volume * scale_factor
+                output_rows.append([item_name, scaled_volume])
+            except (ValueError, IndexError):
+                output_rows.append(row)
+    output_stream = io.StringIO()
+    writer = csv.writer(output_stream)
+    writer.writerows(output_rows)
+    return output_stream.getvalue()
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input(), sys.stdin, or args)
-    result_total, result_average = calculate_volumes()
-    
-    if result_total is None:
-        print("No volume data provided.")
-    else:
-        print(f"Total Volume: {result_total}")
-        print(f"Average Volume: {result_average:.2f}")
+    sample_csv = 'item,volume\napple,100\nbanana,200\ncherry,150'
+    scale_factor = 2.5
+    result = scale_volumes(sample_csv, scale_factor)
+    print(result)

@@ -1,17 +1,20 @@
-def calculate_weighted_average(measurements, category_weights):
-    total_weighted_sum = 0
-    total_category_weight = 0
-    if len(measurements) != len(category_weights):
-        raise ValueError("Measurements and category weights must have the same length")
-    for measurement, weight in zip(measurements, category_weights):
-        total_weighted_sum += measurement * weight
-        total_category_weight += weight
-    if total_category_weight == 0:
-        return 0
-    else:
-        return total_weighted_sum / total_category_weight
+def calculate_weighted_average(measurements):
+    if not measurements:
+        return 0.0
+    total_weighted_value = 0.0
+    total_weights = 0.0
+    for measurement, category_weight in measurements:
+        total_weighted_value += measurement * category_weight
+        total_weights += category_weight
+    if total_weights == 0:
+        return 0.0
+    return total_weighted_value / total_weights
+
 if __name__ == '__main__':
-    measurements = [10, 20, 30]
-    category_weights = [1.5, 2.0, 0.5]
-    result = calculate_weighted_average(measurements, category_weights)
+    sample_data = [
+        (10.5, 2),
+        (12.0, 3),
+        (11.5, 1)
+    ]
+    result = calculate_weighted_average(sample_data)
     print(result)

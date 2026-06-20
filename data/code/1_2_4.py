@@ -1,24 +1,34 @@
-import math
-def convert_to_kg(weight_list):
-    kilograms = []
-    for weight in weight_list:
+def convert_to_kilograms(measurements):
+    conversion_factors = {
+        'g': 0.001,
+        'kg': 1.0,
+        'lb': 0.453592,
+        'oz': 0.0283495,
+        'ton': 907.185
+    }
+    results = []
+    for measurement in measurements:
         try:
-            if weight < 0:
-                raise ValueError("Weight cannot be negative")
-            if weight == 0:
-                kilograms.append(0.0)
-            elif weight == 1:
-                kilograms.append(0.453592)
-            elif weight == 16:
-                kilograms.append(0.274800)
-            elif weight == 1:
-                kilograms.append(1.0)
-            else:
-                kilograms.append(weight * 0.453592)
-        except (TypeError, ValueError):
-            kilograms.append(float('nan'))
-    return kilograms
+            if not isinstance(measurement, dict):
+                raise ValueError("Each measurement must be a dictionary with 'value' and 'unit' keys")
+            value = measurement['value']
+            unit = measurement['unit'].lower().strip()
+            if unit not in conversion_factors:
+                raise ValueError(f"Unsupported unit: {unit}")
+            converted_value = value * conversion_factors[unit]
+            results.append(converted_value)
+        except (KeyError, TypeError, ValueError) as e:
+            results.append(None)
+    return results
+
 if __name__ == '__main__':
-    sample_weights = [10, 5, 16, 1, 20, "invalid", -5]
-    result = convert_to_kg(sample_weights)
-    print(result)
+    sample_measurements = [
+        {'value': 1000, 'unit': 'g'},
+        {'value': 2.5, 'unit': 'kg'},
+        {'value': 5, 'unit': 'lb'},
+        {'value': 10, 'unit': 'oz'},
+        {'value': 0.5, 'unit': 'ton'},
+        {'value': 'invalid', 'unit': 'kg'},
+        {'value': 10, 'unit': 'invalid_unit'}
+    ]
+    print(convert_to_kilograms(sample_measurements))

@@ -1,41 +1,32 @@
-import sys
+def convert_length(value, from_unit, to_unit):
+    units_to_meters = {
+        'm': 1.0,
+        'mm': 0.001,
+        'cm': 0.01,
+        'km': 1000.0,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344,
+        'μm': 1e-6,
+        'nm': 1e-9,
+    }
 
-def meters_to_yards(meters: float) -> float:
-    """Convert a length from meters to yards."""
-    return meters * 0.9144
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+
+    if from_unit_lower not in units_to_meters:
+        raise ValueError(f"Unsupported source unit: {from_unit}")
+    if to_unit_lower not in units_to_meters:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
+
+    meters = value * units_to_meters[from_unit_lower]
+    result = meters / units_to_meters[to_unit_lower]
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without interactive input
-    lengths = [1, 2, 3]
-    
-    with open('input_lengths.txt', 'w') as f:
-        for length in lengths:
-            f.write(f"{length}\n")
-
-    try:
-        with open('input_lengths.txt', 'r') as f:
-            content = f.read().strip()
-            
-        if not content:
-            print("No valid input found.")
-            sys.exit(0)
-        
-        # Split the file content into individual lines and convert to float
-        length_list = [float(line.strip()) for line in content.split('\n') if line.strip()]
-        
-        results = []
-        for meter_length in length_list:
-            yard_length = meters_to_yards(meter_length)
-            results.append(yard_length)
-            
-        # Print the equivalent lengths, one per line
-        print("Equivalent lengths in yards:")
-        for val in results:
-            print(f"{val:.6f}")
-
-    except FileNotFoundError:
-        print("Error: input_lengths.txt not found.")
-        sys.exit(1)
-    except ValueError as ve:
-        print(f"Error: Invalid data in file. Expected numeric values only.\n{ve}", file=sys.stderr)
-        sys.exit(2)
+    print(convert_length(100, 'cm', 'in'))
+    print(convert_length(1, 'mi', 'km'))
+    print(convert_length(50, 'ft', 'm'))
+    print(convert_length(1000, 'mm', 'm'))
+    print(convert_length(1, 'km', 'mi'))

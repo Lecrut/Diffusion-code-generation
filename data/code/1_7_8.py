@@ -1,51 +1,66 @@
 import functools
-def validate_and_normalize_weight(func):
+
+class WeightTypeException(Exception):
+    def __init__(self, value):
+        super().__init__("Invalid type for weight: {}".format(type(value).__name__))
+
+class WeightRangeException(Exception):
+    def __init__(self, value):
+        super().__init__("Invalid weight value: {}".format(value))
+
+MAX_VALID_WEIGHT = 500.0
+MIN_VALID_WEIGHT = 0.0
+
+def ensure_valid_weight(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight = args[0]
-        if not isinstance(weight, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight).__name__}")
-        if weight < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight
-        result = func(*args, **kwargs)
-        return result
+        if len(args) < 1:
+            raise WeightTypeException(None)
+        
+        raw_value = args[0]
+        
+        if isinstance(raw_value, bool):
+            raise WeightTypeException(raw_value)
+            
+        if not isinstance(raw_value, (int, float)):
+            raise WeightTypeException(raw_value)
+            
+        if raw_value < MIN_VALID_WEIGHT or raw_value > MAX_VALID_WEIGHT:
+            raise WeightRangeException(raw_value)
+            
+        normalized_weight = float(raw_value)
+        return func(normalized_weight, *args[1:], **kwargs)
     return wrapper
+
+@ensure_valid_weight
+def compute_mass_kg(weight):
+    return weight
+
+@ensure_valid_weight
+def convert_to_pounds(weight):
+    conversion_factor = 2.20462
+    return weight * conversion_factor
+
 if __name__ == '__main__':
-    @validate_and_normalize_weight
-    def calculate_area(weight, length):
-        return weight * length
-    print("--- Testing valid inputs ---")
+    test_valid = 75.5
+    test_invalid_type = "75"
+    test_negative = -10
+    test_too_heavy = 1000
+    
+    print(compute_mass_kg(test_valid))
+    print(convert_to_pounds(test_valid))
+    
     try:
-        result1 = calculate_area(10.5, 2)
-        print(f"calculate_area(10.5, 2) = {result1}")
-    except Exception as e:
-        print(f"Error: {e}")
+        compute_mass_kg(test_invalid_type)
+    except WeightTypeException as e:
+        print(e)
+        
     try:
-        result2 = calculate_area(5, 10)
-        print(f"calculate_area(5, 10) = {result2}")
-    except Exception as e:
-        print(f"Error: {e}")
-    print("\n--- Testing invalid data types ---")
+        compute_mass_kg(test_negative)
+    except WeightRangeException as e:
+        print(e)
+        
     try:
-        calculate_area("ten", 2)
-    except TypeError as e:
-        print(f"Caught expected error: {e}")
-    except Exception as e:
-        print(f"Caught unexpected error: {e}")
-    print("\n--- Testing impossible values (negative) ---")
-    try:
-        calculate_area(-5, 10)
-    except ValueError as e:
-        print(f"Caught expected error: {e}")
-    except Exception as e:
-        print(f"Caught unexpected error: {e}")
-    print("\n--- Testing missing arguments ---")
-    try:
-        calculate_area(10)
-    except TypeError as e:
-        print(f"Caught expected error: {e}")
-    except Exception as e:
-        print(f"Caught unexpected error: {e}")
+        compute_mass_kg(test_too_heavy)
+    except WeightRangeException as e:
+        print(e)

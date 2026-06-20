@@ -1,31 +1,37 @@
-def convert_length(length_str, target_unit):
-    conversion_factors = {
-        'm': {'ft': 3.28084},
-        'ft': {'m': 0.3048},
-        'in': {'ft': 1/12},
-        'ft': {'in': 12},
-        'yd': {'ft': 3},
-        'ft': {'yd': 1/3},
-    }
-    if length_str not in conversion_factors:
-        return f"Error: Unknown length unit '{length_str}'"
-    if target_unit not in conversion_factors[length_str]:
-        return f"Error: Conversion from {length_str} to {target_unit} is not supported"
-    if length_str == target_unit:
-        return float(length_str)
-    factor = conversion_factors[length_str][target_unit]
-    try:
-        result = float(length_str) * factor
-        return result
-    except ValueError:
-        return f"Error: Invalid numeric value provided for length: {length_str}"
+class UnitConverter:
+    def __init__(self, base_unit):
+        self.base_unit = base_unit
+        self.factors = {}
+        self.factors[base_unit] = 1.0
+
+    def add_unit(self, unit, factor_to_base):
+        self.factors[unit] = float(factor_to_base)
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.factors:
+            raise ValueError(f"Unknown unit: {from_unit}")
+        if to_unit not in self.factors:
+            raise ValueError(f"Unknown unit: {to_unit}")
+        base_value = value * self.factors[from_unit]
+        return base_value / self.factors[to_unit]
+
+    def get_supported_units(self):
+        return list(self.factors.keys())
+
 if __name__ == '__main__':
-    print(convert_length('10', 'ft'))
-    print(convert_length('5', 'm'))
-    print(convert_length('100', 'yd'))
-    print(convert_length('10', 'm'))
-    print(convert_length('10', 'ft'))
-    print(convert_length('10', 'in'))
-    print(convert_length('10', 'm'))
-    print(convert_length('10', 'mm'))
-    print(convert_length('abc', 'ft'))
+    converter = UnitConverter('meter')
+    converter.add_unit('kilometer', 1000.0)
+    converter.add_unit('centimeter', 0.01)
+    converter.add_unit('millimeter', 0.001)
+    converter.add_unit('inch', 0.0254)
+    converter.add_unit('foot', 0.3048)
+
+    result1 = converter.convert(1, 'kilometer', 'meter')
+    result2 = converter.convert(100, 'centimeter', 'meter')
+    result3 = converter.convert(1, 'meter', 'inch')
+    result4 = converter.convert(10, 'foot', 'centimeter')
+
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)

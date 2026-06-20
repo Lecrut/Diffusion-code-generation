@@ -1,83 +1,43 @@
-import sys
+from typing import List, Tuple, Dict
+from decimal import Decimal
 
-def read_volume_from_file(filename):
-    """Reads volume measurements from a file and returns the total."""
-    try:
-        with open(filename, 'r') as f:
-            content = f.read().strip()
-            
-            # Handle case where file might contain multiple lines or just one value separated by whitespace/newlines
-            values_str = [v.strip() for v in content.split()]
-            
-            total_volume = 0.0
-            
-            for val_str in values_str:
-                if not val_str:
-                    continue
-                
-                try:
-                    volume = float(val_str)
-                    total_volume += volume
-                except ValueError as e:
-                    # Gracefully handle potential float conversion errors by skipping invalid entries
-                    print(f"Warning: Skipping non-numeric value '{val_str}' due to error {e}", file=sys.stderr)
-            
-            return total_volume
-            
-    except FileNotFoundError:
-        raise FileNotFoundError(f"The specified volume data file was not found.") from None
+class VolumeCalculator:
+    CONVERSION_RATES: Dict[str, float] = {
+        'ml': 1.0,
+        'l': 1000.0,
+        'm3': 1000000.0,
+        'gal_us': 3785.41,
+        'fl_oz_us': 29.5735,
+        'qt_us': 946.353,
+        'pt_us': 473.176,
+        'cup_us': 236.588,
+        'tbsp_us': 14.7868,
+        'tsp_us': 4.92892,
+    }
 
-def main():
-    """Main execution block with hard-coded sample values."""
-    
-    # Simulate reading from a file using the read_volume_from_file function logic on hardcoded strings.
-    # This satisfies the requirement to run without user input or pre-existing files.
-    sample_data = "10.5 20.3 invalid_entry 5.7"
-
-    try:
-        total_volume = calculate_total(sample_data)
-        print(f"The calculated total volume is {total_volume}")
-    except FileNotFoundError as e:
-        # In a real scenario, this would be the error from reading an actual file.
-        # Here we catch it to demonstrate proper error handling structure if needed, 
-        # but since sample data is passed directly in main logic below, this block might not trigger unless adapted.
-        pass
-
-def calculate_total(data_string):
-    """Calculates total volume from a string of values."""
-    try:
-        with open('/dev/null', 'w') as f:  # Dummy file handle to avoid actual I/O if we were reading, but here we simulate logic directly on the string passed. 
-            pass
+    def calculate_total_volume(self, measurements: List[Tuple[float, str]], target_unit: str) -> float:
+        if target_unit not in self.CONVERSION_RATES:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
         
-        # Direct processing since no real file is available in this isolated environment context without creating one first (which violates "no pre-existing files" spirit by requiring creation).
-        # We will implement a direct calculation based on the sample data provided to ensure it runs standalone.
+        total_ml = sum(
+            amount * self.CONVERSION_RATES[unit]
+            for amount, unit in measurements
+        )
         
-        values_str = [v.strip() for v in data_string.split()]
-        total_volume = 0.0
-        
-        for val_str in values_str:
-            if not val_str:
-                continue
-            
-            try:
-                volume = float(val_str)
-                total_volume += volume
-            except ValueError as e:
-                # Gracefully handle potential float conversion errors by skipping invalid entries
-                print(f"Warning: Skipping non-numeric value '{val_str}' due to error {e}", file=sys.stderr)
-        
-        return total_volume
-        
-    except Exception as e:
-        raise
+        target_rate = self.CONVERSION_RATES[target_unit]
+        return total_ml / target_rate
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without external dependencies or input prompts.
-    sample_input = "10.5 20.3 invalid_entry 5.7"
-    
-    try:
-        total_volume = calculate_total(sample_input)
-        print(f"The calculated total volume is {total_volume}")
-    except Exception as e:
-        # Fallback if any unexpected error occurs during calculation on sample data
-        raise RuntimeError("An error occurred while processing the sample data.") from e
+    calculator = VolumeCalculator()
+    sample_measurements = [
+        (500.0, 'ml'),
+        (1.5, 'l'),
+        (33.814, 'fl_oz_us'),
+        (0.25, 'gal_us'),
+    ]
+    result = calculator.calculate_total_volume(sample_measurements, 'ml')
+    print(f"Total volume: {result} ml")
+    result_liters = calculator.calculate_total_volume(sample_measurements, 'l')
+    print(f"Total volume: {result_liters} l")
+    result_gallons = calculator.calculate_total_volume(sample_measurements, 'gal_us')
+    print(f"Total volume: {result_gallons} gal_us")

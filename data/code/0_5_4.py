@@ -1,29 +1,45 @@
-def convert_length(length_str, target_unit):
-    conversion_factors = {
-        'm': {'ft': 3.28084},
-        'ft': {'m': 0.3048},
-        'in': {'m': 0.0254},
-        'm': {'in': 39.3701},
-        'ft': {'in': 12.000000000000002},
-    }
-    if length_str not in conversion_factors:
-        return f"Error: Unknown length unit '{length_str}'"
-    if target_unit not in conversion_factors[length_str]:
-        return f"Error: Unknown target unit '{target_unit}' for length '{length_str}'"
-    if length_str == target_unit:
-        return float(length_str)
-    factor = conversion_factors[length_str][target_unit]
-    try:
-        result = float(length_str) * factor
+class UnitConverter:
+    def __init__(self):
+        self.base_unit = 'meters'
+        self.conversion_factors = {
+            'meters': 1.0,
+            'kilometers': 1000.0,
+            'centimeters': 0.01,
+            'millimeters': 0.001,
+            'miles': 1609.344,
+            'yards': 0.9144,
+            'feet': 0.3048,
+            'inches': 0.0254
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.conversion_factors:
+            raise ValueError(f"Unknown unit: {from_unit}")
+        if to_unit not in self.conversion_factors:
+            raise ValueError(f"Unknown unit: {to_unit}")
+        
+        base_value = value * self.conversion_factors[from_unit]
+        result = base_value / self.conversion_factors[to_unit]
         return result
-    except ValueError:
-        return f"Error: Invalid length value provided: {length_str}"
+
+    def add_unit(self, unit_name, factor):
+        self.conversion_factors[unit_name] = factor
+
 if __name__ == '__main__':
-    print(convert_length('10', 'ft'))
-    print(convert_length('1', 'm'))
-    print(convert_length('50', 'in'))
-    print(convert_length('10', 'm'))
-    print(convert_length('10', 'm'))
-    print(convert_length('10', 'm'))
-    print(convert_length('10', 'km'))
-    print(convert_length('invalid', 'm'))
+    converter = UnitConverter()
+    
+    result1 = converter.convert(1000, 'meters', 'kilometers')
+    print(result1)
+    
+    result2 = converter.convert(1, 'miles', 'meters')
+    print(result2)
+    
+    result3 = converter.convert(5, 'feet', 'centimeters')
+    print(result3)
+    
+    result4 = converter.convert(100, 'centimeters', 'inches')
+    print(result4)
+    
+    converter.add_unit('light_years', 9.461e15)
+    result5 = converter.convert(1, 'light_years', 'kilometers')
+    print(result5)

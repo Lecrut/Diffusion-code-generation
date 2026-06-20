@@ -1,37 +1,44 @@
-class WeightTracker:
-    def __init__(self, name):
-        self.name = name
-        self.weights = []
-    def add_weight(self, weight):
-        self.weights.append(weight)
-    def calculate_statistics(self):
-        if not self.weights:
+class MetricData:
+    def __init__(self):
+        self.entries = []
+
+    def record(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Value must be numeric")
+        if value <= 0:
+            raise ValueError("Value must be positive")
+        self.entries.append(value)
+
+    def calculate_aggregates(self):
+        if not self.entries:
             return {
-                "name": self.name,
-                "total_weights": 0,
-                "average_weight": 0,
-                "highest_weight": 0,
-                "lowest_weight": 0
+                "count": 0,
+                "sum": 0.0,
+                "mean": 0.0,
+                "lowest": None,
+                "highest": None
             }
-        total = sum(self.weights)
-        average = total / len(self.weights)
-        highest = max(self.weights)
-        lowest = min(self.weights)
+        total = sum(self.entries)
+        count = len(self.entries)
         return {
-            "name": self.name,
-            "total_weights": total,
-            "average_weight": average,
-            "highest_weight": highest,
-            "lowest_weight": lowest
+            "count": count,
+            "sum": total,
+            "mean": total / count,
+            "lowest": min(self.entries),
+            "highest": max(self.entries)
         }
+
+    def get_entries(self):
+        return list(self.entries)
+
+def run_demonstration():
+    tracker = MetricData()
+    tracker.record(75.5)
+    tracker.record(74.2)
+    tracker.record(76.8)
+    tracker.record(73.1)
+    results = tracker.calculate_aggregates()
+    print(results)
+
 if __name__ == '__main__':
-    tracker = WeightTracker("Alice")
-    sample_weights = [65.5, 68.0, 70.5, 66.0, 72.5]
-    for weight in sample_weights:
-        tracker.add_weight(weight)
-    statistics = tracker.calculate_statistics()
-    print(f"--- Weight Tracking Statistics for {statistics['name']} ---")
-    print(f"Total Weights Recorded: {statistics['total_weights']}")
-    print(f"Average Weight: {statistics['average_weight']:.2f}")
-    print(f"Highest Weight: {statistics['highest_weight']:.2f}")
-    print(f"Lowest Weight: {statistics['lowest_weight']:.2f}")
+    run_demonstration()

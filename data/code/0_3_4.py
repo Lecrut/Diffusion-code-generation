@@ -1,24 +1,45 @@
-class UnitConverter:
-    METERS_TO_FEET = 3.28084
-    METERS_TO_KM = 0.001
-    def to_feet(self, meters):
-        return meters * self.METERS_TO_FEET
-    def to_kilometers(self, meters):
-        return meters * self.METERS_TO_KM
-    def to_meters(self, feet):
-        return feet / self.METERS_TO_FEET
-    def to_kilometers_from_feet(self, feet):
-        return feet / self.METERS_TO_FEET * self.METERS_TO_KM
+def convert_length(length_str: str, target_unit: str) -> float:
+    units_to_meters = {
+        'm': 1.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'km': 1000.0,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344,
+    }
+    
+    if target_unit not in units_to_meters:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+    
+    length_str = length_str.strip().lower()
+    length_value = 0.0
+    source_unit = 'm'
+    
+    found_unit = False
+    for unit, factor in units_to_meters.items():
+        if length_str.endswith(unit):
+            source_unit = unit
+            length_value = float(length_str[:-len(unit)].strip())
+            found_unit = True
+            break
+    
+    if not found_unit:
+        try:
+            length_value = float(length_str)
+            source_unit = 'm'
+        except ValueError:
+            raise ValueError(f"Invalid length string: {length_str}")
+    
+    if source_unit not in units_to_meters:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+    
+    value_in_meters = length_value * units_to_meters[source_unit]
+    result = value_in_meters / units_to_meters[target_unit]
+    
+    return result
+
 if __name__ == '__main__':
-    converter = UnitConverter()
-    meters_value = 10
-    feet_value = 32.8084
-    kilometers_value = 1000
-    feet_from_meters = converter.to_feet(meters_value)
-    kilometers_from_meters = converter.to_kilometers(meters_value)
-    meters_from_feet = converter.to_meters(feet_value)
-    kilometers_from_feet = converter.to_kilometers_from_feet(feet_value)
-    print(f"10 meters is {feet_from_meters:.4f} feet")
-    print(f"10 meters is {kilometers_from_meters:.4f} kilometers")
-    print(f"32.8084 feet is {meters_from_feet:.4f} meters")
-    print(f"32.8084 feet is {kilometers_from_feet:.4f} kilometers")
+    result = convert_length("100 cm", "m")
+    print(result)

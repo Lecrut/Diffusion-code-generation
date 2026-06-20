@@ -1,42 +1,44 @@
-import statistics
+import csv
+import os
 
-def calculate_volume_stats(measurements):
-    """Calculate total and average volume from a list of measurements."""
-    if len(measurements) == 0:
-        return {"total": 0, "average": 0}
-
-    total = sum(measurements)
-    average = statistics.mean(measurements)
-
-    # Use int() to ensure the output is clean integers where applicable.
-    # For average, we keep it as a float for precision but strip trailing zeros if desired.
-    return {
-        "total": int(total),
-        "average": round(average, 2)
-    }
-
-def main():
-    """Main function with hard-coded sample values."""
-
-    # Hard-coded sample volume measurements (in cubic meters)
-    sample_measurements = [10.5, 23.4, 7.8, 15.6]
-
-    volumes_list = []
+def scale_volumes(input_filepath, output_filepath, scale_factor):
+    rows = []
+    with open(input_filepath, 'r', newline='') as infile:
+        reader = csv.DictReader(infile)
+        for row in reader:
+            name = row['name']
+            volume = float(row['volume'])
+            scaled_volume = volume * scale_factor
+            rows.append({'name': name, 'volume': scaled_volume})
     
-    # Append the pre-defined samples to our list since we cannot use input() or stdin
-    for vol in sample_measurements:
-        print(f"Sample measurement recorded: {vol} m³")
-        volumes_list.append(vol)
-
-    results = calculate_volume_stats(volumes_list)
-
-    total_vol = results["total"]
-    avg_vol = results["average"]
-
-    # Display the calculated totals and average volume to the user
-    print("\n--- Volume Analysis Results ---")
-    print(f"Total Volume: {total_vol} m³")
-    print(f"Average Volume: {avg_vol} m³")
+    with open(output_filepath, 'w', newline='') as outfile:
+        fieldnames = ['name', 'volume']
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    
+    return rows
 
 if __name__ == '__main__':
-    main()
+    input_file = 'input.csv'
+    output_file = 'output.csv'
+    factor = 2.0
+    
+    sample_data = [
+        {'name': 'apple', 'volume': 10.0},
+        {'name': 'banana', 'volume': 5.0},
+        {'name': 'cherry', 'volume': 20.0}
+    ]
+    
+    with open(input_file, 'w', newline='') as f:
+        fieldnames = ['name', 'volume']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(sample_data)
+    
+    result = scale_volumes(input_file, output_file, factor)
+    
+    print(result)
+    
+    os.remove(input_file)
+    os.remove(output_file)

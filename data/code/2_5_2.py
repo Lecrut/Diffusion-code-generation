@@ -1,11 +1,8 @@
 def scale_volumes(volumes, factor):
-    scaled_volumes = []
-    for volume in volumes:
-        scaled_volume = volume * factor
-        scaled_volumes.append(scaled_volume)
-    return scaled_volumes
+    return [v * factor for v in volumes]
+
 if __name__ == '__main__':
-    initial_volumes = [1.0, 2.5, 3.14159, 10.0]
-    scaling_factor = 1.5
+    initial_volumes = [10.0, 20.5, 30.75]
+    scaling_factor = 2.5
     result = scale_volumes(initial_volumes, scaling_factor)
     print(result)

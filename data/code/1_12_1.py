@@ -1,14 +1,23 @@
-def filter_weights(weight_strings):
-    valid_weights = []
-    for weight_str in weight_strings:
+def _parse_single_weight(raw_value):
+    cleaned = str(raw_value).strip()
+    if not cleaned:
+        raise ValueError("Empty string")
+    number = float(cleaned)
+    if number <= 0:
+        raise ValueError("Non-positive value")
+    return number
+
+def extract_positive_weights(data_list):
+    results = []
+    for entry in data_list:
         try:
-            weight = float(weight_str)
-            if weight > 0:
-                valid_weights.append(weight)
-        except ValueError:
+            converted = _parse_single_weight(entry)
+            results.append(converted)
+        except (ValueError, TypeError):
             continue
-    return valid_weights
+    return results
+
 if __name__ == '__main__':
-    sample_weights = ["10.5", "20", "invalid", "-5.2", "30.1", "0"]
-    result = filter_weights(sample_weights)
-    print(result)
+    test_inputs = ['25.5', '  30.0  ', '-10', 'NaN', '0', 'valid', '42', '', '100']
+    output_values = extract_positive_weights(test_inputs)
+    print(output_values)

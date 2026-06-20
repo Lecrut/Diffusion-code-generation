@@ -1,44 +1,27 @@
-def meters_to_feet(meters: float) -> None:
-    """
-    Converts a given length from meters to feet.
+def convert_length(length, target_unit):
+    supported_units = ["meters", "feet", "kilometers"]
+    if target_unit not in supported_units:
+        raise ValueError(f"Unsupported unit: {target_unit}")
     
-    Parameters:
-        meters (float): The length in meters to convert.
-        
-    Returns:
-        None
+    conversion_rates = {
+        "meters": 1.0,
+        "feet": 3.28084,
+        "kilometers": 0.001
+    }
     
-    Logic:
-        Uses the conversion factor 1 meter = 3.28084 feet.
-        Prints the result formatted to two decimal places.
-    """
-    # Conversion constant defined for precision, though Python handles float arithmetic well enough here.
-    METERS_TO_FEET_FACTOR = 3.28084
-    
-    try:
-        if meters < 0:
-            print(f"Error: Length cannot be negative.")
-            return
+    base_value = length / conversion_rates["meters"]
+    result = base_value * conversion_rates[target_unit]
+    return result
 
-        feet_value = meters * METERS_TO_FEET_FACTOR
-        
-        # Output the result in a readable format
-        print(f"{meters} meters is equal to {feet_value:.2f} feet.")
-    except TypeError as e:
-        print(f"Input error: Cannot convert input of type '{type(meters).__name__}' to float. Please provide a number.")
-
-if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes, avoiding interactive prompts.
+if __name__ == "__main__":
+    sample_length = 100.0
+    sample_unit = "feet"
+    print(convert_length(sample_length, sample_unit))
     
-    # Sample Case 1: Standard conversion
-    meters_sample_1 = 5
+    sample_length_2 = 5.0
+    sample_unit_2 = "kilometers"
+    print(convert_length(sample_length_2, sample_unit_2))
     
-    # Sample Case 2: Larger distance (e.g., marathon length approx)
-    meters_sample_2 = 42195
-    
-    # Note: No actual input() call is used to ensure the script runs immediately upon execution.
-
-    print("--- Converting sample values ---")
-    
-    meters_to_feet(meters_sample_1)
-    meters_to_feet(meters_sample_2)
+    sample_length_3 = 1000.0
+    sample_unit_3 = "meters"
+    print(convert_length(sample_length_3, sample_unit_3))

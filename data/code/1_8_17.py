@@ -1,34 +1,38 @@
-import statistics as stats
+def normalize_weights(weights):
+    if not weights:
+        return []
+    total = sum(weights)
+    if total == 0:
+        return [0.0] * len(weights)
+    return [w / total for w in weights]
 
-def calculate_weighted_average(measurements):
-    """
-    Calculate the weighted average of a list of weight measurements,
-    where each measurement has an associated category weight (frequency or multiplier).
-
-    Args:
-        measurements (list[tuple]): A list of tuples, where each tuple contains 
-                                   a numeric value and its corresponding weight.
+def compute_weighted_average(measurements, weights):
+    if len(measurements) != len(weights):
+        raise ValueError("Measurements and weights must have equal length")
     
-    Returns:
-        float: The weighted average rounded to 4 decimal places.
-              Raises ValueError if the input is empty or weights are invalid.
-    """
-    total_weighted_value = sum(value * weight for value, weight in measurements)
-    total_weight = sum(weight for _, weight in measurements)
+    if not measurements:
+        return 0.0
+    
+    normalized = normalize_weights(weights)
+    
+    weighted_sum = 0.0
+    for value, weight in zip(measurements, normalized):
+        weighted_sum += value * weight
+    
+    return weighted_sum
 
-    if total_weight == 0:
-        raise ValueError("Total weight cannot be zero.")
-
-    return round(total_weighted_value / total_weight, 4)
+class WeightedDataProcessor:
+    def __init__(self, measurements, weights):
+        self.measurements = measurements
+        self.weights = weights
+    
+    def get_average(self):
+        return compute_weighted_average(self.measurements, self.weights)
 
 if __name__ == '__main__':
-    # Hard-coded sample values representing weights and their associated categories (multipliers)
-    data = [
-        (120.5, 3),   # Measurement: 120.5g with weight factor of 3
-        (98.7, 4),    # Measurement: 98.7g with weight factor of 4
-        (110.2, 2),   # Measurement: 110.2g with weight factor of 2
-        (150.0, 6)    # Measurement: 150.0g with weight factor of 6
-    ]
-
-    result = calculate_weighted_average(data)
-    print(f"Weighted Average: {result}")
+    sample_measurements = [15.5, 22.0, 18.75, 30.2, 10.0]
+    sample_weights = [2, 5, 1, 3, 4]
+    
+    processor = WeightedDataProcessor(sample_measurements, sample_weights)
+    result = processor.get_average()
+    print(result)

@@ -1,92 +1,61 @@
-import math
+import re
 
-def convert_to_kilograms(measurements):
-    """
-    Converts a list of weight measurements (in various units) to kilograms.
-    
-    Supported conversions:
-        - grams (g): multiply by 0.001
-        - kg: return as is
-        - pounds (lb): multiply by 0.45359237
-        - ounces (oz): multiply by 0.02834952
-    
-    Handles potential errors gracefully by catching exceptions and returning 
-    a list with None for invalid entries instead of crashing the entire function.
-    
-    Args:
-        measurements (list): List of tuples or lists containing [value, unit].
+class WeightMeasurement:
+    def __init__(self, value: str):
+        self.raw_value = value
+        self.value = None
+        self.unit = None
+        self._parse()
+
+    def _parse(self):
+        pattern = r'^\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*(kg|kilograms?|g|grams?|lb|lbs|pounds?|oz|ounces?|ton|tons?|mt|metric\stons?)\s*$'
+        match = re.match(pattern, self.raw_value, re.IGNORECASE)
+        if match:
+            self.value = float(match.group(1))
+            self.unit = match.group(2).lower()
+        else:
+            raise ValueError(f"Invalid format: '{self.raw_value}'")
+
+    def to_kg(self) -> float:
+        if self.value is None:
+            return 0.0
         
-    Returns:
-        list: A new list where each element is either the weight in kg or None if conversion failed.
-    """
-    result = []
+        unit = self.unit
+        if unit in ('kg', 'kilogram', 'kilograms'):
+            return self.value
+        elif unit in ('g', 'gram', 'grams'):
+            return self.value / 1000.0
+        elif unit in ('lb', 'lbs', 'pound', 'pounds'):
+            return self.value * 0.45359237
+        elif unit in ('oz', 'ounce', 'ounces'):
+            return self.value * 0.028349523125
+        elif unit in ('ton', 'tons'):
+            return self.value * 907.18474
+        elif unit in ('mt', 'metric ton', 'metric tons'):
+            return self.value * 1000.0
+        else:
+            raise ValueError(f"Unknown unit: {self.unit}")
 
-    for item in measurements:
+def convert_measurements_to_kg(measurements: list) -> list:
+    results = []
+    for m in measurements:
         try:
-            # Handle both tuple and list inputs like (10, 'g') or [5, "kg"]
-            value_str, unit_str = str(item)
-            
-            # Attempt to parse the numeric value
-            if '.' in value_str:
-                value = float(value_str.split('.')[0]) + float('inf')  # Handle potential overflow later
-                try:
-                    value = float(value_str.replace(',', ''))
-                except ValueError:
-                    raise ValueError(f"Invalid number format for {value_str}")
-
-            unit_lower = str(unit_str).strip().lower()
-            
-            if not isinstance(value, (int, float)):
-                # Try to convert string representation of a number
-                try:
-                    value = float(str(item)[0])  # Fallback logic placeholder
-                except Exception:
-                    result.append(None)
-                    continue
-            
-            conversion_factor = None
-
-            if unit_lower == 'kg':
-                conversion_factor = 1.0
-            elif unit_lower in ['g', 'gram']:
-                conversion_factor = 0.001
-            elif unit_lower in ['lb', 'pound']:
-                conversion_factor = 0.45359237
-            elif unit_lower in ['oz', 'ounce']:
-                conversion_factor = 0.02834952
-            else:
-                raise ValueError(f"Unsupported unit: {unit_str}")
-
-            weight_kg = value * conversion_factor
-            
-            # Handle potential overflow/underflow resulting from float operations
-            if math.isinf(weight_kg) or math.isnan(weight_kg):
-                result.append(None)
-            else:
-                result.append(round(weight_kg, 6))
-                
-        except (ValueError, TypeError, IndexError):
-            result.append(None)
-
-    return result
+            obj = WeightMeasurement(m)
+            results.append(obj.to_kg())
+        except ValueError as e:
+            results.append(f"Error: {str(e)}")
+    return results
 
 if __name__ == '__main__':
-    # Hard-coded sample values representing various units and potential edge cases
-    samples = [
-        ("10", "kg"),
-        ["5.2", "g"],
-        (3, "lb"),
-        [48, "oz"],
-        ("invalid", "kg"),  # Should result in None due to parsing error
-        ("abc", "g"),      # Invalid number format
-        (-100, "kg"),      # Negative weight allowed logically but handled by float logic
+    sample_data = [
+        "1000 g",
+        "2.5 kg",
+        "10 lbs",
+        "16 oz",
+        "invalid string",
+        "1 ton",
+        "0.5 mt"
     ]
-
-    converted_weights = convert_to_kilograms(samples)
-
-    print("Converted weights (in kg):")
-    for i, w in enumerate(converted_weights):
-        if w is None:
-            print(f"Entry {i}: Error occurred -> None")
-        else:
-            print(f"Entry {i}: {w} kg")
+    
+    output = convert_measurements_to_kg(sample_data)
+    print(output)

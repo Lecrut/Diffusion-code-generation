@@ -1,28 +1,38 @@
-class WeightConverter:
-    def __init__(self, weight, unit):
-        self.weight = weight
+class Weight:
+    def __init__(self, value, unit):
+        self.value = value
         self.unit = unit
-    def convert_weight(self, new_unit):
-        if self.unit == new_unit:
-            return self.weight
-        elif self.unit == "pounds" and new_unit == "kilograms":
-            conversion_factor = 0.453592
-            new_weight = self.weight * conversion_factor
+
+    def to_kilograms(self):
+        if self.unit == 'kg':
+            return self.value
+        if self.unit == 'lb':
+            return self.value * 0.453592
+        if self.unit == 'oz':
+            return self.value * 0.0283495
+        return self.value
+
+    def convert_to(self, target_unit):
+        if target_unit == self.unit:
+            return self.value
+        value_in_kg = self.to_kilograms()
+        if target_unit == 'kg':
+            return value_in_kg
+        if target_unit == 'lb':
+            return value_in_kg / 0.453592
+        if target_unit == 'oz':
+            return value_in_kg / 0.0283495
+        return value_in_kg
+
+    def set_unit(self, new_unit):
+        if new_unit in ('kg', 'lb', 'oz'):
             self.unit = new_unit
-            return new_weight
-        elif self.unit == "kilograms" and new_unit == "pounds":
-            conversion_factor = 2.204622
-            new_weight = self.weight * conversion_factor
-            self.unit = new_unit
-            return new_weight
         else:
-            return "Unsupported conversion"
+            raise ValueError("Unsupported unit")
+
 if __name__ == '__main__':
-    converter1 = WeightConverter(150, "pounds")
-    print(f"Initial weight: {converter1.weight} {converter1.unit}")
-    result1 = converter1.convert_weight("kilograms")
-    print(f"Converted weight: {result1:.2f} {converter1.unit}")
-    converter2 = WeightConverter(75, "kilograms")
-    print(f"Initial weight: {converter2.weight} {converter2.unit}")
-    result2 = converter2.convert_weight("pounds")
-    print(f"Converted weight: {result2:.2f} {converter2.unit}")
+    w = Weight(100, 'lb')
+    print(w.to_kilograms())
+    print(w.convert_to('kg'))
+    w.set_unit('kg')
+    print(w.convert_to('lb'))

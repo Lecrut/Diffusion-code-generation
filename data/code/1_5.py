@@ -1,40 +1,22 @@
 def extract_weights(data):
-    weights = []
+    result = []
     if isinstance(data, dict):
-        for key, value in data.items():
-            if isinstance(value, (int, float)):
-                weights.append(value)
-            elif isinstance(value, dict):
-                weights.extend(extract_weights(value))
+        for value in data.values():
+            result.extend(extract_weights(value))
     elif isinstance(data, list):
         for item in data:
-            if isinstance(item, (int, float)):
-                weights.append(item)
-            elif isinstance(item, dict):
-                weights.extend(extract_weights(item))
-    return weights
+            result.extend(extract_weights(item))
+    elif isinstance(data, (int, float)):
+        result.append(data)
+    return result
+
 if __name__ == '__main__':
-    weight_data = {
-        "record_1": {
-            "weight_kg": 75.5,
-            "details": {
-                "weight_lbs": 166.4,
-                "notes": "heavy"
-            },
-            "status": "complete"
-        },
-        "record_2": {
-            "weight_kg": 80.0,
-            "details": {
-                "weight_lbs": 176.4,
-                "notes": "heavy"
-            },
-            "status": "pending"
-        },
-        "summary": [
-            {"id": 1, "weight": 100.0},
-            {"id": 2, "weight": 105.5}
-        ]
+    sample_data = {
+        "user1": {"weight": 70.5, "history": [68, 69, 70.5]},
+        "user2": {"stats": {"current": 80, "previous": [75, 76.2]}, "active": True},
+        "nested": {"level1": {"level2": {"weight": 90}}},
+        "empty_list": [],
+        "mixed": [10, {"val": 20}, [30]]
     }
-    result = extract_weights(weight_data)
-    print(result)
+    extracted = extract_weights(sample_data)
+    print(extracted)

@@ -1,45 +1,32 @@
 def extract_weights(data):
-    """
-    Recursively traverses a nested dictionary structure to extract all numerical weight values.
-    
-    Args:
-        data (dict | list | float): The input structure containing weights and potential nesting.
-        
-    Returns:
-        list[float]: A flat list of all extracted numerical weight values.
-    """
     weights = []
-    
     if isinstance(data, dict):
-        for value in data.values():
+        for key, value in data.items():
             weights.extend(extract_weights(value))
-    elif isinstance(data, (list, tuple)):
+    elif isinstance(data, list):
         for item in data:
             weights.extend(extract_weights(item))
-    else:
-        # Check if the element is a number (int or float) but not boolean
-        if isinstance(data, (int, float)) and not isinstance(data, bool):
-            weights.append(float(data))
-    
+    elif isinstance(data, (int, float)):
+        weights.append(data)
     return weights
 
 if __name__ == '__main__':
     sample_data = {
-        "record_1": 70.5,
-        "details": [
-            {"id": 101, "weight": 68},
-            {"id": 102, "notes": "Training", "weights": [69.2, 71.0]},
-            {"id": 103}
-        ],
-        "record_2": {
-            "name": "John",
-            "weight": 85.4,
-            "history": [[{"date": "2023-01"}, 67], [69]]
-        }
+        "person1": {
+            "current": 70.5,
+            "history": [68.2, 69.1, 70.5]
+        },
+        "person2": {
+            "current": 82.3,
+            "previous": {
+                "year1": 85.0,
+                "year2": 84.2
+            }
+        },
+        "group": [
+            {"name": "Alice", "weight": 65.5},
+            {"name": "Bob", "weight": 90.1}
+        ]
     }
-
     result = extract_weights(sample_data)
-    
-    print("Extracted weights:")
-    for w in result:
-        print(f"{w}")
+    print(result)

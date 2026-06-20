@@ -1,49 +1,64 @@
 import functools
-def validate_and_normalize_weight(func):
+
+class WeightValidationError(Exception):
+    def __init__(self, message):
+        super(WeightValidationError, self).__init__(message)
+
+class WeightTypeMismatchError(Exception):
+    def __init__(self, expected, actual):
+        super(WeightTypeMismatchError, self).__init__("Expected type {}, got {}".format(expected, actual))
+
+MINIMUM_VALID_WEIGHT = 0.0
+MAXIMUM_VALID_WEIGHT = 500.0
+
+def enforce_weight_contracts(func):
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight_input = args[0]
-        if not isinstance(weight_input, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight_input).__name__}")
-        if weight_input < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight_input * 1.0                                
-        result = func(*([normalized_weight] + list(args[1:])), **kwargs)
-        return result
-    return wrapper
-@validate_and_normalize_weight
-def calculate_area(weight, length):
-    return weight * length
+    def validator(*args, **kwargs):
+        target_args = args if args else (kwargs.get('weight', None),)
+        if not target_args:
+            raise WeightTypeMismatchError('number', 'None')
+        
+        raw_value = target_args[0]
+        
+        if isinstance(raw_value, bool):
+            raise WeightTypeMismatchError('(int, float)', 'bool')
+        
+        if not isinstance(raw_value, (int, float)):
+            raise WeightTypeMismatchError('(int, float)', type(raw_value).__name__)
+        
+        numeric_value = float(raw_value)
+        
+        if numeric_value < MINIMUM_VALID_WEIGHT:
+            raise WeightValidationError("Weight cannot be negative: {}".format(numeric_value))
+        
+        if numeric_value > MAXIMUM_VALID_WEIGHT:
+            raise WeightValidationError("Weight exceeds maximum limit: {}".format(numeric_value))
+        
+        normalized_weight = round(numeric_value, 2)
+        return func(normalized_weight)
+    return validator
+
+@enforce_weight_contracts
+def calculate_lifting_capacity(base_weight):
+    base_multiplier = 1.25
+    adjusted_weight = base_weight * base_multiplier
+    return adjusted_weight
+
 if __name__ == '__main__':
-    print("--- Test Case 1: Valid Input ---")
+    valid_result = calculate_lifting_capacity(100)
+    print(valid_result)
+    
     try:
-        result1 = calculate_area(10.5, 2)
-        print(f"Result 1: {result1}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 1: {e}")
-    print("\n--- Test Case 2: Invalid Type (String) ---")
+        calculate_lifting_capacity(-5)
+    except WeightValidationError as e:
+        print(e)
+        
     try:
-        result2 = calculate_area("ten", 2)
-        print(f"Result 2: {result2}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 2: {e}")
-    print("\n--- Test Case 3: Impossible Value (Negative) ---")
+        calculate_lifting_capacity(600)
+    except WeightValidationError as e:
+        print(e)
+        
     try:
-        result3 = calculate_area(-5, 10)
-        print(f"Result 3: {result3}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 3: {e}")
-    print("\n--- Test Case 4: Missing Argument ---")
-    try:
-        result4 = calculate_area(10)
-        print(f"Result 4: {result4}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 4: {e}")
-    print("\n--- Test Case 5: Valid Input (Integer) ---")
-    try:
-        result5 = calculate_area(5, 3)
-        print(f"Result 5: {result5}")
-    except (TypeError, ValueError) as e:
-        print(f"Error 5: {e}")
+        calculate_lifting_capacity("heavy")
+    except WeightTypeMismatchError as e:
+        print(e)

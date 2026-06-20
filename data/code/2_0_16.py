@@ -1,73 +1,37 @@
 import os
+import tempfile
 
-def read_and_sum_volumes(file_path: str) -> float | None:
-    """
-    Reads volume measurements from a text file, each on a new line as a numeric value,
-    and returns the sum of all values rounded to 2 decimal places.
-    
-    Args:
-        file_path (str): The path to the text file containing volume measurements.
-        
-    Returns:
-        float | None: The total volume if successful; None if an error occurs.
-    """
-    try:
-        with open(file_path, 'r') as f:
-            current_volume = 0.0
-            
-            for line in f:
-                stripped_line = line.strip()
-                # Skip empty lines or non-numeric content gracefully by continuing
-                if not stripped_line:
-                    continue
-                
-                try:
-                    value = float(stripped_line)
-                    current_volume += value
-                except ValueError:
-                    # If a specific line is invalid, ignore it but keep processing
-                    continue
-            
-            return round(current_volume, 2)
-
-    except FileNotFoundError:
-        print(f"Error: The file '{file_path}' was not found.")
-        return None
-    except PermissionError:
-        print(f"Error: No permission to read the file '{file_path}'.")
-        return None
-    except Exception as e:
-        # Catch any unexpected errors related to reading or parsing
-        print(f"An unexpected error occurred while processing {file_path}: {e}")
-        return None
-
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without external files.
-    test_file_name = 'sample_volumes.txt'
-    
-    if os.path.exists(test_file_name):
-        total_volume = read_and_sum_volumes(test_file_name)
-        
-        if total_volume is not None:
-            print(f"Total Volume from '{test_file_name}': {total_volume}")
-            
-            # Clean up the test file after successful operation as it shouldn't persist.
+def read_volume_file(filepath):
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f'The file {filepath} does not exist.')
+    volumes = []
+    with open(filepath, 'r') as f:
+        for line_num, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:
+                continue
             try:
-                os.remove('sample_volumes.txt')
-            except OSError:
-                pass
-                
-        else:
-            print("Failed to calculate total volume.")
-    else:
-        # Simulate a read with hard-coded values since no pre-existing file exists and 
-        # we cannot call input() or use command-line arguments.
-        
-        sample_values = [10.5, 23.4, 98.7, "invalid", -5.2]
-        
-        print("Simulating read from 'sample_volumes.txt' (values provided directly in code).")
-        calculated_sum = sum(v for v in sample_values if isinstance(v, (int, float)))
-        result_volume = round(calculated_sum, 2)
+                volume = float(line)
+                volumes.append(volume)
+            except ValueError:
+                raise ValueError(f"Non-numeric value '{line}' found at line {line_num}.")
+    return volumes
 
-        # Output the simulated result mimicking file behavior.
-        print(f"Calculated Total Volume: {result_volume}")
+def calculate_total_volume(filepath):
+    volumes = read_volume_file(filepath)
+    return sum(volumes)
+
+def create_sample_volume_file():
+    sample_data = ['10.5', '20.0', '30.5', '0', '-5.0']
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        for volume in sample_data:
+            f.write(volume + '\n')
+        temp_path = f.name
+    return temp_path
+if __name__ == '__main__':
+    temp_file_path = create_sample_volume_file()
+    try:
+        total = calculate_total_volume(temp_file_path)
+        print(total)
+    finally:
+        os.unlink(temp_file_path)

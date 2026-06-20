@@ -1,47 +1,41 @@
 import numpy as np
 
-def calculate_volume_metrics(volumes):
-    """
-    Performs vectorized calculations on an array of volume measurements.
+def scale_volume_measurements(measurements, scaling_factor):
+    if not isinstance(measurements, np.ndarray):
+        measurements = np.array(measurements)
+    if measurements.dtype not in [np.float32, np.float64, np.int32, np.int64]:
+        measurements = measurements.astype(np.float64)
+    scaled_data = measurements * scaling_factor
+    return scaled_data
+
+class VolumeProcessor:
+    def __init__(self, raw_volumes):
+        self.raw_volumes = np.array(raw_volumes, dtype=np.float64)
     
-    Parameters:
-        volumes (np.ndarray or list): Array of volume values.
-        
-    Returns:
-        dict: Dictionary containing calculated metrics including mean, median, 
-              standard deviation, min, max, and sum.
-    """
-    # Convert input to numpy array for vectorized operations if not already an ndarray
-    arr = np.array(volumes)
+    def apply_unit_conversion(self, factor):
+        if factor <= 0:
+            raise ValueError("Scaling factor must be positive")
+        return self.raw_volumes * factor
     
-    # Vectorized calculations using NumPy functions which are highly optimized
-    mean_vol = np.mean(arr)
-    median_vol = np.median(arr)
-    std_dev = np.std(arr, ddof=0)  # Population standard deviation
-    min_val = np.min(arr)
-    max_val = np.max(arr)
-    total_volume = np.sum(arr)
-    
-    return {
-        'mean': mean_vol,
-        'median': median_vol,
-        'std_deviation': std_dev,
-        'minimum': min_val,
-        'maximum': max_val,
-        'total_sum': total_volume
-    }
+    def get_statistics(self):
+        return {
+            "mean": float(np.mean(self.raw_volumes)),
+            "std_dev": float(np.std(self.raw_volumes)),
+            "min": float(np.min(self.raw_volumes)),
+            "max": float(np.max(self.raw_volumes))
+        }
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration without user input or external dependencies
-    sample_volumes = [10.5, 23.7, 45.2, 89.1, 67.3, 34.8, 12.9, 56.4]
+    sample_volumes = [10.5, 25.0, 33.7, 12.2, 45.9, 8.1]
+    scale_factor = 2.0
     
-    # Perform calculations using the module function
-    metrics = calculate_volume_metrics(sample_volumes)
+    direct_scaled = scale_volume_measurements(sample_volumes, scale_factor)
+    print(direct_scaled)
     
-    # Output results to demonstrate functionality and performance of vectorized operations
-    print("Volume Measurement Analysis Results:")
-    for key, value in metrics.items():
-        if isinstance(value, float):
-            print(f"{key.capitalize()}: {value:.4f}")
-        else:
-            print(f"{key.capitalize()}: {int(value)}")
+    processor = VolumeProcessor(sample_volumes)
+    converted_volumes = processor.apply_unit_conversion(scale_factor)
+    print(converted_volumes)
+    
+    stats = processor.get_statistics()
+    print(stats['mean'])
+    print(stats['std_dev'])

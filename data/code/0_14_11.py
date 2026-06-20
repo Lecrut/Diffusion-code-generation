@@ -1,50 +1,68 @@
-def convert_length(length, unit):
-    """
-    Converts a numerical length to meters based on the target unit string.
-    
-    Supported units: 'meters', 'feet', 'kilometers'.
-    
-    Args:
-        length (float or int): The numerical value of the length.
-        unit (str): The target unit for conversion ('meters', 'feet', 'kilometers').
-        
-    Returns:
-        float: The converted length in meters.
-        
-    Raises:
-        ValueError: If an unsupported unit is provided.
-    """
-    
-    # Define supported units and their conversion factors to meters
-    supported_units = {
-        "meters": 1,
-        "feet": 0.3048,
-        "kilometers": 1000
+def convert_length(value: float, from_unit: str, to_unit: str) -> float:
+    units = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.344
     }
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    
+    if from_unit_lower not in units:
+        raise ValueError(f"Invalid source unit: {from_unit}")
+    if to_unit_lower not in units:
+        raise ValueError(f"Invalid target unit: {to_unit}")
+        
+    meters = value * units[from_unit_lower]
+    result = meters / units[to_unit_lower]
+    return result
 
-    if unit not in supported_units:
-        raise ValueError(f"Unsupported unit '{unit}'. Supported units are 'meters', 'feet', and 'kilometers'.")
+class LengthConverter:
+    def __init__(self):
+        self.units = {
+            'm': 1.0,
+            'km': 1000.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'in': 0.0254,
+            'ft': 0.3048,
+            'yd': 0.9144,
+            'mi': 1609.344
+        }
 
-    return length * supported_units[unit]
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        from_unit_lower = from_unit.lower()
+        to_unit_lower = to_unit.lower()
+        
+        if from_unit_lower not in self.units:
+            raise ValueError(f"Invalid source unit: {from_unit}")
+        if to_unit_lower not in self.units:
+            raise ValueError(f"Invalid target unit: {to_unit}")
+            
+        meters = value * self.units[from_unit_lower]
+        return meters / self.units[to_unit_lower]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
+    sample_value = 1.0
+    result1 = convert_length(sample_value, 'km', 'm')
+    print(f"{sample_value} km = {result1} m")
     
-    # Test 1: Convert 5 feet to meters
-    result_feet = convert_length(5, "feet")
+    result2 = convert_length(100.0, 'cm', 'in')
+    print(f"100 cm = {result2} in")
     
-    # Test 2: Convert 0.5 kilometers to meters
-    result_km = convert_length(0.5, "kilometers")
+    result3 = convert_length(5.0, 'mi', 'km')
+    print(f"5 mi = {result3} km")
     
-    # Test 3: Convert 100 meters to meters (identity check)
-    result_meters = convert_length(100, "meters")
+    converter = LengthConverter()
+    result4 = converter.convert(12.0, 'ft', 'm')
+    print(f"12 ft = {result4} m")
     
-    print(f"5 feet is {result_feet} meters.")
-    print(f"0.5 kilometers is {result_km} meters.")
-    print(f"100 meters is {result_meters} meters.")
-
-    # Test 4: Demonstrate ValueError for unsupported unit
-    try:
-        convert_length(10, "yards")
-    except ValueError as e:
-        print(f"Caught expected error: {e}")
+    result5 = converter.convert(1.0, 'yd', 'ft')
+    print(f"1 yd = {result5} ft")
+    
+    result6 = convert_length(1000.0, 'mm', 'in')
+    print(f"1000 mm = {result6} in")

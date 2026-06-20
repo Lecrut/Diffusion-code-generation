@@ -1,14 +1,13 @@
-import sys
-def meters_to_feet(meters):
-    return meters * 3.28084
-if __name__ == '__main__':
-    sample_meters = 10
-    try:
-        input_value = float(sample_meters)
-        result = meters_to_feet(input_value)
-        print(f"Input length in meters: {input_value}")
-        print(f"Converted length in feet: {result}")
-    except ValueError:
-        print("Error: Invalid input. Please enter a numerical value.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+def convert_length(length: float, target_unit: str) -> float:
+    if target_unit == "meters":
+        return length
+    elif target_unit == "feet":
+        return length * 3.28084
+    elif target_unit == "kilometers":
+        return length * 0.001
+    else:
+        raise ValueError(f"Unsupported unit: {target_unit}")
+
+if __name__ == "__main__":
+    result = convert_length(100, "feet")
+    print(result)

@@ -1,22 +1,35 @@
-import unittest
+import tempfile
+import os
 
-class TestVolumeCalculation(unittest.TestCase):
-    """Test suite for volume calculation functions with comprehensive edge cases."""
-
-    def test_cube_positive_integer(self):
-        self.assertEqual(calculate_volume(5), 125)
-
-    def test_cube_negative_integer(self):
-        # Negative side length is mathematically invalid for physical cubes, but function handles input.
-        result = calculate_volume(-3)
-        self.assertNotEqual(result, -27) if isinstance(result, int) else None  # Logic check: cube of negative should be positive or raise error depending on design
-
-    def test_cube_zero(self):
-        volume = calculate_volume(0)
-        self.assertEqual(volume, 0)
-
-    def test_cube_negative_float(self):
-        result = calculate_volume(-2.5)
+def calculate_total_volume(filepath):
+    total = 0.0
+    with open(filepath, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                try:
+                    volume = float(line)
+                    total += volume
+                except ValueError:
+                    continue
+    return total
 
 if __name__ == '__main__':
-    pass
+    sample_lines = [
+        "10.5",
+        "20.3",
+        "invalid",
+        "5.2",
+        "-3.1"
+    ]
+    
+    fd, tmp_path = tempfile.mkstemp(suffix='.txt')
+    try:
+        with os.fdopen(fd, 'w') as f:
+            for line in sample_lines:
+                f.write(line + '\n')
+        
+        result = calculate_total_volume(tmp_path)
+        print(result)
+    finally:
+        os.remove(tmp_path)

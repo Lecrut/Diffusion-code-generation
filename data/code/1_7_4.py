@@ -1,40 +1,84 @@
 import functools
-def validate_and_normalize_weight(func):
+
+class WeightTypeException(Exception):
+    def __init__(self, value):
+        self.value = value
+        message = f"Weight must be a number (int or float), not {type(value).__name__}"
+        super().__init__(message)
+
+class WeightRangeException(Exception):
+    def __init__(self, value):
+        self.value = value
+        message = f"Weight {value} is out of allowable range [0.0, 1000.0]"
+        super().__init__(message)
+
+MIN_WEIGHT_LIMIT = 0.0
+MAX_WEIGHT_LIMIT = 1000.0
+
+def normalize_weight_value(value):
+    if value is None:
+        raise WeightTypeException(value)
+    if isinstance(value, bool):
+        raise WeightTypeException(value)
+    if not isinstance(value, (int, float)):
+        raise WeightTypeException(value)
+    
+    normalized = float(value)
+    
+    if normalized < MIN_WEIGHT_LIMIT or normalized > MAX_WEIGHT_LIMIT:
+        raise WeightRangeException(normalized)
+    
+    return normalized
+
+def weight_validating_decorator(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight_input = args[0]
-        if not isinstance(weight_input, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight_input).__name__}")
-        if weight_input < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight_input * 1.0                                
-        result = func(*([normalized_weight] + list(args[1:])), **kwargs)
-        return result
+        weight_arg = None
+        if len(args) > 0:
+            weight_arg = args[0]
+            new_args = (normalize_weight_value(weight_arg),) + args[1:]
+            return func(*new_args, **kwargs)
+        elif 'weight' in kwargs:
+            weight_arg = kwargs['weight']
+            kwargs['weight'] = normalize_weight_value(weight_arg)
+            return func(*args, **kwargs)
+        else:
+            raise WeightTypeException(None)
     return wrapper
-@validate_and_normalize_weight
-def calculate_mass(weight):
-    return weight * 100
+
+@weight_validating_decorator
+def calculate_bmi(weight_kg, height_m):
+    height_m_normalized = float(height_m)
+    if height_m_normalized <= 0:
+        raise ValueError("Height must be positive")
+    return weight_kg / (height_m_normalized ** 2)
+
+def process_mass(weight_input):
+    normalized = normalize_weight_value(weight_input)
+    return normalized * 2.0
+
 if __name__ == '__main__':
-    print("--- Testing valid input ---")
+    sample_weights = [80, 0.0, 999, -5, "abc", True, 1500]
+    
+    print("--- Testing BMI Calculation ---")
     try:
-        result1 = calculate_mass(5.5)
-        print(f"Input 5.5, Result: {result1}")
+        result = calculate_bmi(70, 1.75)
+        print(f"Valid BMI for 70kg: {result}")
     except Exception as e:
-        print(f"Error: {e}")
-    print("\n--- Testing invalid type input ---")
+        print(f"Unexpected error: {e}")
+    
     try:
-        calculate_mass("abc")
-    except Exception as e:
-        print(f"Caught expected error: {type(e).__name__}: {e}")
-    print("\n--- Testing negative value input ---")
-    try:
-        calculate_mass(-10.0)
-    except Exception as e:
-        print(f"Caught expected error: {type(e).__name__}: {e}")
-    print("\n--- Testing missing argument input ---")
-    try:
-        calculate_mass()
-    except Exception as e:
-        print(f"Caught expected error: {type(e).__name__}: {e}")
+        result = calculate_bmi(-10, 1.8)
+        print(f"Invalid BMI result: {result}")
+    except WeightRangeException as e:
+        print(f"Caught range error: {e}")
+        
+    print("\n--- Testing Mass Processing ---")
+    for w in sample_weights:
+        try:
+            final_value = process_mass(w)
+            print(f"Input: {w} -> Processed: {final_value}")
+        except WeightTypeException as e:
+            print(f"Input: {w} -> Type Error: {e}")
+        except WeightRangeException as e:
+            print(f"Input: {w} -> Range Error: {e}")

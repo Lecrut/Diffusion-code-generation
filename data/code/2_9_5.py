@@ -1,39 +1,37 @@
-import unittest
-class VolumeCalculator:
-    def calculate_volume_cuboid(self, length, width, height):
-        return length * width * height
-    def calculate_volume_sphere(self, radius):
-        import math
-        return (4/3) * math.pi * (radius ** 3)
-class TestVolumeCalculator(unittest.TestCase):
-    def setUp(self):
-        self.calculator = VolumeCalculator()
-    def test_calculate_volume_cuboid_positive_inputs(self):
-        self.assertEqual(self.calculator.calculate_volume_cuboid(2, 3, 4), 24)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(1, 1, 1), 1)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(10, 2, 5), 100)
-    def test_calculate_volume_cuboid_zero_input(self):
-        self.assertEqual(self.calculator.calculate_volume_cuboid(0, 5, 10), 0)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(5, 0, 10), 0)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(5, 0, 0), 0)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(0, 0, 0), 0)
-    def test_calculate_volume_cuboid_negative_inputs(self):
-        self.assertEqual(self.calculator.calculate_volume_cuboid(-2, 3, 4), -24)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(2, -3, 4), -24)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(2, 3, -4), -24)
-        self.assertEqual(self.calculator.calculate_volume_cuboid(-2, -3, -4), -24)
-    def test_calculate_volume_sphere_positive_input(self):
-        radius = 3
-        expected = (4/3) * 3 * (3 ** 3)
-        self.assertAlmostEqual(self.calculator.calculate_volume_sphere(radius), expected)
-    def test_calculate_volume_sphere_zero_input(self):
-        radius = 0
-        expected = 0.0
-        self.assertAlmostEqual(self.calculator.calculate_volume_sphere(radius), expected)
-    def test_calculate_volume_sphere_negative_input(self):
-        radius = -2
-        expected = (4/3) * math.pi * (-2 ** 3)
-        self.assertAlmostEqual(self.calculator.calculate_volume_sphere(radius), expected)
+import os
+import tempfile
+
+def calculate_total_volume(volume_strings):
+    total = 0.0
+    for s in volume_strings:
+        try:
+            total += float(s)
+        except (ValueError, TypeError):
+            continue
+    return total
+
+def read_volumes_from_file(filepath):
+    volumes = []
+    with open(filepath, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                volumes.append(line)
+    return volumes
+
+def main():
+    sample_lines = ["1.5", "2.3", "invalid", "0.2", "", "3"]
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+        for line in sample_lines:
+            tmp.write(line + '\n')
+        tmp_path = tmp.name
+
+    try:
+        volumes = read_volumes_from_file(tmp_path)
+        result = calculate_total_volume(volumes)
+        print(result)
+    finally:
+        os.unlink(tmp_path)
+
 if __name__ == '__main__':
-    import math
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    main()

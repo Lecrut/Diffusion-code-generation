@@ -1,82 +1,137 @@
-import csv
+import unittest
+import math
 
-def scale_volumes(input_file: str, output_file: str, factor: float) -> None:
-    """
-    Reads a CSV file with item names and volumes, scales the volume column by 'factor',
-    and writes the results to the specified output file.
+def calculate_sphere_volume(radius):
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    return (4.0 / 3.0) * math.pi * (radius ** 3)
 
-    Args:
-        input_file (str): Path to the input CSV file containing columns for name and volume.
-        output_file (str): Path where the scaled data will be saved.
-        factor (float): The scaling multiplier for volumes.
+def calculate_cylinder_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height cannot be negative")
+    return math.pi * (radius ** 2) * height
+
+def calculate_cone_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height cannot be negative")
+    return (1.0 / 3.0) * math.pi * (radius ** 2) * height
+
+def calculate_rectangular_prism_volume(width, height, depth):
+    if width < 0 or height < 0 or depth < 0:
+        raise ValueError("Dimensions cannot be negative")
+    return width * height * depth
+
+class TestVolumeCalculations(unittest.TestCase):
     
-    Raises:
-        FileNotFoundError: If the input file does not exist.
-        ValueError: If a non-numeric value is found in the volume column or if 'factor' is invalid.
-    """
-    try:
-        with open(input_file, mode='r', newline='', encoding='utf-8') as infile:
-            reader = csv.DictReader(infile)
-
-            # Validate that required columns exist and factor is valid
-            expected_columns = {'name', 'volume'}
-            if not all(col in reader.fieldnames for col in expected_columns):
-                raise ValueError(f"Input CSV must contain the following columns: {expected_columns}")
-            
-            if factor <= 0:
-                raise ValueError("Scaling factor must be a positive number.")
-
-        with open(output_file, mode='w', newline='', encoding='utf-8') as outfile:
-            writer = csv.DictWriter(outfile, fieldnames=['name', 'volume'])
-            writer.writeheader()
-
-            for row in reader:
-                try:
-                    original_volume = float(row['volume'])
-                    scaled_volume = round(original_volume * factor, 4) # Round to avoid floating point noise issues like 0.123999999
-                    new_row = {'name': row['name'], 'volume': str(scaled_volume)}
-                    writer.writerow(new_row)
-                except ValueError:
-                    raise ValueError(f"Invalid volume value '{row['volume']}' found in input file.")
-
-    except FileNotFoundError:
-        print(f"Error: Input file '{input_file}' not found.")
+    def test_sphere_volume_positive(self):
+        result = calculate_sphere_volume(2)
+        expected = (4.0 / 3.0) * math.pi * 8
+        self.assertAlmostEqual(result, expected, places=7)
+    
+    def test_sphere_volume_zero(self):
+        result = calculate_sphere_volume(0)
+        self.assertEqual(result, 0.0)
+    
+    def test_sphere_volume_negative(self):
+        with self.assertRaises(ValueError):
+            calculate_sphere_volume(-1)
+    
+    def test_cylinder_volume_positive(self):
+        result = calculate_cylinder_volume(2, 5)
+        expected = math.pi * 4 * 5
+        self.assertAlmostEqual(result, expected, places=7)
+    
+    def test_cylinder_volume_zero_radius(self):
+        result = calculate_cylinder_volume(0, 5)
+        self.assertEqual(result, 0.0)
+    
+    def test_cylinder_volume_zero_height(self):
+        result = calculate_cylinder_volume(2, 0)
+        self.assertEqual(result, 0.0)
+    
+    def test_cylinder_volume_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(-1, 5)
+    
+    def test_cylinder_volume_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cylinder_volume(2, -5)
+    
+    def test_cone_volume_positive(self):
+        result = calculate_cone_volume(2, 5)
+        expected = (1.0 / 3.0) * math.pi * 4 * 5
+        self.assertAlmostEqual(result, expected, places=7)
+    
+    def test_cone_volume_zero_radius(self):
+        result = calculate_cone_volume(0, 5)
+        self.assertEqual(result, 0.0)
+    
+    def test_cone_volume_zero_height(self):
+        result = calculate_cone_volume(2, 0)
+        self.assertEqual(result, 0.0)
+    
+    def test_cone_volume_negative_radius(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(-1, 5)
+    
+    def test_cone_volume_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_cone_volume(2, -5)
+    
+    def test_prism_volume_positive(self):
+        result = calculate_rectangular_prism_volume(2, 3, 4)
+        self.assertEqual(result, 24)
+    
+    def test_prism_volume_zero_width(self):
+        result = calculate_rectangular_prism_volume(0, 3, 4)
+        self.assertEqual(result, 0)
+    
+    def test_prism_volume_zero_height(self):
+        result = calculate_rectangular_prism_volume(2, 0, 4)
+        self.assertEqual(result, 0)
+    
+    def test_prism_volume_zero_depth(self):
+        result = calculate_rectangular_prism_volume(2, 3, 0)
+        self.assertEqual(result, 0)
+    
+    def test_prism_volume_negative_width(self):
+        with self.assertRaises(ValueError):
+            calculate_rectangular_prism_volume(-1, 3, 4)
+    
+    def test_prism_volume_negative_height(self):
+        with self.assertRaises(ValueError):
+            calculate_rectangular_prism_volume(2, -1, 4)
+    
+    def test_prism_volume_negative_depth(self):
+        with self.assertRaises(ValueError):
+            calculate_rectangular_prism_volume(2, 3, -1)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or external files.
-    # Simulating a temporary process where the 'sample_data.csv' is created in memory logic, 
-    # but since we cannot create pre-existing files on disk during runtime execution of this script alone 
-    # (as per "no pre-existing files" constraint implying no dependency on them), 
-    # we will generate the input data programmatically and write it to a temporary file path.
+    import sys
     
-    import tempfile
-    
-    sample_data = [
-        {'name': 'Apple', 'volume': 0.15},
-        {'name': 'Banana', 'volume': 0.28},
-        {'name': 'Orange', 'volume': 0.34},
-        {'name': 'Milk', 'volume': 1.0}
+    test_cases = [
+        (calculate_sphere_volume, 2, None),
+        (calculate_cylinder_volume, (2, 5), None),
+        (calculate_cone_volume, (2, 5), None),
+        (calculate_rectangular_prism_volume, (2, 3, 4), None),
     ]
-
-    # Create a temporary file to act as the input source since we cannot rely on pre-existing files
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as temp_input:
-        writer = csv.DictWriter(temp_input, fieldnames=['name', 'volume'])
-        writer.writeheader()
-        for item in sample_data:
-            writer.writerow(item)
-        
-        input_path = temp_input.name
-
-    # Define output path and scaling factor
-    output_path = "scaled_output.csv"
-    user_factor = 2.5
     
-    try:
-        scale_volumes(input_path, output_path, user_factor)
-        print(f"Processing complete. Output saved to {output_path}")
-        
-        # Clean up temporary input file immediately after use
-        import os
-        os.remove(input_path)
-    except Exception as e:
-        print(f"An error occurred during processing: {e}")
+    for func, args, _ in test_cases:
+        if isinstance(args, tuple):
+            val = func(*args)
+        else:
+            val = func(args)
+        print(val)
+    
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestVolumeCalculations)
+    runner = unittest.TextTestRunner(verbosity=0)
+    result = runner.run(suite)
+    
+    if result.wasSuccessful():
+        print("All unit tests passed successfully.")
+    else:
+        print("Some unit tests failed.")
+        for failure in result.failures + result.errors:
+            print(failure[1])
+        sys.exit(1)

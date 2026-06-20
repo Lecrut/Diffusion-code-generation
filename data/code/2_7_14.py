@@ -1,27 +1,49 @@
-import statistics as stats
+import csv
+import tempfile
+import os
 
-def calculate_volume_stats(volumes):
-    """Calculate total and average volume from a list of measurements."""
-    if not volumes:
-        return 0, None
-    
-    total = sum(volumes)
-    avg = total / len(volumes)
-    
-    # Ensure the result is rounded to avoid floating point precision issues in display
-    avg_rounded = round(avg, 2)
-    
-    return total, avg_rounded
+def scale_volumes(input_file, output_file, scale_factor):
+    with open(input_file, 'r', newline='', encoding='utf-8') as infile:
+        reader = csv.DictReader(infile)
+        fieldnames = reader.fieldnames
+        rows = list(reader)
+
+    for row in rows:
+        if 'volume' in row and row['volume']:
+            try:
+                original_volume = float(row['volume'])
+                scaled_volume = original_volume * scale_factor
+                row['volume'] = str(scaled_volume)
+            except ValueError:
+                continue
+
+    with open(output_file, 'w', newline='', encoding='utf-8') as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    return f"Processed {len(rows)} items with scale factor {scale_factor}"
 
 if __name__ == '__main__':
-    # Hard-coded sample volume measurements (in liters)
-    samples = [5.0, 10.5, 3.2, 7.8, 9.0]
+    sample_csv_content = """name,volume
+apple,10.5
+banana,20.0
+orange,15.75"""
     
-    print("Processing volume calculations...")
-    total_volume, average_volume = calculate_volume_stats(samples)
+    temp_input = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv', encoding='utf-8')
+    temp_input.write(sample_csv_content)
+    temp_input.close()
     
-    if average_volume is not None:
-        print(f"Total Volume: {total_volume:.1f} L")
-        print(f"Average Volume: {average_volume} L")
-    else:
-        print("No volume data provided.")
+    temp_output = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='_scaled.csv', encoding='utf-8')
+    temp_output_name = temp_output.name
+    temp_output.close()
+
+    result = scale_volumes(temp_input.name, temp_output_name, 2.0)
+    print(result)
+
+    with open(temp_output_name, 'r', encoding='utf-8') as f:
+        output_content = f.read()
+    print(output_content)
+
+    os.unlink(temp_input.name)
+    os.unlink(temp_output_name)

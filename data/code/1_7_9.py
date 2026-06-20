@@ -1,48 +1,52 @@
 import functools
-def validate_and_normalize_weight(func):
+
+class InvalidWeightTypeError(TypeError):
+    def __init__(self, value):
+        message = "Weight must be a numeric type, not {}.".format(type(value).__name__)
+        super().__init__(message)
+
+class ImpossibleWeightError(ValueError):
+    def __init__(self, value):
+        message = "Weight value {} is impossible; must be non-negative and less than 5000.".format(value)
+        super().__init__(message)
+
+MIN_WEIGHT = 0.0
+MAX_WEIGHT = 5000.0
+
+def normalize_weight_input(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if not args:
-            raise TypeError("Weight function requires at least one argument.")
-        weight = args[0]
-        if not isinstance(weight, (int, float)):
-            raise TypeError(f"Weight must be a number, got {type(weight).__name__}")
-        if weight < 0:
-            raise ValueError("Weight cannot be negative.")
-        normalized_weight = weight
-        result = func(*args, **kwargs)
-        return result
+        weight_arg = None
+        if args:
+            weight_arg = args[0]
+        elif 'weight' in kwargs:
+            weight_arg = kwargs['weight']
+        else:
+            raise InvalidWeightTypeError("None")
+        
+        if isinstance(weight_arg, bool):
+            raise InvalidWeightTypeError(weight_arg)
+        
+        if not isinstance(weight_arg, (int, float)):
+            raise InvalidWeightTypeError(weight_arg)
+        
+        if weight_arg < MIN_WEIGHT or weight_arg >= MAX_WEIGHT:
+            raise ImpossibleWeightError(weight_arg)
+        
+        normalized_value = float(weight_arg)
+        return func(normalized_value)
     return wrapper
+
+@normalize_weight_input
+def calculate_bmi_scale_factor(weight):
+    base_factor = 0.453592
+    return weight * base_factor
+
 if __name__ == '__main__':
-    @validate_and_normalize_weight
-    def calculate_area(weight):
-        return weight * 10
-    print("--- Testing valid inputs ---")
-    try:
-        result1 = calculate_area(10.5)
-        print(f"Input 10.5, Result: {result1}")
-        result2 = calculate_area(0)
-        print(f"Input 0, Result: {result2}")
-    except Exception as e:
-        print(f"Unexpected error during valid test: {e}")
-    print("\n--- Testing invalid data types ---")
-    try:
-        calculate_area("invalid")
-    except TypeError as e:
-        print(f"Caught expected error for string input: {e}")
-    except Exception as e:
-        print(f"Caught unexpected error: {e}")
-    print("\n--- Testing impossible values (negative) ---")
-    try:
-        calculate_area(-5.0)
-    except ValueError as e:
-        print(f"Caught expected error for negative input: {e}")
-    except Exception as e:
-        print(f"Caught unexpected error: {e}")
-    print("\n--- Testing missing arguments ---")
-    try:
-        calculate_area()
-    except TypeError as e:
-        print(f"Caught expected error for missing argument: {e}")
-    except Exception as e:
-        print(f"Caught unexpected error: {e}")
+    test_cases = [150, 0, 5001, -5, "invalid", True, 250.5]
+    for val in test_cases:
+        try:
+            result = calculate_bmi_scale_factor(val)
+            print("Input: {} -> Result: {}".format(val, result))
+        except (InvalidWeightTypeError, ImpossibleWeightError) as e:
+            print("Input: {} -> Error: {}".format(val, str(e)))

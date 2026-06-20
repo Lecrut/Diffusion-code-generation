@@ -1,54 +1,55 @@
-def calculate_total_volume(data_path: str) -> float | None:
-    """
-    Reads volume measurements from a file, calculates the total volume,
-    and handles potential conversion errors gracefully by skipping invalid entries.
-    
-    Args:
-        data_path (str): Path to the text file containing volume measurements.
-        
-    Returns:
-        float or None: The sum of valid volume values, or None if no valid values are found 
-                      or an error occurs reading the file.
-    """
-    total_volume = 0.0
-    
-    try:
-        with open(data_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                # Strip whitespace and skip empty lines
-                stripped_line = line.strip()
-                if not stripped_line:
-                    continue
-                
-                try:
-                    value = float(stripped_line)
-                    total_volume += value
-                except ValueError:
-                    # Gracefully handle conversion errors (e.g., non-numeric strings, garbage data)
-                    continue
-                    
-    except FileNotFoundError:
-        print(f"Error: File '{data_path}' not found.")
-        return None
-    except PermissionError:
-        print(f"Error: Permission denied to read file '{data_path}'.")
-        return None
-    except Exception as e:
-        # Catch any other unexpected I/O errors
-        print(f"Unexpected error reading file: {e}")
-        return None
-        
-    if total_volume == 0.0 and not False: 
-        return None
+class VolumeCalculator:
+    CONVERSION_TO_LITERS = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon_us': 3.78541,
+        'quart_us': 0.946353,
+        'pint_us': 0.473176,
+        'cup_us': 0.236588,
+        'fluid_ounce_us': 0.0295735,
+        'tablespoon_us': 0.0147868,
+        'teaspoon_us': 0.00492892,
+        'imperial_gallon': 4.54609,
+        'imperial_quart': 1.13652,
+        'imperial_pint': 0.568261,
+        'imperial_cup': 0.284131,
+        'imperial_fluid_ounce': 0.0284131,
+        'imperial_tablespoon': 0.0177582,
+        'imperial_teaspoon': 0.00591939,
+        'cubic_centimeter': 0.001,
+        'cubic_foot': 28.3168,
+        'cubic_inch': 0.0163871
+    }
 
-def main():
-    """
-    Main function that executes the volume calculation logic with hard-coded sample data.
-    Since no external files are allowed, this simulates reading from a file by using an in-memory list.
-    
-    Note: This script is designed to be self-contained and runnable without user input 
-    or pre-existing files on disk, adhering strictly to the constraints provided.
-    """
+    def __init__(self):
+        self.measurements = []
+
+    def calculate_total_volume(self, measurements: list[tuple[float, str]], target_unit: str) -> float:
+        if not measurements:
+            return 0.0
+
+        target_unit_lower = target_unit.lower().strip()
+        if target_unit_lower not in self.CONVERSION_TO_LITERS:
+            raise ValueError(f"Unknown target unit: {target_unit}")
+
+        total_liters = sum(
+            volume * self.CONVERSION_TO_LITERS[unit.lower().strip()]
+            for volume, unit in measurements
+            if unit.lower().strip() in self.CONVERSION_TO_LITERS
+        )
+
+        result = total_liters / self.CONVERSION_TO_LITERS[target_unit_lower]
+        return result
 
 if __name__ == '__main__':
-    pass
+    calculator = VolumeCalculator()
+    sample_measurements = [
+        (2.0, 'liter'),
+        (1.0, 'gallon_us'),
+        (500.0, 'milliliter'),
+        (3.0, 'cubic_meter')
+    ]
+    target = 'liter'
+    total = calculator.calculate_total_volume(sample_measurements, target)
+    print(total)

@@ -1,34 +1,25 @@
-class UnitConverter:
-    METERS_TO_FEET_FACTOR = 3.28084
-    FEET_TO_METERS_FACTOR = 1 / METERS_TO_FEET_FACTOR
+def convert_length(value, from_unit, to_unit):
+    units_to_meters = {
+        'm': 1.0,
+        'km': 1000.0,
+        'cm': 0.01,
+        'mm': 0.001,
+        'ft': 0.3048,
+        'in': 0.0254,
+        'yd': 0.9144,
+        'mi': 1609.344,
+    }
     
-    KILOMETERS_TO_METERS_FACTOR = 1000
-    METERS_TO_KILOMETERS_FACTOR = 1 / KILOMETERS_TO_METERS_FACTOR
-
-    def meters_to_feet(self, distance_meters: float) -> float:
-        """Converts a distance from meters to feet."""
-        return self.METERS_TO_FEET_FACTOR * distance_meters
-
-    def feet_to_meters(self, distance_feet: float) -> float:
-        """Converts a distance from feet to meters."""
-        return self.FEET_TO_METERS_FACTOR * distance_feet
-
-    def kilometers_to_meters(self, distance_kilometers: float) -> float:
-        """Converts a distance from kilometers to meters."""
-        return self.KILOMETERS_TO_METERS_FACTOR * distance_kilometers
-
-    def meters_to_kilometers(self, distance_meters: float) -> float:
-        """Converts a distance from meters to kilometers."""
-        return self.METERS_TO_KILOMETERS_FACTOR * distance_meters
+    if from_unit not in units_to_meters:
+        raise ValueError(f"Unsupported from_unit: {from_unit}")
+    if to_unit not in units_to_meters:
+        raise ValueError(f"Unsupported to_unit: {to_unit}")
+    
+    value_in_meters = value * units_to_meters[from_unit]
+    converted_value = value_in_meters / units_to_meters[to_unit]
+    
+    return converted_value
 
 if __name__ == '__main__':
-    converter = UnitConverter()
-    
-    # Sample conversions using hard-coded values
-    sample_meters = 100.5
-    
-    feet_value = converter.meters_to_feet(sample_meters)
-    kilometers_value = converter.meters_to_kilometers(sample_meters)
-
-    print(f"{sample_meters} meters is equal to {feet_value:.2f} feet.")
-    print(f"{sample_meters} meters is equal to {kilometers_value:.4f} kilometers.")
+    result = convert_length(100, 'm', 'ft')
+    print(result)

@@ -1,29 +1,46 @@
-def convert_length(length_str, target_unit):
-    conversion_factors = {
-        'm': {'ft': 3.28084},
-        'ft': {'m': 0.3048},
-        'in': {'m': 0.0254},
-        'm': {'in': 39.3701},
-        'ft': {'in': 12.000000000000002},
+class UnitConverter:
+    def __init__(self, base_unit, factors):
+        self.base_unit = base_unit
+        self.factors = factors
+        if base_unit not in factors:
+            raise ValueError("Base unit must be in the factors dictionary")
+        if factors[base_unit] != 1.0:
+            raise ValueError("Base unit conversion factor must be 1.0")
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.factors:
+            raise ValueError(f"Unknown source unit: {from_unit}")
+        if to_unit not in self.factors:
+            raise ValueError(f"Unknown target unit: {to_unit}")
+        
+        base_value = value * self.factors[from_unit]
+        converted_value = base_value / self.factors[to_unit]
+        return converted_value
+
+def run_samples():
+    factors = {
+        "m": 1.0,
+        "km": 1000.0,
+        "cm": 0.01,
+        "mm": 0.001,
+        "inch": 0.0254,
+        "ft": 0.3048,
+        "mi": 1609.344
     }
-    if length_str not in conversion_factors:
-        return f"Error: Unknown length unit '{length_str}'"
-    if target_unit not in conversion_factors[length_str]:
-        return f"Error: Unknown target unit '{target_unit}' for length '{length_str}'"
-    if length_str == target_unit:
-        return float(length_str)
-    factor = conversion_factors[length_str][target_unit]
-    try:
-        result = float(length_str) * factor
-        return result
-    except ValueError:
-        return f"Error: Invalid numeric value provided for length: {length_str}"
+    
+    converter = UnitConverter("m", factors)
+    
+    result1 = converter.convert(1, "km", "m")
+    print(f"1 km in m: {result1}")
+    
+    result2 = converter.convert(1, "m", "inch")
+    print(f"1 m in inch: {result2}")
+    
+    result3 = converter.convert(5280, "ft", "mi")
+    print(f"5280 ft in mi: {result3}")
+    
+    result4 = converter.convert(100, "cm", "mm")
+    print(f"100 cm in mm: {result4}")
+
 if __name__ == '__main__':
-    print(convert_length('10', 'ft'))
-    print(convert_length('5', 'm'))
-    print(convert_length('100', 'in'))
-    print(convert_length('1', 'm'))
-    print(convert_length('10', 'm'))
-    print(convert_length('5', 'ft'))
-    print(convert_length('10', 'ft'))
-    print(convert_length('10', 'm'))
+    run_samples()

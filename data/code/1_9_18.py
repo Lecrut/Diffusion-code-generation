@@ -1,125 +1,67 @@
-import copy
-
-class WeightEntry:
-    """Represents a single weight entry with date and value."""
-    
-    def __init__(self, date_str: str, weight_value: float):
-        self.date = date_str
-        self.weight = weight_value
-    
-    @property
-    def formatted_date(self) -> str:
-        return f"{self.date} ({self.weight:.1f} kg)"
-
 class WeightTracker:
-    """Manages a collection of weight entries and calculates statistics."""
+    def __init__(self, name):
+        self.name = name
+        self.weights = []
 
-    def __init__(self):
-        self._entries = []  # List to store WeightEntry objects
-    
-    @property
-    def count(self) -> int:
-        return len(self._entries)
-    
-    @property
-    def total_weight(self) -> float:
-        if not self._entries:
-            return 0.0
-        return sum(entry.weight for entry in self._entries)
-    
-    @property
-    def average_weight(self) -> float:
-        if not self._entries:
-            return 0.0
-        return round(self.total_weight / len(self._entries), 2)
-    
-    @property
-    def min_weight(self) -> float:
-        if not self._entries:
-            return None
-        return min(entry.weight for entry in self._entries)
-    
-    @property
-    def max_weight(self) -> float:
-        if not self._entries:
-            return None
-        return max(entry.weight for entry in self._entries)
+    def add_weight(self, weight):
+        if weight < 0:
+            raise ValueError("Weight cannot be negative")
+        self.weights.append(weight)
 
-    def add_entry(self, date_str: str, weight_value: float):
-        """Adds a new weight entry to the tracker."""
-        # Basic validation
-        try:
-            weight = float(weight_value)
-        except ValueError:
-            raise ValueError(f"Invalid weight value: {weight_value}. Must be numeric.")
-
-        if date_str and not isinstance(date_str, str):
-            raise TypeError("Date must be a string.")
-
-        entry = WeightEntry(date_str, weight)
-        self._entries.append(entry)
-
-    def get_entries(self) -> list[WeightEntry]:
-        """Returns a copy of the internal entries list to prevent external modification."""
-        return copy.deepcopy(self._entries)
-
-    def display_statistics(self):
-        """Prints formatted statistics based on current data."""
-        if not self._entries:
-            print("No weight records available.")
-            return
+    def get_statistics(self):
+        if not self.weights:
+            return {
+                "name": self.name,
+                "count": 0,
+                "latest": None,
+                "min": None,
+                "max": None,
+                "average": None
+            }
         
-        count = len(self._entries)
+        current_count = len(self.weights)
+        latest_weight = self.weights[-1]
+        min_weight = min(self.weights)
+        max_weight = max(self.weights)
+        average_weight = sum(self.weights) / current_count
         
-        # Calculate stats for consistency with property access logic, 
-        # though properties are more efficient. We recompute here to ensure alignment.
-        total = sum(e.weight for e in self._entries)
-        min_w = min(e.weight for e in self._entries)
-        max_w = max(e.weight for e in self._entries)
+        return {
+            "name": self.name,
+            "count": current_count,
+            "latest": latest_weight,
+            "min": min_weight,
+            "max": max_weight,
+            "average": round(average_weight, 2)
+        }
 
-        print(f"\n--- Weight Tracking Summary ---")
-        print(f"Total Entries: {count}")
-        print(f"Minimum Weight: {min_w:.1f} kg")
-        print(f"Maximum Weight: {max_w:.1f} kg")
-        print(f"Average Weight: {self.average_weight:.2f} kg")
+    def get_trend(self):
+        if len(self.weights) < 2:
+            return "No trend data available"
         
-        # Display individual entries in reverse chronological order (most recent first)
-        sorted_entries = sorted(self._entries, key=lambda x: x.date, reverse=True)
-        print("\nRecent Entries:")
-        for entry in sorted_entries[:5]:  # Show top 5 most recent
-            print(f" - {entry.formatted_date}")
+        first = self.weights[0]
+        last = self.weights[-1]
+        
+        if last > first:
+            return "Gaining weight"
+        elif last < first:
+            return "Losing weight"
+        else:
+            return "Stable weight"
 
 if __name__ == '__main__':
-    # Hard-coded sample values to simulate user input without interactive prompts.
+    tracker = WeightTracker("User_A")
+    tracker.add_weight(150.0)
+    tracker.add_weight(149.5)
+    tracker.add_weight(148.0)
+    tracker.add_weight(148.2)
     
-    tracker = WeightTracker()
-
-    # Sample data: Date (YYYY-MM-DD), Weight in kg
-    samples = [
-        ("2023-10-05", 78.5),
-        ("2023-10-12", 79.0),
-        ("2023-10-19", 76.4),
-        ("2023-10-26", 77.2),
-        ("2023-11-02", 80.1),
-    ]
-
-    # Populate the tracker with sample data
-    for date, weight in samples:
-        tracker.add_entry(date, weight)
-
-    # Display initial statistics
-    print("Initial Statistics:")
-    tracker.display_statistics()
-
-    # Simulate adding new entries (as if user input was processed later)
-    additional_samples = [
-        ("2023-11-09", 78.8),
-        ("2023-11-16", 75.3),
-    ]
-
-    for date, weight in additional_samples:
-        tracker.add_entry(date, weight)
-
-    # Display updated statistics
-    print("\nUpdated Statistics after new entries:")
-    tracker.display_statistics()
+    stats = tracker.get_statistics()
+    print(f"Tracker: {stats['name']}")
+    print(f"Entries: {stats['count']}")
+    print(f"Latest: {stats['latest']}")
+    print(f"Min: {stats['min']}")
+    print(f"Max: {stats['max']}")
+    print(f"Average: {stats['average']}")
+    
+    trend = tracker.get_trend()
+    print(f"Trend: {trend}")

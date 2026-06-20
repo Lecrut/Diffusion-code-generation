@@ -1,99 +1,72 @@
-import copy
+class WeightData:
+    def __init__(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Weight must be numeric")
+        if value <= 0:
+            raise ValueError("Weight must be positive")
+        self.value = value
 
-class WeightRecord:
-    """Represents a single weight entry with date, value, and metadata."""
-
-    def __init__(self, date_str: str, weight_value: float):
-        self.date = date_str
-        self.weight = weight_value
-        self.achievements = []  # List of strings describing progress or milestones
-
-class WeightTrackingSystem:
-    """Manages a collection of weight records and calculates statistics."""
-
+class WeightTracker:
     def __init__(self):
-        self.records = []  # Internal list to store all records
+        self._history = []
+        self._baseline = None
 
-    def add_record(self, date_str: str, weight_value: float) -> None:
-        """Adds a new weight record to the system.
+    def set_baseline(self, weight):
+        data = WeightData(weight)
+        self._baseline = data.value
 
-        Args:
-            date_str (str): The date of the entry in 'YYYY-MM-DD' format.
-            weight_value (float): The recorded weight value.
-        """
-        if not isinstance(weight_value, (int, float)) or weight_value < 0:
-            raise ValueError("Weight must be a non-negative number.")
+    def log_entry(self, weight):
+        data = WeightData(weight)
+        self._history.append(data.value)
+        return len(self._history)
 
-        record = WeightRecord(date_str=date_str, weight_value=weight_value)
-        self.records.append(record)
-
-    def get_total_weight(self) -> float:
-        """Calculates the sum of all recorded weights.
-
-        Returns:
-            float: The total accumulated weight value across all records.
-        """
-        return sum(r.weight for r in self.records)
-
-    def get_average_weight(self) -> float:
-        """Calculates the average weight based on all records.
-
-        Returns:
-            float: The arithmetic mean of recorded weights.
-        """
-        if not self.records:
-            raise ValueError("No records available to calculate an average.")
+    def get_current_stats(self):
+        if not self._history:
+            return {
+                "entries": 0,
+                "latest": None,
+                "change_from_baseline": None,
+                "min": None,
+                "max": None,
+                "average": None
+            }
         
-        return sum(r.weight for r in self.records) / len(self.records)
-
-    def get_min_weight(self) -> float:
-        """Finds the lowest weight ever recorded.
-
-        Returns:
-            float: The minimum weight value among all records.
-        """
-        if not self.records:
-            raise ValueError("No records available to find a minimum.")
-
-        return min(r.weight for r in self.records)
-
-    def get_max_weight(self) -> float:
-        """Finds the highest weight ever recorded.
-
-        Returns:
-            float: The maximum weight value among all records.
-        """
-        if not self.records:
-            raise ValueError("No records available to find a maximum.")
-
-        return max(r.weight for r in self.records)
-
-    def get_weight_change(self, start_date_str: str = None, end_date_str: str = None) -> float:
-        """Calculates the weight change between two specific dates.
-
-        Args:
-            start_date_str (str): The starting date ('YYYY-MM-DD'). Defaults to earliest record.
-            end_date_str (str): The ending date ('YYYY-MM-DD'). Defaults to latest record.
-
-        Returns:
-            float: Weight at end date minus weight at start date.
-        """
-        if not self.records:
-            raise ValueError("No records available.")
-
-        sorted_records = sorted(self.records, key=lambda r: r.date)
-
-        # Filter based on provided dates or use the full range of existing data
-        filtered_records = [r for r in sorted_records 
-                           if (start_date_str is None and not end_date_str) or
-                              start_date_str <= r.date < end_date_str]
+        current = self._history[-1]
+        total = sum(self._history)
+        count = len(self._history)
+        average = total / count
+        minimum = min(self._history)
+        maximum = max(self._history)
         
-        if len(filtered_records) == 0:
-            raise ValueError("No records found within the specified date range.")
+        baseline_diff = None
+        if self._baseline is not None:
+            baseline_diff = current - self._baseline
+        
+        return {
+            "entries": count,
+            "latest": current,
+            "change_from_baseline": baseline_diff,
+            "min": minimum,
+            "max": maximum,
+            "average": average
+        }
 
-        # If no specific dates were given, use first and last record automatically (handled above logic implicitly by defaulting to full set if None/None)
-        # Correction on logic flow for defaults:
-        pass
+def run_simulation():
+    tracker = WeightTracker()
+    tracker.set_baseline(80.0)
+    
+    tracker.log_entry(79.5)
+    tracker.log_entry(79.2)
+    tracker.log_entry(78.8)
+    tracker.log_entry(79.0)
+    
+    final_stats = tracker.get_current_stats()
+    print(f"Total entries: {final_stats['entries']}")
+    print(f"Latest weight: {final_stats['latest']}")
+    print(f"Change from baseline: {final_stats['change_from_baseline']}")
+    print(f"Average weight: {final_stats['average']}")
+    print(f"Minimum weight: {final_stats['min']}")
+    print(f"Maximum weight: {final_stats['max']}")
 
 if __name__ == '__main__':
-    pass
+    run_simulation()

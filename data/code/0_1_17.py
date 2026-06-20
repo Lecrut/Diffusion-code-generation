@@ -1,39 +1,37 @@
-def convert_length(length: float, unit_type: str) -> float:
-    """
-    Converts a given length from one imperial/US customary unit to meters.
-    
-    Supported units (input): 'm', 'ft', 'in'
-    Output is always in meters ('m').
+class UnitConverter:
+    METERS_TO_FEET = 3.28084
+    METERS_TO_KILOMETERS = 0.001
+    FEET_TO_METERS = 1 / 3.28084
+    KILOMETERS_TO_METERS = 1000.0
 
-    Args:
-        length: The numerical value of the length.
-        unit_type: String representing the input unit ('m', 'ft', or 'in').
+    def meters_to_feet(self, meters):
+        return meters * self.METERS_TO_FEET
 
-    Returns:
-        float: Equivalent length in meters.
-    
-    Raises:
-        ValueError: If an unsupported unit type is provided.
-    """
-    conversion_factors = {
-        'm': 1.0,
-        'ft': 0.3048,
-        'in': 0.0254,
-    }
+    def meters_to_kilometers(self, meters):
+        return meters * self.METERS_TO_KILOMETERS
 
-    if unit_type not in conversion_factors:
-        raise ValueError(f"Unsupported unit type '{unit_type}'. Supported units are m, ft, in.")
+    def feet_to_meters(self, feet):
+        return feet * self.FEET_TO_METERS
 
-    return length * conversion_factors[unit_type]
+    def kilometers_to_meters(self, kilometers):
+        return kilometers * self.KILOMETERS_TO_METERS
+
+    def feet_to_kilometers(self, feet):
+        return self.feet_to_meters(feet) * self.METERS_TO_KILOMETERS
+
+    def kilometers_to_feet(self, kilometers):
+        return self.kilometers_to_meters(kilometers) * self.METERS_TO_FEET
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    sample_tests = [
-        (5.0, 'm'),      # 5 meters -> 5.0
-        (10.0, 'ft'),    # 10 feet -> ~3.048
-        (24.0, 'in'),    # 24 inches -> 0.6096
-    ]
+    converter = UnitConverter()
 
-    for length_val, unit_str in sample_tests:
-        result = convert_length(length_val, unit_str)
-        print(f"{length_val} {unit_str.upper()} is equal to {result:.5f} m")
+    meters = 100.0
+    feet = 328.084
+    kilometers = 1.0
+
+    print(f"{meters} meters is {converter.meters_to_feet(meters)} feet")
+    print(f"{meters} meters is {converter.meters_to_kilometers(meters)} kilometers")
+    print(f"{feet} feet is {converter.feet_to_meters(feet)} meters")
+    print(f"{kilometers} kilometers is {converter.kilometers_to_meters(kilometers)} meters")
+    print(f"{feet} feet is {converter.feet_to_kilometers(feet)} kilometers")
+    print(f"{kilometers} kilometers is {converter.kilometers_to_feet(kilometers)} feet")

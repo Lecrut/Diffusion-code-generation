@@ -1,66 +1,45 @@
-import sys
+class VolumeCalculator:
+    _CONVERSION_TO_LITERS = {
+        "mL": 0.001,
+        "L": 1.0,
+        "gal": 3.78541,
+        "qt": 0.946353,
+        "pt": 0.473176,
+        "cup": 0.236588,
+        "fl_oz": 0.0295735,
+        "in3": 0.0163871,
+        "cm3": 0.001,
+    }
 
-def read_volume_from_file(file_path):
-    """Reads volume measurements from a file and returns total volume."""
-    try:
-        with open(file_path, 'r') as f:
-            lines = f.readlines()
-        
-        total_volume = 0.0
-        
-        for line in lines:
-            # Strip whitespace including newlines
-            measurement_str = line.strip()
-            
-            if not measurement_str or measurement_str.startswith('#'):
-                continue
-            
-            try:
-                volume = float(measurement_str)
-                total_volume += volume
-            except ValueError as e:
-                print(f"Warning: Failed to convert '{measurement_str}' to float. Skipping.", file=sys.stderr)
-        
-        return total_volume
-        
-    except FileNotFoundError:
-        raise Exception(f"The specified file was not found.") from None
+    def __init__(self):
+        self._measurements = []
 
-def calculate_total_volumes(volume_list):
-    """Calculates the sum of a list of volume measurements."""
-    try:
-        if not isinstance(volume_list, (list, tuple)):
-            return 0.0
-        
-        total = float(sum(volume_list))
-        
-        # Handle potential overflow/underflow by checking for infinity or NaN
-        import math
-        if math.isinf(total) or math.isnan(total):
-            raise ValueError("Calculated volume is not a finite number.")
-            
-        return total
-        
-    except (ValueError, OverflowError) as e:
-        print(f"Calculation error occurred: {e}", file=sys.stderr)
-        return 0.0
+    def add_measurements(self, volumes):
+        self._measurements = list(volumes)
 
-def main():
-    # Hard-coded sample values simulating reading from a file
-    volume_measurements = [15.5, "20", "# This is a comment\n", "-3.7", "", "invalid_data"]
-    
-    try:
-        total_volume = calculate_total_volumes(volume_measurements)
+    def get_total_volume(self, target_unit):
+        if target_unit not in self._CONVERSION_TO_LITERS:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
         
-        if not isinstance(total_volume, float):
-            print("Error in calculation result type.")
-            return
-            
-        # Output the final calculated volume with 2 decimal places for clarity
-        print(f"Total Volume: {total_volume:.2f}")
+        total_liters = sum(
+            (vol * self._CONVERSION_TO_LITERS[unit] for vol, unit in self._measurements)
+        )
         
-    except Exception as e:
-        print(f"An unexpected error occurred while processing volumes: {e}", file=sys.stderr)
+        conversion_factor = self._CONVERSION_TO_LITERS[target_unit]
+        return total_liters / conversion_factor
 
 if __name__ == '__main__':
-    main()
+    calculator = VolumeCalculator()
+    data = [
+        (1000, "mL"),
+        (2, "L"),
+        (1, "gal"),
+        (500, "mL")
+    ]
+    calculator.add_measurements(data)
+    
+    total_liters = calculator.get_total_volume("L")
+    total_gallons = calculator.get_total_volume("gal")
+    
+    print(total_liters)
+    print(total_gallons)

@@ -1,10 +1,12 @@
-import statistics
+import numpy as np
 
-def main():
-    # Hard-coded sample weight data as strings representing numbers with decimals
-    raw_data = [
-        "70.5", "68.2", "71.9", "69.3", "70.1"
-    ]
+def adjust_weights(weights, percentage_change):
+    weights_array = np.array(weights, dtype=np.float64)
+    adjusted = weights_array * (1.0 + percentage_change)
+    return adjusted.tolist()
 
 if __name__ == '__main__':
-    pass
+    sample_weights = [70.5, 65.2, 80.0, 92.1, 55.8]
+    change_rate = 0.05
+    result = adjust_weights(sample_weights, change_rate)
+    print(result)

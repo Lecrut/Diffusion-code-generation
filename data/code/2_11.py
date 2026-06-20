@@ -1,30 +1,24 @@
-class VolumeCalculator:
-    def convert_to_target(self, volume, unit, target_unit):
-        if unit == target_unit:
-            return volume
-        if unit == "m^3" and target_unit == "L":
-            return volume * 1000
-        if unit == "L" and target_unit == "m^3":
-            return volume / 1000
-        if unit == "cm^3" and target_unit == "L":
-            return volume / 1000
-        if unit == "L" and target_unit == "cm^3":
-            return volume * 1000000
-        return volume
-    def calculate_total_volume(self, measurements: list[tuple[float, str]], target_unit: str) -> float:
-        total_volume = 0.0
-        for volume, unit in measurements:
-            converted_volume = self.convert_to_target(volume, unit, target_unit)
-            total_volume += converted_volume
-        return total_volume
+def standardize_volume(volumes):
+    CONVERSION_TO_CUBIC_METERS = {
+        'water': 1.0,
+        'sand': 1.0,
+        'gallon': 0.00378541,
+        'liter': 0.001,
+        'cubic_foot': 0.0283168,
+        'cubic_yard': 0.764555,
+    }
+
+    standardized = {}
+    for material, value in volumes.items():
+        material_lower = material.lower()
+        if material_lower in CONVERSION_TO_CUBIC_METERS:
+            factor = CONVERSION_TO_CUBIC_METERS[material_lower]
+            standardized[material] = value * factor
+        else:
+            standardized[material] = value
+    return standardized
+
 if __name__ == '__main__':
-    calculator = VolumeCalculator()
-    sample_measurements = [
-        (1.5, "m^3"),
-        (500.0, "L"),
-        (100000.0, "cm^3"),
-        (2.5, "m^3")
-    ]
-    target = "L"
-    total = calculator.calculate_total_volume(sample_measurements, target)
-    print(total)
+    sample_data = {'water': 10.0, 'sand': 5.5, 'gallon': 5.0}
+    result = standardize_volume(sample_data)
+    print(result)

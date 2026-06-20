@@ -1,50 +1,17 @@
-def calculate_weighted_average(measurements):
-    """
-    Calculate the weighted average of a list of measurements where each 
-    measurement has an associated category weight.
-    
-    Args:
-        measurements (list[tuple]): List of tuples containing 
-                                   (measurement_value, weight).
-                                   
-    Returns:
-        float: The calculated weighted average.
-               If the input is empty or invalid, returns 0.0.
-    """
-    if not isinstance(measurements, list) or len(measurements) == 0:
+def weighted_average(measurements, category_weights):
+    if not measurements or not category_weights:
         return 0.0
-    
-    total_weighted_value = 0.0
+    total_weighted_sum = 0.0
     total_weight = 0.0
-    
-    for value, weight in measurements:
-        # Validate input types within the loop to ensure robustness
-        if not isinstance(value, (int, float)) or not isinstance(weight, (int, float)):
-            continue
-            
-        try:
-            numeric_value = float(value)
-            numeric_weight = float(weight)
-            
-            total_weighted_value += numeric_value * numeric_weight
-            total_weight += numeric_weight
-        except (ValueError, TypeError):
-            # Skip invalid entries gracefully
-            continue
-    
-    if total_weight == 0.0:
+    for i, measurement in enumerate(measurements):
+        weight = category_weights.get(i, 1.0)
+        total_weighted_sum += measurement * weight
+        total_weight += weight
+    if total_weight == 0:
         return 0.0
-        
-    return total_weighted_value / total_weight
-
+    return total_weighted_sum / total_weight
 if __name__ == '__main__':
-    # Sample data with measurements and their associated category weights
-    sample_data = [
-        (12, 3),   # Measurement value of 12 with weight of 3
-        (85, 7),   # Measurement value of 85 with weight of 7
-        (90, 4.5)  # Measurement value of 90 with weight of 4.5
-    ]
-    
-    result = calculate_weighted_average(sample_data)
-    
-    print(f"Weighted Average: {result}")
+    measurements = [70.5, 80.3, 90.1, 65.4, 88.9]
+    category_weights = {0: 1.0, 1: 1.5, 2: 2.0, 3: 0.5, 4: 1.0}
+    result = weighted_average(measurements, category_weights)
+    print(result)

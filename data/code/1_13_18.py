@@ -1,24 +1,10 @@
-import statistics
+import numpy as np
 
-def calculate_median_weight():
-    """
-    Reads weight data from standard input (simulated via hardcoded values),
-    calculates the median, and prints it formatted to two decimal places.
-    
-    Since direct stdin interaction is restricted by task constraints for 
-    this specific execution context, sample data is embedded directly here.
-    In a real-world scenario where interactive input were permitted, 
-    one would read lines from sys.stdin or use argparse.
-    """
-    # Hard-coded sample weight values to simulate standard input reading
-    weights = [70.5, 68.2, 71.3, 69.8, 70.1]
-
-    try:
-        median_weight = statistics.median(weights)
-        print(f"{median_weight:.2f}")
-    except Exception as e:
-        # Graceful handling in case of unexpected errors with the data or module
-        print("Error calculating median:", str(e))
+def apply_weight_change(weights, percentage_change):
+    return (np.array(weights) * (1 + percentage_change)).tolist()
 
 if __name__ == '__main__':
-    calculate_median_weight()
+    weights_list = [10.0, 20.0, 30.0]
+    change_rate = 0.1
+    result = apply_weight_change(weights_list, change_rate)
+    print(result)

@@ -1,40 +1,49 @@
-import datetime
+class WeightTracker:
+    def __init__(self):
+        self.weights = []
 
-class WeightEntry:
-    """Represents a single weight recording."""
-    
-    def __init__(self, date_str=None):
-        self.date = None
-        
-        if date_str is not None:
-            try:
-                # Handle ISO format or default to current time string if empty/invalid but provided context implies we can parse dates
-                parsed_date = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-                self.date = parsed_date
-            except ValueError:
-                pass
-        
-        # If no valid date was set in init (and not None), default to today's time for new entries if needed later, 
-        # but here we strictly store what is passed. For consistency in stats calculation without external input prompts,
-        # if self.date remains None and a Date object isn't expected yet, we'll handle it gracefully.
+    def add_weight(self, weight):
+        if not isinstance(weight, (int, float)):
+            raise TypeError("Weight must be a number")
+        if weight <= 0:
+            raise ValueError("Weight must be positive")
+        self.weights.append(weight)
 
-    def add_days(self, days):
-        """Adds specific number of days to the date."""
-        if not isinstance(self.date, datetime.datetime) or self.date is None:
-            return
-        
-        new_date = self.date + datetime.timedelta(days=days)
-        
-        try:
-            self.date = datetime.datetime.strftime(new_date, "%Y-%m-%d %H:%M")
-        except Exception: 
-            # Fallback to just appending string representation logic if strftime fails (unlikely for valid datetime objects created here)
-            pass
-            
-    def add_months(self, months):
-        """Adds specific number of months to the date."""
-        if not isinstance(self.date, datetime.datetime) or self.date is None:
-            return
+    def get_average(self):
+        if not self.weights:
+            return None
+        return sum(self.weights) / len(self.weights)
+
+    def get_min(self):
+        if not self.weights:
+            return None
+        return min(self.weights)
+
+    def get_max(self):
+        if not self.weights:
+            return None
+        return max(self.weights)
+
+    def get_latest(self):
+        if not self.weights:
+            return None
+        return self.weights[-1]
+
+    def get_statistics(self):
+        if not self.weights:
+            return {}
+        return {
+            "count": len(self.weights),
+            "average": self.get_average(),
+            "min": self.get_min(),
+            "max": self.get_max(),
+            "latest": self.get_latest()
+        }
 
 if __name__ == '__main__':
-    pass
+    tracker = WeightTracker()
+    sample_weights = [70.5, 71.2, 69.8, 70.1, 70.9]
+    for w in sample_weights:
+        tracker.add_weight(w)
+    stats = tracker.get_statistics()
+    print(stats)

@@ -1,34 +1,24 @@
 import math
-def convert_length(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    if from_unit == "m":
-        if to_unit == "cm":
-            return value * 100
-        elif to_unit == "km":
-            return value / 1000
-    elif from_unit == "cm":
-        if to_unit == "m":
-            return value / 100
-    elif from_unit == "km":
-        if to_unit == "m":
-            return value * 1000
-        elif to_unit == "cm":
-            return value * 100000
-    raise ValueError("Unsupported unit conversion")
+
+KILOMETERS_TO_METERS = 1000.0
+METERS_TO_FEET = 3.28084
+
+def convert_lengths(kilometers_list):
+    results = []
+    for km in kilometers_list:
+        meters = km * KILOMETERS_TO_METERS
+        feet = meters * METERS_TO_FEET
+        results.append((km, meters, feet))
+    return results
+
+def format_output(results):
+    lines = []
+    for km, meters, feet in results:
+        lines.append(f"{km} km = {meters} m = {feet} ft")
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    length = 5
-    from_unit = "m"
-    to_unit = "cm"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"{length} {from_unit} is {result} {to_unit}")
-    length = 2.5
-    from_unit = "km"
-    to_unit = "m"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"{length} {from_unit} is {result} {to_unit}")
-    length = 100
-    from_unit = "cm"
-    to_unit = "m"
-    result = convert_length(length, from_unit, to_unit)
-    print(f"{length} {from_unit} is {result} {to_unit}")
+    sample_kilometers = [1.0, 5.5, 12.34, 100.0, 0.25]
+    converted = convert_lengths(sample_kilometers)
+    output = format_output(converted)
+    print(output)

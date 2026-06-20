@@ -1,32 +1,76 @@
-import math
-def convert_to_kg(weight_list):
-    kilograms = []
-    for weight in weight_list:
+import re
+from decimal import Decimal, InvalidOperation
+
+class WeightConverter:
+    def __init__(self):
+        self.conversion_factors = {
+            'kg': 1.0,
+            'kilogram': 1.0,
+            'kilograms': 1.0,
+            'g': 0.001,
+            'gram': 0.001,
+            'grams': 0.001,
+            'lb': 0.45359237,
+            'lbs': 0.45359237,
+            'pound': 0.45359237,
+            'pounds': 0.45359237,
+            'oz': 0.028349523125,
+            'ounce': 0.028349523125,
+            'ounces': 0.028349523125,
+            'st': 6.35029318,
+            'stone': 6.35029318,
+            'stones': 6.35029318,
+            't': 1000.0,
+            'ton': 1000.0,
+            'tonne': 1000.0,
+        }
+
+    def convert_measurement(self, measurement):
+        pattern = r'^\s*([+-]?\d*\.?\d+(?:e[+-]?\d+)?)\s*(kg|kilogram|kilograms|g|gram|grams|lb|lbs|pound|pounds|oz|ounce|ounces|st|stone|stones|t|ton|tonne)\s*$'
+        match = re.match(pattern, measurement, re.IGNORECASE)
+        if not match:
+            raise ValueError(f"Invalid format: '{measurement}'")
+        
         try:
-            if weight < 0:
-                raise ValueError("Weight cannot be negative")
-            if weight == 0:
-                kilograms.append(0.0)
-            elif weight == 1:
-                kilograms.append(1.0)
-            elif weight == 2:
-                kilograms.append(2.0)
-            elif weight == 3:
-                kilograms.append(3.0)
-            elif weight == 4:
-                kilograms.append(4.0)
-            elif weight == 5:
-                kilograms.append(5.0)
-            else:
-                kilograms.append(weight)
-        except TypeError:
-            kilograms.append(f"Error: Invalid type for weight {weight}")
-        except ValueError as e:
-            kilograms.append(f"Error: {e}")
-        except Exception as e:
-            kilograms.append(f"Error: An unexpected error occurred for {weight}: {e}")
-    return kilograms
+            value = float(match.group(1))
+        except ValueError:
+            raise ValueError(f"Invalid number: '{match.group(1)}'")
+        
+        unit = match.group(2).lower()
+        if unit not in self.conversion_factors:
+            raise ValueError(f"Unsupported unit: '{unit}'")
+        
+        factor = self.conversion_factors[unit]
+        return value * factor
+
+    def convert_list(self, measurements):
+        results = []
+        for m in measurements:
+            try:
+                result = self.convert_measurement(m)
+                results.append((m, result))
+            except ValueError as e:
+                results.append((m, str(e)))
+        return results
+
+def convert_weight_measurements(measurements):
+    converter = WeightConverter()
+    return converter.convert_list(measurements)
+
 if __name__ == '__main__':
-    sample_weights = [150, 75.5, "200 lbs", 300, -50, 1.5, "invalid"]
-    converted_weights = convert_to_kg(sample_weights)
-    print(converted_weights)
+    sample_measurements = [
+        "1.5 kg",
+        "100 g",
+        "2 lb",
+        "16 oz",
+        "1 stone",
+        "invalid input",
+        "500",
+        "-2.5 lbs"
+    ]
+    results = convert_weight_measurements(sample_measurements)
+    for original, result in results:
+        if isinstance(result, float):
+            print(f"{original} -> {result:.6f} kg")
+        else:
+            print(f"{original} -> Error: {result}")

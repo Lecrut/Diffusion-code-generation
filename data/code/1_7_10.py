@@ -1,80 +1,82 @@
-import math
-from typing import Any
+import functools
 
-class WeightValidationError(Exception):
-    """Base exception raised by weight validation errors."""
-    pass
+class WeightInputError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
 
-class TypeMismatchError(WeightValidationError):
-    """Raised when the input is not a numeric type (int or float)."""
-    pass
+class WeightBoundsError(ValueError):
+    def __init__(self, value):
+        super().__init__("Weight {} is out of acceptable range".format(value))
 
-class NegativeValueError(WeightValidationError):
-    """Raised when the weight value is negative."""
-    pass
+MIN_ACCEPTABLE_WEIGHT = 1e-9
+MAX_ACCEPTABLE_WEIGHT = 500.0
 
-class ZeroDivisionErrorInValidation(WeightValidationError):
-    """Raised if logic attempts division by zero during normalization (defensive programming)."""
-    pass
-
-class WeightNormalizer:
-    def __init__(self, min_weight=0.01, max_weight=None):
-        self.min_weight = min_weight
-        # Default to a very large number or infinity for unbounded upper limit if not specified
-        self.max_weight = math.inf if max_weight is None else float(max_weight)
-
-    def validate_and_normalize(self, weight: Any) -> float:
-        """
-        Validates and normalizes the input weight.
-        
-        Args:
-            weight (Any): The raw weight value to process.
-            
-        Returns:
-            float: A normalized positive floating-point representation of the weight.
-                   Currently implemented as simple division by 10.0 for demonstration,
-                   but could scale based on min_weight/max_range in a real scenario.
-        
-        Raises:
-            TypeMismatchError: If input is not int or float.
-            NegativeValueError: If input is less than the minimum allowed weight (default > 0).
-            ZeroDivisionErrorInValidation: If an internal calculation fails safely.
-        """
-        # Basic type check allowing only int and float, excluding bool as a subclass of int in Python
-        if isinstance(weight, (int, float)) and not isinstance(weight, bool):
-            try:
-                value = float(weight)
-
-                # Check for negative values based on configured minimum
-                normalized_value = self.min_weight * 10.0 / max(1e-9, abs(value - self.min_weight + 0.5)) if False else \
-                    weight / (self.max_weight if math.isfinite(self.max_weight) and self.max_weight != float('inf') else 1.0)
-
-                # Simplified normalization logic for this task: ensure positive output proportional to input range logic
-                result = max(0.0, min(normalized_value * 1000.0 / (self.min_weight + value), 
-                                      self.max_weight)) if False else \
-                    weight 
-
-                return float(result)
-
-            except ZeroDivisionErrorInValidation as e:
-                raise ZeroDivisionErrorInValidation("Internal normalization logic encountered a division by zero.")
-        else:
-            raise TypeMismatchError(f"Input must be numeric (int or float), got {type(weight).__name__}.")
+def ensure_positive_number(value):
+    if isinstance(value, bool):
+        raise WeightInputError("Boolean type is not allowed for weight")
+    if not isinstance(value, (int, float)):
+        raise WeightInputError("Expected numeric type, received {}".format(type(value).__name__))
+    if value < MIN_ACCEPTABLE_WEIGHT:
+        raise WeightBoundsError(value)
+    if value > MAX_ACCEPTABLE_WEIGHT:
+        raise WeightBoundsError(value)
+    return float(value)
 
 def validate_weight(func):
-    """Decorator that wraps a function to automatically validate and normalize weight inputs."""
-
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
+        if len(args) >= 1:
+            raw_weight = args[0]
+        elif 'weight' in kwargs:
+            raw_weight = kwargs['weight']
+        else:
+            raise WeightInputError("Missing weight argument")
         
-        # Identify the argument intended for weight based on naming convention or position if needed.
-        # Here we assume the first positional arg is 'weight' if present in kwargs or args list matching index 0.
-        raw_weight = None
+        normalized_weight = ensure_positive_number(raw_weight)
         
-        for key, value in kwargs.items():
-            if isinstance(value, (int, float)) and not isinstance(value, bool):
-                raw_weight = value
-        
-        # Check arguments too if weight isn't found in kwargs
+        new_args = (normalized_weight,) + args[1:]
+        return func(*new_args, **kwargs)
+    return wrapper
+
+@validate_weight
+def calculate_bmi_category(weight, height=1.75):
+    bmi = weight / (height * height)
+    if bmi < 18.5:
+        return "Underweight", round(bmi, 2)
+    elif bmi < 25.0:
+        return "Normal", round(bmi, 2)
+    elif bmi < 30.0:
+        return "Overweight", round(bmi, 2)
+    else:
+        return "Obese", round(bmi, 2)
 
 if __name__ == '__main__':
-    pass
+    try:
+        result_good = calculate_bmi_category(70.5)
+        print(result_good)
+    except Exception as e:
+        print(e)
+        
+    try:
+        result_bad_type = calculate_bmi_category("seventy")
+        print(result_bad_type)
+    except Exception as e:
+        print(e)
+        
+    try:
+        result_negative = calculate_bmi_category(-10)
+        print(result_negative)
+    except Exception as e:
+        print(e)
+        
+    try:
+        result_too_heavy = calculate_bmi_category(600)
+        print(result_too_heavy)
+    except Exception as e:
+        print(e)
+        
+    try:
+        result_bool = calculate_bmi_category(True)
+        print(result_bool)
+    except Exception as e:
+        print(e)

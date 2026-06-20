@@ -1,57 +1,36 @@
 import pandas as pd
-from scipy import stats
+import numpy as np
 
-def load_data(file_path: str) -> pd.DataFrame:
-    """Load weight data from a CSV file."""
-    return pd.read_csv(file_path, index_col=0 if 'id' in file_path.lower() else None)
+def load_and_standardize_weight_data(file_path: str) -> pd.DataFrame:
+    df = pd.read_csv(file_path)
+    required_columns = ['ID', 'Weight_KG']
+    for col in required_columns:
+        if col not in df.columns:
+            raise ValueError(f'Missing column: {col}')
+    df = df.dropna(subset=['Weight_KG'])
+    df['Weight_KG'] = pd.to_numeric(df['Weight_KG'], errors='coerce')
+    df = df.dropna(subset=['Weight_KG'])
+    mean_weight = df['Weight_KG'].mean()
+    std_weight = df['Weight_KG'].std()
+    if std_weight == 0:
+        df['Weight_Standardized'] = 0.0
+    else:
+        df['Weight_Standardized'] = (df['Weight_KG'] - mean_weight) / std_weight
+    return df
 
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Remove rows with missing values and non-numeric weights."""
-    df = df.dropna(subset=['weight'])
-    numeric_df = df[['weight']].apply(pd.to_numeric, errors='coerce')
-    cleaned_weights = numeric_df[0]
-    
-    # Drop any remaining invalid entries (e.g., if conversion failed)
-    valid_indices = np.array([cleaned_weights.notnull()])
-    return pd.DataFrame({'id': clean_valid_ids(cleaned_weights), 'weight_clean': cleaned_weights})
-
-def calculate_standardized_weight(df: pd.DataFrame, column_name: str = 'weight') -> tuple[pd.Series, float]:
-    """Standardize the weight values using Z-score normalization."""
-    weights = df[column_name]
-    
-    # Calculate mean and standard deviation
-    mean_val = stats.zscore(weights)[0][weights.notnull()]  # Correct approach for z-score
-    
-    return (stats.scale(mean=mean_val, std=None),)
-
+def generate_sample_data():
+    data = {'ID': [1, 2, 3, 4, 5], 'Weight_KG': [70.5, 65.0, 80.2, 72.1, 68.4]}
+    return pd.DataFrame(data)
 if __name__ == '__main__':
-    import numpy as np
-
-    # Hard-coded sample data since no external file exists and input is forbidden
-    raw_data = {
-        'id': ['P001', 'P002', 'P003', None, 'P005'],
-        'weight_raw': [70.5, 68.2, np.nan, 72.1, 69.8]
-    }
-
-    df = pd.DataFrame(raw_data)
-
-    # Step 1: Clean data
-    cleaned_df = clean_data(df)
-    
-    print("Cleaned Data:")
-    print(cleaned_df.to_string())
-
-    # Step 2: Standardize weight (Z-score normalization)
-    standardized_values, mean_val = calculate_standardized_weight(cleaned_df, 'weight_clean')
-
-    # Create new column with standardized values manually for clarity and correctness without external dependencies issues in isolation
-    weights_array = cleaned_df['weight_clean'].astype(float).values
-    std_weights = (weights_array - np.mean(weights_array)) / np.std(weights_array) if len(np.unique(weights_array)) > 1 else np.zeros_like(weights_array, dtype=float)
-
-    result_df = pd.DataFrame({
-        'id': cleaned_df['id'],
-        'weight_raw': cleaned_df['weight_clean'] * 0.5 + std_weights[0] * (np.std(cleaned_df['weight_clean']) if len(np.unique(cleaned_df['weight_clean'])) > 1 else np.zeros(2)) # Placeholder to keep structure consistent with original data
-    })
-
-    print("\nStandardized Weights (Z-score):")
-    z_scores = ((weights_array - weights_array.mean()) / weights_array.std() * cleaned_df['id'].tolist()[0]) if len(weights_array) > 1 else np.zeros(3, dtype=float)
+    sample_df = generate_sample_data()
+    result_df = load_and_standardize_weight_data('/dev/null')
+    import tempfile
+    import os
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
+        sample_df.to_csv(f, index=False)
+        temp_file_path = f.name
+    try:
+        result_df = load_and_standardize_weight_data(temp_file_path)
+        print(result_df[['ID', 'Weight_KG', 'Weight_Standardized']])
+    finally:
+        os.unlink(temp_file_path)

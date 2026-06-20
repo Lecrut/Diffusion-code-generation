@@ -1,46 +1,29 @@
 def extract_weights(data):
-    """
-    Recursively traverses a nested dictionary structure to extract all numerical weight values.
-    
-    Args:
-        data (dict | list | float | int): The input data which can be dictionaries, lists, numbers, or mixed types.
-        
-    Returns:
-        list[float]: A flat list containing only the extracted numerical weights.
-    """
-    weights = []
-
     if isinstance(data, dict):
-        for value in data.values():
+        weights = []
+        for key, value in data.items():
             weights.extend(extract_weights(value))
-    elif isinstance(data, (list, tuple)):
+        return weights
+    elif isinstance(data, list):
+        weights = []
         for item in data:
             weights.extend(extract_weights(item))
+        return weights
+    elif isinstance(data, (int, float)):
+        return [data]
     else:
-        # Check if the current element is a numerical weight
-        if isinstance(data, (int, float)):
-            weights.append(float(data))
-
-    return weights
+        return []
 
 if __name__ == '__main__':
     sample_data = {
-        "record_1": 70.5,
-        "details": {
-            "height": 180,
-            "weight_kg": 68.2,
-            "equipment_weight": [5.0, 3.5],
-            "notes": {"extra_load": 2.1}
+        'patient_1': {
+            'record_1': {'weight': 70.5, 'unit': 'kg'},
+            'record_2': 68.2
         },
-        "record_2": 75.0,
-        "activities": {
-            "running": {"weight_with_gear": 80},
-            "cycling": [69.3, 4.2]
-        }
+        'patient_2': [
+            {'weight': 80},
+            {'weight': 82.5, 'notes': 'heavy'}
+        ],
+        'metadata': {'version': 1}
     }
-
-    weights_list = extract_weights(sample_data)
-    
-    print("Extracted weight values:")
-    for w in sorted(weights_list):
-        print(f"{w}")
+    print(extract_weights(sample_data))

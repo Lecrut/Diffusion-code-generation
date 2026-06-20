@@ -1,33 +1,30 @@
-import unittest
-def calculate_volume_box(length, width, height):
-    return length * width * height
-def calculate_volume_cylinder(radius, height):
-    import math
-    return math.pi * (radius ** 2) * height
-class TestVolumeCalculations(unittest.TestCase):
-    def test_calculate_volume_box_positive(self):
-        self.assertEqual(calculate_volume_box(2, 3, 4), 24)
-        self.assertEqual(calculate_volume_box(10, 5, 2), 100)
-    def test_calculate_volume_box_zero_input(self):
-        self.assertEqual(calculate_volume_box(0, 5, 10), 0)
-        self.assertEqual(calculate_volume_box(10, 0, 5), 0)
-        self.assertEqual(calculate_volume_box(0, 0, 0), 0)
-    def test_calculate_volume_box_negative_input(self):
-        self.assertEqual(calculate_volume_box(-2, 3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, -3, 4), -24)
-        self.assertEqual(calculate_volume_box(2, 3, -4), -24)
-        self.assertEqual(calculate_volume_box(-2, -3, -4), -24)
-    def test_calculate_volume_cylinder_positive(self):
-        expected_volume = math.pi * (1**2) * 10
-        self.assertAlmostEqual(calculate_volume_cylinder(1, 10), expected_volume)
-        self.assertAlmostEqual(calculate_volume_cylinder(2, 5), math.pi * 4 * 5)
-    def test_calculate_volume_cylinder_zero_radius(self):
-        self.assertEqual(calculate_volume_cylinder(0, 10), 0)
-    def test_calculate_volume_cylinder_zero_height(self):
-        self.assertEqual(calculate_volume_cylinder(5, 0), 0)
-    def test_calculate_volume_cylinder_negative_input(self):
-        expected_volume = math.pi * (-2**2) * 10
-        self.assertAlmostEqual(calculate_volume_cylinder(-2, 10), expected_volume)
-        self.assertAlmostEqual(calculate_volume_cylinder(2, -5), -20 * math.pi)
+def calculate_total_volume(filename):
+    total_volume = 0.0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if line:
+                    try:
+                        volume = float(line)
+                        total_volume += volume
+                    except ValueError:
+                        continue
+    except FileNotFoundError:
+        return None
+    return total_volume
+
+def calculate_total_volume_from_list(volumes):
+    total_volume = 0.0
+    for item in volumes:
+        try:
+            volume = float(item)
+            total_volume += volume
+        except (ValueError, TypeError):
+            continue
+    return total_volume
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_volumes = ["10.5", "20.3", "invalid", "30.2", "", "abc", "5.0"]
+    total = calculate_total_volume_from_list(sample_volumes)
+    print(total)

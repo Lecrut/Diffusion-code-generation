@@ -1,26 +1,37 @@
-import statistics
+import csv
+import io
 
-def calculate_volume_stats(measurements):
-    """Calculate total and average volume from a list of measurements."""
-    if not measurements:
-        return None, None
+def scale_volumes(input_data, output_filename, factor):
+    output_lines = []
+    header_written = False
+    for row in input_data:
+        if not row:
+            continue
+        if not header_written:
+            output_lines.append(row)
+            header_written = True
+        else:
+            parts = row.strip().split(',')
+            if len(parts) >= 2:
+                try:
+                    name = parts[0]
+                    volume_str = parts[1]
+                    original_volume = float(volume_str)
+                    scaled_volume = original_volume * factor
+                    output_lines.append(f"{name},{scaled_volume}")
+                except ValueError:
+                    output_lines.append(row)
+            else:
+                output_lines.append(row)
     
-    total = sum(measurements)
-    avg = statistics.mean(measurements)
-    
-    return total, avg
+    with open(output_filename, 'w', newline='') as f:
+        f.write('\n'.join(output_lines))
+
+    return output_lines
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no interactive input or args needed)
-    sample_measurements = [10.5, 23.7, 45.2, 60.8]
-    
-    print("Calculating volume statistics for the following measurements:")
-    print(f"Measurements: {sample_measurements}")
-    
-    total_volume, average_volume = calculate_volume_stats(sample_measurements)
-    
-    if total_volume is not None and average_volume is not None:
-        print(f"\nTotal Volume: {total_volume:.2f}")
-        print(f"Average Volume: {average_volume:.2f}")
-    else:
-        print("No valid measurements provided.")
+    sample_csv_content = "item,volume\nApple,10\nBanana,20\nCherry,30"
+    sample_lines = sample_csv_content.split('\n')
+    scaled_results = scale_volumes(sample_lines, 'scaled_volumes.csv', 2.5)
+    for line in scaled_results:
+        print(line)

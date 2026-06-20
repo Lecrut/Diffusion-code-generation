@@ -1,54 +1,40 @@
-import sys
+def convert_length(value: float, from_unit: str, to_unit: str) -> float:
+    units = {
+        "meter": 1.0,
+        "m": 1.0,
+        "kilometer": 1000.0,
+        "km": 1000.0,
+        "centimeter": 0.01,
+        "cm": 0.01,
+        "millimeter": 0.001,
+        "mm": 0.001,
+        "inch": 0.0254,
+        "in": 0.0254,
+        "foot": 0.3048,
+        "ft": 0.3048,
+        "yard": 0.9144,
+        "yd": 0.9144,
+        "mile": 1609.344,
+        "mi": 1609.344,
+        "nautical mile": 1852.0,
+        "nmi": 1852.0,
+    }
 
-def meters_to_yards(meters: float) -> float:
-    """Convert a distance given in meters to yards."""
-    return meters * 0.9144
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
 
-def read_lengths_from_file(filepath: str):
-    """Read lines of numeric values from the specified file and strip whitespace/newlines."""
-    with open(filepath, 'r') as f:
-        for line in f:
-            # Remove any surrounding whitespace or carriage returns
-            length_str = line.strip()
-            if not length_str:  # Skip empty lines
-                continue
-            try:
-                yield float(length_str)
-            except ValueError:
-                print(f"Warning: Skipping non-numeric value '{length_str}'", file=sys.stderr)
+    if from_unit not in units:
+        raise ValueError(f"Unsupported source unit: {from_unit}")
+    if to_unit not in units:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
 
-def main():
-    """Main execution block reading from a hardcoded sample data string."""
-    
-    # Hardcoded sample input mimicking the content of an input file
-    sample_input = "10.5\n234.789\n 50 \n0"
-    
-    try:
-        lines_str_list = [line for line in sample_input.split('\n') if line.strip()]
-        
-        # Create a temporary list to hold values, simulating file reading logic without actual I/O overhead for samples
-        lengths_in_meters = []
-        for val_str in lines_str_list:
-            try:
-                meters = float(val_str)
-                lengths_in_meters.append(meters)
-            except ValueError:
-                continue
-        
-        # Process and print results to stdout
-        if not lengths_in_meters:
-            return
-            
-        total_yards = 0.0
-        for length in lengths_in_meters:
-            yards_length = meters_to_yards(length)
-            print(f"{yards_length:.4f} yards")
-            total_yards += yards_length
-        
-    except FileNotFoundError as e:
-        # This part is technically unreachable given the hardcoding, but kept for structure if file logic were expanded later. 
-        # Since we used in-memory processing of sample_input above, this won't be hit here.
-        sys.exit(1)
+    value_in_meters = value * units[from_unit]
+    return value_in_meters / units[to_unit]
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    result = convert_length(100, "cm", "m")
+    print(result)
+    result = convert_length(1, "mile", "kilometer")
+    print(result)
+    result = convert_length(12, "in", "cm")
+    print(result)

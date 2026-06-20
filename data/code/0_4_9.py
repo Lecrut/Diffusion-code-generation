@@ -1,40 +1,41 @@
-def inches_to_centimeters(inches: float) -> float:
-    """
-    Convert a length given in inches to centimeters with mathematical precision.
+import tempfile
+import os
 
-    Args:
-        inches (float): The length value in inches. Must be non-negative.
+CONVERSION_FACTOR = 1.09361
 
-    Returns:
-        float: The equivalent length in centimeters, rounded to 4 decimal places for standard representation.
+def parse_meters_from_lines(lines):
+    valid_lengths = []
+    for raw_line in lines:
+        stripped = raw_line.strip()
+        if not stripped:
+            continue
+        try:
+            value = float(stripped)
+            valid_lengths.append(value)
+        except ValueError:
+            valid_lengths.append(0.0)
+    return valid_lengths
 
-    Raises:
-        ValueError: If the input is not a valid number or if it's negative.
-    """
-    try:
-        value = float(inches)
-        if value < 0:
-            raise ValueError("Inch length cannot be negative.")
-        
-        # Conversion factor based on NIST definition of inch (1/254 meter exactly, but historically standardized to this ratio for general use unless ISO specific conversion is required)
-        # However, the strict international foot defines it as 0.3048 meters EXACTLY.
-        centimeters = value * 2.54
-        
-        return round(centimeters, 4)
+def convert_meters_to_yards(lengths):
+    return [m * CONVERSION_FACTOR for m in lengths]
 
-    except (ValueError, TypeError):
-        raise ValueError("Input must be a numeric type representing inches.")
+def simulate_file_read(filepath):
+    with open(filepath, 'r') as f:
+        lines = f.readlines()
+    return parse_meters_from_lines(lines)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    sample_inputs = [
-        {"inches": 12.0},         # Expected: ~30.48 cm (foot)
-        {"inches": 695},          # Standard adult height (~176.97 cm) - actually inches is usually decimal, but int works in calculation logic before rounding if not specified otherwise, let's use standard decimals
-        {"inches": 2023.0},       # Height of Queen Victoria (approx) -> ~513.84 cm
+    test_values = [1.5, 5.25, 100.0, 0.1]
+    fd, temp_path = tempfile.mkstemp(suffix='.txt')
+    try:
+        with os.fdopen(fd, 'w') as temp_file:
+            for val in test_values:
+                temp_file.write(f"{val}\n")
         
-    ]
-
-    for sample_case in sample_inputs:
-        inches_val = sample_case["inches"]
-        result_cm = inches_to_centimeters(inches_val)
-        print(f"{sample_case['inches']:.2f} inches equals {result_cm:.4f} centimeters")
+        input_lengths = simulate_file_read(temp_path)
+        output_lengths = convert_meters_to_yards(input_lengths)
+        
+        for orig, conv in zip(input_lengths, output_lengths):
+            print(f"{orig} meters is {conv} yards")
+    finally:
+        os.unlink(temp_path)

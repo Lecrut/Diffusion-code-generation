@@ -1,53 +1,41 @@
-def convert_length(length: float, unit_type: str) -> float:
-    """
-    Converts a given length from one metric/imperial unit to meters.
+class UnitConverter:
+    METERS_TO_FEET = 3.28084
+    METERS_TO_KILOMETERS = 0.001
 
-    Supported units (case-insensitive): 'm', 'km' (kilometers), 
-    'cm' (centimeters), 'mm' (millimeters), 'ft' (feet), 'in' (inches).
-    
-    Args:
-        length (float): The numerical value of the length.
-        unit_type (str): The source unit as a string ('m', 'km', 'cm', 
-                         'mm', 'ft', or 'in').
+    @classmethod
+    def meters_to_feet(cls, meters):
+        return meters * cls.METERS_TO_FEET
 
-    Returns:
-        float: The converted length in meters.
+    @classmethod
+    def feet_to_meters(cls, feet):
+        return feet / cls.METERS_TO_FEET
 
-    Raises:
-        ValueError: If an unsupported unit type is provided.
-    """
-    
-    # Conversion factors to meters (1 unit = X meters)
-    conversion_factors = {
-        'm': 1,
-        'km': 1000,
-        'cm': 0.01,
-        'mm': 0.001,
-        'ft': 0.3048,
-        'in': 0.0254,
-    }
+    @classmethod
+    def meters_to_kilometers(cls, meters):
+        return meters * cls.METERS_TO_KILOMETERS
 
-    # Normalize input to lowercase for case-insensitive comparison
-    unit_lower = unit_type.lower()
+    @classmethod
+    def kilometers_to_meters(cls, kilometers):
+        return kilometers / cls.METERS_TO_KILOMETERS
 
-    if unit_lower not in conversion_factors:
-        raise ValueError(f"Unsupported unit type '{unit_type}'. Supported units are "
-                        f"'m', 'km', 'cm', 'mm', 'ft', 'in'.")
+    @classmethod
+    def feet_to_kilometers(cls, feet):
+        meters = cls.feet_to_meters(feet)
+        return cls.meters_to_kilometers(meters)
 
-    return length * conversion_factors[unit_lower]
+    @classmethod
+    def kilometers_to_feet(cls, kilometers):
+        meters = cls.kilometers_to_meters(kilometers)
+        return cls.meters_to_feet(meters)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the function
+    converter = UnitConverter()
     
-    test_cases = [
-        (10, 'm'),           # 10 meters -> 10.0 m
-        (5, 'km'),           # 5 kilometers -> 5000.0 m
-        (200, 'cm'),         # 200 centimeters -> 2.0 m
-        (30, 'mm'),          # 30 millimeters -> 0.03 m
-        (10, 'ft'),          # 10 feet -> ~3.048 m
-        (60, 'in'),          # 60 inches -> ~1.524 m
-    ]
-
-    for length_val, unit_str in test_cases:
-        result = convert_length(length_val, unit_str)
-        print(f"{length_val} {unit_str} is equal to {result:.4f} meters.")
+    result1 = converter.meters_to_feet(10)
+    print(f"10 meters is {result1} feet")
+    
+    result2 = converter.kilometers_to_meters(5)
+    print(f"5 kilometers is {result2} meters")
+    
+    result3 = converter.feet_to_kilometers(1000)
+    print(f"1000 feet is {result3} kilometers")

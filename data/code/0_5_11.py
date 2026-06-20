@@ -1,76 +1,98 @@
-def convert_length(value, unit_code):
-    """
-    Converts a length value from one unit to another using a dictionary mapping.
-    
-    Args:
-        value (float or int): The numeric length value.
-        unit_code (str): A string representing the target unit code ('m' for meters).
-                         Currently supports 'ft', 'km', 'in'. Other units are ignored 
-                         but will return an error if not found in mapping logic below.
-    
-    Returns:
-        float: The converted length value in the specified unit (if supported) or None/raises otherwise.
-               If conversion is requested to a specific target, this function assumes input is always meters ('m').
-               To convert FROM another unit TO 'm', please adjust usage by dividing/multiplying appropriately 
-               before passing to a generic converter if needed, but per task simplicity:
-    
-    Correction based on robustness requirement for flexibility:
-        This implementation treats the argument `value` as being in Meters (base).
-        If you want to convert FROM another unit TO meters first, you must manually handle that logic 
-        before calling this function, OR modify how this function is called.
-        
-    However, re-reading "takes a string representing a length and a target unit code":
-    The prompt implies the input VALUE might be in ANY unit? No, it says "string representing a LENGTH" which usually means text like "5ft". 
-    But looking at typical robust functions requested: Usually it takes (numeric_value, from_unit, to_unit).
-    
-    Let's interpret strictly as per standard conversion utility patterns but simplified for the prompt description:
-    The function will assume `value` is in METERS. If you need other origins, use this specific logic or extend it.
-    Wait, "string representing a length" -> likely just text? No, Python functions usually take numeric types unless parsing strings explicitly requested. 
-    Given "target unit code", let's build a robust converter that assumes input is in METERS and converts TO the target unit.
-    
-    If the user wants to convert FROM 'ft' TO 'm', they should do: `convert_length(value_in_ft_to_m, 'm')` where value_in_ft_to_m = feet / 0.3048. 
-    OR we can make it more general if possible without over-engineering. 
-    
-    Let's stick to the most robust interpretation for a single function:
-    It converts from Meters TO any supported target unit.
-    
-    Supported Units (Target): 'ft', 'km', 'in'. Base: meters ('m').
-"""
-    
-    # Mapping factors relative to base meter
-    conversion_factors = {
-        'm': 1,      # Identity for input if it were outputting m from m
-        'ft': 3.28084,
-        'km': 0.001,
-        'in': 39.3701,
-    }
+class UnitConverter:
+    def __init__(self):
+        self.base_units = {}
+        self.conversion_factors = {}
 
-    target_factor = conversion_factors.get(unit_code)
-    
-    if unit_code == 'm' or not target_factor:
-        # If requesting meters back, return original (assuming input is in m). 
-        # To be truly robust for inputs NOT in meters would require a `source_unit` param which wasn't asked.
-        # We assume standard behavior: Input value is always Meters. Target unit determines output scale.
-        if not target_factor:
-            raise ValueError(f"Unsupported target unit code '{unit_code}'. Supported units are 'm', 'ft', 'km', 'in'.")
-        
-    return round(value * target_factor, 4)
+    def add_unit(self, unit_name, factor_to_base):
+        self.base_units[unit_name] = factor_to_base
+        self.conversion_factors[unit_name] = factor_to_base
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.conversion_factors:
+            raise ValueError(f"Unknown unit: {from_unit}")
+        if to_unit not in self.conversion_factors:
+            raise ValueError(f"Unknown unit: {to_unit}")
+
+        factor_from = self.conversion_factors[from_unit]
+        factor_to = self.conversion_factors[to_unit]
+
+        base_value = value * factor_from
+        result = base_value / factor_to
+        return result
+
+    def convert_arbitrary(self, value, from_unit, to_unit):
+        if from_unit == to_unit:
+            return value
+
+        path = self._find_conversion_path(from_unit, to_unit)
+        if path is None:
+            raise ValueError(f"No conversion path from {from_unit} to {to_unit}")
+
+        result = value
+        for i in range(len(path) - 1):
+            current = path[i]
+            next_unit = path[i + 1]
+            result = self.convert(result, current, next_unit)
+        return result
+
+    def _find_conversion_path(self, start, end):
+        if start == end:
+            return [start]
+        if start not in self.conversion_factors or end not in self.conversion_factors:
+            return None
+
+        visited = set()
+        queue = [[start]]
+        while queue:
+            path = queue.pop(0)
+            current = path[-1]
+            if current == end:
+                return path
+            if current in visited:
+                continue
+            visited.add(current)
+            for next_unit in self.conversion_factors:
+                if next_unit not in visited:
+                    queue.append(path + [next_unit])
+        return None
 
 if __name__ == '__main__':
-    # Sample usage block with hard-coded values. 
-    # Assumption: Input value is provided in METERS for this specific function design to keep single-parameter logic simple and robust against missing source unit param.
-    
-    meters = 10
-    
-    result_ft = convert_length(meters, 'ft')
-    print(f"{meters} meters is approximately {result_ft:.2f} feet.")
+    converter = UnitConverter()
+    converter.add_unit('meter', 1.0)
+    converter.add_unit('kilometer', 1000.0)
+    converter.add_unit('centimeter', 0.01)
+    converter.add_unit('millimeter', 0.001)
+    converter.add_unit('mile', 1609.34)
+    converter.add_unit('yard', 0.9144)
+    converter.add_unit('foot', 0.3048)
+    converter.add_unit('inch', 0.0254)
 
-    result_km = convert_length(5, 'km')
-    print(f"5 meters is approximately {result_km:.4f} kilometers.")
-    
-    # Note: To use this function to convert FROM other units (like 10 ft) TO another unit, 
-    # you would typically need a source_unit parameter. Since not requested in the signature logic description explicitly beyond "string representing length",
-    # we assume input is standard SI (meters). If strict parsing of mixed string inputs like "5ft" was needed:
-    result_in = convert_length(30, 'in')  # Example converting meters to inches
-    
-    print(f"{result_ft:.2f} feet converted back to base logic isn't possible without source param.")
+    result1 = converter.convert(5, 'kilometer', 'meter')
+    print(result1)
+
+    result2 = converter.convert(1, 'mile', 'kilometer')
+    print(result2)
+
+    result3 = converter.convert(100, 'centimeter', 'inch')
+    print(result3)
+
+    result4 = converter.convert_arbitrary(2.5, 'foot', 'millimeter')
+    print(result4)
+
+    result5 = converter.convert(0.5, 'kilometer', 'foot')
+    print(result5)
+
+    result6 = converter.convert(72, 'inch', 'centimeter')
+    print(result6)
+
+    result7 = converter.convert(1, 'yard', 'mile')
+    print(result7)
+
+    result8 = converter.convert(3, 'meter', 'kilometer')
+    print(result8)
+
+    result9 = converter.convert(1500, 'millimeter', 'centimeter')
+    print(result9)
+
+    result10 = converter.convert_arbitrary(1, 'inch', 'kilometer')
+    print(result10)
