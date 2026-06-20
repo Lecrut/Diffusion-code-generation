@@ -1,28 +1,46 @@
 import argparse
-def convert_volume(volume, start_unit, target_unit):
-    if start_unit == target_unit:
-        return volume
-    conversion_rates = {
-        ('liters', 'gallons'): 3.78541,
-        ('liters', 'milliliters'): 1000.0,
-        ('gallons', 'liters'): 3.78541,
-        ('gallons', 'milliliters'): 3785.41,
-    }
-    key = (start_unit, target_unit)
-    if key in conversion_rates:
-        return volume * conversion_rates[key]
-    else:
-        raise ValueError(f"Conversion from {start_unit} to {target_unit} is not supported.")
+import sys
+
+CONVERSION_RATES = {
+    'ml': 1,
+    'l': 1000,
+    'fl_oz': 29.5735,
+    'cup': 236.588,
+    'pt': 473.176,
+    'qt': 946.353,
+    'gal': 3785.41,
+    'tsp': 4.92892,
+    'tbsp': 14.7868,
+    'in3': 16.3871,
+    'ft3': 28316.8,
+}
+
+def convert_volume(amount, from_unit, to_unit):
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+    
+    if from_unit not in CONVERSION_RATES:
+        raise ValueError(f"Unsupported starting unit: {from_unit}")
+    if to_unit not in CONVERSION_RATES:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
+    
+    base_value = amount * CONVERSION_RATES[from_unit]
+    result = base_value / CONVERSION_RATES[to_unit]
+    
+    return result
+
+def create_cli_parser():
+    parser = argparse.ArgumentParser(description='Convert volume units.')
+    parser.add_argument('--volume', type=float, required=True, help='The volume value to convert.')
+    parser.add_argument('--from-unit', type=str, required=True, dest='from_unit', help='The starting unit (e.g., ml, l, gal).')
+    parser.add_argument('--to-unit', type=str, required=True, dest='to_unit', help='The target unit (e.g., oz, cup, qt).')
+    return parser
+
+def run_conversion_cli(volume, from_unit, to_unit):
+    result = convert_volume(volume, from_unit, to_unit)
+    print(result)
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Volume conversion tool.")
-    parser.add_argument("volume", type=float, help="The volume value to convert.")
-    parser.add_argument("start_unit", type=str, help="The starting unit of volume.")
-    parser.add_argument("target_unit", type=str, help="The target unit of volume.")
-    args = parser.parse_args(["10.0", "liters", "gallons"])
-    try:
-        result = convert_volume(args.volume, args.start_unit, args.target_unit)
-        print(f"{args.volume} {args.start_unit} is equal to {result:.2f} {args.target_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    run_conversion_cli(1, 'gal', 'l')
+    run_conversion_cli(250, 'ml', 'fl_oz')
+    run_conversion_cli(1, 'tsp', 'ml')

@@ -1,31 +1,29 @@
-def convert_volume(value: float, from_unit: str) -> dict[str, float]:
-    """
-    Converts a given volume to all specified units (liters, milliliters, cubic meters, gallons, cubic inches).
+def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'liters': 1.0,
+        'milliliters': 0.001,
+        'cubic_meters': 1000.0,
+        'gallons': 3.78541,
+        'cubic_inches': 0.0163871
+    }
+    if from_unit not in conversion_factors:
+        raise ValueError(f"Unknown unit: {from_unit}")
+    if to_unit not in conversion_factors:
+        raise ValueError(f"Unknown unit: {to_unit}")
     
-    Base unit for calculation is liters.
-    Conversion factors relative to 1 liter:
-    - Milliliter = 0.001 L^-1 * value -> 1 ml = 0.001 L
-      Actually defined as: volume_in_ml = value_l / (liters_per_liquid_unit)
-    
-    Reference volumes per unit of "from_unit":
-    Liters in 1 liter is itself, etc.
-
-    Returns a dictionary containing the converted values for all units.
-    """
-    # Define conversion rates to liters (e.g., how many liters are in one 'from_unit')
-    if from_unit.lower() == 'liter':
-        factor = 1
-    elif from_unit.lower() == 'milliliter' or from_unit.lower().startswith('ml'):
-        factor = 0.001
-    elif from_unit.lower() == 'cubic meter':
-        # 1 cubic meter = 1000 liters
-        factor = 1000
-    elif from_unit.lower() in ('gallon', 'gal'):
-        # US liquid gallon: approx 3.785411784 liters
-        factor = 3.785411784
-    elif from_unit.lower().startswith('cubic inch') or from_unit.lower() == 'inch^3':
-        # 1 cubic inch is approximately 0.016387064 L
-        factor = 0.016387064
+    liters_value = value * conversion_factors[from_unit]
+    result = liters_value / conversion_factors[to_unit]
+    return result
 
 if __name__ == '__main__':
-    pass
+    sample_conversions = [
+        (1.0, 'liters', 'gallons'),
+        (1000.0, 'milliliters', 'liters'),
+        (1.0, 'cubic_meters', 'liters'),
+        (5.0, 'gallons', 'liters'),
+        (100.0, 'cubic_inches', 'milliliters')
+    ]
+    
+    for val, from_u, to_u in sample_conversions:
+        result = convert_volume(val, from_u, to_u)
+        print(f"{val} {from_u} = {result} {to_u}")

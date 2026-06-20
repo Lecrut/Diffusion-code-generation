@@ -1,81 +1,47 @@
 import argparse
 
-def get_supported_units():
-    """Return a list of supported unit types."""
-    return ["celsius", "fahrenheit"]
+class VolumeConverter:
+    def __init__(self):
+        self.units = {
+            'liter': 1.0,
+            'milliliter': 0.001,
+            'gallon_us': 3.78541,
+            'quart_us': 0.946353,
+            'pint_us': 0.473176,
+            'cup_us': 0.236588,
+            'fluid_ounce_us': 0.0295735,
+            'tablespoon_us': 0.0147868,
+            'teaspoon_us': 0.00492892
+        }
 
-def convert_temperature(value, from_unit, to_unit):
-    """Convert temperature between Celsius and Fahrenheit."""
-    
-    if value is None:
-        raise ValueError("Temperature value must be provided.")
+    def convert(self, volume, start_unit, target_unit):
+        if start_unit not in self.units:
+            raise ValueError(f"Unsupported start unit: {start_unit}")
+        if target_unit not in self.units:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
         
-    if not isinstance(value, (int, float)):
-        raise TypeError(f"Value '{value}' is not a valid number.")
+        volume_in_liters = volume * self.units[start_unit]
+        converted_volume = volume_in_liters / self.units[target_unit]
+        return converted_volume
 
-    celsius = 0.0
-    
-    # Convert to Celsius first as it's the reference unit in this logic here
-    if from_unit == "celsius":
-        celsius = value
-    elif from_unit == "fahrenheit":
-        celsius = (value - 32) * 5/9
-        
-    # Convert from Celsius to target unit
-    if to_unit == "celsius":
-        return celsius
-    elif to_unit == "fahrenheit":
-        fahrenheit = celsius * 9/5 + 32
-        return round(fahrenheit, 2)
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Convert volumes between different units.')
+    parser.add_argument('volume', type=float, help='The volume value to convert')
+    parser.add_argument('start_unit', type=str, help='The starting unit (e.g., liter, gallon_us)')
+    parser.add_argument('target_unit', type=str, help='The target unit (e.g., milliliter, quart_us)')
+    return parser.parse_args()
 
-def create_parser():
-    """Create and configure the argument parser."""
-    
-    # Define supported units for help text without requiring them as args
-    unit_help_text = "Choose a temperature unit: celsius or fahrenheit"
-    
-    parser = argparse.ArgumentParser(
-        description="Convert temperatures between Celsius and Fahrenheit.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    
-    # Add volume argument (as per task requirement) even though it's not used in logic yet. 
-    # We'll interpret 'volume' as the temperature value based on context of conversion tasks often mixing units incorrectly or simply following prompt structure strictly where no specific numeric field like "amount" exists but one was requested instead
-    parser.add_argument(
-        '--value', '-v', type=float, help="The numerical amount to convert."
-    )
-
-    # Add starting unit argument (as per task requirement) even though it's not used in logic yet. 
-    # We'll interpret 'volume' as the temperature value based on context of conversion tasks often mixing units incorrectly or simply following prompt structure strictly where no specific numeric field like "amount" exists but one was requested instead
-    parser.add_argument(
-        '--from-unit', '-f', type=str, choices=get_supported_units(), default='celsius', help="Starting unit for conversion."
-    )
-
-    # Add target unit argument (as per task requirement) even though it's not used in logic yet. 
-    # We'll interpret 'volume' as the temperature value based on context of conversion tasks often mixing units incorrectly or simply following prompt structure strictly where no specific numeric field like "amount" exists but one was requested instead
-    parser.add_argument(
-        '--to-unit', '-t', type=str, choices=get_supported_units(), default='fahrenheit', help="Target unit for conversion."
-    )
-
-    return parser
-
-def main():
-    """Main function to execute the CLI application."""
-    
-    # Hard-coded sample values as per task requirement: run without user input or network access
-    
-    sample_value = 25.0
-    sample_from_unit = "celsius"
-    sample_to_unit = "fahrenheit"
-
-    parser = create_parser()
-    args, _ = parser.parse_known_args([]) # Parse empty list to simulate no arguments passed from outside but with defaults set internally
-    
-    value = args.value if hasattr(args, 'value') and not isinstance(getattr(args, 'value', None), type(lambda: None)) else sample_value
-
-    result = convert_temperature(value, sample_from_unit, sample_to_unit)
-    
-    print(f"Converted {result} to {sample_to_unit}")
+def run_conversion():
+    args = parse_arguments()
+    converter = VolumeConverter()
+    result = converter.convert(args.volume, args.start_unit, args.target_unit)
+    print(result)
 
 if __name__ == '__main__':
-    main()
+    import sys
+    original_argv = sys.argv
+    sys.argv = ['script.py', '5.0', 'liter', 'gallon_us']
+    converter_instance = VolumeConverter()
+    result_value = converter_instance.convert(5.0, 'liter', 'gallon_us')
+    print(result_value)
+    sys.argv = original_argv

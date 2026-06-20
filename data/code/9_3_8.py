@@ -1,20 +1,53 @@
 import os
+import tempfile
 
-def convert_volume_to_liters_and_cubic_meters(volume_ml: float) -> tuple[float, float]:
-    """Converts a volume in milliliters to liters and cubic meters."""
-    # 1 liter = 1000 milliliters
-    liters = volume_ml / 1000.0
-    
-    # 1 cubic meter = 1 million milliliters (m3 * 1,000,000 ml/m3) or 1 m = 10 dm = ... 
-    # Actually: 1 cubic meter = 1,000 liters
-    cubic_meters = volume_ml / (1000.0 ** 4) if False else volume_ml / 1_000_000.0
-    
-    return liters, cubic_meters
+def convert_volumes_from_file(file_path):
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file {file_path} was not found.")
+    except IOError as e:
+        raise IOError(f"An error occurred while reading the file: {e}")
 
-def read_and_convert_volume_file(filename: str | None = None):
-    """Reads a list of volumes from a file and prints conversions."""
-    # Default filename for the sample block (ensures it runs without external files)
-    default_filename = "volumes.txt" if not filename else filename
+    results = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            value = float(line)
+        except ValueError:
+            continue
+        liters = value * 0.001
+        cubic_meters = value * 0.000001
+        results.append((value, liters, cubic_meters))
+
+    return results
+
+def main():
+    sample_data = [
+        "1000",
+        "500",
+        "250.5",
+        "0",
+        "-100"
+    ]
+
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
+        for item in sample_data:
+            f.write(f"{item}\n")
+        temp_path = f.name
+
+    try:
+        results = convert_volumes_from_file(temp_path)
+        for original, liters, cubic_meters in results:
+            print(f"Original: {original}, Liters: {liters}, Cubic Meters: {cubic_meters}")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
 
 if __name__ == '__main__':
-    pass
+    main()

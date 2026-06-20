@@ -1,40 +1,50 @@
 import os
-def convert_volume(volume_liters):
-    volume_cubic_meters = volume_liters / 1000.0
-    return volume_liters, volume_cubic_meters
+import tempfile
+
+def convert_volumes(measurements, unit="liters"):
+    results = []
+    for measurement in measurements:
+        if unit.lower() == "liters":
+            cubic_meters = measurement / 1000.0
+            liters = measurement
+        elif unit.lower() == "cubic_meters":
+            cubic_meters = measurement
+            liters = measurement * 1000.0
+        else:
+            raise ValueError("Unsupported unit")
+        results.append((liters, cubic_meters))
+    return results
+
 def process_volume_file(filepath):
-    volume_data = []
     try:
         with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume_liters = float(line.strip())
-                    volume_data.append(volume_liters)
-                except ValueError:
-                    print(f"Skipping invalid line: {line.strip()}")
+            lines = file.readlines()
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return
-    except IOError as e:
-        print(f"Error reading file: {e}")
-        return
-    print("Volume Conversions:")
-    for volume_liters in volume_data:
-        liters, cubic_meters = convert_volume(volume_liters)
-        print(f"Liters: {liters:.2f}, Cubic Meters: {cubic_meters:.4f}")
+        return []
+    except IOError:
+        return []
+
+    measurements = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        try:
+            value = float(stripped)
+            measurements.append(value)
+        except ValueError:
+            continue
+
+    return convert_volumes(measurements, "liters")
+
 if __name__ == '__main__':
-    sample_filename = "volumes.txt"
-    sample_data = [
-        "1500.5",
-        "2500",
-        "500.75",
-        "invalid_data",
-        "3000.123"
-    ]
+    sample_data = "500\n1500\n750.5\n-100\n"
+
+    tmp = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt')
     try:
-        with open(sample_filename, 'w') as f:
-            for data in sample_data:
-                f.write(data + "\n")
-        process_volume_file(sample_filename)
-    except IOError as e:
-        print(f"An error occurred during file setup: {e}")
+        tmp.write(sample_data)
+        tmp.flush()
+        result = process_volume_file(tmp.name)
+        print(result)
+    finally:
+        os.unlink(tmp.name)

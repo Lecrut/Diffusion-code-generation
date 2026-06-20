@@ -1,62 +1,45 @@
-import math
-def convert_volume(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    if from_unit == "liters":
-        if to_unit == "milliliters":
-            return value * 1000
-        elif to_unit == "cubic meters":
-            return value * 1000
-        elif to_unit == "gallons":
-            return value * 0.264172
-        elif to_unit == "cubic inches":
-            return value * 61023.74
-    elif from_unit == "milliliters":
-        if to_unit == "liters":
-            return value / 1000
-        elif to_unit == "cubic meters":
-            return value / 1000000
-        elif to_unit == "gallons":
-            return value * 0.00378541
-        elif to_unit == "cubic inches":
-            return value * 0.00006102374
-    elif from_unit == "cubic meters":
-        if to_unit == "liters":
-            return value * 1000
-        elif to_unit == "milliliters":
-            return value * 1000
-        elif to_unit == "gallons":
-            return value / 0.00378541
-        elif to_unit == "cubic inches":
-            return value * 163870.673
-    elif from_unit == "gallons":
-        if to_unit == "liters":
-            return value * 3.78541
-        elif to_unit == "milliliters":
-            return value * 3785.41
-        elif to_unit == "cubic meters":
-            return value * 0.00378541
-        elif to_unit == "cubic inches":
-            return value * 1550.0022
-    elif from_unit == "cubic inches":
-        if to_unit == "liters":
-            return value * 0.0000264172
-        elif to_unit == "milliliters":
-            return value * 0.0006102374
-        elif to_unit == "cubic meters":
-            return value * 0.0000000163870673
-        elif to_unit == "gallons":
-            return value / 1550.0022
-    return None
-def main():
-    sample_value = 10
-    from_unit = "liters"
-    to_unit = "gallons"
-    print(f"Sample Value: {sample_value} {from_unit}")
-    converted_value = convert_volume(sample_value, from_unit, to_unit)
-    if converted_value is not None:
-        print(f"Converted Value: {converted_value:.4f} {to_unit}")
-    else:
-        print("Invalid conversion requested.")
+def convert_liters_to_ml(value):
+    return value * 1000
+
+def convert_ml_to_liters(value):
+    return value / 1000
+
+def convert_liters_to_cubic_meters(value):
+    return value / 1000
+
+def convert_cubic_meters_to_liters(value):
+    return value * 1000
+
+def convert_liters_to_gallons(value):
+    return value * 0.264172
+
+def convert_gallons_to_liters(value):
+    return value / 0.264172
+
+def convert_liters_to_cubic_inches(value):
+    return value * 61.0237
+
+def convert_cubic_inches_to_liters(value):
+    return value / 61.0237
+
+def run_conversion_tests():
+    test_liters = 5.0
+    print(f"{test_liters} liters to milliliters: {convert_liters_to_ml(test_liters)}")
+    print(f"{test_liters} liters to cubic meters: {convert_liters_to_cubic_meters(test_liters)}")
+    print(f"{test_liters} liters to gallons: {convert_liters_to_gallons(test_liters)}")
+    print(f"{test_liters} liters to cubic inches: {convert_liters_to_cubic_inches(test_liters)}")
+    
+    test_ml = 1000.0
+    print(f"{test_ml} milliliters to liters: {convert_ml_to_liters(test_ml)}")
+    
+    test_cubic_m = 2.0
+    print(f"{test_cubic_m} cubic meters to liters: {convert_cubic_meters_to_liters(test_cubic_m)}")
+    
+    test_gallons = 10.0
+    print(f"{test_gallons} gallons to liters: {convert_gallons_to_liters(test_gallons)}")
+    
+    test_cubic_inches = 30.0
+    print(f"{test_cubic_inches} cubic inches to liters: {convert_cubic_inches_to_liters(test_cubic_inches)}")
+
 if __name__ == '__main__':
-    main()
+    run_conversion_tests()

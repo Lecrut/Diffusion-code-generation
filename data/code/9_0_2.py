@@ -1,37 +1,52 @@
 import math
-def convert_volume(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    conversion_factors = {
-        'L': 1.0,
-        'mL': 0.001,
-        'm^3': 1000.0,
-        'gal': 3.78541,
-        'in^3': 0.0163871
-    }
-    if from_unit not in conversion_factors or to_unit not in conversion_factors:
-        raise ValueError("Invalid unit specified.")
-    value_in_liters = value * conversion_factors.get(from_unit, 1.0)
-    result = value_in_liters / conversion_factors.get(to_unit, 1.0)
-    return result
-def main():
-    sample_value = 10
-    from_unit = 'L'
-    to_unit = 'gal'
-    print(f"Sample Value: {sample_value} {from_unit}")
-    try:
-        result = convert_volume(sample_value, from_unit, to_unit)
-        print(f"Converted Value: {result:.4f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    sample_value_2 = 500
-    from_unit_2 = 'm^3'
-    to_unit_2 = 'mL'
-    print(f"\nSample Value: {sample_value_2} {from_unit_2}")
-    try:
-        result_2 = convert_volume(sample_value_2, from_unit_2, to_unit_2)
-        print(f"Converted Value: {result_2:.2f} {to_unit_2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-if __name__ == '__main__':
-    main()
+
+class VolumeConverter:
+    def __init__(self):
+        self.to_liters = {
+            "liter": 1.0,
+            "milliliter": 0.001,
+            "cubic_meter": 1000.0,
+            "gallon_us": 3.785411784,
+            "cubic_inch": 0.016387064
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.to_liters:
+            raise ValueError(f"Unsupported source unit: {from_unit}")
+        if to_unit not in self.to_liters:
+            raise ValueError(f"Unsupported target unit: {to_unit}")
+        
+        liters = value * self.to_liters[from_unit]
+        result = liters / self.to_liters[to_unit]
+        return result
+
+    def convert_batch(self, conversions):
+        results = []
+        for item in conversions:
+            val = item["value"]
+            src = item["from"]
+            tgt = item["to"]
+            converted = self.convert(val, src, tgt)
+            results.append({
+                "original_value": val,
+                "original_unit": src,
+                "converted_value": converted,
+                "target_unit": tgt
+            })
+        return results
+
+if __name__ == "__main__":
+    converter = VolumeConverter()
+    
+    test_cases = [
+        {"value": 1, "from": "liter", "to": "milliliter"},
+        {"value": 1, "from": "cubic_meter", "to": "liter"},
+        {"value": 1, "from": "gallon_us", "to": "liter"},
+        {"value": 100, "from": "cubic_inch", "to": "milliliter"},
+        {"value": 5, "from": "gallon_us", "to": "cubic_inch"}
+    ]
+    
+    batch_results = converter.convert_batch(test_cases)
+    
+    for res in batch_results:
+        print(f"{res['original_value']} {res['original_unit']} = {res['converted_value']} {res['target_unit']}")

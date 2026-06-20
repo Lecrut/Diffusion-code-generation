@@ -1,43 +1,51 @@
-import os
-def convert_volume(volume_liters):
-    volume_cubic_meters = volume_liters / 1000.0
-    return volume_liters, volume_cubic_meters
-def process_volume_file(filepath):
-    volume_data = []
+def convert_volumes(file_path):
+    results = []
     try:
-        with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume_liters = float(line.strip())
-                    volume_data.append(volume_liters)
-                except ValueError:
-                    print(f"Skipping invalid line: {line.strip()}")
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split()
+            if len(parts) != 2:
+                continue
+            try:
+                value = float(parts[0])
+                unit = parts[1].lower()
+                if unit == 'ml':
+                    liters = value / 1000.0
+                elif unit == 'cl':
+                    liters = value / 100.0
+                elif unit == 'dl':
+                    liters = value / 10.0
+                elif unit == 'l':
+                    liters = value
+                elif unit == 'm3':
+                    liters = value * 1000.0
+                else:
+                    continue
+                cubic_meters = liters / 1000.0
+                results.append((value, unit, liters, cubic_meters))
+            except ValueError:
+                continue
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return
-    except IOError as e:
-        print(f"Error reading file: {e}")
-        return
-    if not volume_data:
-        print("No valid volume data found.")
-        return
-    print("Volume Conversions:")
-    for volume_liters in volume_data:
-        liters, cubic_meters = convert_volume(volume_liters)
-        print(f"Liters: {liters:.2f}, Cubic Meters: {cubic_meters:.4f}")
+        results.append(f"Error: File '{file_path}' not found.")
+    except IOError:
+        results.append(f"Error: Could not read file '{file_path}'.")
+    return results
+
 if __name__ == '__main__':
-    sample_filename = "volumes.txt"
-    sample_data = [
-        "1500.5",
-        "2500",
-        "500.75",
-        "invalid_data",
-        "3000.123"
-    ]
-    try:
-        with open(sample_filename, 'w') as f:
-            for data in sample_data:
-                f.write(data + "\n")
-        process_volume_file(sample_filename)
-    except IOError as e:
-        print(f"An error occurred during file setup: {e}")
+    sample_content = """1000 ml
+500 cl
+2.5 l
+0.001 m3"""
+    with open('temp_volumes.txt', 'w') as f:
+        f.write(sample_content)
+    output = convert_volumes('temp_volumes.txt')
+    for item in output:
+        if isinstance(item, tuple):
+            value, unit, l, m3 = item
+            print(f"{value} {unit} = {l} liters = {m3} cubic meters")
+        else:
+            print(item)

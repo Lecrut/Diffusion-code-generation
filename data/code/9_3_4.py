@@ -1,40 +1,70 @@
+import tempfile
 import os
-def convert_volume(volume_liters):
-    volume_cubic_meters = volume_liters / 1000.0
-    return volume_liters, volume_cubic_meters
+
+def convert_volume(volume_value, unit):
+    unit = unit.lower().strip()
+    if unit in ('ml', 'milliliter', 'milliliters'):
+        liters = volume_value / 1000.0
+    elif unit in ('liters', 'liter', 'l'):
+        liters = volume_value
+    elif unit in ('cubic_meters', 'cubic_meter', 'm3', 'm^3'):
+        liters = volume_value * 1000.0
+    elif unit in ('gallons', 'gallon', 'gal'):
+        liters = volume_value * 3.78541
+    elif unit in ('cups', 'cup'):
+        liters = volume_value * 0.236588
+    elif unit in ('tablespoons', 'tablespoon', 'tbsp'):
+        liters = volume_value * 0.0147868
+    elif unit in ('teaspoons', 'teaspoon', 'tsp'):
+        liters = volume_value * 0.00492892
+    else:
+        raise ValueError(f'Unsupported unit: {unit}')
+    cubic_meters = liters / 1000.0
+    return (liters, cubic_meters)
+
 def process_volume_file(filepath):
-    volume_data = []
+    results = []
     try:
         with open(filepath, 'r') as file:
-            for line in file:
+            for line_num, line in enumerate(file, 1):
+                line = line.strip()
+                if not line:
+                    continue
                 try:
-                    volume_liters = float(line.strip())
-                    volume_data.append(volume_liters)
-                except ValueError:
-                    print(f"Skipping invalid line: {line.strip()}")
+                    parts = line.split()
+                    if len(parts) != 2:
+                        print(f"Line {line_num}: Invalid format. Expected 'value unit', got: {line}")
+                        continue
+                    value_str, unit = parts
+                    value = float(value_str)
+                    liters, cubic_meters = convert_volume(value, unit)
+                    results.append((value, unit, liters, cubic_meters))
+                except ValueError as ve:
+                    print(f'Line {line_num}: Error parsing line - {ve}')
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return
+        print(f'Error: File not found - {filepath}')
+    except PermissionError:
+        print(f'Error: Permission denied - {filepath}')
     except IOError as e:
-        print(f"Error reading file: {e}")
+        print(f'Error reading file - {e}')
+    return results
+
+def print_results(results):
+    if not results:
+        print('No results to print.')
         return
-    print("Volume Conversions:")
-    for volume_liters in volume_data:
-        liters, cubic_meters = convert_volume(volume_liters)
-        print(f"Liters: {liters:.2f}, Cubic Meters: {cubic_meters:.4f}")
+    print(f"{'Original Value':>15} {'Original Unit':>15} {'Liters':>15} {'Cubic Meters':>15}")
+    print('-' * 65)
+    for value, unit, liters, cubic_meters in results:
+        print(f'{value:>15.2f} {unit:>15} {liters:>15.6f} {cubic_meters:>15.9f}')
 if __name__ == '__main__':
-    sample_filename = "volumes.txt"
-    sample_data = [
-        "1500.5",
-        "2500",
-        "500.75",
-        "invalid_data",
-        "3000"
-    ]
+    sample_data = ['100 ml', '1 liters', '0.5 cubic_meters', '2 gallons', '8 cups', 'invalid_line', '50 ml']
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
+        for line in sample_data:
+            tmpfile.write(line + '\n')
+        tmpfilepath = tmpfile.name
     try:
-        with open(sample_filename, 'w') as f:
-            for data in sample_data:
-                f.write(data + "\n")
-        process_volume_file(sample_filename)
-    except IOError as e:
-        print(f"An error occurred during file setup: {e}")
+        results = process_volume_file(tmpfilepath)
+        print_results(results)
+    finally:
+        os.unlink(tmpfilepath)

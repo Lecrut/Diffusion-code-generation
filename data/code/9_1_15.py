@@ -1,71 +1,33 @@
 class VolumeConverter:
-    """A class to convert between different volume units."""
-    
-    # Conversion constants (1 unit = target_units)
-    LITERS_TO_MILLILITERS = 1000
-    MILLILITERS_TO_LITERS = 1 / 1000
-    
-    CUBIC_METERS_TO_CUBIC_INCHES = 61023.7440947318 # Approximate: (1 m)^3 * (39.37 in/m)^3
-    CUBIC_INCHES_TO_CUBIC_METERS = 1 / 61023.7440947318
+    FACTOR_L_TO_ML = 1000.0
+    FACTOR_CM_TO_CI = 61023.7440947353
+    _VALID_TYPES = (int, float)
 
-    def liters_to_milliliters(self, value_liters: float) -> float:
-        """Convert volume from liters to milliliters."""
-        return self.LITERS_TO_MILLILITERS * value_liters
+    def _validate_numeric(self, value, name):
+        if not isinstance(value, self._VALID_TYPES):
+            raise TypeError("Value must be numeric")
+        if value < 0:
+            raise ValueError("Volume cannot be negative")
 
-    def milliliters_to_liters(self, value_ml: float) -> float:
-        """Convert volume from milliliters to liters."""
-        return self.MILLILITERS_TO_LITERS * value_ml
+    def liters_to_milliliters(self, liters):
+        self._validate_numeric(liters, "liters")
+        return liters * self.FACTOR_L_TO_ML
 
-    def cubic_meters_to_cubic_inches(self, value_m3: float) -> float:
-        """Convert volume from cubic meters to cubic inches."""
-        return self.CUBIC_METERS_TO_CUBIC_INCHES * value_m3
+    def milliliters_to_liters(self, milliliters):
+        self._validate_numeric(milliliters, "milliliters")
+        return milliliters / self.FACTOR_L_TO_ML
 
-    def cubic_inches_to_cubic_meters(self, value_in3: float) -> float:
-        """Convert volume from cubic inches to cubic meters."""
-        return self.CUBIC_INCHES_TO_CUBIC_METERS * value_in3
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        self._validate_numeric(cubic_meters, "cubic_meters")
+        return cubic_meters * self.FACTOR_CM_TO_CI
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        self._validate_numeric(cubic_inches, "cubic_inches")
+        return cubic_inches / self.FACTOR_CM_TO_CI
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration
-    
     converter = VolumeConverter()
-
-    print("=== Liters and Milliliters Conversion ===")
-    
-    # Sample: Convert 5 liters to milliliters
-    val_liters = 5.0
-    result_ml = converter.liters_to_milliliters(val_liters)
-    print(f"{val_liters} liters is equal to {result_ml:.2f} milliliters")
-
-    # Sample: Convert 1000 milliliters back to liters (should be ~5.0)
-    val_ml = 1000.0
-    result_back_liters = converter.milliliters_to_liters(val_ml)
-    print(f"{val_ml} milliliters is equal to {result_back_liters:.2f} liters")
-
-    print("\n=== Cubic Meters and Cubic Inches Conversion ===")
-    
-    # Sample: Convert 1 cubic meter to cubic inches
-    val_m3 = 1.0
-    result_in3 = converter.cubic_meters_to_cubic_inches(val_m3)
-    print(f"{val_m3} cubic meters is equal to {result_in3:.2f} cubic inches")
-
-    # Sample: Convert a large number of cubic inches back to cubic meters
-    val_in3 = 10000.0
-    result_back_m3 = converter.cubic_inches_to_cubic_meters(val_in3)
-    print(f"{val_in3:.2f} cubic inches is equal to {result_back_m3:.6e} cubic meters")
-
-    # Demonstrate reusability by converting a chain of units (Liters -> mL -> back to Liters via math check implicitly handled in separate calls if needed, 
-    # but here we just show independent conversions)
-    
-    print("\n=== Reusability Check ===")
-    original_volume = 2.5
-    
-    # Convert liters to milliliters using the same object instance multiple times without side effects
-    ml_result_1 = converter.liters_to_milliliters(original_volume)
-    ml_result_2 = converter.milliliters_to_liters(ml_result_1) 
-    
-    print(f"Original: {original_volume} L")
-    print(f"After conversion chain (L -> mL -> L): {ml_result_2:.4f} L")
-    
-    # Verify precision within floating point limits
-    if abs(original_volume - ml_result_2) < 0.001:
-        print("Conversion accuracy verified.")
+    print(converter.liters_to_milliliters(2.5))
+    print(converter.milliliters_to_liters(500.0))
+    print(converter.cubic_meters_to_cubic_inches(1.0))
+    print(converter.cubic_inches_to_cubic_meters(100.0))

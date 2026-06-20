@@ -1,40 +1,30 @@
+import json
 import os
-def convert_volume(volume_liters):
-    volume_cubic_meters = volume_liters / 1000.0
-    return volume_liters, volume_cubic_meters
-def process_volume_file(filepath):
-    volume_data = []
+
+def process_volume_data(filename):
+    results = []
     try:
-        with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume_liters = float(line.strip())
-                    volume_data.append(volume_liters)
-                except ValueError:
-                    print(f"Skipping invalid line: {line.strip()}")
+        with open(filename, 'r') as f:
+            data = json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return
-    except IOError as e:
-        print(f"Error reading file: {e}")
-        return
-    print("Volume Conversions:")
-    for volume_liters in volume_data:
-        liters, cubic_meters = convert_volume(volume_liters)
-        print(f"Liters: {liters:.2f}, Cubic Meters: {cubic_meters:.4f}")
+        return []
+    except json.JSONDecodeError:
+        return []
+    if not isinstance(data, list):
+        return []
+    for item in data:
+        if not isinstance(item, (int, float)):
+            continue
+        liters = item * 0.001
+        cubic_meters = item * 1e-06
+        results.append((item, liters, cubic_meters))
+    return results
 if __name__ == '__main__':
-    sample_filename = "volumes.txt"
-    sample_data = [
-        "1500.5",
-        "2500",
-        "5000.75",
-        "invalid_data",
-        "1000"
-    ]
-    try:
-        with open(sample_filename, 'w') as f:
-            for data in sample_data:
-                f.write(data + "\n")
-        process_volume_file(sample_filename)
-    except IOError as e:
-        print(f"An error occurred during file setup: {e}")
+    sample_filename = 'volumes.json'
+    sample_data = [1000, 5000, 25000, 100000]
+    with open(sample_filename, 'w') as f:
+        json.dump(sample_data, f)
+    converted_values = process_volume_data(sample_filename)
+    for original, liters, cubic_meters in converted_values:
+        print(f'{original} ml -> {liters} liters -> {cubic_meters} m³')
+    os.remove(sample_filename)

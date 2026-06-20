@@ -1,58 +1,44 @@
-import math
-
 class VolumeConverter:
-    """A highly reusable class to convert between various volume units."""
-    
-    # Constants (1 unit = X other unit)
-    LITERS_PER_MILLILITER = 0.001      # liters per milliliter
-    MILLILITERS_PER_LITER = 1000       # milliliters per liter
-    
-    CUBIC_METERS_PER_CU_INCH = (0.0254 ** 3) # cubic meters per cubic inch
-    CU_INCHES_PER_CUBIC_METER = round(1 / (0.0254 ** 3), 6)
+    LITERS_TO_ML = 1000
+    ML_TO_LITERS = 0.001
+    CUBIC_METERS_TO_INCHES = 61023.744094732
+    INCHES_TO_CUBIC_METERS = 1 / 61023.744094732
 
-    def convert_liters_to_milliliters(self, liters: float) -> float:
-        """Convert volume from liters to milliliters."""
-        return liters * self.MILLILITERS_PER_LITER
-    
-    def convert_milliliters_to_liters(self, milliliters: float) -> float:
-        """Convert volume from milliliters to liters."""
-        return milliliters / self.MILLILITERS_PER_LITER
+    def liters_to_milliliters(self, liters):
+        if liters < 0:
+            raise ValueError("Volume cannot be negative")
+        return liters * self.LITERS_TO_ML
 
-    def convert_cubic_inches_to_cubic_meters(self, cubic_inches: float) -> float:
-        """Convert volume from cubic inches to cubic meters."""
-        return cubic_inches * self.CUBIC_METERS_PER_CU_INCH
-    
-    def convert_cubic_meters_to_cubic_inches(self, cubic_meters: float) -> float:
-        """Convert volume from cubic meters to cubic inches."""
-        return cubic_meters / self.CU_INCHES_PER_CUBIC_METER
+    def milliliters_to_liters(self, milliliters):
+        if milliliters < 0:
+            raise ValueError("Volume cannot be negative")
+        return milliliters * self.ML_TO_LITERS
 
-def main():
-    # Create an instance of the converter class
-    converter = VolumeConverter()
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        if cubic_meters < 0:
+            raise ValueError("Volume cannot be negative")
+        return cubic_meters * self.CUBIC_METERS_TO_INCHES
 
-    # Sample values for testing - all hard-coded as per requirements
-    sample_liters = 2.5
-    sample_milliliters = 1000
-    
-    sample_cubic_inches = 1728  # exactly 1 cubic foot
-    sample_cubic_meters = 1.0
-
-    print("Volume Conversion Results:")
-    
-    # Test Liters to Milliliters conversion
-    converted_ml = converter.convert_liters_to_milliliters(sample_liters)
-    print(f"{sample_liters} liters is equal to {converted_ml} milliliters.")
-
-    # Test Milliliters to Liters conversion (reverse check)
-    back_converted_liters = converter.convert_milliliters_to_liters(sample_milliliters)
-    assert abs(back_converted_liters - sample_liters) < 0.001, "Reverse conversion failed."
-
-    # Test Cubic Meters to Cubic Inches conversion
-    converted_cu_inches = converter.convert_cubic_meters_to_cubic_inches(sample_cubic_meters)
-    
-    # Test Cubic Inches to Cubic Meters conversion (reverse check with float precision allowed)
-    back_converted_cubemeters = converter.convert_cubic_inches_to_cubic_meters(sample_cubic_inches)
-    print(f"{sample_cu_inches} cubic inches is approximately {back_converted_cubemeters:.6f} cubic meters.")
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        if cubic_inches < 0:
+            raise ValueError("Volume cannot be negative")
+        return cubic_inches * self.INCHES_TO_CUBIC_METERS
 
 if __name__ == '__main__':
-    main()
+    converter = VolumeConverter()
+
+    liters_value = 2.5
+    ml_result = converter.liters_to_milliliters(liters_value)
+    print(f"{liters_value} liters is {ml_result} milliliters")
+
+    cubic_meters_value = 1.0
+    cubic_inches_result = converter.cubic_meters_to_cubic_inches(cubic_meters_value)
+    print(f"{cubic_meters_value} cubic meters is {cubic_inches_result} cubic inches")
+
+    ml_value = 500
+    liters_result = converter.milliliters_to_liters(ml_value)
+    print(f"{ml_value} milliliters is {liters_result} liters")
+
+    cubic_inches_value = 100
+    cubic_meters_result = converter.cubic_inches_to_cubic_meters(cubic_inches_value)
+    print(f"{cubic_inches_value} cubic inches is {cubic_meters_result} cubic meters")

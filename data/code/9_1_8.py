@@ -1,34 +1,25 @@
 class VolumeConverter:
-    def convert_liters_to_milliliters(self, liters):
-        return liters * 1000
-    def convert_milliliters_to_liters(self, milliliters):
-        return milliliters / 1000
-    def convert_cubic_meters_to_cubic_inches(self, cubic_meters):
-        conversion_factor = 35314.6667
-        return cubic_meters * conversion_factor
-    def convert_cubic_inches_to_cubic_meters(self, cubic_inches):
-        conversion_factor = 0.0264172
-        return cubic_inches * conversion_factor
+    def __init__(self):
+        self.liters_to_milliliters = 1000
+        self.cubic_meters_to_cubic_inches = 61023.7441
+
+    def liters_to_milliliters_conversion(self, liters):
+        return liters * self.liters_to_milliliters
+
+    def milliliters_to_liters_conversion(self, milliliters):
+        return milliliters / self.liters_to_milliliters
+
+    def cubic_meters_to_cubic_inches_conversion(self, cubic_meters):
+        return cubic_meters * self.cubic_meters_to_cubic_inches
+
+    def cubic_inches_to_cubic_meters_conversion(self, cubic_inches):
+        return cubic_inches / self.cubic_meters_to_cubic_inches
+
 if __name__ == '__main__':
     converter = VolumeConverter()
-    print("--- Liters to Milliliters Conversion ---")
-    liters_value = 5.5
-    milliliters = converter.convert_liters_to_milliliters(liters_value)
-    print(f"{liters_value} Liters is equal to {milliliters} Milliliters")
-    liters_value = 123.45
-    milliliters = converter.convert_liters_to_milliliters(liters_value)
-    print(f"{liters_value} Liters is equal to {milliliters} Milliliters")
-    print("\n--- Cubic Meters to Cubic Inches Conversion ---")
-    cubic_meters_value = 1.0
-    cubic_inches = converter.convert_cubic_meters_to_cubic_inches(cubic_meters_value)
-    print(f"{cubic_meters_value} Cubic Meters is equal to {cubic_inches} Cubic Inches")
-    cubic_meters_value = 2.5
-    cubic_inches = converter.convert_cubic_meters_to_cubic_inches(cubic_meters_value)
-    print(f"{cubic_meters_value} Cubic Meters is equal to {cubic_inches} Cubic Inches")
-    print("\n--- Cubic Inches to Cubic Meters Conversion ---")
-    cubic_inches_value = 10000
-    cubic_meters = converter.convert_cubic_inches_to_cubic_meters(cubic_inches_value)
-    print(f"{cubic_inches_value} Cubic Inches is equal to {cubic_meters} Cubic Meters")
-    cubic_inches_value = 50000
-    cubic_meters = converter.convert_cubic_inches_to_cubic_meters(cubic_inches_value)
-    print(f"{cubic_inches_value} Cubic Inches is equal to {cubic_meters} Cubic Meters")
+    sample_liters = 5.5
+    sample_cubic_meters = 2.0
+    print(converter.liters_to_milliliters_conversion(sample_liters))
+    print(converter.milliliters_to_liters_conversion(5500))
+    print(converter.cubic_meters_to_cubic_inches_conversion(sample_cubic_meters))
+    print(converter.cubic_inches_to_cubic_meters_conversion(122047.4882))

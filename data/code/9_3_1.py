@@ -1,43 +1,40 @@
-import os
-def convert_volume(volume_liters):
-    volume_cubic_meters = volume_liters / 1000.0
-    return volume_liters, volume_cubic_meters
-def process_volume_file(filepath):
-    volume_data = []
+import sys
+
+class VolumeConverter:
+    def __init__(self, volume_list):
+        self.volume_list = volume_list
+
+    def convert(self):
+        results = []
+        for value in self.volume_list:
+            try:
+                number = float(value)
+                liters = number
+                cubic_meters = number / 1000
+                results.append((liters, cubic_meters))
+            except ValueError:
+                results.append(None)
+        return results
+
+def process_volumes_from_string(data):
     try:
-        with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume_liters = float(line.strip())
-                    volume_data.append(volume_liters)
-                except ValueError:
-                    print(f"Skipping invalid line: {line.strip()}")
-        return volume_data
-    except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return None
-    except IOError as e:
-        print(f"Error reading file: {e}")
-        return None
+        lines = data.strip().split('\n')
+        volume_list = []
+        for line in lines:
+            line = line.strip()
+            if line:
+                volume_list.append(line)
+        
+        converter = VolumeConverter(volume_list)
+        return converter.convert()
+    except Exception as e:
+        return str(e)
+
 if __name__ == '__main__':
-    sample_filename = "volumes.txt"
-    sample_data = [
-        "1500.5",
-        "2500",
-        "1000",
-        "invalid_data",
-        "3000.75"
-    ]
-    try:
-        with open(sample_filename, 'w') as f:
-            for item in sample_data:
-                f.write(item + "\n")
-    except IOError as e:
-        print(f"Could not write sample file: {e}")
-        exit()
-    volumes_in_liters = process_volume_file(sample_filename)
-    if volumes_in_liters is not None:
-        print("Volume Conversions:")
-        for volume_liters in volumes_in_liters:
-            liters, cubic_meters = convert_volume(volume_liters)
-            print(f"Liters: {liters:.2f}, Cubic Meters: {cubic_meters:.4f}")
+    sample_data = "100\n500\n2500\ninvalid\n0.5"
+    output = process_volumes_from_string(sample_data)
+    for item in output:
+        if item is None:
+            print("Error parsing input")
+        else:
+            print(f"Liters: {item[0]}, Cubic Meters: {item[1]}")

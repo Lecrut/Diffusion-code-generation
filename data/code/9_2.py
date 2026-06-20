@@ -1,45 +1,27 @@
-def convert_volume(volume, target_unit):
-    conversion_factors = {
+def convert_volume(value, target_unit):
+    conversion_rates = {
         'L': 1.0,
         'm3': 1000.0,
         'gal': 3.78541,
-        'Liters': 1.0,
-        'm3': 1.0,
-        'gallons': 1.0
+        'ml': 0.001,
+        'fl_oz': 0.0295735,
+        'cup': 0.236588,
+        'pint': 0.473176,
+        'quart': 0.946353
     }
-    if target_unit not in conversion_factors:
-        raise ValueError(f"Unknown target unit: {target_unit}")
-    if volume == 0:
-        return 0.0
-    volume_in_liters = 0.0
-    if target_unit in ['L', 'Liters']:
-        volume_in_liters = volume
-    elif target_unit in ['m3', 'm3']:
-        volume_in_liters = volume
-    else:
-        volume_in_liters = volume
-    if target_unit == 'L':
-        return volume_in_liters
-    elif target_unit == 'm3':
-        return volume_in_liters / 1000.0
-    elif target_unit == 'gal':
-        return volume_in_liters / 3.78541
-    else:
-        return volume_in_liters
+
+    if target_unit not in conversion_rates:
+        raise ValueError(f"Unsupported unit: {target_unit}")
+
+    base_value = value / conversion_rates[target_unit] if target_unit != 'L' else value
+    return base_value
+
 if __name__ == '__main__':
-    volume_value = 500
-    target_unit_1 = 'm3'
-    target_unit_2 = 'gal'
-    target_unit_3 = 'L'
-    print(f"Converting {volume_value} (assumed Liters) to {target_unit_1}: {convert_volume(volume_value, target_unit_1)}")
-    print(f"Converting {volume_value} (assumed Liters) to {target_unit_2}: {convert_volume(volume_value, target_unit_2)}")
-    print(f"Converting {volume_value} (assumed Liters) to {target_unit_3}: {convert_volume(volume_value, target_unit_3)}")
-    volume_value_2 = 1000
-    target_unit_4 = 'Liters'
-    print(f"Converting {volume_value_2} (assumed Liters) to {target_unit_4}: {convert_volume(volume_value_2, target_unit_4)}")
-    volume_value_3 = 10
-    target_unit_5 = 'unknown'
-    try:
-        print(f"Attempting conversion to {target_unit_5}: {convert_volume(volume_value_3, target_unit_5)}")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    print(convert_volume(1000, 'L'))
+    print(convert_volume(1, 'm3'))
+    print(convert_volume(5, 'gal'))
+    print(convert_volume(250, 'ml'))
+    print(convert_volume(16, 'fl_oz'))
+    print(convert_volume(2, 'cup'))
+    print(convert_volume(1, 'pint'))
+    print(convert_volume(1, 'quart'))

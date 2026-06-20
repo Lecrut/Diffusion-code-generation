@@ -80323,3 +80323,3489 @@ if __name__ == '__main__':
     multiplier = 4.0
     output = calculate_scaled_area(initial_area, multiplier)
     print(output)",True,True,False,,9,2686,8_14_9.py
+8,11,Scale area measurements easily,"Write a robust Python script that defines a class for geometric shapes and includes methods to calculate and scale their areas by a given factor. Ensure the implementation is efficient, type-hinted, and adheres to PEP 8 standards.","import math
+
+class Circle:
+    def __init__(self, radius: float) -> None:
+        if radius < 0:
+            raise ValueError(""Radius must be non-negative"")
+        self.radius = radius
+
+    def area(self) -> float:
+        return math.pi * (self.radius ** 2)
+
+    def scale(self, factor: float) -> None:
+        if factor < 0:
+            raise ValueError(""Scale factor must be non-negative"")
+        self.radius *= factor
+
+    def scaled_area(self, factor: float) -> float:
+        if factor < 0:
+            raise ValueError(""Scale factor must be non-negative"")
+        return self.area() * (factor ** 2)
+
+class Rectangle:
+    def __init__(self, width: float, height: float) -> None:
+        if width < 0 or height < 0:
+            raise ValueError(""Dimensions must be non-negative"")
+        self.width = width
+        self.height = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        if factor < 0:
+            raise ValueError(""Scale factor must be non-negative"")
+        self.width *= factor
+        self.height *= factor
+
+    def scaled_area(self, factor: float) -> float:
+        if factor < 0:
+            raise ValueError(""Scale factor must be non-negative"")
+        return self.area() * (factor ** 2)
+
+if __name__ == '__main__':
+    circle = Circle(5.0)
+    print(circle.area())
+    circle.scale(2.0)
+    print(circle.area())
+    print(circle.scaled_area(3.0))
+
+    rectangle = Rectangle(4.0, 6.0)
+    print(rectangle.area())
+    rectangle.scale(0.5)
+    print(rectangle.area())
+    print(rectangle.scaled_area(2.0))",True,True,False,,17,2687,8_11_17.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def _compute_scale_factor_squared(scale_factor: float) -> float:
+    squared_value = scale_factor * scale_factor
+    return squared_value
+
+def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    if base_area < 0:
+        raise ValueError(""Base area cannot be negative"")
+    squared_factor = _compute_scale_factor_squared(scale_factor)
+    return base_area * squared_factor
+
+if __name__ == '__main__':
+    INITIAL_AREA = 25.0
+    EXPANSION_FACTOR = 1.5
+    final_value = calculate_scaled_area(INITIAL_AREA, EXPANSION_FACTOR)
+    print(final_value)",True,True,False,,10,2688,8_14_10.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def square_scale(value: float) -> float:
+    return value * value
+
+def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    squared_factor = square_scale(scale_factor)
+    return base_area * squared_factor
+
+if __name__ == '__main__':
+    initial_area = 12.5
+    zoom_level = 4.0
+    final_area = calculate_scaled_area(initial_area, zoom_level)
+    print(final_area)",True,True,False,,11,2689,8_14_11.py
+8,11,Scale area measurements easily,"Write a robust Python script that defines a class for geometric shapes and includes methods to calculate and scale their areas by a given factor. Ensure the implementation is efficient, type-hinted, and adheres to PEP 8 standards.","import math
+from typing import List
+
+class GeometricShape:
+    def get_area(self) -> float:
+        raise ValueError(""Area must be implemented by subclass"")
+
+    def scale_dimensions(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError(""Scale factor must be strictly positive"")
+
+    def calculate_scaled_area(self, factor: float) -> float:
+        self.scale_dimensions(factor)
+        return self.get_area()
+
+class Circle(GeometricShape):
+    def __init__(self, radius: float) -> None:
+        if radius < 0:
+            raise ValueError(""Radius cannot be negative"")
+        self._radius = radius
+
+    def get_area(self) -> float:
+        return math.pi * (self._radius ** 2)
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self._radius *= factor
+
+class Rectangle(GeometricShape):
+    def __init__(self, width: float, height: float) -> None:
+        if width < 0 or height < 0:
+            raise ValueError(""Dimensions cannot be negative"")
+        self._width = width
+        self._height = height
+
+    def get_area(self) -> float:
+        return self._width * self._height
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self._width *= factor
+        self._height *= factor
+
+class Square(GeometricShape):
+    def __init__(self, side: float) -> None:
+        if side < 0:
+            raise ValueError(""Side length cannot be negative"")
+        self._side = side
+
+    def get_area(self) -> float:
+        return self._side ** 2
+
+    def scale_dimensions(self, factor: float) -> None:
+        super().scale_dimensions(factor)
+        self._side *= factor
+
+if __name__ == '__main__':
+    shapes: List[GeometricShape] = [
+        Circle(5.0),
+        Rectangle(4.0, 3.0),
+        Square(2.0)
+    ]
+
+    scale_factor = 3.0
+
+    for shape in shapes:
+        original_area = shape.get_area()
+        new_area = shape.calculate_scaled_area(scale_factor)
+        print(f""Original: {original_area:.2f}, Scaled: {new_area:.2f}"")",True,True,False,,18,2690,8_11_18.py
+8,11,Scale area measurements easily,"Write a robust Python script that defines a class for geometric shapes and includes methods to calculate and scale their areas by a given factor. Ensure the implementation is efficient, type-hinted, and adheres to PEP 8 standards.","import math
+from typing import List, Union, Optional
+
+SHAPE_ERROR_MSG = ""Base class should not be used directly""
+
+class Shape:
+    def area(self) -> float:
+        raise ValueError(SHAPE_ERROR_MSG)
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError(""Scale factor must be positive"")
+
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        self.radius = radius
+
+    def area(self) -> float:
+        return math.pi * self.radius ** 2
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.radius *= factor
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        self.width = width
+        self.height = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.width *= factor
+        self.height *= factor
+
+def calculate_scaled_area(shape: Shape, factor: float) -> float:
+    original_area = shape.area()
+    shape.scale(factor)
+    new_area = shape.area()
+    shape.scale(1.0 / factor)
+    return new_area
+
+if __name__ == '__main__':
+    circle = Circle(5.0)
+    rectangle = Rectangle(4.0, 6.0)
+
+    factor = 2.0
+
+    circle_scaled_area = calculate_scaled_area(circle, factor)
+    print(circle_scaled_area)
+
+    rectangle_scaled_area = calculate_scaled_area(rectangle, factor)
+    print(rectangle_scaled_area)",True,True,False,,19,2691,8_11_19.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    return base_area * (scale_factor ** 2)
+
+if __name__ == '__main__':
+    base = 10.0
+    scale = 3.0
+    result = calculate_scaled_area(base, scale)
+    print(result)",True,True,False,,12,2692,8_14_12.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    return base_area * (scale_factor ** 2)
+
+if __name__ == '__main__':
+    base = 10.0
+    factor = 2.5
+    result = calculate_scaled_area(base, factor)
+    print(result)",True,True,False,,13,2693,8_14_13.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def liters_to_milliliters(val):
+    return val * 1000
+
+def liters_to_cubic_meters(val):
+    return val * 0.001
+
+def liters_to_gallons(val):
+    return val * 0.264172
+
+def liters_to_cubic_inches(val):
+    return val * 61.0237
+
+def milliliters_to_liters(val):
+    return val / 1000
+
+def cubic_meters_to_liters(val):
+    return val * 1000
+
+def gallons_to_liters(val):
+    return val / 0.264172
+
+def cubic_inches_to_liters(val):
+    return val / 61.0237
+
+def main():
+    liters_input = 5.0
+    ml_result = liters_to_milliliters(liters_input)
+    print(ml_result)
+    m3_result = liters_to_cubic_meters(liters_input)
+    print(m3_result)
+    gal_result = liters_to_gallons(liters_input)
+    print(gal_result)
+    ci_result = liters_to_cubic_inches(liters_input)
+    print(ci_result)
+    gal_input = 10.0
+    l_from_gal = gallons_to_liters(gal_input)
+    print(l_from_gal)
+    ci_input = 300.0
+    l_from_ci = cubic_inches_to_liters(ci_input)
+    print(l_from_ci)
+
+if __name__ == '__main__':
+    main()",True,True,False,,0,2694,9_0.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    squared_factor = scale_factor * scale_factor
+    final_area = base_area * squared_factor
+    return final_area
+
+if __name__ == '__main__':
+    initial_area = 50.0
+    expansion_ratio = 1.5
+    output_value = calculate_scaled_area(initial_area, expansion_ratio)
+    print(output_value)",True,True,False,,14,2695,8_14_14.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    return base_area * (scale_factor ** 2)
+
+if __name__ == '__main__':
+    sample_base_area = 10.0
+    sample_scale_factor = 2.0
+    result = calculate_scaled_area(sample_base_area, sample_scale_factor)
+    print(result)",True,True,False,,15,2696,8_14_15.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def liters_to_milliliters(liters):
+    return liters * 1000
+
+def liters_to_cubic_meters(liters):
+    return liters / 1000
+
+def liters_to_gallons(liters):
+    return liters * 0.264172
+
+def liters_to_cubic_inches(liters):
+    return liters * 61.0237
+
+def gallons_to_liters(gallons):
+    return gallons / 0.264172
+
+def milliliters_to_liters(milliliters):
+    return milliliters / 1000
+
+def cubic_meters_to_liters(cubic_meters):
+    return cubic_meters * 1000
+
+def cubic_inches_to_liters(cubic_inches):
+    return cubic_inches / 61.0237
+
+def convert_volume(value, from_unit, to_unit):
+    liters = 0
+    if from_unit == ""liters"":
+        liters = value
+    elif from_unit == ""milliliters"":
+        liters = milliliters_to_liters(value)
+    elif from_unit == ""cubic_meters"":
+        liters = cubic_meters_to_liters(value)
+    elif from_unit == ""gallons"":
+        liters = gallons_to_liters(value)
+    elif from_unit == ""cubic_inches"":
+        liters = cubic_inches_to_liters(value)
+    
+    if to_unit == ""liters"":
+        return liters
+    elif to_unit == ""milliliters"":
+        return liters_to_milliliters(liters)
+    elif to_unit == ""cubic_meters"":
+        return liters_to_cubic_meters(liters)
+    elif to_unit == ""gallons"":
+        return liters_to_gallons(liters)
+    elif to_unit == ""cubic_inches"":
+        return liters_to_cubic_inches(liters)
+
+if __name__ == '__main__':
+    print(convert_volume(1, ""liters"", ""milliliters""))
+    print(convert_volume(1, ""gallons"", ""liters""))
+    print(convert_volume(1, ""cubic_meters"", ""liters""))
+    print(convert_volume(1, ""cubic_inches"", ""liters""))
+    print(convert_volume(500, ""milliliters"", ""liters""))",True,True,False,,1,2697,9_0_1.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"class AreaCalculator:
+    def __init__(self, base_area: float) -> None:
+        self.base_area = base_area
+
+    def calculate_scaled_area(self, scale_factor: float) -> float:
+        squared_factor = scale_factor * scale_factor
+        return self.base_area * squared_factor
+
+def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    calculator = AreaCalculator(base_area)
+    return calculator.calculate_scaled_area(scale_factor)
+
+if __name__ == '__main__':
+    calc_instance = AreaCalculator(25.0)
+    result1 = calc_instance.calculate_scaled_area(2.0)
+    result2 = calc_instance.calculate_scaled_area(3.0)
+    result3 = calculate_scaled_area(10.0, 4.0)
+    print(result1)
+    print(result2)
+    print(result3)",True,True,False,,16,2698,8_14_16.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","import math
+
+class VolumeConverter:
+    def __init__(self):
+        self.to_liters = {
+            ""liter"": 1.0,
+            ""milliliter"": 0.001,
+            ""cubic_meter"": 1000.0,
+            ""gallon_us"": 3.785411784,
+            ""cubic_inch"": 0.016387064
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.to_liters:
+            raise ValueError(f""Unsupported source unit: {from_unit}"")
+        if to_unit not in self.to_liters:
+            raise ValueError(f""Unsupported target unit: {to_unit}"")
+        
+        liters = value * self.to_liters[from_unit]
+        result = liters / self.to_liters[to_unit]
+        return result
+
+    def convert_batch(self, conversions):
+        results = []
+        for item in conversions:
+            val = item[""value""]
+            src = item[""from""]
+            tgt = item[""to""]
+            converted = self.convert(val, src, tgt)
+            results.append({
+                ""original_value"": val,
+                ""original_unit"": src,
+                ""converted_value"": converted,
+                ""target_unit"": tgt
+            })
+        return results
+
+if __name__ == ""__main__"":
+    converter = VolumeConverter()
+    
+    test_cases = [
+        {""value"": 1, ""from"": ""liter"", ""to"": ""milliliter""},
+        {""value"": 1, ""from"": ""cubic_meter"", ""to"": ""liter""},
+        {""value"": 1, ""from"": ""gallon_us"", ""to"": ""liter""},
+        {""value"": 100, ""from"": ""cubic_inch"", ""to"": ""milliliter""},
+        {""value"": 5, ""from"": ""gallon_us"", ""to"": ""cubic_inch""}
+    ]
+    
+    batch_results = converter.convert_batch(test_cases)
+    
+    for res in batch_results:
+        print(f""{res['original_value']} {res['original_unit']} = {res['converted_value']} {res['target_unit']}"")",True,True,False,,2,2699,9_0_2.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value: float, from_unit: str, to_unit: str) -> float:
+    conversion_factors = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.78541,
+        'cubic_inch': 0.0163871
+    }
+    
+    if from_unit not in conversion_factors or to_unit not in conversion_factors:
+        raise ValueError(""Unsupported unit"")
+    
+    value_in_liters = value * conversion_factors[from_unit]
+    result = value_in_liters / conversion_factors[to_unit]
+    return result
+
+def main():
+    sample_cases = [
+        (1000, 'milliliter', 'liter'),
+        (1, 'cubic_meter', 'liter'),
+        (1, 'gallon', 'liter'),
+        (1, 'gallon', 'milliliter'),
+        (100, 'cubic_inch', 'liter'),
+        (10, 'liter', 'gallon'),
+        (500, 'milliliter', 'cubic_inch')
+    ]
+    
+    for value, from_unit, to_unit in sample_cases:
+        result = convert_volume(value, from_unit, to_unit)
+        print(f""{value} {from_unit} = {result} {to_unit}"")
+
+if __name__ == '__main__':
+    main()",True,True,False,,3,2700,9_0_3.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","CONVERSION_FACTORS = {
+    'liters': 1.0,
+    'milliliters': 0.001,
+    'cubic_meters': 1000.0,
+    'gallons': 3.78541,
+    'cubic_inches': 0.0163871
+}
+
+def convert_volume(value, from_unit, to_unit):
+    from_factor = CONVERSION_FACTORS.get(from_unit.lower())
+    to_factor = CONVERSION_FACTORS.get(to_unit.lower())
+    
+    if from_factor is None or to_factor is None:
+        raise ValueError(f""Unsupported unit. Supported units: {list(CONVERSION_FACTORS.keys())}"")
+    
+    liters_value = value * from_factor
+    result = liters_value / to_factor
+    return result
+
+def main():
+    sample_conversions = [
+        (1.0, 'liters', 'gallons'),
+        (500.0, 'milliliters', 'cubic_inches'),
+        (1.0, 'cubic_meters', 'liters'),
+        (10.0, 'gallons', 'cubic_meters'),
+        (100.0, 'cubic_inches', 'milliliters')
+    ]
+    
+    for value, from_unit, to_unit in sample_conversions:
+        result = convert_volume(value, from_unit, to_unit)
+        print(f""{value} {from_unit} = {result} {to_unit}"")
+
+if __name__ == '__main__':
+    main()",True,True,False,,4,2701,9_0_4.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    return base_area * (scale_factor ** 2)
+
+if __name__ == '__main__':
+    base = 10.0
+    scale = 2.0
+    result = calculate_scaled_area(base, scale)
+    print(result)",True,True,False,,17,2702,8_14_17.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"SQUARE_POWER = 2
+
+def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    scaled_factor = scale_factor ** SQUARE_POWER
+    return base_area * scaled_factor
+
+if __name__ == '__main__':
+    initial_area = 25.0
+    magnification = 3.0
+    final_area = calculate_scaled_area(initial_area, magnification)
+    print(final_area)",True,True,False,,18,2703,8_14_18.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    conversion_factors_to_liters = {
+        'liter': 1.0,
+        'liter': 1.0,
+        'liters': 1.0,
+        'milliliter': 0.001,
+        'milliliters': 0.001,
+        'milliliter': 0.001,
+        'milliliters': 0.001,
+        'cubic_meter': 1000.0,
+        'cubic_meters': 1000.0,
+        'cubic_meter': 1000.0,
+        'cubic_meters': 1000.0,
+        'gallon': 3.78541,
+        'gallons': 3.78541,
+        'cubic_inch': 0.016387064,
+        'cubic_inches': 0.016387064
+    }
+    
+    standard_to_liters = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.78541,
+        'cubic_inch': 0.016387064
+    }
+    
+    standard_from_liters = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.78541,
+        'cubic_inch': 0.016387064
+    }
+    
+    value_liters = value * standard_to_liters[from_unit]
+    result_liters = value_liters
+    
+    if to_unit == 'liter':
+        result = result_liters
+    elif to_unit == 'milliliter':
+        result = result_liters / standard_from_liters['milliliter']
+    elif to_unit == 'cubic_meter':
+        result = result_liters / standard_from_liters['cubic_meter']
+    elif to_unit == 'gallon':
+        result = result_liters / standard_from_liters['gallon']
+    elif to_unit == 'cubic_inch':
+        result = result_liters / standard_from_liters['cubic_inch']
+    else:
+        raise ValueError(f""Unsupported unit: {to_unit}"")
+        
+    return result
+
+def main():
+    val = 5.0
+    src = 'liter'
+    dst = 'milliliter'
+    res = convert_volume(val, src, dst)
+    print(res)
+    
+    val2 = 10.0
+    src2 = 'gallon'
+    dst2 = 'liter'
+    res2 = convert_volume(val2, src2, dst2)
+    print(res2)
+
+if __name__ == '__main__':
+    main()",True,True,False,,5,2704,9_0_5.py
+8,14,Scale area measurements easily,Write a robust and efficient Python function named 'calculate_scaled_area' that accepts a base area value and a scale factor as arguments. The function must return the scaled area calculated by multiplying the base area by the square of the scale factor. Use type hints for all parameters and the return value. Implement the function using standard arithmetic operations without any external libraries or dependencies.,"def calculate_scaled_area(base_area: float, scale_factor: float) -> float:
+    squared_scale = scale_factor * scale_factor
+    scaled_result = base_area * squared_scale
+    return scaled_result
+
+if __name__ == '__main__':
+    area_base = 15.0
+    factor_val = 3.0
+    output_value = calculate_scaled_area(area_base, factor_val)
+    print(output_value)",True,True,False,,19,2705,8_14_19.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    liters_per_unit = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.785411784,
+        'cubic_inch': 0.016387064
+    }
+    
+    if from_unit not in liters_per_unit or to_unit not in liters_per_unit:
+        raise ValueError(f""Unsupported unit: {from_unit} or {to_unit}"")
+    
+    liters = value * liters_per_unit[from_unit]
+    result = liters / liters_per_unit[to_unit]
+    return result
+
+def main():
+    test_cases = [
+        (1.0, 'liter', 'milliliter'),
+        (1000.0, 'milliliter', 'liter'),
+        (1.0, 'cubic_meter', 'liter'),
+        (1.0, 'gallon', 'liter'),
+        (1.0, 'liter', 'gallon'),
+        (100.0, 'cubic_inch', 'milliliter'),
+        (5.0, 'liter', 'cubic_inch'),
+        (1.0, 'cubic_meter', 'cubic_inch'),
+        (10.0, 'gallon', 'cubic_inch'),
+        (1.0, 'cubic_inch', 'cubic_meter')
+    ]
+    
+    for value, from_unit, to_unit in test_cases:
+        result = convert_volume(value, from_unit, to_unit)
+        print(f""{value} {from_unit} = {result} {to_unit}"")
+
+if __name__ == '__main__':
+    main()",True,True,False,,6,2706,9_0_6.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_liters_to_ml(value):
+    return value * 1000
+
+def convert_ml_to_liters(value):
+    return value / 1000
+
+def convert_liters_to_cubic_meters(value):
+    return value / 1000
+
+def convert_cubic_meters_to_liters(value):
+    return value * 1000
+
+def convert_liters_to_gallons(value):
+    return value * 0.264172
+
+def convert_gallons_to_liters(value):
+    return value / 0.264172
+
+def convert_liters_to_cubic_inches(value):
+    return value * 61.0237
+
+def convert_cubic_inches_to_liters(value):
+    return value / 61.0237
+
+def run_conversion_tests():
+    test_liters = 5.0
+    print(f""{test_liters} liters to milliliters: {convert_liters_to_ml(test_liters)}"")
+    print(f""{test_liters} liters to cubic meters: {convert_liters_to_cubic_meters(test_liters)}"")
+    print(f""{test_liters} liters to gallons: {convert_liters_to_gallons(test_liters)}"")
+    print(f""{test_liters} liters to cubic inches: {convert_liters_to_cubic_inches(test_liters)}"")
+    
+    test_ml = 1000.0
+    print(f""{test_ml} milliliters to liters: {convert_ml_to_liters(test_ml)}"")
+    
+    test_cubic_m = 2.0
+    print(f""{test_cubic_m} cubic meters to liters: {convert_cubic_meters_to_liters(test_cubic_m)}"")
+    
+    test_gallons = 10.0
+    print(f""{test_gallons} gallons to liters: {convert_gallons_to_liters(test_gallons)}"")
+    
+    test_cubic_inches = 30.0
+    print(f""{test_cubic_inches} cubic inches to liters: {convert_cubic_inches_to_liters(test_cubic_inches)}"")
+
+if __name__ == '__main__':
+    run_conversion_tests()",True,True,False,,7,2707,9_0_7.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.78541,
+        'cubic_inch': 0.0163871
+    }
+    if from_unit not in conversion_factors:
+        raise ValueError(f""Unknown unit: {from_unit}"")
+    if to_unit not in conversion_factors:
+        raise ValueError(f""Unknown unit: {to_unit}"")
+    
+    liters = value * conversion_factors[from_unit]
+    result = liters / conversion_factors[to_unit]
+    return result
+
+def main():
+    sample_values = [
+        (1, 'liter', 'gallon'),
+        (500, 'milliliter', 'cubic_inch'),
+        (2.5, 'cubic_meter', 'liter'),
+        (10, 'gallon', 'milliliter'),
+        (1, 'cubic_inch', 'liter')
+    ]
+    
+    for value, from_unit, to_unit in sample_values:
+        result = convert_volume(value, from_unit, to_unit)
+        print(f""{value} {from_unit} = {result} {to_unit}"")
+
+if __name__ == '__main__':
+    main()",True,True,False,,8,2708,9_0_8.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_ML = 1000.0
+    ML_TO_LITERS = 0.001
+    CUBIC_METERS_TO_CUBIC_INCHES = 61023.7440947
+    CUBIC_INCHES_TO_CUBIC_METERS = 1 / 61023.7440947
+
+    @staticmethod
+    def liters_to_milliliters(liters):
+        return liters * VolumeConverter.LITERS_TO_ML
+
+    @staticmethod
+    def milliliters_to_liters(milliliters):
+        return milliliters * VolumeConverter.ML_TO_LITERS
+
+    @staticmethod
+    def cubic_meters_to_cubic_inches(cubic_meters):
+        return cubic_meters * VolumeConverter.CUBIC_METERS_TO_CUBIC_INCHES
+
+    @staticmethod
+    def cubic_inches_to_cubic_meters(cubic_inches):
+        return cubic_inches * VolumeConverter.CUBIC_INCHES_TO_CUBIC_METERS
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+
+    liters_input = 2.5
+    ml_result = converter.liters_to_milliliters(liters_input)
+    print(f""{liters_input} liters is {ml_result} milliliters"")
+
+    ml_input = 500
+    liters_result = converter.milliliters_to_liters(ml_input)
+    print(f""{ml_input} milliliters is {liters_result} liters"")
+
+    cubic_meters_input = 1.0
+    cubic_inches_result = converter.cubic_meters_to_cubic_inches(cubic_meters_input)
+    print(f""{cubic_meters_input} cubic meters is {cubic_inches_result} cubic inches"")
+
+    cubic_inches_input = 100
+    cubic_meters_result = converter.cubic_inches_to_cubic_meters(cubic_inches_input)
+    print(f""{cubic_inches_input} cubic inches is {cubic_meters_result} cubic meters"")",True,True,False,,0,2709,9_1.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","import math
+
+CONVERSION_FACTORS = {
+    'liter': 1.0,
+    'milliliter': 0.001,
+    'cubic_meter': 1000.0,
+    'gallon': 3.78541,
+    'cubic_inch': 0.0163871,
+}
+
+UNIT_LABELS = {
+    'liter': 'Liters',
+    'milliliter': 'Milliliters',
+    'cubic_meter': 'Cubic Meters',
+    'gallon': 'Gallons',
+    'cubic_inch': 'Cubic Inches',
+}
+
+def convert_volume(value, from_unit, to_unit):
+    if from_unit not in CONVERSION_FACTORS:
+        raise ValueError(f""Unknown source unit: {from_unit}"")
+    if to_unit not in CONVERSION_FACTORS:
+        raise ValueError(f""Unknown target unit: {to_unit}"")
+    
+    value_in_liters = value * CONVERSION_FACTORS[from_unit]
+    converted_value = value_in_liters / CONVERSION_FACTORS[to_unit]
+    return converted_value
+
+def print_conversions(value, from_unit):
+    results = {}
+    for unit in CONVERSION_FACTORS:
+        if unit == from_unit:
+            results[unit] = value
+        else:
+            results[unit] = convert_volume(value, from_unit, unit)
+    return results
+
+if __name__ == '__main__':
+    sample_value = 1.5
+    sample_unit = 'gallon'
+    
+    converted_values = print_conversions(sample_value, sample_unit)
+    
+    for unit, val in converted_values.items():
+        print(f""{UNIT_LABELS[unit]}: {val:.6f}"")",True,True,False,,9,2710,9_0_9.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    def __init__(self):
+        self.LITERS_PER_MILLILITER = 1000
+        self.CUBIC_METERS_PER_CUBIC_INCH = 0.0000163871
+
+    def liters_to_milliliters(self, liters):
+        return liters * self.LITERS_PER_MILLILITER
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters / self.LITERS_PER_MILLILITER
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters / self.CUBIC_METERS_PER_CUBIC_INCH
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches * self.CUBIC_METERS_PER_CUBIC_INCH
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_liters = 5
+    sample_milliliters = 7500
+    sample_cubic_meters = 2
+    sample_cubic_inches = 1000
+
+    result_liters_to_ml = converter.liters_to_milliliters(sample_liters)
+    result_ml_to_liters = converter.milliliters_to_liters(sample_milliliters)
+    result_cubic_m_to_in = converter.cubic_meters_to_cubic_inches(sample_cubic_meters)
+    result_cubic_in_to_m = converter.cubic_inches_to_cubic_meters(sample_cubic_inches)
+
+    print(result_liters_to_ml)
+    print(result_ml_to_liters)
+    print(result_cubic_m_to_in)
+    print(result_cubic_in_to_m)",True,True,False,,1,2711,9_1_1.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    conversions = {
+        'liters': 1.0,
+        'milliliters': 0.001,
+        'cubic_meters': 1000.0,
+        'gallons': 3.78541,
+        'cubic_inches': 0.0163871
+    }
+    value_in_liters = value * conversions[from_unit.lower()]
+    result = value_in_liters / conversions[to_unit.lower()]
+    return result
+
+def main():
+    sample_values = [
+        (1, 'liters', 'gallons'),
+        (1, 'gallons', 'liters'),
+        (500, 'milliliters', 'cubic_inches'),
+        (1, 'cubic_meters', 'liters'),
+        (100, 'cubic_inches', 'milliliters')
+    ]
+    for amount, source_unit, target_unit in sample_values:
+        converted = convert_volume(amount, source_unit, target_unit)
+        print(f""{amount} {source_unit} = {converted} {target_unit}"")
+
+if __name__ == '__main__':
+    main()",True,True,False,,10,2712,9_0_10.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def liters_to_milliliters(liters):
+    return liters * 1000
+
+def liters_to_cubic_meters(liters):
+    return liters / 1000
+
+def liters_to_gallons(liters):
+    return liters * 0.264172
+
+def liters_to_cubic_inches(liters):
+    return liters * 61.0237
+
+def milliliters_to_liters(milliliters):
+    return milliliters / 1000
+
+def cubic_meters_to_liters(cubic_meters):
+    return cubic_meters * 1000
+
+def gallons_to_liters(gallons):
+    return gallons / 0.264172
+
+def cubic_inches_to_liters(cubic_inches):
+    return cubic_inches / 61.0237
+
+def convert_volume(value, from_unit, to_unit):
+    liters = 0.0
+    if from_unit == ""ml"":
+        liters = milliliters_to_liters(value)
+    elif from_unit == ""m3"":
+        liters = cubic_meters_to_liters(value)
+    elif from_unit == ""gal"":
+        liters = gallons_to_liters(value)
+    elif from_unit == ""in3"":
+        liters = cubic_inches_to_liters(value)
+    elif from_unit == ""l"":
+        liters = value
+    else:
+        raise ValueError(""Unsupported source unit"")
+
+    if to_unit == ""ml"":
+        return liters_to_milliliters(liters)
+    elif to_unit == ""m3"":
+        return liters_to_cubic_meters(liters)
+    elif to_unit == ""gal"":
+        return liters_to_gallons(liters)
+    elif to_unit == ""in3"":
+        return liters_to_cubic_inches(liters)
+    elif to_unit == ""l"":
+        return liters
+    else:
+        raise ValueError(""Unsupported target unit"")
+
+if __name__ == '__main__':
+    sample_value = 5.0
+    sample_from = ""l""
+    sample_to = ""gal""
+    result = convert_volume(sample_value, sample_from, sample_to)
+    print(result)
+    sample_value_two = 1000
+    sample_from_two = ""ml""
+    sample_to_two = ""l""
+    result_two = convert_volume(sample_value_two, sample_from_two, sample_to_two)
+    print(result_two)
+    sample_value_three = 1
+    sample_from_three = ""m3""
+    sample_to_three = ""in3""
+    result_three = convert_volume(sample_value_three, sample_from_three, sample_to_three)
+    print(result_three)",True,True,False,,11,2713,9_0_11.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.78541,
+        'cubic_inch': 0.0163871
+    }
+    
+    if from_unit not in conversion_factors:
+        raise ValueError(f""Unsupported source unit: {from_unit}"")
+    
+    if to_unit not in conversion_factors:
+        raise ValueError(f""Unsupported target unit: {to_unit}"")
+    
+    liters_value = value * conversion_factors[from_unit]
+    result_value = liters_value / conversion_factors[to_unit]
+    
+    return result_value
+
+if __name__ == '__main__':
+    sample_conversions = [
+        (1.0, 'liter', 'milliliter'),
+        (1000.0, 'milliliter', 'liter'),
+        (1.0, 'cubic_meter', 'liter'),
+        (1.0, 'gallon', 'liter'),
+        (1.0, 'cubic_inch', 'milliliter'),
+        (2.5, 'gallon', 'cubic_inch'),
+        (5.0, 'liter', 'gallon')
+    ]
+    
+    for value, from_u, to_u in sample_conversions:
+        result = convert_volume(value, from_u, to_u)
+        print(f""{value} {from_u} = {result} {to_u}"")",True,True,False,,12,2714,9_0_12.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    def __init__(self, volume, unit):
+        if unit not in ('liters', 'milliliters', 'cubic_meters', 'cubic_inches'):
+            raise ValueError(""Unit must be liters, milliliters, cubic_meters, or cubic_inches"")
+        self._volume = volume
+        self._unit = unit
+
+    @property
+    def volume(self):
+        return self._volume
+
+    @property
+    def unit(self):
+        return self._unit
+
+    def to_liters(self):
+        if self._unit == 'liters':
+            return self._volume
+        elif self._unit == 'milliliters':
+            return self._volume / 1000.0
+        elif self._unit == 'cubic_meters':
+            return self._volume * 1000.0
+        elif self._unit == 'cubic_inches':
+            return self._volume * 0.016387064
+        return 0.0
+
+    def to_milliliters(self):
+        liters = self.to_liters()
+        return liters * 1000.0
+
+    def to_cubic_meters(self):
+        if self._unit == 'cubic_meters':
+            return self._volume
+        elif self._unit == 'liters':
+            return self._volume / 1000.0
+        elif self._unit == 'milliliters':
+            return self._volume / 1000000.0
+        elif self._unit == 'cubic_inches':
+            return self._volume * 1.6387064e-5
+        return 0.0
+
+    def to_cubic_inches(self):
+        if self._unit == 'cubic_inches':
+            return self._volume
+        elif self._unit == 'liters':
+            return self._volume / 0.016387064
+        elif self._unit == 'milliliters':
+            return self._volume / 0.016387064 / 1000.0
+        elif self._unit == 'cubic_meters':
+            return self._volume / 1.6387064e-5
+        return 0.0
+
+    def convert(self, target_unit):
+        if target_unit == 'liters':
+            return self.to_liters()
+        elif target_unit == 'milliliters':
+            return self.to_milliliters()
+        elif target_unit == 'cubic_meters':
+            return self.to_cubic_meters()
+        elif target_unit == 'cubic_inches':
+            return self.to_cubic_inches()
+        raise ValueError(""Target unit must be liters, milliliters, cubic_meters, or cubic_inches"")
+
+if __name__ == '__main__':
+    converter = VolumeConverter(5, 'liters')
+    print(converter.to_milliliters())
+    print(converter.to_cubic_meters())
+    
+    converter2 = VolumeConverter(1, 'cubic_meters')
+    print(converter2.to_cubic_inches())
+    
+    converter3 = VolumeConverter(1000, 'milliliters')
+    print(converter3.to_liters())",True,True,False,,2,2715,9_1_2.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    def __init__(self):
+        self.liters_per_milliliter = 0.001
+        self.milliliters_per_liter = 1000
+        self.cubic_meters_per_cubic_inch = 1.63871e-5
+        self.cubic_inches_per_cubic_meter = 61023.7
+
+    def liters_to_milliliters(self, liters):
+        return liters * self.milliliters_per_liter
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters * self.liters_per_milliliter
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * self.cubic_inches_per_cubic_meter
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches * self.cubic_meters_per_cubic_inch
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(2.5))
+    print(converter.milliliters_to_liters(500))
+    print(converter.cubic_meters_to_cubic_inches(1))
+    print(converter.cubic_inches_to_cubic_meters(61023.7))",True,True,False,,3,2716,9_1_3.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_liters_to_liters(value):
+    return value
+
+def convert_liters_to_milliliters(value):
+    return value * 1000
+
+def convert_liters_to_cubic_meters(value):
+    return value / 1000
+
+def convert_liters_to_gallons(value):
+    return value * 0.264172
+
+def convert_liters_to_cubic_inches(value):
+    return value * 61.0237
+
+def convert_milliliters_to_liters(value):
+    return value / 1000
+
+def convert_milliliters_to_milliliters(value):
+    return value
+
+def convert_milliliters_to_cubic_meters(value):
+    return value / 1000000
+
+def convert_milliliters_to_gallons(value):
+    return value * 0.000264172
+
+def convert_milliliters_to_cubic_inches(value):
+    return value * 0.0610237
+
+def convert_cubic_meters_to_liters(value):
+    return value * 1000
+
+def convert_cubic_meters_to_milliliters(value):
+    return value * 1000000
+
+def convert_cubic_meters_to_cubic_meters(value):
+    return value
+
+def convert_cubic_meters_to_gallons(value):
+    return value * 264.172
+
+def convert_cubic_meters_to_cubic_inches(value):
+    return value * 61023.7
+
+def convert_gallons_to_liters(value):
+    return value / 0.264172
+
+def convert_gallons_to_milliliters(value):
+    return value / 0.264172 * 1000
+
+def convert_gallons_to_cubic_meters(value):
+    return value / 264.172
+
+def convert_gallons_to_gallons(value):
+    return value
+
+def convert_gallons_to_cubic_inches(value):
+    return value * 231
+
+def convert_cubic_inches_to_liters(value):
+    return value / 61.0237
+
+def convert_cubic_inches_to_milliliters(value):
+    return value / 61.0237 * 1000
+
+def convert_cubic_inches_to_cubic_meters(value):
+    return value / 61023.7
+
+def convert_cubic_inches_to_gallons(value):
+    return value / 231
+
+def convert_cubic_inches_to_cubic_inches(value):
+    return value
+
+def convert_volume_from_liters(source, target, value):
+    if source == ""liters"":
+        if target == ""liters"":
+            return convert_liters_to_liters(value)
+        elif target == ""milliliters"":
+            return convert_liters_to_milliliters(value)
+        elif target == ""cubic_meters"":
+            return convert_liters_to_cubic_meters(value)
+        elif target == ""gallons"":
+            return convert_liters_to_gallons(value)
+        elif target == ""cubic_inches"":
+            return convert_liters_to_cubic_inches(value)
+    elif source == ""milliliters"":
+        if target == ""liters"":
+            return convert_milliliters_to_liters(value)
+        elif target == ""milliliters"":
+            return convert_milliliters_to_milliliters(value)
+        elif target == ""cubic_meters"":
+            return convert_milliliters_to_cubic_meters(value)
+        elif target == ""gallons"":
+            return convert_milliliters_to_gallons(value)
+        elif target == ""cubic_inches"":
+            return convert_milliliters_to_cubic_inches(value)
+    elif source == ""cubic_meters"":
+        if target == ""liters"":
+            return convert_cubic_meters_to_liters(value)
+        elif target == ""milliliters"":
+            return convert_cubic_meters_to_milliliters(value)
+        elif target == ""cubic_meters"":
+            return convert_cubic_meters_to_cubic_meters(value)
+        elif target == ""gallons"":
+            return convert_cubic_meters_to_gallons(value)
+        elif target == ""cubic_inches"":
+            return convert_cubic_meters_to_cubic_inches(value)
+    elif source == ""gallons"":
+        if target == ""liters"":
+            return convert_gallons_to_liters(value)
+        elif target == ""milliliters"":
+            return convert_gallons_to_milliliters(value)
+        elif target == ""cubic_meters"":
+            return convert_gallons_to_cubic_meters(value)
+        elif target == ""gallons"":
+            return convert_gallons_to_gallons(value)
+        elif target == ""cubic_inches"":
+            return convert_gallons_to_cubic_inches(value)
+    elif source == ""cubic_inches"":
+        if target == ""liters"":
+            return convert_cubic_inches_to_liters(value)
+        elif target == ""milliliters"":
+            return convert_cubic_inches_to_milliliters(value)
+        elif target == ""cubic_meters"":
+            return convert_cubic_inches_to_cubic_meters(value)
+        elif target == ""gallons"":
+            return convert_cubic_inches_to_gallons(value)
+        elif target == ""cubic_inches"":
+            return convert_cubic_inches_to_cubic_inches(value)
+    return value
+
+if __name__ == '__main__':
+    print(convert_volume_from_liters(""liters"", ""milliliters"", 5))
+    print(convert_volume_from_liters(""gallons"", ""liters"", 10))
+    print(convert_volume_from_liters(""cubic_meters"", ""gallons"", 2))
+    print(convert_volume_from_liters(""cubic_inches"", ""liters"", 500))
+    print(convert_volume_from_liters(""milliliters"", ""cubic_meters"", 50000))",True,True,False,,13,2717,9_0_13.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_PER_MILLILITER = 0.001
+    MILLILITERS_PER_LITER = 1000
+    CUBIC_METERS_PER_CUBIC_INCH = 0.000016387064
+    CUBIC_INCHES_PER_CUBIC_METER = 61023.7440947
+
+    @staticmethod
+    def liters_to_milliliters(liters):
+        if liters < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return liters * VolumeConverter.MILLILITERS_PER_LITER
+
+    @staticmethod
+    def milliliters_to_liters(milliliters):
+        if milliliters < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return milliliters * VolumeConverter.LITERS_PER_MILLILITER
+
+    @staticmethod
+    def cubic_meters_to_cubic_inches(cubic_meters):
+        if cubic_meters < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return cubic_meters * VolumeConverter.CUBIC_INCHES_PER_CUBIC_METER
+
+    @staticmethod
+    def cubic_inches_to_cubic_meters(cubic_inches):
+        if cubic_inches < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return cubic_inches * VolumeConverter.CUBIC_METERS_PER_CUBIC_INCH
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+
+    sample_liters = 2.5
+    sample_milliliters = 500
+    sample_cubic_meters = 1.0
+    sample_cubic_inches = 100
+
+    liters_to_ml = converter.liters_to_milliliters(sample_liters)
+    ml_to_liters = converter.milliliters_to_liters(sample_milliliters)
+    cubic_m_to_cubic_in = converter.cubic_meters_to_cubic_inches(sample_cubic_meters)
+    cubic_in_to_cubic_m = converter.cubic_inches_to_cubic_meters(sample_cubic_inches)
+
+    print(liters_to_ml)
+    print(ml_to_liters)
+    print(cubic_m_to_cubic_in)
+    print(cubic_in_to_cubic_m)",True,True,False,,4,2718,9_1_4.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    def liters_to_milliliters(self, liters):
+        return liters * 1000
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters / 1000
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * 61023.7441
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches / 61023.7441
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(5))
+    print(converter.milliliters_to_liters(2500))
+    print(converter.cubic_meters_to_cubic_inches(2))
+    print(converter.cubic_inches_to_cubic_meters(122047.4882))",True,True,False,,5,2719,9_1_5.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    @staticmethod
+    def liters_to_milliliters(liters):
+        return liters * 1000
+
+    @staticmethod
+    def milliliters_to_liters(milliliters):
+        return milliliters / 1000
+
+    @staticmethod
+    def cubic_meters_to_cubic_inches(cubic_meters):
+        conversion_factor = 61023.7440947323
+        return cubic_meters * conversion_factor
+
+    @staticmethod
+    def cubic_inches_to_cubic_meters(cubic_inches):
+        conversion_factor = 61023.7440947323
+        return cubic_inches / conversion_factor
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(2.5))
+    print(converter.milliliters_to_liters(500))
+    print(converter.cubic_meters_to_cubic_inches(1.0))
+    print(converter.cubic_inches_to_cubic_meters(1000))",True,True,False,,6,2720,9_1_6.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","import math
+
+def liters_to_milliliters(value: float) -> float:
+    return value * 1000.0
+
+def liters_to_cubic_meters(value: float) -> float:
+    return value / 1000.0
+
+def liters_to_gallons(value: float) -> float:
+    return value * 0.264172052
+
+def liters_to_cubic_inches(value: float) -> float:
+    return value * 61.0237441
+
+def cubic_inches_to_liters(value: float) -> float:
+    return value / 61.0237441
+
+def convert_volume(value: float, source_unit: str, target_unit: str) -> float:
+    target_unit = target_unit.lower()
+    source_unit = source_unit.lower()
+    if source_unit == target_unit:
+        return value
+    liters = 0.0
+    if source_unit == 'liters':
+        liters = value
+    elif source_unit == 'milliliters':
+        liters = value / 1000.0
+    elif source_unit == 'cubic_meters':
+        liters = value * 1000.0
+    elif source_unit == 'gallons':
+        liters = value / 0.264172052
+    elif source_unit == 'cubic_inches':
+        liters = value / 61.0237441
+    else:
+        raise ValueError(f'Unknown source unit: {source_unit}')
+    if target_unit == 'liters':
+        return liters
+    elif target_unit == 'milliliters':
+        return liters * 1000.0
+    elif target_unit == 'cubic_meters':
+        return liters / 1000.0
+    elif target_unit == 'gallons':
+        return liters * 0.264172052
+    elif target_unit == 'cubic_inches':
+        return liters * 61.0237441
+    else:
+        raise ValueError(f'Unknown target unit: {target_unit}')
+if __name__ == '__main__':
+    result = convert_volume(100, 'liters', 'gallons')
+    print(result)",True,True,False,,14,2721,9_0_14.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","class VolumeConverter:
+    def __init__(self):
+        self.units = {
+            ""liter"": 1.0,
+            ""milliliter"": 0.001,
+            ""cubic_meter"": 1000.0,
+            ""gallon"": 0.264172,
+            ""cubic_inch"": 61.0237
+        }
+
+    def to_liters(self, value, unit):
+        unit_lower = unit.lower()
+        if unit_lower not in self.units:
+            raise ValueError(f""Unknown unit: {unit}"")
+        return value / self.units[unit_lower]
+
+    def from_liters(self, value, target_unit):
+        target_lower = target_unit.lower()
+        if target_lower not in self.units:
+            raise ValueError(f""Unknown unit: {target_unit}"")
+        return value * self.units[target_lower]
+
+    def convert(self, value, source_unit, target_unit):
+        liters = self.to_liters(value, source_unit)
+        return self.from_liters(liters, target_unit)
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    result1 = converter.convert(5, ""gallon"", ""liter"")
+    result2 = converter.convert(1000, ""milliliter"", ""liter"")
+    result3 = converter.convert(1, ""cubic_meter"", ""gallon"")
+    result4 = converter.convert(10, ""liter"", ""cubic_inch"")
+    result5 = converter.convert(50, ""cubic_inch"", ""milliliter"")
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)
+    print(result5)",True,True,False,,15,2722,9_0_15.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    unit_map = {
+        'liters': 1.0,
+        'milliliters': 0.001,
+        'cubic_meters': 1000.0,
+        'gallons': 3.78541,
+        'cubic_inches': 0.0163871
+    }
+    if from_unit not in unit_map or to_unit not in unit_map:
+        raise ValueError(""Unsupported unit"")
+    value_in_liters = value * unit_map[from_unit]
+    result = value_in_liters / unit_map[to_unit]
+    return result
+
+if __name__ == '__main__':
+    print(convert_volume(1, 'liters', 'gallons'))
+    print(convert_volume(1, 'gallons', 'milliliters'))
+    print(convert_volume(1000, 'milliliters', 'cubic_meters'))
+    print(convert_volume(1, 'cubic_meters', 'cubic_inches'))
+    print(convert_volume(50, 'cubic_inches', 'liters'))",True,True,False,,16,2723,9_0_16.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_MILLILITERS = 1000
+    MILLILITERS_TO_LITERS = 0.001
+    CUBIC_METERS_TO_CUBIC_INCHES = 61023.7441
+    CUBIC_INCHES_TO_CUBIC_METERS = 1.6387064e-5
+
+    def liters_to_milliliters(self, liters):
+        return liters * self.LITERS_TO_MILLILITERS
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters * self.MILLILITERS_TO_LITERS
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * self.CUBIC_METERS_TO_CUBIC_INCHES
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches * self.CUBIC_INCHES_TO_CUBIC_METERS
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    
+    liters_value = 2.5
+    ml_result = converter.liters_to_milliliters(liters_value)
+    print(f""{liters_value} liters is {ml_result} milliliters"")
+    
+    cubic_meters_value = 1.0
+    cubic_inches_result = converter.cubic_meters_to_cubic_inches(cubic_meters_value)
+    print(f""{cubic_meters_value} cubic meters is {cubic_inches_result} cubic inches"")",True,True,False,,7,2724,9_1_7.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","import math
+
+VOLUME_CONVERSION_FACTORS = {
+    'liter': 1.0,
+    'milliliter': 0.001,
+    'cubic_meter': 1000.0,
+    'gallon': 3.785411784,
+    'cubic_inch': 0.016387064,
+}
+
+VALID_UNITS = set(VOLUME_CONVERSION_FACTORS.keys())
+
+def convert_volume(value, from_unit, to_unit):
+    if from_unit not in VALID_UNITS:
+        raise ValueError(f""Invalid source unit: {from_unit}"")
+    if to_unit not in VALID_UNITS:
+        raise ValueError(f""Invalid target unit: {to_unit}"")
+    
+    liters = value * VOLUME_CONVERSION_FACTORS[from_unit]
+    converted_value = liters / VOLUME_CONVERSION_FACTORS[to_unit]
+    
+    return converted_value
+
+if __name__ == '__main__':
+    result_liters_to_gallons = convert_volume(10, 'liter', 'gallon')
+    print(f""10 liters is {result_liters_to_gallons} gallons"")
+    
+    result_milliliters_to_cubic_meters = convert_volume(500000, 'milliliter', 'cubic_meter')
+    print(f""500000 milliliters is {result_milliliters_to_cubic_meters} cubic meters"")
+    
+    result_gallons_to_liters = convert_volume(1, 'gallon', 'liter')
+    print(f""1 gallon is {result_gallons_to_liters} liters"")
+    
+    result_cubic_inches_to_liters = convert_volume(61.0237441, 'cubic_inch', 'liter')
+    print(f""61.0237441 cubic inches is {result_cubic_inches_to_liters} liters"")
+    
+    result_liters_to_cubic_inches = convert_volume(1, 'liter', 'cubic_inch')
+    print(f""1 liter is {result_liters_to_cubic_inches} cubic inches"")",True,True,False,,17,2725,9_0_17.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    def __init__(self):
+        self.liters_to_milliliters = 1000
+        self.cubic_meters_to_cubic_inches = 61023.7441
+
+    def liters_to_milliliters_conversion(self, liters):
+        return liters * self.liters_to_milliliters
+
+    def milliliters_to_liters_conversion(self, milliliters):
+        return milliliters / self.liters_to_milliliters
+
+    def cubic_meters_to_cubic_inches_conversion(self, cubic_meters):
+        return cubic_meters * self.cubic_meters_to_cubic_inches
+
+    def cubic_inches_to_cubic_meters_conversion(self, cubic_inches):
+        return cubic_inches / self.cubic_meters_to_cubic_inches
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_liters = 5.5
+    sample_cubic_meters = 2.0
+    print(converter.liters_to_milliliters_conversion(sample_liters))
+    print(converter.milliliters_to_liters_conversion(5500))
+    print(converter.cubic_meters_to_cubic_inches_conversion(sample_cubic_meters))
+    print(converter.cubic_inches_to_cubic_meters_conversion(122047.4882))",True,True,False,,8,2726,9_1_8.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'liters': 1.0,
+        'milliliters': 0.001,
+        'cubic_meters': 1000.0,
+        'gallons': 3.78541,
+        'cubic_inches': 0.0163871
+    }
+    if from_unit not in conversion_factors:
+        raise ValueError(f""Unknown unit: {from_unit}"")
+    if to_unit not in conversion_factors:
+        raise ValueError(f""Unknown unit: {to_unit}"")
+    
+    liters_value = value * conversion_factors[from_unit]
+    result = liters_value / conversion_factors[to_unit]
+    return result
+
+if __name__ == '__main__':
+    sample_conversions = [
+        (1.0, 'liters', 'gallons'),
+        (1000.0, 'milliliters', 'liters'),
+        (1.0, 'cubic_meters', 'liters'),
+        (5.0, 'gallons', 'liters'),
+        (100.0, 'cubic_inches', 'milliliters')
+    ]
+    
+    for val, from_u, to_u in sample_conversions:
+        result = convert_volume(val, from_u, to_u)
+        print(f""{val} {from_u} = {result} {to_u}"")",True,True,False,,18,2727,9_0_18.py
+9,0,Change volume units simply,"Write a complete, high-quality Python script that demonstrates the conversion between common volume units (liters, milliliters, cubic meters, gallons, and cubic inches), including a main function to handle user input and conversion.","def liters_to_ml(value):
+    return value * 1000
+
+def ml_to_liters(value):
+    return value / 1000
+
+def liters_to_cubic_meters(value):
+    return value / 1000
+
+def cubic_meters_to_liters(value):
+    return value * 1000
+
+def liters_to_gallons(value):
+    return value * 0.264172
+
+def gallons_to_liters(value):
+    return value / 0.264172
+
+def liters_to_cubic_inches(value):
+    return value * 61.0237
+
+def cubic_inches_to_liters(value):
+    return value / 61.0237
+
+def convert_volume(value, from_unit, to_unit):
+    units = ['l', 'ml', 'm3', 'gal', 'in3']
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+    
+    if from_unit not in units or to_unit not in units:
+        return ""Invalid unit""
+    
+    if from_unit == to_unit:
+        return value
+    
+    if from_unit == 'l':
+        liters = value
+    elif from_unit == 'ml':
+        liters = value / 1000
+    elif from_unit == 'm3':
+        liters = value * 1000
+    elif from_unit == 'gal':
+        liters = value / 0.264172
+    elif from_unit == 'in3':
+        liters = value / 61.0237
+    
+    if to_unit == 'l':
+        return liters
+    elif to_unit == 'ml':
+        return liters * 1000
+    elif to_unit == 'm3':
+        return liters / 1000
+    elif to_unit == 'gal':
+        return liters * 0.264172
+    elif to_unit == 'in3':
+        return liters * 61.0237
+
+if __name__ == '__main__':
+    test_cases = [
+        (1000, 'ml', 'l'),
+        (1, 'l', 'gal'),
+        (2, 'gal', 'l'),
+        (1, 'm3', 'l'),
+        (5, 'l', 'in3'),
+        (305.1185, 'in3', 'l'),
+        (1, 'l', 'l')
+    ]
+    
+    for value, from_u, to_u in test_cases:
+        result = convert_volume(value, from_u, to_u)
+        print(f""{value} {from_u} equals {result} {to_u}"")",True,True,False,,19,2728,9_0_19.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    conversion_rates = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'ml': 0.001,
+        'fl_oz': 0.0295735,
+        'cup': 0.236588,
+        'pint': 0.473176,
+        'quart': 0.946353
+    }
+
+    if target_unit not in conversion_rates:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+
+    base_value = value / conversion_rates[target_unit] if target_unit != 'L' else value
+    return base_value
+
+if __name__ == '__main__':
+    print(convert_volume(1000, 'L'))
+    print(convert_volume(1, 'm3'))
+    print(convert_volume(5, 'gal'))
+    print(convert_volume(250, 'ml'))
+    print(convert_volume(16, 'fl_oz'))
+    print(convert_volume(2, 'cup'))
+    print(convert_volume(1, 'pint'))
+    print(convert_volume(1, 'quart'))",True,True,False,,0,2729,9_2.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_ML = 1000
+    ML_TO_LITERS = 0.001
+    CUBIC_METERS_TO_INCHES = 61023.744094732
+    INCHES_TO_CUBIC_METERS = 1 / 61023.744094732
+
+    def liters_to_milliliters(self, liters):
+        if liters < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return liters * self.LITERS_TO_ML
+
+    def milliliters_to_liters(self, milliliters):
+        if milliliters < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return milliliters * self.ML_TO_LITERS
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        if cubic_meters < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return cubic_meters * self.CUBIC_METERS_TO_INCHES
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        if cubic_inches < 0:
+            raise ValueError(""Volume cannot be negative"")
+        return cubic_inches * self.INCHES_TO_CUBIC_METERS
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+
+    liters_value = 2.5
+    ml_result = converter.liters_to_milliliters(liters_value)
+    print(f""{liters_value} liters is {ml_result} milliliters"")
+
+    cubic_meters_value = 1.0
+    cubic_inches_result = converter.cubic_meters_to_cubic_inches(cubic_meters_value)
+    print(f""{cubic_meters_value} cubic meters is {cubic_inches_result} cubic inches"")
+
+    ml_value = 500
+    liters_result = converter.milliliters_to_liters(ml_value)
+    print(f""{ml_value} milliliters is {liters_result} liters"")
+
+    cubic_inches_value = 100
+    cubic_meters_result = converter.cubic_inches_to_cubic_meters(cubic_inches_value)
+    print(f""{cubic_inches_value} cubic inches is {cubic_meters_result} cubic meters"")",True,True,False,,9,2730,9_1_9.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(volume, target_unit):
+    _to_liters = {
+        'm3': 1000.0,
+        'L': 1.0,
+        'mL': 0.001,
+        'gal': 3.78541,
+        'qt': 0.946353,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'fl_oz': 0.0295735,
+    }
+    
+    if target_unit not in _to_liters:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    
+    liters = volume * _to_liters[target_unit]
+    return liters / 1.0
+
+if __name__ == '__main__':
+    result = convert_volume(5, 'gal')
+    print(result)
+    
+    result_m3 = convert_volume(2000, 'mL')
+    print(result_m3)
+    
+    result_cups = convert_volume(1, 'm3')
+    print(result_cups)",True,True,False,,1,2731,9_2_1.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(volume, target_unit):
+    conversion_factors = {
+        'L': 1.0,
+        'm3': 0.001,
+        'gal': 0.264172,
+        'ml': 1000.0,
+        'ft3': 0.0353147,
+        'cup': 4.22675,
+        'tbsp': 67.628,
+        'tsp': 202.884
+    }
+    if target_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    return volume * conversion_factors[target_unit]
+
+if __name__ == '__main__':
+    print(convert_volume(1, 'L'))
+    print(convert_volume(1, 'm3'))
+    print(convert_volume(1, 'gal'))
+    print(convert_volume(1000, 'ml'))
+    print(convert_volume(1, 'ft3'))
+    print(convert_volume(1, 'cup'))
+    print(convert_volume(1, 'tbsp'))
+    print(convert_volume(1, 'tsp'))",True,True,False,,2,2732,9_2_2.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","VOLUME_CONVERSIONS = {
+    'L': 1.0,
+    'm3': 1000.0,
+    'gal': 3.785411784,
+    'ml': 0.001,
+    'fl_oz': 0.0295735295625,
+    'qt': 0.946352946,
+    'pt': 0.473176473,
+    'cup': 0.24,
+    'tbsp': 0.0147867647812,
+    'tsp': 0.00492892159375,
+    'in3': 0.016387064,
+    'ft3': 28.316846592,
+}
+
+def convert_volume(value, target_unit):
+    if target_unit not in VOLUME_CONVERSIONS:
+        raise ValueError(f""Unknown unit: {target_unit}"")
+    base_value = value * VOLUME_CONVERSIONS[target_unit]
+    return base_value
+
+if __name__ == '__main__':
+    result1 = convert_volume(5, 'gal')
+    result2 = convert_volume(1000, 'L')
+    result3 = convert_volume(2.5, 'm3')
+    print(result1)
+    print(result2)
+    print(result3)",True,True,False,,3,2733,9_2_3.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    conversion_factors = {
+        'L': 1.0,
+        'ml': 1000.0,
+        'm3': 0.001,
+        'gal': 0.264172,
+        'qt': 1.05669,
+        'pt': 2.11338,
+        'cup': 4.22675,
+        'fl_oz': 33.814,
+        'tbsp': 67.628,
+        'tsp': 202.884
+    }
+
+    normalized_target = target_unit.lower()
+
+    if normalized_target not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+
+    return value / conversion_factors[normalized_target]
+
+if __name__ == '__main__':
+    sample_value = 5.0
+    sample_units = ['L', 'm3', 'gal', 'ml', 'qt']
+
+    for unit in sample_units:
+        converted = convert_volume(sample_value, unit)
+        print(f""{sample_value} L to {unit}: {converted}"")",True,True,False,,4,2734,9_2_4.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(volume, target_unit):
+    factors_to_liters = {
+        'mL': 0.001,
+        'L': 1.0,
+        'gal': 3.78541,
+        'ft3': 28.3168,
+        'm3': 1000.0
+    }
+
+    if target_unit not in factors_to_liters:
+        raise ValueError(f""Unsupported target unit: {target_unit}"")
+
+    liters = volume * factors_to_liters.get(target_unit, 1.0) if volume is not None else 0
+    return liters
+
+if __name__ == '__main__':
+    result = convert_volume(5, 'L')
+    print(result)
+    result2 = convert_volume(1, 'gal')
+    print(result2)",True,True,False,,5,2735,9_2_5.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    FACTOR_LITERS_TO_MILLILITERS = 1000.0
+    FACTOR_MILLILITERS_TO_LITERS = 0.001
+    FACTOR_CUBIC_METERS_TO_CUBIC_INCHES = 61023.744094732
+    FACTOR_CUBIC_INCHES_TO_CUBIC_METERS = 1.6387064e-5
+
+    def convert_liters_to_milliliters(self, liters):
+        return liters * VolumeConverter.FACTOR_LITERS_TO_MILLILITERS
+
+    def convert_milliliters_to_liters(self, milliliters):
+        return milliliters * VolumeConverter.FACTOR_MILLILITERS_TO_LITERS
+
+    def convert_cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * VolumeConverter.FACTOR_CUBIC_METERS_TO_CUBIC_INCHES
+
+    def convert_cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches * VolumeConverter.FACTOR_CUBIC_INCHES_TO_CUBIC_METERS
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    liters_value = 2.5
+    milliliters_result = converter.convert_liters_to_milliliters(liters_value)
+    cubic_meters_value = 1.0
+    cubic_inches_result = converter.convert_cubic_meters_to_cubic_inches(cubic_meters_value)
+    print(liters_result)
+    print(milliliters_result)
+    print(cubic_inches_result)",True,True,False,,10,2736,9_1_10.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","VOLUME_TO_LITERS = {
+    'L': 1.0,
+    'l': 1.0,
+    'm3': 1000.0,
+    'gal': 3.78541,
+    'ml': 0.001,
+    'pt': 0.473176,
+    'qt': 0.946353,
+    'fl_oz': 0.0295735
+}
+
+def convert_volume(value, target_unit):
+    target_factor = VOLUME_TO_LITERS.get(target_unit)
+    if target_factor is None:
+        raise ValueError(f""Unsupported target unit: {target_unit}"")
+    return value / target_factor
+
+if __name__ == '__main__':
+    sample_value = 100.0
+    sample_unit = 'gal'
+    result = convert_volume(sample_value, sample_unit)
+    print(result)",True,True,False,,6,2737,9_2_6.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_MILLILITERS = 1000.0
+    CUBIC_METERS_TO_CUBIC_INCHES = 61023.7440947323
+
+    @classmethod
+    def liters_to_milliliters(cls, liters):
+        return liters * cls.LITERS_TO_MILLILITERS
+
+    @classmethod
+    def milliliters_to_liters(cls, milliliters):
+        return milliliters / cls.LITERS_TO_MILLILITERS
+
+    @classmethod
+    def cubic_meters_to_cubic_inches(cls, cubic_meters):
+        return cubic_meters * cls.CUBIC_METERS_TO_CUBIC_INCHES
+
+    @classmethod
+    def cubic_inches_to_cubic_meters(cls, cubic_inches):
+        return cubic_inches / cls.CUBIC_METERS_TO_CUBIC_INCHES
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+
+    liters = 2.5
+    milliliters = converter.liters_to_milliliters(liters)
+    print(milliliters)
+
+    original_liters = converter.milliliters_to_liters(milliliters)
+    print(original_liters)
+
+    cubic_meters = 1.0
+    cubic_inches = converter.cubic_meters_to_cubic_inches(cubic_meters)
+    print(cubic_inches)
+
+    original_cubic_meters = converter.cubic_inches_to_cubic_meters(cubic_inches)
+    print(original_cubic_meters)",True,True,False,,11,2738,9_1_11.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITER_TO_ML = 1000.0
+    CUBIC_METER_TO_CUBIC_INCH = 61023.7441
+
+    def liters_to_milliliters(self, liters):
+        return liters * self.LITER_TO_ML
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters / self.LITER_TO_ML
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * self.CUBIC_METER_TO_CUBIC_INCH
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches / self.CUBIC_METER_TO_CUBIC_INCH
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(2.5))
+    print(converter.milliliters_to_liters(500))
+    print(converter.cubic_meters_to_cubic_inches(1.0))
+    print(converter.cubic_inches_to_cubic_meters(61023.7441))",True,True,False,,12,2739,9_1_12.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_MILLILITERS = 1000.0
+    CUBIC_METERS_TO_CUBIC_INCHES = 61023.7440947323
+
+    @staticmethod
+    def liters_to_milliliters(liters):
+        return liters * VolumeConverter.LITERS_TO_MILLILITERS
+
+    @staticmethod
+    def milliliters_to_liters(milliliters):
+        return milliliters / VolumeConverter.LITERS_TO_MILLILITERS
+
+    @staticmethod
+    def cubic_meters_to_cubic_inches(cubic_meters):
+        return cubic_meters * VolumeConverter.CUBIC_METERS_TO_CUBIC_INCHES
+
+    @staticmethod
+    def cubic_inches_to_cubic_meters(cubic_inches):
+        return cubic_inches / VolumeConverter.CUBIC_METERS_TO_CUBIC_INCHES
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(1))
+    print(converter.milliliters_to_liters(1000))
+    print(converter.cubic_meters_to_cubic_inches(1))
+    print(converter.cubic_inches_to_cubic_meters(61023.7440947323))",True,True,False,,13,2740,9_1_13.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    units = {
+        'm3': 1.0,
+        'L': 1000.0,
+        'mL': 1000000.0,
+        'gal': 264.172052,
+        'qt': 1056.68821,
+        'pt': 2113.37642,
+        'cup': 4226.75284,
+        'fl_oz': 33814.0227
+    }
+    
+    if target_unit not in units:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    
+    value_in_cubic_meters = value / units[target_unit]
+    
+    for unit, factor in units.items():
+        if unit == target_unit:
+            continue
+        if abs((value_in_cubic_meters * factor) - value) < 1e-9:
+            reference_unit = unit
+            break
+            
+    reference_unit = 'm3'
+    result = value * (units[reference_unit] / units[target_unit])
+    
+    return result
+
+if __name__ == '__main__':
+    print(convert_volume(1, 'L'))
+    print(convert_volume(1, 'gal'))
+    print(convert_volume(1000, 'mL', 'm3'))",True,True,False,,7,2741,9_2_7.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    units_to_liters = {
+        'L': 1.0,
+        'l': 1.0,
+        'm3': 1000.0,
+        'm^3': 1000.0,
+        'gal': 3.78541,
+        'gal_us': 3.78541,
+        'qt': 0.946353,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'fl_oz': 0.0295735,
+        'tbsp': 0.0147868,
+        'tsp': 0.00492892,
+    }
+    
+    if target_unit not in units_to_liters:
+        raise ValueError(f""Unsupported target unit: {target_unit}"")
+    
+    source_unit = value[0]
+    numeric_value = value[1]
+    
+    if source_unit not in units_to_liters:
+        raise ValueError(f""Unsupported source unit: {source_unit}"")
+    
+    liters = numeric_value * units_to_liters[source_unit]
+    result = liters / units_to_liters[target_unit]
+    return result
+
+if __name__ == '__main__':
+    sample_data = [
+        ('m3', 1),
+        ('gal_us', 10),
+        ('L', 500),
+    ]
+    target = 'L'
+    for src, val in sample_data:
+        res = convert_volume((src, val), target)
+        print(f""{val} {src} = {res} {target}"")
+    print(f""{sample_data[0][1]} {sample_data[0][0]} converted to m3: {convert_volume((sample_data[0][0], sample_data[0][1]), 'm3')}"")",True,True,False,,8,2742,9_2_8.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    _LITERS_PER_MILLILITER = 0.001
+    _MILLILITERS_PER_LITER = 1000.0
+    _CUBIC_INCHES_PER_CUBIC_METER = 61023.74409473228
+    _CUBIC_METERS_PER_CUBIC_INCH = 1.0 / 61023.74409473228
+
+    def __init__(self):
+        self.conversion_factors = {
+            'liters_to_milliliters': self._MILLILITERS_PER_LITER,
+            'milliliters_to_liters': self._LITERS_PER_MILLILITER,
+            'cubic_meters_to_cubic_inches': self._CUBIC_INCHES_PER_CUBIC_METER,
+            'cubic_inches_to_cubic_meters': self._CUBIC_METERS_PER_CUBIC_INCH
+        }
+
+    def _apply_factor(self, value, factor_key):
+        return value * self.conversion_factors[factor_key]
+
+    def liters_to_milliliters(self, liters):
+        return self._apply_factor(liters, 'liters_to_milliliters')
+
+    def milliliters_to_liters(self, milliliters):
+        return self._apply_factor(milliliters, 'milliliters_to_liters')
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return self._apply_factor(cubic_meters, 'cubic_meters_to_cubic_inches')
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return self._apply_factor(cubic_inches, 'cubic_inches_to_cubic_meters')
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_liters = 5.5
+    sample_milliliters = 250.0
+    sample_cubic_meters = 1.2
+    sample_cubic_inches = 1000.0
+
+    print(converter.liters_to_milliliters(sample_liters))
+    print(converter.milliliters_to_liters(sample_milliliters))
+    print(converter.cubic_meters_to_cubic_inches(sample_cubic_meters))
+    print(converter.cubic_inches_to_cubic_meters(sample_cubic_inches))",True,True,False,,14,2743,9_1_14.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    FACTOR_L_TO_ML = 1000.0
+    FACTOR_CM_TO_CI = 61023.7440947353
+    _VALID_TYPES = (int, float)
+
+    def _validate_numeric(self, value, name):
+        if not isinstance(value, self._VALID_TYPES):
+            raise TypeError(""Value must be numeric"")
+        if value < 0:
+            raise ValueError(""Volume cannot be negative"")
+
+    def liters_to_milliliters(self, liters):
+        self._validate_numeric(liters, ""liters"")
+        return liters * self.FACTOR_L_TO_ML
+
+    def milliliters_to_liters(self, milliliters):
+        self._validate_numeric(milliliters, ""milliliters"")
+        return milliliters / self.FACTOR_L_TO_ML
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        self._validate_numeric(cubic_meters, ""cubic_meters"")
+        return cubic_meters * self.FACTOR_CM_TO_CI
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        self._validate_numeric(cubic_inches, ""cubic_inches"")
+        return cubic_inches / self.FACTOR_CM_TO_CI
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(2.5))
+    print(converter.milliliters_to_liters(500.0))
+    print(converter.cubic_meters_to_cubic_inches(1.0))
+    print(converter.cubic_inches_to_cubic_meters(100.0))",True,True,False,,15,2744,9_1_15.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    units_to_liters = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'qt': 0.946353,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'fl_oz': 0.0295735,
+        'ml': 0.001,
+        'tsp': 0.00492892,
+        'tbsp': 0.0147868
+    }
+    
+    if target_unit not in units_to_liters:
+        raise ValueError(f""Unsupported target unit: {target_unit}"")
+    
+    value_in_liters = value * units_to_liters[target_unit]
+    
+    for unit, factor in units_to_liters.items():
+        if unit == target_unit:
+            continue
+        if abs(factor - 1.0) < 1e-9:
+            return value_in_liters / units_to_liters[unit]
+    
+    return value_in_liters / units_to_liters[target_unit]
+
+if __name__ == '__main__':
+    result = convert_volume(5, 'L')
+    print(result)
+    
+    result2 = convert_volume(1, 'm3')
+    print(result2)
+    
+    result3 = convert_volume(10, 'gal')
+    print(result3)",True,True,False,,9,2745,9_2_9.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_MILLILITERS = 1000
+    MILLILITERS_TO_LITERS = 0.001
+    CUBIC_METERS_TO_CUBIC_INCHES = 61023.744094732
+    CUBIC_INCHES_TO_CUBIC_METERS = 1 / 61023.744094732
+
+    def convert_liters_to_milliliters(self, liters):
+        return liters * self.LITERS_TO_MILLILITERS
+
+    def convert_milliliters_to_liters(self, milliliters):
+        return milliliters * self.MILLILITERS_TO_LITERS
+
+    def convert_cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * self.CUBIC_METERS_TO_CUBIC_INCHES
+
+    def convert_cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches * self.CUBIC_INCHES_TO_CUBIC_METERS
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.convert_liters_to_milliliters(2.5))
+    print(converter.convert_milliliters_to_liters(500))
+    print(converter.convert_cubic_meters_to_cubic_inches(1))
+    print(converter.convert_cubic_inches_to_cubic_meters(61023.744094732))",True,True,False,,16,2746,9_1_16.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+
+    def __init__(self):
+        self.conversion_factors = {'L_to_ml': 1000, 'ml_to_L': 0.001, 'm3_to_in3': 61023.7441, 'in3_to_m3': 1 / 61023.7441}
+
+    def liters_to_milliliters(self, liters):
+        if liters < 0:
+            raise ValueError('Volume cannot be negative')
+        return liters * self.conversion_factors['L_to_ml']
+
+    def milliliters_to_liters(self, milliliters):
+        if milliliters < 0:
+            raise ValueError('Volume cannot be negative')
+        return milliliters * self.conversion_factors['ml_to_L']
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        if cubic_meters < 0:
+            raise ValueError('Volume cannot be negative')
+        return cubic_meters * self.conversion_factors['m3_to_in3']
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        if cubic_inches < 0:
+            raise ValueError('Volume cannot be negative')
+        return cubic_inches * self.conversion_factors['in3_to_m3']
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    liters_value = 2.5
+    ml_value = 500
+    m3_value = 1.0
+    in3_value = 1000
+    print(f'Liters to Milliliters: {converter.liters_to_milliliters(liters_value)}')
+    print(f'Milliliters to Liters: {converter.milliliters_to_liters(ml_value)}')
+    print(f'Cubic Meters to Cubic Inches: {converter.cubic_meters_to_cubic_inches(m3_value)}')
+    print(f'Cubic Inches to Cubic Meters: {converter.cubic_inches_to_cubic_meters(in3_value)}')",True,True,False,,17,2747,9_1_17.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    UNIT_FACTORS_TO_LITERS = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.785411784,
+        'ml': 0.001,
+        'fl_oz': 0.0295735296,
+        'cup': 0.236588236,
+        'pt': 0.473176473,
+        'qt': 0.946352946,
+        'tbsp': 0.0147867648,
+        'tsp': 0.0049289216,
+        'in3': 0.016387064,
+        'ft3': 28.316846592
+    }
+    
+    if target_unit not in UNIT_FACTORS_TO_LITERS:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    
+    liters = value * UNIT_FACTORS_TO_LITERS[target_unit]
+    return liters
+
+if __name__ == '__main__':
+    print(convert_volume(1, 'm3'))
+    print(convert_volume(264.172, 'gal'))
+    print(convert_volume(500, 'L'))
+    print(convert_volume(1, 'fl_oz'))",True,True,False,,10,2748,9_2_10.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(volume, target_unit):
+    conversions = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'ml': 0.001,
+        'ft3': 28.3168,
+        'cup': 0.24,
+        'tbsp': 0.0147868,
+        'tsp': 0.00492892
+    }
+    if target_unit not in conversions:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    return volume / conversions[target_unit]
+
+if __name__ == '__main__':
+    print(convert_volume(1000, 'L'))
+    print(convert_volume(1, 'm3'))
+    print(convert_volume(5, 'gal'))
+    print(convert_volume(100, 'ml'))
+    print(convert_volume(2, 'ft3'))
+    print(convert_volume(8, 'cup'))
+    print(convert_volume(16, 'tbsp'))
+    print(convert_volume(48, 'tsp'))",True,True,False,,11,2749,9_2_11.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_TO_ML = 1000.0
+    CUBIC_METERS_TO_INCHES = 61023.744095
+
+    def liters_to_milliliters(self, liters):
+        return liters * self.LITERS_TO_ML
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters / self.LITERS_TO_ML
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * self.CUBIC_METERS_TO_INCHES
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches / self.CUBIC_METERS_TO_INCHES
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    liters = 2.5
+    milliliters = converter.liters_to_milliliters(liters)
+    print(milliliters)
+
+    cubic_meters = 1.0
+    cubic_inches = converter.cubic_meters_to_cubic_inches(cubic_meters)
+    print(cubic_inches)
+
+    ml_back = converter.milliliters_to_liters(5000)
+    print(ml_back)
+
+    ci_back = converter.cubic_inches_to_cubic_meters(61023.744095)
+    print(ci_back)",True,True,False,,18,2750,9_1_18.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, unit):
+    conversions_to_liters = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'qt': 0.946353,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'oz': 0.0295735,
+        'tsp': 0.00492892,
+        'tbsp': 0.0147868
+    }
+
+    if unit not in conversions_to_liters:
+        raise ValueError(f""Unsupported unit: {unit}"")
+
+    liters = value * conversions_to_liters[unit]
+
+    return liters
+
+if __name__ == '__main__':
+    result = convert_volume(5, 'gal')
+    print(result)",True,True,False,,12,2751,9_2_12.py
+9,1,Change volume units simply,"Implement a class named 'VolumeConverter' with methods to convert between liters and milliliters, and cubic meters and cubic inches, ensuring the class is object-oriented and highly reusable.","class VolumeConverter:
+    LITERS_IN_CUBIC_METER = 1000
+    MILLILITERS_IN_LITER = 1000
+    INCHES_IN_METER = 39.3701
+
+    def liters_to_milliliters(self, liters):
+        return liters * self.MILLILITERS_IN_LITER
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters / self.MILLILITERS_IN_LITER
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        inches_per_meter = self.INCHES_IN_METER
+        return cubic_meters * (inches_per_meter ** 3)
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        inches_per_meter = self.INCHES_IN_METER
+        return cubic_inches / (inches_per_meter ** 3)
+
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    print(converter.liters_to_milliliters(5))
+    print(converter.cubic_meters_to_cubic_inches(2))",True,True,False,,19,2752,9_1_19.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    conversion_to_base = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'ml': 0.001,
+        'qt': 0.946353,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'floz': 0.0295735,
+        'tbsp': 0.0147868,
+        'tsp': 0.00492892
+    }
+
+    normalized_target = target_unit.upper()
+
+    if normalized_target not in conversion_to_base:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+
+    base_value = value
+    converted_value = base_value / conversion_to_base[normalized_target]
+
+    return converted_value
+
+if __name__ == '__main__':
+    sample_value = 1
+    target = 'gal'
+    result = convert_volume(sample_value, target)
+    print(result)
+
+    sample_value2 = 1
+    target2 = 'm3'
+    result2 = convert_volume(sample_value2, target2)
+    print(result2)
+
+    sample_value3 = 5
+    target3 = 'L'
+    result3 = convert_volume(sample_value3, target3)
+    print(result3)",True,True,False,,13,2753,9_2_13.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","VOLUME_CONVERSION_TO_LITERS = {
+    'L': 1.0,
+    'l': 1.0,
+    'ml': 0.001,
+    'mL': 0.001,
+    'm3': 1000.0,
+    'm³': 1000.0,
+    'gal': 3.78541,
+    'qt': 0.946353,
+    'pt': 0.473176,
+    'fl_oz': 0.0295735,
+    'in3': 0.0163871,
+    'ft3': 28.3168,
+}
+
+def convert_volume(value, target_unit):
+    if target_unit not in VOLUME_CONVERSION_TO_LITERS:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    
+    liters = value * VOLUME_CONVERSION_TO_LITERS[target_unit]
+    
+    if target_unit == 'L' or target_unit == 'l':
+        return liters
+    
+    if target_unit == 'm3' or target_unit == 'm³':
+        return liters / 1000.0
+    
+    if target_unit == 'ml' or target_unit == 'mL':
+        return liters * 1000.0
+    
+    if target_unit == 'gal':
+        return liters / VOLUME_CONVERSION_TO_LITERS['gal']
+    
+    if target_unit == 'qt':
+        return liters / VOLUME_CONVERSION_TO_LITERS['qt']
+    
+    if target_unit == 'pt':
+        return liters / VOLUME_CONVERSION_TO_LITERS['pt']
+    
+    if target_unit == 'fl_oz':
+        return liters / VOLUME_CONVERSION_TO_LITERS['fl_oz']
+    
+    if target_unit == 'in3':
+        return liters / VOLUME_CONVERSION_TO_LITERS['in3']
+    
+    if target_unit == 'ft3':
+        return liters / VOLUME_CONVERSION_TO_LITERS['ft3']
+    
+    return liters
+
+if __name__ == '__main__':
+    sample_value = 50
+    sample_unit = 'gal'
+    result = convert_volume(sample_value, sample_unit)
+    print(f""{sample_value} {sample_unit} = {result} L"")
+    
+    sample_value_2 = 1000
+    sample_unit_2 = 'm3'
+    result_2 = convert_volume(sample_value_2, sample_unit_2)
+    print(f""{sample_value_2} {sample_unit_2} = {result_2} L"")
+    
+    sample_value_3 = 1
+    sample_unit_3 = 'L'
+    result_3 = convert_volume(sample_value_3, sample_unit_3)
+    print(f""{sample_value_3} {sample_unit_3} = {result_3} L"")
+    
+    sample_value_4 = 1
+    sample_unit_4 = 'gal'
+    result_4 = convert_volume(sample_value_4, sample_unit_4)
+    print(f""{sample_value_4} {sample_unit_4} = {result_4} L"")",True,True,False,,14,2754,9_2_14.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(volume, target_unit):
+    conversion_to_base = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'ml': 0.001,
+        'ft3': 28.3168,
+        'cup': 0.236588,
+        'pt': 0.473176,
+        'qt': 0.946353,
+        'tbsp': 0.0147868,
+        'tsp': 0.00492892
+    }
+
+    if target_unit not in conversion_to_base:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+
+    base_volume = volume / conversion_to_base.get('L', 1.0)
+    converted_volume = base_volume * conversion_to_base[target_unit]
+    return converted_volume
+
+if __name__ == '__main__':
+    sample_volume = 5.0
+    sample_unit = 'gal'
+    result = convert_volume(sample_volume, sample_unit)
+    print(result)",True,True,False,,15,2755,9_2_15.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import csv
+import io
+
+def convert_volumes(volumes_liters):
+    results = []
+    for vol in volumes_liters:
+        cubic_meters = vol / 1000.0
+        results.append((vol, cubic_meters))
+    return results
+
+def read_and_convert(file_path):
+    try:
+        with open(file_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            volumes = []
+            for row in reader:
+                if not row:
+                    continue
+                try:
+                    val = float(row[0])
+                    volumes.append(val)
+                except ValueError:
+                    continue
+            return convert_volumes(volumes)
+    except FileNotFoundError:
+        return []
+    except PermissionError:
+        return []
+
+def main():
+    content = ""1000\n2000\n500\n""
+    file_path = ""volumes.csv""
+    
+    with open(file_path, 'w') as f:
+        f.write(content)
+    
+    results = read_and_convert(file_path)
+    
+    for liters, cubic_meters in results:
+        print(f""{liters} liters is {cubic_meters} cubic meters"")
+
+if __name__ == '__main__':
+    main()",True,True,False,,0,2756,9_3.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    units = {
+        'm3': 1.0,
+        'L': 1000.0,
+        'gal': 264.1720523581,
+        'pt': 2113.3764188652,
+        'qt': 1056.6882094326,
+        'cup': 4226.7528377304,
+        'tbsp': 67628.045403696,
+        'tsp': 202884.13621109,
+        'in3': 61023.744094732,
+        'ft3': 35.3146667215,
+        'oz': 33814.022702,
+    }
+    if target_unit not in units:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    liters = value * units['L']
+    return liters / units[target_unit]
+
+if __name__ == '__main__':
+    print(convert_volume(1, 'gal'))
+    print(convert_volume(1, 'm3'))
+    print(convert_volume(10, 'L'))",True,True,False,,16,2757,9_2_16.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import sys
+
+class VolumeConverter:
+    def __init__(self, volume_list):
+        self.volume_list = volume_list
+
+    def convert(self):
+        results = []
+        for value in self.volume_list:
+            try:
+                number = float(value)
+                liters = number
+                cubic_meters = number / 1000
+                results.append((liters, cubic_meters))
+            except ValueError:
+                results.append(None)
+        return results
+
+def process_volumes_from_string(data):
+    try:
+        lines = data.strip().split('\n')
+        volume_list = []
+        for line in lines:
+            line = line.strip()
+            if line:
+                volume_list.append(line)
+        
+        converter = VolumeConverter(volume_list)
+        return converter.convert()
+    except Exception as e:
+        return str(e)
+
+if __name__ == '__main__':
+    sample_data = ""100\n500\n2500\ninvalid\n0.5""
+    output = process_volumes_from_string(sample_data)
+    for item in output:
+        if item is None:
+            print(""Error parsing input"")
+        else:
+            print(f""Liters: {item[0]}, Cubic Meters: {item[1]}"")",True,True,False,,1,2758,9_3_1.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(value, target_unit):
+    unit_factors = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'ml': 0.001,
+        'ft3': 28.3168,
+        'cup': 0.24,
+        'tsp': 0.00492892,
+        'tbsp': 0.0147868
+    }
+    if target_unit not in unit_factors:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    return value * unit_factors[target_unit]
+
+if __name__ == '__main__':
+    sample_value = 5
+    sample_unit = 'gal'
+    converted = convert_volume(sample_value, sample_unit)
+    print(converted)",True,True,False,,17,2759,9_2_17.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","VOLUME_FACTORS = {
+    'L': 1.0,
+    'm3': 1000.0,
+    'gal': 3.78541,
+    'ml': 0.001,
+    'oz': 0.0295735,
+    'ft3': 28.3168,
+    'qt': 0.946353,
+    'pt': 0.473176,
+    'cup': 0.236588
+}
+
+def convert_volume(value, target_unit):
+    source_unit = 'L'
+    if target_unit not in VOLUME_FACTORS:
+        raise ValueError(f""Unsupported target unit: {target_unit}"")
+    base_value = value * VOLUME_FACTORS.get(source_unit, 1.0)
+    return base_value / VOLUME_FACTORS[target_unit]
+
+if __name__ == '__main__':
+    test_value = 50
+    target = 'gal'
+    result = convert_volume(test_value, target)
+    print(result)
+    target_m3 = 'm3'
+    result_m3 = convert_volume(5000, target_m3)
+    print(result_m3)",True,True,False,,18,2760,9_2_18.py
+9,2,Change volume units simply,"Develop an optimized function named 'convert_volume' that accepts a volume value and a target unit code (e.g., 'L', 'm3', 'gal') and returns the converted value, using an internal dictionary for efficient unit management.","def convert_volume(volume, target_unit):
+    conversion_factors = {
+        'L': 1.0,
+        'm3': 1000.0,
+        'gal': 3.78541,
+        'ml': 0.001,
+        'ft3': 28.3168,
+        'cup': 0.24,
+        'tbsp': 0.015,
+        'tsp': 0.005
+    }
+    if target_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {target_unit}"")
+    return volume / conversion_factors[target_unit]
+
+if __name__ == '__main__':
+    sample_volume = 1
+    sample_units = ['L', 'm3', 'gal', 'ml', 'ft3', 'cup', 'tbsp', 'tsp']
+    results = {}
+    for unit in sample_units:
+        results[unit] = convert_volume(sample_volume, unit)
+    print(results)",True,True,False,,19,2761,9_2_19.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import os
+
+def convert_volumes(volume_list):
+    results = []
+    for vol in volume_list:
+        liters = vol * 3.78541
+        cubic_meters = liters / 1000.0
+        results.append((liters, cubic_meters))
+    return results
+
+def process_volumes_from_file(filename):
+    try:
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        return []
+    except IOError:
+        return []
+
+    volumes = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        try:
+            val = float(stripped)
+            volumes.append(val)
+        except ValueError:
+            continue
+
+    return convert_volumes(volumes)
+
+if __name__ == '__main__':
+    sample_data = [1.0, 2.5, 10.0]
+    results = process_volumes_from_file(""nonexistent_file.txt"")
+    if not results:
+        results = convert_volumes(sample_data)
+    for liters, cubic_meters in results:
+        print(f""Liters: {liters}, Cubic Meters: {cubic_meters}"")",True,True,False,,2,2762,9_3_2.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","def convert_volumes(file_path):
+    results = []
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split()
+            if len(parts) != 2:
+                continue
+            try:
+                value = float(parts[0])
+                unit = parts[1].lower()
+                if unit == 'ml':
+                    liters = value / 1000.0
+                elif unit == 'cl':
+                    liters = value / 100.0
+                elif unit == 'dl':
+                    liters = value / 10.0
+                elif unit == 'l':
+                    liters = value
+                elif unit == 'm3':
+                    liters = value * 1000.0
+                else:
+                    continue
+                cubic_meters = liters / 1000.0
+                results.append((value, unit, liters, cubic_meters))
+            except ValueError:
+                continue
+    except FileNotFoundError:
+        results.append(f""Error: File '{file_path}' not found."")
+    except IOError:
+        results.append(f""Error: Could not read file '{file_path}'."")
+    return results
+
+if __name__ == '__main__':
+    sample_content = """"""1000 ml
+500 cl
+2.5 l
+0.001 m3""""""
+    with open('temp_volumes.txt', 'w') as f:
+        f.write(sample_content)
+    output = convert_volumes('temp_volumes.txt')
+    for item in output:
+        if isinstance(item, tuple):
+            value, unit, l, m3 = item
+            print(f""{value} {unit} = {l} liters = {m3} cubic meters"")
+        else:
+            print(item)",True,True,False,,3,2763,9_3_3.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import tempfile
+import os
+
+def convert_volume(volume_value, unit):
+    unit = unit.lower().strip()
+    if unit in ('ml', 'milliliter', 'milliliters'):
+        liters = volume_value / 1000.0
+    elif unit in ('liters', 'liter', 'l'):
+        liters = volume_value
+    elif unit in ('cubic_meters', 'cubic_meter', 'm3', 'm^3'):
+        liters = volume_value * 1000.0
+    elif unit in ('gallons', 'gallon', 'gal'):
+        liters = volume_value * 3.78541
+    elif unit in ('cups', 'cup'):
+        liters = volume_value * 0.236588
+    elif unit in ('tablespoons', 'tablespoon', 'tbsp'):
+        liters = volume_value * 0.0147868
+    elif unit in ('teaspoons', 'teaspoon', 'tsp'):
+        liters = volume_value * 0.00492892
+    else:
+        raise ValueError(f'Unsupported unit: {unit}')
+    cubic_meters = liters / 1000.0
+    return (liters, cubic_meters)
+
+def process_volume_file(filepath):
+    results = []
+    try:
+        with open(filepath, 'r') as file:
+            for line_num, line in enumerate(file, 1):
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    parts = line.split()
+                    if len(parts) != 2:
+                        print(f""Line {line_num}: Invalid format. Expected 'value unit', got: {line}"")
+                        continue
+                    value_str, unit = parts
+                    value = float(value_str)
+                    liters, cubic_meters = convert_volume(value, unit)
+                    results.append((value, unit, liters, cubic_meters))
+                except ValueError as ve:
+                    print(f'Line {line_num}: Error parsing line - {ve}')
+    except FileNotFoundError:
+        print(f'Error: File not found - {filepath}')
+    except PermissionError:
+        print(f'Error: Permission denied - {filepath}')
+    except IOError as e:
+        print(f'Error reading file - {e}')
+    return results
+
+def print_results(results):
+    if not results:
+        print('No results to print.')
+        return
+    print(f""{'Original Value':>15} {'Original Unit':>15} {'Liters':>15} {'Cubic Meters':>15}"")
+    print('-' * 65)
+    for value, unit, liters, cubic_meters in results:
+        print(f'{value:>15.2f} {unit:>15} {liters:>15.6f} {cubic_meters:>15.9f}')
+if __name__ == '__main__':
+    sample_data = ['100 ml', '1 liters', '0.5 cubic_meters', '2 gallons', '8 cups', 'invalid_line', '50 ml']
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmpfile:
+        for line in sample_data:
+            tmpfile.write(line + '\n')
+        tmpfilepath = tmpfile.name
+    try:
+        results = process_volume_file(tmpfilepath)
+        print_results(results)
+    finally:
+        os.unlink(tmpfilepath)",True,True,False,,4,2764,9_3_4.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+
+def get_parser():
+    parser = argparse.ArgumentParser(description=""Volume unit converter"")
+    parser.add_argument(
+        ""--volume"",
+        type=float,
+        default=1.0,
+        help=""The volume value to convert""
+    )
+    parser.add_argument(
+        ""--from-unit"",
+        type=str,
+        default=""liter"",
+        help=""The starting unit of volume""
+    )
+    parser.add_argument(
+        ""--to-unit"",
+        type=str,
+        default=""milliliter"",
+        help=""The target unit of volume""
+    )
+    return parser
+
+def convert_volume(volume, from_unit, to_unit):
+    to_liter_factors = {
+        ""liter"": 1.0,
+        ""litre"": 1.0,
+        ""milliliter"": 0.001,
+        ""millilitre"": 0.001,
+        ""gallon"": 3.78541,
+        ""gallon_us"": 3.78541,
+        ""gallon_uk"": 4.54609,
+        ""quart"": 0.946353,
+        ""pint"": 0.473176,
+        ""cup"": 0.236588,
+        ""tablespoon"": 0.0147868,
+        ""teaspoon"": 0.00492892,
+        ""cubic_meter"": 1000.0,
+        ""cubic_cm"": 0.001,
+        ""cubic_mm"": 0.000001,
+    }
+
+    from_val = to_liter_factors.get(from_unit.lower())
+    to_val = to_liter_factors.get(to_unit.lower())
+
+    if from_val is None or to_val is None:
+        raise ValueError(f""Unsupported unit provided: {from_unit} or {to_unit}"")
+
+    volume_in_liters = volume * from_val
+    result = volume_in_liters / to_val
+    return result
+
+def main():
+    parser = get_parser()
+    args = parser.parse_args([])
+    
+    result = convert_volume(args.volume, args.from_unit, args.to_unit)
+    print(result)
+
+if __name__ == ""__main__"":
+    main()",True,True,False,,0,2765,9_4.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import json
+import os
+
+def process_volume_data(filename):
+    results = []
+    try:
+        with open(filename, 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        return []
+    if not isinstance(data, list):
+        return []
+    for item in data:
+        if not isinstance(item, (int, float)):
+            continue
+        liters = item * 0.001
+        cubic_meters = item * 1e-06
+        results.append((item, liters, cubic_meters))
+    return results
+if __name__ == '__main__':
+    sample_filename = 'volumes.json'
+    sample_data = [1000, 5000, 25000, 100000]
+    with open(sample_filename, 'w') as f:
+        json.dump(sample_data, f)
+    converted_values = process_volume_data(sample_filename)
+    for original, liters, cubic_meters in converted_values:
+        print(f'{original} ml -> {liters} liters -> {cubic_meters} m³')
+    os.remove(sample_filename)",True,True,False,,5,2766,9_3_5.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+import sys
+
+class VolumeConverter:
+    units = {
+        'milliliter': 0.001,
+        'liter': 1.0,
+        'gallon_us': 3.78541,
+        'quart_us': 0.946353,
+        'pint_us': 0.473176,
+        'cup_us': 0.236588,
+        'fluid_ounce_us': 0.0295735
+    }
+
+    def __init__(self):
+        self.parser = argparse.ArgumentParser(description='Convert volume between units.')
+        self.parser.add_argument('volume', type=float, help='The volume value to convert')
+        self.parser.add_argument('from_unit', choices=self.units.keys(), help='The starting unit')
+        self.parser.add_argument('to_unit', choices=self.units.keys(), help='The target unit')
+
+    def convert(self, volume, from_unit, to_unit):
+        if from_unit not in self.units or to_unit not in self.units:
+            raise ValueError('Invalid unit specified')
+        base_volume = volume * self.units[from_unit]
+        result_volume = base_volume / self.units[to_unit]
+        return result_volume
+
+def main():
+    converter = VolumeConverter()
+    args = converter.parser.parse_args(['10', 'liter', 'gallon_us'])
+    result = converter.convert(args.volume, args.from_unit, args.to_unit)
+    print(result)
+
+if __name__ == '__main__':
+    main()",True,True,False,,1,2767,9_4_1.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import os
+import tempfile
+
+def convert_volumes(measurements, unit=""liters""):
+    results = []
+    for measurement in measurements:
+        if unit.lower() == ""liters"":
+            cubic_meters = measurement / 1000.0
+            liters = measurement
+        elif unit.lower() == ""cubic_meters"":
+            cubic_meters = measurement
+            liters = measurement * 1000.0
+        else:
+            raise ValueError(""Unsupported unit"")
+        results.append((liters, cubic_meters))
+    return results
+
+def process_volume_file(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            lines = file.readlines()
+    except FileNotFoundError:
+        return []
+    except IOError:
+        return []
+
+    measurements = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        try:
+            value = float(stripped)
+            measurements.append(value)
+        except ValueError:
+            continue
+
+    return convert_volumes(measurements, ""liters"")
+
+if __name__ == '__main__':
+    sample_data = ""500\n1500\n750.5\n-100\n""
+
+    tmp = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt')
+    try:
+        tmp.write(sample_data)
+        tmp.flush()
+        result = process_volume_file(tmp.name)
+        print(result)
+    finally:
+        os.unlink(tmp.name)",True,True,False,,6,2768,9_3_6.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import sys
+import os
+
+def convert_volumes(filename):
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+    except FileNotFoundError:
+        print(f""Error: The file '{filename}' was not found."")
+        return []
+    except PermissionError:
+        print(f""Error: Permission denied when accessing '{filename}'."")
+        return []
+    except Exception as e:
+        print(f""Error reading the file: {e}"")
+        return []
+
+    results = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            volume = float(line)
+            liters = volume
+            cubic_meters = volume / 1000.0
+            results.append((volume, liters, cubic_meters))
+        except ValueError:
+            print(f""Warning: Skipping invalid volume value '{line}'"")
+            continue
+
+    for original, liters_val, cubic_meters_val in results:
+        print(f""Original: {original} -> Liters: {liters_val} -> Cubic Meters: {cubic_meters_val}"")
+    return results
+
+if __name__ == '__main__':
+    sample_content = [
+        ""1000"",
+        ""500"",
+        ""1"",
+        ""invalid"",
+        ""2500""
+    ]
+    test_filename = ""volumes.txt""
+    
+    with open(test_filename, ""w"") as f:
+        for item in sample_content:
+            f.write(item + ""\n"")
+            
+    convert_volumes(test_filename)
+    
+    os.remove(test_filename)",True,True,False,,7,2769,9_3_7.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import os
+import tempfile
+
+def convert_volumes_from_file(file_path):
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        raise FileNotFoundError(f""The file {file_path} was not found."")
+    except IOError as e:
+        raise IOError(f""An error occurred while reading the file: {e}"")
+
+    results = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            value = float(line)
+        except ValueError:
+            continue
+        liters = value * 0.001
+        cubic_meters = value * 0.000001
+        results.append((value, liters, cubic_meters))
+
+    return results
+
+def main():
+    sample_data = [
+        ""1000"",
+        ""500"",
+        ""250.5"",
+        ""0"",
+        ""-100""
+    ]
+
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
+        for item in sample_data:
+            f.write(f""{item}\n"")
+        temp_path = f.name
+
+    try:
+        results = convert_volumes_from_file(temp_path)
+        for original, liters, cubic_meters in results:
+            print(f""Original: {original}, Liters: {liters}, Cubic Meters: {cubic_meters}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+
+if __name__ == '__main__':
+    main()",True,True,False,,8,2770,9_3_8.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+import sys
+
+def parse_volume_arguments(args=None):
+    parser = argparse.ArgumentParser(description=""Convert volume units."")
+    parser.add_argument(""--volume"", type=float, default=1.0, help=""The volume value to convert."")
+    parser.add_argument(""--from-unit"", type=str, default=""liters"", help=""Starting volume unit."")
+    parser.add_argument(""--to-unit"", type=str, default=""milliliters"", help=""Target volume unit."")
+    parsed_args = parser.parse_args(args)
+    return parsed_args
+
+def get_conversion_factor(from_unit, to_unit):
+    liters_map = {
+        ""liters"": 1.0,
+        ""milliliters"": 0.001,
+        ""gallons"": 3.78541,
+        ""cups"": 0.236588,
+        ""tablespoons"": 0.0147868,
+        ""teaspoons"": 0.00492892
+    }
+    
+    if from_unit not in liters_map:
+        raise ValueError(f""Unknown starting unit: {from_unit}"")
+    if to_unit not in liters_map:
+        raise ValueError(f""Unknown target unit: {to_unit}"")
+        
+    from_liters = liters_map[from_unit]
+    to_liters = liters_map[to_unit]
+    return to_liters / from_liters
+
+def convert_volume(volume, from_unit, to_unit):
+    factor = get_conversion_factor(from_unit, to_unit)
+    return volume * factor
+
+if __name__ == '__main__':
+    args = [
+        ""--volume"", ""2"",
+        ""--from-unit"", ""gallons"",
+        ""--to-unit"", ""liters""
+    ]
+    parsed_args = parse_volume_arguments(args)
+    result = convert_volume(parsed_args.volume, parsed_args.from_unit, parsed_args.to_unit)
+    print(result)",True,True,False,,2,2771,9_4_2.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import os
+
+def convert_volume_measurements(input_path):
+    if not os.path.exists(input_path):
+        return []
+    
+    try:
+        with open(input_path, 'r') as f:
+            lines = f.readlines()
+    except IOError:
+        return []
+
+    results = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        try:
+            val_liters = float(stripped)
+            val_cubic_m = val_liters / 1000.0
+            results.append((val_liters, val_cubic_m))
+        except ValueError:
+            continue
+    return results
+
+if __name__ == '__main__':
+    sample_data = [1000.0, 500.5, 25.75, 0.1]
+    sample_filename = 'volume_data.txt'
+    
+    with open(sample_filename, 'w') as f:
+        for val in sample_data:
+            f.write(f""{val}\n"")
+            
+    conversions = convert_volume_measurements(sample_filename)
+    
+    for liters, cubic_meters in conversions:
+        print(f""Liters: {liters}, Cubic Meters: {cubic_meters}"")
+    
+    os.remove(sample_filename)",True,True,False,,9,2772,9_3_9.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+import sys
+
+class VolumeConverter:
+    def __init__(self):
+        self.units = {
+            'l': 1.0,
+            'ml': 0.001,
+            'gal': 3.78541,
+            'qt': 0.946353,
+            'pt': 0.473176,
+            'cup': 0.236588,
+            'fl_oz': 0.0295735,
+            'tbsp': 0.0147868,
+            'tsp': 0.00492892,
+            'm3': 1000.0,
+            'cm3': 0.001
+        }
+
+    def convert(self, volume, from_unit, to_unit):
+        from_unit_lower = from_unit.lower()
+        to_unit_lower = to_unit.lower()
+        
+        if from_unit_lower not in self.units:
+            raise ValueError(f""Invalid starting unit: {from_unit}"")
+        if to_unit_lower not in self.units:
+            raise ValueError(f""Invalid target unit: {to_unit}"")
+        
+        volume_in_liters = volume * self.units[from_unit_lower]
+        result = volume_in_liters / self.units[to_unit_lower]
+        return result
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Convert volume between units')
+    parser.add_argument('--volume', type=float, default=1.0, help='Volume to convert')
+    parser.add_argument('--from', dest='from_unit', type=str, default='l', help='Starting unit')
+    parser.add_argument('--to', dest='to_unit', type=str, default='gal', help='Target unit')
+    return parser.parse_args([])
+
+def run_conversion():
+    args = parse_arguments()
+    converter = VolumeConverter()
+    result = converter.convert(args.volume, args.from_unit, args.to_unit)
+    return result
+
+if __name__ == '__main__':
+    output = run_conversion()
+    print(f""Result: {output}"")",True,True,False,,3,2773,9_4_3.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import os
+import tempfile
+
+def read_and_convert_volumes(file_path):
+    results = []
+    try:
+        with open(file_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    volume_value = float(line)
+                    liters = volume_value
+                    cubic_meters = volume_value / 1000.0
+                    results.append((volume_value, liters, cubic_meters))
+                except ValueError:
+                    continue
+    except FileNotFoundError:
+        raise FileNotFoundError(f'The file {file_path} was not found.')
+    except PermissionError:
+        raise PermissionError(f'Permission denied to read the file {file_path}.')
+    except IOError as e:
+        raise IOError(f'An error occurred while reading the file {file_path}: {e}')
+    return results
+if __name__ == '__main__':
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp_file:
+        tmp_file.write('100\n')
+        tmp_file.write('250.5\n')
+        tmp_file.write('1000\n')
+        tmp_file_path = tmp_file.name
+    try:
+        results = read_and_convert_volumes(tmp_file_path)
+        for original, liters, cubic_meters in results:
+            print(f'Original: {original}, Liters: {liters}, Cubic Meters: {cubic_meters}')
+    except Exception as e:
+        print(f'Error: {e}')
+    finally:
+        os.remove(tmp_file_path)",True,True,False,,10,2774,9_3_10.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","def convert_volumes(input_data):
+    results = []
+    for item in input_data:
+        try:
+            value = float(item)
+            if value < 0:
+                results.append((value, ""Error: Negative value"", ""Error: Negative value""))
+                continue
+            liters = value
+            cubic_meters = value / 1000.0
+            results.append((value, liters, cubic_meters))
+        except ValueError:
+            results.append((item, ""Error: Invalid number"", ""Error: Invalid number""))
+    return results
+
+if __name__ == '__main__':
+    sample_values = [100, 2500, 5000, ""abc"", -10]
+    output = convert_volumes(sample_values)
+    for original, l, m3 in output:
+        print(f""Original: {original}, Liters: {l}, Cubic Meters: {m3}"")",True,True,False,,11,2775,9_3_11.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","import os
+import tempfile
+
+def convert_volume(volume_ml):
+    liters = volume_ml / 1000.0
+    cubic_meters = volume_ml / 1000000.0
+    return liters, cubic_meters
+
+def process_volume_file(filepath):
+    results = []
+    try:
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        raise FileNotFoundError(f""The file {filepath} was not found."")
+    except IOError as e:
+        raise IOError(f""An error occurred while reading the file: {e}"")
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            volume_ml = float(line)
+            liters, cubic_meters = convert_volume(volume_ml)
+            results.append((volume_ml, liters, cubic_meters))
+        except ValueError:
+            continue
+
+    return results
+
+def main():
+    sample_values = [""1000"", ""500"", ""2000"", ""invalid"", ""3.5""]
+
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:
+        tmp_path = tmp.name
+        for val in sample_values:
+            tmp.write(f""{val}\n"")
+
+    try:
+        results = process_volume_file(tmp_path)
+        for volume_ml, liters, cubic_meters in results:
+            print(f""{volume_ml} ml = {liters} liters = {cubic_meters} cubic meters"")
+    except Exception as e:
+        print(e)
+    finally:
+        os.unlink(tmp_path)
+
+if __name__ == '__main__':
+    main()",True,True,False,,12,2776,9_3_12.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+
+CONVERSION_FACTORS = {
+    ""m"": 1.0,
+    ""km"": 1000.0,
+    ""cm"": 0.01,
+    ""mm"": 0.001,
+    ""mi"": 1609.344,
+    ""ft"": 0.3048,
+    ""in"": 0.0254,
+    ""yd"": 0.9144,
+    ""nm"": 1e-9,
+}
+
+def convert_volume_to_length(value, from_unit, to_unit):
+    if from_unit not in CONVERSION_FACTORS or to_unit not in CONVERSION_FACTORS:
+        raise ValueError(""Unsupported unit"")
+    meters = value * CONVERSION_FACTORS[from_unit]
+    result = meters / CONVERSION_FACTORS[to_unit]
+    return result
+
+def main():
+    parser = argparse.ArgumentParser(description=""Convert volume units to length units"")
+    parser.add_argument(""volume"", type=float, help=""The volume value"")
+    parser.add_argument(""from_unit"", type=str, help=""The starting unit"")
+    parser.add_argument(""to_unit"", type=str, help=""The target unit"")
+    args = parser.parse_args([])
+    
+    args = type('obj', (object,), {
+        'volume': 1000,
+        'from_unit': 'cm',
+        'to_unit': 'mm'
+    })()
+    
+    result = convert_volume_to_length(args.volume, args.from_unit, args.to_unit)
+    print(result)
+
+if __name__ == '__main__':
+    main()",True,True,False,,4,2777,9_4_4.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","def process_volumes(input_filename, sample_values):
+    results = []
+    try:
+        with open(input_filename, 'r') as file:
+            lines = file.readlines()
+            for line in lines:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    value = float(line)
+                    liters = value * 3.78541
+                    cubic_meters = value * 0.00378541
+                    results.append((value, liters, cubic_meters))
+                except ValueError:
+                    continue
+    except FileNotFoundError:
+        for value in sample_values:
+            liters = value * 3.78541
+            cubic_meters = value * 0.00378541
+            results.append((value, liters, cubic_meters))
+    except IOError:
+        for value in sample_values:
+            liters = value * 3.78541
+            cubic_meters = value * 0.00378541
+            results.append((value, liters, cubic_meters))
+
+    output_lines = []
+    for val, lit, cm in results:
+        output_lines.append(f""Original: {val}, Liters: {lit:.4f}, Cubic Meters: {cm:.6f}"")
+    return ""\n"".join(output_lines)
+
+if __name__ == '__main__':
+    input_file_name = ""volumes.txt""
+    sample_data = [10.0, 25.5, 100.0, -5.0, 0.0]
+    output_result = process_volumes(input_file_name, sample_data)
+    print(output_result)",True,True,False,,13,2778,9_3_13.py
+9,3,Change volume units simply,"Write a script that reads a list of volume measurements from a file and prints the equivalent measurements in both liters and cubic meters, handling potential file reading errors gracefully.","def convert_volumes(volume_strings):
+    results = []
+    for volume_str in volume_strings:
+        try:
+            volume_liter = float(volume_str)
+        except ValueError:
+            continue
+        cubic_meters = volume_liter / 1000.0
+        results.append((volume_liter, cubic_meters))
+    return results
+
+def read_and_convert_volumes(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        return []
+    except IOError:
+        return []
+
+    volume_strings = [line.strip() for line in lines if line.strip()]
+    return convert_volumes(volume_strings)
+
+if __name__ == '__main__':
+    sample_volumes = [""1.5"", ""250"", ""0.001"", ""invalid"", ""1000""]
+    converted = convert_volumes(sample_volumes)
+    for liter, cubic_meter in converted:
+        print(f""{liter} liters = {cubic_meter} cubic meters"")",True,True,False,,14,2779,9_3_14.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+import sys
+
+CONVERSION_RATES = {
+    'ml': 1,
+    'l': 1000,
+    'fl_oz': 29.5735,
+    'cup': 236.588,
+    'pt': 473.176,
+    'qt': 946.353,
+    'gal': 3785.41,
+    'tsp': 4.92892,
+    'tbsp': 14.7868,
+    'in3': 16.3871,
+    'ft3': 28316.8,
+}
+
+def convert_volume(amount, from_unit, to_unit):
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
+    
+    if from_unit not in CONVERSION_RATES:
+        raise ValueError(f""Unsupported starting unit: {from_unit}"")
+    if to_unit not in CONVERSION_RATES:
+        raise ValueError(f""Unsupported target unit: {to_unit}"")
+    
+    base_value = amount * CONVERSION_RATES[from_unit]
+    result = base_value / CONVERSION_RATES[to_unit]
+    
+    return result
+
+def create_cli_parser():
+    parser = argparse.ArgumentParser(description='Convert volume units.')
+    parser.add_argument('--volume', type=float, required=True, help='The volume value to convert.')
+    parser.add_argument('--from-unit', type=str, required=True, dest='from_unit', help='The starting unit (e.g., ml, l, gal).')
+    parser.add_argument('--to-unit', type=str, required=True, dest='to_unit', help='The target unit (e.g., oz, cup, qt).')
+    return parser
+
+def run_conversion_cli(volume, from_unit, to_unit):
+    result = convert_volume(volume, from_unit, to_unit)
+    print(result)
+
+if __name__ == '__main__':
+    run_conversion_cli(1, 'gal', 'l')
+    run_conversion_cli(250, 'ml', 'fl_oz')
+    run_conversion_cli(1, 'tsp', 'ml')",True,True,False,,5,2780,9_4_5.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+
+class VolumeConverter:
+    def __init__(self):
+        self.units = {
+            'liter': 1.0,
+            'milliliter': 0.001,
+            'gallon_us': 3.78541,
+            'quart_us': 0.946353,
+            'pint_us': 0.473176,
+            'cup_us': 0.236588,
+            'fluid_ounce_us': 0.0295735,
+            'tablespoon_us': 0.0147868,
+            'teaspoon_us': 0.00492892
+        }
+
+    def convert(self, volume, start_unit, target_unit):
+        if start_unit not in self.units:
+            raise ValueError(f""Unsupported start unit: {start_unit}"")
+        if target_unit not in self.units:
+            raise ValueError(f""Unsupported target unit: {target_unit}"")
+        
+        volume_in_liters = volume * self.units[start_unit]
+        converted_volume = volume_in_liters / self.units[target_unit]
+        return converted_volume
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Convert volumes between different units.')
+    parser.add_argument('volume', type=float, help='The volume value to convert')
+    parser.add_argument('start_unit', type=str, help='The starting unit (e.g., liter, gallon_us)')
+    parser.add_argument('target_unit', type=str, help='The target unit (e.g., milliliter, quart_us)')
+    return parser.parse_args()
+
+def run_conversion():
+    args = parse_arguments()
+    converter = VolumeConverter()
+    result = converter.convert(args.volume, args.start_unit, args.target_unit)
+    print(result)
+
+if __name__ == '__main__':
+    import sys
+    original_argv = sys.argv
+    sys.argv = ['script.py', '5.0', 'liter', 'gallon_us']
+    converter_instance = VolumeConverter()
+    result_value = converter_instance.convert(5.0, 'liter', 'gallon_us')
+    print(result_value)
+    sys.argv = original_argv",True,True,False,,6,2781,9_4_6.py
+9,4,Change volume units simply,"Create a robust command-line interface (CLI) application using Python's `argparse` module that allows the user to specify a volume, a starting unit, and a target unit for conversion.","import argparse
+
+VOLUME_UNITS = {
+    ""ml"": {""name"": ""milliliter"", ""to_liters"": 0.001},
+    ""l"": {""name"": ""liter"", ""to_liters"": 1.0},
+    ""gal"": {""name"": ""gallon"", ""to_liters"": 3.78541},
+    ""qt"": {""name"": ""quart"", ""to_liters"": 0.946353},
+    ""pt"": {""name"": ""pint"", ""to_liters"": 0.473176},
+    ""cup"": {""name"": ""cup"", ""to_liters"": 0.236588},
+    ""fl_oz"": {""name"": ""fluid_ounce"", ""to_liters"": 0.0295735},
+    ""tbsp"": {""name"": ""tablespoon"", ""to_liters"": 0.0147868},
+    ""tsp"": {""name"": ""teaspoon"", ""to_liters"": 0.00492892},
+    ""m3"": {""name"": ""cubic_meter"", ""to_liters"": 1000.0},
+}
+
+def convert_volume(volume, from_unit, to_unit):
+    if from_unit not in VOLUME_UNITS:
+        raise ValueError(f""Unknown source unit: {from_unit}"")
+    if to_unit not in VOLUME_UNITS:
+        raise ValueError(f""Unknown target unit: {to_unit}"")
+
+    liters = volume * VOLUME_UNITS[from_unit][""to_liters""]
+    result = liters / VOLUME_UNITS[to_unit][""to_liters""]
+    return result
+
+def create_parser():
+    parser = argparse.ArgumentParser(description=""Convert volume between units."")
+    parser.add_argument(""volume"", type=float, help=""The volume to convert"")
+    parser.add_argument(""from_unit"", type=str, help=""The starting unit"")
+    parser.add_argument(""to_unit"", type=str, help=""The target unit"")
+    return parser
+
+def main():
+    volume = 1.0
+    from_unit = ""gal""
+    to_unit = ""l""
+    result = convert_volume(volume, from_unit, to_unit)
+    print(result)
+
+if __name__ == '__main__':
+    main()",True,True,False,,7,2782,9_4_7.py

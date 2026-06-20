@@ -1,45 +1,36 @@
-import math
 def convert_volume(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    conversion_factors = {
-        'L': 1.0 / 1000.0,                 
-        'mL': 1.0 / 1000000.0,                     
-        'm^3': 1.0,
-        'gal': 0.00378541,                           
-        'in^3': 1.6387e-6                     
+    liters_per_unit = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'cubic_meter': 1000.0,
+        'gallon': 3.785411784,
+        'cubic_inch': 0.016387064
     }
-    if from_unit in conversion_factors:
-        value_in_m3 = value * conversion_factors[from_unit]
-    else:
-        raise ValueError(f"Unknown source unit: {from_unit}")
-    if to_unit in conversion_factors:
-        result = value_in_m3 / conversion_factors[to_unit]
-        return result
-    else:
-        raise ValueError(f"Unknown target unit: {to_unit}")
+    
+    if from_unit not in liters_per_unit or to_unit not in liters_per_unit:
+        raise ValueError(f"Unsupported unit: {from_unit} or {to_unit}")
+    
+    liters = value * liters_per_unit[from_unit]
+    result = liters / liters_per_unit[to_unit]
+    return result
+
+def main():
+    test_cases = [
+        (1.0, 'liter', 'milliliter'),
+        (1000.0, 'milliliter', 'liter'),
+        (1.0, 'cubic_meter', 'liter'),
+        (1.0, 'gallon', 'liter'),
+        (1.0, 'liter', 'gallon'),
+        (100.0, 'cubic_inch', 'milliliter'),
+        (5.0, 'liter', 'cubic_inch'),
+        (1.0, 'cubic_meter', 'cubic_inch'),
+        (10.0, 'gallon', 'cubic_inch'),
+        (1.0, 'cubic_inch', 'cubic_meter')
+    ]
+    
+    for value, from_unit, to_unit in test_cases:
+        result = convert_volume(value, from_unit, to_unit)
+        print(f"{value} {from_unit} = {result} {to_unit}")
+
 if __name__ == '__main__':
-    sample_value = 10
-    from_unit = 'L'
-    to_unit = 'gal'
-    try:
-        result = convert_volume(sample_value, from_unit, to_unit)
-        print(f"{sample_value} {from_unit} is equal to {result:.4f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    sample_value_2 = 1000
-    from_unit_2 = 'm^3'
-    to_unit_2 = 'mL'
-    try:
-        result_2 = convert_volume(sample_value_2, from_unit_2, to_unit_2)
-        print(f"{sample_value_2} {from_unit_2} is equal to {result_2:.0f} {to_unit_2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    sample_value_3 = 1
-    from_unit_3 = 'in^3'
-    to_unit_3 = 'L'
-    try:
-        result_3 = convert_volume(sample_value_3, from_unit_3, to_unit_3)
-        print(f"{sample_value_3} {from_unit_3} is equal to {result_3:.6f} {to_unit_3}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    main()

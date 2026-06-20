@@ -1,28 +1,27 @@
 def convert_volume(volume, target_unit):
-    unit_conversions = {
-        'L': 1.0,
+    _to_liters = {
         'm3': 1000.0,
+        'L': 1.0,
+        'mL': 0.001,
         'gal': 3.78541,
         'qt': 0.946353,
-        'ml': 1000.0,
+        'pt': 0.473176,
+        'cup': 0.236588,
+        'fl_oz': 0.0295735,
     }
-    if target_unit not in unit_conversions:
-        raise ValueError(f"Unknown target unit: {target_unit}")
-    if target_unit == 'L':
-        return volume
-    else:
-        return volume * unit_conversions[target_unit]
+    
+    if target_unit not in _to_liters:
+        raise ValueError(f"Unsupported unit: {target_unit}")
+    
+    liters = volume * _to_liters[target_unit]
+    return liters / 1.0
+
 if __name__ == '__main__':
-    volume_value = 5
-    target_unit_1 = 'L'
-    target_unit_2 = 'm3'
-    target_unit_3 = 'gal'
-    target_unit_4 = 'ml'
-    result_1 = convert_volume(volume_value, target_unit_1)
-    result_2 = convert_volume(volume_value, target_unit_2)
-    result_3 = convert_volume(volume_value, target_unit_3)
-    result_4 = convert_volume(volume_value, target_unit_4)
-    print(f"Volume: {volume_value} L -> {result_1} L")
-    print(f"Volume: {volume_value} L -> {result_2} m3")
-    print(f"Volume: {volume_value} L -> {result_3} gal")
-    print(f"Volume: {volume_value} L -> {result_4} ml")
+    result = convert_volume(5, 'gal')
+    print(result)
+    
+    result_m3 = convert_volume(2000, 'mL')
+    print(result_m3)
+    
+    result_cups = convert_volume(1, 'm3')
+    print(result_cups)

@@ -1,29 +1,48 @@
 import argparse
-def convert_volume(volume, start_unit, target_unit):
-    if start_unit == target_unit:
-        return volume
-    conversion_rates = {
-        ('liters', 'gallons'): 3.78541,
-        ('cubic_meters', 'liters'): 1000,
-        ('gallons', 'liters'): 3.78541,
-        ('liters', 'cubic_meters'): 0.001,
-        ('cubic_meters', 'gallons'): 264.172,
-    }
-    key = (start_unit, target_unit)
-    if key in conversion_rates:
-        return volume * conversion_rates[key]
-    else:
-        raise ValueError(f"Conversion from {start_unit} to {target_unit} is not supported.")
+import sys
+
+class VolumeConverter:
+    def __init__(self):
+        self.units = {
+            'l': 1.0,
+            'ml': 0.001,
+            'gal': 3.78541,
+            'qt': 0.946353,
+            'pt': 0.473176,
+            'cup': 0.236588,
+            'fl_oz': 0.0295735,
+            'tbsp': 0.0147868,
+            'tsp': 0.00492892,
+            'm3': 1000.0,
+            'cm3': 0.001
+        }
+
+    def convert(self, volume, from_unit, to_unit):
+        from_unit_lower = from_unit.lower()
+        to_unit_lower = to_unit.lower()
+        
+        if from_unit_lower not in self.units:
+            raise ValueError(f"Invalid starting unit: {from_unit}")
+        if to_unit_lower not in self.units:
+            raise ValueError(f"Invalid target unit: {to_unit}")
+        
+        volume_in_liters = volume * self.units[from_unit_lower]
+        result = volume_in_liters / self.units[to_unit_lower]
+        return result
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Convert volume between units')
+    parser.add_argument('--volume', type=float, default=1.0, help='Volume to convert')
+    parser.add_argument('--from', dest='from_unit', type=str, default='l', help='Starting unit')
+    parser.add_argument('--to', dest='to_unit', type=str, default='gal', help='Target unit')
+    return parser.parse_args([])
+
+def run_conversion():
+    args = parse_arguments()
+    converter = VolumeConverter()
+    result = converter.convert(args.volume, args.from_unit, args.to_unit)
+    return result
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Volume conversion tool.")
-    parser.add_argument("volume", type=float, help="The volume value to convert.")
-    parser.add_argument("start_unit", type=str, help="The starting unit of volume.")
-    parser.add_argument("target_unit", type=str, help="The target unit of volume.")
-    args = parser.parse_args(["10.0", "liters", "gallons"])
-    try:
-        result = convert_volume(args.volume, args.start_unit, args.target_unit)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    output = run_conversion()
+    print(f"Result: {output}")

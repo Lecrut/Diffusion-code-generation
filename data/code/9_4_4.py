@@ -1,28 +1,39 @@
 import argparse
-def convert_volume(volume, start_unit, target_unit):
-    if start_unit == target_unit:
-        return volume
-    conversion_factors = {
-        ('liters', 'gallons'): 3.78541,
-        ('liters', 'milliliters'): 1000.0,
-        ('gallons', 'liters'): 3.78541,
-        ('gallons', 'milliliters'): 3785.41,
-    }
-    key = (start_unit, target_unit)
-    if key in conversion_factors:
-        return volume * conversion_factors[key]
-    else:
-        raise ValueError(f"Conversion from {start_unit} to {target_unit} is not supported.")
+
+CONVERSION_FACTORS = {
+    "m": 1.0,
+    "km": 1000.0,
+    "cm": 0.01,
+    "mm": 0.001,
+    "mi": 1609.344,
+    "ft": 0.3048,
+    "in": 0.0254,
+    "yd": 0.9144,
+    "nm": 1e-9,
+}
+
+def convert_volume_to_length(value, from_unit, to_unit):
+    if from_unit not in CONVERSION_FACTORS or to_unit not in CONVERSION_FACTORS:
+        raise ValueError("Unsupported unit")
+    meters = value * CONVERSION_FACTORS[from_unit]
+    result = meters / CONVERSION_FACTORS[to_unit]
+    return result
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert volume units to length units")
+    parser.add_argument("volume", type=float, help="The volume value")
+    parser.add_argument("from_unit", type=str, help="The starting unit")
+    parser.add_argument("to_unit", type=str, help="The target unit")
+    args = parser.parse_args([])
+    
+    args = type('obj', (object,), {
+        'volume': 1000,
+        'from_unit': 'cm',
+        'to_unit': 'mm'
+    })()
+    
+    result = convert_volume_to_length(args.volume, args.from_unit, args.to_unit)
+    print(result)
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Volume conversion tool.")
-    parser.add_argument("volume", type=float, help="The volume value to convert.")
-    parser.add_argument("start_unit", type=str, help="The starting unit of volume (e.g., liters).")
-    parser.add_argument("target_unit", type=str, help="The target unit of volume (e.g., gallons).")
-    args = parser.parse_args(["10.0", "liters", "gallons"])
-    try:
-        result = convert_volume(args.volume, args.start_unit, args.target_unit)
-        print(f"{args.volume} {args.start_unit} is equal to {result:.2f} {args.target_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    main()

@@ -1,43 +1,52 @@
+import sys
 import os
-def convert_volume(volume_liters):
-    volume_cubic_meters = volume_liters / 1000.0
-    return volume_liters, volume_cubic_meters
-def process_volume_file(filepath):
-    volume_data = []
+
+def convert_volumes(filename):
     try:
-        with open(filepath, 'r') as file:
-            for line in file:
-                try:
-                    volume_liters = float(line.strip())
-                    volume_data.append(volume_liters)
-                except ValueError:
-                    print(f"Skipping invalid line: {line.strip()}")
+        with open(filename, 'r') as file:
+            lines = file.readlines()
     except FileNotFoundError:
-        print(f"Error: File not found at {filepath}")
-        return
-    except IOError as e:
-        print(f"Error reading file: {e}")
-        return
-    if not volume_data:
-        print("No valid volume data found.")
-        return
-    print("Volume Conversions:")
-    for volume_liters in volume_data:
-        liters, cubic_meters = convert_volume(volume_liters)
-        print(f"Liters: {liters:.2f}, Cubic Meters: {cubic_meters:.4f}")
+        print(f"Error: The file '{filename}' was not found.")
+        return []
+    except PermissionError:
+        print(f"Error: Permission denied when accessing '{filename}'.")
+        return []
+    except Exception as e:
+        print(f"Error reading the file: {e}")
+        return []
+
+    results = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            volume = float(line)
+            liters = volume
+            cubic_meters = volume / 1000.0
+            results.append((volume, liters, cubic_meters))
+        except ValueError:
+            print(f"Warning: Skipping invalid volume value '{line}'")
+            continue
+
+    for original, liters_val, cubic_meters_val in results:
+        print(f"Original: {original} -> Liters: {liters_val} -> Cubic Meters: {cubic_meters_val}")
+    return results
+
 if __name__ == '__main__':
-    sample_filename = "volumes.txt"
-    sample_data = [
-        "1500.5",
-        "2500",
-        "10000",
-        "invalid_data",
-        "500.75"
+    sample_content = [
+        "1000",
+        "500",
+        "1",
+        "invalid",
+        "2500"
     ]
-    try:
-        with open(sample_filename, 'w') as f:
-            for item in sample_data:
-                f.write(item + "\n")
-        process_volume_file(sample_filename)
-    except IOError as e:
-        print(f"An error occurred during file setup: {e}")
+    test_filename = "volumes.txt"
+    
+    with open(test_filename, "w") as f:
+        for item in sample_content:
+            f.write(item + "\n")
+            
+    convert_volumes(test_filename)
+    
+    os.remove(test_filename)

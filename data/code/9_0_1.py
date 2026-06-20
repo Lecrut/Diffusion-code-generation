@@ -1,59 +1,54 @@
-import math
+def liters_to_milliliters(liters):
+    return liters * 1000
+
+def liters_to_cubic_meters(liters):
+    return liters / 1000
+
+def liters_to_gallons(liters):
+    return liters * 0.264172
+
+def liters_to_cubic_inches(liters):
+    return liters * 61.0237
+
+def gallons_to_liters(gallons):
+    return gallons / 0.264172
+
+def milliliters_to_liters(milliliters):
+    return milliliters / 1000
+
+def cubic_meters_to_liters(cubic_meters):
+    return cubic_meters * 1000
+
+def cubic_inches_to_liters(cubic_inches):
+    return cubic_inches / 61.0237
+
 def convert_volume(value, from_unit, to_unit):
-    if from_unit == to_unit:
-        return value
-    conversion_factors = {
-        'L': 1.0 / 1000.0,                       
-        'mL': 1.0 / 1000.0,                            
-        'm3': 1.0,
-        'gal': 0.00378541,                                
-        'in3': 0.0000163871,                                
-        'm3': 1.0,
-        'L': 1000.0,
-        'mL': 1000.0,
-        'gal': 264.172,                                
-        'in3': 16387.1
-    }
-    value_in_m3 = value * conversion_factors.get(from_unit, 1.0)
-    if to_unit == 'm3':
-        return value_in_m3 / conversion_factors.get(to_unit, 1.0)
-    result = value_in_m3 * conversion_factors.get(to_unit, 1.0)
-    return result
-def main():
-    sample_value = 10.0
-    from_unit = 'L'
-    to_unit = 'gal'
-    print(f"Sample Value: {sample_value} {from_unit}")
-    conversions = {
-        ('L', 'mL'): (sample_value * 1000.0),
-        ('L', 'm3'): (sample_value / 1000.0),
-        ('L', 'gal'): (sample_value / 3.78541),
-        ('L', 'in3'): (sample_value * 61.0237),
-        ('mL', 'm3'): (sample_value / 1000.0),
-        ('mL', 'gal'): (sample_value * 0.00378541 / 1000.0),
-        ('m3', 'L'): (sample_value * 1000.0),
-        ('m3', 'gal'): (sample_value / 0.00378541),
-        ('m3', 'in3'): (sample_value / 0.0000163871),
-        ('gal', 'L'): (sample_value * 3.78541),
-        ('gal', 'm3'): (sample_value * 0.00378541),
-        ('gal', 'in3'): (sample_value * 264.172)
-    }
-    print("\n--- Hardcoded Sample Conversions ---")
-    if (from_unit, to_unit) in conversions:
-        result = conversions[(from_unit, to_unit)]
-        print(f"{sample_value} {from_unit} is equal to {result:.4f} {to_unit}")
-    else:
-        print(f"Conversion from {from_unit} to {to_unit} is not directly pre-calculated in the sample set.")
-    print("\n--- Demonstration of General Conversion Function ---")
-    value = 500.0
-    from_unit = 'mL'
-    to_unit = 'm3'
-    result = convert_volume(value, from_unit, to_unit)
-    print(f"{value} {from_unit} is equal to {result:.6f} {to_unit}")
-    value = 1.0
-    from_unit = 'gal'
-    to_unit = 'in3'
-    result = convert_volume(value, from_unit, to_unit)
-    print(f"{value} {from_unit} is equal to {result:.6f} {to_unit}")
+    liters = 0
+    if from_unit == "liters":
+        liters = value
+    elif from_unit == "milliliters":
+        liters = milliliters_to_liters(value)
+    elif from_unit == "cubic_meters":
+        liters = cubic_meters_to_liters(value)
+    elif from_unit == "gallons":
+        liters = gallons_to_liters(value)
+    elif from_unit == "cubic_inches":
+        liters = cubic_inches_to_liters(value)
+    
+    if to_unit == "liters":
+        return liters
+    elif to_unit == "milliliters":
+        return liters_to_milliliters(liters)
+    elif to_unit == "cubic_meters":
+        return liters_to_cubic_meters(liters)
+    elif to_unit == "gallons":
+        return liters_to_gallons(liters)
+    elif to_unit == "cubic_inches":
+        return liters_to_cubic_inches(liters)
+
 if __name__ == '__main__':
-    main()
+    print(convert_volume(1, "liters", "milliliters"))
+    print(convert_volume(1, "gallons", "liters"))
+    print(convert_volume(1, "cubic_meters", "liters"))
+    print(convert_volume(1, "cubic_inches", "liters"))
+    print(convert_volume(500, "milliliters", "liters"))

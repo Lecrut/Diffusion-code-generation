@@ -1,24 +1,38 @@
-import math
-
 class VolumeConverter:
-    """A class to handle conversions between common volume units."""
+    def __init__(self):
+        self.units = {
+            "liter": 1.0,
+            "milliliter": 0.001,
+            "cubic_meter": 1000.0,
+            "gallon": 0.264172,
+            "cubic_inch": 61.0237
+        }
 
-    # Conversion constants relative to liters (1 liter = 0.264172 gallons)
-    CONVERSION_FACTORS_TO_LITERS = {
-        'liter': 1,
-        'milliliter': 0.001,
-        'cubic_meter': 1000,
-        'gallon_us': 3.785412,      # US liquid gallons (approx)
-        'inches_cubed': math.pow(2.54, 3),  # 1 inch = 2.54 cm => 1 in^3 = ~16.387064 ml -> /1000 for L
-    }
+    def to_liters(self, value, unit):
+        unit_lower = unit.lower()
+        if unit_lower not in self.units:
+            raise ValueError(f"Unknown unit: {unit}")
+        return value / self.units[unit_lower]
 
-    def convert_from_to(self, value: float, from_unit: str, to_unit: str) -> float:
-        """Convert a volume value from one unit to another passing through liters."""
-        
-        # Normalize unit names to lowercase and handle plural forms if needed
-        units = {unit.lower(): factor for unit in self.CONVERSION_FACTORS_TO_LITERS.keys()}
-        
-        start_unit_key = None
+    def from_liters(self, value, target_unit):
+        target_lower = target_unit.lower()
+        if target_lower not in self.units:
+            raise ValueError(f"Unknown unit: {target_unit}")
+        return value * self.units[target_lower]
+
+    def convert(self, value, source_unit, target_unit):
+        liters = self.to_liters(value, source_unit)
+        return self.from_liters(liters, target_unit)
 
 if __name__ == '__main__':
-    pass
+    converter = VolumeConverter()
+    result1 = converter.convert(5, "gallon", "liter")
+    result2 = converter.convert(1000, "milliliter", "liter")
+    result3 = converter.convert(1, "cubic_meter", "gallon")
+    result4 = converter.convert(10, "liter", "cubic_inch")
+    result5 = converter.convert(50, "cubic_inch", "milliliter")
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)
+    print(result5)

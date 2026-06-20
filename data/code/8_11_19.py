@@ -1,62 +1,55 @@
 import math
+from typing import List, Union, Optional
 
-def calculate_polygon_area(vertices: list) -> float:
-    """
-    Calculate the area of a polygon given ordered (x, y) vertices using the Shoelace formula.
-    
-    Args:
-        vertices: A list of tuples representing ordered (x, y) coordinates of polygon vertices.
-        
-    Returns:
-        The calculated area as a float. Negative results are treated as absolute values 
-        to handle potential floating-point inaccuracies or incorrect vertex ordering.
-    """
-    n = len(vertices)
-    
-    if n < 3:
-        return 0.0
+SHAPE_ERROR_MSG = "Base class should not be used directly"
 
-    # Sum for the Shoelace formula: sum(x_i * y_{i+1}) - sum(y_i * x_{i+1})
-    area_sum_1 = 0.0
-    area_sum_2 = 0.0
-    
-    for i in range(n):
-        x_curr, y_curr = vertices[i]
-        next_idx = (i + 1) % n
-        next_x, next_y = vertices[next_idx]
-        
-        area_sum_1 += x_curr * next_y
-        area_sum_2 += y_curr * next_x
-    
-    # Apply Shoelace formula: Area = |sum(x_i*y_{i+1}) - sum(y_i*x_{i+1})| / 2
-    raw_area = abs(area_sum_1 - area_sum_2)
-    
-    return round(raw_area, 8)
+class Shape:
+    def area(self) -> float:
+        raise ValueError(SHAPE_ERROR_MSG)
+
+    def scale(self, factor: float) -> None:
+        if factor <= 0:
+            raise ValueError("Scale factor must be positive")
+
+class Circle(Shape):
+    def __init__(self, radius: float) -> None:
+        self.radius = radius
+
+    def area(self) -> float:
+        return math.pi * self.radius ** 2
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.radius *= factor
+
+class Rectangle(Shape):
+    def __init__(self, width: float, height: float) -> None:
+        self.width = width
+        self.height = height
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def scale(self, factor: float) -> None:
+        super().scale(factor)
+        self.width *= factor
+        self.height *= factor
+
+def calculate_scaled_area(shape: Shape, factor: float) -> float:
+    original_area = shape.area()
+    shape.scale(factor)
+    new_area = shape.area()
+    shape.scale(1.0 / factor)
+    return new_area
 
 if __name__ == '__main__':
-    # Sample polygon: A square with vertices (0,0), (4,0), (4,3), (0,3)
-    sample_vertices = [(0.0, 0.0), (4.0, 0.0), (4.0, 3.0), (0.0, 3.0)]
-    
-    result_area = calculate_polygon_area(sample_vertices)
-    print(f"Calculated Area: {result_area}")
+    circle = Circle(5.0)
+    rectangle = Rectangle(4.0, 6.0)
 
-    # Sample triangle with floating point coordinates to test precision handling
-    sample_triangle = [(1.5, 2.5), (4.0, -2.0), (-3.5, 6.0)]
-    
-    result_triangular_area = calculate_polygon_area(sample_triangle)
-    print(f"Calculated Triangle Area: {result_triangular_area}")
+    factor = 2.0
 
-    # Test with single point or two points to ensure edge case handling
-    invalid_cases = [[(1.0, 2.0)], [(3.0, 4.0), (5.0, 6.0)]]
-    
-    for test_case in invalid_cases:
-        area_result = calculate_polygon_area(test_case)
-        print(f"Area of {test_case}: {area_result}")
+    circle_scaled_area = calculate_scaled_area(circle, factor)
+    print(circle_scaled_area)
 
-    # Test with unsorted vertices to ensure absolute value handling works correctly
-    unordered_square = [(4, 3), (0, 0), (-1.5, -2.5)] + sample_vertices[1:] 
-    # Reconstruct a valid but unordered set for testing logic robustness if needed
-    # Actually, let's just reverse the first two points of our original square to simulate unsorted input manually
-    reversed_square = [(4.0, 3.0), (0.0, 0.0)] + sample_vertices[2:] 
-    result_unordered = calculate_polygon_area(reversed_square)
-    print(f"Area with potentially unordered vertices: {result_unordered}")
+    rectangle_scaled_area = calculate_scaled_area(rectangle, factor)
+    print(rectangle_scaled_area)
