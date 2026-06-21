@@ -228552,3 +228552,500 @@ if __name__ == '__main__':
     goal = (4, 4)
     result = bfs_shortest_path(grid, start, goal)
     print(result)",True,True,False,,9,10680,34_1_9.py
+33,14,Find shortest path on grid,"Construct a professional-grade Python class for grid pathfinding that supports diagonal movement and variable costs, returning the optimal path with minimal memory overhead.","import heapq
+
+class GridPathfinder:
+    def __init__(self, grid, diagonal_cost=1.414, cardinal_cost=1.0):
+        self.grid = grid
+        self.rows = len(grid)
+        self.cols = len(grid[0]) if self.rows > 0 else 0
+        self.diagonal_cost = diagonal_cost
+        self.cardinal_cost = cardinal_cost
+        self.visited = set()
+
+    def heuristic(self, pos_a, pos_b):
+        dx = abs(pos_a[0] - pos_b[0])
+        dy = abs(pos_a[1] - pos_b[1])
+        min_cost = min(dx, dy)
+        max_cost = max(dx, dy)
+        return min_cost * self.diagonal_cost + (max_cost - min_cost) * self.cardinal_cost
+
+    def get_neighbors(self, pos):
+        x, y = pos
+        neighbors = [
+            ((x - 1, y), self.cardinal_cost),
+            ((x + 1, y), self.cardinal_cost),
+            ((x, y - 1), self.cardinal_cost),
+            ((x, y + 1), self.cardinal_cost),
+            ((x - 1, y - 1), self.diagonal_cost),
+            ((x + 1, y + 1), self.diagonal_cost),
+            ((x - 1, y + 1), self.diagonal_cost),
+            ((x + 1, y - 1), self.diagonal_cost),
+        ]
+        valid_neighbors = []
+        for (nx, ny), cost in neighbors:
+            if 0 <= nx < self.rows and 0 <= ny < self.cols and self.grid[nx][ny] == 0:
+                valid_neighbors.append(((nx, ny), cost))
+        return valid_neighbors
+
+    def find_path(self, start, end):
+        if self.grid[start[0]][start[1]] != 0 or self.grid[end[0]][end[1]] != 0:
+            return None
+        if start == end:
+            return [start]
+        
+        open_set = []
+        heapq.heappush(open_set, (0, start))
+        came_from = {}
+        g_score = {start: 0}
+        f_score = {start: self.heuristic(start, end)}
+        
+        while open_set:
+            current_f, current = heapq.heappop(open_set)
+            
+            if current == end:
+                path = []
+                while current in came_from:
+                    path.append(current)
+                    current = came_from[current]
+                path.append(current)
+                return path[::-1]
+            
+            if current in self.visited:
+                continue
+            self.visited.add(current)
+            
+            for neighbor, move_cost in self.get_neighbors(current):
+                if neighbor in self.visited:
+                    continue
+                
+                tentative_g = g_score[current] + move_cost
+                
+                if neighbor not in g_score or tentative_g < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g
+                    f = tentative_g + self.heuristic(neighbor, end)
+                    f_score[neighbor] = f
+                    heapq.heappush(open_set, (f, neighbor))
+        
+        return None
+
+def run():
+    grid = [
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    pathfinder = GridPathfinder(grid)
+    start = (0, 0)
+    end = (4, 4)
+    path = pathfinder.find_path(start, end)
+    print(path)
+
+if __name__ == '__main__':
+    run()",True,True,False,,14,10681,33_14_14.py
+34,0,Navigate grid avoiding obstacles,"Write a robust Python function using A* search algorithm to find the shortest path in a 2D grid with hard-coded obstacles, returning the sequence of coordinates.","import heapq
+
+def a_star_search(grid, start, goal):
+    rows = len(grid)
+    cols = len(grid[0])
+    
+    def heuristic(a, b):
+        return abs(a[0] - b[0]) + abs(a[1] - b[1])
+    
+    open_set = [(0, start)]
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, goal)}
+    open_set_hash = {start}
+    
+    moves = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    
+    while open_set:
+        current_f, current = heapq.heappop(open_set)
+        open_set_hash.discard(current)
+        
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            path.reverse()
+            return path
+        
+        for i, j in moves:
+            neighbor_row = current[0] + i
+            neighbor_col = current[1] + j
+            
+            if not (0 <= neighbor_row < rows and 0 <= neighbor_col < cols):
+                continue
+            
+            if grid[neighbor_row][neighbor_col] == 1:
+                continue
+            
+            tentative_g_score = g_score[current] + 1
+            
+            neighbor = (neighbor_row, neighbor_col)
+            
+            if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g_score
+                f_score[neighbor] = tentative_g_score + heuristic(neighbor, goal)
+                if neighbor not in open_set_hash:
+                    heapq.heappush(open_set, (f_score[neighbor], neighbor))
+                    open_set_hash.add(neighbor)
+    
+    return None
+
+if __name__ == '__main__':
+    grid_data = [
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    
+    start_pos = (0, 0)
+    goal_pos = (4, 4)
+    
+    result = a_star_search(grid_data, start_pos, goal_pos)
+    print(result)",True,True,False,,12,10682,34_0_12.py
+34,1,Navigate grid avoiding obstacles,"Implement a highly efficient Python script utilizing BFS to navigate a grid from start to goal, avoiding static obstacles, and outputting the path length.","from collections import deque
+
+def bfs_path_length(grid, start, goal):
+    rows = len(grid)
+    cols = len(grid[0])
+    
+    visited = set()
+    queue = deque([(start, 0)])
+    visited.add(start)
+    
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    
+    while queue:
+        (r, c), dist = queue.popleft()
+        
+        if (r, c) == goal:
+            return dist
+        
+        for dr, dc in directions:
+            nr, nc = r + dr, c + dc
+            
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if grid[nr][nc] == 0 and (nr, nc) not in visited:
+                    visited.add((nr, nc))
+                    queue.append(((nr, nc), dist + 1))
+                    
+    return -1
+
+if __name__ == '__main__':
+    grid = [
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0]
+    ]
+    
+    start = (0, 0)
+    goal = (4, 4)
+    
+    result = bfs_path_length(grid, start, goal)
+    print(result)",True,True,False,,10,10683,34_1_10.py
+34,1,Navigate grid avoiding obstacles,"Implement a highly efficient Python script utilizing BFS to navigate a grid from start to goal, avoiding static obstacles, and outputting the path length.","from collections import deque
+
+def solve_grid_maze(maze):
+    rows = len(maze)
+    cols = len(maze[0]) if rows > 0 else 0
+    
+    start = None
+    goal = None
+    
+    for r in range(rows):
+        for c in range(cols):
+            if maze[r][c] == 'S':
+                start = (r, c)
+            elif maze[r][c] == 'G':
+                goal = (r, c)
+                
+    if start is None or goal is None:
+        return -1
+        
+    queue = deque([(start, 0)])
+    visited = set([start])
+    
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    
+    while queue:
+        (r, c), dist = queue.popleft()
+        
+        if (r, c) == goal:
+            return dist
+        
+        for dr, dc in directions:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if (nr, nc) not in visited and maze[nr][nc] != '#':
+                    if (nr, nc) == goal:
+                        return dist + 1
+                    visited.add((nr, nc))
+                    queue.append(((nr, nc), dist + 1))
+                    
+    return -1
+
+if __name__ == '__main__':
+    maze_example = [
+        ['S', '.', '.', '#'],
+        ['#', '.', '.', '.'],
+        ['.', '.', '.', 'G']
+    ]
+    
+    result = solve_grid_maze(maze_example)
+    print(result)",True,True,False,,11,10684,34_1_11.py
+34,0,Navigate grid avoiding obstacles,"Write a robust Python function using A* search algorithm to find the shortest path in a 2D grid with hard-coded obstacles, returning the sequence of coordinates.","import heapq
+
+def a_star_shortest_path(grid, start, goal):
+    rows = len(grid)
+    cols = len(grid[0])
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    
+    def heuristic(a, b):
+        return abs(a[0] - b[0]) + abs(a[1] - b[1])
+    
+    open_set = []
+    heapq.heappush(open_set, (heuristic(start, goal), start))
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, goal)}
+    closed_set = set()
+    
+    while open_set:
+        current_f, current = heapq.heappop(open_set)
+        
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            return path[::-1]
+        
+        closed_set.add(current)
+        
+        for dr, dc in directions:
+            neighbor = (current[0] + dr, current[1] + dc)
+            r, c = neighbor
+            
+            if 0 <= r < rows and 0 <= c < cols and grid[r][c] == 0 and neighbor not in closed_set:
+                tentative_g = g_score[current] + 1
+                
+                if neighbor not in g_score or tentative_g < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g
+                    f = tentative_g + heuristic(neighbor, goal)
+                    f_score[neighbor] = f
+                    heapq.heappush(open_set, (f, neighbor))
+    
+    return None
+
+if __name__ == '__main__':
+    grid = [
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 1, 0],
+        [1, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0]
+    ]
+    start = (0, 0)
+    goal = (4, 4)
+    path = a_star_shortest_path(grid, start, goal)
+    print(path)",True,True,False,,13,10685,34_0_13.py
+33,14,Find shortest path on grid,"Construct a professional-grade Python class for grid pathfinding that supports diagonal movement and variable costs, returning the optimal path with minimal memory overhead.","import heapq
+from typing import List, Tuple, Optional, Dict, Set
+
+class GridPathfinder:
+    def __init__(self, grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int], allow_diagonal: bool = False):
+        self.grid = grid
+        self.rows = len(grid)
+        self.cols = len(grid[0]) if self.rows > 0 else 0
+        self.start = start
+        self.goal = goal
+        self.allow_diagonal = allow_diagonal
+        self.visited: Set[Tuple[int, int]] = set()
+        self.parents: Dict[Tuple[int, int], Tuple[int, int]] = {}
+        self.g_scores: Dict[Tuple[int, int], float] = {}
+        self._validate_bounds()
+
+    def _validate_bounds(self):
+        if not (0 <= self.start[0] < self.rows and 0 <= self.start[1] < self.cols):
+            raise ValueError(""Start position out of bounds"")
+        if not (0 <= self.goal[0] < self.rows and 0 <= self.goal[1] < self.cols):
+            raise ValueError(""Goal position out of bounds"")
+        if self.grid[self.start[0]][self.start[1]] == 0:
+            raise ValueError(""Start position is an obstacle"")
+        if self.grid[self.goal[0]][self.goal[1]] == 0:
+            raise ValueError(""Goal position is an obstacle"")
+
+    def _get_neighbors(self, r: int, c: int) -> List[Tuple[int, int, float]]:
+        moves = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        if self.allow_diagonal:
+            moves.extend([(-1, -1), (-1, 1), (1, -1), (1, 1)])
+        neighbors = []
+        for dr, dc in moves:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < self.rows and 0 <= nc < self.cols:
+                if self.grid[nr][nc] != 0:
+                    cost = self.grid[nr][nc] * (1.41421356 if self.allow_diagonal and dr != 0 and dc != 0 else 1.0)
+                    neighbors.append((nr, nc, cost))
+        return neighbors
+
+    def find_optimal_path(self) -> Tuple[Optional[List[Tuple[int, int]]], float]:
+        if self.start == self.goal:
+            return [self.start], self.grid[self.start[0]][self.start[1]]
+        open_set: List[Tuple[float, int, int]] = []
+        heapq.heappush(open_set, (0.0, self.start[0], self.start[1]))
+        self.g_scores[self.start] = self.grid[self.start[0]][self.start[1]]
+        self.visited.clear()
+        self.parents.clear()
+        while open_set:
+            current_f, r, c = heapq.heappop(open_set)
+            if (r, c) in self.visited:
+                continue
+            self.visited.add((r, c))
+            if (r, c) == self.goal:
+                return self._reconstruct_path(), self.g_scores[self.goal]
+            current_g = self.g_scores.get((r, c), float('inf'))
+            for nr, nc, move_cost in self._get_neighbors(r, c):
+                if (nr, nc) in self.visited:
+                    continue
+                tentative_g = current_g + move_cost
+                if tentative_g < self.g_scores.get((nr, nc), float('inf')):
+                    self.parents[(nr, nc)] = (r, c)
+                    self.g_scores[(nr, nc)] = tentative_g
+                    heuristic = self._calculate_heuristic(nr, nc)
+                    f_score = tentative_g + heuristic
+                    heapq.heappush(open_set, (f_score, nr, nc))
+        return None, -1.0
+
+    def _calculate_heuristic(self, r: int, c: int) -> float:
+        dr = abs(r - self.goal[0])
+        dc = abs(c - self.goal[1])
+        if self.allow_diagonal:
+            return (1.41421356 * min(dr, dc)) + (1.0 * abs(dr - dc))
+        else:
+            return float(dr + dc)
+
+    def _reconstruct_path(self) -> List[Tuple[int, int]]:
+        path: List[Tuple[int, int]] = []
+        current = self.goal
+        while current != self.start:
+            path.append(current)
+            current = self.parents[current]
+        path.append(self.start)
+        path.reverse()
+        return path
+
+if __name__ == '__main__':
+    sample_grid = [
+        [1, 2, 1, 1, 1],
+        [1, 0, 0, 0, 1],
+        [1, 2, 1, 2, 1],
+        [1, 1, 0, 1, 1],
+        [1, 2, 1, 1, 1]
+    ]
+    start_pos = (0, 0)
+    goal_pos = (4, 4)
+    pathfinder = GridPathfinder(sample_grid, start_pos, goal_pos, allow_diagonal=True)
+    path, total_cost = pathfinder.find_optimal_path()
+    print(f""Path: {path}"")
+    print(f""Total Cost: {total_cost}"")",True,True,False,,15,10686,33_14_15.py
+34,0,Navigate grid avoiding obstacles,"Write a robust Python function using A* search algorithm to find the shortest path in a 2D grid with hard-coded obstacles, returning the sequence of coordinates.","import heapq
+
+def heuristic(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+def a_star_search(grid, start, goal):
+    rows = len(grid)
+    cols = len(grid[0]) if rows > 0 else 0
+    
+    if rows == 0 or cols == 0:
+        return []
+        
+    if grid[start[0]][start[1]] == 1 or grid[goal[0]][goal[1]] == 1:
+        return []
+        
+    open_set = []
+    heapq.heappush(open_set, (0, start))
+    
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, goal)}
+    
+    closed_set = set()
+    
+    while open_set:
+        current_f, current = heapq.heappop(open_set)
+        
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            path.reverse()
+            return path
+            
+        if current in closed_set:
+            continue
+            
+        closed_set.add(current)
+        
+        row, col = current
+        neighbors = [
+            (row - 1, col),
+            (row + 1, col),
+            (row, col - 1),
+            (row, col + 1)
+        ]
+        
+        for neighbor in neighbors:
+            n_row, n_col = neighbor
+            
+            if n_row < 0 or n_row >= rows or n_col < 0 or n_col >= cols:
+                continue
+                
+            if grid[n_row][n_col] == 1:
+                continue
+                
+            if neighbor in closed_set:
+                continue
+                
+            tentative_g = g_score[current] + 1
+            
+            if neighbor not in g_score or tentative_g < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g
+                f = tentative_g + heuristic(neighbor, goal)
+                f_score[neighbor] = f
+                heapq.heappush(open_set, (f, neighbor))
+                
+    return []
+
+if __name__ == '__main__':
+    grid = [
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    
+    start = (0, 0)
+    goal = (4, 4)
+    
+    path = a_star_search(grid, start, goal)
+    print(path)",True,True,False,,14,10687,34_0_14.py
