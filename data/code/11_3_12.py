@@ -1,20 +1,10 @@
 def get_repeated_char_frequencies(text):
-    counts = {}
+    freq = {}
     for char in text:
-        if char in counts:
-            counts[char] += 1
-        else:
-            counts[char] = 1
-    result = {}
-    for char, count in counts.items():
-        if count > 1:
-            result[char] = count
-    return result
+        freq[char] = freq.get(char, 0) + 1
+    return {char: count for char, count in freq.items() if count > 1}
 
 if __name__ == '__main__':
-    sample_string = "programming"
-    print(get_repeated_char_frequencies(sample_string))
-    sample_string = "aabbccdde"
-    print(get_repeated_char_frequencies(sample_string))
-    sample_string = "hello"
-    print(get_repeated_char_frequencies(sample_string))
+    sample_text = "hello world"
+    result = get_repeated_char_frequencies(sample_text)
+    print(result)

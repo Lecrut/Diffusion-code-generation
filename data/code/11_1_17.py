@@ -1,15 +1,9 @@
 def find_duplicate_chars(text):
-    char_counts = {}
+    char_count = {}
     for char in text:
-        char_counts[char] = char_counts.get(char, 0) + 1
-    
-    duplicates = []
-    for char, count in char_counts.items():
-        if count > 1:
-            duplicates.append(char)
-    
-    duplicates.sort()
-    return duplicates
+        char_count[char] = char_count.get(char, 0) + 1
+    duplicates = {char for char, count in char_count.items() if count > 1}
+    return sorted(duplicates)
 
 if __name__ == '__main__':
     sample_text = "programming"

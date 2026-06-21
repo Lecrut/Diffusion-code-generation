@@ -1,10 +1,15 @@
 def extract_repeated_characters(s):
-    counts = {}
+    all_chars = set(s)
+    unique_chars = set()
+    repeated_chars = set()
     for char in s:
-        counts[char] = counts.get(char, 0) + 1
-    return list(set(char for char, count in counts.items() if count > 1))
+        if char in unique_chars:
+            repeated_chars.add(char)
+        else:
+            unique_chars.add(char)
+    return sorted(list(repeated_chars))
 
 if __name__ == '__main__':
-    sample_string = "programming"
+    sample_string = "hello world"
     result = extract_repeated_characters(sample_string)
     print(result)

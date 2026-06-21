@@ -1,4 +1,4 @@
-def extract_repeated_characters(s):
+def extract_repeated_chars(s: str) -> str:
     seen = set()
     repeated = set()
     for char in s:
@@ -6,8 +6,9 @@ def extract_repeated_characters(s):
             repeated.add(char)
         else:
             seen.add(char)
-    return sorted(list(repeated))
+    return "".join(sorted(repeated, key=s.index))
 
 if __name__ == '__main__':
-    sample = "programming"
-    print(extract_repeated_characters(sample))
+    sample_input = "programming"
+    result = extract_repeated_chars(sample_input)
+    print(result)

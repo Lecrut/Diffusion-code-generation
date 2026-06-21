@@ -1,11 +1,23 @@
-def find_duplicate_chars(text):
-    counts = {}
-    for char in text:
-        counts[char] = counts.get(char, 0) + 1
-    duplicates = [char for char, count in counts.items() if count > 1]
-    return sorted(duplicates)
+import collections
+
+def find_duplicate_characters(text):
+    if not text:
+        return []
+    counts = collections.Counter(text)
+    duplicates = sorted({char for char, count in counts.items() if count > 1})
+    return duplicates
+
+class TextAnalyzer:
+    def __init__(self, content):
+        self.content = content
+
+    def get_duplicates(self):
+        return find_duplicate_characters(self.content)
 
 if __name__ == '__main__':
-    sample_text = "programming"
-    result = find_duplicate_chars(sample_text)
-    print(result)
+    test_string = "hello world"
+    analyzer = TextAnalyzer(test_string)
+    print(analyzer.get_duplicates())
+    another_string = "Mississippi"
+    analyzer.content = another_string
+    print(analyzer.get_duplicates())
