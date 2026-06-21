@@ -1,30 +1,18 @@
-class StringAnalyzer:
-    """A class to analyze string properties."""
+from typing import Union
 
-    def get_length(self, text):
-        """
-        Computes and returns the length of the input string.
+def _validate_positive_dimension(value: Union[int, float]) -> None:
+    if not isinstance(value, (int, float)):
+        raise TypeError("Dimensions must be numeric")
+    if value <= 0:
+        raise ValueError("Dimensions must be positive")
 
-        Args:
-            text (str): The string whose length is to be computed.
-
-        Returns:
-            int: The number of characters in the string.
-        """
-        return len(text)
+def calculate_rectangle_area(width: float, height: float) -> float:
+    _validate_positive_dimension(width)
+    _validate_positive_dimension(height)
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    analyzer = StringAnalyzer()
-    
-    test_cases = [
-        "Hello, World!",
-        "",
-        "Python 3.12",
-        "Café résumé"
-    ]
-
-    print("String Length Analysis Results:")
-    for text in test_cases:
-        length = analyzer.get_length(text)
-        print(f"'{text}' has a length of {length}.")
+    WIDTH_VALUE = 7.5
+    HEIGHT_VALUE = 12.0
+    area_result = calculate_rectangle_area(WIDTH_VALUE, HEIGHT_VALUE)
+    print(area_result)

@@ -1,27 +1,14 @@
-def total_combined_length(strings):
-    """
-    Calculates the total combined length of all strings in a list.
-    
-    Args:
-        strings (list[str]): A list containing string elements.
-        
-    Returns:
-        int: The sum of lengths of all strings in the input list.
-        
-    Complexity Analysis:
-        Time: O(n), where n is the number of strings, as each string is traversed once to count characters.
-        Space: O(1) auxiliary space, excluding the input and output storage.
-    
-    Example:
-        >>> total_combined_length(["hello", "world"])
-        10
-    """
-    return sum(len(s) for s in strings)
+def calculate_rectangle_area(width: int, height: int) -> int:
+    if not isinstance(width, int):
+        raise TypeError("width must be an integer")
+    if not isinstance(height, int):
+        raise TypeError("height must be an integer")
+    if width < 0 or height < 0:
+        raise ValueError("width and height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or file access is required.
-    test_data = ["Python", "is", "awesome!", "", "robust"]
-    
-    result = total_combined_length(test_data)
-    
-    print(f"Total combined length: {result}")
+    w = 5
+    h = 10
+    area = calculate_rectangle_area(w, h)
+    print(area)

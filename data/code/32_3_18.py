@@ -1,7 +1,12 @@
-# Single line expression to find length of 'Hello World' with explanation in docstring
-length = len('Hello World')  # The mechanism is Python's built-in len() function which returns the number of characters (or items) in a sequence; for strings it counts each character including spaces.
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers.")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative.")
+    return width * height
 
 if __name__ == '__main__':
-    sample_string = 'Hello World'
-    result_length = len(sample_string)
-    print(f"Length of '{sample_string}' is {result_length}")
+    w = 5.0
+    h = 3.5
+    result = calculate_rectangle_area(w, h)
+    print(result)

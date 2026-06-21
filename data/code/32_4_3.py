@@ -1,16 +1,16 @@
-def total_string_length(strings):
-    """
-    Calculates the combined length of all strings in a list.
-    
-    Args:
-        strings (list[str]): A list containing string elements.
-        
-    Returns:
-        int: The sum of lengths of all strings in the input list.
-    """
-    return sum(len(s) for s in strings)
+def rectangle_area(width, height):
+    if not isinstance(width, (int, float)):
+        raise TypeError("width must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("height must be a number")
+    if width < 0:
+        raise ValueError("width must be non-negative")
+    if height < 0:
+        raise ValueError("height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    sample_data = ["hello", "world", "!"]
-    result = total_string_length(sample_data)
-    print(result)  # Output: 12 (5 + 5 + 1)
+    print(rectangle_area(5, 10))
+    print(rectangle_area(3.5, 2))
+    print(rectangle_area(0, 10))
+    print(rectangle_area(7, 0))

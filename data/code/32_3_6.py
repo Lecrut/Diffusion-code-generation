@@ -1,4 +1,12 @@
-# Concise single-line expression to find string length with explanation comment integrated in main block execution logic
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise ValueError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
+
 if __name__ == '__main__':
-    s = 'Hello World'  # Hard-coded sample value: a standard English phrase containing spaces and mixed case characters.
-    print(len(s))      # Executes the len() function on s, returning an integer representing the count of characters including letters and whitespace.
+    width = 5
+    height = 10
+    result = calculate_rectangle_area(width, height)
+    print(result)

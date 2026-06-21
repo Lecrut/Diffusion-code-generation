@@ -1,4 +1,10 @@
-length = len('Hello World')  # The `len()` function returns an integer representing the number of characters in a string by iterating through its iterable content (characters). If __name__ == '__main__': length = len('Hello World'); print(length)
+def compute_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers.")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative.")
+    return width * height
 
 if __name__ == '__main__':
-    pass
+    result = compute_rectangle_area(5, 10)
+    print(result)

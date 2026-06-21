@@ -1,9 +1,7 @@
-def word_lengths_generator(sentence):
-    words = sentence.split()
-    for word in words:
-        yield len(word)
+def calculate_rectangle_area(length, width):
+    return length * width
+
 if __name__ == '__main__':
-    sample_sentence = "This is a sample sentence for testing"
-    length_generator = word_lengths_generator(sample_sentence)
-    result_list = list(length_generator)
-    print(result_list)
+    print(calculate_rectangle_area(5, 10))
+    print(calculate_rectangle_area(3.5, 4.2))
+    print(calculate_rectangle_area(7, 3.14159))

@@ -1,28 +1,18 @@
-import re
-
-def word_length_generator(sentence: str):
-    """
-    Yields the length of each word in the given sentence.
-    
-    Optimizes memory efficiency by processing the string without creating 
-    intermediate lists or copies, yielding values one at a time as they are found.
-    
-    Args:
-        sentence (str): The input text to process. Words are defined as sequences 
-                        separated by whitespace and punctuation is stripped from word boundaries.
-        
-    Yields:
-        int: The length of the next word found in the sentence.
-    """
-    # Use a regex iterator which processes the string efficiently without loading everything into memory at once
-    words = re.finditer(r'\b\w+\b', sentence)
-    
-    for match in words:
-        yield len(match.group())
+def calculate_rectangle_area(length, width):
+    try:
+        result = float(length) * float(width)
+        if result.is_integer():
+            return int(result)
+        return result
+    except (ValueError, TypeError) as e:
+        raise ValueError("Length and width must be numbers convertible to float") from e
 
 if __name__ == '__main__':
-    sample_sentence = "Hello, World! This is a test."
-    
-    print("Word lengths from:", repr(sample_sentence))
-    results = list(word_length_generator(sample_sentence))
-    print(results)  # Expected output: [5, 5, 3, 2, 4]
+    sample_length = 5
+    sample_width = 3.5
+    area = calculate_rectangle_area(sample_length, sample_width)
+    print(area)
+    sample_length_int = 10
+    sample_width_int = 20
+    area_int = calculate_rectangle_area(sample_length_int, sample_width_int)
+    print(area_int)

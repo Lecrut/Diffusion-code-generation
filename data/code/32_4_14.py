@@ -1,23 +1,14 @@
-def total_string_length(string_list):
-    """
-    Calculates the combined length of all strings in a list efficiently.
-    
-    This function iterates through the provided list, calculating the len() 
-    of each string and accumulating the sum. It avoids unnecessary type checks
-    or conversions unless specifically needed for robustness against non-string inputs,
-    though per requirements we assume valid input based on task description.
-
-    Args:
-        string_list (list[str]): A list containing strings.
-        
-    Returns:
-        int: The total combined length of all strings in the list.
-    """
-    return sum(len(s) for s in string_list if isinstance(s, str))
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)):
+        raise TypeError("width must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("height must be a number")
+    if isinstance(width, bool):
+        raise TypeError("width must not be bool")
+    if isinstance(height, bool):
+        raise TypeError("height must not be bool")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or external dependencies are needed
-    sample_data = ["Hello", "World", "!"]
-    
-    result = total_string_length(sample_data)
-    print(f"Total combined length: {result}")  # Expected output for the provided samples (5 + 5 + 1 = 11)
+    result = calculate_rectangle_area(5, 10)
+    print(result)

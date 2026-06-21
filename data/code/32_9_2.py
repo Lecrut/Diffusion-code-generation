@@ -1,20 +1,23 @@
-class LengthCalculator:
-    @staticmethod
-    def calculate_length(data):
-        if isinstance(data, (list, tuple, str)):
-            return len(data)
-        elif isinstance(data, dict):
-            return len(data)
-        else:
-            return 0
+def rectangle_area(width, height):
+    if not isinstance(width, (int, float)):
+        raise TypeError("Width must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("Height must be a number")
+    if width < 0:
+        raise ValueError("Width must be non-negative")
+    if height < 0:
+        raise ValueError("Height must be non-negative")
+    return width * height
+
 if __name__ == '__main__':
-    sample1 = [1, 2, 3, 4, 5]
-    sample2 = "hello"
-    sample3 = {"a": 1, "b": 2}
-    sample4 = 123
-    sample5 = []
-    print(f"Length of {sample1}: {LengthCalculator.calculate_length(sample1)}")
-    print(f"Length of '{sample2}': {LengthCalculator.calculate_length(sample2)}")
-    print(f"Length of {sample3}: {LengthCalculator.calculate_length(sample3)}")
-    print(f"Length of {sample4}: {LengthCalculator.calculate_length(sample4)}")
-    print(f"Length of {sample5}: {LengthCalculator.calculate_length(sample5)}")
+    print(rectangle_area(5, 10))
+    print(rectangle_area(0, 10))
+    print(rectangle_area(3.5, 2.0))
+    try:
+        rectangle_area(-1, 5)
+    except ValueError as e:
+        print(e)
+    try:
+        rectangle_area("5", 10)
+    except TypeError as e:
+        print(e)

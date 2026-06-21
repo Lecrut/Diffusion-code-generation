@@ -1,12 +1,8 @@
-def main():
-    # Hard-coded sample phrase to satisfy requirements without user input
-    phrase = "Hello"
-    
-    # Calculate exact length of the phrase
-    length = len(phrase)
-    
-    # Print the result to console
-    print(length)
+def calculate_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    main()
+    width = 10
+    height = 5
+    area = calculate_area(width, height)
+    print(area)

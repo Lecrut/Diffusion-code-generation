@@ -1,39 +1,12 @@
-def total_string_length(string_list):
-    """
-    Calculates the combined length of all strings in a given list without 
-    creating intermediate string objects to ensure high performance.
-    
-    Args:
-        string_list (list[str]): A list containing zero or more string elements.
-        
-    Returns:
-        int: The sum of lengths of all strings in the input list.
-
-    Raises:
-        TypeError: If an element in the list is not a string instance.
-    """
-    total_length = 0
-    
-    # Iterate through each item to check type and accumulate length directly
-    for item in string_list:
-        if isinstance(item, str):
-            total_length += len(item)
-        else:
-            raise TypeError(f"List contains non-string element of type {type(item).__name__}")
+def calculate_rectangle_area(width: int, height: int) -> int:
+    if not isinstance(width, int) or not isinstance(height, int):
+        raise TypeError("width and height must be integers")
+    if width < 0 or height < 0:
+        raise ValueError("width and height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values ensuring no external dependencies or input required
-    test_cases = [
-        ["hello", "world"],
-        [],
-        ["python", "is", "fast"],
-        ["a"] * 100,
-        []
-    ]
-
-    for i, data in enumerate(test_cases):
-        try:
-            result = total_string_length(data)
-            print(f"Test case {i + 1}: Input length={len(data)}, Total characters={result}")
-        except TypeError as e:
-            print(f"Test case {i + 1} Error: {e}")
+    width = 10
+    height = 20
+    result = calculate_rectangle_area(width, height)
+    print(result)

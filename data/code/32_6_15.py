@@ -1,10 +1,8 @@
-# Command-line script to calculate phrase length using a hard-coded sample value as per constraints
-def main():
-    # Hard-coded sample phrase since input() is prohibited
-    phrase = "Python programming is fun!"
-    
-    # Calculate and print the exact length of the phrase
-    print(len(phrase))
+def calculate_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    main()
+    width = 5
+    height = 10
+    result = calculate_area(width, height)
+    print(result)

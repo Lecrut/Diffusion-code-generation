@@ -1,19 +1,15 @@
-import sys
-
-def calculate_total_length(string_list):
-    """
-    Calculates the total combined length of all strings in the provided list.
-    
-    Args:
-        string_list (list[str]): A list containing zero or more string elements.
-        
-    Returns:
-        int: The sum of the lengths of all strings in the input list.
-    """
-    return sum(len(s) for s in string_list)
+def rectangle_area(width, height):
+    if not isinstance(width, (int, float)):
+        raise TypeError("width must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("height must be a number")
+    if width < 0:
+        raise ValueError("width must be non-negative")
+    if height < 0:
+        raise ValueError("height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    sample_strings = ["hello", "world", "!"]
-    
-    result_length = calculate_total_length(sample_strings)
-    print(f"Total combined length: {result_length}")
+    print(rectangle_area(5, 10))
+    print(rectangle_area(3.5, 4))
+    print(rectangle_area(0, 100))

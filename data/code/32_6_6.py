@@ -1,6 +1,5 @@
-def main():
-    phrase = "Hello"
-    print(len(phrase))
+def rectangle_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    main()
+    print(rectangle_area(5, 10))

@@ -1,7 +1,10 @@
-# Concise single-line expression to find string length with explanation comment
-length = len('Hello World')  # The 'len()' function returns the number of characters in a string object, which is computed by counting each character including spaces and case sensitivity.
+def rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers.")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative.")
+    return width * height
 
 if __name__ == '__main__':
-    sample_string = "Hello World"
-    result_length = len(sample_string)
-    print(f"The length of '{sample_string}' is {result_length}.")
+    result = rectangle_area(5, 10)
+    print(result)

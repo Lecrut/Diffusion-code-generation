@@ -1,6 +1,6 @@
-def calculate_length(input_string):
-    return len(input_string)
+def calculate_rectangle_area(width: float, height: float) -> float:
+    return width * height
+
 if __name__ == '__main__':
-    sample_string = "Hello World! This is a test."
-    result = calculate_length(sample_string)
+    result = calculate_rectangle_area(5.0, 3.0)
     print(result)

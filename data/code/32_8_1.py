@@ -1,11 +1,8 @@
-import unittest
-class TestStringLength:
-    def test_string_length(self):
-        self.assertEqual(len("hello"), 5)
-        self.assertEqual(len(""), 0)
-        self.assertEqual(len("abcde"), 5)
-        self.assertEqual(len("!@#$%^&*()"), 10)
-        self.assertEqual(len("a"), 1)
-        self.assertEqual(len("long string with spaces"), 22)
+def rectangle_area(width, height):
+    return width * height
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    width_val = 10
+    height_val = 5
+    result = rectangle_area(width_val, height_val)
+    print(result)

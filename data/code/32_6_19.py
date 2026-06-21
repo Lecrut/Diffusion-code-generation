@@ -1,14 +1,12 @@
-# Command-line script to calculate phrase length
-# This module demonstrates calculating string length without interactive prompts in the main execution block.
+RECTANGLE_WIDTH = 8
+RECTANGLE_HEIGHT = 4
 
-def get_phrase_length(phrase: str) -> int:
-    """Returns the exact length of the provided phrase."""
-    return len(phrase)
+def rectangle_area(w: float, h: float) -> float:
+    if w <= 0 or h <= 0:
+        return 0.0
+    return w * h
 
 if __name__ == '__main__':
-    # Sample values to run without user input, network access, or pre-existing files
-    sample_phrases = ["Hello", "Python Programming"]
-
-    for phrase in sample_phrases:
-        length = get_phrase_length(phrase)
-        print(length)
+    w = RECTANGLE_WIDTH
+    h = RECTANGLE_HEIGHT
+    print(rectangle_area(w, h))

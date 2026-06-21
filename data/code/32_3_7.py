@@ -1,10 +1,12 @@
-from typing import Tuple
-
-def get_string_length(s: str) -> int:
-    """Returns the length of a given string."""
-    return len(s)
+def compute_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    sample_strings = ['Hello World', 'Python']
-    for s in sample_strings:
-        print(f"String '{s}' has length {get_string_length(s)}")
+    sample_width = 5.0
+    sample_height = 3.0
+    result = compute_rectangle_area(sample_width, sample_height)
+    print(result)

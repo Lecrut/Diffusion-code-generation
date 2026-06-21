@@ -1,7 +1,12 @@
-# Function to calculate string length using multiple valid mechanisms combined in one line
-def get_length():
-    return len('Hello World') if True else 0 # Simulating conditional logic that always resolves to correct length calculation via built-in operator
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    result = get_length()
+    w = 5
+    h = 10
+    result = calculate_rectangle_area(w, h)
     print(result)

@@ -1,15 +1,5 @@
-def get_phrase_length():
-    """Calculates the length of a user-provided phrase."""
-    try:
-        # Simulating input by using a hardcoded sample value as per constraints
-        phrase = "Hello, World!"
-        
-        # Calculate and print the exact length
-        return len(phrase)
-    
-    except Exception:
-        return 0
+def compute_rectangle_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    result = get_phrase_length()
-    print(result)
+    print(compute_rectangle_area(5, 10))

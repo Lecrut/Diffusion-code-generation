@@ -1,20 +1,29 @@
-import unittest
+from typing import Union
 
-def measure_string_length(s: str) -> int:
-    """Returns an integer representing the length of a string."""
-    return len(s)
+Number = Union[int, float]
 
-class TestMeasureStringLength(unittest.TestCase):
-    def test_empty_string(self):
-        self.assertEqual(measure_string_length(""), 0)
+def validate_dimensions(width: Number, height: Number) -> None:
+    if width <= 0 or height <= 0:
+        raise ValueError("Dimensions must be positive")
 
-    def test_non_ascii_characters(self):
-        special_chars = "😀🎉★☆❌✅"
-        expected_length = len(special_chars)
-        result = measure_string_length(special_chars)
-        self.assertEqual(result, expected_length)
+def calculate_area(width: Number, height: Number) -> Number:
+    validate_dimensions(width, height)
+    return float(width) * float(height)
+
+class RectangleCalculator:
+    def __init__(self, width: Number, height: Number) -> None:
+        self.width = width
+        self.height = height
+
+    def get_area(self) -> Number:
+        validate_dimensions(self.width, self.height)
+        return self.width * self.height
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestMeasureStringLength)
-    runner = unittest.TextTestRunner(verbosity=2)
-    runner.run(suite)
+    sample_width = 12.5
+    sample_height = 8.0
+    direct_result = calculate_area(sample_width, sample_height)
+    print(direct_result)
+    
+    rect_instance = RectangleCalculator(sample_width, sample_height * 2)
+    print(rect_instance.get_area())

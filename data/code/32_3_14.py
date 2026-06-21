@@ -1,6 +1,16 @@
-# Single line expression to find length of 'Hello World' with explanation logic embedded via print in if block
-length = len('Hello World') # This uses Python's built-in len() function which returns the number of characters (21) including space and case sensitivity matters.
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
+
 if __name__ == '__main__':
-    sample_string = "Hello World"  # Hard-coded sample value as per requirements, no user input needed
-    result_length = len(sample_string)
-    print(f"The length of '{sample_string}' is {result_length} characters.")
+    w = 5.5
+    h = 3.2
+    area = calculate_rectangle_area(w, h)
+    print(area)
+    w2 = 10
+    h2 = 10
+    area2 = calculate_rectangle_area(w2, h2)
+    print(area2)

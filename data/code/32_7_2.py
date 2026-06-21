@@ -1,9 +1,14 @@
-def word_lengths_generator(sentence):
-    words = sentence.split()
-    for word in words:
-        yield len(word)
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
+
 if __name__ == '__main__':
-    sample_sentence = "This is a sample sentence for testing"
-    length_generator = word_lengths_generator(sample_sentence)
-    results = list(length_generator)
-    print(results)
+    integer_width = 5
+    integer_height = 10
+    float_width = 3.5
+    float_height = 4.2
+    print(calculate_rectangle_area(integer_width, integer_height))
+    print(calculate_rectangle_area(float_width, float_height))

@@ -1,48 +1,18 @@
-"""Utility module containing a static method to calculate string length."""
-
-class StringUtils:
-    """Provides utility functions for basic string operations."""
-
-    @staticmethod
-    def get_length(text: str) -> int:
-        """
-        Calculate the number of characters in the given string.
-
-        This is equivalent to len() but encapsulated as a static method
-        within this class, adhering to clean code principles.
-
-        Args:
-            text (str): The input string for which length needs to be calculated.
-
-        Returns:
-            int: The character count of the provided string.
-
-        Raises:
-            TypeError: If the input is not a string instance.
-        """
-        if not isinstance(text, str):
-            raise TypeError("Input must be a string.")
-        
-        return len(text)
+def rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numbers")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without external inputs.
-    
-    test_cases = [
-        "Hello, World!",
-        "",
-        "Python is awesome.",
-        123,  # This will trigger a TypeError as expected logic check
-        None, # Another type error case
-    ]
-
-    for sample in test_cases:
-        try:
-            length_result = StringUtils.get_length(sample)
-            print(f"Input: {repr(sample)}")
-            print(f"Length: {length_result}")
-            print("-" * 20)
-        except TypeError as te:
-            print(f"Input: {repr(sample)}")
-            print(f"Error (Type Error): {te}")
-            print("-" * 20)
+    print(rectangle_area(5, 10))
+    print(rectangle_area(3.5, 2))
+    try:
+        rectangle_area("5", 10)
+    except TypeError as e:
+        print(e)
+    try:
+        rectangle_area(-5, 10)
+    except ValueError as e:
+        print(e)

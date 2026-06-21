@@ -1,23 +1,29 @@
-def print_length(func):
-    """Decorator that prints the length of any string passed to it."""
-    def wrapper(*args, **kwargs):
-        result = func(*args)  # Call original function and get its return value
-        
-        if isinstance(result, str):
-            print(f"Length: {len(result)}")
-        
-        return result
-    
-    return wrapper
+WIDTH_LIMIT = 1e9
+HEIGHT_LIMIT = 1e9
 
-@print_length
-def greet(name: str) -> str:
-    """Returns a greeting message."""
-    return f"Hello, {name}!"
+class RectangleGeometry:
+    def __init__(self, width, height):
+        self._validate(width)
+        self._validate(height)
+        self.width = width
+        self.height = height
+
+    def _validate(self, value):
+        if isinstance(value, bool):
+            raise TypeError("Dimensions must be numeric types, not bool.")
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"Dimension must be int or float, got {type(value).__name__}.")
+        if value < 0:
+            raise ValueError("Dimensions must be non-negative.")
+
+    def calculate_area(self):
+        w = self.width
+        h = self.height
+        if w > WIDTH_LIMIT or h > HEIGHT_LIMIT:
+            raise OverflowError("Dimensions exceed maximum allowed size.")
+        return w * h
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    messages = ["Python", "Beautiful is better than ugly.", "!@#$%", ""]
-    
-    for msg in messages:
-        print("Input:", repr(msg))
+    rect = RectangleGeometry(10, 20)
+    area = rect.calculate_area()
+    print(area)

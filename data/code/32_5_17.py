@@ -1,20 +1,14 @@
-def print_string_length(func):
-    """Decorator that prints the length of any string passed to it before executing the function."""
-    def wrapper(*args, **kwargs):
-        # Check if all positional arguments are strings and calculate their lengths
-        for arg in args:
-            if isinstance(arg, str):
-                print(f"Length of '{arg}': {len(arg)}")
-        
-        return func(*args, **kwargs)
-    return wrapper
-
-@print_string_length
-def greet(name):
-    """A simple greeting function."""
-    return f"Hello, {name}"
+def calculate_rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or isinstance(width, bool):
+        raise TypeError("Width must be a numeric value")
+    if not isinstance(height, (int, float)) or isinstance(height, bool):
+        raise TypeError("Height must be a numeric value")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate the decorator functionality
-    print(greet("Alice"))
-    print(greet("Bob"))
+    area = calculate_rectangle_area(5, 10)
+    print(area)
+    try:
+        calculate_rectangle_area("5", 10)
+    except TypeError as e:
+        print(e)
