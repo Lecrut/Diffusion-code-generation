@@ -1,7 +1,8 @@
-def sort_integers(int_list):
-    return sorted(int_list)
+def find_max(a, b, c):
+    return a if a > b and a > c else (b if b > c else c)
 
 if __name__ == '__main__':
-    sample_values = [34, 7, 23, 32, 5, 62]
-    sorted_values = sort_integers(sample_values)
-    print(sorted_values)
+    x = 10
+    y = 25
+    z = 5
+    print(find_max(x, y, z))

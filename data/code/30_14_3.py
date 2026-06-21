@@ -1,24 +1,9 @@
-def swap_even_odd(s):
-    n = len(s)
-    if n == 0:
-        return ""
-    result = list(s)
-    for i in range(0, n - 1, 2):
-        result[i], result[i+1] = result[i+1], result[i]
-    return "".join(result)
+import math
+
+def calculate_circle_area(radius):
+    return math.pi * radius ** 2
+
 if __name__ == '__main__':
-    test_string_1 = "abcdefgh"
-    print(f"Input: {test_string_1}")
-    print(f"Output: {swap_even_odd(test_string_1)}")
-    test_string_2 = "abcde"
-    print(f"Input: {test_string_2}")
-    print(f"Output: {swap_even_odd(test_string_2)}")
-    test_string_3 = "a"
-    print(f"Input: {test_string_3}")
-    print(f"Output: {swap_even_odd(test_string_3)}")
-    test_string_4 = ""
-    print(f"Input: {test_string_4}")
-    print(f"Output: {swap_even_odd(test_string_4)}")
-    test_string_5 = "123456"
-    print(f"Input: {test_string_5}")
-    print(f"Output: {swap_even_odd(test_string_5)}")
+    radius = 5.0
+    area = calculate_circle_area(radius)
+    print(area)

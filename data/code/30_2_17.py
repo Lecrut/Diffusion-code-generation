@@ -1,26 +1,21 @@
-def swap_adjacent_pairs(s: str) -> str:
-    """Swap all adjacent character pairs within the string."""
-    if len(s) % 2 == 1:
-        return s
-    
-    result = []
-    i = 0
-    while i + 1 < len(s):
-        # Swap characters at index i and i+1
-        pair = list(s[i:i+2])
-        pair.reverse()
-        result.extend(pair)
-        i += 2
-    
-    return ''.join(result)
+import math
+
+class CircleCalculator:
+    def compute_area(self, radius: float) -> float:
+        if not isinstance(radius, (int, float)):
+            raise TypeError("Radius must be a number")
+        if radius < 0:
+            raise ValueError("Radius must be non-negative")
+        return math.pi * (radius * radius)
+
+def calculate_circle_area(radius: float) -> float:
+    calculator = CircleCalculator()
+    return calculator.compute_area(radius)
 
 if __name__ == '__main__':
-    test_strings = [
-        "abcdef",
-        "",
-        "abcd"
-    ]
-    
-    for input_str in test_strings:
-        output_str = swap_adjacent_pairs(input_str)
-        print(output_str)
+    test_radius_one = 7.5
+    area_one = calculate_circle_area(test_radius_one)
+    print(area_one)
+    test_radius_two = 12.0
+    area_two = calculate_circle_area(test_radius_two)
+    print(area_two)

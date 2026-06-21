@@ -1,11 +1,15 @@
-def swap_adjacent_chars(s: str) -> str:
-    """Swaps all adjacent characters in a string using slicing."""
-    if not s:
-        return ""
-    
-    # Create list of lists to hold pairs, then join back together with swapped elements
-    result_parts = []
-    i = 0
+import math
+
+_RADIi_UNITS = {
+    "m": 1.0,
+    "cm": 0.01,
+    "in": 0.0254
+}
+
+def circle_area(radius, unit="m"):
+    factor = _RADIi_UNITS.get(unit, 1.0)
+    return math.pi * (radius * factor) ** 2
 
 if __name__ == '__main__':
-    pass
+    print(circle_area(10, "cm"))
+    print(circle_area(2, "in"))

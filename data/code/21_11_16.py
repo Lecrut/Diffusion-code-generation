@@ -1,16 +1,9 @@
-def sort_by_descending(numbers):
-    """
-    Returns a new list containing the input numbers sorted in descending order.
-    
-    Args:
-        numbers (list of float/int): The list of numerical values to be sorted.
-        
-    Returns:
-        list of float/int: A new list with elements sorted from largest to smallest.
-    """
-    return sorted(numbers, reverse=True)
+def find_largest(a, b, c):
+    return a if a > b and a > c else (b if b > c else c)
 
 if __name__ == '__main__':
-    sample_data = [3.5, 1.2, -4.7, 0, 8, 99]
-    result = sort_by_descending(sample_data)
+    x = 10
+    y = 30
+    z = 20
+    result = find_largest(x, y, z)
     print(result)

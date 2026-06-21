@@ -1,7 +1,5 @@
-def is_palindrome(s: str) -> bool:
-    return s == s[::-1]
+def calculate_square_area(side_length): return side_length ** 2
 
 if __name__ == '__main__':
-    test_strings = ["racecar", "hello", "a", "abba"]
-    for word in test_strings:
-        print(f"{word}: {is_palindrome(word)}")
+    print(calculate_square_area(5.5))
+    print(calculate_square_area(10.123456789))

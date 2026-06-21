@@ -1,12 +1,9 @@
-class StringOperations:
-    def is_palindrome(self, text):
-        processed_text = "".join(filter(str.isalnum, text)).lower()
-        return processed_text == processed_text[::-1]
+import math
+
+def calculate_square_area(side_length):
+    return float(math.pow(side_length, 2))
+
 if __name__ == '__main__':
-    so = StringOperations()
-    print(so.is_palindrome("A man, a plan, a canal: Panama"))
-    print(so.is_palindrome("racecar"))
-    print(so.is_palindrome("hello"))
-    print(so.is_palindrome("Madam"))
-    print(so.is_palindrome("12321"))
-    print(so.is_palindrome("No lemon, no melon"))
+    sample_side = 5.5
+    area = calculate_square_area(sample_side)
+    print(area)

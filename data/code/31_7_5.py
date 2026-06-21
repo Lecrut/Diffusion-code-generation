@@ -1,19 +1,7 @@
-def is_palindrome_optimized(s: str) -> bool:
-    n = len(s)
-    for i in range(n // 2):
-        if s[i] != s[n - 1 - i]:
-            return False
-    return True
+def compute_square_areas(sides):
+    return [s * s for s in sides]
+
 if __name__ == '__main__':
-    string1 = "racecar"
-    string2 = "hello"
-    string3 = "madam"
-    string4 = "world"
-    string5 = ""
-    string6 = "a"
-    print(f"'{string1}' is palindrome: {is_palindrome_optimized(string1)}")
-    print(f"'{string2}' is palindrome: {is_palindrome_optimized(string2)}")
-    print(f"'{string3}' is palindrome: {is_palindrome_optimized(string3)}")
-    print(f"'{string4}' is palindrome: {is_palindrome_optimized(string4)}")
-    print(f"'{string5}' is palindrome: {is_palindrome_optimized(string5)}")
-    print(f"'{string6}' is palindrome: {is_palindrome_optimized(string6)}")
+    side_lengths = [3, 4, 5, 6, 7]
+    areas = compute_square_areas(side_lengths)
+    print(areas)

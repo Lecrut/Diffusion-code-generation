@@ -1,10 +1,9 @@
-"""
-Palindrome Checker Module
-
-Provides optimized methods to determine if a string is a palindrome.
-Includes two implementations: one using the two-pointer approach 
-and another utilizing Python's efficient string slicing capabilities.
-"""
+def compute_area(side_length):
+    if side_length < 0:
+        return 0
+    return side_length ** 2
 
 if __name__ == '__main__':
-    pass
+    side = 7
+    result = compute_area(side)
+    print(result)

@@ -1,5 +1,7 @@
-def is_palindrome(s: str) -> bool:
-    return s == s[::-1]
+def get_square_area(side):
+    return float(side) * float(side)
 
 if __name__ == '__main__':
-    assert is_palindrome("racecar") == True and is_palindrome("hello") == False, "Test failed"
+    side_values = [4.5, 0.003, 12.125]
+    for value in side_values:
+        print(get_square_area(value))

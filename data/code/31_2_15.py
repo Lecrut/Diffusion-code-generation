@@ -1,18 +1,9 @@
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome."""
-    return s == s[::-1]
+def calculate_square_area(side_length):
+    if isinstance(side_length, int) and side_length >= 0:
+        return side_length << 1 if side_length == 0 else (side_length ** 2)
+    return side_length ** 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    test_strings = [
-        "racecar",
-        "hello",
-        "A man a plan a canal Panama"  # This one is not strictly palindrome due to spaces and case, handled by simple check above.
-    ]
-
-    for text in test_strings:
-        result = is_palindrome(text)
-        if result:
-            print(f"'{text}' is a palindrome.")
-        else:
-            print(f"'{text}' is NOT a palindrome.")
+    test_values = [5, 10, 0, 7]
+    for value in test_values:
+        print(calculate_square_area(value))

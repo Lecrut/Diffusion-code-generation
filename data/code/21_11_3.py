@@ -1,16 +1,11 @@
-def sort_by_descending(numbers):
-    """
-    Sorts a list of numbers in descending order using Python's built-in sorted function.
-    
-    Args:
-        numbers (list): A list of numerical values to be sorted.
-        
-    Returns:
-        list: A new list containing the same elements as input, but sorted in descending order.
-    """
-    return sorted(numbers, reverse=True)
+def compute_max(a, b, c):
+    first = a if a > b else b
+    second = c if c > first else first
+    return second
 
 if __name__ == '__main__':
-    sample_data = [3, 1, 4, 5, 9, 2, 6]
-    result = sort_by_descending(sample_data)
-    print(result)
+    val_x = 42
+    val_y = 17
+    val_z = 65
+    maximum = compute_max(val_x, val_y, val_z)
+    print(maximum)

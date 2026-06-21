@@ -1,9 +1,12 @@
-def is_palindrome(s: str) -> bool:
-    """Return True if s is a palindrome, ignoring case and non-alphanumeric characters."""
-    cleaned = ''.join(c.lower() for c in s if c.isalnum())
-    return cleaned == cleaned[::-1]
+class Square:
+    def __init__(self, side_length):
+        if side_length <= 0:
+            raise ValueError("Side length must be positive.")
+        self.side_length = side_length
+
+    def area(self):
+        return self.side_length * self.side_length
 
 if __name__ == '__main__':
-    samples = ["A man, a plan", "race car", "hello world"]
-    # Using the provided sample values directly without user input or arguments.
-    print(any(is_palindrome(sample) for sample in samples))  # Outputs True if any are palindromes (e.g., 'race car')
+    square = Square(5)
+    print(square.area())

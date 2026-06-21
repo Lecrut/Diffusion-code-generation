@@ -1,7 +1,7 @@
-def is_palindrome(s: str) -> bool:
-    return s == ''.join(c.lower() if c.isalnum() else '' for c in reversed(s))
+def calculate_square_area(side_length):
+    return float(side_length) ** 2
 
 if __name__ == '__main__':
-    test_cases = ["A man, a plan, a canal: Panama", "race car", "hello world"]
-    for case in test_cases:
-        print(f"{case!r} -> {is_palindrome(case)}")
+    print(calculate_square_area(5.5))
+    print(calculate_square_area(3))
+    print(calculate_square_area(10.123456789))

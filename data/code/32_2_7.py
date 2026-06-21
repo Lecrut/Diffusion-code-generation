@@ -1,23 +1,8 @@
-class StringAnalyzer:
-    """A class to analyze string properties."""
-
-    def get_length(self, text):
-        """
-        Computes and returns the length of the input string.
-
-        Args:
-            text (str): The input string whose length is to be computed.
-
-        Returns:
-            int: The number of characters in the string.
-        """
-        return len(text)
+def calculate_rectangle_area(width: float, height: float) -> float:
+    return width * height
 
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-    
-    sample_texts = ["Hello", "Python Programming", "", "The quick brown fox"]
-    
-    for text in sample_texts:
-        length = analyzer.get_length(text)
-        print(f"Text: '{text}', Length: {length}")
+    sample_width = 5.0
+    sample_height = 10.0
+    result = calculate_rectangle_area(sample_width, sample_height)
+    print(result)

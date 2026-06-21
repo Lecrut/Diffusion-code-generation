@@ -1,14 +1,13 @@
-def is_palindrome(s: str) -> bool:
-    cleaned = ''.join(ch.lower() for ch in s if ch.isalnum())
-    return cleaned == cleaned[::-1]
+class Square:
+    def __init__(self, side):
+        self.side = side
+
+    def area(self):
+        if self.side < 0:
+            raise ValueError("Side length cannot be negative")
+        return self.side ** 2
 
 if __name__ == '__main__':
-    samples = [
-        "A man, a plan, a canal: Panama",
-        "race car",
-        "Hello World!",
-        "Not a palindrome"
-    ]
-
-    for sample in samples:
-        print(f"'{sample}': {is_palindrome(sample)}")
+    SQUARE_SIDE = 50
+    shape = Square(SQUARE_SIDE)
+    print(shape.area())

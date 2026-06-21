@@ -1,9 +1,17 @@
-def swap_adjacent(s):
-    s_list = list(s)
-    for i in range(len(s_list) - 1):
-        s_list[i], s_list[i+1] = s_list[i+1], s_list[i]
-    return "".join(s_list)
+import math
+
+def calculate_circle_area(radius):
+    try:
+        if not isinstance(radius, (int, float)):
+            raise TypeError("Radius must be a numeric value")
+        if radius < 0:
+            raise ValueError("Radius cannot be negative")
+        return math.pi * radius * radius
+    except (TypeError, ValueError) as e:
+        return str(e)
+
 if __name__ == '__main__':
-    test_string = "abcde"
-    result = swap_adjacent(test_string)
-    print(result)
+    print(calculate_circle_area(5))
+    print(calculate_circle_area(-3))
+    print(calculate_circle_area("abc"))
+    print(calculate_circle_area(0))

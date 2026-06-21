@@ -1,6 +1,6 @@
-def calculate_phrase_length(phrase):
-    return len(phrase)
+def compute_rectangle_area(width, height):
+    return float(width) * float(height)
+
 if __name__ == '__main__':
-    sample_phrase = "Hello world"
-    length = calculate_phrase_length(sample_phrase)
-    print(length)
+    result = compute_rectangle_area(5, 10)
+    print(result)

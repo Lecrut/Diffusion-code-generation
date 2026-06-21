@@ -1,8 +1,11 @@
-result = ""
-        # But wait, I need a single expression or minimal structure.
-        # Let's try: 
-        # swapped_pairs = []
-        # for i in range(0, len(text), 2): ... this is a loop. Is that allowed? "Use slicing". It doesn't ban loops but suggests optimization via slicing.
+import math
+
+def compute_circle_area(radius):
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    return math.pi * (radius ** 2)
 
 if __name__ == '__main__':
-    pass
+    test_radius = 5.0
+    area = compute_circle_area(test_radius)
+    print(area)

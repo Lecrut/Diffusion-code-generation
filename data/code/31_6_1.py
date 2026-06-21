@@ -1,25 +1,12 @@
-def is_palindrome(s):
-    if not s:
-        return True
-    processed_s = "".join(filter(str.isalnum, s)).lower()
-    return processed_s == processed_s[::-1]
+def calculate_area(side_length):
+    if side_length < 0:
+        raise ValueError("Side length cannot be negative")
+    return side_length * side_length
+
 if __name__ == '__main__':
-    test_cases = [
-        ("racecar", True),
-        ("hello", False),
-        ("", True),
-        ("a", True),
-        ("aba", True),
-        ("Madam", True),
-        ("A man, a plan, a canal: Panama", True),
-        ("121", True),
-        ("12321", True),
-        (" ", True),
-        ("!@#$%^&*", True),
-        ("abcde", False),
-        ("1a2b1", False)
-    ]
-    for input_str, expected in test_cases:
-        result = is_palindrome(input_str)
-        assert result == expected, f"Input: '{input_str}', Expected: {expected}, Got: {result}"
-        print(f"Input: '{input_str}', Result: {result}, Expected: {expected} - PASS")
+    print(calculate_area(5))
+    print(calculate_area(7.5))
+    try:
+        print(calculate_area(-3))
+    except ValueError as e:
+        print(e)

@@ -1,20 +1,15 @@
-import re
+def validate_side_length(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Side length must be a number")
+    if value <= 0:
+        raise ValueError("Side length must be positive")
+    return True
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string reads the same forwards and backward, ignoring spaces and punctuation."""
-    cleaned = ''.join(c.lower() for c in s if c.isalnum())
-    return cleaned == cleaned[::-1]
+def calculate_square_area(side_length):
+    validate_side_length(side_length)
+    return side_length ** 2
 
 if __name__ == '__main__':
-    samples = [
-        "A man, a plan, a canal: Panama",
-        "racecar",
-        "No 'x' niixon",
-        "Hello, World!",
-        "",
-        "Was it a car or a cat I saw?",
-    ]
-
-    for sample in samples:
-        result = is_palindrome(sample)
-        print(f"'{sample}' -> {result}")
+    SIDE = 50
+    computed_area = calculate_square_area(SIDE)
+    print(computed_area)

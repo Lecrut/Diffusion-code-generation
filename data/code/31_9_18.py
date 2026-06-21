@@ -1,9 +1,12 @@
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome ignoring case."""
-    cleaned = s.lower()
-    return cleaned == cleaned[::-1]
+class Shape:
+    def __init__(self, side_length):
+        self.side = side_length
+
+    def get_area(self):
+        if self.side is None:
+            return 0
+        return self.side ** 2
 
 if __name__ == '__main__':
-    test_cases = ["racecar", "Hello, World!", "Python"]
-    for word in test_cases:
-        print(f"'{word}': {is_palindrome(word)}")
+    shape = Shape(side_length=10)
+    print(shape.get_area())

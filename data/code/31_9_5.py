@@ -1,11 +1,12 @@
-import re
+class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
 
-def is_palindrome(text: str) -> bool:
-    """Check if a string is a palindrome, ignoring case, spaces, and punctuation."""
-    cleaned = re.sub(r'[^a-zA-Z0-9]', '', text.lower())
-    return cleaned == cleaned[::-1]
+    def calculate_area(self):
+        return self.side_length * self.side_length
 
 if __name__ == '__main__':
-    samples = ["A man, a plan, a canal: Panama", "racecar", "hello"]
-    for sample in samples:
-        print(f"'{sample}' is {'a palindrome' if is_palindrome(sample) else 'not a palindrome'}")
+    sample_square = Square(5)
+    print(sample_square.calculate_area())
+    sample_rectangle = Square(10)
+    print(sample_rectangle.calculate_area())

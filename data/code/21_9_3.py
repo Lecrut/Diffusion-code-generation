@@ -1,12 +1,19 @@
-def sort_list_of_dicts(data, key):
-    return sorted(data, key=lambda x: x[key])
+def get_max(a, b, c):
+    VAL_ONE = 1
+    result = a
+    if b > result:
+        result = b
+    if c > result:
+        result = c
+    return result
+
 if __name__ == '__main__':
-    data = [
-        {'name': 'Alice', 'age': 30, 'score': 85},
-        {'name': 'Bob', 'age': 25, 'score': 92},
-        {'name': 'Charlie', 'age': 35, 'score': 88},
-        {'name': 'David', 'age': 25, 'score': 95}
-    ]
-    key_to_sort_by = 'age'
-    sorted_data = sort_list_of_dicts(data, key_to_sort_by)
-    print(sorted_data)
+    SAMPLE_X = 42
+    SAMPLE_Y = 17
+    SAMPLE_Z = 99
+    output = get_max(SAMPLE_X, SAMPLE_Y, SAMPLE_Z)
+    print(output)
+    output2 = get_max(-10, -5, -20)
+    print(output2)
+    output3 = get_max(0, 0, 0)
+    print(output3)

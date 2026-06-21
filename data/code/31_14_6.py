@@ -1,19 +1,15 @@
-import re
+def is_valid_side(side):
+    if not isinstance(side, (int, float)):
+        raise TypeError("Side must be a number")
+    if side < 0:
+        raise ValueError("Side must be non-negative")
+    return True
 
-def is_palindrome(text: str) -> bool:
-    """Check if a string is a palindrome ignoring spaces, punctuation, and case."""
-    cleaned = "".join(c.lower() for c in text if c.isalnum())
-    return cleaned == cleaned[::-1]
+def calculate_square_area(side_length):
+    is_valid_side(side_length)
+    return side_length * side_length
 
 if __name__ == '__main__':
-    samples = [
-        "A man, a plan, a canal: Panama",
-        "race a car",
-        "Was it a cat and I saw a raccoon?",
-        "",
-        "No 'x' in Nixon"
-    ]
-
-    for sample in samples:
-        result = is_palindrome(sample)
-        print(f"'{sample}' -> {result}")
+    fixed_side = 50
+    computed_area = calculate_square_area(fixed_side)
+    print(computed_area)

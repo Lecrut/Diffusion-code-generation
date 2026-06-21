@@ -1,16 +1,11 @@
-import sys
-
-def sort_integers(data):
-    """Sorts a list of integers in ascending order using Timsort."""
-    return sorted(data)
+def find_largest(a, b, c):
+    if not all(isinstance(x, int) for x in (a, b, c)):
+        raise TypeError("All arguments must be integers")
+    return max(a, b, c)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    sample_data = [64, 34, 25, 12, 98, -10, 72, 45]
-
-    # Sort the data and print the result as a single line of space-separated integers.
-    sorted_list = sort_integers(sample_data)
-    
-    # Output format: each integer on its own line for clarity in standard output streams.
-    for number in sorted_list:
-        print(number)
+    VAL_1 = 42
+    VAL_2 = 99
+    VAL_3 = 17
+    result = find_largest(VAL_1, VAL_2, VAL_3)
+    print(result)

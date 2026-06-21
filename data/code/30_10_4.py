@@ -1,28 +1,14 @@
-def swap_characters(s: str) -> str:
-    """Swaps adjacent pairs of characters in a string in place."""
-    if len(s) == 0:
-        return s
-    
-    # Convert list to make mutable operations possible
-    chars = list(s)
-    
-    # Iterate over the list with step size 2
-    for i in range(0, len(chars), 2):
-        # Check if there is a second character at this position
-        if i + 1 < len(chars):
-            # Swap current and next character
-            chars[i], chars[i + 1] = chars[i + 1], chars[i]
-    
-    return ''.join(chars)
+import math
+
+def calculate_circle_area(radius):
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    return math.pi * radius ** 2
 
 if __name__ == '__main__':
-    sample_strings = [
-        "abcdef",
-        "",
-        "a",
-        "xyztuv"
-    ]
-    
-    for original in sample_strings:
-        result = swap_characters(original)
-        print(f"Original: '{original}' -> Swapped: '{result}'")
+    sample_radius = 5
+    area = calculate_circle_area(sample_radius)
+    print(area)
+    sample_radius_2 = 10.5
+    area_2 = calculate_circle_area(sample_radius_2)
+    print(area_2)

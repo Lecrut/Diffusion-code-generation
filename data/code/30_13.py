@@ -1,7 +1,5 @@
+import math
+def circle_area(r):
+    return math.pi * r ** 2
 if __name__ == '__main__':
-    s = "abcdef"
-    n = len(s)
-    new_s = list(s)
-    for i in range(n - 1):
-        new_s[i], new_s[i+1] = new_s[i+1], new_s[i]
-    print("".join(new_s))
+    print(circle_area(5))

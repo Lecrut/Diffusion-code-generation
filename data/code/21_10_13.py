@@ -1,16 +1,15 @@
-import sys
+def _validate_integers(x, y, z):
+    if not isinstance(x, int) or not isinstance(y, int) or not isinstance(z, int):
+        raise TypeError("All arguments must be integers")
+    return True
 
-def sort_integers(numbers):
-    """Sorts a list of integers in ascending order using Timsort."""
-    return sorted(numbers)
+def find_largest(a, b, c):
+    _validate_integers(a, b, c)
+    return max(a, b, c)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to avoid any user input or file dependencies.
-    unsorted_data = [5, 2, 9, 1, 7, 3]
-
-    # Sort the data efficiently using Timsort (O(n log n)).
-    sorted_data = sort_integers(unsorted_data)
-
-    # Print each number on a new line to standard output.
-    for num in sorted_data:
-        print(num)
+    VAL_A = 42
+    VAL_B = 99
+    VAL_C = 55
+    largest_value = find_largest(VAL_A, VAL_B, VAL_C)
+    print(largest_value)

@@ -1,13 +1,9 @@
-import sys
-def swap_adjacent_pairs(s):
-    n = len(s)
-    if n < 2:
-        return s
-    result = list(s)
-    for i in range(0, n - 1, 2):
-        result[i], result[i+1] = result[i+1], result[i]
-    return "".join(result)
+import math
+
+def circle_area(radius: float) -> float:
+    return math.pi * radius ** 2
+
 if __name__ == '__main__':
-    input_string = "abcdefgh"
-    output_string = swap_adjacent_pairs(input_string)
-    print(output_string)
+    radius = 5.0
+    result = circle_area(radius)
+    print(result)

@@ -1,19 +1,7 @@
-def is_palindrome_optimized(s: str) -> bool:
-    n = len(s)
-    for i in range(n // 2):
-        if s[i] != s[n - 1 - i]:
-            return False
-    return True
+def compute_square_areas(side_lengths):
+    return [side ** 2 for side in side_lengths]
+
 if __name__ == '__main__':
-    test_strings = [
-        "racecar",
-        "hello",
-        "madam",
-        "a",
-        "",
-        "level",
-        "abcde"
-    ]
-    for s in test_strings:
-        result = is_palindrome_optimized(s)
-        print(f"'{s}': {result}")
+    sides = [3, 5, 7, 10]
+    areas = compute_square_areas(sides)
+    print(areas)

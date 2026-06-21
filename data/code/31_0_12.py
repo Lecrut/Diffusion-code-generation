@@ -1,27 +1,11 @@
-def is_palindrome(s: str) -> bool:
-    """
-    Checks if a string is a palindrome, ignoring case and non-alphanumeric characters.
-    
-    Args:
-        s (str): The input string to check.
-        
-    Returns:
-        bool: True if the string is a palindrome, False otherwise.
-    """
-    filtered = ''.join(char.lower() for char in s if char.isalnum())
-    return filtered == filtered[::-1]
+def calculate_square_area(side):
+    if not isinstance(side, (int, float)):
+        raise TypeError("Side length must be a numeric value (int or float).")
+    if side < 0:
+        raise ValueError("Side length cannot be negative.")
+    return side * side
 
 if __name__ == '__main__':
-    # Sample test cases with no user input required
-    samples = [
-        "A man, a plan, a canal: Panama",
-        "race a car",
-        "Was it a car or a cat I saw?",
-        "",
-        "No 'x' in Nixon.",
-        "Not a palindrome"
-    ]
-
-    for sample in samples:
-        result = is_palindrome(sample)
-        print(f"'{sample}' -> {result}")
+    test_side = 5
+    area = calculate_square_area(test_side)
+    print(area)

@@ -1,12 +1,8 @@
-import sys
-def calculate_phrase_length(phrase):
-    return len(phrase)
+def calculate_rectangle_area(width, height):
+    return float(width * height)
+
 if __name__ == '__main__':
-    sample_phrase_1 = "Hello World"
-    sample_phrase_2 = "Python Optimization"
-    sample_phrase_3 = ""
-    sample_phrase_4 = "a"
-    print(f"Length of '{sample_phrase_1}': {calculate_phrase_length(sample_phrase_1)}")
-    print(f"Length of '{sample_phrase_2}': {calculate_phrase_length(sample_phrase_2)}")
-    print(f"Length of '{sample_phrase_3}': {calculate_phrase_length(sample_phrase_3)}")
-    print(f"Length of '{sample_phrase_4}': {calculate_phrase_length(sample_phrase_4)}")
+    width = 5.5
+    height = 3.2
+    area = calculate_rectangle_area(width, height)
+    print(area)

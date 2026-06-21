@@ -1,26 +1,10 @@
-def calculate_phrase_length(phrase: str) -> int:
-    """
-    Calculates the total character count of a given string using Python's built-in len() function,
-    which is implemented in C and offers optimal performance compared to manual iteration or regex.
+def calculate_rectangle_area(width: float, height: float) -> float:
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative")
+    return width * height
 
-    Args:
-        phrase (str): The input string for which the length needs to be calculated.
-
-    Returns:
-        int: The total number of characters in the provided string.
-    """
-    return len(phrase)
-
-if __name__ == '__main__':
-    # Hard-coded sample values as per requirements; no user input or external dependencies used.
-    samples = [
-        "Hello, World!",
-        "",
-        "Python is awesome.",
-        "12345",
-        "!@#$%^&*()",
-    ]
-
-    for phrase in samples:
-        length = calculate_phrase_length(phrase)
-        print(f"Phrase: '{phrase}' -> Length: {length}")
+if __name__ == "__main__":
+    sample_width = 5.5
+    sample_height = 3.2
+    result = calculate_rectangle_area(sample_width, sample_height)
+    print(result)

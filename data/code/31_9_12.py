@@ -1,8 +1,10 @@
-def is_palindrome(s: str) -> bool:
-    return s == s[::-1]
+class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+
+    def area(self):
+        return self.side_length ** 2
 
 if __name__ == '__main__':
-    sample_strings = ["racecar", "hello", "_", "!x!"]
-    for text in sample_strings:
-        result = is_palindrome(text)
-        print(f"'{text}'" + (" IS a palindrome." if result else " is NOT a palindrome."))
+    s = Square(5)
+    print(s.area())

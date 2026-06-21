@@ -1,7 +1,11 @@
-import operator
-def sort_strings_case_insensitive(string_list):
-    return sorted(string_list, key=str.lower)
+def find_greatest(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
 if __name__ == '__main__':
-    sample_list = ["Apple", "banana", "Cherry", "date", "apricot"]
-    sorted_list = sort_strings_case_insensitive(sample_list)
-    print(sorted_list)
+    result = find_greatest(10, 25, 15)
+    print(result)

@@ -1,7 +1,10 @@
+class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+
+    def calculate_area(self):
+        return self.side_length * self.side_length
+
 if __name__ == '__main__':
-    s1 = "racecar"
-    s2 = "hello"
-    s3 = "madam"
-    print(s1 == s1[::-1])
-    print(s2 == s2[::-1])
-    print(s3 == s3[::-1])
+    square = Square(5)
+    print(square.calculate_area())

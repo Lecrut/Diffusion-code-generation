@@ -1,3 +1,5 @@
+def square_area(side): return side ** 2
+
 if __name__ == '__main__':
-    s = "racecar"
-    print(s == s[::-1])
+    print(square_area(5.0))
+    print(square_area(3.5))

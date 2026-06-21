@@ -1,26 +1,13 @@
-class StringAnalyzer:
-    def get_length(self, text):
-        """
-        Computes and returns the length of the input string.
+from typing import Union
 
-        Args:
-            text (str): The input string to measure.
+class Geometry:
+    DEFAULT_WIDTH = 5.5
+    DEFAULT_HEIGHT = 7.5
 
-        Returns:
-            int: The number of characters in the string.
-        """
-        return len(text)
+    @staticmethod
+    def calculate_rectangle_area(width: Union[int, float], height: Union[int, float]) -> float:
+        return float(width * height)
 
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-
-    sample_texts = [
-        "Hello, World!",
-        "",
-        "Python is awesome.",
-        "The quick brown fox jumps over the lazy dog."
-    ]
-
-    for text in sample_texts:
-        length = analyzer.get_length(text)
-        print(f"Length of '{text}': {length}")
+    sample_area = Geometry.calculate_rectangle_area(Geometry.DEFAULT_WIDTH, Geometry.DEFAULT_HEIGHT)
+    print(sample_area)

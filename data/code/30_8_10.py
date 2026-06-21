@@ -1,36 +1,26 @@
-def swap_adjacent_characters(s: str) -> str:
-    """
-    Swaps adjacent characters in a string two positions at a time from left to right.
-    
-    For example, if the input is "abcd", it becomes "badc". If the length is odd,
-    the last character remains as is since there is no pair for it.
-    
-    Args:
-        s (str): The input string whose adjacent characters will be swapped.
-        
-    Returns:
-        str: A new string with every even-indexed and odd-indexed pair of 
-             characters interchanged, or the original character at an odd length's end if one remains.
+import math
 
-    Examples:
-        >>> swap_adjacent_characters("abcd")
-        'badc'
-        >>> swap_adjacent_characters('abc')
-        'bac'
-        >>> swap_adjacent_characters('a')
-        'a'
-    """
-    # Check for empty string
-    if not s:
-        return ""
+CONSTANT_PI = 3.141592653589793
 
-    result = []
-    
-    # Iterate through the string with a step of 2 to form pairs
-    for i in range(0, len(s), 2):
-        pair_start = min(i + 1, len(s))
-        
-        # If there is a second character, swap them; otherwise keep just one char (odd case)
+class RadiusError(Exception):
+    def __init__(self, value):
+        self.message = f"Radius cannot be negative: {value}"
+        super().__init__(self.message)
+
+def calculate_circle_area(radius):
+    if radius < 0:
+        raise RadiusError(radius)
+    return CONSTANT_PI * (radius ** 2)
 
 if __name__ == '__main__':
-    pass
+    positive_radius = 5.0
+    print(calculate_circle_area(positive_radius))
+    
+    zero_radius = 0.0
+    print(calculate_circle_area(zero_radius))
+    
+    negative_radius = -4.0
+    try:
+        calculate_circle_area(negative_radius)
+    except RadiusError as error:
+        print(error.message)

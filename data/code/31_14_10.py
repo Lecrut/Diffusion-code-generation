@@ -1,35 +1,15 @@
-import re
+def validate_positive(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Side length must be a number")
+    if value < 0:
+        raise ValueError("Side length must be non-negative")
+    return value
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string reads the same forwards and backward, ignoring spaces/punctuation."""
-    cleaned = ''.join(c.lower() for c in s.replace(' ', ''))
-    
-    # Palindromic check using two pointers (O(n) time)
-    return is_palindrome_two_pointers(cleaned)
-
-def is_palindrome_two_pointers(s: str) -> bool:
-    left, right = 0, len(s) - 1
-    
-    while left < right:
-        if s[left] != s[right]:
-            return False
-        left += 1
-        right -= 1
-        
-    return True
+def calculate_square_area(side_length):
+    validated_side = validate_positive(side_length)
+    return validated_side ** 2
 
 if __name__ == '__main__':
-    # Test cases with hard-coded values (no user input or files)
-    test_strings = [
-        "A man, a plan, a canal: Panama",
-        "race car",
-        "No 'x' in Nixon",
-        "Madam",
-        "Hello World!",
-        "abc",
-        ""
-    ]
-    
-    for s in test_strings:
-        result = is_palindrome(s)
-        print(f"'{s}' -> {result}")
+    target_side = 50
+    computed_area = calculate_square_area(target_side)
+    print(computed_area)

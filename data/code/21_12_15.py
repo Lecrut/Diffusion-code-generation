@@ -1,33 +1,17 @@
-def sort_strings_case_insensitive(string_list):
-    """
-    Sorts a list of strings alphabetically in a case-insensitive manner.
-    
-    Parameters:
-        string_list (list[str]): List of input strings to be sorted.
-        
-    Returns:
-        list[str]: A new list with the same elements, but sorted by their lowercase representation.
-    """
-    # Create a copy of the original list to avoid modifying it in place if not needed elsewhere later
-    result = string_list.copy()
-    
-    # Sort using key=str.lower for case-insensitivity
-    result.sort(key=lambda x: x.lower())
-    
-    return result
+def greatest_of_three(num1, num2, num3):
+    values = {'a': num1, 'b': num2, 'c': num3}
+    max_val = float('-inf')
+    max_key = None
+    for key in values:
+        current = values[key]
+        if max_key is None or current > max_val:
+            max_val = current
+            max_key = key
+    return max_val
 
 if __name__ == '__main__':
-    # Hard-coded sample values containing various cases to demonstrate functionality
-    input_strings = ["Apple", "banana", "Cherry", "date", "FIGURE"]
-
-    print("Input List:", input_strings)
-    
-    sorted_list = sort_strings_case_insensitive(input_strings)
-    
-    print("\nSorted Output:")
-    for item in sorted_list:
-        # Ensure consistent spacing and clear output even if list items are not uniform length
-        print(item.ljust(15), end=' ')
-        
-    # Also provide a simple Pythonic representation line at the very end of sorting results to complete display clearly
-    print(f"\nPython List Representation: {sorted_list}")
+    val1 = -10
+    val2 = -5
+    val3 = -20
+    result = greatest_of_three(val1, val2, val3)
+    print(result)

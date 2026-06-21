@@ -1,5 +1,6 @@
-def is_palindrome(s: str) -> bool: return s == s[::-1]
+def compute_square_area(side_length: float) -> float:
+    return side_length * side_length
 
 if __name__ == '__main__':
-    print(is_palindrome("racecar"))  # True
-    print(is_palindrome("hello"))   # False
+    print(compute_square_area(4.2))
+    print(compute_square_area(0.001))

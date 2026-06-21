@@ -1,13 +1,11 @@
-import sys
-def swap_adjacent(s):
-    n = len(s)
-    if n < 2:
-        return s
-    result = list(s)
-    for i in range(0, n - 1, 2):
-        result[i], result[i+1] = result[i+1], result[i]
-    return "".join(result)
+import math
+
+def calculate_circle_area(radius: float) -> float:
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    return math.pi * radius * radius
+
 if __name__ == '__main__':
-    sample_input = "abcdefgh"
-    output = swap_adjacent(sample_input)
-    print(output)
+    sample_radius = 5.0
+    area = calculate_circle_area(sample_radius)
+    print(area)

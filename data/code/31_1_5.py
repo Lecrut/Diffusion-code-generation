@@ -1,20 +1,11 @@
-class StringUtils:
-    def is_palindrome(self, s: str) -> bool:
-        n = len(s)
-        for i in range(n // 2):
-            if s[i] != s[n - 1 - i]:
-                return False
-        return True
+class SquareCalculator:
+    DEFAULT_SIDE = 15
+
+    @staticmethod
+    def calculate_area(side):
+        return side * side
+
 if __name__ == '__main__':
-    utils = StringUtils()
-    test_strings = [
-        "racecar",
-        "hello",
-        "madam",
-        "a",
-        "abba",
-        "abcde"
-    ]
-    for s in test_strings:
-        result = utils.is_palindrome(s)
-        print(f"'{s}' is a palindrome: {result}")
+    side_value = SquareCalculator.DEFAULT_SIDE
+    result = SquareCalculator.calculate_area(side_value)
+    print(result)

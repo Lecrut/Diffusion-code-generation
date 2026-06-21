@@ -1,8 +1,13 @@
-def is_palindrome(s):
-    # Normalize string to remove non-alphanumeric characters and convert to lowercase
-    cleaned = ''.join(char.lower() for char in s if char.isalnum())
-    return cleaned == cleaned[::-1]
+class Square:
+    def __init__(self, side_length):
+        if side_length <= 0:
+            raise ValueError("Side length must be positive")
+        self.side_length = side_length
+
+    def area(self):
+        return self.side_length ** 2
 
 if __name__ == '__main__':
-    samples = ["A man, a plan, a canal: Panama", "race a car", "Was it a cat and I?", "Madam"]
-    test_cases = [s for s in samples if is_palindrome(s)]
+    side = 5
+    square = Square(side)
+    print(square.area())

@@ -1,21 +1,11 @@
-def swap_even_odd(s):
-    n = len(s)
-    if n == 0:
-        return s
-    result = list(s)
-    for i in range(0, n - 1, 2):
-        result[i], result[i+1] = result[i+1], result[i]
-    return "".join(result)
+import math
+
+def area_of_circle(radius):
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    return math.pi * radius ** 2
+
 if __name__ == '__main__':
-    test_string_1 = "abcdef"
-    print(f"Input: {test_string_1}, Output: {swap_even_odd(test_string_1)}")
-    test_string_2 = "abcde"
-    print(f"Input: {test_string_2}, Output: {swap_even_odd(test_string_2)}")
-    test_string_3 = "abcde"
-    print(f"Input: {test_string_3}, Output: {swap_even_odd(test_string_3)}")
-    test_string_4 = "abcd"
-    print(f"Input: {test_string_4}, Output: {swap_even_odd(test_string_4)}")
-    test_string_5 = "a"
-    print(f"Input: {test_string_5}, Output: {swap_even_odd(test_string_5)}")
-    test_string_6 = ""
-    print(f"Input: {test_string_6}, Output: {swap_even_odd(test_string_6)}")
+    radius = 5
+    result = area_of_circle(radius)
+    print(result)

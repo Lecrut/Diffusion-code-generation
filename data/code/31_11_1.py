@@ -1,9 +1,7 @@
-import sys
-def is_palindrome(s):
-    s = s.lower().replace(" ", "")
-    return s == s[::-1]
+def calculate_square_area(side_length):
+    return side_length * side_length
+
 if __name__ == '__main__':
-    sample_string = "racecar"
-    result = is_palindrome(sample_string)
-    print(f"The string entered is: {sample_string}")
-    print(f"Is the string a palindrome? {result}")
+    side = 15
+    area = calculate_square_area(side)
+    print(area)

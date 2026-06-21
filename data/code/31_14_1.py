@@ -1,8 +1,7 @@
-def is_palindrome(s):
-    processed = "".join(filter(str.isalnum, s)).lower()
-    return processed == processed[::-1]
+def calculate_square_area(side_length):
+    return side_length * side_length
+
 if __name__ == '__main__':
-    print(is_palindrome("A man, a plan, a canal: Panama"))
-    print(is_palindrome("racecar"))
-    print(is_palindrome("hello"))
-    print(is_palindrome("Madam, I'm Adam"))
+    side = 50
+    area = calculate_square_area(side)
+    print(area)

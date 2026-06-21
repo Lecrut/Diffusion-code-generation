@@ -1,9 +1,15 @@
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome using built-in methods."""
-    cleaned = ''.join(c.lower() for c in s if c.isalnum())
-    return cleaned == cleaned[::-1]
+class Square:
+    def __init__(self, side_length):
+        if side_length < 0:
+            raise ValueError("Side length must be non-negative")
+        self.side_length = side_length
+
+    def area(self):
+        return self.side_length ** 2
 
 if __name__ == '__main__':
-    samples = ["racecar", "Hello, World!", "Python3.9"]
-    for sample in samples:
-        print(f"'{sample}' is a palindrome: {is_palindrome(sample)}")
+    square = Square(5)
+    print(square.area())
+
+    square2 = Square(3.5)
+    print(square2.area())

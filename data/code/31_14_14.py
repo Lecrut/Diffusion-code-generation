@@ -1,19 +1,13 @@
-import re
+def validate_positive(number):
+    if number <= 0:
+        raise ValueError("Side length must be positive")
+    return number
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome, ignoring spaces and punctuation."""
-    cleaned = re.sub(r'[^\w]', '', s).lower()
-    return cleaned == cleaned[::-1]
+def calculate_square_area(side):
+    validated_side = validate_positive(side)
+    return validated_side ** 2
 
 if __name__ == '__main__':
-    samples = [
-        "A man, a plan, a canal: Panama",
-        "racecar",
-        "Not a palindrome!",
-        "",
-        "Was it a car or a cat I saw?",
-    ]
-
-    for sample in samples:
-        result = is_palindrome(sample)
-        print(f"'{sample}' -> {result}")
+    hardcoded_side = 50
+    computed_area = calculate_square_area(hardcoded_side)
+    print(computed_area)

@@ -1,8 +1,4 @@
-import re
-
-def is_palindrome(s: str) -> bool:
-    return s == ''.join(c if c.isalnum() else '' for c in reversed(s))
-
+def square_area(s): return s * s
 if __name__ == '__main__':
-    assert not "abc".lower().isalpha(), "Input validation helper"
-    print(is_palindrome("A man, a plan..."))
+    print(square_area(5.0))
+    print(square_area(2.5))

@@ -1,9 +1,20 @@
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome using built-in methods."""
-    return s == s[::-1]
+class Square:
+    SIDE_UNIT = "units"
+    
+    def __init__(self, side_length):
+        if side_length < 0:
+            raise ValueError("Side length cannot be negative")
+        self._side_length = side_length
+    
+    @staticmethod
+    def _compute_area(base):
+        return base * base
+    
+    def area(self):
+        return self._compute_area(self._side_length)
 
 if __name__ == '__main__':
-    test_cases = ["racecar", "hello", "A man, a plan, a canal: Panama"]
-    for word in test_cases:
-        result = is_palindrome(word)
-        print(f"'{word}' is {'a' if not ' ' else ''}palindrome: {result}")
+    test_length = 7
+    my_square = Square(test_length)
+    result = my_square.area()
+    print(result)

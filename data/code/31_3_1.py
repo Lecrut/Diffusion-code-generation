@@ -1,7 +1,6 @@
+def calculate_square_area(side_length):
+    return side_length * side_length
+
 if __name__ == '__main__':
-    s1 = "racecar"
-    s2 = "hello"
-    s3 = "madam"
-    print(s1 == s1[::-1])
-    print(s2 == s2[::-1])
-    print(s3 == s3[::-1])
+    print(calculate_square_area(2.5))
+    print(calculate_square_area(10.123456789))

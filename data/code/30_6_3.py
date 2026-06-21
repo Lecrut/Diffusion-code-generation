@@ -1,11 +1,21 @@
-def swap_adjacent_chars(s: str) -> str:
-    """Swaps adjacent characters in a string."""
-    chars = list(s)
-    for i in range(len(chars) - 1, 0, -2):
-        chars[i], chars[i-1] = chars[i-1], chars[i]
-    return ''.join(chars)
+import math
+
+def calculate_circle_area(radius):
+    if not isinstance(radius, (int, float)):
+        raise TypeError("Radius must be a numeric type.")
+    if radius < 0:
+        raise ValueError("Radius cannot be negative.")
+    return math.pi * radius ** 2
 
 if __name__ == '__main__':
-    test_strings = ["abc", "aabbccdd"]
-    for s in test_strings:
-        print(f"{s} -> {swap_adjacent_chars(s)}")
+    print(calculate_circle_area(5))
+    print(calculate_circle_area(0))
+    try:
+        calculate_circle_area(-3)
+    except ValueError:
+        print("Handled negative radius")
+    try:
+        calculate_circle_area("abc")
+    except TypeError:
+        print("Handled non-numeric input")
+    print(calculate_circle_area(2.5))

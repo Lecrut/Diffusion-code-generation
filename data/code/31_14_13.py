@@ -1,20 +1,15 @@
-import re
+class Square:
+    def __init__(self, side):
+        self.side = side
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome ignoring spaces, punctuation, and case."""
-    cleaned = ''.join(c.lower() for c in s if c.isalnum())
-    return cleaned == cleaned[::-1]
+    def get_area(self):
+        return self.side * self.side
+
+    def get_perimeter(self):
+        return 4 * self.side
 
 if __name__ == '__main__':
-    test_cases = [
-        "A man, a plan, a canal: Panama",
-        "race a car",
-        "Was it a car or a cat I saw?",
-        "",
-        "Madam",
-        "No 'x' in Nixon"
-    ]
-
-    for text in test_cases:
-        result = is_palindrome(text)
-        print(f"'{text}' -> {result}")
+    sample_side = 50
+    shape = Square(sample_side)
+    print(shape.get_area())
+    print(shape.get_perimeter())

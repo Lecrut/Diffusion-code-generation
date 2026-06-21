@@ -1,21 +1,9 @@
-def swap_adjacent_pairs(s):
-    result = []
-    for i in range(0, len(s) - 1, 2):
-        result.append(s[i+1])
-        result.append(s[i])
-    if len(s) % 2 != 0:
-        result.append(s[-1])
-    return "".join(result)
+import math
+
+def compute_circle_area(radius):
+    return float(math.pi * radius * radius)
+
 if __name__ == '__main__':
-    test_string1 = "abcdef"
-    test_string2 = "hello"
-    test_string3 = "abcde"
-    test_string4 = "ab"
-    test_string5 = "a"
-    test_string6 = ""
-    print(f"Input: {test_string1}, Output: {swap_adjacent_pairs(test_string1)}")
-    print(f"Input: {test_string2}, Output: {swap_adjacent_pairs(test_string2)}")
-    print(f"Input: {test_string3}, Output: {swap_adjacent_pairs(test_string3)}")
-    print(f"Input: {test_string4}, Output: {swap_adjacent_pairs(test_string4)}")
-    print(f"Input: {test_string5}, Output: {swap_adjacent_pairs(test_string5)}")
-    print(f"Input: {test_string6}, Output: {swap_adjacent_pairs(test_string6)}")
+    print(compute_circle_area(5))
+    print(compute_circle_area(10))
+    print(compute_circle_area(1))

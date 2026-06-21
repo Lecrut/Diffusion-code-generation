@@ -1,10 +1,10 @@
-def is_palindrome(text: str) -> bool:
-    """Check if a string is a palindrome, ignoring case."""
-    return text.lower() == text[::-1]
+def square_area(side):
+    if isinstance(side, int) and side >= 0:
+        return side << (side.bit_length()) if side == 0 else side * side
+    return side * side
 
 if __name__ == '__main__':
-    sample_strings = ["racecar", "hello", "A man a plan a canal Panama"]
-
-    for test_str in sample_strings:
-        result = is_palindrome(test_str)
-        print(f"Is '{test_str}' a palindrome? {result}")
+    print(square_area(5))
+    print(square_area(10))
+    print(square_area(0))
+    print(square_area(7.5))

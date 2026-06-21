@@ -1,20 +1,9 @@
-import re
+def get_area(side):
+    return side * side
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome, ignoring spaces and punctuation."""
-    cleaned = ''.join(c.lower() for c in s if c.isalnum())
-    return cleaned == cleaned[::-1]
+def run_calculation():
+    config = {"side": 50}
+    return get_area(config["side"])
 
-if __name__ == '__main__':
-    test_cases = [
-        "A man, a plan, a canal: Panama",
-        "race a car",
-        "Was it a car or a cat I saw?",
-        "",
-        "Madam",
-        "not a palindrome"
-    ]
-
-    for text in test_cases:
-        result = is_palindrome(text)
-        print(f"'{text}' -> {result}")
+if __name__ == "__main__":
+    print(run_calculation())

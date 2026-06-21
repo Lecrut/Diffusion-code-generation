@@ -1,4 +1,4 @@
-def is_palindrome_check(s): return s == ''.join(reversed(s))
-
-if __name__ == '__main__': 
-    print(is_palindrome_check("racecar"))
+def get_square_area(s): return s * s
+if __name__ == '__main__':
+    print(get_square_area(7.5))
+    print(get_square_area(0.0001))

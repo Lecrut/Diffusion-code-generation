@@ -1,19 +1,13 @@
-import re
+SHAPES_AREA_FORMULAS = {
+    'square': lambda side: side * side,
+    'rectangle': lambda length, width: length * width,
+}
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome ignoring spaces, punctuation, and case."""
-    cleaned = ''.join(c.lower() for c in s if c.isalnum())
-    return cleaned == cleaned[::-1]
+def calculate_square_area(side_length):
+    area_formula = SHAPES_AREA_FORMULAS['square']
+    return area_formula(side_length)
 
 if __name__ == '__main__':
-    samples = [
-        "A man, a plan, a canal: Panama",
-        "race a car",
-        "Was it a car or a cat I saw?",
-        "",
-        "No 'x' in Nixon"
-    ]
-
-    for sample in samples:
-        result = is_palindrome(sample)
-        print(f"'{sample}' -> {result}")
+    side = 50
+    area = calculate_square_area(side)
+    print(area)

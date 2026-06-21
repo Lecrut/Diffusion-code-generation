@@ -1,8 +1,10 @@
-from collections import Counter
+SIDE_LENGTH = 50
 
-def is_palindrome(s: str) -> bool:
-    """Check if a string is a palindrome, ignoring spaces and punctuation."""
-    cleaned = "".join(c.lower() for c in s if c.isalnum())
+def compute_area(length):
+    squared_value = length * length
+    return squared_value
 
 if __name__ == '__main__':
-    pass
+    side = SIDE_LENGTH
+    area = compute_area(side)
+    print(area)

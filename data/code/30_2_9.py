@@ -1,30 +1,32 @@
-import sys
+import math
 
-def swap_adjacent_pairs(s: str) -> str:
-    """Swaps all adjacent character pairs in the input string."""
-    result = []
-    i = 0
-    length = len(s)
-    
-    while i < length - 1:
-        if i + 2 <= length and s[i] != '':
-            # Swap current pair with next char, then move two steps forward
-            first_char, second_char = s[i], s[i+1]
-            result.append(second_char)
-            result.append(first_char)
-            i += 2
-    
-    return ''.join(result)
+UNIT_MULTIPLIERS = {
+    "cm": 1.0,
+    "mm": 0.1,
+    "m": 100.0,
+    "in": 2.54,
+}
+
+def _validate_and_normalize(radius: float, unit: str) -> float:
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    if unit not in UNIT_MULTIPLIERS:
+        raise ValueError(f"Unsupported unit: {unit}")
+    return radius * UNIT_MULTIPLIERS[unit]
+
+def calculate_circle_area(radius: float, unit: str = "cm") -> float:
+    normalized_radius = _validate_and_normalize(radius, unit)
+    return math.pi * (normalized_radius ** 2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or command-line arguments
     test_cases = [
-        "ab",
-        "abcdefg",
-        "",
-        "!@#$"
+        {"radius": 10.0, "unit": "cm"},
+        {"radius": 5.0, "unit": "m"},
+        {"radius": 2.0, "unit": "mm"},
     ]
-    
+
     for case in test_cases:
-        modified_string = swap_adjacent_pairs(case)
-        print(modified_string)
+        val = case["radius"]
+        u = case["unit"]
+        area = calculate_circle_area(val, u)
+        print(f"Radius: {val} {u}, Area: {area}")

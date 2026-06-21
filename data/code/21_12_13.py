@@ -1,32 +1,18 @@
-import string
+class NumberComparator:
+    MAX_VALUE_THRESHOLD = 0
 
-def sort_strings_case_insensitive(strings):
-    """
-    Sorts a list of strings alphabetically in a case-insensitive manner.
-    
-    Args:
-        strings (list[str]): A list of input strings to be sorted.
-        
-    Returns:
-        list[str]: A new list containing the sorted strings.
-    """
-    # Create a copy of the original list to avoid modifying it in place
-    result = strings.copy()
-    
-    # Sort using a key that converts each string to lowercase for comparison,
-    # ensuring case-insensitivity while preserving original casing in output.
-    result.sort(key=str.lower)
-    
-    return result
+    @staticmethod
+    def _determine_max(x, y):
+        return x if x > y else y
+
+    @classmethod
+    def get_highest(cls, first, second, third):
+        pair_max = cls._determine_max(first, second)
+        return cls._determine_max(pair_max, third)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files needed).
-    sample_data = ["Banana", "apple", "Cherry", "date", "Elderberry"]
-
-    print("Original list:", sample_data)
-    
-    sorted_list = sort_strings_case_insensitive(sample_data)
-    
-    print("Sorted list (case-insensitive):")
-    for item in sorted_list:
-        print(item)
+    val_one = 42
+    val_two = 17
+    val_three = 99
+    computed_result = NumberComparator.get_highest(val_one, val_two, val_three)
+    print(computed_result)
