@@ -1,0 +1,13 @@
+def is_valid_index(lst, index):
+    return 0 <= index < len(lst)
+
+def get_element_at_index(lst, index):
+    if not is_valid_index(lst, index):
+        return None
+    return lst[index]
+
+if __name__ == '__main__':
+    sample_list = [100, 200, 300, 400, 500]
+    indices_to_test = [2, 7, -1, 0]
+    for idx in indices_to_test:
+        print(get_element_at_index(sample_list, idx))

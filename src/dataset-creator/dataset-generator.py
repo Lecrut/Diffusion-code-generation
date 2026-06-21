@@ -1,6 +1,7 @@
 import argparse
 import importlib.util
 import os
+import re
 import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -14,7 +15,7 @@ import codegen as code
 import instructions
 import persistence
 import topics
-from ollama import ensure_model, ensure_ollama, save_cache
+from ollama import backend_summary, ensure_model, ensure_ollama, save_cache
 
 try:
     from path_config import DATA_DIR as DEFAULT_DATA_DIR
@@ -34,6 +35,16 @@ AUTO_COMMIT_ENABLED = os.environ.get("DATASET_GENERATOR_AUTO_COMMIT", "0").lower
 }
 SAVE_DATASET_EVERY = int(os.environ.get("DATASET_SAVE_EVERY", "20"))
 SAVE_DATASET_EVERY_SECONDS = float(os.environ.get("DATASET_SAVE_EVERY_SECONDS", "60"))
+ALLOW_CODE_OVERWRITE = os.environ.get("DATASET_ALLOW_CODE_OVERWRITE", "0").lower() in {
+    "1",
+    "true",
+    "yes",
+}
+KEEP_OBSOLETE_ROWS = os.environ.get("DATASET_KEEP_OBSOLETE_ROWS", "0").lower() in {
+    "1",
+    "true",
+    "yes",
+}
 
 DATA_DIR = Path(os.environ.get("DATASET_CREATOR_DATA_DIR", DEFAULT_DATA_DIR))
 DATASET_FILE = DATA_DIR / "dataset.csv"
@@ -83,11 +94,25 @@ def _truthy(value) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes"}
 
 
+def _normalize_instruction_text(value) -> str:
+    return " ".join(_clean_cell(value).strip().lower().split())
+
+
 def _code_file_name(topic_id: int, instruction_id: int, variant_idx: int) -> str:
     base_name = f"{topic_id}_{instruction_id}"
     if variant_idx > 0:
         return f"{base_name}_{variant_idx}.py"
     return f"{base_name}.py"
+
+
+def _parse_code_file_name(file_name: str):
+    match = re.fullmatch(r"(\d+)_(\d+)(?:_(\d+))?\.py", file_name)
+    if not match:
+        return None
+    topic_id = int(match.group(1))
+    instruction_id = int(match.group(2))
+    variant_idx = int(match.group(3) or 0)
+    return topic_id, instruction_id, variant_idx
 
 
 def _load_auto_commit():
@@ -110,6 +135,32 @@ def _read_code_file(file_name: str) -> str:
         return ""
 
 
+def _allocate_code_file(topic_id: int, instruction_id: int, variant_idx: int, code_text: str):
+    if ALLOW_CODE_OVERWRITE:
+        return variant_idx, _code_file_name(topic_id, instruction_id, variant_idx)
+
+    requested_variant_idx = variant_idx
+    while True:
+        file_name = _code_file_name(topic_id, instruction_id, variant_idx)
+        file_path = CODE_DIR / file_name
+        if not file_path.exists():
+            if variant_idx != requested_variant_idx:
+                print(
+                    f"[SAVE] avoiding overwrite: using {file_name} instead of "
+                    f"{_code_file_name(topic_id, instruction_id, requested_variant_idx)}",
+                    flush=True,
+                )
+            return variant_idx, file_name
+
+        try:
+            if file_path.read_text(encoding="utf-8") == code_text:
+                return variant_idx, file_name
+        except OSError:
+            pass
+
+        variant_idx += 1
+
+
 def save_dataset_snapshot(partial_results):
     global _last_dataset_save_at, _unsaved_dataset_rows
 
@@ -128,7 +179,16 @@ def save_progress(chunk, partial_results, lock, force=False):
             topic_id = _safe_int(row.get("topic_id"))
             instruction_id = _safe_int(row.get("instruction_id"))
             variant_idx = _safe_int(row.get("variant_idx"))
-            file_name = _code_file_name(topic_id, instruction_id, variant_idx) if code_text else ""
+            is_valid = _truthy(row.get("valid"))
+            if code_text and is_valid:
+                variant_idx, file_name = _allocate_code_file(
+                    topic_id,
+                    instruction_id,
+                    variant_idx,
+                    code_text,
+                )
+            else:
+                file_name = _code_file_name(topic_id, instruction_id, variant_idx) if code_text else ""
 
             row["topic_id"] = topic_id
             row["instruction_id"] = instruction_id
@@ -137,7 +197,7 @@ def save_progress(chunk, partial_results, lock, force=False):
             row["code_file"] = file_name
             partial_results.append(row)
 
-            if code_text and _truthy(row.get("valid")):
+            if code_text and is_valid:
                 persistence.save_code(CODE_DIR / file_name, code_text)
                 print(f"Saved code file: {file_name}", flush=True)
             else:
@@ -197,10 +257,51 @@ def load_existing_dataset():
     return records
 
 
+def filter_current_instruction_records(records, instr_df):
+    if not records:
+        return records
+
+    current_instructions = {}
+    for _, row in instr_df.iterrows():
+        key = (_safe_int(row.get("topic_id"), -1), _safe_int(row.get("instruction_id"), -1))
+        current_instructions[key] = _normalize_instruction_text(row.get("instruction"))
+
+    kept = []
+    dropped = 0
+    for row in records:
+        key = (_safe_int(row.get("topic_id"), -1), _safe_int(row.get("instruction_id"), -1))
+        current_instruction = current_instructions.get(key)
+        if not current_instruction:
+            dropped += 1
+            continue
+        if _normalize_instruction_text(row.get("instruction")) != current_instruction:
+            dropped += 1
+            continue
+        kept.append(row)
+
+    if dropped:
+        print(
+            f"Dropped {dropped} existing rows for obsolete or regenerated instructions.",
+            flush=True,
+        )
+
+    return kept
+
+
 def build_existing_state(records):
     existing_keys = defaultdict(set)
     existing_examples = defaultdict(list)
     next_variant_idx = defaultdict(int)
+
+    for path in CODE_DIR.glob("*.py"):
+        parsed = _parse_code_file_name(path.name)
+        if parsed is None:
+            continue
+        topic_id, instruction_id, variant_idx = parsed
+        next_variant_idx[(topic_id, instruction_id)] = max(
+            next_variant_idx[(topic_id, instruction_id)],
+            variant_idx + 1,
+        )
 
     for row in records:
         topic_id = _safe_int(row.get("topic_id"), default=-1)
@@ -299,6 +400,7 @@ def run(
 ):
     print("Rozpoczynam generowanie datasetu.")
     print(f"Data directory: {DATA_DIR}")
+    print(f"LLM backend: {backend_summary()}")
     print(
         f"Run target: topics={num_topics}, instructions/topic={instr_per_topic}, "
         f"variants/instruction={variants_per_instr}, attempts/instruction={attempts_per_instr}, "
@@ -328,6 +430,10 @@ def run(
         print(f"Zaladowano {len(instr)} instrukcji.")
 
         partial_results = load_existing_dataset()
+        if KEEP_OBSOLETE_ROWS:
+            print("Keeping obsolete dataset rows because DATASET_KEEP_OBSOLETE_ROWS is enabled.", flush=True)
+        else:
+            partial_results = filter_current_instruction_records(partial_results, instr)
         existing_keys, existing_examples, next_variant_idx = build_existing_state(partial_results)
         completed_count = sum(1 for keys in existing_keys.values() if len(keys) >= variants_per_instr)
         if partial_results:

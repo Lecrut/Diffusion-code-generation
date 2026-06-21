@@ -1,0 +1,19 @@
+from typing import Union
+
+class Triangle:
+    BASE_MULTIPLIER = 0.5
+
+    @staticmethod
+    def area(base: float, height: float) -> float:
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive numbers")
+        return Triangle.BASE_MULTIPLIER * base * height
+
+if __name__ == '__main__':
+    sample_base = 8.0
+    sample_height = 3.0
+    try:
+        area_result = Triangle.area(sample_base, sample_height)
+        print(area_result)
+    except ValueError as e:
+        print(e)

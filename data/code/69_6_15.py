@@ -24,14 +24,26 @@ class ListDictInterface:
                 if 0 <= index < len(self.elements):
                     self.elements[index] = value
                 else:
-                    raise KeyError(f'Index {index} out of range')
+                    raise IndexError(f'Index {index} out of range')
             except ValueError:
                 raise KeyError(f'Key {key} not found')
+
+    def __len__(self):
+        return len(self.elements)
+
+    def __repr__(self):
+        return repr(self.elements)
 if __name__ == '__main__':
     mixed_list = [10, 'hello', 3.14, True, [1, 2], None]
     list_dict_interface = ListDictInterface(mixed_list)
     print(list_dict_interface[0])
     print(list_dict_interface['2'])
+    try:
+        print(list_dict_interface['5'])
+    except KeyError as e:
+        print(e)
     list_dict_interface[1] = 'world'
+    print(list_dict_interface['1'])
     list_dict_interface['4'] = [3, 4]
-    print(mixed_list)
+    print(list_dict_interface[4])
+    print(len(list_dict_interface))

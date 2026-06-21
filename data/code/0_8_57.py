@@ -1,0 +1,20 @@
+class LengthConverter:
+    METER_TO_FEET = 3.28084
+    METER_TO_KILOMETERS = 0.001
+
+    @staticmethod
+    def convert_length(length, target_unit):
+        supported_units = {
+            'meters': length,
+            'feet': length * LengthConverter.METER_TO_FEET,
+            'kilometers': length * LengthConverter.METER_TO_KILOMETERS
+        }
+        if target_unit not in supported_units:
+            raise ValueError(f"Unsupported unit: {target_unit}")
+        return supported_units[target_unit]
+
+if __name__ == '__main__':
+    sample_length = 150
+    target_unit = 'meters'
+    converted_value = LengthConverter.convert_length(sample_length, target_unit)
+    print(converted_value)

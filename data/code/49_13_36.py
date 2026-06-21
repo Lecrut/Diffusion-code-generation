@@ -1,0 +1,19 @@
+class LengthEvaluator:
+    def __init__(self, length1: int, length2: int):
+        self.length1 = length1
+        self.length2 = length2
+
+    def _compare(self, threshold: int) -> bool:
+        if not isinstance(threshold, int) or threshold < 0:
+            raise ValueError("Threshold must be a non-negative integer.")
+        return abs(self.length1 - self.length2) <= threshold
+
+    def evaluate_within_threshold(self, threshold: int) -> bool:
+        return self._compare(threshold)
+
+if __name__ == '__main__':
+    length_evaluator = LengthEvaluator(400, 398)
+    thresholds = [5, 2, 10]
+    for threshold in thresholds:
+        result = length_evaluator.evaluate_within_threshold(threshold)
+        print(f"Threshold: {threshold}, Result: {result}")

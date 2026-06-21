@@ -1,0 +1,26 @@
+import re
+
+class TextProcessor:
+    def __init__(self):
+        self.whitespace_pattern = re.compile(r'\s+')
+
+    def remove_whitespace(self, input_string):
+        if not isinstance(input_string, str):
+            raise ValueError("Input must be a string")
+        return self.whitespace_pattern.sub('', input_string)
+
+    def process_text(self, text):
+        cleaned_text = self.remove_whitespace(text)
+        return f"Processed: {cleaned_text}"
+
+if __name__ == '__main__':
+    sample_input_1 = "  This is a   test string with \t various \n whitespace characters.  "
+    sample_input_2 = "Another example \twith different\nwhitespace."
+
+    processor = TextProcessor()
+    
+    result_1 = processor.remove_whitespace(sample_input_1)
+    print(result_1)
+    
+    result_2 = processor.process_text(sample_input_2)
+    print(result_2)

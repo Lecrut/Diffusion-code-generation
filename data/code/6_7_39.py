@@ -1,0 +1,22 @@
+class WeightCalculator:
+    def __init__(self):
+        self.weights = []
+
+    def add_weight(self, weight):
+        if not isinstance(weight, (int, float)):
+            raise ValueError("Weight must be a number")
+        self.weights.append(weight)
+
+    def calculate_weight_difference(self, weight1, weight2):
+        if weight1 not in self.weights or weight2 not in self.weights:
+            raise ValueError("Both weights must be added to the calculator first")
+        return abs(weight1 - weight2)
+
+if __name__ == '__main__':
+    calculator = WeightCalculator()
+    sample_weight_1 = 65.3
+    sample_weight_2 = 72.8
+    calculator.add_weight(sample_weight_1)
+    calculator.add_weight(sample_weight_2)
+    difference = calculator.calculate_weight_difference(sample_weight_1, sample_weight_2)
+    print(difference)

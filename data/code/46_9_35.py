@@ -1,0 +1,10 @@
+class Triangle:
+
+    def __init__(self, side1: float, side2: float, side3: float):
+        self.sides = [side1, side2, side3]
+
+    def perimeter(self) -> float:
+        return sum(self.sides)
+if __name__ == '__main__':
+    triangle_instance = Triangle(7.0, 9.0, 12.0)
+    print('Perimeter:', triangle_instance.perimeter())

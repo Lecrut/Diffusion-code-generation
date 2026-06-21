@@ -1,0 +1,7 @@
+def calculate_perimeter(length, width):
+    return 2 * (length + width)
+
+if __name__ == '__main__':
+    length = 6
+    width = 2
+    print(calculate_perimeter(length, width))

@@ -1,0 +1,10 @@
+from datetime import datetime
+
+def calculate_year_difference(date1_str: str, date2_str: str) -> int:
+    date1 = datetime.strptime(date1_str, "%Y-%m-%d")
+    date2 = datetime.strptime(date2_str, "%Y-%m-%d")
+    return abs(date1.year - date2.year)
+
+if __name__ == '__main__':
+    result = calculate_year_difference("2020-01-01", "2023-12-31")
+    print(result)

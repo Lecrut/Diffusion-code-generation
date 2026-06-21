@@ -1,0 +1,11 @@
+def check_match(value1, value2):
+    try:
+        return value1 == value2
+    except Exception as e:
+        raise ValueError(f"Invalid input: {e}")
+
+if __name__ == '__main__':
+    sample_value1 = [1, 2, 3]
+    sample_value2 = [1, 2, 3]
+    result = check_match(sample_value1, sample_value2)
+    print(result)

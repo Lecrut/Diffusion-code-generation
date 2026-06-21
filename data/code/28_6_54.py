@@ -1,0 +1,21 @@
+def is_largest_element_larger(lst, target):
+    if not lst:
+        raise ValueError("The list cannot be empty")
+    if not isinstance(target, (int, float)):
+        raise TypeError("Target must be an integer or a float")
+
+    def find_max_recursive(index):
+        if index == len(lst) - 1:
+            return lst[index]
+        else:
+            current_max = find_max_recursive(index + 1)
+            return max(lst[index], current_max)
+
+    largest_element = find_max_recursive(0)
+    return largest_element > target
+
+if __name__ == '__main__':
+    sample_list = [1, 4, 3, 9, 2]
+    target_value = 7
+    result = is_largest_element_larger(sample_list, target_value)
+    print(result)

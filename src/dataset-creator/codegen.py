@@ -60,6 +60,7 @@ CODEGEN_REPAIR_TEMPERATURES = _parse_temperature_list(
 ]
 MAX_DUPLICATE_STREAK = int(os.environ.get("CODEGEN_MAX_DUPLICATE_STREAK", "16"))
 MAX_VALIDATION_STREAK = int(os.environ.get("CODEGEN_MAX_VALIDATION_STREAK", "10"))
+CODEGEN_NUM_PREDICT = int(os.environ.get("CODEGEN_NUM_PREDICT", "1024"))
 VALIDATE_BY_EXECUTION = os.environ.get("CODEGEN_EXECUTE_VALIDATION", "0").lower() not in {
     "0",
     "false",
@@ -91,6 +92,9 @@ CODE_PROMPT_TEMPLATE = (
     "15. The literal tokens `pass`, `NotImplementedError`, `TODO`, `...`, and `Ellipsis` must not appear anywhere in the output.\n"
     "16. Every function, class, branch, loop, and exception handler must contain real executable logic.\n"
     "17. Use clear names and simple executable code instead of comments.\n"
+    "18. If the task mentions inheritance, base classes, interfaces, or generic Shape-style APIs, still write concrete executable classes and methods. Do not create abstract methods.\n"
+    "19. If the task is underspecified, choose a reasonable deterministic interpretation and implement it fully instead of returning a stub.\n"
+    "20. Use ValueError for unsupported concrete inputs; never use NotImplementedError.\n"
     "{variant_directive}"
     "{retry_feedback}"
 )
@@ -848,7 +852,13 @@ def generate_code(
     )
     seed = random.randint(1, 2_147_483_647)
     start = time.time()
-    raw_output = ollama_generate(prompt, temperature, use_cache=False, seed=seed)
+    raw_output = ollama_generate(
+        prompt,
+        temperature,
+        use_cache=False,
+        seed=seed,
+        num_predict=CODEGEN_NUM_PREDICT,
+    )
     elapsed = time.time() - start
     if not raw_output:
         print(f"[OLLAMA] Failed after {elapsed:.2f}s (temp={temperature:.2f})", flush=True)

@@ -1,0 +1,14 @@
+from typing import Union
+
+class Square:
+    def __init__(self, side_length: Union[int, float]):
+        if side_length <= 0:
+            raise ValueError("Side length must be positive")
+        self.side_length = side_length
+
+    def get_area(self) -> Union[int, float]:
+        return self.side_length ** 2
+
+if __name__ == '__main__':
+    square = Square(5)
+    print(square.get_area())

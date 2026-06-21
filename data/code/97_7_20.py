@@ -1,0 +1,15 @@
+def generate_truth_table(variables):
+    n = len(variables)
+    rows = []
+    for i in range(2 ** n):
+        row = {}
+        for j, var in enumerate(variables):
+            row[var] = bool((i >> (n - 1 - j)) & 1)
+        rows.append(row)
+    return rows
+
+if __name__ == '__main__':
+    variables = ['P', 'Q', 'R']
+    table = generate_truth_table(variables)
+    for row in table:
+        print(row)

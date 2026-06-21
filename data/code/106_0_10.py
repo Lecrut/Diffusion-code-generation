@@ -1,0 +1,13 @@
+import datetime
+
+def calculate_year_difference(date1: datetime.date, date2: datetime.date) -> int:
+    delta = date2 - date1
+    days = delta.days
+    years = days // 365
+    return years
+
+if __name__ == '__main__':
+    start_date = datetime.date(2000, 1, 1)
+    end_date = datetime.date(2023, 1, 1)
+    result = calculate_year_difference(start_date, end_date)
+    print(result)

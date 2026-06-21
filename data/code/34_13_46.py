@@ -1,0 +1,9 @@
+def capitalize_first_letter(s):
+    if not isinstance(s, str):
+        raise ValueError("Input must be a string")
+    return s.capitalize()
+
+if __name__ == '__main__':
+    SAMPLE_STRING = "hello world"
+    capitalized_string = capitalize_first_letter(SAMPLE_STRING)
+    print(capitalized_string)

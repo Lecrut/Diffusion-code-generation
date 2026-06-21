@@ -1,0 +1,25 @@
+class Number:
+
+    def __init__(self, value):
+        self.value = value
+
+    def compare(self, other):
+        if not isinstance(other, Number):
+            raise ValueError('Argument must be an instance of Number')
+        if self.value < other.value:
+            return 'Less than'
+        elif self.value > other.value:
+            return 'Greater than'
+        else:
+            return 'Equal to'
+if __name__ == '__main__':
+    num1 = Number(10)
+    num2 = Number(20)
+    result = num1.compare(num2)
+    print(result)
+    num3 = Number(30)
+    result = num2.compare(num3)
+    print(result)
+    num4 = Number(20)
+    result = num2.compare(num4)
+    print(result)

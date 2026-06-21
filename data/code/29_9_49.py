@@ -1,0 +1,11 @@
+def reverse_string(s):
+    if not isinstance(s, str):
+        raise ValueError("Input must be a string")
+    return s[::-1]
+
+if __name__ == '__main__':
+    sample_string = "Alibaba"
+    try:
+        print(reverse_string(sample_string))
+    except ValueError as e:
+        print(e)

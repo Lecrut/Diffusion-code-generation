@@ -1,0 +1,16 @@
+class LengthComparer:
+    def __init__(self, length1, length2):
+        self.length1 = length1
+        self.length2 = length2
+
+    def compare(self):
+        if not isinstance(self.length1, (int, float)) or not isinstance(self.length2, (int, float)):
+            raise ValueError("Both lengths must be numbers")
+        return max(self.length1, self.length2)
+
+if __name__ == '__main__':
+    sample_length1 = 18.5
+    sample_length2 = 22.3
+    comparer = LengthComparer(sample_length1, sample_length2)
+    longer_length = comparer.compare()
+    print(longer_length)

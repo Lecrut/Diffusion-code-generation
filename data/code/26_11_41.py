@@ -1,0 +1,15 @@
+def is_greater(num1, num2):
+    return num1 > num2
+
+if __name__ == '__main__':
+    test_cases = {
+        'case1': (10, 5),
+        'case2': (3, 7),
+        'case3': (-1, -5),
+        'case4': (0, 0),
+        'case5': (100, 100),
+        'case6': (-10, -20)
+    }
+    for test_name, (num1, num2) in test_cases.items():
+        result = is_greater(num1, num2)
+        print(f"{test_name}: is_greater({num1}, {num2}) = {result}")

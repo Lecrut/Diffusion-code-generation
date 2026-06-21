@@ -1,0 +1,11 @@
+class ListChecker:
+    def get_extremes(self, lst):
+        if not lst:
+            raise ValueError("List must not be empty")
+        return (lst[0], lst[-1])
+
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_list = [10, 20, 30, 40, 50]
+    result = checker.get_extremes(sample_list)
+    print(result)

@@ -1,0 +1,25 @@
+import datetime
+import locale
+
+def format_datetime(dt: datetime.datetime) -> str:
+    if not isinstance(dt, datetime.datetime):
+        raise ValueError('Input must be a datetime object')
+    day = dt.day
+    month = dt.month
+    year = dt.year
+    hour = dt.hour
+    minute = dt.minute
+    period = 'AM' if hour < 12 else 'PM'
+    hour_12 = hour % 12
+    if hour_12 == 0:
+        hour_12 = 12
+    day_str = f'{day:02d}'
+    month_str = f'{month:02d}'
+    year_str = f'{year:04d}'
+    hour_str = f'{hour_12:02d}'
+    minute_str = f'{minute:02d}'
+    return f'{day_str}/{month_str}/{year_str} {hour_str}:{minute_str} {period}'
+if __name__ == '__main__':
+    sample_dt = datetime.datetime(2023, 10, 5, 14, 30)
+    result = format_datetime(sample_dt)
+    print(result)

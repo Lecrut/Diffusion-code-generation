@@ -6,23 +6,31 @@ class ListDictInterface:
     def __getitem__(self, key):
         if isinstance(key, int) and 0 <= key < len(self.elements):
             return self.elements[key]
-        else:
-            raise KeyError('Index out of range or not an integer')
+        elif isinstance(key, str):
+            try:
+                index = int(key)
+                if 0 <= index < len(self.elements):
+                    return self.elements[index]
+            except ValueError:
+                raise KeyError(f'Key {key} not found')
+        raise KeyError(f'Key {key} not found')
 
     def __setitem__(self, key, value):
         if isinstance(key, int) and 0 <= key < len(self.elements):
             self.elements[key] = value
+        elif isinstance(key, str):
+            try:
+                index = int(key)
+                if 0 <= index < len(self.elements):
+                    self.elements[index] = value
+            except ValueError:
+                raise KeyError(f'Key {key} not found')
         else:
-            raise KeyError('Index out of range or not an integer')
-
-    def __len__(self):
-        return len(self.elements)
-
-    def __repr__(self):
-        return repr(self.elements)
+            raise KeyError(f'Key {key} not found')
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    list_dict_interface = ListDictInterface(sample_list)
-    print(list_dict_interface[2])
-    list_dict_interface[2] = 300
-    print(list_dict_interface)
+    mixed_list = [10, 'hello', 3.14, True, [1, 2], None]
+    list_dict_interface = ListDictInterface(mixed_list)
+    print(list_dict_interface[0])
+    print(list_dict_interface['2'])
+    list_dict_interface['3'] = 'new_value'
+    print(list_dict_interface[3])
