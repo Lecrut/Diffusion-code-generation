@@ -1,23 +1,33 @@
-def check_parity(number: int) -> None:
-    """Prints a clear message indicating if the number is even or odd."""
-    if number % 2 == 0:
-        print(f"The number {number} is even.")
-    else:
-        print(f"The number {number} is odd.")
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.head = 0
+        self.tail = 0
+        self.size = 0
 
-def handle_input_error(input_str: str) -> None:
-    """Handles cases where the input cannot be converted to an integer."""
-    try:
-        int_value = int(input_str.strip())
-        check_parity(int_value)
-    except ValueError:
-        print(f"Error: '{input_str}' is not a valid integer.")
+    def append(self, value):
+        self.buffer[self.tail] = value
+        self.tail = (self.tail + 1) % self.capacity
+        if self.size < self.capacity:
+            self.size += 1
+        else:
+            self.head = (self.head + 1) % self.capacity
+
+    def get_last(self):
+        if self.size == 0:
+            return None
+        index = (self.tail - 1) % self.capacity
+        return self.buffer[index]
 
 if __name__ == '__main__':
-    # Sample values run without user input, command-line arguments, or network access.
-    test_cases = ["4", "7", "-3", "+10"]
-
-    for case in test_cases:
-        handle_input_error(case)
-
-        print("---")  # Separator between tests
+    buffer = CircularBuffer(5)
+    buffer.append(10)
+    buffer.append(20)
+    buffer.append(30)
+    buffer.append(40)
+    buffer.append(50)
+    buffer.append(60)
+    buffer.append(70)
+    last_value = buffer.get_last()
+    print(last_value)

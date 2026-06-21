@@ -1,19 +1,17 @@
-def check_parity(number):
-    """
-    Determines if a given integer is even or odd using the modulo operator.
-    
-    Args:
-        number (int): The integer to be checked.
-        
-    Returns:
-        str: 'Even' if the number is divisible by 2, otherwise 'Odd'.
-    """
-    return "Even" if number % 2 == 0 else "Odd"
+def get_last_element(items):
+    if not items:
+        return None
+    return items[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input or external dependencies.
-    test_numbers = [10, 7, -4, 0]
+    test_list_1 = [10, 20, 30, 40]
+    test_list_2 = []
+    test_list_3 = ['apple', 'banana', 'cherry']
     
-    for num in test_numbers:
-        result = check_parity(num)
-        print(f"The number {num} is {result}.")
+    result_1 = get_last_element(test_list_1)
+    result_2 = get_last_element(test_list_2)
+    result_3 = get_last_element(test_list_3)
+    
+    print(result_1)
+    print(result_2)
+    print(result_3)

@@ -1,51 +1,22 @@
-import math
+MAX_LIST_SIZE = 100
+SAMPLE_DATA = [7, 14, 21, 28, 35]
 
-def is_positive_float(value):
-    """
-    Check if a given float value is strictly positive.
+def get_leading_element(items):
+    if len(items) == 0:
+        raise IndexError("Cannot retrieve leading element from an empty list")
+    if len(items) > MAX_LIST_SIZE:
+        raise ValueError(f"List size exceeds maximum allowed size of {MAX_LIST_SIZE}")
+    return items[0]
+
+class ListAccessor:
+    def __init__(self, data):
+        self._data = data
     
-    This function handles standard floating-point comparisons without 
-    introducing unnecessary precision complexities as per the task requirement,
-    unless edge cases near zero require consideration (though strict > 0 suffices here).
-
-    Args:
-        value (float): The number to check.
-
-    Returns:
-        bool: True if value is positive (> 0), False otherwise.
-    """
-    return value > 0
+    def get_head(self):
+        return get_leading_element(self._data)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    
-    test_cases = [
-        (1.5, True),           # Clearly positive
-        (-2.3, False),         # Negative
-        (0.0, False),          # Zero is not positive
-        (1e-10, True),         # Very small positive number
-        (-1e-10, False),       # Very small negative number
-        (float('nan'), False), # NaN comparisons return False in boolean context for this check logic
-    ]
-
-    print("Running positivity checks on sample values:")
-    
-    all_passed = True
-    
-    for num, expected_result in test_cases:
-        result = is_positive_float(num)
-        status = "PASS" if result == expected_result else "FAIL"
-        
-        # Special handling for NaN since > 0 returns False but logically it's undefined/not positive
-        if isinstance(num, float) and math.isnan(num):
-            expected_nan_check = False 
-            if not (result == expected_nan_check):
-                all_passed = False
-        
-        print(f"is_positive_float({num}): got {result}, expected {expected_result} -> [{status}]")
-
-    # Final summary execution result
-    if all_passed:
-        print("\nAll tests passed.")
-    else:
-        print("\nSome tests failed.")
+    result = get_leading_element(SAMPLE_DATA)
+    print(result)
+    accessor = ListAccessor(SAMPLE_DATA)
+    print(accessor.get_head())

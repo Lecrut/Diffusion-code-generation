@@ -1,9 +1,15 @@
-def is_even(n: int) -> bool:
-    """Check if an integer is even using the modulo operator."""
-    return n % 2 == 0
+class SequenceProcessor:
+    def __init__(self, sequence):
+        self.sequence = sequence
+        self._length = len(sequence)
+
+    def retrieve_final_element(self):
+        if self._length == 0:
+            raise ValueError("Cannot retrieve from an empty sequence")
+        index = self._length - 1
+        return self.sequence[index]
 
 if __name__ == '__main__':
-    test_cases = [1, -5, 42, 0, 3]
-    for num in test_cases:
-        result = "Even" if is_even(num) else "Odd"
-        print(f"{num} is {result}")
+    data = [7, 14, 21, 28, 35]
+    processor = SequenceProcessor(data)
+    print(processor.retrieve_final_element())

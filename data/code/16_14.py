@@ -1,8 +1,9 @@
-def is_positive(number: float) -> bool:
-    return number > 0
+from collections import deque
+
+def extract_first_element(dq: deque):
+    return dq.popleft()
+
 if __name__ == '__main__':
-    print(f"is_positive(5): {is_positive(5)}")
-    print(f"is_positive(0): {is_positive(0)}")
-    print(f"is_positive(-3.14): {is_positive(-3.14)}")
-    print(f"is_positive(1e-9): {is_positive(1e-9)}")
-    print(f"is_positive(-0.001): {is_positive(-0.001)}")
+    dq = deque([1, 2, 3, 4, 5])
+    result = extract_first_element(dq)
+    print(result)

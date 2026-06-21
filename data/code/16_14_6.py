@@ -1,28 +1,11 @@
-from typing import Number
+from collections import deque
 
-def is_positive(value: Number) -> bool:
-    """
-    Determines if a given numerical value is strictly positive.
-
-    Args:
-        value (Number): A number to check against zero.
-
-    Returns:
-        bool: True if the number is greater than 0, False otherwise.
-    
-    Examples:
-        >>> is_positive(5)
-        True
-        >>> is_positive(-3)
-        False
-        >>> is_positive(0)
-        False
-    """
-    return value > 0
+def extract_first_element(d):
+    if not d:
+        raise IndexError("Cannot extract from an empty deque")
+    return d.popleft()
 
 if __name__ == '__main__':
-    test_values = [1, -2, 0.5, float('inf'), float('-inf')]
-
-    for num in test_values:
-        result = is_positive(num)
-        print(f"is_positive({num}) = {result}")
+    sample_deque = deque([1, 2, 3, 4, 5])
+    result = extract_first_element(sample_deque)
+    print(result)

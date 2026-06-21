@@ -1,9 +1,20 @@
-def is_even(n: int) -> bool:
-    """Check if an integer is even."""
-    return n % 2 == 0
+class Collection:
+    def __init__(self):
+        self._items = []
+
+    def add(self, item):
+        self._items.append(item)
+
+    def get_last(self):
+        if not self._items:
+            return None
+        return self._items[-1]
 
 if __name__ == '__main__':
-    test_values = [1, -5, 42, 0]
-    for val in test_values:
-        result = is_even(val)
-        print(f"is_even({val}) = {result}")
+    collection = Collection()
+    collection.add(10)
+    collection.add(20)
+    collection.add(30)
+    print(collection.get_last())
+    collection.add("final")
+    print(collection.get_last())

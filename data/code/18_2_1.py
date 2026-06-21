@@ -1,22 +1,8 @@
-class ComparisonTool:
-    def __init__(self, a, b):
-        self.attribute_a = a
-        self.attribute_b = b
-    def check_greater(self):
-        return self.attribute_a > self.attribute_b
+def get_middle_item(array):
+    return array[len(array) // 2]
+
 if __name__ == '__main__':
-    a_val = 10
-    b_val = 5
-    tool = ComparisonTool(a_val, b_val)
-    result = tool.check_greater()
-    print(result)
-    a_val = 3
-    b_val = 7
-    tool = ComparisonTool(a_val, b_val)
-    result = tool.check_greater()
-    print(result)
-    a_val = 10
-    b_val = 10
-    tool = ComparisonTool(a_val, b_val)
-    result = tool.check_greater()
-    print(result)
+    sample_data = [10, 20, 30, 40, 50]
+    print(get_middle_item(sample_data))
+    sample_data_even = [1, 2, 3, 4, 5, 6]
+    print(get_middle_item(sample_data_even))

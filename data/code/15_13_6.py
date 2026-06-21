@@ -1,10 +1,15 @@
-def check_equal(a: object, b: object) -> bool:
-    """Checks if two arbitrary Python objects are equal using the built-in equality operator."""
-    return a == b
+def get_penultimate(lst):
+    if len(lst) < 2:
+        return None
+    return lst[-2]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values (no user input or external dependencies required)
-    assert check_equal(5, 5) is True
-    assert check_equal([1, 2], [3, 4]) is False
-    assert check_equal((1,), {"a": "b"}) is False
-    print("All basic equality checks executed successfully.")
+    sample_lists = [
+        [],
+        [1],
+        [1, 2],
+        [1, 2, 3, 4, 5],
+        ['a', 'b', 'c']
+    ]
+    for sample in sample_lists:
+        print(get_penultimate(sample))

@@ -1,8 +1,9 @@
-def is_positive(number):
-    return number > 0
+import numpy as np
+
+def get_initial_value(arr):
+    return arr.flat[0]
+
 if __name__ == '__main__':
-    print(is_positive(5))
-    print(is_positive(-1))
-    print(is_positive(0))
-    print(is_positive(0.001))
-    print(is_positive(-100))
+    sample_array = np.array([[1, 2], [3, 4]])
+    result = get_initial_value(sample_array)
+    print(result)

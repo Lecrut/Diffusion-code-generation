@@ -1,6 +1,10 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_key_value(data):
+    if not data:
+        return None
+    last_item = list(data.items())[-1]
+    return last_item
 
 if __name__ == '__main__':
-    assert is_even(4), "Should be True"
-    assert not is_even(3), "Should be False"
+    sample_dict = {'first': 1, 'second': 2, 'third': 3}
+    result = get_last_key_value(sample_dict)
+    print(result)

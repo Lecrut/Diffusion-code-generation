@@ -1,12 +1,11 @@
-def check_equality(a, b):
-    return a == b
+def get_penultimate(lst):
+    if len(lst) < 2:
+        return None
+    return lst[-2]
+
 if __name__ == '__main__':
-    x = 10
-    y = 10
-    print(check_equality(x, y))
-    x = [1, 2]
-    y = [1, 2]
-    print(check_equality(x, y))
-    x = 10
-    y = 20
-    print(check_equality(x, y))
+    print(get_penultimate([1, 2, 3, 4, 5]))
+    print(get_penultimate([1, 2]))
+    print(get_penultimate([1]))
+    print(get_penultimate([]))
+    print(get_penultimate([10, 20, 30]))

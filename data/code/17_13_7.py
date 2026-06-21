@@ -1,7 +1,8 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_inserted_item(dictionary):
+    last_key = next(reversed(dictionary))
+    return last_key, dictionary[last_key]
 
 if __name__ == '__main__':
-    test_cases = [1, 2, -3, 4]
-    results = [(n, is_even(n)) for n in test_cases]
-    print(results)
+    sample_dict = {1: 'one', 2: 'two', 3: 'three'}
+    result = get_last_inserted_item(sample_dict)
+    print(result)

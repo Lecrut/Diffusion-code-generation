@@ -1,8 +1,14 @@
-def is_even(n: int) -> bool:
-    """Check if an integer is even using the modulo operator."""
-    return n % 2 == 0
+class ListAccessor:
+    def __init__(self, data):
+        self.data = data
+
+    def get_last_item(self):
+        if not self.data:
+            return None
+        return self.data[len(self.data) - 1]
 
 if __name__ == '__main__':
-    test_cases = [1, 2, -3, 4, 0]
-    for num in test_cases:
-        print(f"{num} is {'even' if is_even(num) else 'odd'}")
+    sample_list = [10, 20, 30, 40, 50]
+    accessor = ListAccessor(sample_list)
+    result = accessor.get_last_item()
+    print(result)

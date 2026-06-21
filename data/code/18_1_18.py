@@ -1,10 +1,15 @@
-def is_greater(a: float | int, b: float | int) -> bool:
-    """Returns True if a > b, otherwise False."""
-    return a > b
+def get_median(sorted_list):
+    n = len(sorted_list)
+    if n == 0:
+        return None
+    mid = n // 2
+    if n % 2 == 1:
+        return sorted_list[mid]
+    else:
+        return (sorted_list[mid - 1] + sorted_list[mid]) / 2
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert is_greater(10.5, 3.2) is True
-    assert is_greater(7, 8) is False
-    assert is_greater(-5, -2) is False
-    assert is_greater(float('inf'), float('-inf')) is True
+    print(get_median([1, 2, 3, 4, 5]))
+    print(get_median([1, 2, 3, 4]))
+    print(get_median([10]))
+    print(get_median([1, 3]))

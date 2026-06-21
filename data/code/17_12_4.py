@@ -1,16 +1,19 @@
-class NumberChecker:
-    def check_parity(self, num):
-        if num % 2 == 0:
-            return 'Even'
-        else:
-            return 'Odd'
+class Deque:
+    def __init__(self):
+        self._data = []
+
+    def push_back(self, value):
+        self._data.append(value)
+
+    def pop_back(self):
+        return self._data.pop()
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample values to test without user input or command-line arguments
-    sample_numbers = [1, 2, -3, 0]
-    
-    for number in sample_numbers:
-        result = checker.check_parity(number)
-        print(f"Number {number} is {result}")
+    dq = Deque()
+    dq.push_back(10)
+    dq.push_back(20)
+    dq.push_back(30)
+    dq.push_back(40)
+    dq.push_back(50)
+    result = dq.pop_back()
+    print(result)

@@ -1,8 +1,7 @@
-import math
-def is_positive(value: float) -> bool:
-    return value > 0.0
+def get_leading_element(data):
+    return data[0]
+
 if __name__ == '__main__':
-    test_values = [1.0, 0.0, -5.5, 0.000000000000001, -0.000000000000001]
-    for val in test_values:
-        result = is_positive(val)
-        print(f"Is {val} positive? {result}")
+    sample_list = [10, 20, 30, 40]
+    result = get_leading_element(sample_list)
+    print(result)

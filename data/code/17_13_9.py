@@ -1,6 +1,9 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_item(d):
+    if not d:
+        return None
+    last_key = next(reversed(d))
+    return (last_key, d[last_key])
 
 if __name__ == '__main__':
-    assert is_even(4), "Even number should be True"
-    assert not is_even(7), "Odd number should be False"
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    print(get_last_item(sample_dict))

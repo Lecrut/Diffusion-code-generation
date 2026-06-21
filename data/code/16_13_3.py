@@ -1,18 +1,13 @@
-def filter_positive_numbers(numbers):
-    """
-    Processes a list of numbers and returns a new list containing 
-    only the elements that are positive (greater than zero).
-    
-    Args:
-        numbers (list): A list of numerical values to process.
-        
-    Returns:
-        list: A new list with only the positive integers from the input.
-    """
-    return [num for num in numbers if num > 0]
+def get_first_element(generator):
+    try:
+        return next(generator)
+    except StopIteration:
+        return None
 
 if __name__ == '__main__':
-    sample_data = [-5, 3, -1, 0, 2, -7, 8, -2, 4]
-    result = filter_positive_numbers(sample_data)
-    print(f"Input: {sample_data}")
-    print(f"Output (positive numbers only): {result}")
+    sample_gen = (x * 2 for x in range(5))
+    first = get_first_element(sample_gen)
+    print(first)
+    sample_empty = (x for x in [])
+    first_empty = get_first_element(sample_empty)
+    print(first_empty)

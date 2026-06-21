@@ -1,11 +1,7 @@
-def is_even(n: int) -> bool:
-    """Check if an integer is even."""
-    return n % 2 == 0
+def get_last_item(lst):
+    return lst[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input.
-    samples = [1, -5, 42, 0]
-
-    for num in samples:
-        result = is_even(num)
-        print(f"{num} is {'even' if result else 'odd'}")
+    sample_data = [10, 20, 30, 40, 50]
+    result = get_last_item(sample_data)
+    print(result)

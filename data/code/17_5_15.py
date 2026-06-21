@@ -1,13 +1,11 @@
-import sys
+def get_last_element(sequence):
+    if len(sequence) == 0:
+        raise IndexError("Sequence cannot be empty")
+    return sequence[-1]
 
-def determine_parity(number: int) -> str:
-    """Returns 'Even' if number is even, otherwise 'Odd'."""
-    return "Even" if number % 2 == 0 else "Odd"
+DEFAULT_SAMPLE_DATA = [100, 200, 300, 400, 500]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to satisfy the requirement of running without user input.
-    test_values = [10, 7, -3, 4]
-
-    for val in test_values:
-        result = determine_parity(val)
-        print(result)
+    data = DEFAULT_SAMPLE_DATA
+    result = get_last_element(data)
+    print(result)

@@ -1,5 +1,7 @@
-def is_even_recursive(n):
-          if n < 0: return False # Should not happen per spec but for safety
+def get_last_element(lst: list) -> any:
+    return lst[-1]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_element(sample_list)
+    print(result)

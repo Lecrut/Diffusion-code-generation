@@ -1,8 +1,9 @@
-def compare_values(v1, v2):
-    return v1 == v2
+def get_second_to_last(items):
+    if len(items) < 2:
+        raise IndexError("List must contain at least two items.")
+    return items[-2]
+
 if __name__ == '__main__':
-    print(f"compare_values(10, 10): {compare_values(10, 10)}")
-    print(f"compare_values(5, 3): {compare_values(5, 3)}")
-    print(f"compare_values('a', 'a'): {compare_values('a', 'a')}")
-    print(f"compare_values(True, True): {compare_values(True, True)}")
-    print(f"compare_values(1.5, 1.5): {compare_values(1.5, 1.5)}")
+    sample_data = [10, 20, 30, 40, 50]
+    result = get_second_to_last(sample_data)
+    print(result)

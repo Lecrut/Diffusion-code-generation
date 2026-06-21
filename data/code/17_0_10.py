@@ -1,30 +1,8 @@
-"""
-Script to determine if an integer is even or odd.
-
-This script defines a function that checks the parity of an integer 
-and returns 'even' or 'odd'. It includes a main execution block with 
-hard-coded sample values to demonstrate functionality without requiring user input.
-"""
-
-def check_parity(number: int) -> str:
-    """
-    Determines whether a given integer is even or odd.
-
-    Args:
-        number (int): The integer to be checked.
-
-    Returns:
-        str: 'even' if the number is divisible by 2, otherwise 'odd'.
-    """
-    return "even" if number % 2 == 0 else "odd"
+def get_last_element(data):
+    return data[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration. 
-    # No user input, command-line arguments, or external dependencies are used.
-    
-    test_numbers = [42, -3, 17]
-
-    print("Checking parity of the following numbers:")
-    for num in test_numbers:
-        result = check_parity(num)
-        print(f"The number {num} is {result}.")
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_last_element(sample_list))
+    print(get_last_element(['apple', 'banana', 'cherry']))
+    print(get_last_element([True, False, True]))

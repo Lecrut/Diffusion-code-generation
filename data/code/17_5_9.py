@@ -1,11 +1,16 @@
-def check_parity(number):
-    """Returns 'Even' if number is even, otherwise returns 'Odd'."""
-    return "Even" if number % 2 == 0 else "Odd"
+class SequenceTail:
+    EMPTY_MSG = "Cannot retrieve last element from empty sequence"
+
+    @staticmethod
+    def validate(seq):
+        if len(seq) == 0:
+            raise IndexError(SequenceTail.EMPTY_MSG)
+
+    @staticmethod
+    def get_last(sequence):
+        SequenceTail.validate(sequence)
+        return sequence[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or arguments.
-    test_values = [4, 7, -3, 10]
-
-    for value in test_values:
-        result = check_parity(value)
-        print(result)
+    data = [100, 200, 300]
+    print(SequenceTail.get_last(data))

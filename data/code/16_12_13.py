@@ -1,3 +1,9 @@
-x = 5 if __name__ == '__main__' else None; print(True) if x > 0 else False, (lambda: True)(1), (lambda: False)(-2)
+import numpy
+
+def get_first_element(arr):
+    return arr.flat[0]
+
 if __name__ == '__main__':
-    assert ((lambda _: _ > 0)(3)) is True and ((lambda _: _ > 0)(-5)) is False
+    data = numpy.array([[10, 20], [30, 40]])
+    result = get_first_element(data)
+    print(result)

@@ -1,7 +1,19 @@
-def is_even(n):
-    return n % 2 == 0
+class Collection:
+    def __init__(self):
+        self.items = []
+
+    def add(self, item):
+        self.items.append(item)
+
+    def get_last(self):
+        if not self.items:
+            return None
+        return self.items[-1]
+
 if __name__ == '__main__':
-    print(is_even(4))
-    print(is_even(7))
-    print(is_even(0))
-    print(is_even(-2))
+    collection = Collection()
+    collection.add("First")
+    collection.add("Second")
+    collection.add("Third")
+    result = collection.get_last()
+    print(result)

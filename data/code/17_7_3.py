@@ -1,8 +1,9 @@
-def get_number_and_parity(n: int) -> tuple[int, bool]:
-    parity = n % 2 == 0
-    return (n, parity)
+def get_last_entry(collection):
+    if not collection:
+        raise ValueError("Collection cannot be empty")
+    return collection[-1]
+
 if __name__ == '__main__':
-    print(get_number_and_parity(4))
-    print(get_number_and_parity(7))
-    print(get_number_and_parity(0))
-    print(get_number_and_parity(-3))
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_entry(sample_list)
+    print(result)

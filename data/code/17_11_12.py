@@ -1,19 +1,18 @@
-def is_even(n: int) -> bool:
-    """
-    Check if an integer is even.
-    
-    Args:
-        n (int): The number to check.
-        
-    Returns:
-        bool: True if the number is even, False otherwise.
-    """
-    return n % 2 == 0
+class Collection:
+    def __init__(self):
+        self._items = []
+
+    def add(self, item):
+        self._items.append(item)
+
+    def get_last(self):
+        if not self._items:
+            return None
+        return self._items[-1]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [10, -3, 42, 0, 7]
-    
-    for num in samples:
-        result = is_even(num)
-        print(f"is_even({num}) = {result}")
+    collection = Collection()
+    collection.add("first")
+    collection.add("second")
+    collection.add("third")
+    print(collection.get_last())

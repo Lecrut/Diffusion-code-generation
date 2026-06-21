@@ -1,7 +1,6 @@
-def check_positive(x):
-    return x > 0
+def get_first_item(lst):
+    return lst[0]
 
 if __name__ == '__main__':
-    test_cases = [5, -3, 0]
-    results = [check_positive(val) for val in test_cases]
-    assert all(results), "Test failed"
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_first_item(sample_list))

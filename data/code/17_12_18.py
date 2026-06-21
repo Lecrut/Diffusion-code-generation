@@ -1,16 +1,20 @@
-class NumberChecker:
-    def check_parity(self, number):
-        if number % 2 == 0:
-            return 'Even'
-        else:
-            return 'Odd'
+from collections import deque
+
+def create_deque_with_integers():
+    d = deque()
+    d.append(10)
+    d.append(20)
+    d.append(30)
+    d.append(40)
+    d.append(50)
+    return d
+
+def pop_last_item(d):
+    if not d:
+        return None
+    return d.pop()
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample test cases with hard-coded values
-    test_values = [4, 7, -3, 10]
-    
-    for value in test_values:
-        result = checker.check_parity(value)
-        print(f"{value} is {result}")
+    d = create_deque_with_integers()
+    last_item = pop_last_item(d)
+    print(last_item)

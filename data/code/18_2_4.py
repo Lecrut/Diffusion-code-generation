@@ -1,17 +1,13 @@
-class ComparisonTool:
-    def __init__(self, attr1, attr2):
-        self._attribute1 = attr1
-        self._attribute2 = attr2
-    def check_greater(self):
-        return self._attribute1 > self._attribute2
+def get_middle_item(array):
+    if not array:
+        return None
+    index = len(array) // 2
+    return array[index]
+
 if __name__ == '__main__':
-    a = 10
-    b = 5
-    tool = ComparisonTool(a, b)
-    result = tool.check_greater()
-    print(result)
-    c = 3
-    d = 8
-    tool2 = ComparisonTool(c, d)
-    result2 = tool2.check_greater()
-    print(result2)
+    primary_set = [3, 7, 1, 9, 2]
+    secondary_set = [5, 12, 8, 20]
+    single_set = [99]
+    print(get_middle_item(primary_set))
+    print(get_middle_item(secondary_set))
+    print(get_middle_item(single_set))

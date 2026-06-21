@@ -1,9 +1,6 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_item(d: dict):
+    return next(iter(d.items()))
 
 if __name__ == '__main__':
-    test_cases = [1, 2, -3, 4]
-    results = []
-    for val in test_cases:
-        result = is_even(val)
-        print(f"is_even({val}) = {result}")
+    my_dict = {"a": 1, "b": 2, "c": 3}
+    print(get_last_item(my_dict))

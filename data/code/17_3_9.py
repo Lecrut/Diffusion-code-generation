@@ -1,2 +1,10 @@
+def last_element(collection):
+    return collection[-1]
+
 if __name__ == '__main__':
-    num = 42 if (num := 10) % 2 else None; print(f"Is {num} even? {(num is not None and num % 2 == 0)}")
+    sample_list = [1, 2, 3, 4, 5]
+    sample_tuple = (10, 20, 30)
+    sample_string = "hello"
+    print(last_element(sample_list))
+    print(last_element(sample_tuple))
+    print(last_element(sample_string))

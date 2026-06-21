@@ -1,7 +1,11 @@
-def is_even(n):
-    return n % 2 == 0
+def get_last_item(data):
+    if not data:
+        return None
+    keys = list(data.keys())
+    last_key = keys[-1]
+    return (last_key, data[last_key])
 
 if __name__ == '__main__':
-    test_cases = [-1, 0, 3, 4]
-    results = [is_even(x) for x in test_cases]
-    print(results)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+    result = get_last_item(sample_dict)
+    print(result)

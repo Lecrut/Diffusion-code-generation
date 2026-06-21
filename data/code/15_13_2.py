@@ -1,11 +1,15 @@
-def check_equal(a, b):
-    return a == b
+def get_penultimate_element(data):
+    if len(data) < 2:
+        return None
+    return data[-2]
+
 if __name__ == '__main__':
-    result1 = check_equal(10, 10)
-    result2 = check_equal("hello", "hello")
-    result3 = check_equal([1, 2], [1, 2])
-    result4 = check_equal(1, 2)
-    print(f"10 == 10: {result1}")
-    print(f"'hello' == 'hello': {result2}")
-    print(f"[1, 2] == [1, 2]: {result3}")
-    print(f"1 == 2: {result4}")
+    sample_list_1 = [10, 20, 30, 40, 50]
+    sample_list_2 = [42]
+    sample_list_3 = []
+    result_1 = get_penultimate_element(sample_list_1)
+    result_2 = get_penultimate_element(sample_list_2)
+    result_3 = get_penultimate_element(sample_list_3)
+    print(result_1)
+    print(result_2)
+    print(result_3)

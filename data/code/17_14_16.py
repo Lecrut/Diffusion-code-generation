@@ -1,23 +1,32 @@
-def get_even_odd_status(number):
-    """Determine if a number is even or odd."""
-    return "even" if number % 2 == 0 else "odd"
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.start = 0
+        self.end = 0
+        self.size = 0
 
-def validate_input(input_str, error_msg="Invalid input: Please enter an integer."):
-    """Validate that the input string can be converted to an integer."""
-    try:
-        int_value = int(input_str)
-        return True, int_value
-    except ValueError:
-        print(error_msg)
-        return False, None
+    def push(self, value):
+        if self.size == self.capacity:
+            self.buffer[self.end] = value
+            self.end = (self.end + 1) % self.capacity
+            self.start = (self.start + 1) % self.capacity
+        else:
+            self.buffer[self.end] = value
+            self.end = (self.end + 1) % self.capacity
+            self.size += 1
+
+    def get_last_inserted(self):
+        if self.size == 0:
+            raise IndexError("Buffer is empty")
+        index = (self.end - 1) % self.capacity
+        return self.buffer[index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or arguments.
-    test_cases = [10, 25, "abc", -4]
-
-    for case in test_cases:
-        is_valid, number_value = validate_input(case)
-
-        if is_valid and number_value is not None:
-            status_message = get_even_odd_status(number_value)
-            print(f"The entered number {number_value} is a {status_message}.")
+    buffer = CircularBuffer(3)
+    buffer.push(10)
+    buffer.push(20)
+    buffer.push(30)
+    buffer.push(40)
+    buffer.push(50)
+    print(buffer.get_last_inserted())

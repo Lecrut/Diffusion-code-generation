@@ -1,9 +1,9 @@
-def compare_values(v1, v2):
-    return v1 == v2
+def get_second_to_last(lst):
+    if len(lst) < 2:
+        raise ValueError("List must have at least two elements")
+    return lst[-2]
+
 if __name__ == '__main__':
-    print(compare_values(5, 5))
-    print(compare_values(10, 10))
-    print(compare_values(3.14, 3.14))
-    print(compare_values(1, 2))
-    print(compare_values("hello", "hello"))
-    print(compare_values(100, 101))
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_to_last(sample_list)
+    print(result)

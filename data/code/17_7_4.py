@@ -1,8 +1,9 @@
-def get_number_and_parity(n: int) -> tuple[int, bool]:
-    return (n, n % 2 == 0)
+def get_last_entry(data):
+    if not data:
+        return None
+    return data[-1]
+
 if __name__ == '__main__':
-    test_numbers = [1, 2, 3, 4, 5, 0, -2, -3]
-    results = []
-    for num in test_numbers:
-        results.append(get_number_and_parity(num))
-    print(results)
+    sample_data = [10, 20, 30, 40, 50]
+    result = get_last_entry(sample_data)
+    print(result)

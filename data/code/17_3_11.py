@@ -1,6 +1,13 @@
-if __name__ == "__main__":
-    sample_values = [1, 2, 3, 4]
-    for val in sample_values:
-        result = val % 2 == 0
-        if not isinstance(result, bool):
-            print(f"{val} is even" if result else f"{val} is odd")
+def get_last_element(collection):
+    return collection[-1]
+
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = ('a', 'b', 'c')
+    sample_string = "optimization"
+    result_list = get_last_element(sample_list)
+    result_tuple = get_last_element(sample_tuple)
+    result_string = get_last_element(sample_string)
+    print(result_list)
+    print(result_tuple)
+    print(result_string)

@@ -1,8 +1,9 @@
-import math
-def is_positive(value):
-    return value > 0.0
+def get_leading_element(fixed_list):
+    if not fixed_list:
+        raise ValueError("List must not be empty")
+    return fixed_list[0]
+
 if __name__ == '__main__':
-    test_values = [1.0, 0.0, -5.5, 0.0000000000000001, -0.0000000000000001]
-    for val in test_values:
-        result = is_positive(val)
-        print(f"Is {val} positive? {result}")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_leading_element(sample_list)
+    print(result)

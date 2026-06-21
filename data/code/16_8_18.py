@@ -1,16 +1,9 @@
-import sys
+import numpy as np
 
-def process_number(number: int) -> str:
-    """Check if a number is positive and return the result."""
-    if number > 0:
-        return "Positive"
-    else:
-        return "Non-positive"
+def get_first_value():
+    vector = np.array([10, 20, 30, 40, 50])
+    return vector[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input.
-    samples = [5, -3, 0]
-
-    for num in samples:
-        result = process_number(num)
-        print(result)
+    result = get_first_value()
+    print(result)

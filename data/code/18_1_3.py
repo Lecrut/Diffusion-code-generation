@@ -1,10 +1,23 @@
-def is_greater(a: float, b: float) -> bool:
-    """Returns True if a > b, otherwise False."""
-    return a > b
+def get_median(sorted_list):
+    length = len(sorted_list)
+    mid = length // 2
+    if length % 2 == 1:
+        return sorted_list[mid]
+    else:
+        return (sorted_list[mid - 1] + sorted_list[mid]) / 2
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert is_greater(10.5, 3.2) is True
-    assert is_greater(-5, -7) is True
-    assert is_greater(42, 99) is False
-    print("All tests passed.")
+    sample_lists = [
+        [1, 3, 5],
+        [1, 2, 3, 4],
+        [10],
+        [2, 2, 2, 2],
+        []
+    ]
+
+    for sample in sample_lists:
+        if sample:
+            result = get_median(sample)
+            print(result)
+        else:
+            print(None)

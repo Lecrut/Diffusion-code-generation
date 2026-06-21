@@ -1,3 +1,7 @@
-print("num" if "num" in globals() else None) or print(num % 2 == 0) # Check logic wrapped but needs execution; corrected below:
+def get_last(collection):
+    return collection[-1]
+
 if __name__ == '__main__':
-    num = 10
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_last(sample_list)
+    print(result)

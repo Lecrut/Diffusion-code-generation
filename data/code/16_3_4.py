@@ -1,4 +1,7 @@
+def get_first_item(lst):
+    return lst[0]
+
 if __name__ == '__main__':
-    x = 5 if True else -3
-    result = bool(x > 0)
-    print(result, "True" if result else "False")
+    sample_list = [10, 20, 30, 40, 50]
+    first = get_first_item(sample_list)
+    print(first)

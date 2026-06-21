@@ -1,10 +1,11 @@
-def are_equal(a, b):
-    return a == b
+def penultimate_element(lst):
+    if len(lst) < 2:
+        return None
+    return lst[-2]
+
 if __name__ == '__main__':
-    x = 10
-    y = 10
-    z = "hello"
-    w = "hello"
-    print(are_equal(x, y))
-    print(are_equal(x, z))
-    print(are_equal(w, w))
+    print(penultimate_element([1, 2, 3, 4]))
+    print(penultimate_element([1]))
+    print(penultimate_element([]))
+    print(penultimate_element([10, 20]))
+    print(penultimate_element(['a', 'b', 'c']))

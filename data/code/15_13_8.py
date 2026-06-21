@@ -1,10 +1,15 @@
-def check_equal(a: object, b: object) -> bool:
-    """Check if two objects are equal using the built-in equality operator."""
-    return a == b
+def get_penultimate_element(data):
+    if len(data) < 2:
+        return None
+    return data[-2]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values (no user input or external dependencies required)
-    assert check_equal(5, 5) is True
-    assert check_equal([1, 2], [1, 2]) is True
-    assert check_equal("hello", "world") is False
-    print("All tests passed.")
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [10, 20],
+        [5],
+        [],
+        ['a', 'b', 'c']
+    ]
+    for case in test_cases:
+        print(get_penultimate_element(case))

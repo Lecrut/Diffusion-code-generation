@@ -1,17 +1,18 @@
-def is_greater(a: float, b: float) -> bool:
-    """Returns True if a > b, otherwise False."""
-    return a > b
+def get_median(sorted_list):
+    length = len(sorted_list)
+    mid = length // 2
+    if length % 2 == 1:
+        return sorted_list[mid]
+    else:
+        return (sorted_list[mid - 1] + sorted_list[mid]) / 2
 
 if __name__ == '__main__':
-    # Sample values to test the function without external input or files.
-    sample_cases = [
-        (10, 5),      # Expected: True
-        (3.14, 2.71),# Expected: True
-        (-1, -5),     # Expected: False
-        (0, 0),       # Expected: False
-        (float('inf'), float('-inf')), # Expected: True
+    test_cases = [
+        [1, 3, 5],
+        [1, 2, 3, 4],
+        [10],
+        [5, 10],
+        [1, 2, 3, 4, 5, 6, 7]
     ]
-
-    for val_a, val_b in sample_cases:
-        result = is_greater(val_a, val_b)
-        print(f"is_greater({val_a}, {val_b}) -> {result}")
+    for case in test_cases:
+        print(get_median(case))

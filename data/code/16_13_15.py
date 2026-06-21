@@ -1,28 +1,20 @@
-def filter_positive_numbers(numbers):
-    """
-    Processes a list of numbers and returns a new list containing 
-    only the elements that are positive (greater than zero).
-    
-    Args:
-        numbers (list[float|int]): A list of numeric values.
-        
-    Returns:
-        list[float|int]: A list containing only the positive numbers from the input.
-    """
-    return [num for num in numbers if num > 0]
+def get_first_generator_element(gen):
+    try:
+        return next(gen)
+    except StopIteration:
+        raise ValueError("Generator is empty")
 
-if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files)
-    sample_data = [-5, 3, -12, 0, 8.5, -7, 4.2, 0, 9]
-    
-    result = filter_positive_numbers(sample_data)
-    
-    # Output the result to verify functionality (no print() calls requested in task description 
-    # but standard practice for runnable modules includes output demonstration; however, strictly following "return only a single complete runnable Python module" 
-    # and avoiding unnecessary prose means we keep it minimal yet functional. 
-    # Since no explicit instruction was given on whether to print or just return, 
-    # and the task emphasizes 'runnable', printing is acceptable for verification without violating constraints).
-    
-    # Note: The function itself returns the list; this block demonstrates usage.
-    positive_numbers = filter_positive_numbers(sample_data)
-    print(positive_numbers)  # This line executes only when run as a script, not imported
+if __name__ == "__main__":
+    def sample_generator():
+        yield 10
+        yield 20
+        yield 30
+
+    gen_obj = sample_generator()
+    first_item = get_first_generator_element(gen_obj)
+    print(first_item)
+    print(get_first_generator_element(iter([5, 15, 25])))
+    try:
+        get_first_generator_element(iter([]))
+    except ValueError as e:
+        print(e)

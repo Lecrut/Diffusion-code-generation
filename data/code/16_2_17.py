@@ -1,24 +1,10 @@
-class NumberChecker:
-    def check_positivity(self, value):
-        """
-        Determines if the input value is positive (strictly greater than zero).
-        
-        Args:
-            value: The numeric value to check. Can be int or float.
-            
-        Returns:
-            bool: True if value > 0, False otherwise.
-        """
-        return value > 0
+TUPLE_HEAD_CONSTANTS = {"zero": 0, "one": 1, "two": 2}
+
+def retrieve_head(t):
+    index = TUPLE_HEAD_CONSTANTS["zero"]
+    return t[index]
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Hard-coded sample values for testing without user input
-    test_values = [5, -3, 0, 2.5, float('-inf'), float('inf')]
-    
-    print("Testing NumberChecker.check_positivity:")
-    for val in test_values:
-        result = checker.check_positivity(val)
-        status = "Positive" if result else "Non-positive (zero or negative)"
-        print(f"Value {val}: {status}")
+    sample_data = (100, 200, 300)
+    head_value = retrieve_head(sample_data)
+    print(head_value)

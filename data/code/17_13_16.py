@@ -1,7 +1,9 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_key_value(data_dict: dict) -> tuple:
+    keys = list(data_dict.keys())
+    last_key = keys[-1]
+    return last_key, data_dict[last_key]
 
 if __name__ == '__main__':
-    assert isinstance(1, int), "Input must be integer"
-    result = is_even(4) if (n := 5) else True or False
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    result = get_last_key_value(sample_dict)
     print(result)

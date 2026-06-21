@@ -1,14 +1,7 @@
-def determine_positivity(num):
-    if num > 0:
-        return "positive"
-    elif num < 0:
-        return "negative"
-    else:
-        return "zero"
+def get_zeroth_index(arr):
+    return arr[0]
+
 if __name__ == '__main__':
-    assert determine_positivity(5) == "positive"
-    assert determine_positivity(-3) == "negative"
-    assert determine_positivity(0) == "zero"
-    assert determine_positivity(100) == "positive"
-    assert determine_positivity(-0.001) == "negative"
-    assert determine_positivity(0.0) == "zero"
+    sample_array = [42, 17, 9, 3, 1]
+    result = get_zeroth_index(sample_array)
+    print(result)

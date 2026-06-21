@@ -1,15 +1,6 @@
-import sys
-
-def is_even(number: int) -> bool:
-    """Check if a number is even."""
-    return number % 2 == 0
+def get_last_element(seq):
+    return seq[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements to avoid interactive input calls.
-    test_values = [4, 3, -5, 17]
-
-    for value in test_values:
-        if is_even(value):
-            print('Even')
-        else:
-            print('Odd')
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_last_element(sample_list))

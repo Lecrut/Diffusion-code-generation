@@ -1,8 +1,9 @@
-def is_even(number):
-    return number % 2 == 0
+class ListAccessor:
+    def get_last_item(self, items):
+        return items[-1]
+
 if __name__ == '__main__':
-    print(is_even(4))
-    print(is_even(7))
-    print(is_even(0))
-    print(is_even(-2))
-    print(is_even(-3))
+    accessor = ListAccessor()
+    sample_list = [10, 20, 30, 40, 50]
+    result = accessor.get_last_item(sample_list)
+    print(result)

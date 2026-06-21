@@ -1,11 +1,11 @@
-def is_even(n: int) -> bool:
-    """Check if an integer is even using the modulo operator."""
-    return n % 2 == 0
+class ListProcessor:
+    def get_last_item(self, lst):
+        if not lst:
+            raise IndexError("list index out of range")
+        return lst[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input
-    samples = [1, -5, 42, 0, 99]
-    
-    for num in samples:
-        result = is_even(num)
-        print(f"{num} is {'even' if result else 'odd'}")
+    processor = ListProcessor()
+    sample_list = [1, 2, 3, 4, 5]
+    result = processor.get_last_item(sample_list)
+    print(result)

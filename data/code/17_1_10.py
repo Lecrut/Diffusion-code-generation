@@ -1,19 +1,19 @@
-def is_even(num: int) -> bool:
-    """
-    Checks if an integer is even using the modulo operator.
+class ListRetriever:
+    def __init__(self, data):
+        self.data = data
 
-    Args:
-        num (int): The number to check.
-
-    Returns:
-        bool: True if num is even, False otherwise.
-    """
-    return num % 2 == 0
+    def get_last_item(self):
+        if not self.data:
+            raise IndexError("Cannot retrieve the last item from an empty list.")
+        return self.data[-1]
 
 if __name__ == '__main__':
-    # Sample test cases run without user input or external dependencies
-    sample_values = [42, -3, 17, 0, 100]
-
-    for value in sample_values:
-        result = is_even(value)
-        print(f"{value} is {'even' if result else 'odd'}")
+    sample_list = [10, 20, 30, 40, 50]
+    retriever = ListRetriever(sample_list)
+    print(retriever.get_last_item())
+    empty_list = []
+    empty_retriever = ListRetriever(empty_list)
+    try:
+        print(empty_retriever.get_last_item())
+    except IndexError as e:
+        print(e)

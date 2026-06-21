@@ -1,16 +1,17 @@
-class NumberChecker:
-    def check_parity(self, number):
-        if number % 2 == 0:
-            return 'Even'
-        else:
-            return 'Odd'
+class Deque:
+    def __init__(self):
+        self.items = []
+
+    def append(self, value):
+        self.items.append(value)
+
+    def pop_back(self):
+        return self.items.pop()
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample values to test the method without user input
-    sample_numbers = [1, 2, -3, 4]
-    
-    for num in sample_numbers:
-        result = checker.check_parity(num)
-        print(f"Number {num} is {result}")
+    dq = Deque()
+    dq.append(10)
+    dq.append(20)
+    dq.append(30)
+    result = dq.pop_back()
+    print(result)

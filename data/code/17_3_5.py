@@ -1,7 +1,12 @@
-# Check if 'num' is even using a one-liner expression
-is_even = num % 2 == 0
+def get_last_element(collection):
+    if len(collection) == 0:
+        raise IndexError("Cannot get the last element of an empty collection")
+    return collection[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test without user input or network access
-    for val in [1, 2, -4, 0]:
-        print(f"Is {val} even? {is_even := (val % 2 == 0)}")
+    sample_list = [10, 20, 30, 40, 50]
+    sample_string = "Hello World"
+    sample_tuple = (1, 2, 3, 4, 5)
+    print(get_last_element(sample_list))
+    print(get_last_element(sample_string))
+    print(get_last_element(sample_tuple))

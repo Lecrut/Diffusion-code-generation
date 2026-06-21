@@ -1,27 +1,35 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.head = 0
+        self.count = 0
 
-def check_parity(number: int) -> None:
-    """Prints a clear message indicating if the number is even or odd."""
-    if number % 2 == 0:
-        print(f"The number {number} is even.")
-    else:
-        print(f"The number {number} is odd.")
+    def insert(self, value):
+        if self.count == self.capacity:
+            self.buffer[self.head] = value
+            self.head = (self.head + 1) % self.capacity
+        else:
+            idx = (self.head + self.count) % self.capacity
+            self.buffer[idx] = value
+            self.count += 1
 
-def validate_input(input_str: str) -> int | None:
-    """Attempts to convert the input string to an integer. Returns None on failure."""
-    try:
-        return int(input_str.strip())
-    except ValueError:
-        return None
+    def get_last(self):
+        if self.count == 0:
+            return None
+        last_idx = (self.head + self.count - 1) % self.capacity
+        return self.buffer[last_idx]
+
+def main():
+    buf = CircularBuffer(3)
+    buf.insert(10)
+    buf.insert(20)
+    buf.insert(30)
+    result = buf.get_last()
+    print(result)
+    buf.insert(40)
+    result2 = buf.get_last()
+    print(result2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or arguments
-    test_cases = [0, 1, -2, "abc", "", 42]
-
-    for value in test_cases:
-        parsed_int = validate_input(str(value))
-        
-        if parsed_int is not None:
-            check_parity(parsed_int)
-        else:
-            print(f"Error: Input '{value}' could not be converted to an integer.")
+    main()

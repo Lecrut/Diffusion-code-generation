@@ -1,14 +1,11 @@
-def check_positive(number):
-    if number > 0:
-        return True
-    else:
-        return False
+def get_initial_value(items):
+    iterator = iter(items)
+    try:
+        return next(iterator)
+    except StopIteration:
+        return None
+
 if __name__ == '__main__':
-    sample_inputs = [10, -5, 0, 3.14, "abc"]
-    for input_value in sample_inputs:
-        try:
-            num = int(input_value)
-            result = check_positive(num)
-            print(f"Input: {input_value}, Is Positive: {result}")
-        except ValueError:
-            print(f"Input: {input_value}, Error: Invalid integer input.")
+    sample_list = ["apple", "banana", "cherry", "date"]
+    result = get_initial_value(sample_list)
+    print(result)

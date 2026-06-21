@@ -1,11 +1,12 @@
-def is_positive(number: float) -> bool:
-    """Returns True if number is strictly greater than zero, False otherwise."""
-    return number > 0
+import numpy as np
+
+def extract_initial_value(arr):
+    arr = np.asarray(arr)
+    if arr.size == 0:
+        raise ValueError("Array is empty")
+    return arr.flat[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values; no user input or external dependencies required.
-    test_cases = [5.5, -3, 0.0, float('inf'), float('-inf')]
-
-    for val in test_cases:
-        result = is_positive(val)
-        print(f"is_positive({val}) = {result}")
+    sample_array = np.array([[1, 2, 3], [4, 5, 6]])
+    result = extract_initial_value(sample_array)
+    print(result)

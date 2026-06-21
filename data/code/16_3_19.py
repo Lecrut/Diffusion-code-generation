@@ -1,12 +1,9 @@
+def get_first_item(items):
+    if len(items) == 0:
+        raise IndexError("List is empty")
+    return items[0]
+
 if __name__ == '__main__':
-    x = 5 if True else -3
-    
-# Test with positive value (should be True)
-result1 = "True" if x > 0 else "False"
-assert result1 == "True", f"Expected 'True', got '{result1}'"
-
-x = -7
-result2 = "True" if x > 0 else "False"
-assert result2 == "False", f"Expected 'False', got '{result2}'"
-
-print("All assertions passed.")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_first_item(sample_list)
+    print(result)

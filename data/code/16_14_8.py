@@ -1,21 +1,9 @@
-def is_positive(number: float) -> bool:
-    """
-    Check if a number is strictly positive.
+from collections import deque
 
-    Args:
-        number (float): The numerical value to check.
-
-    Returns:
-        bool: True if the number is greater than zero, False otherwise.
-    """
-    return number > 0
+def extract_first(d):
+    return d.popleft()
 
 if __name__ == '__main__':
-    sample_values = [1.5, -3, 0, None]
-
-    for value in sample_values:
-        try:
-            result = is_positive(value) if isinstance(value, (int, float)) else "Invalid type"
-            print(f"is_positive({value}) -> {result}")
-        except Exception as e:
-            print(f"is_positive({value}) raised an error: {e}")
+    sample_deque = deque([10, 20, 30, 40])
+    result = extract_first(sample_deque)
+    print(result)

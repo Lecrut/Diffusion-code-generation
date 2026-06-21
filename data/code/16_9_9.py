@@ -1,32 +1,17 @@
-"""Utility module containing logic to determine positivity."""
-
-class PositivityChecker:
-    """A utility class for checking if a value is positive."""
-
-    @staticmethod
-    def is_positive(value):
-        """
-        Determine if the given numeric value is strictly greater than zero.
-
-        Args:
-            value (int | float): The number to check.
-
-        Returns:
-            bool: True if value > 0, False otherwise.
-        """
-        return value > 0
+def get_first_element(numbers):
+    if len(numbers) == 0:
+        return None
+    return numbers[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the static method.
-    test_cases = [
-        -5,   # Negative number
-        0,    # Zero (not positive)
-        3.14, # Positive float
-        100,  # Large positive integer
-    ]
-
-    print("Testing PositivityChecker.is_positive():")
-    for num in test_cases:
-        result = PositivityChecker.is_positive(num)
-        status = "Positive" if result else "Not Positive"
-        print(f"{num} is {status}")
+    sample_list_1 = [10, 20, 30]
+    sample_list_2 = []
+    sample_list_3 = [5]
+    
+    result_1 = get_first_element(sample_list_1)
+    result_2 = get_first_element(sample_list_2)
+    result_3 = get_first_element(sample_list_3)
+    
+    print(result_1)
+    print(result_2)
+    print(result_3)

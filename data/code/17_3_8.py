@@ -1,1 +1,13 @@
-if __name__ == '__main__': print("Even:" if isinstance(num := 42) in (int, float) else "Not int/float"), num % 2 == 0 or not type(num).numerator.is_integer() and num - round(num) != 0
+def get_last_element(collection):
+    if not collection:
+        raise IndexError("Collection is empty")
+    return collection[-1]
+
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = ('a', 'b', 'c')
+    sample_string = "Python"
+    
+    print(get_last_element(sample_list))
+    print(get_last_element(sample_tuple))
+    print(get_last_element(sample_string))

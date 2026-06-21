@@ -1,12 +1,8 @@
-import sys
-
-def check_parity(number: int) -> str:
-    """Determine if a number is even or odd."""
-    return "Even" if number % 2 == 0 else "Odd"
+def retrieve_last(seq):
+    if not seq:
+        raise IndexError("cannot get last element of empty sequence")
+    return seq[-1]
 
 if __name__ == '__main__':
-    test_values = [1, 4, -3, 0]
-
-    for value in test_values:
-        result = check_parity(value)
-        print(result)
+    data = [100, 200, 300]
+    print(retrieve_last(data))

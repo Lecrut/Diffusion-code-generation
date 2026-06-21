@@ -1,4 +1,9 @@
+import numpy as np
+
+def get_first_element(arr):
+    return arr.flat[0]
+
 if __name__ == '__main__':
-    x = 5
-    result = x > 0
+    data = np.array([10, 20, 30, 40])
+    result = get_first_element(data)
     print(result)

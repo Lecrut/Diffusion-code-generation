@@ -1,20 +1,18 @@
-def is_greater(a: float | int, b: float | int) -> bool:
-    """
-    Returns True if a > b, otherwise False.
-    
-    Args:
-        a (int or float): The first number to compare.
-        b (int or float): The second number to compare.
-    
-    Returns:
-        bool: True if a is strictly greater than b, False otherwise.
-    """
-    return a > b
+def get_median(sorted_list):
+    length = len(sorted_list)
+    if length == 0:
+        return None
+    mid_index = length // 2
+    if length % 2 == 0:
+        return (sorted_list[mid_index - 1] + sorted_list[mid_index]) / 2
+    return sorted_list[mid_index]
 
 if __name__ == '__main__':
-    # Sample test cases running without user input
-    assert is_greater(10, 5) is True
-    assert is_greater(3.14, 2.71) is True
-    assert is_greater(-1, -5) is True
-    assert is_greater(0, 0) is False
-    assert is_greater('a', 'b') is False  # Strings are not numbers but Python allows comparison; logic holds for types if needed
+    test_cases = [
+        [1, 3, 5, 7, 9],
+        [10, 20, 30, 40],
+        [42],
+        []
+    ]
+    for case in test_cases:
+        print(get_median(case))

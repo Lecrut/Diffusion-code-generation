@@ -1,8 +1,18 @@
-def is_even(number: int) -> bool:
-    """Returns True if 'number' is even, False otherwise."""
-    return number % 2 == 0
+class Collection:
+    def __init__(self):
+        self.items = []
+
+    def add(self, item):
+        self.items.append(item)
+
+    def get_last(self):
+        if not self.items:
+            return None
+        return self.items[-1]
 
 if __name__ == '__main__':
-    test_values = [0, -5, 42, -18, 3]
-    for val in test_values:
-        print(f"is_even({val}) = {is_even(val)}")
+    c = Collection()
+    c.add("apple")
+    c.add("banana")
+    c.add("cherry")
+    print(c.get_last())

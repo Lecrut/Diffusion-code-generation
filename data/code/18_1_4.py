@@ -1,28 +1,23 @@
-def is_greater(a: float, b: float) -> bool:
-    """
-    Returns True if a > b, otherwise False.
-    
-    This function uses Python's native comparison operator which 
-    is implemented in C and offers optimal performance for numerical comparisons.
-    
-    Args:
-        a (float): The first number to compare.
-        b (float): The second number to compare.
-        
-    Returns:
-        bool: True if a is greater than b, False otherwise.
-    """
-    return a > b
+def get_median(sorted_list):
+    n = len(sorted_list)
+    if n == 0:
+        raise ValueError("List must not be empty")
+    mid_index = n // 2
+    if n % 2 == 1:
+        return sorted_list[mid_index]
+    else:
+        return (sorted_list[mid_index - 1] + sorted_list[mid_index]) / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
     test_cases = [
-        (10.5, 5),       # Expected: True
-        (-3, -7),        # Expected: False
-        (42, 42),        # Expected: False (equal)
-        (float('inf'), float('-inf')), # Expected: True
+        [1, 2, 3, 4, 5],
+        [1, 2, 3, 4],
+        [10],
+        [1, 3],
+        [1, 2, 3]
     ]
 
-    for val_a, val_b in test_cases:
-        result = is_greater(val_a, val_b)
-        print(f"is_greater({val_a}, {val_b}) = {result}")
+    for tc in test_cases:
+        sorted_tc = sorted(tc)
+        median = get_median(sorted_tc)
+        print(median)

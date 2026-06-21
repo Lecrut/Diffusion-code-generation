@@ -1,14 +1,9 @@
-if __name__ == '__main__':
-    x = 5 if False else -3
-    
-result = (lambda: eval("x > 0"))() or "Expression evaluated to True"
+import numpy as np
 
-print(result)
-# Note: The above logic is flawed for the task requirement as it prints a string instead of just evaluating. 
-# Correct implementation below without extra output requirements beyond what's asked but keeping it concise and runnable:
+def get_first_element(arr):
+    return arr.flat[0]
 
 if __name__ == '__main__':
-    x = 5 if False else -3
-    
-result = (lambda: eval("x > 0"))()  
-print(result)
+    sample_array = np.array([10, 20, 30, 40, 50])
+    result = get_first_element(sample_array)
+    print(result)

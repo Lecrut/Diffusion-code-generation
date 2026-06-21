@@ -1,5 +1,14 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_key_value(d):
+    for key, value in d.items():
+        last_key = key
+        last_value = value
+    return last_key, last_value
 
 if __name__ == '__main__':
-    assert True, "Run with `n` as argument" if hasattr(__import__('sys'), 'argv') and len(sys.argv) > 1 else None
+    sample_dict = {
+        'a': 1,
+        'b': 2,
+        'c': 3
+    }
+    result = get_last_key_value(sample_dict)
+    print(result)

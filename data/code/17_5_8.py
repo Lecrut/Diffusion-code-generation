@@ -1,11 +1,8 @@
-def get_number():
-    """Returns a hardcoded integer sample value."""
-    return 42
+def get_last_element(sequence):
+    if not sequence:
+        raise IndexError("Empty sequence")
+    return sequence[-1]
 
 if __name__ == '__main__':
-    number = get_number()
-    
-    if number % 2 == 0:
-        print('Even')
-    else:
-        print('Odd')
+    sample_list = [1, 2, 3, 4, 5]
+    print(get_last_element(sample_list))

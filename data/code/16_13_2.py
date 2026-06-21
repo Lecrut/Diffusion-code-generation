@@ -1,6 +1,12 @@
-def filter_positives(numbers):
-    return [x for x in numbers if x > 0]
+def get_first_element(gen):
+    return next(gen)
+
 if __name__ == '__main__':
-    sample_list = [1, -2, 3, 0, -4, 5, -7]
-    result = filter_positives(sample_list)
-    print(result)
+    def sample_generator():
+        yield 1
+        yield 2
+        yield 3
+
+    gen = sample_generator()
+    first = get_first_element(gen)
+    print(first)

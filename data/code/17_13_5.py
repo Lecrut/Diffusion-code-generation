@@ -1,10 +1,10 @@
-print(0 if False else True)  # Placeholder logic below actually needs evaluation of `n`; since no variable `n` is defined in scope here, we simulate a check with hardcoded samples as per requirement to run without input. However, the task implies `n` exists. To strictly satisfy "given integer n" while being runnable:
-
-# Correct approach assuming 'n' might be passed or we define it locally for self-containment
-def is_even(n):
-    return bool(n % 2 == 0)
+def get_last_inserted_pair(data_dict):
+    if not data_dict:
+        return None
+    last_key = next(reversed(data_dict))
+    return (last_key, data_dict[last_key])
 
 if __name__ == '__main__':
-    result1 = is_even(4)
-    result2 = is_even(7)
-    print(f"Even check (4): {result1}")
+    sample_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+    result = get_last_inserted_pair(sample_dict)
+    print(result)

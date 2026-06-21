@@ -1,28 +1,19 @@
-class NumberChecker:
-    """A class to check properties of numbers."""
+class TupleExtractor:
+    def __init__(self, data):
+        self.data = data
 
-    def check_positivity(self, value):
-        """
-        Determines if the provided value is positive.
+    def get_first(self):
+        head, *tail = self.data
+        return head
 
-        A number is considered positive if it is strictly greater than zero.
-        
-        Args:
-            value (int or float): The numerical value to evaluate.
-            
-        Returns:
-            bool: True if value > 0, False otherwise.
-        """
-        return value > 0
+    def get_rest(self):
+        head, *tail = self.data
+        return tuple(tail)
+
+def extract_first_item(tup):
+    extractor = TupleExtractor(tup)
+    return extractor.get_first()
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_values = [5, -3, 0, 2.5, float('-inf'), float('inf')]
-
-    print("Testing positivity check:")
-    for val in test_values:
-        result = checker.check_positivity(val)
-        status = "Positive" if result else "Non-positive (zero or negative)"
-        print(f"{val}: {status}")
+    sample = (99, 88, 77)
+    print(extract_first_item(sample))

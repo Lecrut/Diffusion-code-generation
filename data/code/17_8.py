@@ -1,17 +1,9 @@
-def is_even(number):
-    return number % 2 == 0
+def get_last_element(data):
+    if not data:
+        raise ValueError("List cannot be empty")
+    return data[-1]
+
 if __name__ == '__main__':
-    test_cases = [
-        (0, True),
-        (1, False),
-        (2, True),
-        (3, False),
-        (-4, True),
-        (-5, False),
-        (-6, True)
-    ]
-    for input_num, expected_output in test_cases:
-        actual_output = is_even(input_num)
-        assert actual_output == expected_output, f"Input: {input_num}, Expected: {expected_output}, Got: {actual_output}"
-        print(f"Test passed for input {input_num}: {actual_output}")
-    print("All test cases passed!")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_element(sample_list)
+    print(result)

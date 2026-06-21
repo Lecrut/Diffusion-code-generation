@@ -1,42 +1,39 @@
-#!/usr/bin/env python3
-"""
-Command-line tool to determine if an integer is even or odd.
-Uses hard-coded sample values in the main block as per requirements.
-Does not call input(), sys.stdin, argparse required arguments, or any interactive prompts.
-No external network access or file dependencies are used.
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.start = 0
+        self.count = 0
 
-Author: AI Assistant
-Version: 1.0
-"""
+    def add(self, value):
+        index = (self.start + self.count) % self.capacity
+        self.buffer[index] = value
+        if self.count < self.capacity:
+            self.count += 1
+        else:
+            self.start = (self.start + 1) % self.capacity
 
-def check_parity(number):
-    """
-    Takes an integer and returns a string indicating if it is even or odd.
+    def get_last_inserted(self):
+        if self.count == 0:
+            return None
+        index = (self.start + self.count - 1) % self.capacity
+        return self.buffer[index]
 
-    Args:
-        number (int): The integer to check.
-
-    Returns:
-        str: Message describing the parity of the number.
-    """
-    if isinstance(number, int) and not isinstance(number, bool):
-        return f"Is {number} an EVEN number." if number % 2 == 0 else \
-               f"Is {number} an ODD number."
-    
-    raise ValueError(f"The input must be an integer. Received: '{number}' (type: {type(number).__name__})")
+    def get_all(self):
+        if self.count == 0:
+            return []
+        result = []
+        for i in range(self.count):
+            index = (self.start + i) % self.capacity
+            result.append(self.buffer[index])
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user interaction, 
-    # command-line arguments, or external files.
-    samples = [42, -5, 0, 100]
-
-    for value in samples:
-        try:
-            result = check_parity(value)
-            print(result)
-        except Exception as e:
-            if isinstance(e, ValueError):
-                error_message = f"Error processing number {value}: {e}"
-            else:
-                error_message = f"Unexpected error while checking parity of {value}: {e}"
-            print(error_message)
+    buffer = CircularBuffer(5)
+    values = [10, 20, 30, 40, 50, 60, 70]
+    for val in values:
+        buffer.add(val)
+    last_val = buffer.get_last_inserted()
+    all_vals = buffer.get_all()
+    print(last_val)
+    print(all_vals)

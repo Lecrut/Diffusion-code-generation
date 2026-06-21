@@ -1,7 +1,7 @@
-import sys
+def get_last_element(sequence):
+    return sequence[-1]
+
 if __name__ == '__main__':
-    input_value = 17
-    if input_value % 2 == 0:
-        print("Even")
-    else:
-        print("Odd")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_element(sample_list)
+    print(result)

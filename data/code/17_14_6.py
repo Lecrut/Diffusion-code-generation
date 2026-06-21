@@ -1,16 +1,26 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.write_index = 0
+        self.count = 0
 
-def check_parity(number: int) -> None:
-    """Prints a clear message indicating if the number is even or odd."""
-    status = "even" if number % 2 == 0 else "odd"
-    print(f"The number {number} is {status}.")
+    def insert(self, value):
+        self.buffer[self.write_index] = value
+        self.write_index = (self.write_index + 1) % self.capacity
+        if self.count < self.capacity:
+            self.count += 1
+
+    def get_last_inserted(self):
+        if self.count == 0:
+            raise IndexError("Buffer is empty")
+        if self.count == self.capacity:
+            return self.buffer[(self.write_index - 1) % self.capacity]
+        return self.buffer[(self.write_index - 1) % self.capacity]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input.
-    test_cases = [1, 2, -3, 4]
-
-    for value in test_cases:
-        try:
-            check_parity(value)
-        except Exception as e:
-            print(f"Error processing {value}: {e}", file=sys.stderr)
+    sample_buffer = CircularBuffer(5)
+    initial_values = [10, 20, 30, 40, 50, 60, 70]
+    for value in initial_values:
+        sample_buffer.insert(value)
+    print(sample_buffer.get_last_inserted())

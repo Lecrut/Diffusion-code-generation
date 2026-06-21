@@ -1,8 +1,6 @@
-import math
-def is_positive(value):
-    return value > 0.0
+def get_first_element(items):
+    return items[0] if items else None
+
 if __name__ == '__main__':
-    test_values = [1.0, 0.0, -3.14, 0.0000000000000001, -0.0000000000000001]
-    for val in test_values:
-        result = is_positive(val)
-        print(f"Is {val} positive? {result}")
+    sample_list = [10, 20, 30, 40]
+    print(get_first_element(sample_list))

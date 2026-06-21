@@ -1,9 +1,11 @@
-def is_even(n: int) -> bool:
-    """Check if an integer is even using the modulo operator."""
-    return n % 2 == 0
+class ListRetriever:
+    def get_last_item(self, items):
+        if not items:
+            return None
+        return items[-1]
 
 if __name__ == '__main__':
-    test_values = [1, -5, 42, 0]
-    for val in test_values:
-        result = is_even(val)
-        print(f"{val} is {'even' if result else 'odd'}")
+    sample_list = [10, 20, 30, 40, 50]
+    retriever = ListRetriever()
+    result = retriever.get_last_item(sample_list)
+    print(result)

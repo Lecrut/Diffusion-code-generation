@@ -1,4 +1,7 @@
-import math; n = 42 if all(n == x**2 + y**2 for x in range(math.isqrt(abs(n) // 3)) for y in range(x+1, math.isqrt(3*n//5))) else False
+def get_last_item(d):
+    items = list(d.items())
+    return items[-1]
 
 if __name__ == '__main__':
-    pass
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    print(get_last_item(sample_dict))

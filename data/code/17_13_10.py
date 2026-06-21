@@ -1,7 +1,6 @@
-def is_even(n: int) -> bool:
-    return n % 2 == 0
+def get_last_item(d):
+    return list(d.items())[-1]
 
 if __name__ == '__main__':
-    test_cases = [1, 2, -4, 0]
-    results = [(n, is_even(n)) for n in test_cases]
-    print(results)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    print(get_last_item(sample_dict))

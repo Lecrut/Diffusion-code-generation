@@ -1,21 +1,19 @@
-def is_even(n: int) -> bool:
-    """
-    Returns True if n is even, False otherwise.
-    
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if n is divisible by 2, False otherwise.
-    """
-    return n % 2 == 0
+class OrderedCollection:
+    def __init__(self):
+        self.items = []
+
+    def add(self, item):
+        self.items.append(item)
+
+    def get_last(self):
+        if len(self.items) == 0:
+            return None
+        return self.items[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [1, 2, -3, 4, 10**5, 0]
-    
-    print("Testing is_even function:")
-    for num in test_cases:
-        result = is_even(num)
-        status = "Even" if result else "Odd"
-        print(f"is_even({num}) -> {result} ({status})")
+    collection = OrderedCollection()
+    collection.add("first")
+    collection.add("second")
+    collection.add("third")
+    result = collection.get_last()
+    print(result)

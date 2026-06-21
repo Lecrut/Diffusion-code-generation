@@ -1,9 +1,7 @@
-x = 5 if __name__ == '__main__' else None
-result = x > 0
-if result:
-    print("True")
-else:
-    print("False")
+def get_first_item(lst):
+    return lst[0]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_first_item(sample_list)
+    print(result)

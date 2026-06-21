@@ -1,23 +1,16 @@
-class NumberChecker:
-    def check_parity(self, number):
-        """
-        Checks if a given integer is even or odd.
+from collections import deque
 
-        Args:
-            number (int): The integer to be checked.
+def create_deque_with_items(items):
+    d = deque()
+    for item in items:
+        d.append(item)
+    return d
 
-        Returns:
-            str: 'Even' if the number is divisible by 2, otherwise 'Odd'.
-        """
-        return "Even" if number % 2 == 0 else "Odd"
+def pop_last_item(d):
+    return d.pop()
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Hard-coded sample values for testing without user input
-    test_numbers = [4, 7, -3, 10]
-
-    print("Parity Check Results:")
-    for num in test_numbers:
-        result = checker.check_parity(num)
-        print(f"Number {num} is {result}")
+    sample_items = [10, 20, 30, 40, 50]
+    my_deque = create_deque_with_items(sample_items)
+    last_item = pop_last_item(my_deque)
+    print(last_item)

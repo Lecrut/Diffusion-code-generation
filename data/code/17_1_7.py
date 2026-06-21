@@ -1,9 +1,9 @@
-def is_even(number: int) -> bool:
-    """Check if a number is even using the modulo operator."""
-    return number % 2 == 0
+class ListUtils:
+    def get_last_item(self, lst):
+        return lst[-1]
 
 if __name__ == '__main__':
-    test_values = [1, -5, 42, 0]
-    for val in test_values:
-        result = is_even(val)
-        print(f"{val} is {'even' if result else 'odd'}")
+    utils = ListUtils()
+    sample_list = [10, 20, 30, 40, 50]
+    result = utils.get_last_item(sample_list)
+    print(result)

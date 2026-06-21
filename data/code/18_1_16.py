@@ -1,26 +1,21 @@
-def is_greater(a: float, b: float) -> bool:
-    """
-    Returns True if a > b, otherwise False.
-    
-    Args:
-        a (float): The first numerical value to compare.
-        b (float): The second numerical value to compare.
-        
-    Returns:
-        bool: True if a is strictly greater than b, False otherwise.
-    """
-    return a > b
+def get_median_from_sorted_list(sorted_list):
+    length = len(sorted_list)
+    if length == 0:
+        return None
+    mid_index = length // 2
+    if length % 2 == 0:
+        return (sorted_list[mid_index - 1] + sorted_list[mid_index]) / 2
+    return sorted_list[mid_index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        (10, 5),      # Expected: True
-        (3.14, 2.71),# Expected: True
-        (-1, -5),     # Expected: False
-        (0, 0),       # Expected: False
-        (float('inf'), float('-inf')), # Expected: True
-    ]
-
-    for val_a, val_b in test_cases:
-        result = is_greater(val_a, val_b)
-        print(f"is_greater({val_a}, {val_b}) = {result}")
+    test_list_1 = [1, 3, 4, 5, 9]
+    test_list_2 = [2, 4, 6, 8]
+    test_list_3 = []
+    
+    result_1 = get_median_from_sorted_list(test_list_1)
+    result_2 = get_median_from_sorted_list(test_list_2)
+    result_3 = get_median_from_sorted_list(test_list_3)
+    
+    print(result_1)
+    print(result_2)
+    print(result_3)

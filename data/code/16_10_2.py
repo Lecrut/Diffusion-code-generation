@@ -1,10 +1,7 @@
+def print_list_without_indexing(strings):
+    for s in strings:
+        print(s)
+
 if __name__ == '__main__':
-    input_value = 10
-    try:
-        number = int(input_value)
-        if number > 0:
-            print("Positive")
-        else:
-            print("Not Positive")
-    except ValueError:
-        print("Invalid input: Please enter an integer.")
+    sample_strings = ["hello", "world", "python"]
+    print_list_without_indexing(sample_strings)

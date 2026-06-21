@@ -1,19 +1,8 @@
-def check_parity(number):
-    """
-    Determines whether a given integer is even or odd.
-
-    Args:
-        number (int): The integer to be checked.
-
-    Returns:
-        str: 'Even' if the number is divisible by 2, otherwise 'Odd'.
-    """
-    return "Even" if number % 2 == 0 else "Odd"
+def get_last_element(data):
+    return data[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    test_numbers = [10, 7]
-
-    for num in test_numbers:
-        result = check_parity(num)
-        print(f"{num} is {result}.")
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_last_element(sample_list))
+    sample_mixed = ['apple', 'banana', True, 3.14]
+    print(get_last_element(sample_mixed))

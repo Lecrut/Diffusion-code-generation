@@ -1,9 +1,11 @@
-def check_equal(a: object, b: object) -> bool:
-    """Check if two arbitrary Python objects are equal using ==."""
-    return a == b
+def penultimate(lst):
+    if len(lst) < 2:
+        return None
+    return lst[-2]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert (1 == 1), "Integers should be equal"
-    assert ("hello" != "world"), "Different strings should not be equal"
-    print("All equality checks passed.")
+    print(penultimate([1, 2, 3, 4, 5]))
+    print(penultimate([10, 20]))
+    print(penultimate([42]))
+    print(penultimate([]))
+    print(penultimate(['a', 'b', 'c', 'd']))

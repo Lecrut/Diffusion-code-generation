@@ -1,18 +1,15 @@
-def get_int(value):
-    """Returns an integer from a string representation."""
-    return int(value)
+DEFAULT_EMPTY_INDICATOR = "__EMPTY__"
 
-def is_even(number):
-    """Checks if a number is even using modulo operator."""
-    return number % 2 == 0
+def retrieve_last_element(sequence, empty_indicator=DEFAULT_EMPTY_INDICATOR):
+    if len(sequence) == 0:
+        return empty_indicator
+    return sequence[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to avoid any input() or sys.stdin calls.
-    test_cases = [4, 7, -3, 18]
-
-    for num_str in test_cases:
-        num = get_int(num_str)
-        if is_even(num):
-            print('Even')
-        else:
-            print('Odd')
+    sample_list = ["alpha", "bravo", "charlie", "delta"]
+    result = retrieve_last_element(sample_list)
+    print(result)
+    
+    empty_list = []
+    empty_result = retrieve_last_element(empty_list)
+    print(empty_result)

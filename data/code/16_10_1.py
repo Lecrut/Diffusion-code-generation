@@ -1,10 +1,7 @@
+def print_list_without_indexing(lst):
+    for item in lst:
+        print(item)
+
 if __name__ == '__main__':
-    input_value = 10
-    try:
-        number = int(input_value)
-        if number > 0:
-            print("Positive")
-        else:
-            print("Not Positive")
-    except ValueError:
-        print("Error: Invalid input. Please enter an integer.")
+    sample_list = ["apple", "banana", "cherry", "date"]
+    print_list_without_indexing(sample_list)

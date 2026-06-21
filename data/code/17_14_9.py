@@ -1,23 +1,43 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.head = 0
+        self.size = 0
 
-def check_parity(number: int) -> None:
-    """Prints a clear message indicating if the number is even or odd."""
-    if number % 2 == 0:
-        print(f"The integer {number} is even.")
-    else:
-        print(f"The integer {number} is odd.")
+    def push(self, item):
+        if self.size < self.capacity:
+            self.buffer[self.head] = item
+            self.head = (self.head + 1) % self.capacity
+            self.size += 1
+        else:
+            self.buffer[self.head] = item
+            self.head = (self.head + 1) % self.capacity
 
-def handle_non_integer_input() -> None:
-    """Handles cases where input cannot be converted to an integer."""
-    print("Error: Non-integer value received. Please ensure a valid integer is provided.", file=sys.stderr)
-    sys.exit(1)
+    def get_last_inserted(self):
+        if self.size == 0:
+            raise IndexError("Buffer is empty")
+        if self.size < self.capacity:
+            idx = (self.head - 1 + self.capacity) % self.capacity
+        else:
+            idx = (self.head - 1 + self.capacity) % self.capacity
+        return self.buffer[idx]
+
+    def get_all(self):
+        result = []
+        for i in range(self.size):
+            idx = (self.head - self.size + i + self.capacity) % self.capacity
+            result.append(self.buffer[idx])
+        return result
 
 if __name__ == '__main__':
-    try:
-        # Simulating reading from standard input with hard-coded sample values as per constraints
-        inputs = [42, 73, -8]
-
-        for val in inputs:
-            check_parity(val)
-    except ValueError as e:
-        handle_non_integer_input()
+    cb = CircularBuffer(3)
+    cb.push(10)
+    cb.push(20)
+    cb.push(30)
+    last = cb.get_last_inserted()
+    print(last)
+    cb.push(40)
+    last_after_overwrite = cb.get_last_inserted()
+    print(last_after_overwrite)
+    print(cb.get_all())

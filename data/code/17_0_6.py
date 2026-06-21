@@ -1,25 +1,10 @@
-def is_even(number):
-    """
-    Determines if a given integer is even.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        bool: True if the number is even, False otherwise.
-    """
-    return number % 2 == 0
-
-def main():
-    # Sample values for testing without user input or command-line arguments
-    sample_values = [10, -3, 42, 0]
-
-    print("Testing numbers to determine if they are even or odd:")
-    
-    for num in sample_values:
-        result = is_even(num)
-        status = "even" if result else "odd"
-        print(f"{num} is {status}")
+def get_last_element(data):
+    return data[-1]
 
 if __name__ == '__main__':
-    main()
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_last_element(sample_list))
+    sample_string = "Hello"
+    print(get_last_element(sample_string))
+    sample_tuple = (1, 2, 3)
+    print(get_last_element(sample_tuple))

@@ -1,22 +1,14 @@
-def is_strictly_greater(a, b):
-    try:
-        return a > b
-    except TypeError:
-        return False
+def get_middle_element(lst):
+    length = len(lst)
+    if length == 0:
+        return None
+    index = length // 2
+    return lst[index]
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 5
-    result1 = is_strictly_greater(num1, num2)
-    print(f"Is {num1} strictly greater than {num2}? {result1}")
-    num3 = 3
-    num4 = 7
-    result2 = is_strictly_greater(num3, num4)
-    print(f"Is {num3} strictly greater than {num4}? {result2}")
-    num5 = "a"
-    num6 = 5
-    result3 = is_strictly_greater(num5, num6)
-    print(f"Is {num5} strictly greater than {num6}? {result3}")
-    num7 = 10.5
-    num8 = 10.5
-    result4 = is_strictly_greater(num7, num8)
-    print(f"Is {num7} strictly greater than {num8}? {result4}")
+    odd_list = [10, 20, 30, 40, 50]
+    even_list = [1, 2, 3, 4, 5, 6]
+    middle_odd = get_middle_element(odd_list)
+    middle_even = get_middle_element(even_list)
+    print(middle_odd)
+    print(middle_even)

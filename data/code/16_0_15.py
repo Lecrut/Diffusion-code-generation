@@ -1,47 +1,16 @@
-def is_positive(num):
-    """
-    Determines if a number is positive.
-    
-    Args:
-        num (float|int|str): The value to check. Can be numeric or string representation of a number.
-        
-    Returns:
-        bool: True if the number is greater than zero, False otherwise.
-        
-    Raises:
-        ValueError: If the input cannot be converted to a valid float/int.
-    """
-    try:
-        # Attempt conversion from string to float for flexibility in user input
-        n = float(num)
-    except (ValueError, TypeError):
-        raise ValueError(f"Invalid number type or non-numeric value provided: {num}")
+from typing import TypeVar, Generic, List
 
-    return n > 0
+T = TypeVar('T')
 
-def main():
-    """
-    Main function containing the required sample block.
-    
-    This module avoids interactive prompts and uses only hard-coded test cases 
-    as per requirements to ensure it runs without user input, network access, 
-    or pre-existing files.
-    """
+class ListAccessor(Generic[T]):
+    def get_head(self, sequence: List[T]) -> T:
+        return sequence[0]
 
-    # Hard-coded sample values for testing
-    test_cases = [10, "25", -3.5, 0, "", None]
-
-    print("Running automated tests with hard-coded samples...")
-
-    for value in test_cases:
-        try:
-            result = is_positive(value)
-            # Output the result indicating whether it was successfully evaluated and its status
-            status_str = "is positive" if result else (str(type(value).__name__).upper() + "(or zero/negative)")
-            print(f"{value!r}: {status_str}")
-        except ValueError as e:
-            # Gracefully handle non-numeric inputs that cannot be converted to numbers
-            print(f"{value!r} raised an error: '{e}'")
+def retrieve_first_item(items: List[T]) -> T:
+    accessor = ListAccessor[T]()
+    return accessor.get_head(items)
 
 if __name__ == '__main__':
-    main()
+    sample_values = [99, 101, 103]
+    output = retrieve_first_item(sample_values)
+    print(output)

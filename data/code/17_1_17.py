@@ -1,9 +1,11 @@
-def is_even(n: int) -> bool:
-    """Returns True if n is even, False otherwise."""
-    return n % 2 == 0
+class ListAccessor:
+    def get_last_item(self, lst):
+        if not lst:
+            return None
+        return lst[len(lst) - 1]
 
 if __name__ == '__main__':
-    test_cases = [10, -3, 42, 0, 7]
-    for num in test_cases:
-        result = is_even(num)
-        print(f"{num} is {'even' if result else 'odd'}")
+    accessor = ListAccessor()
+    sample_list = [10, 20, 30, 40, 50]
+    result = accessor.get_last_item(sample_list)
+    print(result)

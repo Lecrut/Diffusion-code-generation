@@ -1,18 +1,12 @@
-def is_positive(number):
-    """
-    Returns True if number is strictly greater than zero, False otherwise.
-    
-    Args:
-        number (int or float): The numerical argument to check.
-        
-    Returns:
-        bool: True if number > 0, else False.
-    """
-    return number > 0
+import numpy as np
 
+def extract_initial_value(arr):
+    if not isinstance(arr, np.ndarray):
+        raise TypeError('Input must be a NumPy array')
+    if arr.size == 0:
+        raise ValueError('Input array is empty')
+    return arr.flat[0]
 if __name__ == '__main__':
-    test_values = [1, -5, 0.0, 3.14, float('inf'), float('-inf')]
-    
-    for val in test_values:
-        result = is_positive(val)
-        print(f"is_positive({val!r}) = {result}")
+    sample_array = np.array([1, 2, 3, 4, 5])
+    initial_value = extract_initial_value(sample_array)
+    print(initial_value)

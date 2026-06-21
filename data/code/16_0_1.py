@@ -1,13 +1,7 @@
-def check_positivity(number):
-    if number > 0:
-        return True
-    else:
-        return False
+def get_first_element(lst):
+    return lst[0]
+
 if __name__ == '__main__':
-    sample_numbers = [10, -5, 0, 3.14, -100]
-    for num in sample_numbers:
-        if not isinstance(num, (int, float)):
-            print(f"Error: Input '{num}' is not a valid number.")
-            continue
-        is_positive = check_positivity(num)
-        print(f"The number {num} is positive: {is_positive}")
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_first_element(sample_list)
+    print(result)

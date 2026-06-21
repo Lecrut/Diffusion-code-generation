@@ -1,11 +1,10 @@
-def check_parity(number):
-    """Check if a number is even or odd."""
-    return 'Even' if number % 2 == 0 else 'Odd'
+def retrieve_final_item(data):
+    length = len(data)
+    if length == 0:
+        raise IndexError("Cannot retrieve from empty sequence")
+    return data[length - 1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per constraints (no input(), sys.stdin, etc.)
-    test_values = [4, 7, -3, 10]
-
-    for value in test_values:
-        result = check_parity(value)
-        print(f"{value} -> {result}")
+    predefined_values = [100, 200, 300, 400]
+    output = retrieve_final_item(predefined_values)
+    print(output)

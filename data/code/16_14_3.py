@@ -1,7 +1,11 @@
-def is_positive(number: float) -> bool:
-    return number > 0
+from collections import deque
+
+def get_first_element(d):
+    if not d:
+        return None
+    return d[0]
+
 if __name__ == '__main__':
-    test_values = [10.5, -5.0, 0.0, 3.14, -0.001]
-    for value in test_values:
-        result = is_positive(value)
-        print(f"Is {value} positive? {result}")
+    sample_deque = deque([10, 20, 30, 40])
+    first_value = get_first_element(sample_deque)
+    print(first_value)

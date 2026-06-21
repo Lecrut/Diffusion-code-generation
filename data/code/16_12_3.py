@@ -1,7 +1,9 @@
-def is_positive(x: float) -> bool:
-    return x > 0 if isinstance(x, (int, float)) else False
+import numpy as np
+
+def get_first_element(arr):
+    return np.asarray(arr).flat[0]
 
 if __name__ == '__main__':
-    assert is_positive(5) is True
-    assert is_positive(-3) is False
-    print("Tests passed.")
+    sample_array = np.array([10, 20, 30, 40])
+    result = get_first_element(sample_array)
+    print(result)

@@ -1,13 +1,10 @@
-def is_even(number):
-    """Check if a number is even using the modulo operator."""
-    return number % 2 == 0
+def get_last_element(items):
+    if not items:
+        return None
+    return items[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test without user input or network access.
-    test_numbers = [1, 2, -3, 4, 5]
-
-    for num in test_numbers:
-        if is_even(num):
-            print(f"{num} is even.")
-        else:
-            print(f"{num} is odd.")
+    sample_list_1 = [10, 20, 30, 40]
+    sample_list_2 = []
+    print(get_last_element(sample_list_1))
+    print(get_last_element(sample_list_2))

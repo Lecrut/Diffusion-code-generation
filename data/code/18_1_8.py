@@ -1,23 +1,16 @@
-import sys
-
-def is_greater(a: float | int, b: float | int) -> bool:
-    """
-    Returns True if a > b, otherwise False.
-    
-    Args:
-        a (float|int): First numerical argument.
-        b (float|int): Second numerical argument.
-        
-    Returns:
-        bool: Result of comparison a > b.
-    """
-    return a > b
+def get_median(sorted_list):
+    n = len(sorted_list)
+    if n == 0:
+        return None
+    mid = n // 2
+    if n % 2 == 1:
+        return sorted_list[mid]
+    else:
+        return (sorted_list[mid - 1] + sorted_list[mid]) / 2.0
 
 if __name__ == '__main__':
-    # Sample values for testing without external input or files
-    sample_a = 10
-    sample_b = 5
-    
-    result = is_greater(sample_a, sample_b)
-    
-    print(result)
+    print(get_median([1, 3, 5]))
+    print(get_median([1, 3, 5, 7]))
+    print(get_median([10]))
+    print(get_median([]))
+    print(get_median([2, 4]))

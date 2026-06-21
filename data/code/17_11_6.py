@@ -1,9 +1,19 @@
-def is_even(n: int) -> bool:
-    """Returns True if n is even, False otherwise."""
-    return n % 2 == 0
+class OrderedCollection:
+    def __init__(self):
+        self._items = []
+
+    def add(self, item):
+        self._items.append(item)
+
+    def get_last(self):
+        if not self._items:
+            return None
+        return self._items[-1]
 
 if __name__ == '__main__':
-    test_values = [10, -3, 42, 0]
-    for val in test_values:
-        result = is_even(val)
-        print(f"is_even({val}) = {result}")
+    collection = OrderedCollection()
+    collection.add('first')
+    collection.add('second')
+    collection.add('third')
+    result = collection.get_last()
+    print(result)

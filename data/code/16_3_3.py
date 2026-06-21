@@ -1,6 +1,9 @@
-# Check if x is positive using a one-liner expression
-result = lambda: bool(x) > 0
+def get_first_item(lst):
+    if not lst:
+        raise IndexError("Cannot get first item from an empty list")
+    return lst[0]
+
 if __name__ == '__main__':
-    # Test with sample values including negative, zero, and positive numbers
-    for val in [-5, 0, -3.14, 2]:
-        print(f"Testing x={val}: {bool(val) > 0}")
+    sample_list = [10, 20, 30, 40]
+    result = get_first_item(sample_list)
+    print(result)

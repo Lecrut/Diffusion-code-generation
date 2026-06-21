@@ -1,19 +1,7 @@
-def get_number_parity(number: int) -> tuple[int, bool]:
-    """
-    Returns a tuple containing the input number and its parity (True if even, False if odd).
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        tuple[int, bool]: A tuple of (number, is_even) where is_even is True for even numbers.
-    """
-    return (number, not number % 2)
+def get_final_entry(collection):
+    return collection[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input or external dependencies
-    samples = [0, -5, 42, 100]
-
-    for num in samples:
-        result = get_number_parity(num)
-        print(f"Input: {num}, Parity (even): {result[1]}")
+    sample_list = [10, 25, 30, 45, 99]
+    result = get_final_entry(sample_list)
+    print(result)

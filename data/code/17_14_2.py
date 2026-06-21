@@ -1,47 +1,42 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.head = 0
+        self.count = 0
 
-def determine_parity(number: int) -> str:
-    """
-    Checks if a number is even or odd.
+    def insert(self, value):
+        self.buffer[self.head] = value
+        self.head = (self.head + 1) % self.capacity
+        if self.count < self.capacity:
+            self.count += 1
 
-    Args:
-        number (int): The integer to check.
+    def get_last_inserted(self):
+        if self.count == 0:
+            return None
+        return self.buffer[(self.head - 1) % self.capacity]
 
-    Returns:
-        str: A message indicating 'even' or 'odd'.
-    """
-    status = "The entered number IS EVEN" if number % 2 == 0 else "The entered number IS ODD"
-    return f"{status}. Number provided was {number}."
-
-def validate_input(input_str: str) -> int | None:
-    """
-    Attempts to convert a string input to an integer.
-
-    Args:
-        input_str (str): The string representation of the potential number.
-
-    Returns:
-        int | None: The converted integer if successful, otherwise returns None for error handling.
-    """
-    try:
-        return int(input_str)
-    except ValueError:
-        # This handles cases where input is not a valid integer (e.g., letters or empty string with non-space chars).
-        raise RuntimeError(f"Error: Input '{input_str}' could not be converted to an integer.")
+    def get_all(self):
+        result = []
+        if self.count == 0:
+            return result
+        start_index = (self.head - self.count) % self.capacity
+        for i in range(self.count):
+            index = (start_index + i) % self.capacity
+            result.append(self.buffer[index])
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing as per requirements.
-    test_cases = ["42", "17", "0", "-3"]
-
-    print("Testing parity check with the following samples:")
-    for case in test_cases:
-        try:
-            num_input = int(case)  # Direct conversion from string to validate logic flow
-            result = determine_parity(num_input)
-            print(result)
-        except ValueError:
-            print(f"Handled non-integer input '{case}' internally by attempting direct conversion which is valid for our specific test list but shows the type handling.")
-
-    # Simulating error scenario without using sys.stdin or argparse directly as per constraints.
-    # We demonstrate how an invalid string would be handled if it were passed to validate_input logic,
-    # though strictly adhering to 'no input()' means we only execute on hard-coded valid strings here.
+    buffer = CircularBuffer(5)
+    buffer.insert(10)
+    buffer.insert(20)
+    buffer.insert(30)
+    last_val = buffer.get_last_inserted()
+    print(last_val)
+    buffer.insert(40)
+    buffer.insert(50)
+    buffer.insert(60)
+    last_val_after = buffer.get_last_inserted()
+    print(last_val_after)
+    all_vals = buffer.get_all()
+    print(all_vals)

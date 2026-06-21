@@ -1,7 +1,9 @@
-def get_number_and_parity(n: int) -> tuple[int, bool]:
-    return (n, n % 2 == 0)
+def get_final_entry(collection):
+    if not collection:
+        return None
+    return collection[-1]
+
 if __name__ == '__main__':
-    print(get_number_and_parity(4))
-    print(get_number_and_parity(7))
-    print(get_number_and_parity(0))
-    print(get_number_and_parity(-3))
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_final_entry(sample_list)
+    print(result)

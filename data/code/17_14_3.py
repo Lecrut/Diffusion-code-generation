@@ -1,44 +1,57 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        if capacity <= 0:
+            raise ValueError("Capacity must be positive")
+        self._capacity = capacity
+        self._buffer = [None] * capacity
+        self._head = 0
+        self._count = 0
+        self._is_full = False
 
-def determine_parity(number):
-    """
-    Determine if a number is even or odd based on modulo 2 result.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        str: "EVEN" if the number is divisible by 2, otherwise "ODD".
-        
-    Raises:
-        ValueError: If the input is not a valid integer.
-    """
-    return "EVEN" if number % 2 == 0 else "ODD"
+    def push(self, item):
+        index = (self._head + self._count) % self._capacity
+        if self._is_full:
+            self._buffer[self._head] = item
+            self._head = (self._head + 1) % self._capacity
+        else:
+            self._buffer[index] = item
+            self._count += 1
+            if self._count == self._capacity:
+                self._is_full = True
 
-def main():
-    """
-    Main function to handle input processing and output results without interactive prompts.
-    
-    This implementation avoids user_input(), sys.stdin, or argparse by using 
-    pre-defined sample values directly within the script execution flow. It validates 
-    that inputs are integers before determining parity. Error handling ensures graceful degradation for non-integer data types (e.g., strings representing numbers).
-    """
-    
-    # Define hard-coded sample values to ensure self-contained, executable module behavior.
-    # This satisfies the requirement of running without external input or files while providing test coverage.
-    sample_inputs = [42, 101, -3]
-    
-    for num_str in sample_inputs:
-        try:
-            number = int(num_str)
-            result_message = determine_parity(number)
-            
-            # Clear message format as per requirements
-            print(f"The number {number} is {result_message}.")
-        except ValueError:
-            # Handle non-integer input gracefully
-            error_message = f"Error: '{num_str}' could not be converted to an integer."
-            print(error_message)
+    def get_last_inserted(self):
+        if self._count == 0:
+            raise IndexError("Buffer is empty")
+        if self._is_full:
+            return self._buffer[self._head]
+        return self._buffer[(self._head + self._count - 1) % self._capacity]
+
+    def get_all_elements(self):
+        if self._count == 0:
+            return []
+        result = []
+        for i in range(self._count):
+            index = (self._head + i) % self._capacity
+            result.append(self._buffer[index])
+        return result
+
+    @property
+    def count(self):
+        return self._count
+
+    @property
+    def capacity(self):
+        return self._capacity
 
 if __name__ == '__main__':
-    main()
+    buffer = CircularBuffer(3)
+    buffer.push(10)
+    buffer.push(20)
+    buffer.push(30)
+    last = buffer.get_last_inserted()
+    print(last)
+    buffer.push(40)
+    last_after_push = buffer.get_last_inserted()
+    print(last_after_push)
+    all_elements = buffer.get_all_elements()
+    print(all_elements)

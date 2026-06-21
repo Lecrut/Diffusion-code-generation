@@ -1,13 +1,16 @@
-def check_all_positive(numbers):
-    return all(n > 0 for n in numbers)
+def safe_first_element(sequence):
+    if len(sequence) == 0:
+        raise IndexError("sequence is empty")
+    return sequence[0]
+
 if __name__ == '__main__':
-    list1 = [1, 5, 10, 2]
-    list2 = [1, -5, 10, 2]
-    list3 = [0, 5, 10, 2]
-    list4 = []
-    list5 = [-1, -5, -10, -2]
-    print(f"List 1: {check_all_positive(list1)}")
-    print(f"List 2: {check_all_positive(list2)}")
-    print(f"List 3: {check_all_positive(list3)}")
-    print(f"List 4: {check_all_positive(list4)}")
-    print(f"List 5: {check_all_positive(list5)}")
+    sample_list = [10, 20, 30]
+    sample_empty = []
+    
+    result = safe_first_element(sample_list)
+    print(result)
+    
+    try:
+        safe_first_element(sample_empty)
+    except IndexError as e:
+        print(f"Caught exception: {e}")

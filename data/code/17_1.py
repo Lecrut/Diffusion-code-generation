@@ -1,7 +1,11 @@
-def is_even(number):
-    return number % 2 == 0
+class ListHelper:
+    def __init__(self, items):
+        self.items = items
+
+    def get_last_item(self):
+        return self.items[-1]
+
 if __name__ == '__main__':
-    print(is_even(4))
-    print(is_even(7))
-    print(is_even(0))
-    print(is_even(-2))
+    sample_list = [1, 2, 3, 4, 5]
+    helper = ListHelper(sample_list)
+    print(helper.get_last_item())

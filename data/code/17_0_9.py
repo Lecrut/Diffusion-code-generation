@@ -1,12 +1,11 @@
-def is_even(number):
-    """Check if a number is even."""
-    return number % 2 == 0
+def get_final_element(lst: list) -> object:
+    if not isinstance(lst, list):
+        raise TypeError("Input must be a list")
+    if len(lst) == 0:
+        raise ValueError("List must be non-empty")
+    return lst[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_numbers = [1, 2, -3, 4]
-
-    for num in test_numbers:
-        result = is_even(num)
-        status = "even" if result else "odd"
-        print(f"{num} is {status}.")
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_final_element(sample_list)
+    print(result)

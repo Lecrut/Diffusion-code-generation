@@ -1,19 +1,24 @@
-class NumberChecker:
-    def check_parity(self, number):
-        if number % 2 == 0:
-            return 'Even'
-        else:
-            return 'Odd'
+from collections import deque
+
+class DequeStructure:
+    def __init__(self):
+        self.deque = deque()
+
+    def add_item(self, item):
+        self.deque.append(item)
+
+    def pop_last_added(self):
+        return self.deque.pop()
+
+def create_and_pop():
+    d = DequeStructure()
+    d.add_item(10)
+    d.add_item(20)
+    d.add_item(30)
+    d.add_item(40)
+    d.add_item(50)
+    return d.pop_last_added()
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample inputs with hard-coded values
-    test_numbers = [10, 7, -4, 3.5] 
-    
-    for num in test_numbers:
-        if isinstance(num, int):
-            result = checker.check_parity(num)
-            print(f"Number {num} is {result}")
-        else:
-            print(f"{num} cannot be checked as it is not an integer")
+    result = create_and_pop()
+    print(result)

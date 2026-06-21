@@ -1,6 +1,8 @@
-# Check if num is even using a single expression with sample tests in main block
+def get_last_element(collection):
+    return collection[-1]
+
 if __name__ == '__main__':
-    print(num := 10) # Test case: should be True, result printed via next line logic below
-    result = (num % 2 == 0 or not type(type(4))(int)) if isinstance(num, int) else False; 
-    # Actually simplifying the task to just check evenness for num variable
-    print("Is", str(num), "even?", end="")
+    numbers = [10, 20, 30, 40, 50]
+    print(get_last_element(numbers))
+    letters = ('a', 'b', 'c')
+    print(get_last_element(letters))

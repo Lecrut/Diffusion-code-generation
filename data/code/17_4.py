@@ -1,6 +1,7 @@
-def filter_even_numbers(data):
-    return [x for x in data if x % 2 == 0]
+def get_last_item():
+    numbers = [10, 20, 30, 40, 50]
+    return numbers[-1]
+
 if __name__ == '__main__':
-    input_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    result = filter_even_numbers(input_list)
+    result = get_last_item()
     print(result)

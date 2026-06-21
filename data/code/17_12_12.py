@@ -1,14 +1,24 @@
-class NumberChecker:
-    def check_parity(self, number):
-        """Returns 'Even' if the number is even, otherwise returns 'Odd'."""
-        return "Even" if number % 2 == 0 else "Odd"
+from collections import deque
+
+class IntDeque:
+    def __init__(self):
+        self._data = deque()
+
+    def add(self, value):
+        self._data.append(value)
+
+    def pop_last(self):
+        return self._data.pop()
+
+def main():
+    d = IntDeque()
+    d.add(10)
+    d.add(20)
+    d.add(30)
+    d.add(40)
+    d.add(50)
+    result = d.pop_last()
+    print(result)
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Sample test cases with hard-coded values
-    test_values = [10, 7, -4, 0]
-
-    for val in test_values:
-        result = checker.check_parity(val)
-        print(f"{val} is {result}")
+    main()

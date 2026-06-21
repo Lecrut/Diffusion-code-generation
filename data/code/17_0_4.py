@@ -1,19 +1,9 @@
-def determine_parity(number: int) -> str:
-    """
-    Determines whether a given integer is even or odd.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        str: 'even' if the number is divisible by 2, otherwise 'odd'.
-    """
-    return "even" if number % 2 == 0 else "odd"
+def get_last_element(items):
+    if not items:
+        raise ValueError("List cannot be empty")
+    return items[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    test_values = [10, 7, -4, 0]
-
-    for value in test_values:
-        result = determine_parity(value)
-        print(f"The number {value} is {result}.")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_element(sample_list)
+    print(result)

@@ -1,20 +1,11 @@
-def is_even(n: int) -> bool:
-    """
-    Check if an integer is even using the modulo operator.
-
-    Args:
-        n (int): The number to check.
-
-    Returns:
-        bool: True if 'n' is even, False otherwise.
-    """
-    return n % 2 == 0
+class ListHelper:
+    def get_last_item(self, lst):
+        if not lst:
+            raise IndexError("List is empty")
+        return lst[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_values = [10, -3, 42, 0, 7]
-
-    print("Testing is_even function:")
-    for val in test_values:
-        result = "Even" if is_even(val) else "Odd"
-        print(f"{val} -> {result}")
+    helper = ListHelper()
+    sample_list = [1, 2, 3, 4, 5]
+    result = helper.get_last_item(sample_list)
+    print(result)

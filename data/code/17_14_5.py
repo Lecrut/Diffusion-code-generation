@@ -1,34 +1,40 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.head = 0
+        self.count = 0
 
-def is_even(n: int) -> bool:
-    """Check if an integer n is even."""
-    return n % 2 == 0
+    def insert(self, item):
+        if self.count == self.capacity:
+            self.head = (self.head + 1) % self.capacity
+        self.buffer[self.head] = item
+        if self.count < self.capacity:
+            self.count += 1
+        next_pos = (self.head + 1) % self.capacity
+        return self.buffer[next_pos] if self.count < self.capacity else self.buffer[self.head]
 
-def validate_input(raw_value: str):
-    """Attempt to parse a string into an integer. Raise ValueError on failure."""
-    try:
-        number = int(raw_value.strip())
-        # Check for empty input after stripping whitespace
-        if raw_value and not any(c.isdigit() or c in '+-' for c in raw_value):
-            raise ValueError("Input must be a valid integer.")
-        return number
-    except ValueError as e:
-        error_message = f"Invalid input '{raw_value}': {e}. Please provide an integer."
-        sys.stderr.write(f"{error_message}\n")
+    def get_last_inserted(self):
+        if self.count == 0:
+            return None
+        last_pos = (self.head - 1 + self.capacity) % self.capacity
+        return self.buffer[last_pos]
+
+    def get_all(self):
+        if self.count == 0:
+            return []
+        result = []
+        for i in range(self.count):
+            index = (self.head + i) % self.capacity
+            result.append(self.buffer[index])
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values to run without user interaction
-    test_inputs = ["42", "-7", "0"]
-
-    for input_str in test_inputs:
-        try:
-            number = int(input_str)
-            if is_even(number):
-                message = f"The entered number {number} is EVEN."
-            else:
-                message = f"The entered number {number} is ODD."
-            
-            print(message)
-
-        except ValueError as e:
-            sys.stderr.write(f"Error processing input '{input_str}': {e}\n")
+    buffer = CircularBuffer(3)
+    last_val = buffer.insert(10)
+    buffer.insert(20)
+    last_val2 = buffer.insert(30)
+    buffer.insert(40)
+    final_last = buffer.get_last_inserted()
+    print(final_last)
+    print(buffer.get_all())

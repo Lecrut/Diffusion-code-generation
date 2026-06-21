@@ -1,3 +1,6 @@
-# Check if num is even using a one-liner expression in an f-string
+def last_element(collection):
+    return collection[-1]
+
 if __name__ == '__main__':
-    print(f"num=10: {('even' if 10 % 2 == 0 else 'odd')}") # True (assumed num=10)
+    sample_list = [1, 2, 3, 4, 5]
+    print(last_element(sample_list))

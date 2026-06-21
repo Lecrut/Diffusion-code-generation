@@ -1,9 +1,13 @@
-class NumberChecker:
-    def check_positivity(self, value):
-        return value > 0
+def get_head(tuple_input):
+    if not tuple_input:
+        raise ValueError("tuple is empty")
+    return tuple_input[0]
+
 if __name__ == '__main__':
-    checker = NumberChecker()
-    test_values = [10, -5, 0, 3.14, -0.001]
-    for value in test_values:
-        result = checker.check_positivity(value)
-        print(f"Is {value} positive? {result}")
+    sample_tuple = (10, 20, 30, 40)
+    print(get_head(sample_tuple))
+    empty_tuple = ()
+    try:
+        get_head(empty_tuple)
+    except ValueError as e:
+        print(e)

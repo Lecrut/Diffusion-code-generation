@@ -1,13 +1,9 @@
-import sys
-
-def check_positive(number: float) -> bool:
-    """Check if a number is positive (greater than zero)."""
-    return number > 0
+def get_first_value(vector):
+    if not vector:
+        raise ValueError("Vector cannot be empty")
+    return vector[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    samples = [1, -5, 0, 3.14]
-
-    for num in samples:
-        result = check_positive(num)
-        print(f"{num}: {'Positive' if result else 'Non-positive'}")
+    sample_vector = [10, 20, 30, 40]
+    result = get_first_value(sample_vector)
+    print(result)

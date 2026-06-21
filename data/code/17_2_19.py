@@ -1,24 +1,10 @@
-class NumberChecker:
-    def check_parity(self, number):
-        """
-        Determines if an integer is even.
-        
-        Args:
-            number (int): The integer to check.
-            
-        Returns:
-            bool: True if the number is even, False otherwise.
-        """
-        return number % 2 == 0
+def extract_final_entry(sequence):
+    if not sequence:
+        raise IndexError("sequence is empty")
+    length = len(sequence)
+    return sequence[length - 1]
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample values for testing without user input or external dependencies
-    test_values = [10, -3, 42, 0, 7]
-    
-    print("Number Parity Check Results:")
-    for val in test_values:
-        is_even = checker.check_parity(val)
-        status = "Even" if is_even else "Odd"
-        print(f"{val} -> {status}")
+    sample_tuple = (1, 2, 3, 4, 5)
+    result = extract_final_entry(sample_tuple)
+    print(result)

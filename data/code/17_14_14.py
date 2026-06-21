@@ -1,17 +1,32 @@
-import sys
+class CircularBuffer:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.buffer = [None] * capacity
+        self.head = 0
+        self.count = 0
 
-def check_parity(number: int) -> str:
-    """Return a message indicating if the number is even or odd."""
-    return "The number {} is even.".format(number) if number % 2 == 0 else "The number {} is odd.".format(number)
+    def push(self, item):
+        if self.count < self.capacity:
+            self.buffer[(self.head + self.count) % self.capacity] = item
+            self.count += 1
+        else:
+            self.buffer[self.head] = item
+            self.head = (self.head + 1) % self.capacity
+
+    def get_last_inserted(self):
+        if self.count == 0:
+            return None
+        if self.count < self.capacity:
+            return self.buffer[(self.head + self.count - 1) % self.capacity]
+        return self.buffer[(self.head - 1) % self.capacity]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input.
-    test_cases = [1, 2, -3, 4]
-
-    for value in test_cases:
-        try:
-            result_message = check_parity(value)
-            print(result_message)
-        except Exception as e:
-            # This block technically won't be reached with integers from the list.
-            print("Error processing number {}: {}".format(str(e)))
+    buf = CircularBuffer(3)
+    buf.push(10)
+    buf.push(20)
+    buf.push(30)
+    print(buf.get_last_inserted())
+    buf.push(40)
+    print(buf.get_last_inserted())
+    buf.push(50)
+    print(buf.get_last_inserted())

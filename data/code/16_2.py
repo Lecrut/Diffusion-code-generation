@@ -1,10 +1,6 @@
-class NumberChecker:
-    def check_positivity(self, value):
-        return value > 0
+def get_tuple_head(t):
+    return t[0]
+
 if __name__ == '__main__':
-    checker = NumberChecker()
-    print(checker.check_positivity(10))
-    print(checker.check_positivity(-5))
-    print(checker.check_positivity(0))
-    print(checker.check_positivity(3.14))
-    print(checker.check_positivity(-0.001))
+    sample_tuple = (10, 20, 30)
+    print(get_tuple_head(sample_tuple))

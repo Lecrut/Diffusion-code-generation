@@ -1,9 +1,14 @@
-def check_equal(a: object, b: object) -> bool:
-    """Check if two objects are equal using the built-in equality operator."""
-    return a == b
+def get_penultimate_element(items):
+    if len(items) < 2:
+        return None
+    return items[-2]
 
 if __name__ == '__main__':
-    # Sample test cases without external input or files
-    assert (10 == 10), "Integers should be equal"
-    assert ("hello" != "world"), "Strings with different content should not be equal"
-    print("All basic equality checks passed.")
+    sample_list_1 = [10, 20, 30, 40]
+    sample_list_2 = []
+    sample_list_3 = [5]
+    sample_list_4 = ['a', 'b', 'c']
+    print(get_penultimate_element(sample_list_1))
+    print(get_penultimate_element(sample_list_2))
+    print(get_penultimate_element(sample_list_3))
+    print(get_penultimate_element(sample_list_4))

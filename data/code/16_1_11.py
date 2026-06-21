@@ -1,20 +1,19 @@
-def is_positive(num):
-    """Returns True if num > 0, otherwise False."""
-    return num > 0
+import numpy as np
+
+class ArrayAccessor:
+    def __init__(self, data):
+        self.data = np.asarray(data)
+        if self.data.size == 0:
+            raise ValueError("Input array must not be empty")
+
+    def get_initial_value(self):
+        return self.data.flat[0]
 
 if __name__ == '__main__':
-    samples = [-5.3421, -2659827.1, -1.0e-300, 0.0, 1/3, 0.00000001]
-    results = []
+    test_data = np.array([[5, 12, 8], [3, 9, 1]])
+    accessor = ArrayAccessor(test_data)
+    print(accessor.get_initial_value())
     
-    for sample in samples:
-        # Apply the function and store result directly
-        res = is_positive(sample)
-        
-        if isinstance(res, bool):
-            results.append(('Sample', True))
-        elif not isinstance(res, (int, float)):
-            print(f"Warning: Expected numeric input. Got type {type(result)} instead.")
-
-    for val in samples:
-        # Direct execution of function with no external prompts or inputs required; uses local variable from the list above
-        res = is_positive(val)
+    test_scalar = np.array(7)
+    scalar_accessor = ArrayAccessor(test_scalar)
+    print(scalar_accessor.get_initial_value())

@@ -1,13 +1,14 @@
-def is_even(number):
-    """Check if a number is even using the modulo operator."""
-    return number % 2 == 0
+def is_list_empty(items):
+    return len(items) == 0
+
+def get_last_element(items):
+    if is_list_empty(items):
+        return None
+    last_index = len(items) - 1
+    return items[last_index]
 
 if __name__ == '__main__':
-    # Sample values to test without user input
-    sample_numbers = [4, 7, -3, 10]
-
-    for num in sample_numbers:
-        if is_even(num):
-            print(f"{num} is even.")
-        else:
-            print(f"{num} is odd.")
+    sample_values = [5, 15, 25, 35]
+    print(get_last_element(sample_values))
+    print(get_last_element([]))
+    print(get_last_element([42]))

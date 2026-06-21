@@ -1,17 +1,8 @@
-import sys
-def check_positive(number):
-    if number > 0:
-        return True
-    else:
-        return False
+def print_initial_value(items):
+    for item in items:
+        print(item)
+        break
+
 if __name__ == '__main__':
-    sample_inputs = [10, -5, 0, 3.14, "hello"]
-    for value in sample_inputs:
-        try:
-            num = int(value)
-            result = check_positive(num)
-            print(f"Input: {value}, Is Positive: {result}")
-        except ValueError:
-            print(f"Input: {value}, Error: Invalid integer input.")
-        except TypeError:
-            print(f"Input: {value}, Error: Type error during conversion.")
+    sample_list = ["hello", "world", "python"]
+    print_initial_value(sample_list)

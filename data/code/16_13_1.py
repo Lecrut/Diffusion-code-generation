@@ -1,6 +1,23 @@
-def filter_positive_numbers(numbers):
-    return [x for x in numbers if x > 0]
+def get_first_generator_element(gen):
+    try:
+        return next(gen)
+    except StopIteration:
+        return None
+
 if __name__ == '__main__':
-    sample_list = [1, -2, 3, 0, -4, 5, -7]
-    result = filter_positive_numbers(sample_list)
+    def sample_generator():
+        yield 1
+        yield 2
+        yield 3
+
+    gen_obj = sample_generator()
+    result = get_first_generator_element(gen_obj)
     print(result)
+
+    def empty_generator():
+        return
+        yield
+
+    empty_gen = empty_generator()
+    empty_result = get_first_generator_element(empty_gen)
+    print(empty_result)

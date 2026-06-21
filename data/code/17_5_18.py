@@ -1,19 +1,12 @@
-def check_parity(number):
-    """
-    Determines if a given integer is even or odd.
-    
-    Args:
-        number (int): The integer to evaluate.
-        
-    Returns:
-        str: 'Even' if the number is divisible by 2, otherwise 'Odd'.
-    """
-    return "Even" if number % 2 == 0 else "Odd"
+class SequenceUtils:
+    INDEX_OFFSET = -1
+
+    @staticmethod
+    def retrieve_last(sequence):
+        if not sequence:
+            raise ValueError("Sequence cannot be empty")
+        return sequence[SequenceUtils.INDEX_OFFSET]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_values = [10, 7, -4, 0]
-
-    for value in test_values:
-        result = check_parity(value)
-        print(result)
+    sample_data = [5, 12, 99, 34, 88]
+    print(SequenceUtils.retrieve_last(sample_data))

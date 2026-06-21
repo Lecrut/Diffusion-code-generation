@@ -1,7 +1,7 @@
-def is_positive(value):
-    """Check if a number is positive."""
-    return value > 0
+def get_first_element(items):
+    return items[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input or command-line arguments.
-    samples = [5, -3, "12", "", None]
+    sample_list = [10, 20, 30]
+    result = get_first_element(sample_list)
+    print(result)

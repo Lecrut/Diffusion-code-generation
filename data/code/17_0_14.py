@@ -1,20 +1,26 @@
-# Script to determine if a number is even or odd without user input prompts.
-def check_parity(number: int) -> str:
-    """
-    Determines whether a given integer is even or odd.
+class SequenceAccessor:
+    EMPTY_SEQUENCE_ERROR = "Sequence must not be empty"
+    INVALID_TYPE_ERROR = "Input must be a sequence"
 
-    Args:
-        number (int): The integer to check.
+    @staticmethod
+    def validate_input(data):
+        if not isinstance(data, (list, tuple, str)):
+            raise TypeError(SequenceAccessor.INVALID_TYPE_ERROR)
+        if len(data) == 0:
+            raise ValueError(SequenceAccessor.EMPTY_SEQUENCE_ERROR)
 
-    Returns:
-        str: A message indicating if the number is 'even' or 'odd'.
-    """
-    return "even" if number % 2 == 0 else "odd"
+    @staticmethod
+    def fetch_last(data):
+        SequenceAccessor.validate_input(data)
+        return data[-1]
 
-if __name__ == "__main__":
-    # Hard-coded sample values as per constraints (no input(), sys.stdin, etc.)
-    test_numbers = [4, 7, -3, 10]
-
-    for num in test_numbers:
-        result = check_parity(num)
-        print(f"The number {num} is {result}.")
+if __name__ == '__main__':
+    integers = [100, 200, 300, 400, 500]
+    last_int = SequenceAccessor.fetch_last(integers)
+    print(last_int)
+    text = "Python3"
+    last_char = SequenceAccessor.fetch_last(text)
+    print(last_char)
+    items = (True, False, True)
+    last_bool = SequenceAccessor.fetch_last(items)
+    print(last_bool)

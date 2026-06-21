@@ -1,15 +1,7 @@
-def determine_positivity(num):
-    if num > 0:
-        return "positive"
-    elif num < 0:
-        return "negative"
-    else:
-        return "zero"
+def get_first_element(data):
+    return data[0]
+
 if __name__ == '__main__':
-    assert determine_positivity(5) == "positive"
-    assert determine_positivity(-3) == "negative"
-    assert determine_positivity(0) == "zero"
-    assert determine_positivity(100) == "positive"
-    assert determine_positivity(-0.001) == "negative"
-    assert determine_positivity(0.0) == "zero"
-    print("All tests passed.")
+    sample_array = [42, 15, 7, 99, 23]
+    result = get_first_element(sample_array)
+    print(result)

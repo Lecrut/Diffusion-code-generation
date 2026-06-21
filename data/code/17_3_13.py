@@ -1,8 +1,6 @@
-# Check if 'num' is even using the modulo operator within a boolean context
-result = num % 2 == 0
+def get_last(collection):
+    return collection[-1]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input or external dependencies
-    test_cases = [4, -3, 0]
-    for val in test_cases:
-        print(f"Is {val} even? {(val % 2 == 0)}")
+    result = get_last([1, 2, 3])
+    print(result)

@@ -1,8 +1,13 @@
-def is_positive(number: float) -> bool:
-    """Returns True if number is strictly greater than zero, False otherwise."""
-    return number > 0
+import numpy as np
+
+def extract_initial_value(array):
+    if not isinstance(array, np.ndarray):
+        raise ValueError("Input must be a NumPy array")
+    if array.size == 0:
+        raise ValueError("Array is empty")
+    return array.flat[0]
 
 if __name__ == '__main__':
-    test_cases = [1.5, -3.2, 0, 4e-9]
-    for val in test_cases:
-        print(f"is_positive({val}) = {is_positive(val)}")
+    sample_array = np.array([[1, 2, 3], [4, 5, 6]])
+    result = extract_initial_value(sample_array)
+    print(result)

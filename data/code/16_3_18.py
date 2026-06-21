@@ -1,9 +1,9 @@
-def is_positive(x):
-    return x > 0
+def get_first_item(lst):
+    if not lst:
+        raise IndexError("list index out of range")
+    return lst[0]
 
 if __name__ == '__main__':
-    test_cases = [3, -5, 0]
-    results = []
-    for val in test_cases:
-        result = is_positive(val)
-        print(f"is_positive({val}) = {result}")
+    sample_list = [42, "hello", 3.14, True]
+    result = get_first_item(sample_list)
+    print(result)
