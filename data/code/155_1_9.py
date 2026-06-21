@@ -1,0 +1,8 @@
+from functools import reduce
+INITIAL_VALUE = 0
+
+def compute_total(numbers):
+    return reduce(lambda x, y: x + y, numbers, INITIAL_VALUE)
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5]
+    print(compute_total(sample_numbers))

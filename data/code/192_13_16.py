@@ -1,0 +1,22 @@
+class ListIntersection:
+    def find_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        return set1.intersection(set2)
+
+if __name__ == '__main__':
+    intersection_finder = ListIntersection()
+    sample_list1 = [1, 2, 3, 4, 5]
+    sample_list2 = [4, 5, 6, 7, 8]
+    result1 = intersection_finder.find_intersection(sample_list1, sample_list2)
+    print(f"Intersection of {sample_list1} and {sample_list2}: {result1}")
+    
+    sample_list3 = ['apple', 'banana', 'cherry']
+    sample_list4 = ['banana', 'date', 'apple']
+    result2 = intersection_finder.find_intersection(sample_list3, sample_list4)
+    print(f"Intersection of {sample_list3} and {sample_list4}: {result2}")
+    
+    sample_list5 = [10, 20, 30]
+    sample_list6 = [30, 10, 40]
+    result3 = intersection_finder.find_intersection(sample_list5, sample_list6)
+    print(f"Intersection of {sample_list5} and {sample_list6}: {result3}")

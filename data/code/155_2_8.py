@@ -1,0 +1,10 @@
+def calculate_float_sum(numbers):
+    total = 0.0
+    for number in numbers:
+        total += number
+    return total
+
+if __name__ == '__main__':
+    sample_list = [1.23456789, 2.34567890, 3.45678901, -1.11111111]
+    result = calculate_float_sum(sample_list)
+    print(result)

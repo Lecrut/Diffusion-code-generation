@@ -1,0 +1,10 @@
+import numpy as np
+
+def sum_large_numeric_list(numbers):
+    return np.sum(np.array(numbers))
+
+if __name__ == '__main__':
+    sample_numbers = [10, 25, 3.5, 42]
+    print("Sample numbers to process:", sample_numbers)
+    result = sum_large_numeric_list(sample_numbers)
+    print("Total sum:", result)

@@ -1,0 +1,14 @@
+def filter_dict_by_value(input_dict, threshold):
+    return {key: value for key, value in input_dict.items() if value >= threshold}
+
+if __name__ == '__main__':
+    sample_dict = {
+        "Alice": 88,
+        "Bob": 95,
+        "Charlie": 78,
+        "David": 92
+    }
+    threshold_value = 90
+    filtered_dict = filter_dict_by_value(sample_dict, threshold_value)
+    print(f"Original Dictionary: {sample_dict}")
+    print(f"Filtered Dictionary (threshold >= {threshold_value}): {filtered_dict}")

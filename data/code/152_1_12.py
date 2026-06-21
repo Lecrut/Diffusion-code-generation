@@ -1,0 +1,12 @@
+def find_common_elements(list1, list2):
+    common = []
+    set_b = set(list2)
+    for item in list1:
+        if item in set_b and item not in common:
+            common.append(item)
+    return common
+
+if __name__ == '__main__':
+    sample_list1 = [1, 2, 3, 4, 5, 6]
+    sample_list2 = [4, 5, 6, 7, 8, 9]
+    print(find_common_elements(sample_list1, sample_list2))

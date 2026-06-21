@@ -1,0 +1,9 @@
+import itertools
+
+def flatten_nested_lists(nested_lists):
+    return list(itertools.chain.from_iterable(nested_lists))
+
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 4], [5, 6]]
+    flattened_list = flatten_nested_lists(sample_data)
+    print(flattened_list)

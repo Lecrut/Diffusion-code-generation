@@ -1,0 +1,10 @@
+import unicodedata
+
+def contains_normalized_word(text, word):
+    normalized_text = unicodedata.normalize('NFC', text)
+    return word in normalized_text
+
+if __name__ == '__main__':
+    sample_text = "Hello, 世界!"
+    sample_word = "世"
+    print(contains_normalized_word(sample_text, sample_word))

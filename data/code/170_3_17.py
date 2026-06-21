@@ -1,0 +1,36 @@
+import threading
+
+class Inventory:
+    def __init__(self):
+        self.items = {}
+        self.lock = threading.Lock()
+    
+    def add_item(self, item, quantity):
+        with self.lock:
+            if item in self.items:
+                self.items[item] += quantity
+            else:
+                self.items[item] = quantity
+    
+    def remove_item(self, item, quantity):
+        with self.lock:
+            if item in self.items and self.items[item] >= quantity:
+                self.items[item] -= quantity
+                if self.items[item] == 0:
+                    del self.items[item]
+                return True
+            return False
+    
+    def get_inventory(self):
+        with self.lock:
+            return self.items.copy()
+
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item("Laptop", 1)
+    my_inventory.add_item("Mouse", 2)
+    print(my_inventory.get_inventory())
+    
+    success = my_inventory.remove_item("Mouse", 1)
+    print(f"Remove successful: {success}")
+    print(my_inventory.get_inventory())

@@ -1,0 +1,15 @@
+def check_list_item(input_list, item):
+    if not isinstance(input_list, list) or not all(isinstance(x, int) for x in input_list):
+        raise ValueError("Input must be a list of integers")
+    if not isinstance(item, int):
+        raise ValueError("Item to find must be an integer")
+    return item in set(input_list)
+
+if __name__ == '__main__':
+    my_list = [1, 5, 8, 10, 2]
+    item_to_find_present = 8
+    item_to_find_absent = 9
+    result_present = check_list_item(my_list, item_to_find_present)
+    print(f"Is {item_to_find_present} in {my_list}? {result_present}")
+    result_absent = check_list_item(my_list, item_to_find_absent)
+    print(f"Is {item_to_find_absent} in {my_list}? {result_absent}")

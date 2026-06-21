@@ -1,0 +1,8 @@
+MAX_VALUE = float('inf')
+
+def find_min_item(items):
+    return min((item for item in items), default=MAX_VALUE)
+
+if __name__ == '__main__':
+    sample_items = [5, 3, 9, 1, 10]
+    print(find_min_item(sample_items))

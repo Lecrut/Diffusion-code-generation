@@ -1,0 +1,7 @@
+def substring_in_corpus(substring, corpus):
+    return corpus.find(substring) != -1
+
+if __name__ == '__main__':
+    sample_substring = "example"
+    sample_corpus = "This is an example sentence to search for the substring."
+    print(substring_in_corpus(sample_substring, sample_corpus))

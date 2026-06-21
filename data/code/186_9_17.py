@@ -1,0 +1,16 @@
+import functools
+
+def sum_elements(lst):
+    return sum(lst)
+
+def compare_lists(list1, list2):
+    return sum_elements(list1) - sum_elements(list2)
+
+def sort_by_sum(lists):
+    key = functools.cmp_to_key(compare_lists)
+    return sorted(lists, key=key)
+
+if __name__ == '__main__':
+    sample_data = [[3, 5], [1, 2], [4, 6]]
+    sorted_data = sort_by_sum(sample_data)
+    print(sorted_data)

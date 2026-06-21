@@ -1,0 +1,15 @@
+def check_security_system(hardware_status, software_integrity, network_connectivity):
+    if hardware_status and software_integrity and network_connectivity:
+        return "System is secure"
+    elif not hardware_status:
+        return "Hardware failure detected"
+    elif not software_integrity:
+        return "Software integrity compromised"
+    else:
+        return "Network connectivity issues"
+
+if __name__ == '__main__':
+    print(check_security_system(True, True, True))
+    print(check_security_system(False, True, True))
+    print(check_security_system(True, False, True))
+    print(check_security_system(True, True, False))

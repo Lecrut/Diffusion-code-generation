@@ -1,0 +1,16 @@
+class CommonElementsFinder:
+    def find_common_elements(self, list1, list2):
+        seen_in_list2 = set()
+        common_elements = []
+        for item in list1:
+            if item in list2 and item not in seen_in_list2:
+                common_elements.append(item)
+                seen_in_list2.add(item)
+        return common_elements
+
+if __name__ == '__main__':
+    finder = CommonElementsFinder()
+    sample_list1 = [1, 2, 3, 4, 5, 5]
+    sample_list2 = [4, 5, 6, 7, 8, 4]
+    result = finder.find_common_elements(sample_list1, sample_list2)
+    print(result)

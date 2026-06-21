@@ -1,0 +1,14 @@
+class SetOperations:
+    def find_common_elements(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return sorted(intersection)
+
+if __name__ == '__main__':
+    sample_list1 = [1, 3, 5, 7, 9]
+    sample_list2 = [0, 2, 4, 6, 8, 7, 9]
+    
+    operations = SetOperations()
+    result = operations.find_common_elements(sample_list1, sample_list2)
+    print(result)

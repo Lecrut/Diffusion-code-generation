@@ -1,0 +1,10 @@
+class WordExtractor:
+    @staticmethod
+    def find_alphabetic_words(text):
+        return [word for word in text.split() if word.isalpha()]
+
+if __name__ == '__main__':
+    extractor = WordExtractor()
+    sample_text = "Hello, world! This is a test."
+    alphabetic_words = extractor.find_alphabetic_words(sample_text)
+    print(alphabetic_words)

@@ -1,0 +1,7 @@
+def tuple_exists_in_list(target_tuple, list_of_tuples):
+    return target_tuple in list_of_tuples
+
+if __name__ == '__main__':
+    sample_tuple = (1, 2)
+    sample_list = [(3, 4), (5, 6), (1, 2)]
+    print(tuple_exists_in_list(sample_tuple, sample_list))

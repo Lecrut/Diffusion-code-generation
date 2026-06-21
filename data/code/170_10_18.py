@@ -1,0 +1,32 @@
+class InventoryManager:
+
+    def __init__(self):
+        self.items = {}
+
+    def add_item(self, item, quantity):
+        if item in self.items:
+            self.items[item] += quantity
+        else:
+            self.items[item] = quantity
+
+    def remove_item(self, item, quantity):
+        if item in self.items and self.items[item] >= quantity:
+            self.items[item] -= quantity
+            if self.items[item] == 0:
+                del self.items[item]
+        else:
+            raise ValueError('Not enough inventory or item does not exist')
+
+    def get_quantity(self, item):
+        return self.items.get(item, 0)
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.add_item('apple', 10)
+    manager.add_item('banana', 5)
+    print(manager.get_quantity('apple'))
+    manager.remove_item('apple', 3)
+    print(manager.get_quantity('apple'))
+    try:
+        manager.remove_item('orange', 1)
+    except ValueError as e:
+        print(e)

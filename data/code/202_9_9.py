@@ -1,0 +1,11 @@
+def find_maximum(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
+if __name__ == '__main__':
+    max_val = find_maximum(15, 23, 9)
+    print(max_val)

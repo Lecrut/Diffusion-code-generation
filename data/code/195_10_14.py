@@ -1,0 +1,13 @@
+class ListComparator:
+    @staticmethod
+    def are_lists_identical(list1, list2):
+        return set(list1) == set(list2)
+
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [5, 4, 3, 2, 1]
+    list_c = [1, 2, 3, 4, 6]
+    
+    print(f"Comparing {list_a} and {list_b}: {comparator.are_lists_identical(list_a, list_b)}")
+    print(f"Comparing {list_a} and {list_c}: {comparator.are_lists_identical(list_a, list_c)}")

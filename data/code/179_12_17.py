@@ -1,0 +1,8 @@
+def reverse_word_order(sentence):
+    words = sentence.split()
+    return ' '.join(reversed(words))
+
+if __name__ == '__main__':
+    sample_sentence = "Python is fun to learn"
+    reversed_sentence = reverse_word_order(sample_sentence)
+    print(reversed_sentence)

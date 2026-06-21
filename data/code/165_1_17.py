@@ -1,0 +1,21 @@
+from collections import namedtuple
+
+Contact = namedtuple('Contact', ['first_name', 'last_name', 'phone_number'])
+
+def add_contact(contacts, first_name, last_name, phone_number):
+    if not isinstance(first_name, str) or not isinstance(last_name, str) or not isinstance(phone_number, str):
+        raise ValueError("All inputs must be strings.")
+    contacts.append(Contact(first_name, last_name, phone_number))
+
+def search_by_phone(contacts, phone_number):
+    return [contact for contact in contacts if contact.phone_number == phone_number]
+
+def sort_contacts_by_last_name(contacts):
+    return sorted(contacts, key=lambda x: x.last_name)
+
+if __name__ == '__main__':
+    contacts = []
+    add_contact(contacts, 'John', 'Doe', '123-456-7890')
+    add_contact(contacts, 'Jane', 'Smith', '098-765-4321')
+    print(search_by_phone(contacts, '123-456-7890'))
+    print(sort_contacts_by_last_name(contacts))

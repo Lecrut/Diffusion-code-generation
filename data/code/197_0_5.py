@@ -1,0 +1,21 @@
+class ChecklistManager:
+
+    def __init__(self):
+        self.membership = set()
+
+    def add_item(self, item):
+        self.membership.add(item)
+
+    def remove_item(self, item):
+        self.membership.discard(item)
+
+    def check_membership(self, item):
+        return item in self.membership
+if __name__ == '__main__':
+    manager = ChecklistManager()
+    manager.add_item('Task 1')
+    manager.add_item('Task 2')
+    print(manager.check_membership('Task 1'))
+    print(manager.check_membership('Task 3'))
+    manager.remove_item('Task 1')
+    print(manager.check_membership('Task 1'))

@@ -1,0 +1,11 @@
+def find_unique_commons(list1, list2):
+    common_elements = []
+    for item in list1:
+        if item in list2 and item not in common_elements:
+            common_elements.append(item)
+    return common_elements
+
+if __name__ == '__main__':
+    sample_list1 = [10, 20, 30, 40, 50]
+    sample_list2 = [40, 50, 60, 70, 80]
+    print(find_unique_commons(sample_list1, sample_list2))

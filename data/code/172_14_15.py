@@ -1,0 +1,12 @@
+def create_noun_mapping():
+    return {
+        1: 'apple',
+        2: 'banana',
+        3: 'cherry',
+        4: 'date',
+        5: 'elderberry'
+    }
+
+if __name__ == '__main__':
+    noun_mapping = create_noun_mapping()
+    print(noun_mapping)

@@ -1,0 +1,11 @@
+import pandas as pd
+
+def calculate_category_means():
+    data = {'category': ['A', 'B', 'A', 'C', 'B', 'A'], 'value': [10, 20, None, 30, 40, 50]}
+    df = pd.DataFrame(data)
+    df['value'] = df['value'].fillna(0)
+    result = df.groupby('category')['value'].mean().reset_index()
+    return result
+if __name__ == '__main__':
+    result = calculate_category_means()
+    print(result)

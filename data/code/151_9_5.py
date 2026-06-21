@@ -1,0 +1,8 @@
+def merge_lists(list1, list2):
+    return set().union(*list1, *list2)
+
+if __name__ == '__main__':
+    sample_list1 = [{1, 3, 5}, {7, 9}]
+    sample_list2 = [{2, 4}, {6, 8}]
+    result = merge_lists(sample_list1, sample_list2)
+    print(result)

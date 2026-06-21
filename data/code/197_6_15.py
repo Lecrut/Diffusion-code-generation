@@ -1,0 +1,11 @@
+class MembershipManager:
+    def __init__(self, members):
+        self.members = members
+
+    def is_member(self, element):
+        return element in self.members
+
+if __name__ == '__main__':
+    manager = MembershipManager([1, 2, 3, 4, 5])
+    print(manager.is_member(3))
+    print(manager.is_member('a'))

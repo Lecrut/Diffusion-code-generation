@@ -1,0 +1,8 @@
+class FloatSorter:
+    def sort(self, lst):
+        return sorted(lst)
+
+if __name__ == '__main__':
+    sorter = FloatSorter()
+    result = sorter.sort([3.5, 1.2, 4.8, 2.1])
+    print(result)

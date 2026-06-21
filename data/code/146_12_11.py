@@ -1,0 +1,11 @@
+def process_numbers():
+    numbers = [10, 23, 45, 56, 67, 89, 90]
+    for number in numbers:
+        if number % 2 == 0:
+            continue
+        if number > 50:
+            break
+        print(number)
+
+if __name__ == '__main__':
+    process_numbers()

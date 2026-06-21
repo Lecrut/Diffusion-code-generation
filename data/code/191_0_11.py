@@ -1,0 +1,34 @@
+class ListMerger:
+    @staticmethod
+    def merge_sorted_lists(list1, list2):
+        merged_list = []
+        i, j = 0, 0
+        while i < len(list1) and j < len(list2):
+            if list1[i] < list2[j]:
+                merged_list.append(list1[i])
+                i += 1
+            else:
+                merged_list.append(list2[j])
+                j += 1
+        while i < len(list1):
+            merged_list.append(list1[i])
+            i += 1
+        while j < len(list2):
+            merged_list.append(list2[j])
+            j += 1
+        return merged_list
+
+if __name__ == '__main__':
+    list_a = [1, 3, 5, 7]
+    list_b = [2, 4, 6, 8]
+    result1 = ListMerger.merge_sorted_lists(list_a, list_b)
+    print(f"List A: {list_a}")
+    print(f"List B: {list_b}")
+    print(f"Merged Sorted List: {result1}")
+
+    list_c = [10, 20, 30]
+    list_d = [15, 25, 35]
+    result2 = ListMerger.merge_sorted_lists(list_c, list_d)
+    print(f"List C: {list_c}")
+    print(f"List D: {list_d}")
+    print(f"Merged Sorted List: {result2}")

@@ -1,0 +1,11 @@
+def combine_lists(list_alpha, list_beta):
+    result = []
+    result.extend(list_alpha)
+    result.extend(list_beta)
+    return result
+
+if __name__ == '__main__':
+    sample_list1 = [1, 2, 3]
+    sample_list2 = [4, 5, 6]
+    combined_list = combine_lists(sample_list1, sample_list2)
+    print(combined_list)

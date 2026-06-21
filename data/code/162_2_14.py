@@ -1,0 +1,13 @@
+import json
+
+def construct_json_structure():
+    name_value_pairs = {
+        "name": "Jane Smith",
+        "age": 25,
+        "is_student": True,
+        "major": "Computer Science"
+    }
+    return json.dumps(name_value_pairs, indent=4)
+
+if __name__ == '__main__':
+    print(construct_json_structure())

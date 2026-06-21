@@ -1,0 +1,24 @@
+def validate_input(iterable):
+    if not isinstance(iterable, (list, tuple)):
+        raise TypeError("Input must be a list or tuple")
+    for item in iterable:
+        if not isinstance(item, (int, float)):
+            raise ValueError("All elements of the input must be numbers")
+
+def calculate_list_sum(iterable):
+    validate_input(iterable)
+    total = 0
+    for number in iterable:
+        total += number
+    return total
+
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20.5, 30.5]
+    list3 = [-1, 5, -10, 2]
+    empty_list = []
+    
+    print(f"Sum of {list1}: {calculate_list_sum(list1)}")
+    print(f"Sum of {list2}: {calculate_list_sum(list2)}")
+    print(f"Sum of {list3}: {calculate_list_sum(list3)}")
+    print(f"Sum of {empty_list}: {calculate_list_sum(empty_list)}")

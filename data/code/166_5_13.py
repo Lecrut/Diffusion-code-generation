@@ -1,0 +1,9 @@
+favorite_colors = ['red', 'blue', 'green', 'blue', 'red', 'yellow']
+
+def calculate_color_frequency(colors):
+    from collections import Counter
+    return dict(Counter(colors))
+
+if __name__ == '__main__':
+    frequency = calculate_color_frequency(favorite_colors)
+    print(frequency)

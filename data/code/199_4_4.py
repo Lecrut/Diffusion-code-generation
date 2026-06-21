@@ -1,0 +1,14 @@
+def count_vowels(name):
+    vowels = 'aeiouAEIOU'
+    return sum(1 for char in name if char in vowels)
+
+def sort_names_by_vowels(names):
+    if not isinstance(names, list) or not all(isinstance(name, str) for name in names):
+        raise ValueError("Input must be a list of strings")
+    
+    return sorted(names, key=count_vowels, reverse=True)
+
+if __name__ == '__main__':
+    sample_names = ["Alice", "Bob", "Charlie", "Diana"]
+    sorted_names = sort_names_by_vowels(sample_names)
+    print(sorted_names)

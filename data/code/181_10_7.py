@@ -1,0 +1,8 @@
+def extract_words_with_vowels(words):
+    vowels = set('aeiouAEIOU')
+    return [word for word in words if any(vowel in word for vowel in vowels)]
+
+if __name__ == '__main__':
+    sample_words = ['apple', 'banana', 'cherry', 'grape', 'kiwi']
+    result = extract_words_with_vowels(sample_words)
+    print(result)

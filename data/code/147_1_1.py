@@ -1,0 +1,13 @@
+def sort_strings_in_place(lst):
+    n = len(lst)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if lst[min_idx] > lst[j]:
+                min_idx = j
+        lst[i], lst[min_idx] = lst[min_idx], lst[i]
+
+if __name__ == '__main__':
+    sample_list = ["banana", "apple", "cherry"]
+    sort_strings_in_place(sample_list)
+    print(sample_list)

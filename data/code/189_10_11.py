@@ -1,0 +1,8 @@
+def remove_element(lst, element):
+    return [x for x in lst if x != element]
+
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 2, 6]
+    element_to_remove = 2
+    result = remove_element(sample_list, element_to_remove)
+    print(result)

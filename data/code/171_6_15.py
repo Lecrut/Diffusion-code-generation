@@ -1,0 +1,17 @@
+from collections import Counter
+
+class StoreWordCounter:
+    def count_top_words(self, descriptions):
+        word_counts = Counter(word.lower() for desc in descriptions for word in desc.split())
+        top_5_words = word_counts.most_common(5)
+        return top_5_words
+
+if __name__ == '__main__':
+    counter = StoreWordCounter()
+    descriptions = [
+        "Apple store sells apples and oranges",
+        "Banana store has bananas and grapes",
+        "Apple store has more apples than oranges",
+        "Grapes are popular in the Banana store"
+    ]
+    print(counter.count_top_words(descriptions))

@@ -1,0 +1,12 @@
+def reverse_list(input_list):
+    if not isinstance(input_list, list):
+        raise ValueError("Input must be a list")
+    
+    reversed_iterator = reversed(input_list)
+    return list(reversed_iterator)
+
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(f"Original list: {sample_list}")
+    reversed_list = reverse_list(sample_list)
+    print(f"Reversed list: {reversed_list}")

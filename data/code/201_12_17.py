@@ -1,0 +1,13 @@
+class ArithmeticMeanCalculator:
+    def calculate_mean(self, numbers):
+        if not all(isinstance(num, float) for num in numbers):
+            raise TypeError("All elements in the iterable must be floats")
+        total = sum(numbers)
+        count = len(numbers)
+        return total / count
+
+if __name__ == '__main__':
+    calculator = ArithmeticMeanCalculator()
+    sample_values = [1.5, 2.5, 3.5, 4.5]
+    result = calculator.calculate_mean(sample_values)
+    print(result)

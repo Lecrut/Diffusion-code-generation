@@ -1,0 +1,30 @@
+from typing import Dict
+
+class InventoryManager:
+
+    def __init__(self):
+        self.items: Dict[str, int] = {}
+
+    def add_items(self, items: Dict[str, int]):
+        for item, count in items.items():
+            if item in self.items:
+                self.items[item] += count
+            else:
+                self.items[item] = count
+
+    def remove_items(self, item: str, quantity: int) -> bool:
+        if item in self.items and self.items[item] >= quantity:
+            self.items[item] -= quantity
+            return True
+        return False
+
+    def check_critical_threshold(self, threshold: int) -> bool:
+        for count in self.items.values():
+            if count < threshold:
+                return True
+        return False
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.add_items({'apple': 10, 'banana': 5})
+    print(manager.remove_items('apple', 3))
+    print(manager.check_critical_threshold(2))
