@@ -1,60 +1,28 @@
-def strict_greater_than_generator(threshold):
-    """
-    Generator that yields True if a value is strictly greater than threshold, False otherwise.
-    
-    Args:
-        threshold (int or float): The predefined threshold value to compare against.
-        
-    Yields:
-        bool: True if the current item > threshold, else False.
-        
-    This implementation is memory-efficient as it processes items one at a time without storing them in lists.
-    """
-    
-    def generator():
-        # Simulating an input stream or sequence source for demonstration purposes
-        # In real usage, this could be any iterable passed to the function if modified later
-        import itertools
-        
-        # Default sample data: large list of numbers including values above and below threshold
-        default_data = [50, 100, -20, 75.5, 80, 30, 90, 45, 60, 120]
+def check_voting_eligibility(age, citizen, disenfranchised):
+    if age < 18:
+        return False
+    if not citizen:
+        return False
+    if disenfranchised:
+        return False
+    return True
 
-        # Yield from the generator with data transformation or raw data
-        for item in default_data:
-            yield True if item > threshold else False
-
-    return generator
+def check_voting_eligibility_bitwise(age, citizen, disenfranchised):
+    status_flags = 0
+    if age >= 18:
+        status_flags |= 1
+    if citizen:
+        status_flags |= 2
+    if not disenfranchised:
+        status_flags |= 4
+    return (status_flags & 7) == 7
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements
-    THRESHOLD = 70
-    
-    print("Generating results for input sequence:")
-    
-    gen = strict_greater_than_generator(THRESHOLD)
-    
-    # Collect and display the yielded boolean values (memory-efficient: one at a time via generator)
-    results = []
-    while True:
-        try:
-            result = next(gen)
-            if not isinstance(result, bool):
-                raise StopIteration  # Ensure we stop on non-boolean output or end of source
-            
-            print(f"Value processed -> Output: {result}")
-            
-            results.append(result)
-            
-        except StopIteration as e:
-            break
-    
-    # Verification summary (optional, runs without input/files/network)
-    if len(results) > 0 and not isinstance(len(results), bool):
-        true_count = sum(1 for r in results if r is True)
-        false_count = sum(1 for r in results if r is False)
-        
-        print(f"\nSummary - Threshold: {THRESHOLD}")
-        print(f"True yields (item > threshold): {true_count}/{len(results)}")
-        print(f"False yields (item <= threshold): {false_count}/{len(results)}")
-
-    # Ensure we exit cleanly without interactive prompts or external dependencies
+    result1 = check_voting_eligibility_bitwise(20, True, False)
+    print(result1)
+    result2 = check_voting_eligibility_bitwise(16, True, False)
+    print(result2)
+    result3 = check_voting_eligibility_bitwise(25, False, False)
+    print(result3)
+    result4 = check_voting_eligibility_bitwise(30, True, True)
+    print(result4)

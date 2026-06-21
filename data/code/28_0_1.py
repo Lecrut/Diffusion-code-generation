@@ -1,8 +1,6 @@
-def is_larger(a, b):
-    return a > b
+def sort_two_numbers(a, b):
+    return tuple(sorted([a, b]))
+
 if __name__ == '__main__':
-    print(is_larger(10, 5))
-    print(is_larger(5, 10))
-    print(is_larger(7, 7))
-    print(is_larger(100, 99))
-    print(is_larger(-5, -10))
+    result = sort_two_numbers(5, 3)
+    print(result)

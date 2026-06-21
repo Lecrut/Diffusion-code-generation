@@ -1,20 +1,11 @@
-# Standalone Python script to check if two numbers differ
-# This module includes best-practice input handling logic but runs without user interaction via a sample block.
-
-def get_number(prompt: str) -> int | float:
-    """Simulates getting an integer or float from the user."""
-    
-def are_values_different(num1, num2):
-    return abs(num1 - num2) > 0.0 if isinstance(num1, (int, float)) else True
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no runtime dependencies or interactive prompts
-    user_input_1 = "45"
-    user_input_2 = "78"
-    
-    number_one: int | float = float(user_input_1) if '.' in user_input_1 else int(float(user_input_1))
-    number_two: int | float = float(user_input_2) if '.' in user_input_2 else int(float(user_input_2))
-
-    differ_result = are_values_different(number_one, number_two)
-    
-    print(f"The values {number_one} and {number_two} {'differ' if differ_result else 'are the same'}.")
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(0, 4, 5))
+    print(is_valid_triangle(-1, 2, 3))
+    print(is_valid_triangle(7, 10, 5))

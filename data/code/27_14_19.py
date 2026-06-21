@@ -1,26 +1,14 @@
-def check_difference(value1, value2):
-    """Check if two values differ by returning True/False."""
-    return value1 != value2
+def validate_triangle(a: float, b: float, c: float) -> bool:
+    return (a + b > c) and (a + c > b) and (b + c > a) and a > 0 and b > 0 and c > 0
+
+def format_result(side_a: float, side_b: float, side_c: float, is_valid: bool) -> str:
+    status = "Valid" if is_valid else "Invalid"
+    return f"Sides ({side_a}, {side_b}, {side_c}) form a {status} triangle."
 
 if __name__ == '__main__':
-    val_a = 10
-    val_b = 10.00000000000001
-    
-    # The expression checks for inequality using Python's default float comparison semantics
-    is_different = check_difference(val_a, val_b)
-    
-    print(f"Values: {val_a} and {val_b}")
-    print(f"Are they different? {is_different}")
-
-    # Additional demonstration of the floating point behavior conceptually used here.
-    # While Python's != operator uses a tolerance-like mechanism internally 
-    # based on machine epsilon to decide equality, strictly speaking it does not use exact bitwise comparison 
-    # for large ranges or infinities in all contexts (e.g., int vs float), but 10 and that specific float 
-    # are treated as different by the standard implementation.
-    
-    # Direct inline idiom requested:
-    result_idiom = val_a != val_b
-    
-    assert is_different == result_idiom, "Logic mismatch"
-
-    print("Inline expression verification passed.")
+    sample_a = 3.0
+    sample_b = 4.0
+    sample_c = 5.0
+    result = validate_triangle(sample_a, sample_b, sample_c)
+    formatted_output = format_result(sample_a, sample_b, sample_c, result)
+    print(formatted_output)

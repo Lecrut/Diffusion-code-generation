@@ -1,36 +1,21 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if a is different from b, False otherwise.
-    
-    Args:
-        a (float): First numerical value.
-        b (float): Second numerical value.
-        
-    Returns:
-        bool: True if the values are not equal within floating-point precision limits given by epsilon=1e-9, 
-              else False. Using an explicit equality check for simplicity and performance on standard numeric types.
-    """
-    # For integer-like float representations where exact comparison is safe/expected in most "different" contexts:
-    return a != b
+def is_valid_triangle(a, b, c):
+    return (a + b > c) and (a + c > b) and (b + c > a)
 
 if __name__ == '__main__':
-    sample1 = 5.0
-    sample2 = 3.0
-    
-    result_check_different = check_difference(sample1, sample2)
-    
-    # Additional test case for equality within tolerance (though using direct != operator here as per standard interpretation unless float comparison context specified otherwise). 
-    # However, to satisfy "robust" in a floating-point world without external libraries:
-    
-    sample3 = 5.0 + 1e-9
-    result_same = check_difference(sample1, sample_sample2 := (sample3 if False else sample3)) 
-    
-    # Re-evaluating based on pure instruction requirement for "robust" and common usage of difference functions which often imply tolerance in FP:
-    
-    # Let's implement a robust version that handles float precision gracefully as part of being robust.
-    epsilon = 1e-9
-    
-    def check_difference_robust(val_a, val_b):
-        return abs(val_a - val_b) > epsilon
+    test_cases = [
+        (3, 4, 5, True),
+        (1, 2, 3, False),
+        (7, 10, 5, True),
+        (0, 0, 0, False),
+        (10, 1, 1, False),
+        (5, 5, 5, True),
+        (1, 1, 100, False)
+    ]
 
-    print(check_difference_robust(sample3, sample1))
+    results = []
+    for a, b, c, expected in test_cases:
+        result = is_valid_triangle(a, b, c)
+        results.append((a, b, c, result))
+
+    for a, b, c, result in results:
+        print(f"is_valid_triangle({a}, {b}, {c}) -> {result}")

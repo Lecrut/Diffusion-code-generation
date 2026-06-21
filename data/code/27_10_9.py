@@ -1,23 +1,14 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if two numerical values are different, False otherwise.
-    
-    Args:
-        a (float): First numerical value.
-        b (float): Second numerical value.
-        
-    Returns:
-        bool: True if a != b, False otherwise.
-    """
-    return a != b
+def is_non_degenerate_triangle(sides):
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    sample1 = check_difference(5.0, 3.0)
-    assert sample1 is True
-
-    sample2 = check_difference(7.0, 7.0)
-    assert sample2 is False
-
-    print(f"Test 1 (different): {sample1}")
-    print(f"Test 2 (same): {sample2}")
+    print(is_non_degenerate_triangle((3.0, 4.0, 5.0)))
+    print(is_non_degenerate_triangle((1.0, 2.0, 3.0)))
+    print(is_non_degenerate_triangle((1.0, 1.0, 1.0)))
+    print(is_non_degenerate_triangle((-1.0, 2.0, 3.0)))
+    print(is_non_degenerate_triangle((0.0, 1.0, 2.0)))

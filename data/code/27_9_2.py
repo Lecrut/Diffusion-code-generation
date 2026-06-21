@@ -1,15 +1,15 @@
-def compare_numbers(a, b):
-    return a > b
+def is_valid_triangle(sides):
+    a, b, c = sides
+    return (a + b > c) and (a + c > b) and (b + c > a)
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 5
-    result = compare_numbers(num1, num2)
-    print(result)
-    num3 = 7
-    num4 = 7
-    result = compare_numbers(num3, num4)
-    print(result)
-    num5 = -3
-    num6 = 1
-    result = compare_numbers(num5, num6)
-    print(result)
+    triplets = [
+        [3, 4, 5],
+        [1, 2, 3],
+        [10, 10, 10],
+        [0, 0, 0],
+        [1, 1, 2]
+    ]
+    results = [is_valid_triangle(t) for t in triplets]
+    for res in results:
+        print(res)

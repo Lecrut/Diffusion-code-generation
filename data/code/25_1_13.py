@@ -1,18 +1,10 @@
-def is_zero(value):
-    """Returns True if value is exactly zero, False otherwise."""
-    return (value == 0)
+def compute_discounted_price(price: float, discount_rate: float = 0.15) -> float:
+    return price * (1 - discount_rate)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test various numeric types and edge cases
-    samples = [0, 0.0, -0.0, float('nan'), None]
-    
-    for val in samples:
-        try:
-            result = is_zero(val)
-            print(f"is_zero({val!r}) -> {result}")
-        except Exception as e:
-            # Handle non-numeric or invalid comparison cases gracefully without breaking the module
-            if not isinstance(val, (int, float)) and val != NotImplemented:
-                continue 
-            result = is_zero(val)
-            print(f"is_zero({val!r}) -> {result}")
+    price1 = 100
+    price2 = 250
+    discounted_price1 = compute_discounted_price(price1)
+    discounted_price2 = compute_discounted_price(price2)
+    print(discounted_price1)
+    print(discounted_price2)

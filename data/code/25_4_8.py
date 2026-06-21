@@ -1,11 +1,14 @@
-def contains_zero(iterable):
-            for item in iterable:
-                if item == 0:
-                    yield True
-                    return # Stops the generator immediately after yielding True
-        
-            # If we reach here, no zero was found during iteration
-            yield False
+import decimal
+
+def calculate_discounted_total(prices, discount_rate):
+    total = decimal.Decimal('0')
+    discount_factor = decimal.Decimal('1') - decimal.Decimal(str(discount_rate))
+    for price in prices:
+        total += decimal.Decimal(str(price)) * discount_factor
+    return float(total)
 
 if __name__ == '__main__':
-    pass
+    prices = [10.0, 20.5, 30.0]
+    discount_rate = 0.25
+    result = calculate_discounted_total(prices, discount_rate)
+    print(result)

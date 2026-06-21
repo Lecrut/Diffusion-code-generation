@@ -1,5 +1,8 @@
+def check_voting_status(age, threshold=18):
+    return age >= threshold
+
 if __name__ == '__main__':
-    x = 10
-    y = 5
-    result = x > y
-    print(f"x ({x}) is greater than y ({y}): {result}")
+    print(check_voting_status(16))
+    print(check_voting_status(18))
+    print(check_voting_status(21))
+    print(check_voting_status(18, threshold=21))

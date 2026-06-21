@@ -1,28 +1,19 @@
-class StringReverser:
-    """A class to reverse strings."""
-
-    def __init__(self):
-        """Initialize the StringReverser instance with no arguments required."""
-        pass
-
-    @staticmethod
-    def reverse(word) -> str:
-        """Reverse the input string.
-        
-        Args:
-            word (str): The string to be reversed.
-            
-        Returns:
-            str: The reversed string.
-        """
-        return word[::-1]
+def count_vowels(text):
+    vowels = set('aeiouAEIOU')
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or file I/O
-    test_cases = ["hello", "Python Programming", "", "a"]
-
-    reverser = StringReverser()
-
-    for word in test_cases:
-        reversed_word = reverser.reverse(word)
-        print(f"Original: '{word}' -> Reversed: '{reversed_word}'")
+    sample_strings = [
+        "Hello World",
+        "Python Programming",
+        "",
+        "12345!@#",
+        "AEIOU aeiou"
+    ]
+    for s in sample_strings:
+        result = count_vowels(s)
+        print(result)

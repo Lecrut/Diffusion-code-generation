@@ -1,15 +1,10 @@
-def determine_larger(value1, value2):
-    """
-    Returns the larger of two comparable values (integers or floats).
-    
-    Parameters:
-        value1 (Comparable): First value to compare.
-        value2 (Comparable): Second value to compare.
-        
-    Returns:
-        Comparable: The larger of the two input values.
-    """
-    return max(value1, value2)
+def sort_two_numbers(a, b):
+    if a <= b:
+        return a, b
+    return b, a
 
 if __name__ == '__main__':
-    pass
+    value1 = 42
+    value2 = 7
+    sorted_values = sort_two_numbers(value1, value2)
+    print(sorted_values)

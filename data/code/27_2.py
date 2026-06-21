@@ -1,7 +1,8 @@
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return (a + b > c) and (a + c > b) and (b + c > a)
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 5
-    if num1 != num2:
-        print("The two entered values differ.")
-    else:
-        print("The two entered values are the same.")
+    result = is_valid_triangle(3, 4, 5)
+    print(result)

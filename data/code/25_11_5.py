@@ -1,27 +1,43 @@
-from typing import Any
+class DiscountCalculator:
+    FIXED_PRICES = {
+        "standard": 100.0,
+        "premium": 250.0,
+        "ultimate": 500.0
+    }
 
-class ValueChecker:
-    """A class designed to check if a given value is zero."""
+    DISCOUNT_TIERS = [
+        (1, 0.0),
+        (10, 0.05),
+        (50, 0.10),
+        (100, 0.15)
+    ]
 
-    def check_for_zero(self, value: Any) -> bool:
-        """
-        Determines if the input value is equal to zero.
-
-        Args:
-            value (Any): The numerical or boolean value to check against zero.
-
-        Returns:
-            bool: True if value is 0, False otherwise.
-        """
-        return value == 0
+    @staticmethod
+    def calculate_tiered_discount(product_type: str, quantity: int) -> float:
+        if product_type not in DiscountCalculator.FIXED_PRICES:
+            raise ValueError(f"Invalid product type: {product_type}")
+        if quantity < 0:
+            raise ValueError("Quantity cannot be negative")
+        
+        base_price = DiscountCalculator.FIXED_PRICES[product_type]
+        total_before_discount = base_price * quantity
+        
+        discount_rate = 0.0
+        for tier_quantity, tier_rate in DiscountCalculator.DISCOUNT_TIERS:
+            if quantity >= tier_quantity:
+                discount_rate = tier_rate
+        
+        discount_amount = total_before_discount * discount_rate
+        return discount_amount
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    checker = ValueChecker()
-
-    test_values = [0, -1, 1, "", [], {}, None, True, False]
-
-    print("Checking if the following values are zero:")
-    for val in test_values:
-        result = checker.check_for_zero(val)
-        print(f"Value {repr(val)} is zero: {result}")
+    test_cases = [
+        ("standard", 5),
+        ("premium", 12),
+        ("ultimate", 55),
+        ("standard", 150)
+    ]
+    
+    for prod_type, qty in test_cases:
+        result = DiscountCalculator.calculate_tiered_discount(prod_type, qty)
+        print(f"Product: {prod_type}, Quantity: {qty}, Discount Amount: {result:.2f}")

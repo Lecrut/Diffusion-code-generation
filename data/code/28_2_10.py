@@ -1,16 +1,18 @@
-def compare_numbers(num1: int, num2: int) -> str:
-    """Compare two integers and return a descriptive message."""
-    if num1 > num2:
-        return f"{num1} is larger than {num2}"
-    elif num2 > num1:
-        return f"{num2} is larger than {num1}"
-    else:
-        return "Both numbers are equal"
+def sort_pair(x, y):
+    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+        raise TypeError("Inputs must be numeric")
+    if x < y:
+        return (x, y)
+    return (y, x)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input(), sys.stdin, etc.)
-    a = 42
-    b = 73
-    
-    result_message = compare_numbers(a, b)
-    print(result_message)
+    output = sort_pair(10, 20)
+    print(output)
+    output = sort_pair(20, 10)
+    print(output)
+    output = sort_pair(-5, -10)
+    print(output)
+    try:
+        sort_pair(1, "2")
+    except TypeError as e:
+        print(e)

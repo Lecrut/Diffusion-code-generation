@@ -1,7 +1,8 @@
-if x > y:  # Check if variable x is strictly greater than y
-    pass  # Perform action here (e.g., print result)
-
-# Example usage block with hard-coded values to satisfy requirements without user input or external dependencies
+def check_voting_status(age, threshold=18):
+    return age >= threshold
 
 if __name__ == '__main__':
-    pass
+    print(check_voting_status(20))
+    print(check_voting_status(16))
+    print(check_voting_status(18))
+    print(check_voting_status(17, threshold=16))

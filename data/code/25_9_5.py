@@ -1,47 +1,53 @@
-class DataProcessor:
+class PriceValidationError(Exception):
+    def __init__(self, message: str):
+        self.message = message
+        super().__init__(self.message)
+
+class NegativePriceError(PriceValidationError):
     def __init__(self):
-        self.value = 0
-    
-    @staticmethod
-    def is_zero(instance, attribute_name="value"):
-        """
-        Checks if a specific instance attribute equals zero.
-        
-        Args:
-            instance (object): The object to inspect.
-            attribute_name (str): Name of the attribute to check. Defaults to 'value'.
-            
-        Returns:
-            bool: True if the attribute is 0, False otherwise.
-        """
-        return getattr(instance, attribute_name) == 0
+        super().__init__("Original price must be non-negative.")
+
+class NegativeDiscountError(PriceValidationError):
+    def __init__(self):
+        super().__init__("Discount percentage cannot be negative.")
+
+class ExcessiveDiscountError(PriceValidationError):
+    def __init__(self):
+        super().__init__("Discount percentage cannot exceed 100%.")
+
+def _validate_price(value: float) -> None:
+    if value < 0.0:
+        raise NegativePriceError()
+
+def _validate_discount(value: float) -> None:
+    if value < 0.0:
+        raise NegativeDiscountError()
+    if value > 100.0:
+        raise ExcessiveDiscountError()
+
+def apply_discount(value: float, rate: float) -> float:
+    return value * (1.0 - rate / 100.0)
+
+def calculate_final_price(original_price: float, discount_percentage: float) -> float:
+    _validate_price(original_price)
+    _validate_discount(discount_percentage)
+    return apply_discount(original_price, discount_percentage)
+
+class PriceCalculator:
+    def __init__(self, base_price: float, discount_rate: float):
+        self.base_price = base_price
+        self.discount_rate = discount_rate
+
+    def get_final_price(self) -> float:
+        return calculate_final_price(self.base_price, self.discount_rate)
 
 if __name__ == '__main__':
-    processor = DataProcessor()
-    
-    # Hard-coded sample values
-    test_cases = [
-        ("zero_value", 5),      # Expected: True (attribute is zero) -> False in this context as value=5, but let's adjust logic for clarity below. 
-                                # Actually the task says "checks if ... equal to zero". So if attribute IS zero, return True.
-    ]
-
-    # Let's create instances with specific values for testing
-    instance_one = DataProcessor()
-    instance_two = DataProcessor()
-    
-    # Manually set attributes for demonstration without relying on __init__ default being the only source of truth
-    instance_one.value = 0      # Should be True
-    instance_two.value = 42     # Should be False
-
-    print(f"Is {instance_one.__class__.__name__} attribute 'value' zero? {DataProcessor.is_zero(instance_one, 'value')}")
-    print(f"Is {instance_two.__class__.__name__} attribute 'value' zero? {DataProcessor.is_zero(instance_two, 'value')}")
-
-    # Test with a different instance type to ensure it works on any object
-    class Counter:
-        def __init__(self):
-            self.count = 0
-    
-    counter_obj = Counter()
-    counter_obj.count = 100
-    
-    print(f"Is {Counter.__name__} attribute 'count' zero? {DataProcessor.is_zero(counter_obj, 'count')}")
+    standard_price = 150.0
+    standard_discount = 20.0
+    print(calculate_final_price(standard_price, standard_discount))
+    zero_discount = 0.0
+    print(calculate_final_price(standard_price, zero_discount))
+    full_discount = 100.0
+    print(calculate_final_price(standard_price, full_discount))
+    calculator = PriceCalculator(200.0, 25.0)
+    print(calculator.get_final_price())

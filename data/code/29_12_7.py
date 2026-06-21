@@ -1,29 +1,13 @@
-class StringReverser:
-    def reverse(self, text):
-        """
-        Reverses a given string efficiently using slicing.
-        
-        Args:
-            text (str): The input string to be reversed.
-            
-        Returns:
-            str: The reversed string.
-        """
-        return text[::-1]
+_VOWELS = frozenset("aeiouAEIOU")
+
+def _is_valid_input(data):
+    return isinstance(data, str)
+
+def count_vowels(text):
+    if not _is_valid_input(text):
+        raise TypeError("Input must be a string")
+    return sum(1 for char in text if char in _VOWELS)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [
-        "Hello, World!",
-        "",
-        "a",
-        "Python is awesome.",
-        "To be or not to be"
-    ]
-
-    reverser = StringReverser()
-
-    for sample in samples:
-        reversed_text = reverser.reverse(sample)
-        print(f"Original: {sample}")
-        print(f"Reversed: {reversed_text}\n")
+    sample_text = "The quick brown fox jumps over the lazy dog"
+    print(count_vowels(sample_text))

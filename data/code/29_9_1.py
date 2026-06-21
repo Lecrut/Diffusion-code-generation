@@ -1,6 +1,10 @@
-def reverse_word(word):
-    return word[::-1]
+import string
+
+def count_vowels_precomputed(s):
+    translation_table = bytes.maketrans(b'', b'', b'aeiouAEIOU')
+    return len(s) - len(s.translate(translation_table))
+
 if __name__ == '__main__':
-    sample_word = "example"
-    reversed_word = reverse_word(sample_word)
-    print(reversed_word)
+    sample_string = "Hello World! This is a test string with vowels." * 1000000
+    result = count_vowels_precomputed(sample_string)
+    print(result)

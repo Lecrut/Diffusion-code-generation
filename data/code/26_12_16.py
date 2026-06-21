@@ -1,27 +1,20 @@
-def validate_number(user_input):
-    """Check if the input is a valid integer."""
-    try:
-        return int(float(user_input))
-    except (ValueError, TypeError):
-        raise ValueError("Invalid number.")
-
-def compare_numbers(num1, num2):
-    """Compare two numbers and print which one is greater."""
-    result = "The first number ({}) is greater than the second number ({}).".format(num1, num2) if num1 > num2 else \
-             "The first number ({}) is not greater than the second number ({}).".format(num1, num2)
-    print(result)
+def evaluate_voting_eligibility(age, has_criminal_record, is_citizen):
+    if not is_citizen:
+        return False
+    if age < 18:
+        return False
+    if has_criminal_record:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or command-line arguments are required.
-    sample_value_1 = "5"
-    sample_value_2 = "3"
-
-    try:
-        num1 = validate_number(sample_value_1)
-        num2 = validate_number(sample_value_2)
-        
-        # Test and print comparison result using an if statement
-        compare_numbers(num1, num2)
-        
-    except ValueError as e:
-        print("Error:", str(e))
+    sample_cases = [
+        (25, False, True),
+        (17, False, True),
+        (30, True, True),
+        (45, False, False),
+        (19, False, True)
+    ]
+    for age, record, citizen in sample_cases:
+        result = evaluate_voting_eligibility(age, record, citizen)
+        print(result)

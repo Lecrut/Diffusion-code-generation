@@ -1,6 +1,10 @@
-def is_zero(val): return val == 0 if isinstance(val, (int, float)) else False
+def calculate_price(original_price, discount_percent):
+    discount_amount = original_price * (discount_percent / 100)
+    final_price = original_price - discount_amount
+    return (original_price, discount_amount, final_price)
 
 if __name__ == '__main__':
-    samples = [0, -1e-256, 42, "zero", True]
-    for s in samples:
-        print(f"{s!r}: {is_zero(s)}")
+    original = 99.99
+    discount = 30
+    result = calculate_price(original, discount)
+    print(result)

@@ -1,28 +1,18 @@
-import unittest
-def check_difference(a, b):
-    return a != b
-class TestNumberDifference(unittest.TestCase):
-    def test_positive_numbers(self):
-        self.assertTrue(check_difference(5, 10))
-        self.assertFalse(check_difference(5, 5))
-    def test_negative_numbers(self):
-        self.assertTrue(check_difference(-5, -10))
-        self.assertFalse(check_difference(-5, -5))
-        self.assertTrue(check_difference(-10, -5))
-    def test_mixed_signs(self):
-        self.assertTrue(check_difference(5, -5))
-        self.assertFalse(check_difference(5, 5))
-    def test_involving_zero(self):
-        self.assertTrue(check_difference(0, 5))
-        self.assertFalse(check_difference(0, 0))
-        self.assertTrue(check_difference(-5, 0))
-        self.assertTrue(check_difference(0, -5))
-    def test_zero_difference(self):
-        self.assertFalse(check_difference(0, 0))
-    def test_floating_point_numbers(self):
-        self.assertTrue(check_difference(1.5, 2.5))
-        self.assertFalse(check_difference(1.5, 1.5))
-        self.assertTrue(check_difference(0.0, 0.001))
-        self.assertFalse(check_difference(3.14, 3.14))
+def triangle_status(a, b, c):
+    sides = sorted([a, b, c])
+    if sides[0] <= 0 or sides[1] <= 0 or sides[2] <= 0:
+        return "invalid"
+    if sides[0] + sides[1] <= sides[2]:
+        return "not_a_triangle"
+    if sides[0] == sides[1] == sides[2]:
+        return "equilateral"
+    if sides[0] == sides[1] or sides[1] == sides[2] or sides[0] == sides[2]:
+        return "isosceles"
+    return "scalene"
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print(triangle_status(3, 4, 5))
+    print(triangle_status(2, 2, 2))
+    print(triangle_status(1, 1, 2))
+    print(triangle_status(10, 2, 10))
+    print(triangle_status(-1, 2, 3))

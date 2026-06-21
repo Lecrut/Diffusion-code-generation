@@ -1,16 +1,16 @@
-def check_difference(a: float, b: float) -> bool:
-    """Check if two floating-point numbers differ by more than machine epsilon."""
-    return abs(a - b) > 1e-9
+def validate_triangle(a, b, c):
+    return (a > 0 and b > 0 and c > 0) and (a + b > c) and (a + c > b) and (b + c > a)
+
+def main():
+    sides_a = [3, 4, 5, 1, 10, 0, -1, 5, 5, 10]
+    sides_b = [4, 3, 4, 2, 10, 5, 5, 5, 1, 10]
+    sides_c = [5, 5, 6, 3, 5, 0, 10, 8, 1, 20]
+
+    results = []
+    for a, b, c in zip(sides_a, sides_b, sides_c):
+        results.append(validate_triangle(a, b, c))
+
+    print(results)
 
 if __name__ == '__main__':
-    val_int = 10
-    val_float_approx_10 = 10.00000000000001
-    
-    # Use a small epsilon for float comparison, but direct subtraction 
-    # reveals the difference clearly here as it exceeds typical machine precision noise
-    is_different = abs(val_int - val_float_approx_10) > 1e-9
-
-    if is_different:
-        print("The values are different.")
-    else:
-        print("The values appear to be equal within floating-point tolerance.")
+    main()

@@ -1,22 +1,52 @@
-class ValueChecker:
-    def check_for_zero(self, value) -> bool:
-        """
-        Determines if the input value is equal to zero.
+class TieredDiscountCalculator:
+    PRICE_LIST = {
+        "widget": 25.00,
+        "gadget": 50.00,
+        "doohickey": 75.00,
+        "thingamajig": 100.00
+    }
+    
+    TIER_THRESHOLDS = [
+        (1000, 0.20),
+        (500, 0.15),
+        (200, 0.10),
+        (0, 0.05)
+    ]
+
+    @staticmethod
+    def calculate_total_discount(items):
+        subtotal = 0.0
+        for item, quantity in items.items():
+            if item in TieredDiscountCalculator.PRICE_LIST:
+                price = TieredDiscountCalculator.PRICE_LIST[item]
+                subtotal += price * quantity
         
-        Args:
-            value (int | float): The numeric value to check against zero.
-            
-        Returns:
-            bool: True if value equals 0, False otherwise.
-        """
-        return value == 0
+        discount_rate = 0.0
+        for threshold, rate in TieredDiscountCalculator.TIER_THRESHOLDS:
+            if subtotal >= threshold:
+                discount_rate = rate
+                break
+        
+        discount_amount = subtotal * discount_rate
+        final_total = subtotal - discount_amount
+        return {
+            "subtotal": subtotal,
+            "discount_rate": discount_rate,
+            "discount_amount": discount_amount,
+            "final_total": final_total
+        }
 
 if __name__ == '__main__':
-    checker = ValueChecker()
-
-    # Test cases with hard-coded sample values (no user input required)
-    test_values = [0, -1, 1, 0.0, -0.0, 2.5]
-
-    for val in test_values:
-        result = checker.check_for_zero(val)
-        print(f"Value {val!r}: {'Is zero' if result else 'Not zero'}")
+    calculator = TieredDiscountCalculator()
+    
+    test_order_1 = {"widget": 5, "gadget": 2}
+    result_1 = calculator.calculate_total_discount(test_order_1)
+    print(result_1)
+    
+    test_order_2 = {"doohickey": 10, "thingamajig": 5}
+    result_2 = calculator.calculate_total_discount(test_order_2)
+    print(result_2)
+    
+    test_order_3 = {"widget": 100}
+    result_3 = calculator.calculate_total_discount(test_order_3)
+    print(result_3)

@@ -1,21 +1,16 @@
-def is_zero(number):
-    """
-    Check if a given input number is exactly zero.
+def calculate_discounted_price(original_price: float, discount_percentage: float) -> float:
+    if original_price < 0:
+        raise ValueError("Original price cannot be negative.")
+    if not (0 <= discount_percentage <= 100):
+        raise ValueError("Discount percentage must be between 0 and 100 inclusive.")
     
-    Parameters:
-        number (int, float): The numerical value to check.
-        
-    Returns:
-        bool: True if the number is 0, False otherwise.
-    """
-    return number == 0
+    discount_amount = original_price * (discount_percentage / 100.0)
+    final_price = original_price - discount_amount
+    
+    return final_price
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_values = [0, -1, 1, 3.5, 0.0, float('inf'), None]
-
-    print("Testing is_zero function:")
-    for value in test_values:
-        result = is_zero(value) if isinstance(value, (int, float)) else "Invalid type"
-        status = "Zero detected!" if result and not isinstance(value, bool) else ""
-        print(f"is_zero({value}) -> {result} {status}")
+    original_price = 100.0
+    discount_percentage = 20.0
+    result = calculate_discounted_price(original_price, discount_percentage)
+    print(result)

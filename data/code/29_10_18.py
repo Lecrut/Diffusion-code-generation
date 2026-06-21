@@ -1,66 +1,33 @@
-#!/usr/bin/env python3
-"""
-Script to reverse a given input string with robust handling of various types.
-This module demonstrates reversing strings while ensuring no external dependencies,
-interactive prompts, or command-line arguments are used during execution.
-"""
+VOWELS_LOWER = frozenset('aeiou')
+VOWELS_UPPER = frozenset('AEIOU')
 
-def is_string(input_value):
-    """Check if the provided value is actually a string."""
-    return isinstance(input_value, str)
+def _validate_input(text):
+    if not isinstance(text, str):
+        raise TypeError("Input must be a string")
 
-def reverse_string(value):
-    """Reverse a given string using slicing for efficiency and clarity."""
-    # Slicing with negative step reverses the sequence in-place without extra memory overhead.
-    reversed_str = value[::-1]
-    return reversed_str
+def count_vowels(text):
+    _validate_input(text)
+    count = 0
+    for char in text:
+        if char in VOWELS_LOWER or char in VOWELS_UPPER:
+            count += 1
+    return count
 
-def process_input(data_type: type, input_value) -> str | None:
-    """Process different data types to ensure only strings are reversed and returned."""
-    if is_string(input_value):
-        try:
-            # Attempt direct reversal for standard string handling.
-            result = reverse_string(input_value)
-            
-            # Handle unicode escape sequences or special characters gracefully by ensuring 
-            # the output remains a valid Python string representation.
-            return result
-        except Exception as e:
-            print(f"Error during processing of {input_value}: {e}")
-    else:
-        # If input is not a string, convert it to one for demonstration purposes or handle non-string types explicitly if needed.
-        try:
-            str_repr = repr(input_value)
-            return reverse_string(str_repr)
-        except Exception as e:
-            print(f"Error converting and processing {input_value}: {e}")
-
-def main():
-    """Main execution block with hard-coded sample values."""
+class VowelCounter:
+    def __init__(self, text):
+        self.text = text
     
-    # Sample inputs covering various types to demonstrate robustness.
-    samples = [
-        "Hello, World!",           # Standard string
-        1234567890,               # Integer (converted via repr)
-        ["Python", "is", "great"],# List of strings (handled as non-string input initially)
-        None,                      # Null value
-    ]
-
-    print("Starting String Reversal Process...")
-    
-    for sample in samples:
-        try:
-            result = process_input(type(sample), sample)
-            
-            if isinstance(result, str):
-                print(f"Input Type: {type(sample).__name__}")
-                print(f"Original Input: {sample!r}")
-                print(f"Reversed Output: {result}\n")
-            else:
-                # Fallback for cases where conversion might fail unexpectedly.
-                print(f"Failed to process input of type {type(sample).__name__}. Skipping.")
-        except Exception as e:
-            print(f"Unexpected error processing sample: {e}")
+    def get_count(self):
+        return count_vowels(self.text)
 
 if __name__ == '__main__':
-    main()
+    print(count_vowels("Programming"))
+    print(count_vowels("123456"))
+    print(count_vowels("Quick Fox"))
+    print(count_vowels("aeiou"))
+    counter_instance = VowelCounter("Rhythm")
+    print(counter_instance.get_count())
+    try:
+        count_vowels(123)
+    except TypeError as e:
+        print(e)

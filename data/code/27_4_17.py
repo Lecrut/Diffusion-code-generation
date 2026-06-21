@@ -1,8 +1,13 @@
-def numbers_different_generator(a: int | float = None, b: int | float = None) -> bool:
-    """Yields True if two input numbers are different, False otherwise."""
-    # Using a generator approach with a single yield is functionally equivalent to 
-    # returning the result directly for this specific logic. This ensures memory efficiency 
-    # by avoiding the creation of intermediate lists or large data structures, which might be
+def is_valid_triangle(a: float, b: float, c: float) -> bool:
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    pass
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(-1, 2, 3))
+    print(is_valid_triangle(0, 2, 3))
+    print(is_valid_triangle(7, 10, 5))

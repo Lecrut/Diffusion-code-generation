@@ -1,10 +1,13 @@
-def even_zero_generator(start, end):
-    for num in range(start, end + 1):
-        if num % 2 == 0:
-            if num == 0:
-                yield True
+from decimal import Decimal, ROUND_HALF_UP
+
+ORIG_PRICE = Decimal('100.00')
+DISCOUNT_PERCENT = Decimal('20')
+
+def calculate_discounted_price(orig_price, discount_percent):
+    discount_amount = orig_price * (discount_percent / Decimal('100'))
+    discounted_price = orig_price - discount_amount
+    return discounted_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
 if __name__ == '__main__':
-    print(list(even_zero_generator(0, 10)))
-    print(list(even_zero_generator(1, 5)))
-    print(list(even_zero_generator(2, 4)))
-    print(list(even_zero_generator(10, 10)))
+    result = calculate_discounted_price(ORIG_PRICE, DISCOUNT_PERCENT)
+    print(result)

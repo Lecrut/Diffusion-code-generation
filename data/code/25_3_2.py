@@ -1,22 +1,18 @@
-def check_value(value):
-    """Check if a given value is zero."""
-    return value == 0
+DISCOUNT_THRESHOLD = 100
+HIGH_DISCOUNT_RATE = 0.10
+LOW_DISCOUNT_RATE = 0.05
 
-def handle_non_integer():
-    """Handle cases where input might not be an integer by printing a message and re-prompting logic would normally go here, 
-    but per constraints we simulate this within the sample block or assume valid structure for standalone execution without prompts.
-    Since interactive prompting is forbidden in the final runnable module's main flow except via hard-coded samples:
-    This function outlines how non-integer handling would work if input() were available."""
-    print("Error: Input must be an integer.")
+def get_tiered_discounted_price(amount):
+    is_high_tier = amount > DISCOUNT_THRESHOLD
+    applicable_rate = HIGH_DISCOUNT_RATE if is_high_tier else LOW_DISCOUNT_RATE
+    discount_amount = amount * applicable_rate
+    final_price = amount - discount_amount
+    return final_price
 
 if __name__ == '__main__':
-    # Hardcoded sample values to demonstrate functionality without user interaction or prompts.
-    test_values = [0, 1, -5]
-
-    for num in test_values:
-        is_zero = check_value(num)
-        
-        if isinstance(num, int):
-            print(f"Value {num} is {'zero' if is_zero else 'not zero'}")
-        else:
-            handle_non_integer()
+    sample_input_low = 50
+    sample_input_high = 150
+    result_low = get_tiered_discounted_price(sample_input_low)
+    result_high = get_tiered_discounted_price(sample_input_high)
+    print(result_low)
+    print(result_high)

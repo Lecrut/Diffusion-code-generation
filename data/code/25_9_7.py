@@ -1,19 +1,45 @@
-class DataProcessor:
-    def __init__(self, value):
-        """Initialize instance attribute 'value'."""
-        self.value = value
-    
-    def is_zero(self) -> bool:
-        """Check if the instance attribute 'value' is equal to zero.
-        
-        Returns:
-            True if self.value == 0, False otherwise.
-        """
-        return self.value == 0
+class PriceCalculationError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+class NegativePriceError(PriceCalculationError):
+    def __init__(self):
+        super().__init__("Original price cannot be negative.")
+
+class NegativeDiscountError(PriceCalculationError):
+    def __init__(self):
+        super().__init__("Discount percentage cannot be negative.")
+
+class ExcessiveDiscountError(PriceCalculationError):
+    def __init__(self):
+        super().__init__("Discount percentage cannot exceed 100%.")
+
+def _ensure_valid_price(value: float) -> None:
+    if value < 0:
+        raise NegativePriceError()
+
+def _ensure_valid_discount(value: float) -> None:
+    if value < 0:
+        raise NegativeDiscountError()
+    if value > 100:
+        raise ExcessiveDiscountError()
+
+def calculate_final_price(original_price: float, discount_percentage: float) -> float:
+    _ensure_valid_price(original_price)
+    _ensure_valid_discount(discount_percentage)
+    discount_value = original_price * (discount_percentage / 100.0)
+    return original_price - discount_value
+
+def run_tests() -> None:
+    test_cases = [
+        (100.0, 20.0),
+        (50.0, 0.0),
+        (200.0, 100.0),
+        (15.50, 10.0)
+    ]
+    for price, discount in test_cases:
+        final = calculate_final_price(price, discount)
+        print(final)
 
 if __name__ == '__main__':
-    processor_1 = DataProcessor(5)
-    processor_2 = DataProcessor(0)
-    
-    print(f"{processor_1.__class__.__name__} value is zero: {processor_1.is_zero()}")
-    print(f"{processor_2.__class__.__name__} value is zero: {processor_2.is_zero()}")
+    run_tests()

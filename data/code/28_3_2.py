@@ -1,9 +1,10 @@
-def compare_to_threshold(data, threshold):
-    for item in data:
-        if item > threshold:
-            yield True
+def sort_two_floats(a, b):
+    smallest = min(a, b)
+    largest = max(a, b)
+    return smallest, largest
+
 if __name__ == '__main__':
-    sample_list = [10, 5, 20, 3, 15]
-    threshold_value = 12
-    results = list(compare_to_threshold(sample_list, threshold_value))
-    print(results)
+    first_value = 9.8
+    second_value = 3.1
+    sorted_pair = sort_two_floats(first_value, second_value)
+    print(sorted_pair)

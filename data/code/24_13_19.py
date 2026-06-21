@@ -1,39 +1,38 @@
-import sys
+from typing import Final
 
-def get_number_from_input():
-    """Prompt user to enter a number."""
-    try:
-        # Simulate an input scenario by reading from stdin if available, otherwise return a default
-        # However, the task forbids input(), so we will structure this for manual testing or non-interactive runs.
-        pass  # This function is logically defined here but usage in main block requires specific conditions below
+class LeapYearVerifier:
+    DIVISIBLE_BY_4: Final[int] = 4
+    DIVISIBLE_BY_100: Final[int] = 100
+    DIVISIBLE_BY_400: Final[int] = 400
+    MIN_YEAR: Final[int] = 1
 
-    except (ValueError):
-        print("Please enter an integer.")
+    def __init__(self) -> None:
+        self._verification_count: int = 0
 
-def check_value(number):
-    """Check if the number is negative and return a message."""
-    status = "negative" if number < 0 else "non-negative"
-    message = f"The value {number} is considered {status}."
-    return message, True
+    def _check_divisibility(self, year: int, divisor: int) -> bool:
+        return year % divisor == 0
 
-if __name__ == "__main__":
+    def verify(self, year: int) -> bool:
+        if year < self.MIN_YEAR:
+            return False
+        is_div_by_4 = self._check_divisibility(year, self.DIVISIBLE_BY_4)
+        is_div_by_100 = self._check_divisibility(year, self.DIVISIBLE_BY_100)
+        is_div_by_400 = self._check_divisibility(year, self.DIVISIBLE_BY_400)
+        if not is_div_by_4:
+            return False
+        if is_div_by_100 and not is_div_by_400:
+            return False
+        return True
 
-    # Simulated sample values to ensure the block runs without user input or network access.
-    # We test with positive and negative integers directly.
-    sample_values = [-5, 0, 10]
+    def get_status(self, year: int) -> str:
+        is_leap = self.verify(year)
+        prefix = "is" if is_leap else "is not"
+        return f"{year} {prefix} a leap year"
 
-    for val in sample_values:
-        print(f"Testing value: {val}")
-        
-        message, is_valid = check_value(val)
-        if not is_valid:
-            continue
-            
-        # If the input was invalid during logic (though we use hardcoded safe values here), it would handle gracefully.
-        print(message)
-
-    # Note on error handling for non-integer inputs in an interactive scenario:
-    # In a real-world script where input() were allowed, we would wrap get_number_from_input() with try-except blocks around int().
-    # Since the requirement forbids input(), sys.stdin, and arguments, this section serves as documentation of intended error handling logic.
-
-    print("\nSample execution completed successfully without user interaction.")
+if __name__ == '__main__':
+    verifier = LeapYearVerifier()
+    test_years = [2000, 1900, 2024, 2023, 1600, 1700, 2100, 400]
+    for year in test_years:
+        print(verifier.get_status(year))
+    print(verifier.verify(2000))
+    print(verifier.verify(1900))

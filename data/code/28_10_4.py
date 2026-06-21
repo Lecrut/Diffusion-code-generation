@@ -1,6 +1,7 @@
-def is_larger(a: float | int) -> bool:
-    """Returns True if a > b, False otherwise."""
-    return a > b
+def sort_pair(a: int, b: int) -> tuple:
+    return (a, b) if a < b else (b, a)
 
 if __name__ == '__main__':
-    print(is_larger(10, 5))   # Output: True
+    print(sort_pair(5, 3))
+    print(sort_pair(1, 10))
+    print(sort_pair(-5, 5))

@@ -1,20 +1,12 @@
-def is_larger(a: float, b: float) -> bool:
-    """
-    Returns True if a is strictly greater than b, otherwise False.
-    
-    Args:
-        a (float): The first numerical value to compare.
-        b (float): The second numerical value to compare.
-        
-    Returns:
-        bool: True if a > b, else False.
-    """
-    return a > b
+def sort_pair(a, b):
+    if a <= b:
+        return (a, b)
+    return (b, a)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert is_larger(5.0, 3.0) is True
-    assert is_larger(10, 20) is False
-    assert is_larger(-1.5, -2.5) is True
-    assert is_larger(float('inf'), float('-inf')) is True
-    print("All tests passed.")
+    result1 = sort_pair(10, 5)
+    print(result1)
+    result2 = sort_pair(3, 3)
+    print(result2)
+    result3 = sort_pair(-1, 100)
+    print(result3)

@@ -1,22 +1,12 @@
-import unittest
-def check_comparison(a, b):
-    return a > b
-class TestCheckComparison(unittest.TestCase):
-    def test_positive_numbers(self):
-        self.assertTrue(check_comparison(5, 3))
-        self.assertFalse(check_comparison(3, 5))
-        self.assertFalse(check_comparison(5, 5))
-    def test_negative_numbers(self):
-        self.assertTrue(check_comparison(-1, -5))
-        self.assertFalse(check_comparison(-5, -1))
-        self.assertFalse(check_comparison(-5, -5))
-    def test_mixed_numbers(self):
-        self.assertTrue(check_comparison(10, -2))
-        self.assertFalse(check_comparison(-10, 2))
-        self.assertTrue(check_comparison(-1, 0))
-        self.assertFalse(check_comparison(0, -1))
-    def test_equality(self):
-        self.assertFalse(check_comparison(7, 7))
-        self.assertFalse(check_comparison(0, 0))
+def check_voting_eligibility():
+    birth_year_string = "1995-06-15"
+    birth_year = int(birth_year_string.split('-')[0])
+    current_year = 2024
+    age = current_year - birth_year
+    if age >= 18:
+        return True
+    return False
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    result = check_voting_eligibility()
+    print(result)

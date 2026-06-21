@@ -1,9 +1,15 @@
-from typing import Callable
+VOWEL_MAP = {
+    'a': True, 'e': True, 'i': True, 'o': True, 'u': True,
+    'A': True, 'E': True, 'I': True, 'O': True, 'U': True
+}
 
-def reverse_string(s: str) -> str:
-    return s[::-1] if isinstance(s, str) else ""
+def count_vowels(text: str) -> int:
+    total = 0
+    for char in text:
+        if VOWEL_MAP.get(char, False):
+            total += 1
+    return total
 
-if __name__ == "__main__":
-    sample_strings = ["hello", "world"]
-    for val in sample_strings:
-        print(f"Original: {val}, Reversed: {reverse_string(val)}")
+if __name__ == '__main__':
+    static_text = "Python programming is fun"
+    print(count_vowels(static_text))

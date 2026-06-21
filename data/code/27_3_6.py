@@ -1,7 +1,16 @@
-# Check if 'a' is different from 'b' without using any input functions
-print(a != b) 
+def is_valid_triangle(sides):
+    a, b, c = sides
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    a = 10
-    b = 20
-    # Example usage to demonstrate the condition check (output: True)
+    test_cases = [
+        (3, 4, 5),
+        (1, 2, 3),
+        (10, 10, 10),
+        (0, 0, 0),
+        (1, 10, 12)
+    ]
+    results = []
+    for sides in test_cases:
+        results.append(is_valid_triangle(sides))
+    print(results)

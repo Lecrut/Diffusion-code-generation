@@ -1,9 +1,6 @@
-# Optimized one-liner to check if x > y using comparison operators
-result = (x := 10) > (y := 5)
+def check_voting_status(age, threshold=18):
+    return age >= threshold
 
 if __name__ == '__main__':
-    print(f"x is greater than y: {result}")
-    # Additional verification with specific values
-    sample_x, sample_y = 20.5, 30
-    check_result = sample_x > sample_y
-    assert check_result == False, "Assertion failed"
+    result = check_voting_status(20)
+    print(result)

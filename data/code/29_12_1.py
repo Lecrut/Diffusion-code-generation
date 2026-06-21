@@ -1,15 +1,8 @@
-class StringReverser:
-    def reverse(self, s: str) -> str:
-        return s[::-1]
+def count_vowels(text: str) -> int:
+    vowels = set("aeiouAEIOU")
+    return sum(1 for char in text if char in vowels)
+
 if __name__ == '__main__':
-    reverser = StringReverser()
-    sample1 = "hello"
-    sample2 = "world"
-    sample3 = "Python"
-    sample4 = ""
-    sample5 = "aabbaa"
-    print(f"Reversing '{sample1}': {reverser.reverse(sample1)}")
-    print(f"Reversing '{sample2}': {reverser.reverse(sample2)}")
-    print(f"Reversing '{sample3}': {reverser.reverse(sample3)}")
-    print(f"Reversing '{sample4}': {reverser.reverse(sample4)}")
-    print(f"Reversing '{sample5}': {reverser.reverse(sample5)}")
+    sample_text = "Hello World from Python"
+    result = count_vowels(sample_text)
+    print(result)

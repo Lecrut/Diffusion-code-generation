@@ -1,10 +1,9 @@
-from typing import Callable, List
+import calendar
 
-def is_negative(x: int) -> bool:
-    return x < 0
+def is_leap_year(year):
+    return calendar.isleap(year)
 
 if __name__ == '__main__':
-    test_cases: List[int] = [-5, -1, 0, 1, 42]
-    results = [is_negative(n) for n in test_cases]
-    
-    print("Testing is_negative function:")
+    years = [2000, 1900, 2024, 2023, 2004]
+    for year in years:
+        print(f"{year}: {is_leap_year(year)}")

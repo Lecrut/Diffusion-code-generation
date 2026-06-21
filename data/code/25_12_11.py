@@ -1,22 +1,15 @@
-def is_zero(value):
-    """Check if a value is zero."""
-    return 0 == value
-
-# Hard-coded sample values to avoid any input prompts or dependencies
-SAMPLE_DATA = [1, 2, 3, 4, 5]
+def calculate_price_details(original_price, discount_percentage):
+    if discount_percentage < 0 or discount_percentage > 100:
+        raise ValueError("Discount percentage must be between 0 and 100")
+    discount_value = original_price * (discount_percentage / 100)
+    final_price = original_price - discount_value
+    return {
+        "original_price": original_price,
+        "discount_percentage": discount_percentage,
+        "discount_value": discount_value,
+        "final_price": final_price
+    }
 
 if __name__ == '__main__':
-    try:
-        # Process the hard-coded list using a list comprehension for efficiency
-        results = [is_zero(x) for x in SAMPLE_DATA]
-
-        # Print whether each integer is zero or not (True means it IS zero, False otherwise)
-        print(results)
-        
-        # Example manual verification of individual items if needed:
-        # Note: The task asks to read from input but forbids sys.stdin/input(). 
-        # Since we must run without user input and use a list comprehension,
-        # the above block processes the fixed sample data as per constraints.
-    except Exception:
-        # Graceful error handling for any unexpected issues during processing
-        print("An error occurred while processing the data.")
+    result = calculate_price_details(100, 20)
+    print(result)

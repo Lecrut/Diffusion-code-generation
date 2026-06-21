@@ -1,11 +1,20 @@
-def get_numbers():
-    """Returns two integers to compare."""
-    return 10, 25
+def is_adult(citizen_details):
+    if not isinstance(citizen_details, dict):
+        return False
+    if 'age' not in citizen_details:
+        return False
+    age = citizen_details['age']
+    if not isinstance(age, (int, float)):
+        return False
+    return age >= 18
 
 if __name__ == '__main__':
-    num1, num2 = get_numbers()
-    
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+    citizen1 = {'name': 'Alice', 'age': 20}
+    citizen2 = {'name': 'Bob', 'age': 16}
+    citizen3 = {'name': 'Charlie'}
+    result1 = is_adult(citizen1)
+    result2 = is_adult(citizen2)
+    result3 = is_adult(citizen3)
+    print(result1)
+    print(result2)
+    print(result3)

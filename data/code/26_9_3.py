@@ -1,3 +1,7 @@
-result = lambda x: (lambda y: x > y)(y) if False else None  # Placeholder logic below in main
+def can_vote(age):
+    return age > 17
+
 if __name__ == '__main__':
-    print(result(5, 3))  # Expected output: True
+    print(can_vote(16))
+    print(can_vote(18))
+    print(can_vote(21))

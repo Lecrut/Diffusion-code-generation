@@ -1,7 +1,6 @@
-def is_greater(a, b):
-    return a > b
+def is_eligible_to_vote(age: int) -> bool:
+    return age >= 18
+
 if __name__ == '__main__':
-    print(is_greater(10, 5))
-    print(is_greater(3, 7))
-    print(is_greater(5, 5))
-    print(is_greater(-1, 0))
+    age = 20
+    print(is_eligible_to_vote(age))

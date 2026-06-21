@@ -1,17 +1,16 @@
-def check_for_zero(data):
-    for item in data:
-        if item == 0:
-            yield True
-            return
-    yield False
+from decimal import Decimal, ROUND_HALF_UP
+
+def calculate_discounted_total(prices, discount_percent):
+    discount_rate = Decimal(discount_percent) / Decimal('100')
+    discounted_prices = []
+    for price in prices:
+        original_price = Decimal(str(price))
+        discounted_price = original_price * (Decimal('1') - discount_rate)
+        discounted_prices.append(discounted_price)
+    total = sum(discounted_prices)
+    return total
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4]
-    list2 = [1, 0, 3, 4]
-    list3 = [5, 6, 7, 8]
-    list4 = [0, 1, 2, 3]
-    empty_list = []
-    print(list1)
-    print(list2)
-    print(list3)
-    print(list4)
-    print(empty_list)
+    prices = [10.0, 20.5, 30.0]
+    discount = 25
+    result = calculate_discounted_total(prices, discount)
+    print(result)

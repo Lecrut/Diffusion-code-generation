@@ -1,11 +1,34 @@
-def check_sum_difference(list1, list2):
-    sum1 = sum(list1)
-    sum2 = sum(list2)
-    return sum1 != sum2
+def check_triangle(sides: dict) -> dict:
+    if not isinstance(sides, dict):
+        return {"valid": False, "type": "invalid_input"}
+    
+    valid_types = {
+        "scalene": lambda s: s[0] + s[1] > s[2] and s[0] + s[2] > s[1] and s[1] + s[2] > s[0],
+        "equilateral": lambda s: s[0] == s[1] == s[2] and check_triangle({"a": s[0], "b": s[1], "c": s[2]})["valid"],
+        "isosceles": lambda s: (s[0] == s[1] or s[1] == s[2] or s[0] == s[2]) and check_triangle({"a": s[0], "b": s[1], "c": s[2]})["valid"]
+    }
+    
+    if not all(isinstance(s, (int, float)) for s in [sides.get('a'), sides.get('b'), sides.get('c')]):
+        return {"valid": False, "type": "invalid_input"}
+        
+    a, b, c = sides['a'], sides['b'], sides['c']
+    
+    if not (a > 0 and b > 0 and c > 0):
+        return {"valid": False, "type": "invalid_dimensions"}
+        
+    if a == b == c:
+        return {"valid": True, "type": "equilateral"}
+    elif a == b or b == c or a == c:
+        return {"valid": True, "type": "isosceles"}
+    else:
+        return {"valid": True, "type": "scalene"}
+
 if __name__ == '__main__':
-    list_a = [1, 2, 3, 4, 5]
-    list_b = [10, 20, 30, 40, 50]
-    list_c = [1, 2, 3, 4, 5]
-    print(check_sum_difference(list_a, list_b))
-    print(check_sum_difference(list_a, list_c))
-    print(check_sum_difference(list_b, list_c))
+    result = check_triangle({'a': 5, 'b': 5, 'c': 5})
+    print(result)
+    
+    result = check_triangle({'a': 3, 'b': 4, 'c': 5})
+    print(result)
+    
+    result = check_triangle({'a': 2, 'b': 2, 'c': 5})
+    print(result)

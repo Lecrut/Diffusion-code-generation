@@ -1,63 +1,21 @@
-import functools
-
-# Hardcoded constant for comparison
-CONSTANT = 100
-
-def validate_first_arg_greater_than_constant(func):
-    """Decorator that checks if the first argument is greater than CONSTANT."""
-    
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        # Access the first positional argument from args tuple
-        first_argument = args[0] if args else None
-        
-        if not isinstance(first_argument, (int, float)):
-            raise ValueError("First argument must be a number.")
-        
-        if not (first_argument > CONSTANT):
-            raise ValueError(
-                f"The first argument ({first_argument}) is not greater than {CONSTANT}."
-            )
-        
-        return func(*args, **kwargs)
-    
-    return wrapper
+def validate_voting_eligibility(age):
+    if not isinstance(age, (int, float)):
+        raise TypeError("Age must be a number")
+    if age < 0:
+        raise ValueError("Age must be non-negative")
+    if age < 18:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample function to wrap for testing
-    @validate_first_arg_greater_than_constant
-    def process_data(value):
-        """Sample function that expects a number greater than 100."""
-        print(f"Processing data with value: {value}")
-
-    # Test case 1: Valid input (greater than CONSTANT)
+    print(validate_voting_eligibility(17))
+    print(validate_voting_eligibility(18))
+    print(validate_voting_eligibility(25))
     try:
-        result = process_data(250)
-        print("Test 1 passed.")
+        validate_voting_eligibility(-5)
     except ValueError as e:
-        print(f"Unexpected error in Test 1: {e}")
-
-    # Test case 2: Invalid input (not greater than CONSTANT)
+        print(e)
     try:
-        result = process_data(90)
-        print("Test 2 failed - should have raised an exception.")
-    except ValueError as e:
-        print(f"Expected error in Test 2 received correctly.")
-
-    # Test case 3: Boundary condition (equal to CONSTANT, not greater)
-    try:
-        result = process_data(100.5)
-        print("Test 3 failed - should have raised an exception.")
-    except ValueError as e:
-        print(f"Expected error in Test 3 received correctly.")
-
-    # Additional test with tuple unpacking simulation (if needed for edge cases, though args are simple here)
-    @validate_first_arg_greater_than_constant
-    def helper(data):
-        return data * 2
-    
-    try:
-        out = helper(150)
-        print(f"Helper output correct: {out}")
-    except Exception as e:
-        print(f"Unexpected error in Helper test: {e}")
+        validate_voting_eligibility("abc")
+    except TypeError as e:
+        print(e)

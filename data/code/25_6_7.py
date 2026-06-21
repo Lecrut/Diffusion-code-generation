@@ -1,20 +1,10 @@
-def check_zero_result(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        if result != 0:
-            raise ValueError("Function result is not zero")
-        return result
-    return wrapper
-@check_zero_result
-def multiply(a, b):
-    return a * b
+def calculate_final_cost(item_price, discount_rate):
+    discount_amount = item_price * discount_rate
+    final_cost = item_price - discount_amount
+    return final_cost
+
 if __name__ == '__main__':
-    print(f"Test 1 (0 * 5): {multiply(0, 5)}")
-    try:
-        print(f"Test 2 (2 * 0): {multiply(2, 0)}")
-    except ValueError as e:
-        print(f"Test 2 Error: {e}")
-    try:
-        print(f"Test 3 (2 * 3): {multiply(2, 3)}")
-    except ValueError as e:
-        print(f"Test 3 Error: {e}")
+    item_price = 75.50
+    discount_rate = 0.10
+    final_cost = calculate_final_cost(item_price, discount_rate)
+    print(final_cost)

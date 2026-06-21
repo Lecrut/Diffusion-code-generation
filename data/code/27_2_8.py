@@ -1,25 +1,20 @@
-def check_difference():
-    """
-    Compares two numbers to determine if they differ.
-    
-    This function takes two numeric inputs, converts them to floats, 
-    compares their absolute difference against a small epsilon value 
-    to handle potential floating-point inaccuracies, and returns True 
-    if the values are different.
-    """
-    num1 = 5.0
-    num2 = 3.7
-    
-    # Use an epsilon for float comparison safety, though integers will be exact anyway
-    EPSILON = 1e-9
-    
-    diff = abs(num1 - num2)
-    
-    if diff > EPSILON:
-        return True
-    else:
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
         return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    result = check_difference()
-    print(f"The values {num1} and {num2} {'differ' if result else 'do not differ'}.")
+    result = is_valid_triangle(3, 4, 5)
+    print(result)
+    result2 = is_valid_triangle(-1, 2, 3)
+    print(result2)
+    result3 = is_valid_triangle(0, 0, 0)
+    print(result3)
+    result4 = is_valid_triangle(1, 2, 3)
+    print(result4)

@@ -1,7 +1,12 @@
-def check_for_zero(number):
-    return number == 0
+def calculate_discounted_price(original_price: float, discount_percent: float) -> float:
+    if original_price < 0 or discount_percent < 0 or discount_percent > 100:
+        raise ValueError("Invalid input: original_price must be non-negative, discount_percent must be between 0 and 100.")
+    discount_amount = original_price * (discount_percent / 100.0)
+    final_price = original_price - discount_amount
+    return final_price
+
 if __name__ == '__main__':
-    test_numbers = [0, 5, -3, 0, 100, -1]
-    for num in test_numbers:
-        result = check_for_zero(num)
-        print(f"Is {num} zero? {result}")
+    original = 100.0
+    discount = 20.0
+    result = calculate_discounted_price(original, discount)
+    print(result)

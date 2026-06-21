@@ -1,6 +1,10 @@
-def main():
-    # Simulate reading two integers from standard input without using input()
-    import sys
+def order_pair(a, b):
+    if a < b:
+        return a, b
+    else:
+        return b, a
 
 if __name__ == '__main__':
-    pass
+    print(order_pair(5, 3))
+    print(order_pair(10, 20))
+    print(order_pair(0, 0))

@@ -1,4 +1,8 @@
-import math
-def is_zero(val): return abs(float(val)) < 1e-9 if isinstance(val, (int, float)) else False
+def calculate_discount(price, discount_percent):
+    discount_amount = price * discount_percent / 100
+    final_price = price - discount_amount
+    return price, discount_amount, final_price
+
 if __name__ == '__main__':
-    assert is_zero(0) or is_zero(-0.0) or is_zero(math.floor(3.14)/math.pi)
+    result = calculate_discount(99.99, 30)
+    print(result)

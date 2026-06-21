@@ -1,10 +1,15 @@
-def reverse_string(s):
-    n = len(s)
-    reversed_s = []
-    for i in range(n):
-        reversed_s.append(s[n - 1 - i])
-    return "".join(reversed_s)
+def vowel_count_generator(sentences=None):
+    if sentences is None:
+        sentences = ["Hello World", "Python is great", "Count the vowels here"]
+    
+    vowels = set("aeiouAEIOU")
+    
+    for sentence in sentences:
+        words = sentence.split()
+        for word in words:
+            count = sum(1 for char in word if char in vowels)
+            yield count
+
 if __name__ == '__main__':
-    sample_string = "hello"
-    reversed_result = reverse_string(sample_string)
-    print(reversed_result)
+    results = list(vowel_count_generator())
+    print(results)

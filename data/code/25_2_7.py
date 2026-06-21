@@ -1,28 +1,11 @@
-class ValueChecker:
-    """A class designed to check if a given value is zero."""
-
-    def check_if_zero(self, value):
-        """
-        Determines if the input value is equal to zero.
-
-        Args:
-            value (int | float | None): The value to be checked.
-
-        Returns:
-            bool: True if the value is zero, False otherwise.
-        
-        Examples:
-            checker = ValueChecker()
-            print(checker.check_if_zero(0))   # Output: True
-            print(checker.check_if_zero(-1))  # Output: False
-        """
-        return value == 0
+def calculate_discount(base_price, discount_percentage):
+    savings = base_price * discount_percentage / 100
+    final_price = base_price - savings
+    return savings, final_price
 
 if __name__ == '__main__':
-    checker = ValueChecker()
-
-    sample_values = [0, -5, 3.14, None]
-    
-    for val in sample_values:
-        result = checker.check_if_zero(val)
-        print(f"Value {val!r} is zero? {result}")
+    base_price = 500
+    discount_percentage = 20
+    savings, final_price = calculate_discount(base_price, discount_percentage)
+    print(savings)
+    print(final_price)

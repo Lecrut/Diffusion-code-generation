@@ -1,12 +1,11 @@
-class NumberChecker:
-    def __init__(self, value):
-        self.value = value
-    
-    def is_greater_than(self, other):
-        return self.value > other.value
+def check_voting_eligibility(age):
+    if age >= 18:
+        return 'Eligible'
+    else:
+        return 'Ineligible'
 
 if __name__ == '__main__':
-    checker1 = NumberChecker(10)
-    checker2 = NumberChecker(5)
-    result = checker1.is_greater_than(checker2)
-    print(f"{checker1} is greater than {checker2}: {result}")
+    ages = [16, 18, 20, 17, 25]
+    for age in ages:
+        result = check_voting_eligibility(age)
+        print(f"Age: {age} -> {result}")

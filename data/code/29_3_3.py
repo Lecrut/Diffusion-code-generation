@@ -1,9 +1,8 @@
-def reverse_string(s):
-    return s[::-1]
+def count_vowels(strings):
+    vowels = set("aeiouAEIOU")
+    return sum(1 for s in strings for char in s if char in vowels)
 
 if __name__ == '__main__':
-    sample_strings = ["Hello, World!", "Python", "!olleH"]
-    results = [reverse_string(s) for s in sample_strings]
-    print("Input\tReverse")
-    for i, (inp, rev) in enumerate(zip(sample_strings, results)):
-        print(f"{inp}\t{rev}")
+    sample_strings = ["hello", "world", "Python", "Programming"]
+    total = count_vowels(sample_strings)
+    print(total)

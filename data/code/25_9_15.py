@@ -1,23 +1,18 @@
-class Counter:
-    def __init__(self, initial_value=0):
-        """Initialize a counter instance."""
-        self.value = initial_value
+def calculate_discounted_price(original_price: float, discount_percentage: float) -> float:
+    if original_price < 0:
+        raise ValueError("Original price cannot be negative")
+    if discount_percentage < 0:
+        raise ValueError("Discount percentage cannot be negative")
+    if discount_percentage > 100:
+        raise ValueError("Discount percentage cannot exceed 100")
     
-    @property
-    def is_zero(self) -> bool:
-        """Check if the internal value attribute equals zero.
-        
-        Returns:
-            bool: True if self.value == 0, False otherwise.
-        """
-        return self.value == 0
+    discount_amount = original_price * (discount_percentage / 100)
+    final_price = original_price - discount_amount
+    
+    return round(final_price, 2)
 
 if __name__ == '__main__':
-    # Sample values for testing without user input or file access
-    sample_instances = [Counter(5), Counter(0)]
-
-    print("Testing is_zero property:")
-    for inst in sample_instances:
-        result = inst.is_zero
-        status = "Zero" if result else "Not Zero"
-        print(f"Instance with value {inst.value}: {status}")
+    print(calculate_discounted_price(100, 20))
+    print(calculate_discounted_price(50, 50))
+    print(calculate_discounted_price(200, 0))
+    print(calculate_discounted_price(99.99, 15))

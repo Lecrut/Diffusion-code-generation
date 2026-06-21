@@ -1,16 +1,16 @@
-def main():
-    # Hard-coded sample values to ensure the script runs without user input
-    num1 = 5
-    num2 = 3
-    
-    print(f"Comparing number {num1} and {num2}.")
-    
-    if num1 != num2:
-        message = "The two entered values differ."
-    else:
-        message = "The two entered values are the same."
-        
-    print(message)
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    main()
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(-1, 2, 2))
+    print(is_valid_triangle(0, 0, 0))

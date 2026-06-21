@@ -1,23 +1,21 @@
-import sys
-
-def process_integer(number: int) -> str:
-    """Check if an integer is zero and return a descriptive string."""
-    return "Zero" if number == 0 else "Not Zero"
+def compute_discount_metrics(base_cost, percent_reduction):
+    if base_cost < 0:
+        raise ValueError("Base cost cannot be negative")
+    if percent_reduction < 0 or percent_reduction > 100:
+        raise ValueError("Percent reduction must be between 0 and 100")
+    
+    cut_amount = base_cost * percent_reduction * 0.01
+    net_total = base_cost - cut_amount
+    
+    return {
+        "original_price": base_cost,
+        "discount_percentage": percent_reduction,
+        "calculated_discount_value": cut_amount,
+        "final_price": net_total
+    }
 
 if __name__ == '__main__':
-    # Hard-coded sample values as required to avoid external input dependencies.
-    numbers = [1, -2, 3, 0, 4, None]
-
-    try:
-        result_values = []
-        for num in numbers:
-            if num is not None and isinstance(num, int):
-                # Simulating list comprehension logic manually to demonstrate the check without side effects on stdin.
-                res_str = process_integer(num)
-                print(res_str)
-            else:
-                print("Invalid input type or null")
-
-    except Exception as e:
-        # Graceful handling of any unexpected runtime errors during processing.
-        print(f"An error occurred while processing the values: {e}")
+    PRICE_A = 450.0
+    RATE_A = 30.0
+    data = compute_discount_metrics(PRICE_A, RATE_A)
+    print(data)

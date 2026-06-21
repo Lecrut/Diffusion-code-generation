@@ -1,4 +1,15 @@
-def get_diff(a,b): return abs(a-b) # returns float/int
+def verify_triangle_inequality(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    pass
+    sides = [3.0, 4.0, 5.0]
+    result = verify_triangle_inequality(*sides)
+    print(result)

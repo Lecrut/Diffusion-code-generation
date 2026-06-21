@@ -1,12 +1,17 @@
-def check_difference(a, b):
-    return a != b
+def is_valid_triangle(sides):
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
+
 if __name__ == '__main__':
-    val1 = 10
-    val2 = 10
-    val3 = 5
-    val4 = 8.5
-    print(f"check_difference({val1}, {val2}): {check_difference(val1, val2)}")
-    print(f"check_difference({val1}, {val3}): {check_difference(val1, val3)}")
-    print(f"check_difference({val2}, {val4}): {check_difference(val2, val4)}")
-    print(f"check_difference(3.14, 3.14): {check_difference(3.14, 3.14)}")
-    print(f"check_difference(1, 0): {check_difference(1, 0)}")
+    sample1 = (3.0, 4.0, 5.0)
+    print(is_valid_triangle(sample1))
+    sample2 = (1.0, 1.0, 2.0)
+    print(is_valid_triangle(sample2))
+    sample3 = (0.5, 0.5, 0.5)
+    print(is_valid_triangle(sample3))
+    sample4 = (-1.0, 2.0, 3.0)
+    print(is_valid_triangle(sample4))

@@ -1,11 +1,10 @@
-def check_difference(a, b):
-    return a != b
+def is_valid_triangle(a, b, c):
+    return (a + b > c) and (a + c > b) and (b + c > a)
+
 if __name__ == '__main__':
-    val1 = 10
-    val2 = 10
-    val3 = 5
-    val4 = 15.5
-    print(f"Difference between {val1} and {val2}: {check_difference(val1, val2)}")
-    print(f"Difference between {val1} and {val3}: {check_difference(val1, val3)}")
-    print(f"Difference between {val2} and {val4}: {check_difference(val2, val4)}")
-    print(f"Difference between {val3} and {val4}: {check_difference(val3, val4)}")
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(7, 10, 5))
+    print(is_valid_triangle(1, 1, 1))
+    print(is_valid_triangle(0, 0, 0))
+    print(is_valid_triangle(-1, 2, 3))

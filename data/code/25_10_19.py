@@ -1,27 +1,10 @@
-def is_zero(value):
-    """
-    Returns True if value is exactly zero, False otherwise.
-    
-    Args:
-        value (int | float): The numerical argument to check.
-        
-    Returns:
-        bool: True if value equals 0, False otherwise.
-    """
-    return value == 0
+def compute_discount_and_final_price(price, discount_rate):
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        (0, True),           # Integer zero
-        (-0, True),          # Negative zero is equal to positive zero in Python
-        (1.5, False),        # Float non-zero
-        (float('inf'), False),  # Infinity
-        (float('-inf'), False), # Negative infinity
-    ]
-
-    for test_value, expected_result in test_cases:
-        result = is_zero(test_value)
-        assert result == expected_result, f"Failed for input {test_value}: got {result}, expected {expected_result}"
-    
-    print("All tests passed.")
+    hardcoded_price = 100.0
+    hardcoded_discount_rate = 0.2
+    result = compute_discount_and_final_price(hardcoded_price, hardcoded_discount_rate)
+    print(result)

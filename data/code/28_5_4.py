@@ -1,18 +1,10 @@
-import sys
-
-def compare_values(a: float, b: float) -> str:
-    """Compare two numerical values and return a string indicating which is larger."""
-    if a > b:
-        return "Value A is larger"
-    elif b > a:
-        return "Value B is larger"
-    else:
-        return "Values are equal"
+def sort_two_numbers(a, b):
+    if a <= b:
+        return [a, b]
+    return [b, a]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    value_a = 10.5
-    value_b = 20.3
-    
-    result = compare_values(value_a, value_b)
+    x = 5
+    y = 2
+    result = sort_two_numbers(x, y)
     print(result)

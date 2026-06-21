@@ -1,29 +1,21 @@
-import unittest
-
-def check_difference(num1: float, num2: float) -> bool:
-    """Check if two numbers differ (are not equal)."""
-    return abs(num1 - num2) > 0
-
-class TestDifference(unittest.TestCase):
-    
-    def test_positive_numbers(self):
-        self.assertTrue(check_difference(5.0, 10.0))
-
-    def test_negative_numbers(self):
-        self.assertFalse(check_difference(-3.0, -7.0))
-
-    def test_mixed_signs(self):
-        self.assertEqual(check_difference(-2.0, 4.0), True)
-
-    def test_zero_values(self):
-        # First zero should fail (they are equal), second pass (one is non-zero)
-        self.assertFalse(check_difference(0.0, -5.1))
-        
-    def test_float_precision(self):
-        a = float('inf') + 2
-        b = float('inf')
-        self.assertTrue(check_difference(a, b))
+def check_triangle_validity(a, b, c):
+    if not all(isinstance(x, (int, float)) and x > 0 for x in (a, b, c)):
+        return "Invalid"
+    if a + b <= c or a + c <= b or b + c <= a:
+        return "Not a triangle"
+    sides = sorted([a, b, c])
+    if sides[0] ** 2 + sides[1] ** 2 == sides[2] ** 2:
+        return "Right-angled"
+    if a == b == c:
+        return "Equilateral"
+    if a == b or b == c or a == c:
+        return "Isosceles"
+    return "Scalene"
 
 if __name__ == '__main__':
-    
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestDifference)
+    print(check_triangle_validity(3, 4, 5))
+    print(check_triangle_validity(7, 7, 7))
+    print(check_triangle_validity(3, 3, 4))
+    print(check_triangle_validity(1, 2, 3))
+    print(check_triangle_validity(10, 21, 20))
+    print(check_triangle_validity(-1, 2, 2))

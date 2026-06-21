@@ -1,34 +1,21 @@
-class StringReverser:
-    """A class designed to reverse strings."""
+def count_vowels(text: str) -> int:
+    vowels = set("aeiouAEIOU")
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
 
-    def reverse(self, word):
-        """
-        Reverses the input string in-place if it is a list of characters,
-        or returns a new reversed string for standard strings.
-
-        Args:
-            word (str): The string to be reversed.
-
-        Returns:
-            str: A new string with the characters of 'word' in reverse order.
-        """
-        return word[::-1]
-
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        "hello",
-        "Python programming",
-        "",
-        "a" * 10,
-        "!@#$%"
-    ]
-
-    reverser = StringReverser()
-
-    print("String Reversal Results:")
-    for word in test_cases:
-        reversed_word = reverser.reverse(word)
-        # Using f-string formatting to ensure no markdown is rendered outside the code block logic
-        result_line = f"Original: '{word}' -> Reversed: '{reversed_word}'"
-        print(result_line)
+if __name__ == "__main__":
+    sample_string_1 = "Hello World!"
+    sample_string_2 = ""
+    sample_string_3 = "AEIOUaeiou"
+    sample_string_4 = "12345!@#"
+    result_1 = count_vowels(sample_string_1)
+    result_2 = count_vowels(sample_string_2)
+    result_3 = count_vowels(sample_string_3)
+    result_4 = count_vowels(sample_string_4)
+    print(result_1)
+    print(result_2)
+    print(result_3)
+    print(result_4)

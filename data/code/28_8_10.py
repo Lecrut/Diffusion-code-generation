@@ -1,22 +1,31 @@
-def compare_and_report(num1: float, num2: float) -> bool:
-    """
-    Check if two floating-point numbers are strictly unequal.
-    
-    Args:
-        num1 (float): The first number to compare.
-        num2 (float): The second number to compare.
-        
-    Returns:
-        bool: True if num1 is not equal to num2, False otherwise.
-    """
-    return num1 != num2
+def _validate_pair(a, b):
+    try:
+        if a > b:
+            return True
+        if b > a:
+            return True
+        return True
+    except TypeError:
+        raise TypeError("Arguments must be comparable")
+
+def sort_pair(a, b):
+    _validate_pair(a, b)
+    if a <= b:
+        return (a, b)
+    return (b, a)
+
+class PairSorter:
+    def __init__(self, first, second):
+        self.first = first
+        self.second = second
+
+    def get_sorted(self):
+        return sort_pair(self.first, self.second)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    result_1 = compare_and_report(5.0, 3.14)
-    result_2 = compare_and_report(7.89, -7.89)
-    result_3 = compare_and_report(10.0, 10.0)
-
-    print(f"compare_and_report(5.0, 3.14): {result_1}")
-    print(f"compare_and_report(7.89, -7.89): {result_2}")
-    print(f"compare_and_report(10.0, 10.0): {result_3}")
+    print(sort_pair(15, 7))
+    print(sort_pair(20.5, 20.5))
+    print(sort_pair(-3, -10))
+    instance = PairSorter(100, 50)
+    print(instance.get_sorted())
+    print(sort_pair(10, 20))

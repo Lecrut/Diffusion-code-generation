@@ -1,13 +1,8 @@
-if __name__ == '__main__':
-    x = 0
-    
-    # Test case where x is zero (should be True)
-    result1 = bool(x == 0) or not x != 0 and x == 0
-    
-    print(f"x={x}, Result: {result1}")
+def apply_discount(prices, discount_rate):
+    return [price * (1 - discount_rate) for price in prices]
 
-    # Test case where x is non-zero (should be False)
-    x2 = 5
-    result2 = bool(x2 == 0) or not x2 != 0 and x2 == 0
-    
-    print(f"x={x2}, Result: {result2}")
+if __name__ == '__main__':
+    prices = [100.0, 200.0, 300.0]
+    discount_rate = 0.1
+    result = apply_discount(prices, discount_rate)
+    print(result)

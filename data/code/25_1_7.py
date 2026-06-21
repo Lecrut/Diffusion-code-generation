@@ -1,11 +1,13 @@
-def is_zero(value):
-    """Returns True if value is zero, False otherwise."""
-    return value == 0
+def calculate_discounted_price(original_price):
+    discount_rate = 0.15
+    discount_amount = original_price * discount_rate
+    discounted_price = original_price - discount_amount
+    return discounted_price
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input
-    samples = [0.0, -5, "0", [], {}, None]
-    
-    for item in samples:
-        result = is_zero(item)
-        print(f"is_zero({item!r}) -> {result}")
+    price_1 = 100
+    price_2 = 250
+    result_1 = calculate_discounted_price(price_1)
+    result_2 = calculate_discounted_price(price_2)
+    print(result_1)
+    print(result_2)

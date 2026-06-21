@@ -1,9 +1,8 @@
-def check_zero(number):
-    if number == 0:
-        print("The number is zero.")
-    else:
-        print("The number is not zero.")
+def calculate_price(price):
+    if price > 100:
+        return price * 0.9
+    return price * 0.95
+
 if __name__ == '__main__':
-    sample_values = [0, 5, -3, 0, 100]
-    for value in sample_values:
-        check_zero(value)
+    print(calculate_price(50))
+    print(calculate_price(150))

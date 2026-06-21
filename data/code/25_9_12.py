@@ -1,34 +1,26 @@
-class DataProcessor:
-    def __init__(self, value):
-        """Initialize the processor with a specific instance attribute."""
-        self.current_value = value
+def calculate_final_price(price: float, discount_percentage: float) -> float:
+    if price < 0:
+        raise ValueError("Price cannot be negative")
+    if discount_percentage < 0:
+        raise ValueError("Discount percentage cannot be negative")
+    if discount_percentage > 100:
+        raise ValueError("Discount percentage cannot exceed 100%")
     
-    @property
-    def is_zero(self):
-        """Check if the current_instance_attribute equals zero.
-
-        This method returns True if `current_value` is 0, otherwise False.
-        It ensures that the comparison only involves this specific instance attribute.
-        
-        Returns:
-            bool: True if self.current_value == 0, else False.
-        """
-        return self.current_value == 0
+    discount_amount = price * (discount_percentage / 100.0)
+    return price - discount_amount
 
 if __name__ == '__main__':
-    # Sample block with hard-coded values to test functionality
+    sample_price = 100.0
+    sample_discount = 20.0
+    result = calculate_final_price(sample_price, sample_discount)
+    print(result)
     
-    # Create instances with different initial values
-    instance_a = DataProcessor(1)
-    
-    instance_b = DataProcessor(0)
-    
-    instance_c = DataProcessor(-5.0)  # Edge case: zero is numeric
-
-    print(f"Instance A (value=1), is_zero? {instance_a.is_zero}")       # Expected False
-    print(f"Instance B (value=0), is_zero? {instance_b.is_zero}")      # Expected True
-    print(f"Instance C (value=-5.0), is_zero? {instance_c.is_zero}")  # Expected False
-    
-    # Verify return types and consistency
-    assert isinstance(instance_a.is_zero, bool)
-    assert instance_b.is_zero == True
+    try:
+        calculate_final_price(-50.0, 10.0)
+    except ValueError as e:
+        print(e)
+        
+    try:
+        calculate_final_price(50.0, 150.0)
+    except ValueError as e:
+        print(e)

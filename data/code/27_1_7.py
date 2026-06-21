@@ -1,26 +1,10 @@
-class ValueChecker:
-    def __ne__(self, other):
-        """Check if two provided values are unequal."""
-        return self != other
-
-def main():
-    checker = ValueChecker()
-    
-    # Hard-coded sample values to demonstrate the functionality without user input
-    value_a = 10
-    value_b = 20
-    
-    result_unequal = (value_a != value_b)
-    print(f"Are {value_a} and {value_b} unequal? {result_unequal}")
-
-    
-    # Additional test cases with different types
-    num_val = 42.5
-    text_val = "hello"
-    bool_val = True
-    
-    result_num_text = (num_val != text_val)
-    print(f"Impartial comparison between number and string: {result_num_text}")
+def is_valid_triangle(a, b, c):
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    main()
+    sides1 = (3, 4, 5)
+    sides2 = (1, 2, 3)
+    sides3 = (10, 2, 1)
+    print(is_valid_triangle(*sides1))
+    print(is_valid_triangle(*sides2))
+    print(is_valid_triangle(*sides3))

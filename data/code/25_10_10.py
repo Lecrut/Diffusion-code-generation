@@ -1,14 +1,13 @@
-def is_zero(value):
-    """Returns True if value is exactly zero, False otherwise."""
-    return value == 0
+def compute_discount(price, discount_rate):
+    if price < 0 or discount_rate < 0 or discount_rate > 1:
+        return 0, price
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
 
 if __name__ == '__main__':
-    samples = [
-        (1 + 2),           # Should be False
-        (-4.5 / -3 * 9 + 8) * 7 + 1,  # Non-zero result of arithmetic
-        float(0),          # Zero as float
-        int(0 * 10),       # Explicitly zero
-    ]
-
-    for i_val in samples:
-        print(f"Input: {i_val}, is_zero: {is_zero(i_val)}")
+    price = 100
+    discount_rate = 0.15
+    discount, final = compute_discount(price, discount_rate)
+    print(discount)
+    print(final)

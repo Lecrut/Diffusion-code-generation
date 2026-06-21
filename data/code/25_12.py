@@ -1,6 +1,13 @@
-import sys
+def calculate_discount(original_price, discount_percentage):
+    discount_value = original_price * (discount_percentage / 100)
+    final_price = original_price - discount_value
+    return {
+        "original_price": original_price,
+        "discount_percentage": discount_percentage,
+        "discount_value": discount_value,
+        "final_price": final_price
+    }
+
 if __name__ == '__main__':
-    input_data = [1, 0, 5, 0, -3, 0, 10]
-    zero_check = [1 if x == 0 else 0 for x in input_data]
-    for result in zero_check:
-        print(result)
+    result = calculate_discount(100.0, 20.0)
+    print(result)

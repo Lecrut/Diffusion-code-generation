@@ -1,10 +1,10 @@
-from typing import Union
-
-def is_zero(x: Union[int, float]) -> bool:
-    """Check if a number is numerically equivalent to zero."""
-    return x == 0 or (x != int) and abs(float(int(round(x)))) < 1e-9
+def calculate_price(original_price, discount_percentage):
+    discount_amount = original_price * (discount_percentage / 100.0)
+    final_price = original_price - discount_amount
+    return (original_price, discount_amount, final_price)
 
 if __name__ == '__main__':
-    test_values = [0.0, -0.0, 1, -1, 2.5, float('inf'), float('-inf')]
-    for val in test_values:
-        print(f"{val!r}: {is_zero(val)}")
+    original = 99.99
+    discount = 30
+    result = calculate_price(original, discount)
+    print(result)

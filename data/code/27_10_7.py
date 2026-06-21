@@ -1,11 +1,8 @@
-def check_difference(a: float, b: float) -> bool:
-    """Returns True if a is different from b, False otherwise."""
-    return a != b
+def is_non_degenerate_triangle(sides: tuple) -> bool:
+    a, b, c = sorted(sides)
+    return a + b > c
 
 if __name__ == '__main__':
-    sample_a = 5.0
-    sample_b = 7.2
-    
-    result = check_difference(sample_a, sample_b)
-    
-    print(f"check_difference({sample_a}, {sample_b}) = {result}")
+    sample_sides = (3.0, 4.0, 5.0)
+    result = is_non_degenerate_triangle(sample_sides)
+    print(result)

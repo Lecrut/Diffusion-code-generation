@@ -1,18 +1,14 @@
-import sys
-
-def compare_numbers(num1: int, num2: int) -> str:
-    """Compare two integers and return a descriptive message."""
-    if num1 > num2:
-        return f"{num1} is larger than {num2}"
-    elif num2 > num1:
-        return f"{num2} is larger than {num1}"
-    else:
-        return "Both numbers are equal"
+class NumberSorter:
+    def sort(self, a, b):
+        if a < b:
+            return a, b
+        return b, a
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or network)
-    value_a = 42
-    value_b = 73
-
-    result_message = compare_numbers(value_a, value_b)
-    print(result_message)
+    sorter = NumberSorter()
+    pair_one = sorter.sort(42, 17)
+    print(pair_one)
+    pair_two = sorter.sort(99, 101)
+    print(pair_two)
+    pair_three = sorter.sort(5, 5)
+    print(pair_three)

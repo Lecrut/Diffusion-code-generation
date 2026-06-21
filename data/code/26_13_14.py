@@ -1,28 +1,38 @@
-from typing import List
+def check_voter_eligibility(voter: dict) -> dict:
+    required_keys = {"age", "citizenship", "registered"}
+    if not required_keys.issubset(voter.keys()):
+        raise ValueError("Missing required voter attributes")
+    age = voter["age"]
+    citizenship = voter["citizenship"]
+    registered = voter["registered"]
+    if not isinstance(age, int) or age < 0:
+        raise TypeError("Age must be a non-negative integer")
+    if not isinstance(citizenship, bool):
+        raise TypeError("Citizenship must be a boolean")
+    if not isinstance(registered, bool):
+        raise TypeError("Registered must be a boolean")
+    eligible = age >= 18 and citizenship and registered
+    return {"eligible": eligible, "reason": None if eligible else get_ineligibility_reason(age, citizenship, registered)}
 
-def check_first_greater_than_second(values: List[int]) -> bool:
-    return values[0] > values[1] if len(values) >= 2 else False
+def get_ineligibility_reason(age: int, citizenship: bool, registered: bool) -> str:
+    if age < 18:
+        return "Too young"
+    if not citizenship:
+        return "Not a citizen"
+    if not registered:
+        return "Not registered"
+    return "Unknown reason"
 
 if __name__ == '__main__':
-    sample_list = [5, 3]
-    result = check_first_greater_than_second(sample_list)
-    print(result) # True for input [5, 3], would be False for [3, 5] or raise IndexError otherwise if not handled by logic above (but task assumes list has at least two elements).
-
-# Note: The lambda expression requested is embedded in the function body below as a one-liner for clarity of the specific request.
-# Lambda version used internally to demonstrate conciseness: check_first_greater_than_second = lambda v: v[0] > v[1] if len(v) >= 2 else False
-
-def main():
-    # Hard-coded sample values ensuring list has at least two elements as per assumption in task logic description.
-    test_cases = [
-        ([5, 3], True),   # First is greater than second
-        ([3, 5], False),  # First is less than or equal to second (strictly not greater)
-        ([10, -2], True),# Positive vs negative
-    ]
-
-    for lst, expected in test_cases:
-        # Using the lambda logic directly as requested within a concise structure
-        condition = any(lst[0] > lst[1]) if len(lst) >= 2 else False 
-        print(f"List {lst}: First ({lst[0]}) > Second ({lst[1]}): {condition} (Expected: {expected})")
-
-if __name__ == '__main__':
-    main()
+    voter = {"age": 25, "citizenship": True, "registered": True}
+    result = check_voter_eligibility(voter)
+    print(result)
+    voter2 = {"age": 16, "citizenship": True, "registered": True}
+    result2 = check_voter_eligibility(voter2)
+    print(result2)
+    voter3 = {"age": 30, "citizenship": False, "registered": True}
+    result3 = check_voter_eligibility(voter3)
+    print(result3)
+    voter4 = {"age": 20, "citizenship": True, "registered": False}
+    result4 = check_voter_eligibility(voter4)
+    print(result4)

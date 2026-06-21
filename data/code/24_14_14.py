@@ -1,13 +1,9 @@
-import sys
+import calendar
 
-def is_negative(n: int) -> bool:
-    return n < 0 if isinstance(n, int) else (False if not isinstance(n, (int, float)) or n != int(float(n)) else False)
+def is_leap(year):
+    return calendar.isleap(year)
 
 if __name__ == '__main__':
-    test_cases = [-5, -1, 0, 3.7, "abc", None]
-    for val in test_cases:
-        try:
-            result = is_negative(val) if isinstance(val, (int, float)) else False
-            print(f"{val!r} -> {result}")
-        except Exception as e:
-            print(f"Error processing {val}: {e}")
+    test_years = [2000, 2001, 2004, 1900, 2024, 2100]
+    for year in test_years:
+        print(f"{year}: {is_leap(year)}")

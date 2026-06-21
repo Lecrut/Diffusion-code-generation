@@ -1,17 +1,13 @@
-import sys
-
-def compare_numbers(a: int, b: int) -> None:
-    """Compare two integers and print a descriptive message."""
-    if a > b:
-        print(f"{a} is larger than {b}")
-    elif b > a:
-        print(f"{b} is larger than {a}")
+def min_max(a, b):
+    if a < b:
+        return a, b
     else:
-        print("The numbers are equal")
+        return b, a
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements to avoid any input prompts or dependencies.
-    num1 = 42
-    num2 = 99
-    
-    compare_numbers(num1, num2)
+    result = min_max(5, 2)
+    print(result)
+    result = min_max(10, 15)
+    print(result)
+    result = min_max(7, 7)
+    print(result)

@@ -1,9 +1,10 @@
-class ValueChecker:
-    def check_if_zero(self, value):
-        return value == 0
+def calculate_savings_and_final_price(base_price, discount_percent):
+    savings = base_price * (discount_percent / 100)
+    final_price = base_price - savings
+    return savings, final_price
+
 if __name__ == '__main__':
-    checker = ValueChecker()
-    sample_values = [0, 5, -10, 0.0, -0.0]
-    for value in sample_values:
-        result = checker.check_if_zero(value)
-        print(f"Checking value: {value}, Result: {result}")
+    base_price = 500
+    discount_percent = 20
+    savings, final_price = calculate_savings_and_final_price(base_price, discount_percent)
+    print({"savings": savings, "final_price": final_price})

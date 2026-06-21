@@ -1,10 +1,8 @@
-import sys
-
-def reverse_string(s):
-    """Reverses a string efficiently using slice notation."""
-    return s[::-1]
+def count_vowels(text: str) -> int:
+    vowels = set('aeiouAEIOU')
+    return sum(1 for char in text if char in vowels)
 
 if __name__ == '__main__':
-    test_cases = ["hello", "Python 3.9", "!dlroW olleh"]
-    for case in test_cases:
-        print(f"Original: {case} -> Reversed: {reverse_string(case)}")
+    text = "Hello World"
+    result = count_vowels(text)
+    print(result)

@@ -1,27 +1,8 @@
-def check_threshold(threshold):
-    def decorator(func):
-        def wrapper(*args):
-            result = func(*args)
-            if result == threshold:
-                raise ValueError("Result equals the specified threshold")
-            return result
-        return wrapper
-    return decorator
-@check_threshold(10)
-def calculate_difference(a, b):
-    return a - b
+def verify_triangle_inequality(a, b, c):
+    return a + b > c and a + c > b and b + c > a
+
 if __name__ == '__main__':
-    val1 = 15
-    val2 = 5
-    try:
-        difference = calculate_difference(val1, val2)
-        print(f"The difference between {val1} and {val2} is: {difference}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    val3 = 10
-    val4 = 10
-    try:
-        difference2 = calculate_difference(val3, val4)
-        print(f"The difference between {val3} and {val4} is: {difference2}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_values = [(3, 4, 5), (1, 2, 3), (0.5, 0.5, 0.8), (10, 2, 1), (7, 7, 7)]
+    for a, b, c in sample_values:
+        result = verify_triangle_inequality(a, b, c)
+        print(result)

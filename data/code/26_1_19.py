@@ -1,33 +1,24 @@
-class ComparisonUtils:
-    @staticmethod
-    def check_greater(val1, val2):
-        """
-        Checks if val1 is strictly greater than val2 using direct comparison operators.
-        
-        Args:
-            val1 (any comparable type): The first value to compare.
-            val2 (any comparable type): The second value to compare.
-            
-        Returns:
-            bool: True if val1 > val2, False otherwise.
-        """
-        return val1 > val2
+MIN_VOTING_AGE = 18
+
+def is_eligible_to_vote(age: int) -> bool:
+    if not isinstance(age, int):
+        return False
+    if age < 0:
+        return False
+    return age >= MIN_VOTING_AGE
+
+def check_voting_status(age: int) -> str:
+    if not isinstance(age, int):
+        return "Invalid input"
+    if age < 0:
+        return "Invalid input"
+    
+    if is_eligible_to_vote(age):
+        return "Eligible"
+    else:
+        return "Not eligible"
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without any user input or external dependencies
-    
-    test_cases = [
-        (50, 30),      # Expected: True
-        (10, 10),      # Expected: False (equal)
-        (-5, -20),     # Expected: True
-        ("apple", "banana"),  # Expected: True ('a' < 'b')
-        ([1, 2], [3]),       # Expected: True
-    ]
-
-    utils = ComparisonUtils()
-
-    for i, (val1, val2) in enumerate(test_cases):
-        result = utils.check_greater(val1, val2)
-        expected = val1 > val2
-        status = "PASS" if result == expected else "FAIL"
-        print(f"Test {i+1}: check_greater({val1}, {val2}) -> {result} (Expected: {expected}) [{status}]")
+    sample_ages = [20, 17, -5, 0, 18, 65]
+    for age in sample_ages:
+        print(check_voting_status(age))

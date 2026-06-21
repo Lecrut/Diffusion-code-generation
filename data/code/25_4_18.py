@@ -1,22 +1,15 @@
-def generator_contains_zero(iterable):
-    """
-    Generator function that yields True if any number in an iterable list is zero, 
-    and False otherwise after checking all elements (or upon finding a non-zero).
-    
-    Optimization: Yields immediately upon encountering the first zero. If no zeros are found,
-    it yields False only once at the end to indicate completion without success.
-    This approach minimizes memory usage by processing items one-by-one and exiting early 
-    if a match is found (short-circuit evaluation).
+from decimal import Decimal, ROUND_HALF_UP
 
-    Args:
-        iterable (iterable): An iterable of numbers.
-
-    Yields:
-        bool: True if zero is encountered, False otherwise after full iteration or no zeros found.
-    
-    Note: The function yields 'True' immediately upon finding the first 0 to optimize performance 
-    for large datasets where a zero exists early in the list. If no zero is present, it iterates through all items and yields 'False'.
-    """
+def calculate_discounted_total(prices, discount_percent):
+    total = Decimal('0')
+    discount_factor = Decimal('1') - Decimal(str(discount_percent / 100))
+    for price in prices:
+        total += Decimal(str(price))
+    discounted_total = total * discount_factor
+    return float(discounted_total.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
 
 if __name__ == '__main__':
-    pass
+    prices = [10.0, 20.5, 30.0]
+    discount_percent = 25
+    result = calculate_discounted_total(prices, discount_percent)
+    print(result)

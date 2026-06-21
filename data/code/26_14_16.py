@@ -1,24 +1,40 @@
-def greater_than_threshold(value, threshold=10):
-    """
-    Generator function that yields True if value is strictly greater than threshold,
-    otherwise yields nothing (or False depending on requirement interpretation).
-    
-    Since the task says "yields True ONLY when...": 
-        - If input > threshold: yield True
-        - Otherwise: do not yield anything
-    
-    This ensures memory efficiency by processing one item at a time.
+from enum import IntFlag
+from typing import NamedTuple
 
-    Args:
-        value: The numerical value to check against the threshold.
-        threshold (float): The predefined threshold for comparison, defaults to 10.
+class VotingStatus(IntFlag):
+    AGE = 1
+    CITIZENSHIP = 2
+    DISFRANCHISED = 4
 
-    Yields:
-        bool: True if value > threshold, otherwise nothing is yielded.
+class VotingResult(NamedTuple):
+    eligible: bool
+    reasons: list
+
+def calculate_eligibility(age_flag: int, citizenship_flag: int, disenfranchised_flag: int) -> VotingResult:
+    flags = (age_flag & VotingStatus.AGE) | (citizenship_flag & VotingStatus.CITIZENSHIP)
+    if disenfranchised_flag & VotingStatus.DISFRANCHISED:
+        return VotingResult(eligible=False, reasons=["Disenfranchised status active"])
     
-    Example usage with filter(list(greater_than_threshold(x) for x in large_sequence)) 
-         This would be a common use-case pattern where you want only the items that pass criteria
-    """
+    if (flags & VotingStatus.AGE) and (flags & VotingStatus.CITIZENSHIP):
+        return VotingResult(eligible=True, reasons=[])
+    
+    reasons = []
+    if not (flags & VotingStatus.AGE):
+        reasons.append("Age requirement not met")
+    if not (flags & VotingStatus.CITIZENSHIP):
+        reasons.append("Citizenship requirement not met")
+    
+    return VotingResult(eligible=False, reasons=reasons)
 
 if __name__ == '__main__':
-    pass
+    test_cases = [
+        (VotingStatus.AGE.value, VotingStatus.CITIZENSHIP.value, 0),
+        (0, VotingStatus.CITIZENSHIP.value, 0),
+        (VotingStatus.AGE.value, 0, 0),
+        (VotingStatus.AGE.value, VotingStatus.CITIZENSHIP.value, VotingStatus.DISFRANCHISED.value),
+        (VotingStatus.AGE.value, 0, VotingStatus.DISFRANCHISED.value)
+    ]
+    
+    for age, citizenship, disenfranchised in test_cases:
+        result = calculate_eligibility(age, citizenship, disenfranchised)
+        print(result)

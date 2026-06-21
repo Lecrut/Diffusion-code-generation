@@ -1,17 +1,10 @@
-class NumberComparator:
-    @staticmethod
-    def are_unequal(a, b):
-        return a != b
+def is_valid_triangle(a: int, b: int, c: int) -> bool:
+    return (a + b > c) and (a + c > b) and (b + c > a)
+
 if __name__ == '__main__':
-    num1 = 5
-    num2 = 10
-    result1 = NumberComparator.are_unequal(num1, num2)
-    print(f"Are {num1} and {num2} unequal? {result1}")
-    num3 = 7
-    num4 = 7
-    result2 = NumberComparator.are_unequal(num3, num4)
-    print(f"Are {num3} and {num4} unequal? {result2}")
-    num5 = -1
-    num6 = 1
-    result3 = NumberComparator.are_unequal(num5, num6)
-    print(f"Are {num5} and {num6} unequal? {result3}")
+    result = is_valid_triangle(3, 4, 5)
+    print(result)
+    result = is_valid_triangle(1, 2, 3)
+    print(result)
+    result = is_valid_triangle(5, 5, 5)
+    print(result)

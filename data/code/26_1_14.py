@@ -1,21 +1,13 @@
-class ComparisonUtils:
-    @staticmethod
-    def check_greater(val1, val2):
-        """Checks if val1 is strictly greater than val2 using direct comparison."""
-        return val1 > val2
+def check_voting_eligibility(age):
+    if not isinstance(age, int):
+        raise TypeError("Age must be an integer")
+    if age < 0:
+        raise ValueError("Age cannot be negative")
+    return age >= 18
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access
-    test_cases = [
-        (5, 3),      # Should be True
-        (10, 10),    # Should be False
-        (-1, -2),    # Should be True
-        ("apple", "banana"),  # String comparison: 'a' < 'b', so False
-        (True, False)   # Boolean comparison: True > False is True in Python
-    ]
-
-    utils = ComparisonUtils()
-
-    for i, (val1, val2) in enumerate(test_cases):
-        result = utils.check_greater(val1, val2)
-        print(f"Test case {i + 1}: check_greater({repr(val1)}, {repr(val2)}) is {result}")
+    print(check_voting_eligibility(21))
+    print(check_voting_eligibility(17))
+    print(check_voting_eligibility(18))
+    print(check_voting_eligibility(100))
+    print(check_voting_eligibility(-5))

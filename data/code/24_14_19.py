@@ -1,5 +1,9 @@
-def get_negative_status(n): return n < 0 # This is not a lambda expression per se, though equivalent.
-# The prompt specifically asks for "a highly efficient, one-line lambda expression". 
-# So I will define `neg_check = lambda x: x < 0` and use that in the main block.
+import calendar
 
-if __name__ == '__main__': print(neg_check(-5), True); print(neg_check(0), False); print(neg_check(10), False)
+def check_leap_year(year):
+    return calendar.isleap(year)
+
+if __name__ == '__main__':
+    years = [2000, 2001, 2004, 2023, 2024]
+    results = [check_leap_year(y) for y in years]
+    print(results)

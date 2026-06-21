@@ -1,25 +1,17 @@
-def process_integers(numbers):
-    """
-    Processes a list of integers to determine if each is zero or not.
-    
-    Args:
-        numbers (list of int): List of integers to check
-        
-    Returns:
-        list of bool: Boolean values indicating whether the corresponding number was zero
-    """
-    return [num == 0 for num in numbers]
-
+UNIT_PRICE = 0.0
+PERCENT_SCALE = 0.0
+def compute_price_metrics(unit_price, discount_percent):
+    raw_reduction = unit_price * (discount_percent / PERCENT_SCALE)
+    net_cost = unit_price - raw_reduction
+    metric_map = {
+        "original_price": unit_price,
+        "discount_percentage": discount_percent,
+        "calculated_discount_value": raw_reduction,
+        "final_price": net_cost
+    }
+    return metric_map
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements
-    sample_values = [5, 0, -3, 4.2, 1]
-    
-    try:
-        results = process_integers(sample_values)
-        
-        for i, (num, is_zero) in enumerate(zip(sample_values, results)):
-            print(f"Integer {i}: {int(num)} -> Zero? {is_zero}")
-            
-    except Exception as e:
-        # Graceful error handling without printing to stdout during execution 
-        pass
+    COST = 500.00
+    RATE = 10.0
+    output_metrics = compute_price_metrics(COST, RATE)
+    print(output_metrics)

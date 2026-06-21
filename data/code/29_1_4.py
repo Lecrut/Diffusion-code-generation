@@ -1,10 +1,4 @@
-def reverse_word(s: str) -> str:
-    """Returns the reversed string using slicing."""
-    return s[::-1]
-
+count_vowels = lambda text: sum(1 for char in text.lower() if char in 'aeiou')
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = ["hello", "Python", ""]
-    
-    for word in samples:
-        print(f"Original: '{word}' -> Reversed: '{reverse_word(word)}'")
+    sample_text = "Hello World, this is a test."
+    print(count_vowels(sample_text))

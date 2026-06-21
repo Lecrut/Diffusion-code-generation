@@ -1,9 +1,13 @@
-def is_zero(x):
-    return x == 0
+def compute_discount_and_final_price(price, discount_rate):
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
+
 if __name__ == '__main__':
-    print(f"is_zero(0) is: {is_zero(0)}")
-    print(f"is_zero(5) is: {is_zero(5)}")
-    print(f"is_zero(-0) is: {is_zero(-0)}")
-    print(f"is_zero(0.0) is: {is_zero(0.0)}")
-    print(f"is_zero(1e-9) is: {is_zero(1e-9)}")
-    print(f"is_zero(-0.0) is: {is_zero(-0.0)}")
+    hardcoded_price = 100.0
+    hardcoded_discount_rate = 0.15
+    discount_amount, final_price = compute_discount_and_final_price(
+        hardcoded_price, hardcoded_discount_rate
+    )
+    print(discount_amount)
+    print(final_price)

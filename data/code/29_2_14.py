@@ -1,29 +1,21 @@
-class StringReverser:
-    def reverse(self, word):
-        """
-        Reverses the input string.
-
-        Args:
-            word (str): The string to be reversed.
-
-        Returns:
-            str: The reversed version of the input string.
-        """
-        return word[::-1]
+def count_vowels(text):
+    vowels = set('aeiouAEIOU')
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    # Sample test cases run without user interaction or external dependencies
-    tests = [
-        ("hello", "olleh"),
-        ("Python3", "3nohtyP"),
-        ("", ""),
-        ("A man a plan, a canal: Panama!", "!amanaP :lanac A ,nalp A nam A")
+    samples = [
+        "Hello World",
+        "AEIOU",
+        "aeiou",
+        "",
+        "12345!@#",
+        "Python Programming",
+        "Rhythm",
+        "AeIoU aeiou"
     ]
-
-    reverser = StringReverser()
-    
-    for input_str, expected_output in tests:
-        result = reverser.reverse(input_str)
-        assert result == expected_output, f"Test failed for '{input_str}': got {result}, expected {expected_output}"
-        
-print("All test cases passed.")
+    for sample in samples:
+        print(count_vowels(sample))

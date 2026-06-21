@@ -1,8 +1,11 @@
-# Lambda to compare two variables x and y returning True if x > y else False
-compare = lambda x, y: x > y
+MINIMUM_AGE = 18
+
+def can_vote(age):
+    if age is None:
+        return False
+    return age > MINIMUM_AGE
 
 if __name__ == '__main__':
-    result1 = compare(5, 3)
-    result2 = compare(4, 7)
-    print(f"{result1=}") # Expected: result1=True
-    print(f"{result2=}") # Expected: result2=False
+    ages_to_check = [16, 18, 19, None]
+    for a in ages_to_check:
+        print(can_vote(a))

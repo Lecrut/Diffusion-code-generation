@@ -1,5 +1,18 @@
-result = lambda x, y: x > y; print(result(10, 5))
+VOTING_AGE_THRESHOLD = 18
+
+def check_voting_eligibility(age):
+    is_of_age = age > VOTING_AGE_THRESHOLD
+    return is_of_age
+
+class VoterStatus:
+    def __init__(self, age):
+        self.age = age
+
+    def get_eligibility(self):
+        return check_voting_eligibility(self.age)
+
 if __name__ == '__main__':
-    result = lambda x, y: x > y
-    sample_output = "x=10, y=5 => True" if (lambda x, y: x > y)(10, 5) else "False"
-    print(sample_output)
+    test_ages = [17, 18, 19, 45]
+    for age in test_ages:
+        status = VoterStatus(age)
+        print(status.get_eligibility())

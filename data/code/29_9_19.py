@@ -1,25 +1,11 @@
-def reverse_word(word: str) -> str:
-    """
-    Reverses a given word using Python's slicing capabilities.
-    
-    Args:
-        word (str): The input string to be reversed.
-        
-    Returns:
-        str: The reversed string.
-    """
-    return word[::-1]
+import string
+
+TRANSLATE_TABLE = str.maketrans('', '', ''.join(set(string.ascii_letters) - set('aeiouAEIOU')))
+
+def count_vowels(text: str) -> int:
+    return len(text.translate(TRANSLATE_TABLE))
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_cases = [
-        "hello",
-        "Python programming is fun!",
-        "",
-        "a"
-    ]
-
-    print("Reversed Words:")
-    for original in test_cases:
-        reversed_word = reverse_word(original)
-        print(f"'{original}' -> '{reversed_word}'")
+    sample_text = "The quick brown fox jumps over the lazy dog in a field of green grass where the sun shines bright and the birds sing loud songs of joy."
+    result = count_vowels(sample_text)
+    print(result)

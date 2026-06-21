@@ -1,9 +1,20 @@
-class ComparisonUtils:
-    def check_greater(self, val1, val2):
-        return val1 > val2
+def check_voting_eligibility(age):
+    if not isinstance(age, (int, float)):
+        raise TypeError("Age must be a number")
+    if age < 0:
+        raise ValueError("Age cannot be negative")
+    if age >= 18:
+        return True
+    return False
+
 if __name__ == '__main__':
-    utils = ComparisonUtils()
-    print(utils.check_greater(10, 5))
-    print(utils.check_greater(3, 7))
-    print(utils.check_greater(42, 42))
-    print(utils.check_greater(-1, 0))
+    test_cases = [25, 17, 18, 0, -5, 100]
+    results = []
+    for age in test_cases:
+        try:
+            result = check_voting_eligibility(age)
+            results.append(result)
+        except (TypeError, ValueError) as e:
+            results.append(str(e))
+    for result in results:
+        print(result)

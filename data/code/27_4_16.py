@@ -1,17 +1,27 @@
-import sys
+from typing import List, Tuple, Union
 
-def is_different(a: int | float) -> bool:
-    """Generator function that yields True if two input numbers are different, False otherwise."""
-    yield not (a == a)  # This logic will always be False unless we compare with something else. 
-                        # Wait, the requirement says "yields True if two input numbers are different".
-                        # But I only have one number in the signature above? 
-                        # Re-reading task: "two input numbers".
-    pass
+def check_triangle_validity(sides: Tuple[Union[int, float], Union[int, float], Union[int, float]]) -> bool:
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
-def yields_if_different(*args) -> bool:
-    """Returns True if all arguments are not equal (assuming pairwise difference implies distinctness or at least not identical)."""
-    if len(args) == 2:
-        return args[0] != args[1]
+def evaluate_triangles(configurations: List[Tuple[Union[int, float], Union[int, float], Union[int, float]]]) -> List[bool]:
+    results = []
+    for sides in configurations:
+        results.append(check_triangle_validity(sides))
+    return results
 
 if __name__ == '__main__':
-    pass
+    triangle_configs = [
+        (3, 4, 5),
+        (1, 2, 3),
+        (7, 10, 5),
+        (0, 4, 5),
+        (-3, 4, 5),
+        (1, 1, 1)
+    ]
+    results = evaluate_triangles(triangle_configs)
+    print(results)

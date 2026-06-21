@@ -1,27 +1,32 @@
-def check_threshold(threshold):
-    def decorator(func):
-        def wrapper(*args):
-            result = func(*args)
-            if result == threshold:
-                raise ValueError("Result equals the specified threshold")
-            return result
-        return wrapper
-    return decorator
-@check_threshold(10)
-def calculate_difference(a, b):
-    return a - b
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
+
 if __name__ == '__main__':
-    val1 = 20
-    val2 = 10
-    try:
-        difference = calculate_difference(val1, val2)
-        print(f"The difference between {val1} and {val2} is: {difference}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    val3 = 15
-    val4 = 5
-    try:
-        difference = calculate_difference(val3, val4)
-        print(f"The difference between {val3} and {val4} is: {difference}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    test_a = 3.0
+    test_b = 4.0
+    test_c = 5.0
+    result = is_valid_triangle(test_a, test_b, test_c)
+    print(result)
+    test_x = 1.0
+    test_y = 2.0
+    test_z = 10.0
+    result_2 = is_valid_triangle(test_x, test_y, test_z)
+    print(result_2)
+    test_p = 5.5
+    test_q = 5.5
+    test_r = 5.5
+    result_3 = is_valid_triangle(test_p, test_q, test_r)
+    print(result_3)
+    test_m = -1.0
+    test_n = 4.0
+    test_o = 5.0
+    result_4 = is_valid_triangle(test_m, test_n, test_o)
+    print(result_4)

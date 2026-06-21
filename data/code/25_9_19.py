@@ -1,23 +1,31 @@
-class DataProcessor:
-    """A simple class demonstrating a method to check if an instance attribute is zero."""
-
-    def __init__(self, value):
-        self.value = value
-
-    def is_zero(self) -> bool:
-        """Check if the instance attribute 'value' equals zero.
-
-        Returns:
-            bool: True if self.value is 0, False otherwise.
-        """
-        return self.value == 0
+def calculate_final_price(price: float, discount_percent: float) -> float:
+    if price < 0:
+        raise ValueError("Price cannot be negative.")
+    if discount_percent < 0:
+        raise ValueError("Discount percentage cannot be negative.")
+    if discount_percent > 100:
+        raise ValueError("Discount percentage cannot exceed 100%.")
+    
+    discount_amount = price * (discount_percent / 100)
+    final_price = price - discount_amount
+    return final_price
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or files.
-    instance_positive = DataProcessor(15)
-    instance_negative = DataProcessor(-3)
-    instance_zero = DataProcessor(0)
+    sample_price = 100.0
+    sample_discount = 20.0
+    result = calculate_final_price(sample_price, sample_discount)
+    print(result)
+    
+    sample_price_negative = -50.0
+    sample_discount_negative = 10.0
+    try:
+        calculate_final_price(sample_price_negative, sample_discount_negative)
+    except ValueError as e:
+        print(e)
 
-    print(f"Is {instance_positive.value} zero? {instance_positive.is_zero()}")  # False
-    print(f"Is {instance_negative.value} zero? {instance_negative.is_zero()}")  # False
-    print(f"Is {instance_zero.value} zero? {instance_zero.is_zero()}")        # True
+    sample_price_high = 200.0
+    sample_discount_high = 150.0
+    try:
+        calculate_final_price(sample_price_high, sample_discount_high)
+    except ValueError as e:
+        print(e)

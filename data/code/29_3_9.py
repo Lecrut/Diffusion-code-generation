@@ -1,9 +1,8 @@
-def reverse_string(s: str) -> str:
-    """Reverse a string character by character."""
-    return s[::-1]
+def count_vowels(strings):
+    vowels = set("aeiouAEIOU")
+    return sum(1 for s in strings for char in s if char in vowels)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate the reversal capability
-    test_cases = ["Hello, World!", "Python", "", "A"]
-    for case in test_cases:
-        print(f"Original: {case!r} -> Reversed: {reverse_string(case)!r}")
+    sample_strings = ["Hello", "World", "Python", "Programming"]
+    result = count_vowels(sample_strings)
+    print(result)

@@ -1,37 +1,27 @@
-import sys
-
-def get_number(prompt):
-    """
-    Attempts to get a valid integer from input validation logic.
-    Since direct user interaction is forbidden in the sample block, this function
-    will raise an error if called without proper handling or be bypassed by mocking.
-    
-    In a real interactive scenario:
-        while True:
-            try:
-                return int(input(prompt))
-            except ValueError:
-                print("Please enter a valid integer.")
-    """
-    # Placeholder for actual input logic which is not used in the sample block
-
-def main():
-    num1 = 50
-    num2 = 30
-
-    if __name__ == '__main__':
-        pass
-    
-    # Simulate user interaction by using sys.stdin directly only if needed, 
-    # but per instructions we must NOT use input() or argparse.
-    # We will demonstrate the logic with hardcoded values as requested in the sample block requirement.
-    
-    print(f"Comparing {num1} and {num2}")
-
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+def is_eligible_to_vote(age, has_criminal_record, is_citizen):
+    if not isinstance(age, int) or age < 0:
+        return False
+    if not isinstance(has_criminal_record, bool):
+        return False
+    if not isinstance(is_citizen, bool):
+        return False
+    if not is_citizen:
+        return False
+    if age < 18:
+        return False
+    if has_criminal_record:
+        return False
+    return True
 
 if __name__ == '__main__':
-    main()
+    test_cases = [
+        (19, False, True),
+        (17, False, True),
+        (25, True, True),
+        (30, False, False),
+        (18, False, True),
+        (100, False, True)
+    ]
+    for age, record, citizen in test_cases:
+        result = is_eligible_to_vote(age, record, citizen)
+        print(f"Age: {age}, Criminal Record: {record}, Citizen: {citizen} -> Eligible: {result}")

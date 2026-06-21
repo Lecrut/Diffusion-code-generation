@@ -1,9 +1,11 @@
-class ValueChecker:
-    def are_unequal(self, a: int, b: int) -> bool:
-        return a != b
+def check_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return a + b > c and a + c > b and b + c > a
+
 if __name__ == '__main__':
-    checker = ValueChecker()
-    print(checker.are_unequal(10, 5))
-    print(checker.are_unequal(7, 7))
-    print(checker.are_unequal(0, -1))
-    print(checker.are_unequal(3.14, 3.1400000000000004))
+    side1 = 3
+    side2 = 4
+    side3 = 5
+    result = check_triangle(side1, side2, side3)
+    print(result)

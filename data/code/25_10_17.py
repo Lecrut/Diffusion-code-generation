@@ -1,14 +1,10 @@
-def is_zero(value):
-    """
-    Returns True if value is exactly zero, False otherwise.
-    
-    Args:
-        value (number): A numerical argument to check against 0.
-        
-    Returns:
-        bool: True if value equals 0, False otherwise.
-    """
-    return value == 0
+def calculate_discount(price, discount_rate):
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
 
 if __name__ == '__main__':
-    pass
+    sample_price = 100.00
+    sample_discount_rate = 0.20
+    result = calculate_discount(sample_price, sample_discount_rate)
+    print(result)

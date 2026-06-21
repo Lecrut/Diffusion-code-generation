@@ -1,111 +1,58 @@
-import math
+import enum
+import typing
 
-def threshold_generator(value: float) -> bool:
-    """
-    Generator function that yields True if a given value is strictly greater 
-    than a predefined constant THRESHOLD, otherwise it does not yield anything.
-    
-    This implementation assumes the input 'value' will be processed against 
-    the global THRESHOLD variable to maintain memory efficiency for large sequences.
-    """
-    # Check if current item meets criteria (strictly greater)
-    return value > math.log10(THRESHOLD + 5e-8)
+class VotingStatus(enum.IntFlag):
+    AGE = 1
+    CITIZENSHIP = 2
+    DISENFRANCHISED = 4
 
-# Predefined threshold constant used by the generator logic
-THRESHOLD = 234567
-
-def _generate_sequence():
-    """Helper to generate a sequence of numbers for demonstration."""
-    # Generate integers up to THRESHOLD * log10(THRESHOLD + small_epsilon)
-    limit = math.log10(THRESHOLD + 5e-8) 
-    if not hasattr(_generate_sequence, 'limit'):
-        _generate_sequence.limit = limit
+def check_voting_eligibility(age: bool, is_citizen: bool, is_disenfranchised: bool) -> typing.Tuple[bool, VotingStatus]:
+    flags = 0
+    if age:
+        flags |= VotingStatus.AGE
+    if is_citizen:
+        flags |= VotingStatus.CITIZENSHIP
+    if is_disenfranchised:
+        flags |= VotingStatus.DISENFRANCHISED
     
-    for i in range(int(limit)):
-        yield float(i * (i+1))
-
-if __name__ == '__main__':
-    # Hard-coded sample values and demonstration block
-    count = 0
+    has_age = (flags & VotingStatus.AGE) != 0
+    has_citizenship = (flags & VotingStatus.CITIZENSHIP) != 0
+    is_disqualified = (flags & VotingStatus.DISENFRANCHISED) != 0
     
-    # Using a generator expression directly on the helper function to simulate large sequence
-    results = threshold_generator(x for x in _generate_sequence())
+    if not has_age or not has_citizenship or is_disqualified:
+        return False, flags
     
-    print(f"Threshold constant defined as: {THRESHOLD}")
-    print("Demonstrating memory-efficient filtering:")
-    
-    for result in results:
-        count += 1
-    
-    if count > 0:
-        # Output the first few matches to confirm behavior without printing entire stream
-        sample_gen = _generate_sequence()
-        
-        # Find a value that should yield True based on our logic re-evaluation
-        val = float(sample_gen.__next__()) * (sample_gen.limit + 1) 
-        
-        print(f"\nSample validation:")
-        print(f"Input value: {val:.6f}")
-        is_greater = val > math.log10(THRESHOLD + 5e-8)
-        if is_greater:
-            print("Result from threshold_generator would be: True")
-        else:
-            print("Result from threshold_generator would be: False (no yield)")
-    else:
-        print("No values met the strict greater-than condition in sample range.")
-
-# Additional direct test with hard-coded explicit value to ensure correctness outside helper logic context
-def check_explicit(value):
-    """Direct inline check mimicking generator behavior"""
-    return value > math.log10(THRESHOLD + 5e-8)
+    return True, flags
 
 if __name__ == '__main__':
-    # Final verification block independent of the above flow to ensure standalone runnable nature
-    test_cases = [234.5, THRESHOLD * 2, float('inf')]
+    sample_age_true = True
+    sample_citizen_true = True
+    sample_disenfranchised_false = False
     
-    print("\nExplicit Test Cases:")
-    for tc in test_cases:
-        if check_explicit(tc):
-            yield_result = True 
-            status = "Yields True"
-        else:
-            yield_result = False 
-            status = "Does not yield (False)"
-        
-        # Simulate generator step manually since we can't iterate over a function call directly in print without side effects
-        if tc == float('inf'):
-             result_val = check_explicit(tc)
-        elif tc == THRESHOLD * 2:
-            result_val = check_explicit(tc)
-        else:
-            result_val = check_explicit(tc)
-            
-        print(f"Input {tc}: Status -> {status}")
-
-# Re-iterating a simple range to demonstrate the generator usage pattern clearly in context
-print("\nGenerator Usage Example:")
-def create_stream(start, end):
-    for i in range(start, int(end)) + 1: # Add one extra point just above limit approx if needed via math check logic adjustment here implicitly handled by caller
+    result_eligible, flags_eligible = check_voting_eligibility(sample_age_true, sample_citizen_true, sample_disenfranchised_false)
+    print(result_eligible)
+    print(flags_eligible)
     
-        val = float(i)
-        
-        yield_val = threshold_generator(val)
-
-# Since we cannot iterate a generator object directly inside print without side effects or complex setup 
-# let's do the actual iteration in a clean block below this point to satisfy requirements fully
-        
-    # Actual execution of the logic for demonstration output
-    stream_gen = (x for x in range(10, 34568)) 
+    sample_age_false = False
+    sample_citizen_true_2 = True
+    sample_disenfranchised_false_2 = False
     
-    filtered_count = sum(1 for _ in threshold_generator(x for x in stream_gen if check_explicit(float(x))))
-
-# Correct simple iteration block at end to ensure runnable nature and no external deps
+    result_ineligible_age, flags_ineligible_age = check_voting_eligibility(sample_age_false, sample_citizen_true_2, sample_disenfranchised_false_2)
+    print(result_ineligible_age)
+    print(flags_ineligible_age)
     
-print("\nFinal Verification with Hardcoded Data:")
-data_list = [20.5, THRESHOLD * 3] # Ensure one is clearly below and one above logic threshold roughly or just test specific knowns
-        
-for item in data_list:
-    if check_explicit(item):
-        print(f"Value {item} triggers True yield")
-        
-# Final standalone runnable block ensuring no dependencies on external state other than THRESHOLD defined here
+    sample_age_true_3 = True
+    sample_citizen_false = False
+    sample_disenfranchised_false_3 = False
+    
+    result_ineligible_cit, flags_ineligible_cit = check_voting_eligibility(sample_age_true_3, sample_citizen_false, sample_disenfranchised_false_3)
+    print(result_ineligible_cit)
+    print(flags_ineligible_cit)
+    
+    sample_age_true_4 = True
+    sample_citizen_true_4 = True
+    sample_disenfranchised_true = True
+    
+    result_disqualified, flags_disqualified = check_voting_eligibility(sample_age_true_4, sample_citizen_true_4, sample_disenfranchised_true)
+    print(result_disqualified)
+    print(flags_disqualified)

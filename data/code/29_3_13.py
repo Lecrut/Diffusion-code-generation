@@ -1,8 +1,7 @@
-def reverse_string(s: str) -> str:
-    """Reverse a given ASCII string in-place using slice notation."""
-    return s[::-1]
+def count_vowels(strings):
+    vowels = set("aeiouAEIOU")
+    return sum(1 for s in strings for c in s if c in vowels)
 
 if __name__ == '__main__':
-    sample = "Hello, World!"
-    result = reverse_string(sample)
-    print(result)
+    sample_strings = ["Hello", "World", "Python", "Programming", "Efficiency"]
+    print(count_vowels(sample_strings))

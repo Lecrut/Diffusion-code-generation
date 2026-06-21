@@ -1,13 +1,10 @@
-def main():
-    num1 = 25
-    num2 = 40
-    
-    print(f"Comparing two numbers: {num1} and {num2}")
-    
-    if num1 > num2:
-        print("The first number is greater than the second.")
-    else:
-        print("The first number is not greater than the second.")
+def is_adult(citizen_details):
+    return citizen_details.get('age', None) is not None and citizen_details['age'] >= 18
 
 if __name__ == '__main__':
-    main()
+    sample_data = {'name': 'Alice', 'age': 25}
+    print(is_adult(sample_data))
+    sample_minor = {'name': 'Bob', 'age': 15}
+    print(is_adult(sample_minor))
+    sample_missing = {'name': 'Charlie'}
+    print(is_adult(sample_missing))

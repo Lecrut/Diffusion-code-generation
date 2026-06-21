@@ -1,8 +1,9 @@
-def main():
-    x = 10
-    y = 5
-    is_x_greater_than_y = x > y
-    print(f"x ({x}) is greater than y ({y}): {is_x_greater_than_y}")
+def can_vote(age, threshold=18):
+    return age >= threshold
 
 if __name__ == '__main__':
-    main()
+    print(can_vote(16))
+    print(can_vote(18))
+    print(can_vote(21))
+    print(can_vote(17, threshold=21))
+    print(can_vote(25, threshold=21))

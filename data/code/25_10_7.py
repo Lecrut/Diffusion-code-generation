@@ -1,23 +1,8 @@
-def is_zero(value):
-    """
-    Returns True if value is exactly zero, False otherwise.
-    
-    Args:
-        value (numeric): A single numerical argument.
-        
-    Returns:
-        bool: True if value equals 0.0 or equivalent integer, else False.
-    """
-    return value == 0
+def calculate_discount(price, discount_rate):
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without external input
-    test_values = [0, 1, -1, 0.0, -0.0, float('inf'), -float('inf')]
-    
-    results = []
-    for val in test_values:
-        result = is_zero(val)
-        results.append(result)
-    
-    # Output results to standard output (no interactive input required)
-    print(results)
+    result = calculate_discount(100.0, 0.1)
+    print(result)

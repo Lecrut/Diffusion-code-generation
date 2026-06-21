@@ -1,19 +1,16 @@
-def is_greater(a: any, b: any) -> bool:
-    """
-    Returns True if a is strictly greater than b, False otherwise.
-    
-    Args:
-        a (any): The first value to compare.
-        b (any): The second value to compare.
-        
-    Returns:
-        bool: True if a > b, else False.
-    """
-    return a > b
+class VotingEligibilityChecker:
+    VOTING_THRESHOLD = 18
+
+    def __init__(self, age):
+        self.age = age
+
+    def check(self):
+        return self.age >= self.VOTING_THRESHOLD
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    print(is_greater(10, 5))      # Expected output: True (integers)
-    print(is_greater("z", "a"))   # Expected output: True (strings)
-    print(is_greater(3.14, 2.71))# Expected output: True (floats)
-    print(is_greater(False, True))# Expected output: False (booleans)
+    checker1 = VotingEligibilityChecker(17)
+    print(checker1.check())
+    checker2 = VotingEligibilityChecker(18)
+    print(checker2.check())
+    checker3 = VotingEligibilityChecker(30)
+    print(checker3.check())

@@ -1,26 +1,12 @@
-def reverse_string(s: str) -> str:
-    """
-    Reverses a given input string efficiently.
-    
-    Args:
-        s (str): The input string to be reversed.
-        
-    Returns:
-        str: The reversed string.
-    """
-    return s[::-1]
+def count_vowels(s):
+    vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}
+    count = 0
+    for char in s:
+        if char in vowels:
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing various edge cases and character sets
-    samples = [
-        "",                      # Empty string
-        "a",                     # Single character
-        "Hello, World!",         # String with punctuation and spaces
-        "!@#$%",                 # Special characters
-        "12345 67890",           # Numbers and mixed whitespace
-    ]
-
-    for sample in samples:
-        result = reverse_string(sample)
-        print(f"Original: {sample!r}")
-        print(f"Reversed: {result!r}\n")
+    sample_text = "Hello, World! This is an example string with vowels."
+    result = count_vowels(sample_text)
+    print(result)

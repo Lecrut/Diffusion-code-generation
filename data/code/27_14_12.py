@@ -1,13 +1,20 @@
-def check_difference():
-    """Check if two float values are different using a tolerance threshold."""
-    value1 = 10
-    value2 = 10.00000000000001
-    
-    # Use relative and absolute tolerances to determine inequality safely
-    return not (abs(value1 - value2) < abs(float(1e-8)) * max(abs(value1), abs(value2)))
+def validate_triangle(s1, s2, s3):
+    if s1 <= 0 or s2 <= 0 or s3 <= 0:
+        return False
+    if s1 + s2 <= s3:
+        return False
+    if s1 + s3 <= s2:
+        return False
+    if s2 + s3 <= s1:
+        return False
+    return True
 
 if __name__ == '__main__':
-    if check_difference():
-        print("The values are considered different.")
-    else:
-        print("The values are effectively the same.")
+    result = validate_triangle(3, 4, 5)
+    print(result)
+    
+    result_invalid = validate_triangle(1, 2, 3)
+    print(result_invalid)
+    
+    result_negative = validate_triangle(-1, 4, 5)
+    print(result_negative)

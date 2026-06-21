@@ -1,10 +1,16 @@
-from __future__ import annotations
+from typing import Final
 
-def reverse_string(s: str) -> str:
-    """Reverse a given string efficiently using slicing."""
-    return s[::-1]
+VOWEL_SET: Final[set] = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}
 
-if __name__ == "__main__":
-    samples = ["hello", "world!", "Python is great"]
-    for sample in samples:
-        print(f"Original: {sample}, Reversed: {reverse_string(sample)}")
+def _is_valid_text(text: str) -> bool:
+    return isinstance(text, str)
+
+def count_vowels(text: str) -> int:
+    if not _is_valid_text(text):
+        return 0
+    return sum(1 for char in text if char in VOWEL_SET)
+
+if __name__ == '__main__':
+    static_phrase = "AeIoU XxYyZz 123"
+    result = count_vowels(static_phrase)
+    print(result)

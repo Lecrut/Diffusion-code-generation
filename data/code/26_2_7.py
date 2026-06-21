@@ -1,16 +1,11 @@
-def main():
-    # Hard-coded sample values to avoid interactive input
-    num1 = 25
-    num2 = 30
-    
-    print(f"Comparing {num1} and {num2}")
-    
-    if num1 > num2:
-        result_text = f"{num1} is greater than {num2}"
-    else:
-        result_text = f"{num1} is not greater than {num2}"
-        
-    print(result_text)
+def is_adult(citizen_details):
+    return citizen_details.get('age', None) is not None and citizen_details['age'] >= 18
 
 if __name__ == '__main__':
-    main()
+    print(is_adult({'age': 20}))
+    print(is_adult({'age': 17}))
+    print(is_adult({}))
+    print(is_adult({'name': 'Alice'}))
+    print(is_adult({'age': 18}))
+    print(is_adult({'age': 0}))
+    print(is_adult({'age': -5}))

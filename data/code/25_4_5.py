@@ -1,15 +1,15 @@
-def check_for_zero(data):
-    for item in data:
-        if item == 0:
-            yield True
-            return
-    yield False
+from decimal import Decimal, getcontext
+
+def calculate_discounted_total(prices, discount_percent):
+    getcontext().prec = 28
+    decimal_prices = [Decimal(str(p)) for p in prices]
+    discount_factor = Decimal(str(discount_percent)) / Decimal('100')
+    discounted_prices = [price * (Decimal('1') - discount_factor) for price in decimal_prices]
+    total = sum(discounted_prices)
+    return float(total)
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4]
-    list2 = [1, 0, 3, 4]
-    list3 = [5, 6, 7, 8]
-    list4 = [0, 1, 2]
-    print(list1)
-    print(list2)
-    print(list3)
-    print(list4)
+    prices = [10.0, 20.5, 30.0]
+    discount = 25
+    result = calculate_discounted_total(prices, discount)
+    print(result)

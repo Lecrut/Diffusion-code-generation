@@ -1,12 +1,14 @@
-# Check if variable 'a' is different from variable 'b' using a concise one-line expression
-result = (lambda: a != b)()  # This line evaluates to True or False based on whether a and b are unequal
+def is_valid_triangle(sides):
+    a, b, c = sorted(sides)
+    return a + b > c
 
 if __name__ == '__main__':
-    a = 10
-    b = 20
-    print(result)  # Expected output: True
-    
-    c = 5
-    d = 5
-    result_cd = (lambda x, y: x != y)(c, d)
-    print(result_cd)  # Expected output: False
+    side_sets = [
+        (3, 4, 5),
+        (1, 2, 3),
+        (5, 5, 5),
+        (10, 1, 1)
+    ]
+    for sides in side_sets:
+        result = is_valid_triangle(sides)
+        print(f"{sides}: {result}")

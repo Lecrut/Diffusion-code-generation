@@ -1,16 +1,16 @@
-import sys
-def check_number(number):
-    if number < 0:
-        print("The number is negative.")
-    else:
-        print("The number is not negative.")
+import datetime
+
+class LeapYearValidator:
+    def is_leap_year(self, year: int) -> bool:
+        if not isinstance(year, int):
+            return False
+        if year < 1:
+            return False
+        return datetime.date(year, 2, 29).day == 29
+
 if __name__ == '__main__':
-    sample_values = [10, -5, 0, 3.14, -100]
-    for value in sample_values:
-        try:
-            if isinstance(value, int):
-                check_number(value)
-            else:
-                print(f"Error: Input '{value}' is not an integer.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+    validator = LeapYearValidator()
+    test_years = [2000, 1900, 2024, 2023, 400, 500]
+    results = [validator.is_leap_year(y) for y in test_years]
+    for year, is_leap in zip(test_years, results):
+        print(is_leap)

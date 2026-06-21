@@ -1,8 +1,12 @@
-def check_difference(a: float, b: float) -> bool:
-    """Returns True if a is different from b, False otherwise."""
-    return a != b
+def is_valid_triangle(sides):
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    sample_values = [1.0, 2.0]
-    result = check_difference(sample_values[0], sample_values[1])
-    print(result)
+    print(is_valid_triangle((3.0, 4.0, 5.0)))
+    print(is_valid_triangle((1.0, 2.0, 3.0)))
+    print(is_valid_triangle((-1.0, 2.0, 3.0)))

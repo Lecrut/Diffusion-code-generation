@@ -1,22 +1,19 @@
-class NumberTracker:
-    def __init__(self, value):
-        """Initialize the tracker with a starting value."""
-        self.value = value
-
-    def is_zero(self) -> bool:
-        """Check if the instance attribute 'value' equals zero.
-
-        Returns:
-            bool: True if self.value == 0, False otherwise.
-        """
-        return self.value == 0
+def compute_discounted_price(original_amount: float, discount_rate: float) -> float:
+    if original_amount < 0:
+        raise ValueError("Original amount must be non-negative")
+    if discount_rate < 0:
+        raise ValueError("Discount rate cannot be negative")
+    if discount_rate > 100:
+        raise ValueError("Discount rate cannot exceed 100 percent")
+    reduction_factor = 1.0 - (discount_rate / 100.0)
+    return original_amount * reduction_factor
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    tracker_one = NumberTracker(5)
-    tracker_two = NumberTracker(0)
-    tracker_three = NumberTracker(-1)
-
-    print(f"Is 5 equal to zero? {tracker_one.is_zero()}")   # False
-    print(f"Is 0 equal to zero? {tracker_two.is_zero()}") # True
-    print(f"Is -1 equal to zero? {tracker_three.is_zero()}") # False
+    test_amount = 200.0
+    test_rate = 15.0
+    computed_result = compute_discounted_price(test_amount, test_rate)
+    print(computed_result)
+    edge_case_result = compute_discounted_price(50.0, 0.0)
+    print(edge_case_result)
+    full_discount_result = compute_discounted_price(100.0, 100.0)
+    print(full_discount_result)

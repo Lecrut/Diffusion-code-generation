@@ -1,9 +1,5 @@
-def reverse_word(word):
-    return word[::-1]
+VOWEL_SET = {'a', 'e', 'i', 'o', 'u'}
+count_vowels = lambda text: len([ch for ch in text.lower() if ch in VOWEL_SET])
 if __name__ == '__main__':
-    sample_string = "hello"
-    reversed_string = reverse_word(sample_string)
-    print(reversed_string)
-    sample_string_2 = "python"
-    reversed_string_2 = reverse_word(sample_string_2)
-    print(reversed_string_2)
+    test_string = "Programming is fascinating"
+    print(count_vowels(test_string))

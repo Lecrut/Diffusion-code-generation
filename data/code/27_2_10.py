@@ -1,20 +1,16 @@
-def check_difference():
-    """
-    Compares two numbers to determine if they differ.
-    
-    Returns:
-        bool: True if the numbers are different, False otherwise.
-    """
-    # Hard-coded sample values as per requirements (no user input)
-    num1 = 42
-    num2 = 98
-    
-    return num1 != num2
+def is_valid_triangle(a, b, c):
+    if not all(isinstance(side, int) for side in (a, b, c)):
+        return False
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if (a + b <= c) or (a + c <= b) or (b + c <= a):
+        return False
+    return True
 
 if __name__ == '__main__':
-    result = check_difference()
-    
-    if result:
-        print("The two entered values differ.")
-    else:
-        print("The two entered values are the same.")
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(0, 4, 5))
+    print(is_valid_triangle(-1, 4, 5))
+    print(is_valid_triangle(10, 1, 2))
+    print(is_valid_triangle(5, 5, 5))

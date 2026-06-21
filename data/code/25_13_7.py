@@ -1,14 +1,8 @@
-def is_zero(x):
-    return x == 0
+def apply_discount(prices, discount_rate):
+    return [price * (1 - discount_rate) for price in prices]
 
 if __name__ == '__main__':
-    test_cases = [
-        (5, False),
-        (-3, False),
-        (0.0, True),
-        (0j, True)
-    ]
-
-    for value, expected in test_cases:
-        result = is_zero(value)
-        print(f"is_zero({value!r}) -> {result} (expected: {expected})")
+    sample_prices = [100, 200, 150, 300]
+    discount_rate = 0.2
+    discounted_prices = apply_discount(sample_prices, discount_rate)
+    print(discounted_prices)

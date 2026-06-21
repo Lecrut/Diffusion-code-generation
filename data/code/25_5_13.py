@@ -1,6 +1,10 @@
-import math; zero_check = lambda x: abs(x) < 1e-9 if isinstance(x, (int, float)) else False
+def calculate_prices(original_price, discount_percent):
+    discount_amount = original_price * (discount_percent / 100)
+    final_price = original_price - discount_amount
+    return original_price, discount_amount, final_price
 
 if __name__ == '__main__':
-    print(zero_check(0))      # True
-    print(zero_check(-0.0001))# False
-    print(zero_check(float('inf')))   # False
+    original = 99.99
+    discount = 30
+    result = calculate_prices(original, discount)
+    print(result)

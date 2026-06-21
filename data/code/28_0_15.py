@@ -1,22 +1,10 @@
-def is_larger(a: float, b: float) -> bool:
-    """
-    Returns True if a is strictly larger than b, otherwise False.
-    
-    Args:
-        a (float): The first number to compare.
-        b (float): The second number to compare.
-        
-    Returns:
-        bool: True if a > b, False otherwise.
-    """
-    return a > b
+def sort_two_numbers(a, b):
+    if a <= b:
+        return (a, b)
+    else:
+        return (b, a)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    result1 = is_larger(5, 3)       # Expected: True
-    result2 = is_larger(3, 5)       # Expected: False
-    result3 = is_larger(4.7, 4.8)   # Expected: False
-    
-    print(f"is_larger({1}, {0}) -> {result1}")
-    print(f"is_larger({2}, {5}) -> {result2}")
-    print(f"is_larger({4.7}, {4.8}) -> {result3}")
+    print(sort_two_numbers(5, 3))
+    print(sort_two_numbers(10, 10))
+    print(sort_two_numbers(-1, 4))

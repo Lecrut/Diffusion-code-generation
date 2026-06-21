@@ -1,7 +1,12 @@
-import sys
-def reverse_string(s):
-    return s[::-1]
+def count_vowels(text: str) -> int:
+    vowels = "aeiouAEIOU"
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
+
 if __name__ == '__main__':
-    sample_word = "example"
-    reversed_word = reverse_string(sample_word)
-    print(reversed_word)
+    sample_text = "Hello World"
+    result = count_vowels(sample_text)
+    print(result)

@@ -1,29 +1,14 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if two numerical values are different from each other, False otherwise.
-    
-    This function uses a direct comparison which is highly optimized in Python's C implementation.
-    It handles integers and floating-point numbers correctly. For floats, it treats them as 
-    equal only if they have the exact same bit representation (not considering epsilon for equality),
-    unless specific tolerance logic was requested, but standard 'different' implies inequality.
-
-    Args:
-        a (float): The first numerical value.
-        b (float): The second numerical value.
-
-    Returns:
-        bool: True if a != b, False otherwise.
-    """
-    return a != b
+def validate_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b > c and a + c > b and b + c > a:
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input or external dependencies
-    val1 = 5.0
-    val2 = 7
-    
-    result = check_difference(val1, val2)
-    
-    if result:
-        print("The numbers are different.")
-    else:
-        print("The numbers are equal.")
+    result1 = validate_triangle(3, 4, 5)
+    print(result1)
+    result2 = validate_triangle(1, 2, 3)
+    print(result2)
+    result3 = validate_triangle(-1, 5, 5)
+    print(result3)

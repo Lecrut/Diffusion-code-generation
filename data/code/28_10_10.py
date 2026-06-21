@@ -1,17 +1,8 @@
-def is_larger(a: float | int) -> bool:
-    """Returns True if a is strictly greater than b, False otherwise."""
-    return a > b
+def sort_pair(a, b):
+    return (min(a, b), max(a, b))
 
-if __name__ == "__main__":
-    # Hard-coded sample values to demonstrate functionality without external input.
-    test_cases = [
-        (5, 3),       # Expected: True
-        (3, 5),       # Expected: False
-        (42.7, 10),   # Expected: True
-        (-1, -5),     # Expected: True
-        (float('inf'), float('-inf')),  # Expected: True
-    ]
-
-    for a, b in test_cases:
-        result = is_larger(a, b)
-        print(f"is_larger({a}, {b}) => {result}")
+if __name__ == '__main__':
+    print(sort_pair(5, 3))
+    print(sort_pair(10, 10))
+    print(sort_pair(-1, -5))
+    print(sort_pair(0, 42))

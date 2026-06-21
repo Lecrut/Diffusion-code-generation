@@ -1,10 +1,9 @@
-import sys # Only import needed to prevent linter warnings if unused logic were present; here it's unnecessary but kept per "single module" convention, though strictly not used in lambda logic. 
+import calendar
 
-def is_negative(x: int) -> bool: 
-    return x < 0 
+def is_leap_year(year):
+    return calendar.isleap(year)
 
 if __name__ == '__main__':
-    test_cases = [-5, -1, 0, 1, 2] # Hard-coded sample values as per requirements
-    for case in test_cases:
-        result = is_negative(case) 
-        print(f"Input {case} -> Output: {result}")
+    test_years = [2000, 1900, 2024, 2023, 2400, 2100]
+    for year in test_years:
+        print(f"{year}: {is_leap_year(year)}")

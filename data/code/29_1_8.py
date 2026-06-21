@@ -1,8 +1,4 @@
-def reverse_word(s: str) -> str:
-    """Returns a new string with characters in 's' reversed using slicing."""
-    return s[::-1]
+vowel_count = lambda s: sum(1 for c in s.lower() if c in 'aeiou')
 
 if __name__ == '__main__':
-    samples = ["hello", "Pythonic!", "", "a"]
-    for sample in samples:
-        print(f"Original: '{sample}' -> Reversed: '{reverse_word(sample)}'")
+    print(vowel_count("Hello World"))

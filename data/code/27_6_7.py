@@ -1,29 +1,16 @@
-import unittest
-def check_difference(a, b):
-    return a != b
-class TestNumberDifference(unittest.TestCase):
-    def test_positive_numbers(self):
-        self.assertTrue(check_difference(5, 10))
-        self.assertFalse(check_difference(5, 5))
-    def test_negative_numbers(self):
-        self.assertTrue(check_difference(-5, -10))
-        self.assertFalse(check_difference(-5, -5))
-        self.assertTrue(check_difference(-10, -5))
-    def test_mixed_signs(self):
-        self.assertTrue(check_difference(5, -5))
-        self.assertFalse(check_difference(5, 5))
-        self.assertTrue(check_difference(-5, 5))
-    def test_involving_zero(self):
-        self.assertTrue(check_difference(0, 5))
-        self.assertFalse(check_difference(0, 0))
-        self.assertTrue(check_difference(-5, 0))
-        self.assertTrue(check_difference(0, -5))
-    def test_zero_difference(self):
-        self.assertFalse(check_difference(0, 0))
-    def test_floating_point_numbers(self):
-        self.assertTrue(check_difference(1.5, 2.5))
-        self.assertFalse(check_difference(3.14, 3.14))
-        self.assertTrue(check_difference(1.0, 1.0000000000000001))
-        self.assertFalse(check_difference(1.0, 1.0))
+def check_triangle_validity(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return "Invalid"
+    if a + b <= c or a + c <= b or b + c <= a:
+        return "Invalid"
+    if a == b and b == c:
+        return "Equilateral"
+    if a == b or b == c or a == c:
+        return "Isosceles"
+    return "Scalene"
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    side1 = 3
+    side2 = 4
+    side3 = 5
+    print(check_triangle_validity(side1, side2, side3))

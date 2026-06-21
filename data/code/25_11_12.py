@@ -1,38 +1,44 @@
-from typing import Any
+class DiscountCalculator:
+    PRICE_LIST = {
+        "item_A": 100,
+        "item_B": 200,
+        "item_C": 300
+    }
 
-class ValueChecker:
-    """A class to check if a given value is equal to zero."""
-
-    def check_for_zero(self, value: Any) -> bool:
-        """
-        Determines if the input 'value' is numerically equal to zero.
-
-        This method handles integers and floats by comparing them directly with 0.
-        For other types (like strings), it returns False unless an explicit 
-        conversion logic was intended, but based on standard numeric comparison,
-        non-numeric values are not considered zero in this context.
-
-        Args:
-            value (Any): The input value to check. Can be int or float.
-
-        Returns:
-            bool: True if the value is numerically equal to 0, False otherwise.
-        """
-        return value == 0
-
-if __name__ == '__main__':
-    checker = ValueChecker()
-
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_values = [
-        (0, True),           # Integer zero
-        (-0, True),          # Negative integer zero (equivalent to 0)
-        (1.5, False),        # Float non-zero
-        (0.0, True),         # Explicit float zero
-        ("zero", False),     # String "zero" is not numerically zero here
+    TIER_THRESHOLDS = [
+        (1000, 0.0),
+        (2500, 0.05),
+        (5000, 0.10),
+        (10000, 0.15),
+        (float('inf'), 0.20)
     ]
 
-    for value, expected in test_values:
-        result = checker.check_for_zero(value)
-        status = "PASS" if result == expected else "FAIL"
-        print(f"{status}: check_for_zero({value!r}) -> {result} (expected {expected})")
+    @staticmethod
+    def calculate_total_cost(items):
+        if not items:
+            return 0.0
+        
+        total_base_price = 0.0
+        for item in items:
+            if item in DiscountCalculator.PRICE_LIST:
+                total_base_price += DiscountCalculator.PRICE_LIST[item]
+            else:
+                raise ValueError(f"Unknown item: {item}")
+
+        if total_base_price <= 0:
+            return 0.0
+
+        discount_rate = 0.0
+        for threshold, rate in DiscountCalculator.TIER_THRESHOLDS:
+            if total_base_price < threshold:
+                discount_rate = rate
+                break
+
+        discount_amount = total_base_price * discount_rate
+        final_cost = total_base_price - discount_amount
+        return final_cost
+
+if __name__ == '__main__':
+    items = ["item_A", "item_A", "item_B", "item_B", "item_C"]
+    result = DiscountCalculator.calculate_total_cost(items)
+    print(result)

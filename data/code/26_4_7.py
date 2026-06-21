@@ -1,6 +1,8 @@
-# Optimized one-liner to check if x > y using comparison operators directly in an expression context within main logic
+def is_of_voting_age(age, threshold=18):
+    return age >= threshold
+
 if __name__ == '__main__':
-    x = 10
-    y = 5
-    result = (x > y)
-    print(f"x={x}, y={y}, is greater: {result}")
+    sample_age = 20
+    threshold = 18
+    result = is_of_voting_age(sample_age, threshold)
+    print(result)

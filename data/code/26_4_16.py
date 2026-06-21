@@ -1,5 +1,8 @@
+def check_voting_status(age: int, threshold: int = 18) -> bool:
+    if age is None:
+        return False
+    return age >= threshold
+
 if __name__ == '__main__':
-    x = 10
-    y = 5
-    result = x > y if (x > y) else False
-    print("Optimized check:", result) # Outputs: Optimized check: True
+    result = check_voting_status(20)
+    print(result)

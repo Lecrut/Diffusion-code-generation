@@ -1,19 +1,11 @@
-import sys
-
-def compare_numbers(a: int, b: int) -> str:
-    """Compare two integers and return a descriptive message."""
-    if a > b:
-        return f"{a} is larger than {b}"
-    elif b > a:
-        return f"{b} is larger than {a}"
+def order_numbers(a, b):
+    if a < b:
+        return a, b
     else:
-        return "Both numbers are equal"
+        return b, a
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    num1 = 42
-    num2 = 99
-    
-    result_message = compare_numbers(num1, num2)
-    
-    print(result_message)
+    val1 = 10
+    val2 = 5
+    result = order_numbers(val1, val2)
+    print(result)

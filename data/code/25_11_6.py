@@ -1,52 +1,38 @@
-from __future__ import annotations
+class TieredDiscountCalculator:
+    PRICE_LIST = {
+        1: 10.0,
+        2: 15.5,
+        3: 20.0,
+        4: 25.0,
+        5: 30.0
+    }
 
-class ValueChecker:
-    """A utility class to check if a given value is equal to zero."""
-
-    def check_for_zero(self, value: int | float) -> bool:
-        """Determines if the input 'value' is numerically equal to zero.
-
-        Args:
-            value (int | float): The numeric value to be checked.
-
-        Returns:
-            bool: True if 'value' equals 0, False otherwise.
-        """
-        return not isinstance(value, type(None)) and abs(float(value) - 0) < float('eps') or value == 0
-
-if __name__ == '__main__':
-    checker = ValueChecker()
-
-    # Hard-coded sample values to test the method without user input
-    samples = [
-        (123, False),
-        (-45.6789, False),
-        (0, True),
-        ("zero", TypeError),  # Expected error for non-numeric types handled by try-except context or direct call observation
-        ([], TypeError),
+    DISCOUNT_TIERS = [
+        (100, 0.10),
+        (50, 0.05),
+        (0, 0.0)
     ]
 
-    print("Testing ValueChecker.check_for_zero:")
-    
-    for test_input in samples:
-        value_to_check = test_input[0] if isinstance(test_input, tuple) else test_input
+    @staticmethod
+    def calculate_discount(quantity, item_id):
+        unit_price = TieredDiscountCalculator.PRICE_LIST.get(item_id, None)
+        if unit_price is None:
+            raise ValueError(f"Invalid item_id: {item_id}")
         
-        # Check type compatibility strictly as per hint requirements without catching exceptions silently to show behavior clarity
-        try:
-            result = checker.check_for_zero(value_to_check)
-            
-            if hasattr(result.__class__, '__name__') and 'bool' in str(type(result)):
-                print(f"Input {value_to_check!r} -> Result: {result}")
-            else:
-                # Handle potential type errors gracefully for demonstration purposes within the module logic
-                raise TypeError("Non-numeric input passed to check_for_zero")
-        except (TypeError, ValueError) as e:
-             if isinstance(value_to_check, int) or isinstance(value_to_check, float):
-                 print(f"Input {value_to_check!r} -> Error encountered: {e}") # Should not happen for ints/floats in normal flow unless logic flawed above
-            
-    # Final specific numeric checks to ensure correctness per task requirements specifically on zero detection
-    assert checker.check_for_zero(0) is True, "Failed assertion for 0"
-    assert checker.check_for_zero(1.0) is False, "Failed assertion for float one"
-    assert checker.check_for_zero(-999) is False, "Failed assertion for negative int"
+        total_price = quantity * unit_price
+        
+        for threshold, discount_rate in TieredDiscountCalculator.DISCOUNT_TIERS:
+            if total_price >= threshold:
+                final_price = total_price * (1 - discount_rate)
+                return final_price
+        
+        return total_price
 
-    print("All assertions passed.")
+if __name__ == '__main__':
+    calculator = TieredDiscountCalculator()
+    result1 = TieredDiscountCalculator.calculate_discount(5, 1)
+    result2 = TieredDiscountCalculator.calculate_discount(10, 2)
+    result3 = TieredDiscountCalculator.calculate_discount(3, 5)
+    print(result1)
+    print(result2)
+    print(result3)

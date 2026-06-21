@@ -1,7 +1,8 @@
-# Concise idiomatic Python expression to check if x is zero
-is_zero = (x := 0) == 0
+def apply_discount(prices, discount_rate):
+    return [price * (1 - discount_rate) for price in prices]
 
 if __name__ == '__main__':
-    # Sample test cases hard-coded without user input or external dependencies
-    for val in [0, -1, 1]:
-        print(f"x={val}, expression_result={(val)==0})")
+    sample_prices = [100, 200, 150, 50]
+    discount = 0.2
+    discounted_prices = apply_discount(sample_prices, discount)
+    print(discounted_prices)

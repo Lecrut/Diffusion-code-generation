@@ -1,17 +1,25 @@
-def different_generator(a: int, b: int):
-    """Yields True if a is different from b, otherwise yields False."""
-    yield not (a == b)
+from typing import List, Tuple
+
+def is_valid_triangle(side_a: float, side_b: float, side_c: float) -> bool:
+    if side_a <= 0 or side_b <= 0 or side_c <= 0:
+        return False
+    return (side_a + side_b > side_c) and (side_a + side_c > side_b) and (side_b + side_c > side_a)
+
+def evaluate_triangles(configurations: List[Tuple[float, float, float]]) -> List[bool]:
+    results = []
+    for config in configurations:
+        side_a, side_b, side_c = config
+        results.append(is_valid_triangle(side_a, side_b, side_c))
+    return results
 
 if __name__ == '__main__':
-    # Sample test cases with hardcoded values
-    results = list(different_generator(5, 3))
-    print(f"Test case: {results}")
-
-    expected = [True] if 5 != 3 else [False]
-    assert results == expected, "Generator logic failed for distinct inputs."
-
-    results2 = list(different_generator(10, 10))
-    print(f"Test case (equal): {results2}")
-
-    expected2 = [False] if 10 == 10 else [True]
-    assert results2 == expected2, "Generator logic failed for equal inputs."
+    configs: List[Tuple[float, float, float]] = [
+        (3.0, 4.0, 5.0),
+        (1.0, 2.0, 3.0),
+        (5.0, 5.0, 5.0),
+        (-1.0, 4.0, 5.0),
+        (0.0, 0.0, 0.0)
+    ]
+    outcomes = evaluate_triangles(configs)
+    for outcome in outcomes:
+        print(outcome)

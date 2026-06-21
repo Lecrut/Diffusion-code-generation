@@ -1,45 +1,17 @@
-import sys
+def apply_single_discount(value, rate):
+    reduction = value * rate
+    return value - reduction
 
-def contains_zero(numbers):
-    """
-    Checks if the number zero exists within a list of numbers.
-
-    Args:
-        numbers (list[int]): A list containing numeric values.
-
-    Returns:
-        bool: True if 0 is present in the list, False otherwise.
-    
-    Time Complexity: O(n) where n is the length of the input list.
-    Space Complexity: O(1).
-    """
-    return 0 in numbers
+def compute_discounted_prices(prices, discount_rate):
+    multiplier = 1 - discount_rate
+    results = []
+    for current_price in prices:
+        discounted_price = apply_single_discount(current_price, discount_rate)
+        results.append(discounted_price)
+    return results
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or external dependencies
-    test_cases = [
-        {
-            "input": [-5, 0, 3],
-            "expected": True
-        },
-        {
-            "input": [1, -2, 4.5],
-            "expected": False
-        },
-        {
-            "input": [],
-            "expected": False
-        },
-        {
-            "input": [0, 0, 0],
-            "expected": True
-        }
-    ]
-
-    for i, case in enumerate(test_cases):
-        result = contains_zero(case["input"])
-        status = "PASS" if result == case["expected"] else "FAIL"
-        print(f"Test Case {i + 1}: Input={case['input']} | Result: {result} (Expected: {case['expected']}) -> [{status}]")
-    
-    # Ensure script exits cleanly regardless of test outcomes to satisfy 'no network/files' requirement
-    sys.exit(0)
+    sample_values = [100, 200, 300]
+    discount_percentage = 0.05
+    output_list = compute_discounted_prices(sample_values, discount_percentage)
+    print(output_list)

@@ -1,31 +1,24 @@
-class ComparisonUtils:
-    @staticmethod
-    def check_greater(val1, val2):
-        """
-        Checks if val1 is strictly greater than val2 using direct comparison operators.
-        
-        Args:
-            val1 (any comparable type): The first value to compare.
-            val2 (any comparable type): The second value to compare.
-            
-        Returns:
-            bool: True if val1 > val2, False otherwise.
-        """
-        return val1 > val2
+import re
 
+def check_voting_eligibility(age_str: str) -> bool:
+    try:
+        age = float(age_str)
+    except ValueError:
+        return False
+    if age < 0:
+        return False
+    if age < 18:
+        return False
+    return True
+
+def run_tests():
+    test_cases = [('17', False), ('18', True), ('19', True), ('0', False), ('-1', False), ('100', True), ('abc', False), ('', False), ('18.0', True), ('17.9', False), ('-0.5', False)]
+    results = []
+    for age_str, expected in test_cases:
+        result = check_voting_eligibility(age_str)
+        results.append((age_str, result, expected))
+    for age_str, result, expected in results:
+        status = 'PASS' if result == expected else 'FAIL'
+        print(f'Input: {age_str!r}, Expected: {expected}, Got: {result}, Status: {status}')
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        (5, 3),      # Expected: True
-        (3, 5),      # Expected: False
-        (7.8, 7.9),  # Expected: False
-        ('apple', 'banana'),  # Expected: False
-        ('zebra', 'ant'),    # Expected: True
-        (10, 10),    # Expected: False (strictly greater)
-    ]
-
-    utils = ComparisonUtils()
-
-    for i, (val1, val2) in enumerate(test_cases):
-        result = utils.check_greater(val1, val2)
-        print(f"Test case {i + 1}: check_greater({val1!r}, {val2!r}) => {result}")
+    run_tests()

@@ -1,18 +1,11 @@
-def is_zero(value):
-    """
-    Returns True if value is exactly zero, False otherwise.
-    
-    Args:
-        value (int | float): The numerical argument to check.
-        
-    Returns:
-        bool: True if value == 0, else False.
-    """
-    return value == 0
+def calculate_discounted_price(price: float, discount_rate: float) -> tuple:
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
 
 if __name__ == '__main__':
-    test_cases = [0, -1, 1, 0.0, -0.0, 3.5]
-    
-    for case in test_cases:
-        result = is_zero(case)
-        print(f"is_zero({case}) -> {result}")
+    sample_price = 100.0
+    sample_discount_rate = 0.2
+    amount, final = calculate_discounted_price(sample_price, sample_discount_rate)
+    print(f"{amount}")
+    print(f"{final}")

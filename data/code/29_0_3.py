@@ -1,16 +1,16 @@
-import sys
-def reverse_string(s):
-    return s[::-1]
+def count_vowels(s):
+    vowels = set('aeiouAEIOU')
+    return sum(1 for c in s if c in vowels)
+
 if __name__ == '__main__':
-    input_string_1 = "hello"
-    reversed_1 = reverse_string(input_string_1)
-    print(reversed_1)
-    input_string_2 = "Python"
-    reversed_2 = reverse_string(input_string_2)
-    print(reversed_2)
-    input_string_3 = ""
-    reversed_3 = reverse_string(input_string_3)
-    print(reversed_3)
-    input_string_4 = "12345!@#"
-    reversed_4 = reverse_string(input_string_4)
-    print(reversed_4)
+    sample1 = "Hello World"
+    sample2 = "Python Programming"
+    sample3 = "AEIOU aeiou"
+    sample4 = "Rhythm"
+    sample5 = ""
+
+    print(count_vowels(sample1))
+    print(count_vowels(sample2))
+    print(count_vowels(sample3))
+    print(count_vowels(sample4))
+    print(count_vowels(sample5))

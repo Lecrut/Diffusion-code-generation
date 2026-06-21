@@ -1,55 +1,44 @@
-import sys
+class VotingEligibilityManager:
+    def __init__(self, minimum_voting_age=18):
+        self.minimum_voting_age = minimum_voting_age
+        self.records = {}
 
-class ComparisonTool:
-    def check_greater(self, a, b):
-        """
-        Determines if value 'a' is strictly greater than value 'b'.
-        
-        Handles type errors gracefully by catching exceptions during comparison.
-        Returns True if a > b and both are comparable numbers (int or float).
-        Returns False otherwise without raising an exception for invalid types.
-        
-        Args:
-            a: First value to compare.
-            b: Second value to compare.
-            
-        Returns:
-            bool: True if a is greater than b, False otherwise.
-        """
-        try:
-            # Only perform comparison if both are numeric (int or float) and not booleans
-            if isinstance(a, (int, float)) and isinstance(b, (int, float)):
-                return a > b
-            else:
-                # If types don't match expected numeric criteria, default to False
-                return False
-        except Exception:
-            # Catch any other potential comparison errors gracefully
+    def add_record(self, person_id, age, citizenship_status=True):
+        self.records[person_id] = {
+            'age': age,
+            'citizenship_status': citizenship_status
+        }
+
+    def remove_record(self, person_id):
+        if person_id in self.records:
+            del self.records[person_id]
+
+    def check_eligibility(self, person_id):
+        if person_id not in self.records:
             return False
 
+        record = self.records[person_id]
+        return (
+            record['age'] >= self.minimum_voting_age and
+            record['citizenship_status'] is True
+        )
+
+    def get_eligible_voters(self):
+        eligible = []
+        for person_id, record in self.records.items():
+            if self.check_eligibility(person_id):
+                eligible.append(person_id)
+        return eligible
+
 if __name__ == '__main__':
-    tool = ComparisonTool()
+    manager = VotingEligibilityManager()
+    manager.add_record('person1', 25, True)
+    manager.add_record('person2', 16, True)
+    manager.add_record('person3', 20, False)
+    manager.add_record('person4', 18, True)
 
-    # Test cases with hard-coded sample values
-    test_cases = [
-        (10, 5),           # Expected: True
-        (3.9, 4.0),        # Expected: False
-        ("apple", "banana"),# Should not crash, return False due to type mismatch logic above or comparison failure if allowed by Python default behavior but we enforce numeric check here -> False based on isinstance
-        (10, "ten"),       # Mixed types -> False per our strict numeric requirement in this implementation. 
-                           # Note: Standard Python allows comparing int and str which raises TypeError. Our try/except catches it.
-    ]
-
-    print("Running ComparisonTool checks...")
-    
-    for i, item in enumerate(test_cases):
-        a_val = item[0]
-        b_val = item[1]
-        
-        result = tool.check_greater(a_val, b_val)
-        status_str = "True" if result else "False"
-        print(f"Test {i+1}: check_greater({a_val}, {b_val}) -> {status_str}")
-
-    # Additional explicit numeric tests to ensure core functionality works without exceptions for valid inputs
-    assert tool.check_greater(5, 3) == True
-    assert tool.check_greater(2.5, 2.6) == False
-    print("All assertions passed.")
+    print(manager.check_eligibility('person1'))
+    print(manager.check_eligibility('person2'))
+    print(manager.check_eligibility('person3'))
+    print(manager.check_eligibility('person4'))
+    print(manager.get_eligible_voters())

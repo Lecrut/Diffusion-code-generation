@@ -1,26 +1,21 @@
-def is_greater(a: any, b: any) -> bool:
-    """
-    Returns True if 'a' is strictly greater than 'b', otherwise False.
-    
-    Args:
-        a: The first value to compare.
-        b: The second value to compare against.
+class VoterEligibilityChecker:
+    def __init__(self, minimum_age):
+        self.minimum_age = minimum_age
 
-    Returns:
-        A boolean indicating whether a > b.
-    """
-    return a > b
+    def is_eligible(self, age):
+        return age >= self.minimum_age
+
+    def check_multiple_ages(self, ages):
+        return [self.is_eligible(age) for age in ages]
+
+def is_eligible_to_vote(age):
+    checker = VoterEligibilityChecker(18)
+    return checker.is_eligible(age)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        (10, 5),      # Expected: True
-        (3, 7),       # Expected: False
-        ('apple', 'banana'),  # Expected: False
-        (True, False),   # Expected: True
-        (None, None),   # Expected: False
-    ]
-
-    for val_a, val_b in test_cases:
-        result = is_greater(val_a, val_b)
-        print(f"is_greater({val_a!r}, {val_b!r}) = {result}")
+    checker = VoterEligibilityChecker(18)
+    print(checker.is_eligible(15))
+    print(checker.is_eligible(18))
+    print(checker.is_eligible(25))
+    print(is_eligible_to_vote(17))
+    print(is_eligible_to_vote(20))

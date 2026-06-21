@@ -1,17 +1,15 @@
-def get_number(prompt):
-    """Prompt the user (or use sample) to input a number."""
-    # In this specific scenario, we will simulate interaction via direct assignment 
-    # within the main block as per the constraints prohibiting sys.stdin or interactive prompts.
-    
-# The requirement asks for an 'if __name__ == "__main__":' block with hard-coded values that run without user input.
-# However, it also says "prompts the user to input...". This is a contradiction given the strict prohibition 
-# on calling input() and running without user interaction in the sample block.
-# To satisfy all conditions simultaneously: The main function will contain logic for prompting (as if called),
-# but the execution entry point MUST use hard-coded values and cannot call any blocking I/O functions like input().
+def evaluate_voting_eligibility(age: int, has_criminal_record: bool, is_citizen: bool) -> bool:
+    if age < 18:
+        return False
+    if is_citizen is not True:
+        return False
+    if has_criminal_record is True:
+        return False
+    return True
 
-def prompt_and_validate():
-    """Simulates getting a number with validation."""
-    # Since we cannot actually run 'input()' in the mandatory sample block without violating 
-    # "run without user input", this function is defined but not called from main.
-    
-# Correct approach: Define the logic, then execute it directly using hard-coded values in __main__.
+if __name__ == '__main__':
+    candidate_age = 20
+    candidate_has_record = False
+    candidate_is_citizen = True
+    result = evaluate_voting_eligibility(candidate_age, candidate_has_record, candidate_is_citizen)
+    print(result)

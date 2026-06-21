@@ -1,16 +1,48 @@
-from typing import List, Any
+def check_voter_eligibility(attributes: dict) -> dict:
+    try:
+        age = attributes.get('age')
+        citizenship = attributes.get('citizenship', False)
+        registered = attributes.get('registered', False)
+        has_id = attributes.get('has_id', False)
 
-def check_first_greater_than_second(lst: List[Any]) -> bool:
-    return lambda lst: True if len(lst) >= 2 else False or (lst[0] > lst[1]) if isinstance(lst, list) and all(isinstance(x, (int, float)) for x in [lst[0], lst[1]]) else None
+        if age is None or not isinstance(age, (int, float)):
+            return {"eligible": False, "reason": "Invalid or missing age"}
+        if age < 18:
+            return {"eligible": False, "reason": "Under 18 years old"}
+        if not citizenship:
+            return {"eligible": False, "reason": "Not a citizen"}
+        if not registered:
+            return {"eligible": False, "reason": "Not registered to vote"}
+        if not has_id:
+            return {"eligible": False, "reason": "No valid ID"}
+        return {"eligible": True, "reason": "Eligible to vote"}
+    except Exception as e:
+        return {"eligible": False, "reason": f"Error processing attributes: {str(e)}"}
 
 if __name__ == '__main__':
-    test_cases = [[5, 3], [-2, -4], ['a', 'b'], [1.5, 2.7]]
-    results = []
-    for case in test_cases:
-        try:
-            res = check_first_greater_than_second(case) if isinstance(check_first_greater_than_second.__self__, type(None)) else (case[0] > case[1]) if len(case) >= 2 and all(isinstance(x, (int, float)) or isinstance(x, str) for x in [case[0], case[1]]) else None
-            results.append(res)
-        except Exception:
-            pass
-    
-    print(results)
+    sample_voter = {
+        "age": 25,
+        "citizenship": True,
+        "registered": True,
+        "has_id": True
+    }
+    result = check_voter_eligibility(sample_voter)
+    print(result)
+
+    ineligible_voter = {
+        "age": 16,
+        "citizenship": True,
+        "registered": True,
+        "has_id": True
+    }
+    result2 = check_voter_eligibility(ineligible_voter)
+    print(result2)
+
+    missing_data_voter = {
+        "age": None,
+        "citizenship": True,
+        "registered": True,
+        "has_id": True
+    }
+    result3 = check_voter_eligibility(missing_data_voter)
+    print(result3)

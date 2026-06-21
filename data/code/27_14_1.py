@@ -1,13 +1,16 @@
-def check_difference():
-    """Checks if 10 and a very slightly larger float differ."""
-    # Using '!=' checks for inequality directly in Python
-    val_float = 10 + (2**-45)  # A value extremely close to but not equal to 10 due to floating point precision limits
-    
-    # Concise check: are the values different?
-    return {10, val_float} != {val_float, 10}, "values differ" if 10 != val_float else "values appear same in equality check"
+def validate_triangle(a, b, c):
+    sides = sorted([a, b, c])
+    if sides[0] <= 0:
+        return False
+    return sides[0] + sides[1] > sides[2]
 
 if __name__ == '__main__':
-    is_different = (10 != 10.00000000000001)
-    
-    # Print result to demonstrate the behavior
-    print(f"Different: {is_different}")
+    a1, b1, c1 = 3, 4, 5
+    a2, b2, c2 = 1, 2, 3
+    a3, b3, c3 = 0.5, 0.6, 0.7
+    print(validate_triangle(a1, b1, c1))
+    print(validate_triangle(a2, b2, c2))
+    print(validate_triangle(a3, b3, c3))
+    print(validate_triangle(1, -2, 3))
+    print(validate_triangle(10, 10, 10))
+    print(validate_triangle(7, 2, 8))

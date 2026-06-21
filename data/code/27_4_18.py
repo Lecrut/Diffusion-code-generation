@@ -1,31 +1,22 @@
-def different_numbers_generator(a: int | float, b: int | float):
-    """
-    Generator function that yields a single boolean value indicating 
-    whether two input numbers are different.
-    
-    Args:
-        a (int or float): First number.
-        b (int or float): Second number.
-        
-    Yields:
-        bool: True if a != b, False otherwise.
-    """
-    result = a != b
-    yield result
+def evaluate_triangles(sides: list[tuple[float, float, float]]) -> list[bool]:
+    results: list[bool] = []
+    for a, b, c in sides:
+        if a <= 0 or b <= 0 or c <= 0:
+            results.append(False)
+        elif a + b <= c or a + c <= b or b + c <= a:
+            results.append(False)
+        else:
+            results.append(True)
+    return results
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [
-        (10, 20),      # Should yield True
-        (5, 5),        # Should yield False
-        (3.14, 3.14), # Should yield False
-        (7, -7),       # Should yield True
-        (0, 0)         # Should yield False
+    test_cases: list[tuple[float, float, float]] = [
+        (3, 4, 5),
+        (1, 2, 3),
+        (7, 10, 5),
+        (0, 4, 5),
+        (-1, 2, 3),
+        (1, 1, 1)
     ]
-
-    for a, b in samples:
-        print(f"Comparing {a} and {b}: ", end="")
-        
-        # Using next() to get the single yielded value from the generator
-        result = next(different_numbers_generator(a, b))
-        print(result)
+    results: list[bool] = evaluate_triangles(test_cases)
+    print(results)

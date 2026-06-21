@@ -1,13 +1,12 @@
-import sys
-
-def compare_numbers(num1: float, num2: float) -> None:
-    """Compares two numbers using an if-else structure to determine which is larger."""
-    
-    # Handle potential edge cases like NaN (Not a Number) or infinity where appropriate comparison logic fails
-    import math
-    
-    def safe_check(val):
-        return not (math.isnan(val) or math.isinf(val))
+def sort_two_floats(a, b):
+    if a <= b:
+        return [a, b]
+    return [b, a]
 
 if __name__ == '__main__':
-    pass
+    result = sort_two_floats(3.14, 2.71)
+    print(result)
+    result = sort_two_floats(10.5, 10.5)
+    print(result)
+    result = sort_two_floats(-5.2, -10.0)
+    print(result)

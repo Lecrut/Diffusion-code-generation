@@ -1,10 +1,9 @@
-import math
+import calendar
 
-def is_negative(n: int) -> bool:
-    return n < 0
+def is_leap_year(year):
+    return calendar.isleap(year)
 
 if __name__ == '__main__':
-    test_cases = [-5, -1, 0, 42]
-    for num in test_cases:
-        result = is_negative(num)
-        print(f"is_negative({num}) = {result}")
+    test_years = [2000, 1900, 2024, 2023, 2028, 1800]
+    for year in test_years:
+        print(f"{year}: {is_leap_year(year)}")

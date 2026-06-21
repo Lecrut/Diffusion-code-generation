@@ -1,19 +1,19 @@
-def is_greater(a: float | int, b: float | int) -> bool:
-    """
-    Returns True if 'a' is strictly greater than 'b', otherwise False.
-
-    Args:
-        a (float|int): The first numerical value to compare.
-        b (float|int): The second numerical value to compare against.
-
-    Returns:
-        bool: True if a > b, False otherwise.
-    """
-    return a > b
+def is_eligible_to_vote(age: int, is_citizen: bool) -> bool:
+    if age < 0:
+        return False
+    if not is_citizen:
+        return False
+    return age >= 18
 
 if __name__ == '__main__':
-    # Sample test cases run without user input or external dependencies
-    assert is_greater(10, 5) is True
-    assert is_greater(3.5, 4.2) is False
-    assert is_greater(-1, -5) is True
-    print("All internal tests passed.")
+    test_cases = [
+        (18, True),
+        (17, True),
+        (25, False),
+        (-5, True),
+        (60, True),
+        (0, True),
+    ]
+    for age, citizen in test_cases:
+        result = is_eligible_to_vote(age, citizen)
+        print(f"Age: {age}, Citizen: {citizen} -> Eligible: {result}")

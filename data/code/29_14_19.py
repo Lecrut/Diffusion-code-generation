@@ -1,13 +1,10 @@
-def reverse_word(word):
-    """Reverses a given word."""
-    return word[::-1]
+def count_vowels(s):
+    return sum(1 for char in s if char.lower() in 'aeiou')
 
 if __name__ == '__main__':
-    sample_words = ["hello", "world", "programming"]
-    
-    print("Running CLI reversal demonstration with hard-coded samples.")
-    
-    for test_input in sample_words:
-        reversed_word = reverse_word(test_input)
-        print(f"Original word: {test_input}")
-        print(f"Reversed word:  {reversed_word}\n")
+    print(count_vowels('hello'))
+    print(count_vowels('world'))
+    print(count_vowels('Python Programming'))
+    print(count_vowels('AEIOU'))
+    print(count_vowels('xyz'))
+    print(count_vowels(''))

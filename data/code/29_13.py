@@ -1,5 +1,11 @@
-reverse_string = lambda s: s[::-1]
+def count_vowels(text: str) -> int:
+    vowels = "aeiouAEIOU"
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
+
 if __name__ == '__main__':
-    test_string = "hello"
-    reversed_str = reverse_string(test_string)
-    print(reversed_str)
+    sample_text = "Hello World"
+    print(count_vowels(sample_text))

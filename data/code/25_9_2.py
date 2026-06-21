@@ -1,45 +1,63 @@
-class DataProcessor:
-    def __init__(self):
-        self.count = 0
-    
-    @classmethod
-    def check_zero(cls, instance_attribute_name="count"):
-        """Returns a function that checks if an attribute on any instance is zero."""
-        # This method returns a lambda or closure logic to be used dynamically.
-        # However, the task asks for a class method that performs the check.
-        # To make it idiomatic and usable as described (checking 'a specific instance'),
-        # we will implement an alternative: A static helper within the class 
-        # that can inspect instances if passed them, or simply return True/False based on context.
-        # Given the phrasing "checks if a specific instance attribute", let's create a method 
-        # that accepts an instance and checks its attribute. If no args are provided in signature logic,
-        # we assume the intent is to provide a utility. Let's implement it as:
-        
-        def check(instance):
-            return getattr(instance, instance_attribute_name) == 0
-        
-        return check
+class PriceCalculationError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
-    @staticmethod
-    def verify_zero_value(obj, attr_name="count"):
-        """Static method that checks if an object has the specified attribute equal to zero."""
-        try:
-            value = getattr(obj, attr_name)
-            return value == 0
-        except AttributeError:
-            return False
+class NegativePriceError(PriceCalculationError):
+    def __init__(self):
+        super().__init__("The original price cannot be negative.")
+
+class NegativeDiscountError(PriceCalculationError):
+    def __init__(self):
+        super().__init__("The discount percentage cannot be negative.")
+
+class ExcessiveDiscountError(PriceCalculationError):
+    def __init__(self):
+        super().__init__("The discount percentage cannot exceed 100.")
+
+def _validate_price(value: float) -> None:
+    if value < 0.0:
+        raise NegativePriceError()
+
+def _validate_discount(value: float) -> None:
+    if value < 0.0:
+        raise NegativeDiscountError()
+    if value > 100.0:
+        raise ExcessiveDiscountError()
+
+def calculate_final_price(original_price: float, discount_percentage: float) -> float:
+    _validate_price(original_price)
+    _validate_discount(discount_percentage)
+    multiplier = 1.0 - (discount_percentage / 100.0)
+    final_amount = original_price * multiplier
+    return final_amount
+
+def format_currency(value: float) -> str:
+    formatted = f"${value:.2f}"
+    return formatted
 
 if __name__ == '__main__':
-    # Hard-coded sample values
-    processor1 = DataProcessor()
-    processor2 = DataProcessor()
+    standard_price = 150.0
+    standard_discount = 25.0
+    result_standard = calculate_final_price(standard_price, standard_discount)
+    print(format_currency(result_standard))
     
-    # Simulate setting a different attribute for demonstration if needed, 
-    # but relying on the default 'count' initialized to 0.
-    # Let's manually set one to non-zero to test functionality properly.
-    processor2.count = 5
+    zero_discount_price = 50.0
+    zero_discount = 0.0
+    result_zero = calculate_final_price(zero_discount_price, zero_discount)
+    print(format_currency(result_zero))
     
-    result1 = processor1.verify_zero_value(processor1)
-    result2 = processor1.verify_zero_value(processor2)
+    full_discount_price = 300.0
+    full_discount = 100.0
+    result_full = calculate_final_price(full_discount_price, full_discount)
+    print(format_currency(result_full))
     
-    print(f"Is processor1 count zero? {result1}") # Expected: True
-    print(f"Is processor2 count zero (checked via instance)? {result2}") # Expected: False
+    try:
+        calculate_final_price(-10.0, 10.0)
+    except PriceCalculationError as e:
+        print(e.message)
+    
+    try:
+        calculate_final_price(100.0, 110.0)
+    except PriceCalculationError as e:
+        print(e.message)

@@ -1,20 +1,16 @@
-def compare_numeric_values(a, b):
-    if a > b:
-        return 1
-    elif a < b:
-        return -1
-    else:
-        return 0
+def validate_triangles(triplets):
+    return [
+        (a + b > c) and (a + c > b) and (b + c > a) and (a > 0) and (b > 0) and (c > 0)
+        for a, b, c in triplets
+    ]
+
 if __name__ == '__main__':
-    val1 = 10
-    val2 = 5
-    result1 = compare_numeric_values(val1, val2)
-    print(f"Comparing {val1} and {val2}: {result1}")
-    val3 = 7.5
-    val4 = 7.5
-    result2 = compare_numeric_values(val3, val4)
-    print(f"Comparing {val3} and {val4}: {result2}")
-    val5 = -3
-    val6 = 1
-    result3 = compare_numeric_values(val5, val6)
-    print(f"Comparing {val5} and {val6}: {result3}")
+    sample_triplets = [
+        (3, 4, 5),
+        (1, 2, 3),
+        (7, 10, 5),
+        (1, 1, 1),
+        (0, 5, 5),
+        (10, 1, 1)
+    ]
+    print(validate_triangles(sample_triplets))

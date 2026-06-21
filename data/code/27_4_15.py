@@ -1,40 +1,14 @@
-def yield_different(*args):
-    """Generator function that yields True if two input numbers are different, False otherwise.
-    
-    Since the requirement specifies comparing "two" inputs but allows *args, this generator 
-    will compare all provided arguments pairwise sequentially to ensure robustness for more than 2 values,
-    though the primary logic follows the 'different' comparison as requested. It yields results one by one
-    without storing them in memory (memory efficient).
-
-    Args:
-        args: Variable number of numerical inputs. The generator compares adjacent pairs 
-               from left to right and yields True if they differ, False otherwise.
-    
-    Yields:
-        bool: True if the current pair differs, False if identical.
-        
-    Example:
-        >>> list(yield_different(1, 2)) -> [True]
-        >>> list(yield_different(3, 3, 4, 5)) -> [False, True] (compares 3-3 then 3-4)
-        Note: For exactly two numbers a and b, it yields one boolean value.
-    """
-    
-    if len(args) < 2:
-        return
-    
-    # Compare first number with the second as per primary requirement ("two input numbers")
-    yield args[0] != args[1]
-
+def evaluate_triangle_validity(sides: list[float]) -> dict[str, object]:
+    if len(sides) != 3:
+        return {'valid': False, 'error': 'Exactly three side lengths are required.'}
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return {'valid': False, 'error': 'All side lengths must be positive.'}
+    if a + b <= c or a + c <= b or b + c <= a:
+        return {'valid': False, 'error': 'The sides do not satisfy the triangle inequality theorem.'}
+    return {'valid': True, 'error': None}
 if __name__ == '__main__':
-    # Sample execution block with hard-coded values, no user interaction or file I/O required.
-    
-    test_cases = [
-        (5, 10),       # Different -> True
-        (7, 7),        # Same -> False
-        (3.5, 4.2),   # Floats different -> True
-        (-1, -1),      # Negative same -> False
-    ]
-
-    for num_a, num_b in test_cases:
-        result = next(yield_different(num_a, num_b))
-        print(f"Is {num_a} != {num_b}? Result: {result}")
+    sample_sides = [[3, 4, 5], [1, 2, 3], [7, 10, 5], [0, 4, 5], [-1, 2, 3], [10, 2, 5], [5, 5, 5], [3, 3, 3], [1, 1, 1], [2, 2, 3]]
+    for sides in sample_sides:
+        result = evaluate_triangle_validity(sides)
+        print(f"Sides {sides} -> Valid: {result['valid']}, Error: {result['error']}")

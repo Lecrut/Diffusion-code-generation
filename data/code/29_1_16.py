@@ -1,14 +1,5 @@
-def reverse_word(s: str) -> str:
-    """Returns a new string with characters in 's' reversed."""
-    return s[::-1]
-
-if __name__ == '__main__':
-    test_cases = [
-        "hello",
-        "Pythonic",
-        "",
-        "a"
-    ]
-
-    for word in test_cases:
-        print(f"{word!r} -> {reverse_word(word)!r}")
+count_vowels = lambda text: sum(1 for char in text.lower() if char in "aeiou")
+if __name__ == "__main__":
+    sample_input = "The quick brown fox jumps over the lazy dog"
+    result = count_vowels(sample_input)
+    print(result)

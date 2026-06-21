@@ -1,8 +1,13 @@
-def is_zero(x):
-    return x == 0
+DISCOUNT_RATE = 0.15
+
+SAMPLE_VALUES = [100, 250]
+
+def compute_discounted_price(original_price: float) -> float:
+    return original_price * (1 - DISCOUNT_RATE)
+
 if __name__ == '__main__':
-    print(f"is_zero(0): {is_zero(0)}")
-    print(f"is_zero(1): {is_zero(1)}")
-    print(f"is_zero(-5): {is_zero(-5)}")
-    print(f"is_zero(0.0): {is_zero(0.0)}")
-    print(f"is_zero(0.000000000000001): {is_zero(0.000000000000001)}")
+    results = []
+    for price in SAMPLE_VALUES:
+        results.append(compute_discounted_price(price))
+    for val in results:
+        print(val)

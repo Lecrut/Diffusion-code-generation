@@ -1,29 +1,18 @@
-import unittest
-def check_difference(a, b):
-    return a != b
-class TestDifferenceChecker(unittest.TestCase):
-    def test_positive_numbers(self):
-        self.assertTrue(check_difference(5, 10))
-        self.assertFalse(check_difference(5, 5))
-    def test_negative_numbers(self):
-        self.assertTrue(check_difference(-5, -10))
-        self.assertFalse(check_difference(-5, -5))
-        self.assertTrue(check_difference(-10, -5))
-    def test_mixed_signs(self):
-        self.assertTrue(check_difference(5, -5))
-        self.assertFalse(check_difference(5, 5))
-        self.assertTrue(check_difference(-5, 5))
-    def test_involving_zero(self):
-        self.assertTrue(check_difference(0, 5))
-        self.assertFalse(check_difference(0, 0))
-        self.assertTrue(check_difference(-5, 0))
-        self.assertTrue(check_difference(0, -5))
-    def test_zero_comparison(self):
-        self.assertFalse(check_difference(0, 0))
-    def test_floating_point_numbers(self):
-        self.assertTrue(check_difference(1.0, 1.0000000000000001))
-        self.assertFalse(check_difference(3.14, 3.14))
-        self.assertTrue(check_difference(1.5, 2.0))
-        self.assertFalse(check_difference(1.5, 1.5))
+def check_triangle_validity(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return "Invalid"
+    if a + b <= c or a + c <= b or b + c <= a:
+        return "Invalid"
+    return "Valid"
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    side1 = 3
+    side2 = 4
+    side3 = 5
+    result = check_triangle_validity(side1, side2, side3)
+    print(result)
+    side4 = 1
+    side5 = 2
+    side6 = 3
+    result2 = check_triangle_validity(side4, side5, side6)
+    print(result2)

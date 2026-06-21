@@ -1,9 +1,7 @@
-def main():
-    x = 10
-    y = 5
-    
-result = lambda x, y: x > y
-print(f"{x} > {y}: {result(x, y)}")
+def can_vote(age):
+    return age > 18
 
 if __name__ == '__main__':
-    pass
+    print(can_vote(17))
+    print(can_vote(18))
+    print(can_vote(20))

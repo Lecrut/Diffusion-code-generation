@@ -1,10 +1,9 @@
-import sys
-if __name__ == '__main__':
-    num1 = 15
-    num2 = 25
-    if num1 > num2:
-        print(f"{num1} is larger than {num2}")
-    elif num2 > num1:
-        print(f"{num2} is larger than {num1}")
+def order_numbers(a, b):
+    if a < b:
+        return a, b
     else:
-        print(f"{num1} and {num2} are equal")
+        return b, a
+
+if __name__ == '__main__':
+    result = order_numbers(5, 3)
+    print(result)

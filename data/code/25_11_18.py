@@ -1,34 +1,26 @@
-from typing import Union
-
-class ValueChecker:
-    """A utility class to check if a given value is zero."""
-
-    def check_for_zero(self, value: Union[int, float]) -> bool:
-        """
-        Determines if the input value is equal to zero.
-
-        Args:
-            value (int | float): The numeric value to check.
-
-        Returns:
-            bool: True if value is 0, False otherwise.
-        """
-        return value == 0
-
-if __name__ == '__main__':
-    checker = ValueChecker()
-
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_values = [
-        (5, False),
-        (-3.14, False),
-        (0, True),
-        (float('inf'), False),  # Infinity is not zero
-        (float('-inf'), False), # Negative infinity is not zero
+class TieredDiscountCalculator:
+    BASE_PRICE = 1000.0
+    TIER_RANGES = [
+        (100, 0.25),
+        (50, 0.15),
+        (20, 0.08),
+        (0, 0.0)
     ]
 
-    for value, expected in test_values:
-        result = checker.check_for_zero(value)
-        assert result == expected, f"Failed for input {value}. Expected {expected}, got {result}"
-    
-    print("All tests passed.")
+    @staticmethod
+    def calculate_final_price(quantity):
+        if quantity < 0:
+            return 0.0
+        total_cost = quantity * TieredDiscountCalculator.BASE_PRICE
+        for min_qty, discount_rate in TieredDiscountCalculator.TIER_RANGES:
+            if quantity >= min_qty:
+                discount_amount = total_cost * discount_rate
+                return total_cost - discount_amount
+        return total_cost
+
+if __name__ == '__main__':
+    calculator = TieredDiscountCalculator()
+    quantities = [0, 10, 55, 105]
+    for qty in quantities:
+        final_price = calculator.calculate_final_price(qty)
+        print(final_price)

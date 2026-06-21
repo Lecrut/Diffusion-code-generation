@@ -1,24 +1,23 @@
-def different_generator(a: int | float, b: int | float):
-    """
-    Generator function that yields a single boolean value indicating 
-    whether two input numbers are different.
-    
-    Args:
-        a (int or float): First number to compare.
-        b (int or float): Second number to compare.
-        
-    Yields:
-        bool: True if a != b, False otherwise.
-    """
-    yield a != b
+def is_valid_triangle(side_a: float, side_b: float, side_c: float) -> bool:
+    if side_a <= 0 or side_b <= 0 or side_c <= 0:
+        return False
+    if side_a + side_b <= side_c:
+        return False
+    if side_a + side_c <= side_b:
+        return False
+    if side_b + side_c <= side_a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    results = list(different_generator(5, 10))
-    print(f"Test case (5, 10): {results}")
-
-    results2 = list(different_generator(3.5, 7.0))
-    print(f"Test case (3.5, 7.0): {results2}")
-
-    results3 = list(different_generator(-42, -42))
-    print(f"Test case (-42, -42): {results3}")
+    test_cases = [
+        (3.0, 4.0, 5.0),
+        (1.0, 1.0, 2.0),
+        (7.0, 8.0, 9.0),
+        (0.0, 1.0, 1.0),
+        (2.0, 2.0, 5.0),
+    ]
+    for sides in test_cases:
+        a, b, c = sides
+        result = is_valid_triangle(a, b, c)
+        print(f"{sides} -> {result}")

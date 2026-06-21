@@ -1,10 +1,11 @@
-# Check if 'a' is different from 'b' using a concise one-line expression
-result = a != b
+def is_valid_triangle(sides):
+    a, b, c = sorted(sides)
+    return a + b > c
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test without user input or external dependencies
-    a = 10
-    b = 20
-    
-    # Print the result of the comparison for verification
-    print(f"Is {a} different from {b}? {result}")
+    sides_1 = (3, 4, 5)
+    sides_2 = (1, 2, 4)
+    result_1 = is_valid_triangle(sides_1)
+    result_2 = is_valid_triangle(sides_2)
+    print(result_1)
+    print(result_2)

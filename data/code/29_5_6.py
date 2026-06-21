@@ -1,22 +1,15 @@
-def reverse_string_iterative(s: str) -> str:
-    """
-    Reverses a string iteratively without using built-in reversal methods.
-    
-    Args:
-        s (str): The input string to be reversed.
-        
-    Returns:
-        str: The reversed string.
-    """
-    result = []
-    for char in s:
-        result.insert(0, char)
-    return ''.join(result)
+def vowel_count_generator(sentences):
+    vowels = set('aeiouAEIOU')
+    for sentence in sentences:
+        for word in sentence.split():
+            count = sum(1 for char in word if char in vowels)
+            yield count
 
 if __name__ == '__main__':
-    sample_strings = ["hello", "Python3"]
-    
-    for test_str in sample_strings:
-        reversed_str = reverse_string_iterative(test_str)
-        print(f"Original: {test_str}")
-        print(f"Reversed: {reversed_str}\n")
+    sample_sentences = [
+        "The quick brown fox",
+        "jumps over the lazy dog",
+        "Python is awesome"
+    ]
+    counts = list(vowel_count_generator(sample_sentences))
+    print(counts)

@@ -1,25 +1,17 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if a is numerically different from b, False otherwise.
-    
-    This function uses an epsilon-based comparison to handle potential floating-point 
-    inaccuracies when determining equality. Two values are considered equal if their 
-    absolute difference is less than the machine epsilon scaled by the magnitude of the larger value.
-    
-    Args:
-        a (float): The first numerical input.
-        b (float): The second numerical input.
-        
-    Returns:
-        bool: True if a and b are different, False otherwise.
-    """
-    import math
-    
-    epsilon = math.isclose(a, b) not in [True]  # Not using isclose for the return logic to be explicit on difference
-    # Correction above was an error in thought process during generation; let's rewrite directly.
-    
-    # Direct robust float comparison: values are different if their absolute diff exceeds tolerance based scale
-    max_val = abs(max(a, b)) or 0.5
+def is_valid_triangle(a, b, c):
+    if a + b > c and a + c > b and b + c > a:
+        return True
+    else:
+        return False
 
 if __name__ == '__main__':
-    pass
+    test_cases = [
+        (3, 4, 5),
+        (1, 2, 3),
+        (5, 5, 10),
+        (6, 2, 3),
+        (7, 10, 5)
+    ]
+    for side1, side2, side3 in test_cases:
+        result = is_valid_triangle(side1, side2, side3)
+        print(f"Sides ({side1}, {side2}, {side3}): {result}")

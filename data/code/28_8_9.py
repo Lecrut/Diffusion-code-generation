@@ -1,23 +1,22 @@
-def compare_and_report(num1: float, num2: float) -> bool:
-    """
-    Performs a strict inequality check between two floating-point numbers.
+OPERATIONS = {
+    "less": lambda x, y: x < y,
+    "greater": lambda x, y: x > y
+}
 
-    Args:
-        num1 (float): The first number to compare.
-        num2 (float): The second number to compare.
-
-    Returns:
-        bool: True if num1 is strictly less than num2, False otherwise.
-    """
-    return num1 < num2
+def order_pair(first, second):
+    if OPERATIONS["less"](first, second):
+        return (first, second)
+    return (second, first)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    result_1 = compare_and_report(3.5, 7.0)
-    print(f"compare_and_report(3.5, 7.0) = {result_1}")
-
-    result_2 = compare_and_report(-1.0, -2.0)
-    print(f"compare_and_report(-1.0, -2.0) = {result_2}")
-
-    result_3 = compare_and_report(4.5, 4.5)
-    print(f"compare_and_report(4.5, 4.5) = {result_3}")
+    val1 = 15
+    val2 = 3
+    print(order_pair(val1, val2))
+    
+    val3 = -5
+    val4 = 10
+    print(order_pair(val3, val4))
+    
+    val5 = 7
+    val6 = 7
+    print(order_pair(val5, val6))

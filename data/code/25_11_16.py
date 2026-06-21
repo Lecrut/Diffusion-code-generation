@@ -1,38 +1,44 @@
-from typing import Any
+class DiscountCalculator:
+    _PRICE_LIST = {
+        'basic': 100.0,
+        'standard': 200.0,
+        'premium': 500.0,
+    }
 
-class ValueChecker:
-    """A utility class to check if a given value is zero."""
-
-    def check_for_zero(self, value: Any) -> bool:
-        """
-        Determines if the input 'value' is equal to zero.
-
-        Args:
-            value (Any): The value to be checked for equality with zero.
-
-        Returns:
-            bool: True if the value is numerically equivalent to 0, False otherwise.
-                  Handles integers and floats correctly while ignoring non-numeric types.
-        """
-        try:
-            return float(value) == 0.0
-        except (TypeError, ValueError):
-            # If conversion fails, it's not zero by definition in this context
-            return False
-
-if __name__ == '__main__':
-    checker = ValueChecker()
-
-    test_cases = [
-        ("Zero integer", 0),
-        ("Negative one", -1),
-        ("Positive two", 2.5),
-        ("String zero", "0"),
-        ("Empty string", ""),
-        ("None value", None),
-        ("Float point", 0.0),
+    _DISCOUNT_TIERS = [
+        (5000, 0.10),
+        (2000, 0.05),
+        (0, 0.0),
     ]
 
-    for description, test_value in test_cases:
-        result = checker.check_for_zero(test_value)
-        print(f"{description}: {test_value} -> Is zero? {result}")
+    @staticmethod
+    def get_base_price(item_code):
+        if item_code in DiscountCalculator._PRICE_LIST:
+            return DiscountCalculator._PRICE_LIST[item_code]
+        return 0.0
+
+    @staticmethod
+    def calculate_final_price(item_code, quantity):
+        base_price = DiscountCalculator.get_base_price(item_code)
+        if base_price == 0.0 or quantity <= 0:
+            return 0.0
+
+        subtotal = base_price * quantity
+        
+        if subtotal >= 5000:
+            discount_rate = 0.10
+        elif subtotal >= 2000:
+            discount_rate = 0.05
+        else:
+            discount_rate = 0.0
+
+        discount_amount = subtotal * discount_rate
+        final_price = subtotal - discount_amount
+        return final_price
+
+if __name__ == '__main__':
+    calc = DiscountCalculator()
+    item = 'premium'
+    qty = 15
+    price = DiscountCalculator.calculate_final_price(item, qty)
+    print(price)

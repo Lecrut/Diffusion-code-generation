@@ -1,63 +1,42 @@
-from typing import Any
+class DiscountCalculator:
+    PRICES = {
+        'basic': 10.0,
+        'standard': 25.0,
+        'premium': 50.0,
+        'enterprise': 100.0
+    }
 
-class ValueChecker:
-    """A utility class to check if a given value is zero."""
-
-    def check_for_zero(self, value: Any) -> bool:
-        """
-        Determines if the input 'value' is equal to zero.
-
-        This method handles multiple types of values including integers and floats.
-        For floating-point numbers, it checks for exact equality as per Python's behavior.
-
-        Args:
-            value (Any): The numeric value to be checked against zero.
-
-        Returns:
-            bool: True if the value is 0 or equivalent, False otherwise.
-        """
-        return value == 0
+    @staticmethod
+    def calculate_total_cost(items):
+        if not items:
+            return 0.0
+        
+        total_raw = 0.0
+        for item in items:
+            name = item.get('name', '')
+            quantity = item.get('quantity', 0)
+            price = DiscountCalculator.PRICES.get(name, 0.0)
+            total_raw += price * quantity
+        
+        discount_rate = 0.0
+        if total_raw >= 500:
+            discount_rate = 0.20
+        elif total_raw >= 250:
+            discount_rate = 0.15
+        elif total_raw >= 100:
+            discount_rate = 0.10
+        elif total_raw >= 50:
+            discount_rate = 0.05
+        
+        discount_amount = total_raw * discount_rate
+        final_total = total_raw - discount_amount
+        return round(final_total, 2)
 
 if __name__ == '__main__':
-    checker = ValueChecker()
-    
-    # Hard-coded sample values without user input
-    test_values = [
-        (0, "Zero integer"),
-        (-123456789, "Negative large integer"),
-        ("zero", "String 'zero'"),
-        ([], "Empty list - should be False but not zero type check logic applied strictly to numeric equality conceptually here as per task spec for value==0"),
-        (None, "None - should be False"),
-        (3.14159, "Float non-zero"),
-        (0.0, "Zero float"),
+    sample_order = [
+        {'name': 'premium', 'quantity': 3},
+        {'name': 'standard', 'quantity': 5},
+        {'name': 'basic', 'quantity': 10}
     ]
-
-    print("Testing ValueChecker.check_for_zero:\n")
-    
-    # Note: The task specifies checking if value IS equal to zero (== 0). 
-    # In Python, 'zero' == 0 is False and [] == 0 is False. We follow strict equality rules unless specified otherwise for numeric types only implicitly by context of "value".
-    # However, the prompt implies general comparison logic often seen in such utility classes which might involve float comparisons or type specific handling if implied, 
-    # but strictly "== 0" works as described below without special float tolerance unless requested.
-
-    all_passed = True
-    
-    for value, description in test_values:
-        result = checker.check_for_zero(value)
-        
-        # Determine expected behavior based on strict equality rules applied to the input types provided
-        if isinstance(value, (int, float)):
-            is_expected_zero = value == 0
-        else:
-            is_expected_zero = False
-        
-        passed = result == is_expected_zero
-        
-        status = "PASS" if passed else "FAIL"
-        
-        print(f"[{status}] {description}: Value={value!r}, Result={result}")
-
-    # Check for any failures in the test run to ensure logic correctness based on strict equality
-    all_passed_and_correct_logic = True
-    
-    # If we ran into unexpected type mismatches where a non-numeric zero-like string was expected or vice versa, 
-    # strictly following Python's == operator means "zero" is not 0. The task asks for determining if value IS equal to zero.
+    result = DiscountCalculator.calculate_total_cost(sample_order)
+    print(result)

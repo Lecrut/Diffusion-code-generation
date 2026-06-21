@@ -1,12 +1,16 @@
-def check_difference(a, b):
-    return a != b
+def is_valid_triangle(side_a, side_b, side_c):
+    if side_a <= 0 or side_b <= 0 or side_c <= 0:
+        return False
+    if side_a + side_b <= side_c:
+        return False
+    if side_a + side_c <= side_b:
+        return False
+    if side_b + side_c <= side_a:
+        return False
+    return True
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 10
-    print(f"10 and 10 are different: {check_difference(num1, num2)}")
-    num3 = 5
-    num4 = 8
-    print(f"5 and 8 are different: {check_difference(num3, num4)}")
-    num5 = -3.5
-    num6 = -3.5000000000000004
-    print(f"-3.5 and -3.5000000000000004 are different: {check_difference(num5, num6)}")
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(10, 1, 2))
+    print(is_valid_triangle(7, 10, 5))

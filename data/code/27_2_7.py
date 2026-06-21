@@ -1,24 +1,15 @@
-def main():
-    """
-    Demonstrates the logic of comparing two numbers without user input.
-    Since interactive prompts like input() are forbidden in this context,
-    we simulate the scenario using hard-coded values within an if block.
-    
-    This strictly follows the requirement to run without network access 
-    or pre-existing files while demonstrating the core functionality.
-    """
-    # Hard-coded sample values as per instructions (no user interaction)
-    num1 = 42
-    num2 = 86
-
-    print(f"Comparing number {num1} and number {num2}.")
-    
-    if num1 != num2:
-        message = f"The two entered values differ. Value A is {num1}, which is different from Value B, {num2}."
-    else:
-        message = "The two entered values are the same."
-
-    print(message)
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    main()
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(-1, 2, 3))
+    print(is_valid_triangle(0, 5, 5))
+    print(is_valid_triangle(7, 10, 5))
+    print(is_valid_triangle(1, 1, 1))
+    print(is_valid_triangle(100, 1, 1))

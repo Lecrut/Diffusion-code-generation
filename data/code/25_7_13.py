@@ -1,26 +1,16 @@
-def contains_zero(numbers: list) -> bool:
-    """
-    Checks if zero exists in the provided list of numbers.
-    
-    Args:
-        numbers (list): A list containing numeric values.
-        
-    Returns:
-        bool: True if 0 is found, False otherwise.
-    """
-    return any(num == 0 for num in numbers)
+class DiscountCalculator:
+    def __init__(self, rates):
+        self.rates = rates
+
+    def apply(self, value, rate_index):
+        return value * (1.0 - self.rates[rate_index])
+
+    def compute_all(self, values):
+        return [self.apply(v, 0) for v in values]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    sample_lists = [
-        [1, 2, 3],           # Expected: False
-        [-5, 0, 7],          # Expected: True
-        [],                  # Expected: False (empty list)
-        [0.0, -1.5],        # Expected: True (float zero)
-    ]
-
-    for i, test_list in enumerate(sample_lists):
-        result = contains_zero(test_list)
-        expected = 0 if not any(num == 0 for num in test_list) else 1
-        status = "PASS" if int(result) == expected else "FAIL"
-        print(f"Test {i + 1}: List={test_list}, Result={result} -> Status: {status}")
+    calc = DiscountCalculator([0.05])
+    hard_values = [100, 200, 300]
+    computed = calc.compute_all(hard_values)
+    print(computed)
+    print(calc.apply(150, 0))

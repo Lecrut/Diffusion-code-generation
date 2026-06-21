@@ -1,11 +1,9 @@
-def is_negative(n: int) -> bool:
-    return n < 0
+import calendar
+
+def is_leap_year(year):
+    return calendar.isleap(year)
 
 if __name__ == '__main__':
-    test_cases = [-5, -1, 0, 42]
-    print("Input\tResult")
-    for val in test_cases:
-        result = is_negative(val)
-        expected = val < 0
-        status = "PASS" if result == expected else "FAIL"
-        print(f"{val}\t{result} ({status})")
+    years = [2020, 2021, 2000, 1900, 2400]
+    for y in years:
+        print(f"{y}: {is_leap_year(y)}")

@@ -1,34 +1,28 @@
-def get_integer():
-    """Prompt the user to enter a number (simulated via direct execution in main block)."""
-    # This function is defined but not used directly with input() as per constraints;
-    # usage happens inside if __name__ == '__main__'.
-    pass
+from typing import Optional, List, Tuple
 
-def process_number(value):
-    """Determine and print whether the entered value is negative."""
-    message = ""
-    if value < 0:
-        message = f"The number {value} is a negative integer."
-    else:
-        message = f"The number {value} is not negative (it is zero or positive)."
-    
-    # Clear screen for better user experience on some terminals, then print the result.
-    import os; os.system('cls' if os.name == 'nt' else 'clear')
-    return message
+class LeapYearChecker:
+    def __init__(self) -> None:
+        self._history: List[Tuple[int, bool]] = []
+
+    def is_leap_year(self, year: int) -> bool:
+        if not isinstance(year, int):
+            raise TypeError("Year must be an integer")
+        if year < 1:
+            raise ValueError("Year must be positive")
+        
+        is_leap = (year % 4 == 0) and (year % 100 != 0 or year % 400 == 0)
+        self._history.append((year, is_leap))
+        return is_leap
+
+    def get_history(self) -> List[Tuple[int, bool]]:
+        return list(self._history)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without any input or arguments.
-    # This fulfills the requirement of running without user interaction while demonstrating logic.
+    checker = LeapYearChecker()
+    test_years = [2000, 1900, 2024, 2023, 2100, 2400]
     
-    test_values = [-5, 0, -12345]
+    for year in test_years:
+        result = checker.is_leap_year(year)
+        print(f"{year}: {result}")
     
-    for num in test_values:
-        print(f"--- Processing value: {num} ---")
-        
-        if isinstance(num, int):
-            result = process_number(num)
-            # Since the prompt asks to "print a clear message", we output it directly.
-            # We simulate the user experience by iterating through samples automatically.
-            pass
-        
-    print("--- Sample execution completed successfully." )
+    print(checker.get_history())

@@ -1,17 +1,16 @@
-def is_zero(value: float) -> bool:
-    """
-    Returns True if value is exactly zero, False otherwise.
-    
-    Args:
-        value (float): The numerical argument to check.
-        
-    Returns:
-        bool: True if value == 0, else False.
-    """
-    return value == 0
+discount_settings = {
+    "sample_price": 150.0,
+    "sample_discount_rate": 0.25
+}
+
+def calculate_discount(price, discount_rate):
+    discount_amount = price * discount_rate
+    final_price = price - discount_amount
+    return discount_amount, final_price
 
 if __name__ == '__main__':
-    test_cases = [0, -1e-4532, 5, 0.0]
-    for val in test_cases:
-        result = is_zero(val)
-        print(f"is_zero({val}) -> {result}")
+    price = discount_settings["sample_price"]
+    rate = discount_settings["sample_discount_rate"]
+    result = calculate_discount(price, rate)
+    print(result[0])
+    print(result[1])

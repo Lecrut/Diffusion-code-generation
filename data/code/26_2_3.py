@@ -1,12 +1,8 @@
-def main():
-    # Simulate user interaction with hard-coded values as per requirements
-    num1 = 42
-    num2 = 37
-    
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+def is_adult(citizen_details):
+    age = citizen_details.get('age')
+    return age is not None and age >= 18
 
 if __name__ == '__main__':
-    main()
+    sample_citizen = {'name': 'Alice', 'age': 25}
+    result = is_adult(sample_citizen)
+    print(result)

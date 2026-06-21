@@ -1,17 +1,13 @@
-import sys
-
-def compare_numbers(num1: int, num2: int) -> None:
-    """Compare two integers and print a descriptive message."""
-    if num1 > num2:
-        print(f"{num1} is larger than {num2}")
-    elif num2 > num1:
-        print(f"{num2} is larger than {num1}")
+def get_ordered_pair(a, b):
+    if a < b:
+        return a, b
     else:
-        print("Both numbers are equal")
+        return b, a
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or args)
-    val_a = 42
-    val_b = 73
-    
-    compare_numbers(val_a, val_b)
+    result = get_ordered_pair(5, 3)
+    print(result)
+    result = get_ordered_pair(10, 10)
+    print(result)
+    result = get_ordered_pair(1, 100)
+    print(result)

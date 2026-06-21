@@ -1,11 +1,9 @@
-def is_zero(value):
-    """Returns True if value is zero (0), False otherwise."""
-    return value == 0
+def compute_discounted_price(price):
+    discount_rate = 0.15
+    return price * (1 - discount_rate)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [0, -1.5e-24, float('inf'), '0', [], {}, None]
-
-    for sample in samples:
-        result = is_zero(sample)
-        print(f"is_zero({sample!r}) = {result}")
+    value1 = 100
+    value2 = 250
+    print(compute_discounted_price(value1))
+    print(compute_discounted_price(value2))

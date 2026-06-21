@@ -1,20 +1,20 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if two numerical values are different, False otherwise.
-    
-    Args:
-        a (float): First numerical value.
-        b (float): Second numerical value.
-        
-    Returns:
-        bool: True if a != b, False otherwise.
-    """
-    return a != b
+import math
+
+class TriangleValidator:
+    EPSILON = 1e-9
+
+    @staticmethod
+    def is_valid(sides):
+        if len(sides) != 3:
+            return False
+        a, b, c = sorted(sides)
+        if a <= 0:
+            return False
+        return a + b > c + TriangleValidator.EPSILON
 
 if __name__ == '__main__':
-    sample_a = 10.5
-    sample_b = 20.3
-    
-    result = check_difference(sample_a, sample_b)
-    
-    print(f"check_difference({sample_a}, {sample_b}) = {result}")
+    print(TriangleValidator.is_valid((3.0, 4.0, 5.0)))
+    print(TriangleValidator.is_valid((1.0, 1.0, 2.0)))
+    print(TriangleValidator.is_valid((0.1, 0.2, 0.3)))
+    print(TriangleValidator.is_valid((10.0, 5.0, 2.0)))
+    print(TriangleValidator.is_valid((-5.0, 5.0, 10.0)))

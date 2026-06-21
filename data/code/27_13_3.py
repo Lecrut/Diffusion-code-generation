@@ -1,12 +1,10 @@
-class ValueChecker:
-    def are_different(self, val1, val2):
-        return val1 != val2
+def is_valid_triangle(a, b, c):
+    if not (isinstance(a, (int, float)) and isinstance(b, (int, float)) and isinstance(c, (int, float))):
+        return False
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return (a + b > c) and (a + c > b) and (b + c > a)
+
 if __name__ == '__main__':
-    checker = ValueChecker()
-    value1 = 10
-    value2 = 20
-    value3 = 10
-    value4 = 10
-    print(f"Are {value1} and {value2} different? {checker.are_different(value1, value2)}")
-    print(f"Are {value1} and {value3} different? {checker.are_different(value1, value3)}")
-    print(f"Are {value3} and {value4} different? {checker.are_different(value3, value4)}")
+    result = is_valid_triangle(3, 4, 5)
+    print(result)

@@ -1,23 +1,12 @@
-def check_threshold(threshold):
-    def decorator(func):
-        def wrapper(*args):
-            result = func(*args)
-            if result == threshold:
-                raise ValueError("Result equals the specified threshold")
-            return result
-        return wrapper
-    return decorator
-@check_threshold(10)
-def add(a, b):
-    return a + b
+def verify_triangle_inequality(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b > c and a + c > b and b + c > a:
+        return True
+    return False
+
 if __name__ == '__main__':
-    try:
-        result1 = add(5, 5)
-        print(f"add(5, 5) = {result1}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        result2 = add(1, 8)
-        print(f"add(1, 8) = {result2}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    print(verify_triangle_inequality(3.0, 4.0, 5.0))
+    print(verify_triangle_inequality(1.0, 2.0, 3.0))
+    print(verify_triangle_inequality(0.5, 0.5, 0.5))
+    print(verify_triangle_inequality(-1.0, 2.0, 3.0))

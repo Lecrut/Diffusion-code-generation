@@ -1,16 +1,19 @@
-def reverse_string_iterative(s):
-    n = len(s)
-    reversed_s = []
-    for i in range(n):
-        reversed_s.append(s[n - 1 - i])
-    return "".join(reversed_s)
+def count_vowels_per_word(sentences):
+    vowels = set('aeiouAEIOU')
+    for sentence in sentences:
+        words = sentence.split()
+        for word in words:
+            count = 0
+            for char in word:
+                if char in vowels:
+                    count += 1
+            yield count
+
 if __name__ == '__main__':
-    sample_string = "hello"
-    reversed_result = reverse_string_iterative(sample_string)
-    print(reversed_result)
-    sample_string_2 = "world"
-    reversed_result_2 = reverse_string_iterative(sample_string_2)
-    print(reversed_result_2)
-    sample_string_3 = "python"
-    reversed_result_3 = reverse_string_iterative(sample_string_3)
-    print(reversed_result_3)
+    sample_sentences = [
+        "Hello world",
+        "Python is awesome",
+        "Generator functions are memory efficient"
+    ]
+    results = list(count_vowels_per_word(sample_sentences))
+    print(results)

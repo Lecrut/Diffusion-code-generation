@@ -1,9 +1,18 @@
-def determine_larger(value1: int | float, value2: int | float) -> int | float:
-    """Returns the larger of two comparable numeric values."""
-    return max(value1, value2)
+def sort_two_numbers(a, b):
+    if a < b:
+        return a, b
+    return b, a
 
 if __name__ == '__main__':
-    sample_int_1 = 45
-    sample_float_1 = 3.7
-    result1 = determine_larger(sample_int_1, sample_float_1)
-    print(result1)
+    first = 42
+    second = 17
+    sorted_first, sorted_second = sort_two_numbers(first, second)
+    print(sorted_first, sorted_second)
+    x = -5
+    y = -5
+    sorted_x, sorted_y = sort_two_numbers(x, y)
+    print(sorted_x, sorted_y)
+    num1 = 100
+    num2 = 0.5
+    sorted_num1, sorted_num2 = sort_two_numbers(num1, num2)
+    print(sorted_num1, sorted_num2)

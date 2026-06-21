@@ -1,6 +1,7 @@
-def lambda_compare(x: int | float = 10, y: int | float = 5) -> bool:
-    return x > y
+def can_vote(age):
+    return age > 18
 
 if __name__ == '__main__':
-    result = lambda_compare(20, 10)
-    print(f"x=20, y=10 => {result}")
+    test_ages = [17, 18, 19, 25]
+    for age in test_ages:
+        print(f"Age {age}: {can_vote(age)}")

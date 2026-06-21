@@ -1,14 +1,13 @@
-def main():
-    # Simulate user interaction with hard-coded values as per requirements
-    num1 = 50
-    num2 = 30
-    
-    print(f"Comparing {num1} and {num2}")
-    
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}.")
-    else:
-        print(f"{num1} is not greater than {num2}.")
+def check_citizen_age(citizen_details):
+    if not isinstance(citizen_details, dict):
+        return False
+    if 'age' not in citizen_details:
+        return False
+    age = citizen_details['age']
+    if not isinstance(age, (int, float)):
+        return False
+    return age >= 18
 
 if __name__ == '__main__':
-    main()
+    result = check_citizen_age({'name': 'John', 'age': 20})
+    print(result)

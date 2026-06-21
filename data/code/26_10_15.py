@@ -1,45 +1,18 @@
-def is_greater(a: float | int, b: float | int) -> bool:
-    """
-    Returns True if 'a' is strictly greater than 'b', otherwise False.
-
-    Args:
-        a (float|int): The first numerical value to compare.
-        b (float|int): The second numerical value to compare against.
-
-    Returns:
-        bool: True if a > b, False otherwise.
-    
-    Examples:
-        >>> is_greater(5, 3)
-        True
-        >>> is_greater(10, 10)
-        False
-    """
-    return a > b
+def is_voting_eligible(age: int, is_citizen: bool) -> bool:
+    if age is None or age < 0:
+        return False
+    if not isinstance(age, int) or isinstance(age, bool):
+        return False
+    return age >= 18 and is_citizen
 
 if __name__ == '__main__':
-    # Sample test cases to demonstrate functionality without user input or external dependencies
-    sample_cases = [
-        (5, 3),      # Expected: True
-        (4, 4),      # Expected: False
-        (-1.5, -2.0),# Expected: True (negative numbers)
-        ("string", "other"),  # This will raise a TypeError as expected for non-numbers
-    ]
-
-    print("Running sample tests...")
-    
-    try:
-        result = is_greater(10, 8)
-        assert result == True
-        
-        result2 = is_greater(7.5, 9.5)
-        assert result2 == False
-        
-        # Testing with negative numbers specifically to ensure robustness
-        result3 = is_greater(-5, -10)
-        assert result3 == True
-        
-        print("All assertions passed successfully.")
-        
-    except AssertionError:
-        print("An assertion failed!")
+    result = is_voting_eligible(20, True)
+    print(result)
+    result_negative = is_voting_eligible(-5, True)
+    print(result_negative)
+    result_non_citizen = is_voting_eligible(25, False)
+    print(result_non_citizen)
+    result_underage = is_voting_eligible(17, True)
+    print(result_underage)
+    result_boundary = is_voting_eligible(18, True)
+    print(result_boundary)

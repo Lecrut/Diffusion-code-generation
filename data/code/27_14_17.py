@@ -1,16 +1,22 @@
-def main():
-    val1 = 10
-    val2 = 10.00000000000001
-    
-    # Check if values differ using direct equality comparison with a small epsilon tolerance for float precision issues, 
-    # but note: the prompt specifically asks to check IF they are different. Since one is int and other is float slightly greater than 10,
-    # standard != will return True because 10 < 10.00000000000001. However, often "different" in numeric contexts implies 
-    # considering floating point noise. Here we follow the literal interpretation of inequality for these specific numbers.
-    
-    if val1 != val2:
-        print("Values are different")
-    else:
-        print("Values are equal")
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    main()
+    side1 = 3
+    side2 = 4
+    side3 = 5
+    result = is_valid_triangle(side1, side2, side3)
+    print(result)
+    side4 = 1
+    side5 = 2
+    side6 = 3
+    result = is_valid_triangle(side4, side5, side6)
+    print(result)

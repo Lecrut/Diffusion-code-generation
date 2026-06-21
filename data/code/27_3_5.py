@@ -1,13 +1,8 @@
-# Check if variable 'a' is different from variable 'b' using a one-line expression in an `if` statement within a runnable module block.
-print("Testing equality check:", 5 != 3) 
+def is_valid_triangle(sides):
+    a, b, c = sorted(sides)
+    return a + b > c and a > 0
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the condition without user input or external dependencies.
-    a, b = 10, 20
-    
-    # One-line expression to check if 'a' is different from 'b'.
-    result = a != b
-    
-    print(f"Value of 'a': {a}")
-    print(f"Value of 'b': {b}")
-    print(f"a differs from b: {result}")
+    test_cases = [(3, 4, 5), (1, 2, 3), (7, 10, 5), (-1, 2, 3), (0, 0, 0)]
+    for sides in test_cases:
+        print(is_valid_triangle(sides))

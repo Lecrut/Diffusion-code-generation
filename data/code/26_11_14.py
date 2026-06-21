@@ -1,47 +1,50 @@
-class ComparisonTool:
-    def check_greater(self, value1, value2):
-        """
-        Determines if the first provided value is strictly greater than 
-        the second value after converting both to integers. Handles type errors gracefully by returning False on failure.
-        
-        Args:
-            value1 (int or float): The first value to compare.
-            value2 (int or float): The second value to compare.
-            
-        Returns:
-            bool: True if value1 > value2 after conversion, otherwise False.
-                  If a type error occurs during comparison, returns False instead of raising an exception.
-        """
-        try:
-            # Attempt to convert both values to integers for safe numerical comparison
-            int_val_1 = int(value1)
-            int_val_2 = int(value2)
-            
-            return int_val_1 > int_val_2
-        except (TypeError, ValueError):
-            # Gracefully handle cases where conversion or comparison fails
+import datetime
+from typing import Optional
+
+class VotingEligibilityManager:
+    VOTING_AGE = 18
+    DEFAULT_DISQUALIFICATION_YEARS = 5
+
+    def __init__(self, age: int, has_criminal_record: bool = False, felony_disqualification_years: int = 0):
+        self.age = age
+        self.has_criminal_record = has_criminal_record
+        self.felony_disqualification_years = felony_disqualification_years
+
+    def check_age_eligibility(self) -> bool:
+        return self.age >= self.VOTING_AGE
+
+    def check_legal_eligibility(self) -> bool:
+        if not self.has_criminal_record:
+            return True
+        if self.felony_disqualification_years >= self.DEFAULT_DISQUALIFICATION_YEARS:
+            return True
+        return False
+
+    def is_eligible(self) -> bool:
+        if not self.check_age_eligibility():
             return False
+        return self.check_legal_eligibility()
+
+    def get_eligibility_status(self) -> str:
+        if not self.check_age_eligibility():
+            return f"Ineligible: Age {self.age} is below voting age {self.VOTING_AGE}"
+        if self.has_criminal_record and self.felony_disqualification_years < self.DEFAULT_DISQUALIFICATION_YEARS:
+            return f"Ineligible: Felony disqualification period of {self.felony_disqualification_years} years has not passed"
+        return f"Eligible: Age {self.age}, No active legal disqualification"
 
 if __name__ == '__main__':
-    tool = ComparisonTool()
+    manager_adult = VotingEligibilityManager(25, False)
+    print(manager_adult.is_eligible())
+    print(manager_adult.get_eligibility_status())
 
-    # Sample test cases with hard-coded values
-    
-    # Test 1: Normal integer comparison
-    result_1 = tool.check_greater(5, 3)
-    
-    # Test 2: Float conversion
-    result_2 = tool.check_greater(7.9, 6.8)
-    
-    # Test 3: Negative numbers
-    result_3 = tool.check_greater(-10, -20)
-    
-    # Test 4: Type error simulation (comparing string with number directly might fail conversion if not handled)
-    # Note: int() on a valid string like "5" works in Python, so let's use invalid input for the try block to trigger exception handling
-    
-    result_4 = tool.check_greater("not_a_number", 10)
+    manager_minor = VotingEligibilityManager(16, False)
+    print(manager_minor.is_eligible())
+    print(manager_minor.get_eligibility_status())
 
-    print(f"{result_1} (Expected: True)")
-    print(f"{result_2} (Expected: True)")
-    print(f"{result_3} (Expected: True)")
-    print(f"{result_4} (Expected: False due to type error in conversion logic or invalid comparison)")
+    manager_convict = VotingEligibilityManager(30, True, 3)
+    print(manager_convict.is_eligible())
+    print(manager_convict.get_eligibility_status())
+
+    manager_fully_served = VotingEligibilityManager(30, True, 6)
+    print(manager_fully_served.is_eligible())
+    print(manager_fully_served.get_eligibility_status())

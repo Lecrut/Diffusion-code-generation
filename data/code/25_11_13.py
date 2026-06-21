@@ -1,37 +1,45 @@
-from typing import Any
-
-class ValueChecker:
-    """A utility class to check if a given value is zero."""
-
-    def check_for_zero(self, value: Any) -> bool:
-        """
-        Determines if the input 'value' is equal to zero.
-
-        Args:
-            value (Any): The value to be checked for equality with zero.
-
-        Returns:
-            bool: True if value is 0 or equivalent to 0 in numeric types, False otherwise.
-        """
-        return value == 0
-
-if __name__ == '__main__':
-    checker = ValueChecker()
-
-    # Sample values to test without user input
-    test_cases = [
-        0,
-        -123456789,
-        0.0,
-        float('inf'),
-        float('-inf'),
-        "0",       # String zero (should be False as per strict equality)
-        [],        # Empty list
-        {},        # Empty dict
+class TieredDiscountCalculator:
+    price_list = {
+        'item_a': 100.0,
+        'item_b': 50.0,
+        'item_c': 25.0
+    }
+    
+    tiers = [
+        (5, 0.0),
+        (10, 0.1),
+        (20, 0.2),
+        (float('inf'), 0.3)
     ]
 
-    print("Testing ValueChecker.check_for_zero()")
-    for value in test_cases:
-        result = checker.check_for_zero(value)
-        status = "is" if result else "is not"
-        print(f"{value!r} {status} equal to zero.")
+    @staticmethod
+    def calculate_discount(quantity):
+        for limit, discount_rate in TieredDiscountCalculator.tiers:
+            if quantity < limit:
+                return discount_rate
+        return 0.0
+
+    @staticmethod
+    def get_unit_price(item_name):
+        return TieredDiscountCalculator.price_list.get(item_name, 0.0)
+
+    @staticmethod
+    def calculate_total(item_name, quantity):
+        unit_price = TieredDiscountCalculator.get_unit_price(item_name)
+        subtotal = unit_price * quantity
+        discount_rate = TieredDiscountCalculator.calculate_discount(quantity)
+        discount_amount = subtotal * discount_rate
+        final_price = subtotal - discount_amount
+        return {
+            'item': item_name,
+            'quantity': quantity,
+            'unit_price': unit_price,
+            'subtotal': subtotal,
+            'discount_rate': discount_rate,
+            'discount_amount': discount_amount,
+            'final_price': final_price
+        }
+
+if __name__ == '__main__':
+    result = TieredDiscountCalculator.calculate_total('item_a', 15)
+    print(result)

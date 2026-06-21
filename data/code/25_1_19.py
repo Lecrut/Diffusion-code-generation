@@ -1,14 +1,12 @@
-def is_zero(value):
-    """Returns True if value is zero, False otherwise."""
-    return value == 0
+MULTIPLIER = 0.85
+
+def get_discounted_price(base_price):
+    if base_price < 0:
+        return 0
+    return base_price * MULTIPLIER
 
 if __name__ == '__main__':
-    test_cases = [0, -123456789, 0.0, "0", None]
-    for case in test_cases:
-        try:
-            result = is_zero(case) if isinstance(case, (int, float)) else False
-            print(f"is_zero({case!r}) -> {result}")
-        except Exception as e:
-            # Handle non-numeric types gracefully by returning False or raising specific error logic here if needed.
-            # Since the task asks for a numerical argument check but sample might include edge cases, we handle type safety implicitly via try/except in main block demonstration.
-            print(f"is_zero({case!r}) -> Error handling: {e}")
+    first_val = get_discounted_price(100)
+    second_val = get_discounted_price(250)
+    print(first_val)
+    print(second_val)

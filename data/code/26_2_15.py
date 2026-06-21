@@ -1,12 +1,15 @@
-def main():
-    # Simulate user interaction with hardcoded values instead of input()
-    num1 = 42
-    num2 = 30
-    
-    if num1 > num2:
-        print(f"The first number {num1} is greater than the second number {num2}.")
-    else:
-        print("The first number is not greater than the second.")
+def check_adult(citizen_details):
+    if 'age' not in citizen_details:
+        return False
+    try:
+        return int(citizen_details['age']) >= 18
+    except (ValueError, TypeError):
+        return False
 
 if __name__ == '__main__':
-    main()
+    sample_data_1 = {'name': 'Alice', 'age': '25'}
+    sample_data_2 = {'name': 'Bob', 'age': '15'}
+    sample_data_3 = {'name': 'Charlie'}
+    print(check_adult(sample_data_1))
+    print(check_adult(sample_data_2))
+    print(check_adult(sample_data_3))

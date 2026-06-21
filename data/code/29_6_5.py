@@ -1,12 +1,12 @@
-def reverse_word(word):
-    """Returns the reversed version of a given word."""
-    return word[::-1]
+def count_vowels(s):
+    count = 0
+    vowels = set('aeiouAEIOU')
+    for char in s:
+        if char in vowels:
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    # Sample values to run without user input or command-line arguments
-    sample_words = ["hello", "world", "Python"]
-
-    for test_word in sample_words:
-        reversed_word = reverse_word(test_word)
-        print(f"Original: {test_word}")
-        print("Reversed:", reversed_word)
+    sample_string = "Hello World"
+    result = count_vowels(sample_string)
+    print(result)

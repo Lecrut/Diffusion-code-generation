@@ -1,24 +1,12 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if two numerical values are different (not equal), False otherwise.
-    
-    Args:
-        a: First numerical input.
-        b: Second numerical input.
-        
-    Returns:
-        A boolean indicating whether the inputs differ.
-    """
-    return a != b
+def is_valid_triangle(a, b, c):
+    return (a + b > c) and (a + c > b) and (b + c > a)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user interaction
-    val1 = 5.0
-    val2 = 3.7
+    result = is_valid_triangle(3, 4, 5)
+    print(result)
     
-    result = check_difference(val1, val2)
+    result2 = is_valid_triangle(1, 2, 3)
+    print(result2)
     
-    if result:
-        print(f"{val1} and {val2} are different.")
-    else:
-        print(f"{val1} and {val2} are the same.")
+    result3 = is_valid_triangle(7, 10, 5)
+    print(result3)

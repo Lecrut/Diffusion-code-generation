@@ -1,35 +1,14 @@
-class NumberChecker:
-    def is_greater_than(self, other):
-        """
-        Checks if this instance's value is greater than another instance's value.
-        
-        Args:
-            other (NumberChecker): The other number checker instance to compare against.
-            
-        Returns:
-            bool: True if self.value > other.value, False otherwise.
-        """
-        return self.value > other.value
+def check_voting_eligibility(ages):
+    results = []
+    for age in ages:
+        if age >= 18:
+            results.append('Eligible')
+        else:
+            results.append('Ineligible')
+    return results
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    
-    obj1 = NumberChecker()
-    obj2 = NumberChecker()
-
-    # Set .value attributes directly since no constructor is provided in the task description.
-    # We assume these are set externally or via a setter, but here we must ensure they exist.
-    if not hasattr(obj1, 'value'):
-        raise AttributeError("obj1 does not have a 'value' attribute.")
-    
-    obj1.value = 50
-
-    if not hasattr(obj2, 'value'):
-        raise AttributeError("obj2 does not have a 'value' attribute.")
-        
-    obj2.value = 30
-    
-    result = obj1.is_greater_than(obj2)
-    
-    print(f"Comparison: {obj1} vs {obj2}")
-    print(f"{obj1.value > obj2.value}")
+    sample_ages = [15, 18, 21, 12, 30]
+    eligibility_results = check_voting_eligibility(sample_ages)
+    for result in eligibility_results:
+        print(result)

@@ -1,12 +1,8 @@
-def check_difference(a: float, b: float) -> bool:
-    """Check if two floating-point values are different using an epsilon tolerance."""
-    return abs(a - b) > 1e-9
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    val_1 = 10
-    val_2 = 10.00000000000001
-    
-    # Check if the values are different according to floating-point tolerance
-    is_different = check_difference(val_1, val_2)
-    
-    print(f"Is {val_1} and {val_2} different? {is_different}")
+    s1, s2, s3 = 3, 4, 5
+    print(is_valid_triangle(s1, s2, s3))

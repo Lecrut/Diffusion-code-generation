@@ -1,17 +1,10 @@
-def compare_numbers(a, b):
-    if a > b:
-        return "a is greater than b"
-    elif a < b:
-        return "a is less than b"
-    else:
-        return "a is equal to b"
+def validate_triangles(triplets):
+    results = []
+    for a, b, c in triplets:
+        is_valid = (a + b > c) and (a + c > b) and (b + c > a) and (a > 0) and (b > 0) and (c > 0)
+        results.append(is_valid)
+    return results
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 5
-    print(compare_numbers(num1, num2))
-    num3 = 20
-    num4 = 20
-    print(compare_numbers(num3, num4))
-    num5 = 3.14159
-    num6 = 3.1415900000000004
-    print(compare_numbers(num5, num6))
+    sample_triplets = [(3, 4, 5), (1, 2, 10), (5, 5, 5), (0, 1, 2), (2, 2, 3)]
+    print(validate_triangles(sample_triplets))

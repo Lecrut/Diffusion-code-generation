@@ -1,31 +1,42 @@
+from dataclasses import dataclass
+from enum import IntFlag
 import sys
 
-class ThresholdGenerator:
-    """
-    A generator class that yields True if a value is strictly greater than 
-    a predefined threshold, otherwise it does not yield anything (implicitly False).
-    
-    This implementation is memory-efficient as it processes items one by one.
-    To make the function truly standalone without an explicit external parameter,
-    we can either pass the threshold or define it as a class attribute.
-    Given the requirement for a "generator function", here is both:
-    1. A generator function `threshold_gen` that accepts the sequence and threshold directly (most flexible).
-    2. An alternative usage pattern inside __main__ where values are generated on demand.
+class StatusFlags(IntFlag):
+    AGE_OK = 1
+    CITIZEN_OK = 2
+    DISENFRANCHISED = 4
 
-    The task asks for a 'generator function', so we define it to accept an iterable 
-    and a threshold, yielding True only if item > threshold.
-    
-    :param items: Iterable of numbers (e.g., list, generator).
-    :param threshold: Number used as the comparison limit.
-    """
+@dataclass(frozen=True)
+class VoterStatus:
+    age: int
+    is_citizen: bool
+    is_disenfranchised: bool
 
-def is_greater_than_threshold(value):
-    # Helper logic to check single value against a fixed global-like context or passed arg.
-    pass
+    def to_bits(self) -> int:
+        bits = 0
+        if self.age >= 18:
+            bits |= StatusFlags.AGE_OK
+        if self.is_citizen:
+            bits |= StatusFlags.CITIZEN_OK
+        if self.is_disenfranchised:
+            bits |= StatusFlags.DISENFRANCHISED
+        return bits
 
-# Since we need strict adherence to "generator function" yielding True/False behavior 
-# (though typically generators yield values, here 'True' implies success condition),
-# and ensuring memory efficiency for large sequences:
-
+def check_eligibility(age: int, is_citizen: bool, is_disenfranchised: bool) -> bool:
+    bits = 0
+    if age >= 18:
+        bits |= StatusFlags.AGE_OK
+    if is_citizen:
+        bits |= StatusFlags.CITIZEN_OK
+    if is_disenfranchised:
+        bits |= StatusFlags.DISENFRANCHISED
+    eligible_flags = StatusFlags.AGE_OK | StatusFlags.CITIZEN_OK
+    is_eligible = bits & eligible_flags == eligible_flags
+    is_disqualified = bits & StatusFlags.DISENFRANCHISED != 0
+    return is_eligible and (not is_disqualified)
 if __name__ == '__main__':
-    pass
+    test_cases = [VoterStatus(20, True, False), VoterStatus(17, True, False), VoterStatus(25, False, False), VoterStatus(30, True, True), VoterStatus(45, True, False)]
+    for case in test_cases:
+        result = check_eligibility(case.age, case.is_citizen, case.is_disenfranchised)
+        print(f'Age:{case.age} Citizen:{case.is_citizen} Disenfranchised:{case.is_disenfranchised} -> Eligible:{result}')

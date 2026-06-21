@@ -1,14 +1,16 @@
-def is_zero(value):
-    """
-    Returns True if value is exactly zero, False otherwise.
-    
-    Args:
-        value (int | float): A numerical input to check.
-        
-    Returns:
-        bool: True if value equals 0, False otherwise.
-    """
-    return value == 0
+DISCOUNT_RATE = 0.10
+BASE_PRICE = 50.0
+
+def compute_discount_data(base_price, rate):
+    if rate >= 1.0:
+        return 0, base_price
+    if rate < 0:
+        return 0, base_price
+    discount = base_price * rate
+    final = base_price - discount
+    return discount, final
 
 if __name__ == '__main__':
-    pass
+    discount_amt, final_price = compute_discount_data(BASE_PRICE, DISCOUNT_RATE)
+    print(discount_amt)
+    print(final_price)

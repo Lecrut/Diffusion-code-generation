@@ -1,6 +1,9 @@
-# Optimized one-line expression to check if x is greater than y using comparison operators
-is_x_greater_than_y = (lambda x, y: x > y)  # Direct use of '>' operator which is Python's standard comparison operator
-
+def get_voting_status(age: int, threshold: int=18) -> bool:
+    return age >= threshold
 if __name__ == '__main__':
-    x_val = 10
-    y_val = 5
+    result = get_voting_status(20)
+    print(result)
+    result_threshold = get_voting_status(16, threshold=18)
+    print(result_threshold)
+    result_custom = get_voting_status(18, threshold=18)
+    print(result_custom)

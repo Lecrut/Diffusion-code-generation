@@ -1,15 +1,8 @@
-def compare_numeric_values(a, b):
-    return a > b
+def validate_triangle_inequalities(triplets):
+    return [all(2 * x < sum(triplet) for x in triplet) for triplet in triplets]
+
 if __name__ == '__main__':
-    val1 = 10
-    val2 = 5
-    result = compare_numeric_values(val1, val2)
-    print(result)
-    val3 = 3.14
-    val4 = 3.14
-    result2 = compare_numeric_values(val3, val4)
-    print(result2)
-    val5 = -5
-    val6 = -10
-    result3 = compare_numeric_values(val5, val6)
-    print(result3)
+    sample_triplets = [[3, 4, 5], [1, 2, 3], [10, 5, 2], [7, 7, 7], [1, 1, 3]]
+    results = validate_triangle_inequalities(sample_triplets)
+    for result in results:
+        print(result)

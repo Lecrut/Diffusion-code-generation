@@ -1,35 +1,25 @@
-class ValueChecker:
-    """A professional utility class to check if two values are different."""
+MIN_SIDE_THRESHOLD = 0
+STRICT_DEGENERACY_LIMIT = 0
 
-    def __init__(self):
-        pass  # No initialization needed for basic value comparison
-
-    def are_different(self, val1, val2):
-        """
-        Efficiently checks if the provided two values are not equal.
-
-        Args:
-            val1 (any): The first value to compare.
-            val2 (any): The second value to compare.
-
-        Returns:
-            bool: True if val1 is not equal to val2, False otherwise.
-        """
-        return val1 != val2
+def is_valid_triangle(side_a: float, side_b: float, side_c: float) -> bool:
+    if side_a <= MIN_SIDE_THRESHOLD or side_b <= MIN_SIDE_THRESHOLD or side_c <= MIN_SIDE_THRESHOLD:
+        return False
+    if side_a + side_b <= side_c:
+        return False
+    if side_a + side_c <= side_b:
+        return False
+    if side_b + side_c <= side_a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access
-    checker = ValueChecker()
-
     test_cases = [
-        (5, 5),           # Should be equal -> False
-        ("hello", "world"),  # Different strings -> True
-        ([1, 2], [3, 4]),     # Different lists -> True
-        ({'a': 1}, {'b': 1}),# Different dicts -> True
+        (5, 12, 13),
+        (1, 1, 2),
+        (0, 5, 5),
+        (-3, 4, 5),
+        (7, 8, 9),
+        (2.5, 2.5, 5.0)
     ]
-
-    print("Testing ValueChecker.are_different():")
-    for i, (val1, val2) in enumerate(test_cases):
-        result = checker.are_different(val1, val2)
-        status = "Equal" if not result else "Different"
-        print(f"Test {i+1}: are_different({repr(val1)}, {repr(val2)}) -> {result} ({status})")
+    for x, y, z in test_cases:
+        print(is_valid_triangle(x, y, z))

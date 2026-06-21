@@ -1,12 +1,15 @@
-def main():
-    # Simulate user interaction with hard-coded sample values as per requirements
-    num1 = 42
-    num2 = 38
-    
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+def is_adult(citizen_details):
+    return isinstance(citizen_details, dict) and 'age' in citizen_details and citizen_details['age'] >= 18
 
 if __name__ == '__main__':
-    main()
+    sample_adult = {"name": "Alice", "age": 20}
+    sample_minor = {"name": "Bob", "age": 15}
+    sample_no_age = {"name": "Charlie"}
+    
+    result_adult = is_adult(sample_adult)
+    result_minor = is_adult(sample_minor)
+    result_no_age = is_adult(sample_no_age)
+    
+    print(result_adult)
+    print(result_minor)
+    print(result_no_age)

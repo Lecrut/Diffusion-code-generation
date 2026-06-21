@@ -1,25 +1,19 @@
-def check_difference(a: float | int, b: float | int) -> bool:
-    """
-    Returns True if a is different from b, False otherwise.
-
-    Args:
-        a (float|int): First numerical value.
-        b (float|int): Second numerical value.
-
-    Returns:
-        bool: Result of the difference check.
-    """
-    return a != b
+def is_valid_triangle(sides: tuple[float, float, float]) -> bool:
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample test cases with no user input required
-    sample_cases = [
-        (5, 10),      # Expected: True
-        (3.5, 7.2),   # Expected: True
-        (42, 42),     # Expected: False
-        (-9, -9),     # Expected: False
-    ]
-
-    for val_a, val_b in sample_cases:
-        result = check_difference(val_a, val_b)
-        print(f"check_difference({val_a}, {val_b}) = {result}")
+    sample_1 = (3.0, 4.0, 5.0)
+    sample_2 = (1.0, 2.0, 3.0)
+    sample_3 = (-1.0, 4.0, 5.0)
+    print(is_valid_triangle(sample_1))
+    print(is_valid_triangle(sample_2))
+    print(is_valid_triangle(sample_3))

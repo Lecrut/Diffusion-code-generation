@@ -1,8 +1,10 @@
-class ComparisonTool:
-    def check_greater(self, a, b):
-        return a > b
+def sort_descending(a, b):
+    if a >= b:
+        return (a, b)
+    return (b, a)
+
 if __name__ == '__main__':
-    tool = ComparisonTool()
-    print(tool.check_greater(10, 5))
-    print(tool.check_greater(3, 8))
-    print(tool.check_greater(42, 42))
+    x = 15
+    y = 42
+    result = sort_descending(x, y)
+    print(result)

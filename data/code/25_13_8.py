@@ -1,10 +1,8 @@
-import math
-
-def is_zero(x):
-    # Treat very small floating-point numbers as zero to avoid edge cases
-    return abs(float(x)) < 1e-9 if not isinstance(x, int) else x == 0
+def apply_discount(prices, discount_rate):
+    return [price * (1 - discount_rate) for price in prices]
 
 if __name__ == '__main__':
-    test_cases = [0, -5.234678, 2/3, float(0)]
-    for val in test_cases:
-        print(f"is_zero({val}) evaluates to {is_zero(val)}")
+    sample_prices = [100.0, 50.5, 200.0, 75.25]
+    fixed_discount = 0.15
+    discounted_prices = apply_discount(sample_prices, fixed_discount)
+    print(discounted_prices)

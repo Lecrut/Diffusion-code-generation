@@ -1,46 +1,30 @@
-from typing import Any
-
-class ValueChecker:
-    """A class to check if a given value is equal to zero."""
-
-    def check_for_zero(self, value: Any) -> bool:
-        """
-        Determines if the input 'value' is numerically equal to zero.
-
-        This method handles numeric types (int and float). For non-numeric inputs,
-        it returns False as they cannot be strictly compared for equality with 0
-        in a numerical context without raising an error or being implicitly handled.
-
-        Args:
-            value (Any): The input value to check.
-
-        Returns:
-            bool: True if the value is zero, False otherwise.
-        """
-        try:
-            return float(value) == 0.0
-        except (TypeError, ValueError):
-            # If conversion fails, it's not a numeric zero.
-            return False
+class DiscountCalculator:
+    @staticmethod
+    def calculate_tiered_discount(base_price, quantity):
+        if not isinstance(base_price, (int, float)) or base_price < 0:
+            raise ValueError("Base price must be a non-negative number")
+        if not isinstance(quantity, int) or quantity < 0:
+            raise ValueError("Quantity must be a non-negative integer")
+        
+        rate = 0.0
+        if quantity >= 100:
+            rate = 0.20
+        elif quantity >= 50:
+            rate = 0.15
+        elif quantity >= 20:
+            rate = 0.10
+        elif quantity >= 10:
+            rate = 0.05
+        
+        total_cost = base_price * quantity
+        discount_amount = total_cost * rate
+        final_price = total_cost - discount_amount
+        return final_price, rate, discount_amount
 
 if __name__ == '__main__':
-    checker = ValueChecker()
-
-    test_values = [
-        0,          # Should be True
-        -0,         # Should be True (same as 0)
-        1,          # Should be False
-        0.0,        # Should be True
-        "0",        # String representation of zero -> converted to float first
-        "abc",      # Non-numeric string -> should return False based on logic above or strict check? 
-                    # The prompt asks for optimized method determining if input is equal to zero.
-                    # Strict equality `value == 0` works for numbers but fails types like strings in Python (returns False).
-                    # However, converting "0" to int/float makes sense for a utility checker unless specified otherwise.
-                    # Let's stick to strict type checking first as it is safer and more efficient than trying/catching conversion 
-                    # if the intent was pure equality check on potentially mixed types where '=="0"' returns False anyway.
-        None,       # Should be False
-    ]
-
-    for val in test_values:
-        result = checker.check_for_zero(val)
-        print(f"check_for_zero({val!r}) -> {result}")
+    sample_price = 25.00
+    sample_quantity = 75
+    final_price, applied_rate, discount_val = DiscountCalculator.calculate_tiered_discount(sample_price, sample_quantity)
+    print(final_price)
+    print(applied_rate)
+    print(discount_val)

@@ -1,14 +1,7 @@
-def reverse_word(text: str) -> str:
-    """Returns the reversed version of a single string."""
-    return text[::-1]
-
+VOWELS = frozenset(['a', 'e', 'i', 'o', 'u'])
+count_vowels = lambda text: sum(1 for char in text.casefold() if char in VOWELS)
 if __name__ == '__main__':
-    test_cases = [
-        "hello",
-        "Pythonic code",
-        "",
-        "a"
-    ]
-
-    for case in test_cases:
-        print(f"Original: {case!r} -> Reversed: {reverse_word(case)!r}")
+    sample_text = "Cryptographic systems ensure data integrity"
+    print(count_vowels(sample_text))
+    print(count_vowels("Rhythm"))
+    print(count_vowels(""))

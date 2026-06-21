@@ -1,7 +1,9 @@
-def check_greater():
-    x = 10
-    y = 5
-    return "x is greater than y" if x > y else f"x ({x}) is not greater than y ({y})"
+def get_voting_status(age: int, threshold: int = 18) -> str:
+    if age >= threshold:
+        return "eligible"
+    else:
+        return "ineligible"
 
 if __name__ == '__main__':
-    print(check_greater())
+    result = get_voting_status(20)
+    print(result)

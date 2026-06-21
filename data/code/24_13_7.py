@@ -1,13 +1,21 @@
-import sys
-def check_number(number):
-    if number < 0:
-        print("The number is negative.")
-    else:
-        print("The number is not negative.")
+class LeapYearChecker:
+    def __init__(self, year: int) -> None:
+        self.year = year
+
+    def is_leap_year(self) -> bool:
+        if self.year % 4 != 0:
+            return False
+        if self.year % 100 != 0:
+            return True
+        if self.year % 400 != 0:
+            return False
+        return True
+
 if __name__ == '__main__':
-    sample_values = [10, -5, 0, 3.14, -100]
-    for value in sample_values:
-        if isinstance(value, int):
-            check_number(value)
-        else:
-            print(f"Error: Input '{value}' is not an integer and cannot be processed by this specific check.")
+    years_to_check = [2000, 1900, 2024, 2023, 2400, 1800]
+    results = []
+    for y in years_to_check:
+        checker = LeapYearChecker(y)
+        results.append((y, checker.is_leap_year()))
+    for year, is_leap in results:
+        print(f"{year}: {is_leap}")

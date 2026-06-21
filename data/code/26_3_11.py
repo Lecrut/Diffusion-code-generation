@@ -1,25 +1,20 @@
-def yield_greater_than(iterator, threshold):
-    """
-    Generator that yields True whenever an iterated value is greater than a predefined threshold.
-    
-    This function consumes elements from the provided iterable one by one (memory efficient),
-    and outputs 'True' if the current element exceeds the given threshold; otherwise, it does nothing for that iteration.
+class VotingEligibility:
+    def __init__(self, age):
+        self.age = age
 
-    :param iterator: An input iterable object (e.g., list, generator).
-    :param threshold: A numeric value representing the cutoff limit.
-    """
-    for item in iterator:
-        # Check condition and yield result immediately to avoid storing all items in memory
-        if isinstance(item, (int, float)): 
-            if item > threshold:
-                yield True
+    def is_eligible(self):
+        if not isinstance(self.age, int) or isinstance(self.age, bool):
+            return False
+        return self.age >= 18
 
 if __name__ == '__main__':
-    # Hard-coded sample values with no user input or external dependencies.
-    data_list = [10, 25, 30, -5, 45, 80]
-    THRESHOLD_VALUE = 20
-    
-    results = yield_greater_than(data_list.copy(), THRESHOLD_VALUE)
-    
-    for result in results:
-        print(result if isinstance(result, bool) else str(bool(int(result))))
+    voter1 = VotingEligibility(20)
+    print(voter1.is_eligible())
+    voter2 = VotingEligibility(17)
+    print(voter2.is_eligible())
+    voter3 = VotingEligibility(18)
+    print(voter3.is_eligible())
+    voter4 = VotingEligibility("20")
+    print(voter4.is_eligible())
+    voter5 = VotingEligibility(18.5)
+    print(voter5.is_eligible())

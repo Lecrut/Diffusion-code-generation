@@ -1,9 +1,11 @@
-class ValueChecker:
-    def are_different(self, val1, val2):
-        return val1 != val2
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return a + b > c and a + c > b and b + c > a
+
 if __name__ == '__main__':
-    checker = ValueChecker()
-    print(f"Are 10 and 20 different? {checker.are_different(10, 20)}")
-    print(f"Are 5 and 5 different? {checker.are_different(5, 5)}")
-    print(f"Are 'a' and 'b' different? {checker.are_different('a', 'b')}")
-    print(f"Are 3.14 and 3.140 different? {checker.are_different(3.14, 3.140)}")
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(-1, 2, 3))
+    print(is_valid_triangle(0, 5, 5))
+    print(is_valid_triangle(7, 10, 5))

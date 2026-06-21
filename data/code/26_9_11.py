@@ -1,6 +1,7 @@
-import sys as _sys
-x = 10
-y = 5
+def can_vote(age):
+    return age > 18
 
 if __name__ == '__main__':
-    pass
+    sample_age = 20
+    result = can_vote(sample_age)
+    print(result)

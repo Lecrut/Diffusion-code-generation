@@ -1,11 +1,9 @@
-def is_larger(a, b):
-    return a > b
+def sort_reverse(a, b):
+    result = [a, b]
+    result.sort(reverse=True)
+    return result
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 5
-    result = is_larger(num1, num2)
-    print(result)
-    num3 = 3
-    num4 = 7
-    result = is_larger(num3, num4)
-    print(result)
+    val1 = 5
+    val2 = 10
+    print(sort_reverse(val1, val2))

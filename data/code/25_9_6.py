@@ -1,28 +1,23 @@
-class DataProcessor:
-    """A class that provides utility methods to check instance attributes."""
-
-    def is_zero(self, attribute_name):
-        """
-        Check if a specific instance attribute equals zero.
-
-        Args:
-            attribute_name (str): The name of the attribute to inspect as a string.
-
-        Returns:
-            bool: True if the attribute exists and its value is 0, False otherwise.
-        """
-        return getattr(self, attribute_name) == 0
+def calculate_discounted_price(price: float, discount_percent: float) -> float:
+    if price < 0:
+        raise ValueError("Price cannot be negative")
+    if discount_percent < 0:
+        raise ValueError("Discount percentage cannot be negative")
+    if discount_percent > 100:
+        raise ValueError("Discount percentage cannot exceed 100%")
+    discount_amount = price * (discount_percent / 100)
+    return price - discount_amount
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or files.
-    processor = DataProcessor()
-
-    # Set up some instance attributes including one that is zero and others that are not.
-    processor.count_items = 5
-    processor.balance = 0
-    processor.status = "active"
-
-    # Test the method with different attribute names.
-    print("Is count_items equal to zero?", processor.is_zero('count_items'))
-    print("Is balance equal to zero?", processor.is_zero('balance'))
-    print("Is status equal to zero?", processor.is_zero('status'))
+    sample_price = 100.0
+    sample_discount = 25.0
+    final_price = calculate_discounted_price(sample_price, sample_discount)
+    print(final_price)
+    try:
+        calculate_discounted_price(-50.0, 10.0)
+    except ValueError as e:
+        print(e)
+    try:
+        calculate_discounted_price(50.0, 150.0)
+    except ValueError as e:
+        print(e)

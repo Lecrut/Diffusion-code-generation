@@ -1,15 +1,8 @@
-def compare_numbers(num1: int, num2: int) -> None:
-    """Compare two integers and print a descriptive message."""
-    if num1 > num2:
-        print(f"{num1} is larger than {num2}")
-    elif num2 > num1:
-        print(f"{num2} is larger than {num1}")
-    else:
-        print("Both numbers are equal")
+def order_two(a, b):
+    if a <= b:
+        return (a, b)
+    return (b, a)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input() or sys.stdin)
-    val_a = 42
-    val_b = 97
-    
-    compare_numbers(val_a, val_b)
+    print(order_two(3, 5))
+    print(order_two(10, 2))

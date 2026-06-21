@@ -1,5 +1,8 @@
-# Wait, no markdown fences allowed.
-comp = (lambda x,y : x > y)
+def can_vote(age):
+    return age > 18
 
 if __name__ == '__main__':
-    pass
+    print(can_vote(17))
+    print(can_vote(18))
+    print(can_vote(19))
+    print(can_vote(25))

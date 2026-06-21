@@ -1,20 +1,17 @@
-def is_greater(a: any, b: any) -> bool:
-    """
-    Returns True if a is strictly greater than b, False otherwise.
-    
-    Args:
-        a (any): The first value to compare.
-        b (any): The second value to compare.
-        
-    Returns:
-        bool: True if a > b, else False.
-    """
-    return a > b
+VOTING_THRESHOLD = 18
+
+def _validate_age_input(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Age must be a numeric type")
+    if value < 0:
+        raise ValueError("Age cannot be negative")
+    return int(value)
+
+def is_eligible_to_vote(age):
+    validated_age = _validate_age_input(age)
+    return validated_age >= VOTING_THRESHOLD
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert is_greater(10, 5) is True
-    assert is_greater(3, 7) is False
-    assert is_greater("z", "a") is True
-    assert is_greater([2], [1]) is True
-    print("All tests passed.")
+    test_cases = [17, 18, 25, 65, 10]
+    for age in test_cases:
+        print(is_eligible_to_vote(age))

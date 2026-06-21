@@ -1,7 +1,10 @@
-def is_larger(a, b):
-    return a > b
+def sort_two_integers(a: int, b: int) -> tuple[int, int]:
+    if a <= b:
+        return (a, b)
+    return (b, a)
+
 if __name__ == '__main__':
-    print(is_larger(10, 5))
-    print(is_larger(5, 10))
-    print(is_larger(7.5, 7.5))
-    print(is_larger(200, 199))
+    x = 10
+    y = 5
+    result = sort_two_integers(x, y)
+    print(result)

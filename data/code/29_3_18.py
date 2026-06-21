@@ -1,6 +1,6 @@
-def reverse_string(s):
-    return ''.join(reversed(list(s))) if s else ""
+def count_vowels(strings):
+    return sum(len([c for c in s if c.lower() in 'aeiou']) for s in strings)
 
 if __name__ == '__main__':
-    sample = "Hello"
-    print(reverse_string(sample))
+    sample_strings = ["hello", "world", "python", "programming"]
+    print(count_vowels(sample_strings))

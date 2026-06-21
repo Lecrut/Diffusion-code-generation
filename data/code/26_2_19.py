@@ -1,16 +1,14 @@
-def get_number():
-    """Returns a sample number to avoid interactive prompts."""
-    return 10
-
-def main():
-    num1 = 5
-    num2 = 3
-    
-    # Determine relationship between numbers using if-else
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+def is_adult(citizen):
+    if 'age' not in citizen:
+        return False
+    if not isinstance(citizen['age'], (int, float)):
+        return False
+    return citizen['age'] >= 18
 
 if __name__ == '__main__':
-    main()
+    sample_citizen = {'name': 'Alice', 'age': 20}
+    print(is_adult(sample_citizen))
+    sample_minor = {'name': 'Bob', 'age': 17}
+    print(is_adult(sample_minor))
+    sample_no_age = {'name': 'Charlie'}
+    print(is_adult(sample_no_age))

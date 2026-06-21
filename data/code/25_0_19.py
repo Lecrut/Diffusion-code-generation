@@ -1,11 +1,19 @@
-def is_zero(value):
-    """Check if a given input number is exactly zero."""
-    return value == 0
+def calculate_final_price(original_price, discount_percentage):
+    if not isinstance(original_price, (int, float)):
+        raise TypeError("original_price must be a number")
+    if not isinstance(discount_percentage, (int, float)):
+        raise TypeError("discount_percentage must be a number")
+    if original_price < 0:
+        raise ValueError("original_price cannot be negative")
+    if discount_percentage < 0 or discount_percentage > 100:
+        raise ValueError("discount_percentage must be between 0 and 100")
+    
+    discount_multiplier = 1 - discount_percentage / 100
+    final_price = original_price * discount_multiplier
+    return round(final_price, 2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user interaction
-    samples = [0, -1.5e-24, float('inf'), "zero", False]
-
-    for item in samples:
-        result = is_zero(item)
-        print(f"Input: {item!r} -> Is zero? {result}")
+    original = 100.00
+    discount = 20
+    result = calculate_final_price(original, discount)
+    print(result)

@@ -1,11 +1,7 @@
-class StringReverser:
-    def reverse(self, input_string):
-        return input_string[::-1]
+def count_vowels(text):
+    return sum(1 for char in text if char.lower() in 'aeiou')
+
 if __name__ == '__main__':
-    reverser = StringReverser()
-    sample1 = "hello"
-    sample2 = "world"
-    sample3 = "Python"
-    print(reverser.reverse(sample1))
-    print(reverser.reverse(sample2))
-    print(reverser.reverse(sample3))
+    text = "Hello World! How are you today?"
+    result = count_vowels(text)
+    print(result)

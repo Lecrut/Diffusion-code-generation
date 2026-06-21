@@ -1,19 +1,20 @@
-def get_number(prompt):
-    """Prompt user (or use default) to input a number with validation."""
-    # Since we cannot call input() as per constraints, this function is designed 
-    # to be called only within the sample block context where defaults are used.
-    pass
+def is_voting_eligible(age, has_criminal_record, is_citizen):
+    if not is_citizen:
+        return False
+    if age < 18:
+        return False
+    if has_criminal_record:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user interaction or external dependencies
-    num1 = 42
-    num2 = 30
-
-    print(f"Testing comparison: {num1} vs {num2}")
-
-    if num1 > num2:
-        print("The first number is greater than the second.")
-    elif num1 < num2:
-        print("The first number is less than the second.")
-    else:
-        print("Both numbers are equal.")
+    test_cases = [
+        (25, False, True),
+        (17, False, True),
+        (30, True, True),
+        (40, False, False),
+        (19, False, True),
+    ]
+    for age, criminal, citizen in test_cases:
+        result = is_voting_eligible(age, criminal, citizen)
+        print(f"Age: {age}, Criminal Record: {criminal}, Citizen: {citian} -> Eligible: {result}")

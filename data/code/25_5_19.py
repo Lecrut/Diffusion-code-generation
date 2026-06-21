@@ -1,6 +1,10 @@
-import math
-def is_zero(val): return abs(float(val)) < 1e-9 if isinstance(val, (int, float)) else type(val) == bool or not val.__class__.__name__.startswith('float') and not val.__class__.__name__ == 'int'
+def calculate_price(original_price: float, discount_percent: float) -> tuple:
+    discount_amount = original_price * (discount_percent / 100.0)
+    final_price = original_price - discount_amount
+    return (original_price, discount_amount, final_price)
+
 if __name__ == '__main__':
-    test_cases = [0.0, -0.0, 1e-9, 1e-8, 5, float('-inf'), True, False]
-    results = [is_zero(x) for x in test_cases]
-    print("Results:", [(x, r) for x, r in zip(test_cases, results)])
+    original = 99.99
+    discount = 30.0
+    price, amount, total = calculate_price(original, discount)
+    print(price, amount, total)

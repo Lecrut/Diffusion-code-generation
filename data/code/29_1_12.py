@@ -1,9 +1,3 @@
-def reverse_word(text: str) -> str:
-    """Returns the reversed string."""
-    return text[::-1]
-
+count_vowels = lambda text: sum(1 for char in text.lower() if char in 'aeiou')
 if __name__ == '__main__':
-    sample_strings = ["hello", "Python is fun", ""]
-    for s in sample_strings:
-        print(f"Original: {s!r}")
-        print(f"Reversed:{reverse_word(s)!r}\n")
+    print(count_vowels("Hello World"))

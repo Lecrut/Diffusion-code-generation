@@ -1,24 +1,8 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if two numerical values are different, False otherwise.
-    
-    Args:
-        a (float): First numerical value.
-        b (float): Second numerical value.
-        
-    Returns:
-        bool: True if a != b, False otherwise.
-    """
-    return a != b
+def is_non_degenerate_triangle(sides):
+    a, b, c = sides[0], sides[1], sides[2]
+    return (a > 0) and (b > 0) and (c > 0) and (a + b > c) and (a + c > b) and (b + c > a)
 
 if __name__ == '__main__':
-    # Sample test cases running without user input or external dependencies
-    print(check_difference(5, 10))      # Expected output: True (5 is different from 10)
-    print(check_difference(3.5, 3.5))   # Expected output: False (equal floats)
-    
-    # Additional edge case tests using hard-coded values as per task requirements
-    result_a = check_difference(-42.98765, -42.98765)
-    print(f"Test a ({-42.98765}, {-42.98765}) -> {result_a}")  # False
-    
-    result_b = check_difference(float('inf'), float('-inf'))  
-    print(f"Test b (Inf, -Inf) -> {result_b}")   # True
+    sample_sides = (3.0, 4.0, 5.0)
+    result = is_non_degenerate_triangle(sample_sides)
+    print(result)

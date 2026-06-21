@@ -1,29 +1,16 @@
-class DataProcessor:
-    """A simple class demonstrating instance attribute checking."""
+def calculate_final_price(price: float, discount_percent: float) -> float:
+    if price < 0:
+        raise ValueError("Price cannot be negative")
+    if discount_percent < 0:
+        raise ValueError("Discount cannot be negative")
+    if discount_percent > 100:
+        raise ValueError("Discount cannot exceed 100%")
+    discount_amount = price * (discount_percent / 100.0)
+    final_price = price - discount_amount
+    return final_price
 
-    def __init__(self, value):
-        self.value = value
-
-    @staticmethod
-    def is_zero(instance_attr_name, obj=None):
-        """
-        Check if a specific instance attribute equals zero.
-
-        Args:
-            instance_attr_name (str): Name of the instance attribute to check.
-            obj (object, optional): The object whose attributes are being checked. Defaults to self.
-
-        Returns:
-            bool: True if the attribute is 0, False otherwise.
-        """
-        return getattr(obj, instance_attr_name) == 0
-
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    processor = DataProcessor(42)
-
-    print(f"Is 'value' zero? {processor.is_zero('value', obj=processor)}")
-
-    # Create another instance with a different value to verify behavior
-    processor_two = DataProcessor(0)
-    print(f"Is 'value' zero for second instance? {processor_two.is_zero('value', obj=processor_two)}")
+if __name__ == "__main__":
+    sample_price = 100.0
+    sample_discount = 20.0
+    result = calculate_final_price(sample_price, sample_discount)
+    print(result)

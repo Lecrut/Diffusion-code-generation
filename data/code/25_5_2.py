@@ -1,10 +1,8 @@
-import math
-
-def is_zero(x):
-    return abs(float(x)) < 1e-9 if x != float('inf') and x != -float('inf') else False
+def calculate_discounted_price(original_price, discount_percent):
+    discount_amount = original_price * discount_percent / 100
+    final_price = original_price - discount_amount
+    return original_price, discount_amount, final_price
 
 if __name__ == '__main__':
-    print(is_zero(0.0))     # True
-    print(is_zero(0))       # True
-    print(is_zero(1e-15))   # True
-    print(is_zero(1e-9))    # False
+    result = calculate_discounted_price(99.99, 30)
+    print(result)

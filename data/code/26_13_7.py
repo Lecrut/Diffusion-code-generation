@@ -1,18 +1,27 @@
-from typing import List, Any
-
-def check_first_greater_than_second(lst: List[Any]) -> bool:
-    """Check if the first element is greater than the second in a list of at least two elements."""
-    return lambda lst: lst[0] > lst[1] if len(lst) >= 2 else False
+def check_voter_eligibility(voter_attributes: dict[str, int]) -> bool:
+    age = voter_attributes.get('age')
+    citizenship_years = voter_attributes.get('citizenship_years')
+    
+    if age is None or citizenship_years is None:
+        raise ValueError("Missing required attributes: 'age' and 'citizenship_years'")
+    
+    if not isinstance(age, int) or not isinstance(citizenship_years, int):
+        raise TypeError("Attributes must be integers")
+    
+    if age < 18:
+        return False
+    
+    if citizenship_years < 1:
+        return False
+    
+    return True
 
 if __name__ == '__main__':
-    sample_lists = [
-        ([5, 3], True),
-        ([3, 5], False),
-        ([10, 10], False),
-        ([-1, -2], True),
-        ([True, False], True)
-    ]
+    sample_voter = {'age': 25, 'citizenship_years': 5}
+    print(check_voter_eligibility(sample_voter))
     
-    for test_list, expected in sample_lists:
-        result = check_first_greater_than_second(test_list)(test_list) if len(test_list) >= 2 else False
-        assert result == expected, f"Failed for {test_list}: got {result}, expected {expected}"
+    ineligible_voter = {'age': 16, 'citizenship_years': 10}
+    print(check_voter_eligibility(ineligible_voter))
+    
+    new_citizen = {'age': 30, 'citizenship_years': 0}
+    print(check_voter_eligibility(new_citizen))

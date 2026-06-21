@@ -1,13 +1,12 @@
-def check_difference(num1: float, num2: float) -> None:
-    """Checks if two numbers differ and prints a clear message."""
-    difference = abs(num1 - num2)
-    
-    # Using a small epsilon is best practice to avoid precision errors for floats close in value.
-    IS_DIFFERENT = False
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input(), sys.stdin, or argparse).
-    SAMPLE_NUM1: float = 5.0
-    SAMPLE_NUM2: float = 7.3
-    
-    check_difference(SAMPLE_NUM1, SAMPLE_NUM2)
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 3))
+    print(is_valid_triangle(-1, 4, 5))
+    print(is_valid_triangle(0, 5, 5))
+    print(is_valid_triangle(10, 1, 1))
+    print(is_valid_triangle(5, 5, 10))

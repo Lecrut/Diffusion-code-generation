@@ -1,21 +1,15 @@
-import sys
-
-def main():
-    """Reads a list of integers from standard input (if provided) via hardcoded values,
-    prints whether each integer is zero or not."""
-    
-    # Hardcoded sample values as per requirements to avoid external dependencies and user prompts
-    data = [0, 1, -5, 0, 42]
-
-    try:
-        results = ["Zero" if x == 0 else "Not Zero" for x in data]
-        
-        for result in results:
-            print(result)
-            
-    except Exception as e:
-        # Graceful error handling without printing complex stack traces to main output flow
-        sys.stderr.write(f"An unexpected internal error occurred: {e}\n")
+def calculate_discount(original_price, discount_percentage):
+    discount_value = original_price * (discount_percentage / 100)
+    final_price = original_price - discount_value
+    return {
+        "original_price": original_price,
+        "discount_percentage": discount_percentage,
+        "discount_value": discount_value,
+        "final_price": final_price
+    }
 
 if __name__ == '__main__':
-    main()
+    original_price = 100.0
+    discount_percentage = 20.0
+    result = calculate_discount(original_price, discount_percentage)
+    print(result)

@@ -1,18 +1,12 @@
-def reverse_word(text: str) -> str:
-    """
-    Reverses a single string using slicing for maximum efficiency.
-    
-    Args:
-        text (str): The input string to be reversed.
-        
-    Returns:
-        str: A new string containing the characters of the original string in reverse order.
-    """
-    return text[::-1]
+def count_vowels(text: str) -> int:
+    vowels = set('aeiouAEIOU')
+    count = 0
+    for char in text:
+        if char in vowels:
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction
-    samples = ["hello", "Python programming", "!HolB", ""]
-    
-    for s in samples:
-        print(f"Original: '{s}' -> Reversed: '{reverse_word(s)}'")
+    sample_text = "Hello World! This is a sample text to count vowels."
+    result = count_vowels(sample_text)
+    print(result)

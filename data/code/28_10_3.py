@@ -1,8 +1,9 @@
-def is_larger(a, b):
-    return a > b
+def sort_pair(a, b):
+    if a < b:
+        return (a, b)
+    else:
+        return (b, a)
+
 if __name__ == '__main__':
-    print(is_larger(10, 5))
-    print(is_larger(5, 10))
-    print(is_larger(7.5, 7.5))
-    print(is_larger(100, 99))
-    print(is_larger(-5, -10))
+    result = sort_pair(10, 3)
+    print(result)

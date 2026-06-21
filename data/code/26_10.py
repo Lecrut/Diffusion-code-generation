@@ -1,11 +1,13 @@
-def is_greater(a, b):
-    return a > b
+def is_eligible_to_vote(age: int, is_citizen: bool) -> bool:
+    if age < 0:
+        return False
+    if not is_citizen:
+        return False
+    return age >= 18
+
 if __name__ == '__main__':
-    result1 = is_greater(10, 5)
-    print(f"is_greater(10, 5): {result1}")
-    result2 = is_greater(5, 10)
-    print(f"is_greater(5, 10): {result2}")
-    result3 = is_greater(7.5, 7.5)
-    print(f"is_greater(7.5, 7.5): {result3}")
-    result4 = is_greater(-2, -5)
-    print(f"is_greater(-2, -5): {result4}")
+    print(is_eligible_to_vote(20, True))
+    print(is_eligible_to_vote(15, True))
+    print(is_eligible_to_vote(20, False))
+    print(is_eligible_to_vote(-5, True))
+    print(is_eligible_to_vote(18, True))

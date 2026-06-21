@@ -1,40 +1,16 @@
-class ValueChecker:
-    """A professional class designed to check if two values are different."""
+import math
 
-    def are_different(self, val1, val2):
-        """
-        Check if val1 is not equal to val2.
-
-        This method uses the standard inequality operator for efficiency and clarity.
-        It handles all data types (integers, floats, strings, booleans, etc.) correctly.
-        Returns True if they are different, False otherwise.
-
-        Args:
-            val1: The first value to compare.
-            val2: The second value to compare.
-
-        Returns:
-            bool: True if val1 != val2, else False.
-        """
-        return val1 != val2
+def is_valid_triangle(a, b, c):
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)) or not isinstance(c, (int, float)):
+        return False
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration without user input or external dependencies
-    
-    checker = ValueChecker()
-    
-    test_cases = [
-        ("integers", 5, 3),       # Expected: True
-        ("floats", 1.0, 2.0),     # Expected: True
-        ("strings", "hello", "world"), # Expected: True
-        ("booleans", True, False),    # Expected: True
-        ("same_integers", 42, 42),   # Expected: False
-        ("similar_floats", 3.14, 3.15), # Expected: True
-        ("equal_strings", "test", "test"), # Expected: False
-    ]
-
-    print("ValueChecker Test Results:")
-    for label, v1, v2 in test_cases:
-        result = checker.are_different(v1, v2)
-        status = "PASS" if (label != "same_integers" and label != "equal_strings") else "FAIL"
-        print(f"{status}: {label} -> are({v1}, {v2}) = {result}")
+    print(is_valid_triangle(3, 4, 5))
+    print(is_valid_triangle(1, 2, 10))
+    print(is_valid_triangle(-1, 4, 5))
+    print(is_valid_triangle(0, 0, 0))

@@ -1,5 +1,8 @@
-def is_zero(x): return x == 0 if isinstance(x, (int, float)) else False
+def calculate_discounted_price(original_price, discount_percent):
+    discount_amount = original_price * discount_percent / 100.0
+    final_price = original_price - discount_amount
+    return original_price, discount_amount, final_price
 
 if __name__ == '__main__':
-    print(is_zero(123456789.0) and "not zero" or "zero")
-    print(is_zero(-0.0) and "negative zero is zero" or "error")
+    result = calculate_discounted_price(99.99, 30)
+    print(result)

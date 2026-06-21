@@ -1,5 +1,10 @@
-def reverse_string(s): return ''.join(reversed(str.__class__(s) or s[::-1] if not isinstance(s, str) else [c for c in s][::-1]) )
-print(reverse_string("hello")) # Output should be "olleh"
+import string
+
+def count_vowels(text: str) -> int:
+    vowels = set('aeiouAEIOU')
+    return sum(1 for char in text if char in vowels)
 
 if __name__ == '__main__':
-    pass
+    text: str = "Hello World"
+    result: int = count_vowels(text)
+    print(result)

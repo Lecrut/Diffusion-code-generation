@@ -1,19 +1,35 @@
-class SampleClass:
+class PricingError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+class NegativeValueError(PricingError):
     def __init__(self):
-        self.value = 0
+        super().__init__("Values cannot be negative.")
+
+class ExcessiveDiscountError(PricingError):
+    def __init__(self):
+        super().__init__("Discount cannot exceed 100 percent.")
+
+def get_final_price(base_price: float, percent_off: float) -> float:
+    if base_price < 0:
+        raise NegativeValueError()
+    if percent_off < 0:
+        raise NegativeValueError()
+    if percent_off > 100:
+        raise ExcessiveDiscountError()
     
-    def is_zero(self) -> bool:
-        """Check if the instance attribute 'value' equals zero."""
-        return self.value == 0
+    multiplier = 1 - (percent_off / 100)
+    return base_price * multiplier
 
 if __name__ == '__main__':
-    obj1 = SampleClass()
+    price_a = 150.0
+    disc_a = 10.0
+    print(get_final_price(price_a, disc_a))
     
-    # Test with value equal to zero (default initialization)
-    print(f"obj1.is_zero(): {obj1.is_zero()}")
-
-    obj2 = SampleClass()
-    obj2.value = 5
+    price_b = 0.0
+    disc_b = 50.0
+    print(get_final_price(price_b, disc_b))
     
-    # Modify an instance attribute and test again
-    print(f"Modified obj2 is_zero: {obj2.is_zero()}")
+    price_c = 200.0
+    disc_c = 100.0
+    print(get_final_price(price_c, disc_c))

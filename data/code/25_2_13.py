@@ -1,28 +1,24 @@
-class ValueChecker:
-    """A class that provides utility methods to check properties of values."""
+class ProductPricing:
+    BASE_PRICE = 500
+    DISCOUNT_PERCENT = 20
 
-    def check_if_zero(self, value):
-        """
-        Determines if the input value is zero.
+    def __init__(self, price, percent):
+        self.price = price
+        self.percent = percent
 
-        This method checks both integer and floating-point zeros.
-        It returns True if the absolute value of the number is less than a small epsilon
-        (to handle floating-point inaccuracies), otherwise False.
+    def get_savings(self):
+        return self.price * (self.percent / 100)
 
-        Args:
-            value (int or float): The numeric value to check.
+    def get_final_price(self):
+        return self.price - self.get_savings()
 
-        Returns:
-            bool: True if the value is effectively zero, False otherwise.
-        """
-        # Using a small epsilon for float comparison to avoid precision issues
-        return abs(value) < 1e-9
+    def process(self):
+        savings = self.get_savings()
+        final = self.get_final_price()
+        return savings, final
 
 if __name__ == '__main__':
-    checker = ValueChecker()
-
-    sample_values = [0, -0, 0.0, 1, -5, 3.14, 2e-10]
-
-    for val in sample_values:
-        result = checker.check_if_zero(val)
-        print(f"Value {val} is zero? {result}")
+    processor = ProductPricing(ProductPricing.BASE_PRICE, ProductPricing.DISCOUNT_PERCENT)
+    saved, cost = processor.process()
+    print(saved)
+    print(cost)

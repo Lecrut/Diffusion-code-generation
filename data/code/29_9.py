@@ -1,7 +1,8 @@
-import sys
-def reverse_word(word):
-    return word[::-1]
+def count_vowels(s):
+    translation_table = str.maketrans('aeiouAEIOU', '1111111111')
+    return s.translate(translation_table).count('1')
+
 if __name__ == '__main__':
-    sample_word = "example"
-    reversed_word = reverse_word(sample_word)
-    print(reversed_word)
+    sample_string = "The Quick Brown Fox Jumps Over The Lazy Dog. Aeiou Aeiou"
+    result = count_vowels(sample_string)
+    print(result)

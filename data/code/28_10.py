@@ -1,8 +1,13 @@
-def is_larger(a, b):
-    return a > b
+def sort_two_numbers(a, b):
+    if a <= b:
+        return (a, b)
+    else:
+        return (b, a)
+
 if __name__ == '__main__':
-    print(is_larger(10, 5))
-    print(is_larger(5, 10))
-    print(is_larger(7.5, 7.5))
-    print(is_larger(200, 199))
-    print(is_larger(-1, -5))
+    result = sort_two_numbers(15, 7)
+    print(result)
+    result = sort_two_numbers(-3, -8)
+    print(result)
+    result = sort_two_numbers(100, 100)
+    print(result)

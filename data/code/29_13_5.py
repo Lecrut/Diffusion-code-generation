@@ -1,7 +1,15 @@
-def reverse_string(s: str) -> str:
-    return s[::-1]
+from typing import Dict, List, Tuple
+
+def count_vowels(text: str) -> Dict[str, int]:
+    vowels = set("aeiouAEIOU")
+    counts: Dict[str, int] = {char: 0 for char in "aeiou"}
+    for char in text:
+        if char in vowels:
+            lower_char = char.lower()
+            counts[lower_char] += 1
+    return counts
 
 if __name__ == '__main__':
-    samples = ["hello", "Python 3.9"]
-    print(f"Reversed 'hello': {reverse_string(samples[0])}")
-    print(f"Reversed 'Python 3.9': {reverse_string(samples[1])}")
+    sample_text = "Hello World, this is a deterministic example."
+    result = count_vowels(sample_text)
+    print(result)

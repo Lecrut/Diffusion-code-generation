@@ -1,10 +1,13 @@
-a = 5
-b = 10
-if a != b:
-    print("Values differ")
-else:
-    print("Values are equal")
-print(a is not b) if a is not b else None or "Check complete"
+def is_valid_triangle(sides):
+    a, b, c = sides
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    pass
+    test_cases = (
+        (3, 4, 5),
+        (1, 2, 3),
+        (7, 10, 5),
+        (1, 1, 10),
+    )
+    for sides in test_cases:
+        print(is_valid_triangle(sides))

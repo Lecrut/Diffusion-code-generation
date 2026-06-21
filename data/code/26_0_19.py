@@ -1,10 +1,15 @@
-def is_greater(a: any, b: any) -> bool:
-    """Returns True if a is strictly greater than b, False otherwise."""
-    return a > b
+class VoterEligibilityChecker:
+    def __init__(self, minimum_age=18):
+        self.minimum_age = minimum_age
+
+    def is_eligible(self, age):
+        return age >= self.minimum_age
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values to ensure no external input or files are needed.
-    assert is_greater(5, 3) is True
-    assert is_greater(10, 10) is False
-    assert is_greater("apple", "banana") is False
-    print("All tests passed.")
+    checker = VoterEligibilityChecker(minimum_age=18)
+    result1 = checker.is_eligible(17)
+    result2 = checker.is_eligible(18)
+    result3 = checker.is_eligible(20)
+    print(result1)
+    print(result2)
+    print(result3)

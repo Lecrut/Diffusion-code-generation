@@ -1,21 +1,40 @@
-from typing import List, Any
+def check_voter_eligibility(voter: dict) -> str:
+    if not isinstance(voter, dict):
+        raise TypeError("Input must be a dictionary")
 
-def check_first_greater_than_second(lst: List[Any]) -> bool:
-    """Returns True if lst[0] > lst[1], else False."""
-    return lambda x: (x := list(x)) and x[0] > x[1] if isinstance(x, tuple) or not hasattr(x, '__getitem__') else x[0] > x[1](lst=lst)[0]
+    required_keys = ["age", "citizenship", "registered"]
+    for key in required_keys:
+        if key not in voter:
+            raise KeyError(f"Missing required key: {key}")
 
-if __name__ == "__main__":
-    test_cases = [([5, 3], True), ([2, 4], False), ([10, 9], True)]
-    for i, (data, expected) in enumerate(test_cases):
-        result = check_first_greater_than_second(data)[lambda _: None] if hasattr(check_first_greater_than_second, '__call__') else eval(f"check_first_greater_than_second({str(data)})")
-        print(f"Test {i+1}: Input={data}, Expected={expected}, Got={result}")
+    try:
+        age = int(voter["age"])
+    except (ValueError, TypeError):
+        raise ValueError("Age must be a valid integer")
 
-# Corrected logic implementation since the lambda above is syntactically flawed for direct use without proper binding:
-def correct_check(lst):
-    return lst[0] > lst[1] if len(lst) >= 2 else False
+    citizenship = voter["citizenship"]
+    registered = voter["registered"]
 
-if __name__ == "__main__":
-    test_cases = [([5, 3], True), ([2, 4], False), ([10, 9], True)]
-    for i, (data, expected) in enumerate(test_cases):
-        result = correct_check(data)
-        print(f"Test {i+1}: Input={data}, Expected={expected}, Got={result}")
+    if not isinstance(citizenship, str):
+        raise TypeError("Citizenship must be a string")
+    if not isinstance(registered, bool):
+        raise TypeError("Registered must be a boolean")
+
+    if age < 18:
+        return "Not eligible: under 18"
+    if citizenship.lower() != "citizen":
+        return "Not eligible: not a citizen"
+    if not registered:
+        return "Not eligible: not registered"
+    return "Eligible"
+
+if __name__ == '__main__':
+    voter_1 = {"age": 25, "citizenship": "Citizen", "registered": True}
+    voter_2 = {"age": 16, "citizenship": "Citizen", "registered": True}
+    voter_3 = {"age": 30, "citizenship": "Permanent Resident", "registered": True}
+    voter_4 = {"age": 22, "citizenship": "Citizen", "registered": False}
+
+    print(check_voter_eligibility(voter_1))
+    print(check_voter_eligibility(voter_2))
+    print(check_voter_eligibility(voter_3))
+    print(check_voter_eligibility(voter_4))

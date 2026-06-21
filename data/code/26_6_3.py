@@ -1,19 +1,19 @@
-def check_greater_than_hardcoded(func):
-    def wrapper(arg, *args, **kwargs):
-        if arg <= 100:
-            raise ValueError("Argument must be greater than 100")
-        return func(arg, *args, **kwargs)
-    return wrapper
-@check_greater_than_hardcoded
-def decorated_function(x, y=1):
-    return x + y
+def validate_voting_age(age):
+    if not isinstance(age, (int, float)):
+        raise TypeError("Age must be a number")
+    if age < 0:
+        raise ValueError("Age cannot be negative")
+    if age < 18:
+        raise ValueError("Must be at least 18 years old")
+    return True
+
 if __name__ == '__main__':
-    try:
-        result = decorated_function(101)
-        print(f"Result: {result}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        result = decorated_function(99)
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_ages = [18, 25, 17, -1, 17.9]
+    for age in sample_ages:
+        try:
+            result = validate_voting_age(age)
+            print(f"Age {age}: Eligible")
+        except ValueError as e:
+            print(f"Age {age}: Ineligible - {e}")
+        except TypeError as e:
+            print(f"Age {age}: Invalid Type - {e}")

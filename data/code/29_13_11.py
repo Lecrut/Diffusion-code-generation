@@ -1,10 +1,12 @@
-def reverse_string(s: str) -> str:
-    return s[::-1]
+def count_vowels(text: str) -> int:
+    if not text:
+        return 0
+    count: int = 0
+    for c in text:
+        if c in 'aeiouAEIOU':
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    samples = ["hello", "Python 3.9"]
-    results = [reverse_string(sample) for sample in samples]
-    print("Input | Output")
-    print("-" * 40)
-    for inp, out in zip(samples, results):
-        print(f"{inp} | {out}")
+    sample_text: str = "Programming is fun"
+    print(count_vowels(sample_text))

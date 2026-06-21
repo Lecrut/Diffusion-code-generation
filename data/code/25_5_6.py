@@ -1,9 +1,8 @@
-from typing import Union
-
-def is_zero(x: Union[int, float]) -> bool:
-    return x == 0 if isinstance(x, (int, float)) else False
+def calculate_discounted_price(original_price, discount_percentage):
+    discount_amount = original_price * (discount_percentage / 100)
+    final_price = original_price - discount_amount
+    return original_price, discount_amount, final_price
 
 if __name__ == '__main__':
-    test_cases = [0.0, -0.0, 1e-9, int(3), 2 / 7]
-    for val in test_cases:
-        print(f"{val!r}: {is_zero(val)}")
+    result = calculate_discounted_price(99.99, 30)
+    print(result)

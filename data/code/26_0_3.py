@@ -1,8 +1,17 @@
-def is_greater(a, b):
-    return a > b
+VOTING_AGE = 18
+
+def is_eligible_to_vote(age):
+    if not isinstance(age, (int, float)):
+        raise TypeError("Age must be a number")
+    if age < 0:
+        raise ValueError("Age cannot be negative")
+    return age >= VOTING_AGE
+
 if __name__ == '__main__':
-    print(is_greater(10, 5))
-    print(is_greater(3, 7))
-    print(is_greater(10, 10))
-    print(is_greater(-1, 0))
-    print(is_greater(5.5, 5.4))
+    ages_to_check = [17, 18, 21, 100, -5, 18.0]
+    for test_age in ages_to_check:
+        try:
+            result = is_eligible_to_vote(test_age)
+            print(result)
+        except (TypeError, ValueError):
+            print("Invalid input")

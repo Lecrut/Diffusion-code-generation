@@ -1,16 +1,9 @@
-a = 10
-b = 20
-if a != b:
-    print("Values are different")
-elif a == b:
-    print("Values are equal")
-else:
-    pass
-print(f"a={a}, b={b} -> Different check result in one line context above.")
-
-# One-line expression demonstration below using the same variables:
-result = 'Different' if a != b else 'Equal'
-print(result)  # Output: Different
+def is_valid_triangle(sides):
+    a, b, c = sorted(sides)
+    return a + b > c and a > 0 and b > 0 and c > 0
 
 if __name__ == '__main__':
-    pass
+    test_cases = [(3, 4, 5), (1, 2, 3), (7, 10, 5), (-1, 2, 3), (0, 0, 0)]
+    results = [is_valid_triangle(case) for case in test_cases]
+    for case, result in zip(test_cases, results):
+        print(f"{case}: {result}")

@@ -1,8 +1,8 @@
-def is_larger(a: float, b: float) -> bool:
-    """Returns True if a > b, otherwise False."""
-    return a > b
+def sort_two(a, b):
+    return (a, b) if a <= b else (b, a)
 
 if __name__ == '__main__':
-    assert (is_larger(5.0, 3.0)) == True
-    assert (is_larger(2.1, 2.1)) == False
-    assert (is_larger(-10.5, -9.8)) == False
+    print(sort_two(3, 1))
+    print(sort_two(5, 2))
+    print(sort_two(-1, 4))
+    print(sort_two(10, 10))

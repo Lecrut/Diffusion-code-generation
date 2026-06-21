@@ -1,9 +1,8 @@
-a = 5
-b = 10
-if a != b:
-    print("Values are different.")
-else:
-    print("Values are equal.")
+def is_valid_triangle(sides):
+    a, b, c = sides
+    return a + b > c and a + c > b and b + c > a
 
 if __name__ == '__main__':
-    pass
+    sample_sides = (3, 4, 5)
+    result = is_valid_triangle(sample_sides)
+    print(result)

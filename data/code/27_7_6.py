@@ -1,27 +1,18 @@
-def check_not_equal_threshold(threshold):
-    def decorator(func):
-        def wrapper(*args):
-            result = func(*args)
-            if result == threshold:
-                raise ValueError("Result equals the specified threshold.")
-            return result
-        return wrapper
-    return decorator
-@check_not_equal_threshold(10)
-def calculate_difference(a, b):
-    return a - b
+def is_valid_triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
+
 if __name__ == '__main__':
-    val1 = 20
-    val2 = 10
-    try:
-        difference = calculate_difference(val1, val2)
-        print(f"Difference between {val1} and {val2}: {difference}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    val3 = 10
-    val4 = 10
-    try:
-        difference2 = calculate_difference(val3, val4)
-        print(f"Difference between {val3} and {val4}: {difference2}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    result1 = is_valid_triangle(3.0, 4.0, 5.0)
+    result2 = is_valid_triangle(1.0, 2.0, 10.0)
+    result3 = is_valid_triangle(0.0, 5.0, 5.0)
+    print(result1)
+    print(result2)
+    print(result3)

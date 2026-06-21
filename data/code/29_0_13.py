@@ -1,27 +1,12 @@
-def reverse_string(input_str: str) -> str:
-    """
-    Reverses a given input string efficiently using slicing.
-    
-    Args:
-        input_str (str): The string to be reversed. Can contain any character set, 
-                         including empty strings or Unicode characters.
-        
-    Returns:
-        str: A new string that is the reverse of the input string.
-    """
-    return input_str[::-1]
+def count_vowels(text):
+    vowels = {'a', 'e', 'i', 'o', 'u'}
+    count = 0
+    for char in text.lower():
+        if char in vowels:
+            count += 1
+    return count
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test edge cases and different character sets
-    samples = [
-        "",                          # Empty string
-        "hello",                     # Simple lowercase word
-        "Hello, World!",             # Mixed case with punctuation
-        "1234567890",                # Digits only
-        "你好世界",                   # Unicode Chinese characters
-    ]
-
-    for sample in samples:
-        reversed_str = reverse_string(sample)
-        print(f"Original: '{sample}'")
-        print(f"Reversed: '{reversed_str}'\n")
+    sample_string = "Hello World! This is an example string with vowels."
+    result = count_vowels(sample_string)
+    print(result)

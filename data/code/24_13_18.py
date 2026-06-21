@@ -1,48 +1,30 @@
-# Script to check if a number is negative with error handling
-def get_number():
-    """Prompt user for input, but since external interaction is disallowed in this context, 
-    it will return None which triggers an internal fallback mechanism."""
-    # In a real interactive scenario: try converting user_input to int.
+from typing import Optional, Union
 
-# Hard-coded sample values execution block
-if __name__ == '__main__':
-    sample_values = [-50, 0, 123]
-    
-    for val in sample_values:
-        print(f"Checking value: {val}")
-        
-        if val < 0:
-            message = "The entered number is negative."
-        elif val == 0:
-            message = f"The number ({val}) is zero, which is not considered negative (neither positive nor negative)."
+YearType = Union[int, str]
+
+class LeapYearVerifier:
+    def is_leap(self, year: YearType) -> bool:
+        if isinstance(year, str):
+            if not year.isdigit():
+                raise ValueError("Year string must contain only digits")
+            year_value = int(year)
         else:
-            message = "The entered number is positive."
-            
-        print(message)
+            year_value = year
         
-    # Explicit handling of non-integer input simulation 
-    # Since we are restricted from user prompts and stdin in this environment logic block,
-    # we demonstrate the check for valid integers against float types to ensure robustness:
-    
-    try_non_int_examples = [3.5, "not_a_number"]  # Simulating potential conversion issues
-    
-    print("\n--- Testing Non-Integer Handling (Simulated) ---")
-    
-    def safe_check_integer(number):
-        """Attempts to process number as integer; raises TypeError if invalid."""
-        try:
-            num = int(float(str(number))) 
-            return num, "Error: Not an integer" # Simulating the error case here for clarity
-            
-        except (TypeError, ValueError) as e:
-             print(f"This value ({number}) is not a valid integer.")
+        if year_value < 1:
+            raise ValueError("Year must be a positive integer")
+        
+        if year_value % 400 == 0:
+            return True
+        if year_value % 100 == 0:
+            return False
+        if year_value % 4 == 0:
+            return True
+        return False
 
-    test_cases = [10.75, 34] 
-    
-    for tc in test_cases:
-            result_message = safe_check_integer(tc)[1] # Get message from function
-            
-            if int(float(str(tc))) < 0:
-                 print(f"Result for {tc}: The number is negative.")
-            else:
-                print(f"Result for {tc} with issue '{result_message}': Number analysis skipped due to non-integer status (simulated).")
+if __name__ == '__main__':
+    verifier = LeapYearVerifier()
+    test_years = [2000, 1900, 2024, 2023, "2024", "1900", "2000", "2023"]
+    for t_year in test_years:
+        result = verifier.is_leap(t_year)
+        print(f"{t_year}: {result}")

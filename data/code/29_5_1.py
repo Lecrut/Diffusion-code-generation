@@ -1,9 +1,19 @@
-def reverse_string_iterative(s):
-    reversed_s = ""
-    for char in s:
-        reversed_s = char + reversed_s
-    return reversed_s
-if __name__ == '__main__':
-    sample_string = "hello"
-    reversed_result = reverse_string_iterative(sample_string)
-    print(reversed_result)
+def vowel_count_generator(sentences):
+    vowels = set("aeiouAEIOU")
+    for sentence in sentences:
+        words = sentence.split()
+        for word in words:
+            count = 0
+            for char in word:
+                if char in vowels:
+                    count += 1
+            yield count
+
+if __name__ == "__main__":
+    sample_sentences = [
+        "Hello world",
+        "Python is amazing",
+        "Generate memory efficient code"
+    ]
+    results = list(vowel_count_generator(sample_sentences))
+    print(results)

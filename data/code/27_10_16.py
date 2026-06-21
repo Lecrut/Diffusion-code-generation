@@ -1,22 +1,13 @@
-def check_difference(a: float, b: float) -> bool:
-    """
-    Returns True if two numerical values are different, False otherwise.
-    
-    Args:
-        a (float): First numerical value.
-        b (float): Second numerical value.
-        
-    Returns:
-        bool: True if a != b, False otherwise.
-    """
-    return a != b
+def is_valid_triangle(sides: tuple) -> bool:
+    a, b, c = sides
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c or a + c <= b or b + c <= a:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    result1 = check_difference(5.0, 6.0)
-    assert result1 is True
-    
-    result2 = check_difference(3.14, 3.14)
-    assert result2 is False
-    
-    print("All checks passed.")
+    print(is_valid_triangle((3.0, 4.0, 5.0)))
+    print(is_valid_triangle((1.0, 2.0, 3.0)))
+    print(is_valid_triangle((-1.0, 2.0, 3.0)))
+    print(is_valid_triangle((0.0, 5.0, 5.0)))

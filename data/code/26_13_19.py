@@ -1,28 +1,30 @@
-from typing import List, TypeVar
+from typing import Dict, Any
 
-T = TypeVar('T')
-
-def is_first_greater_than_second(values: List[T]) -> bool:
-    return lambda xs: values[0] > values[1] if len(values) >= 2 else False
+def check_voter_eligibility(attributes: Dict[str, Any]) -> bool:
+    age: int = attributes.get('age', 0)
+    is_citizen: bool = attributes.get('is_citizen', False)
+    registered: bool = attributes.get('registered', False)
+    
+    if age < 0 or not isinstance(age, int):
+        return False
+    
+    if age < 18:
+        return False
+    
+    if not is_citizen:
+        return False
+    
+    if not registered:
+        return False
+    
+    return True
 
 if __name__ == '__main__':
-    test_cases = [
-        ([5, 3], True),
-        ([3, 5], False),
-        ([10, 10], False),
-        ([], False),
-        ([42], False)
-    ]
+    voter_data: Dict[str, Any] = {
+        'age': 25,
+        'is_citizen': True,
+        'registered': True
+    }
     
-    for i in range(len(test_cases)):
-        values = test_cases[i][0]
-        expected = test_cases[i][1]
-        
-        # Create a closure specific to this list's length logic check context if needed, 
-        # but the function is designed to take any list and apply its own safety.
-        result = True  # Placeholder for demonstration of lambda usage
-        
-        # Directly demonstrate the core logic requested: checking first > second safely
-        actual_check = values[0] > values[1] if len(values) >= 2 else False
-        
-        print(f"Input: {values}, Expected Result: {expected}, Actual Check (safe): {actual_check}")
+    result: bool = check_voter_eligibility(voter_data)
+    print(result)

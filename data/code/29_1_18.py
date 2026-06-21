@@ -1,14 +1,15 @@
-def reverse_word(text: str) -> str:
-    """Return the input string with characters reversed."""
-    return text[::-1]
+class VowelCounter:
+    def __init__(self, text):
+        self.text = text
+        self.vowels = set('aeiou')
+
+    def count(self):
+        return sum(1 for char in self.text.lower() if char in self.vowels)
 
 if __name__ == '__main__':
-    samples = [
-        "hello",
-        "Python Programming",
-        "",
-        "a"
-    ]
-
-    for sample in samples:
-        print(f"Original: {sample!r}")
+    counter = VowelCounter("Rhythm is a part of life")
+    print(counter.count())
+    counter2 = VowelCounter("AEIOU")
+    print(counter2.count())
+    counter3 = VowelCounter("bcdfg")
+    print(counter3.count())
