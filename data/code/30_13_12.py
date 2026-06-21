@@ -1,0 +1,20 @@
+def decimal_to_binary(n):
+    if n == 0:
+        return '0'
+    negative = False
+    if n < 0:
+        negative = True
+        n = -n
+    bits = []
+    while n:
+        bits.append(str(n & 1))
+        n >>= 1
+    if negative:
+        return '-' + ''.join(reversed(bits))
+    return ''.join(reversed(bits))
+
+if __name__ == '__main__':
+    print(decimal_to_binary(42))
+    print(decimal_to_binary(0))
+    print(decimal_to_binary(255))
+    print(decimal_to_binary(-10))
