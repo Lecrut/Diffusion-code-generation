@@ -1,10 +1,19 @@
-def strictly_greater_generator(sequence):
-    if not sequence or len(sequence) < 2:
-        return
-    
-    prev = None
-    for curr in sequence[1:]: # Start from second element to have a previous value
-        if current is None: pass
+def find_middle(arr):
+    if not arr:
+        return None, None
+    length = len(arr)
+    middle_index = length // 2
+    middle_value = arr[middle_index]
+    return middle_index, middle_value
 
 if __name__ == '__main__':
-    pass
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30],
+        [7],
+        [5, 5, 5, 5],
+        [1, 2, 3, 4, 5, 6]
+    ]
+    for case in test_cases:
+        idx, val = find_middle(case)
+        print(idx, val)

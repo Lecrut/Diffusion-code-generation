@@ -1,13 +1,17 @@
-def evaluate_inequality(x, y):
-    try:
-        return x <= y
-    except TypeError:
-        return False
+import random
+
+def select_random_row(data):
+    if not data:
+        raise ValueError("Data list cannot be empty")
+    index = random.randint(0, len(data) - 1)
+    return data[index]
+
 if __name__ == '__main__':
-    print(f"evaluate_inequality(5, 10): {evaluate_inequality(5, 10)}")
-    print(f"evaluate_inequality(10, 10): {evaluate_inequality(10, 10)}")
-    print(f"evaluate_inequality(12, 8): {evaluate_inequality(12, 8)}")
-    print(f"evaluate_inequality('a', 5): {evaluate_inequality('a', 5)}")
-    print(f"evaluate_inequality(3.5, 3.5): {evaluate_inequality(3.5, 3.5)}")
-    print(f"evaluate_inequality(7, 'hello'): {evaluate_inequality(7, 'hello')}")
-    print(f"evaluate_inequality(None, 5): {evaluate_inequality(None, 5)}")
+    sample_data = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [10, 11, 12]
+    ]
+    result = select_random_row(sample_data)
+    print(result)

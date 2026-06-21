@@ -1,47 +1,30 @@
-def compare_strings(str1: str, str2: str) -> tuple[int, int]:
-    """
-    Compares two strings lexicographically and returns a tuple with 
-    (comparison_result, length_difference).
+def calculate_grades(scores):
+    if not scores:
+        return []
     
-    Comparison logic:
-        - If str1 < str2 lexically: comparison_result = -1
-        - If str1 > str2 lexically: comparison_result = 1
-        - Otherwise: comparison_result = 0
+    min_score = min(scores)
+    max_score = max(scores)
+    score_range = max_score - min_score
     
-    Length difference is calculated as len(str1) - len(str2).
+    if score_range == 0:
+        return ['A' for _ in scores]
     
-    Args:
-        str1 (str): The first string to compare.
-        str2 (str): The second string to compare.
-        
-    Returns:
-        tuple[int, int]: A tuple containing the comparison result and length difference.
-    """
-    # Lexicographical comparison using Python's built-in < operator which handles Unicode correctly
-    if str1 < str2:
-        cmp_result = -1
-    elif str1 > str2:
-        cmp_result = 1
-    else:
-        cmp_result = 0
-    
-    length_diff = len(str1) - len(str2)
-    
-    return (cmp_result, length_diff)
+    grades = []
+    for s in scores:
+        normalized = (s - min_score) / score_range
+        if normalized >= 0.9:
+            grades.append('A')
+        elif normalized >= 0.8:
+            grades.append('B')
+        elif normalized >= 0.7:
+            grades.append('C')
+        elif normalized >= 0.6:
+            grades.append('D')
+        else:
+            grades.append('F')
+    return grades
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        ("apple", "banana"),      # Lexicographically smaller, different lengths
-        ("zebra", "ant"),         # Lexicographically larger, same length (4 vs 3) -> wait: zebra(6), ant(3)
-        ("hello", "world"),       # Different first letters
-        ("test", "testing"),      # Prefix case
-        ("a", "aa"),              # Same start, different lengths
-    ]
-
-    for s1, s2 in test_cases:
-        result = compare_strings(s1, s2)
-        print(f"Comparing '{s1}' and '{s2}':")
-        print(f"  Lexicographical comparison: {result[0]} (negative means str1 < str2)")
-        print(f"  Length difference ({len(s1)} - {len(s2)}): {result[1]}")
-        print()
+    sample_scores = [85, 92, 78, 55, 100, 60, 90]
+    result = calculate_grades(sample_scores)
+    print(result)

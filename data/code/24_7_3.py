@@ -1,18 +1,21 @@
-import math
-def is_strictly_less_than_zero(x):
-    if x < 0:
-        return True
-    return False
+def is_leap_year(year):
+    if not isinstance(year, int):
+        raise TypeError("Year must be an integer")
+    if year < 1:
+        raise ValueError("Year must be positive")
+    divisible_by_4 = year % 4 == 0
+    divisible_by_100 = year % 100 == 0
+    divisible_by_400 = year % 400 == 0
+    if not divisible_by_4:
+        return False
+    if divisible_by_100 and not divisible_by_400:
+        return False
+    return True
+
 if __name__ == '__main__':
-    test_values = [
-        -0.0000001,
-        -1.0,
-        0.0,
-        1e-10,
-        -1.0000000000000001,
-        0.0,
-        -9.999999999999999
-    ]
-    for value in test_values:
-        result = is_strictly_less_than_zero(value)
-        print(f"Is {value} strictly less than zero? {result}")
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))
+    print(is_leap_year(1600))
+    print(is_leap_year(1700))

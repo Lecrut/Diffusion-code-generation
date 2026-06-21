@@ -1,19 +1,12 @@
-# Script to filter negative integers from a list using list comprehension
+is_leap = lambda y: (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0)
 
-def main():
-    """Reads hardcoded sample data, filters negatives, and prints results."""
-    
-    # Hard-coded list of integers as per requirements (no user input or files)
-    numbers = [3, -5, 0, -2, 7, -1]
-    
-    # Use a generator expression to filter only negative numbers from the list.
-    # Generator expressions are memory efficient for large datasets compared to list comprehensions.
-    negative_numbers_gen = (num for num in numbers if num < 0)
-    
-    # Convert the generator to a list and print each number on a new line with clear formatting
-    result_list = list(negative_numbers_gen)
-    for index, value in enumerate(result_list):
-        print(f"Negative Number {index + 1}: {value}")
+def validate_leap_years():
+    leap_years = [4, 8, 2000, 2004, 2400]
+    non_leap_years = [3, 100, 1800, 1900, 2100, 2200, 2300]
+    results = {year: is_leap(year) for year in leap_years + non_leap_years}
+    return results
 
 if __name__ == '__main__':
-    main()
+    output = validate_leap_years()
+    for year, is_leap_result in sorted(output.items()):
+        print(f"{year}: {is_leap_result}")

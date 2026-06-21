@@ -1,4 +1,17 @@
-a > b if 'a' in globals() else False  # Placeholder logic since actual variables aren't present; this module structure ensures no external dependencies or input prompts, but to fulfill the "greater than" check as requested with hard-coded samples: a = 10; b = 5; print(a > b)
+def get_middle_element(lst):
+    if not lst:
+        return None
+    index = len(lst) // 2
+    return lst[index]
 
 if __name__ == '__main__':
-    pass
+    sample_lists = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30],
+        [7, 8],
+        [1],
+        []
+    ]
+    for lst in sample_lists:
+        result = get_middle_element(lst)
+        print(result)

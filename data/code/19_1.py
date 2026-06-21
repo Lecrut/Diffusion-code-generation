@@ -1,7 +1,12 @@
-def is_greater(a, b):
-    return a > b
+import random
+
+def get_random_key_value(data):
+    if not data:
+        raise ValueError("Dictionary cannot be empty")
+    key = random.choice(list(data.keys()))
+    return key, data[key]
+
 if __name__ == '__main__':
-    print(is_greater(10, 5))
-    print(is_greater(3, 7))
-    print(is_greater(42, 42))
-    print(is_greater(-1, 0))
+    sample_data = {'apple': 5, 'banana': 3, 'cherry': 8, 'date': 12}
+    result_key, result_value = get_random_key_value(sample_data)
+    print(f"{result_key}: {result_value}")

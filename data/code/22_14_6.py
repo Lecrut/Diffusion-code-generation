@@ -1,33 +1,59 @@
-def filter_odd_numbers(numbers: list[int]) -> list[int]:
-    """
-    Returns a new list containing only the odd integers from the input list.
+def validate_password_strength(password, common_weak_passwords=None):
+    if common_weak_passwords is None:
+        common_weak_passwords = ["password", "123456", "12345678", "qwerty", "abc123", "monkey", "master", "dragon", "111111", "baseball"]
     
-    Args:
-        numbers (list[int]): A list of integers to be filtered.
-        
-    Returns:
-        list[int]: A list of odd integers found in the input.
-        
-    Raises:
-        TypeError: If 'numbers' is not a list or contains non-integer elements.
-    """
-    if not isinstance(numbers, list):
-        raise TypeError("Input must be a list.")
+    if not password:
+        return {
+            "is_strong": False,
+            "errors": ["Password cannot be empty"]
+        }
     
-    result = []
-    for num in numbers:
-        if not isinstance(num, int) or isinstance(num, bool):
-            continue  # Skip booleans and non-integers
+    errors = []
+    
+    if len(password) < 8:
+        errors.append("Password must be at least 8 characters long")
+    
+    if len(password) > 128:
+        errors.append("Password must not exceed 128 characters")
+    
+    if password.lower() in common_weak_passwords:
+        errors.append("Password is too common")
+    
+    has_upper = any(c.isupper() for c in password)
+    has_lower = any(c.islower() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
+    
+    char_types = sum([has_upper, has_lower, has_digit, has_special])
+    
+    if char_types < 3:
+        errors.append("Password must contain at least 3 types of characters (upper, lower, digit, special)")
+    
+    for i in range(len(password) - 2):
+        c1 = ord(password[i])
+        c2 = ord(password[i + 1])
+        c3 = ord(password[i + 2])
         
-        if num % 2 != 0:
-            result.append(num)
-            
-    return result
+        if c2 == c1 + 1 and c3 == c2 + 1:
+            errors.append("Password contains sequential characters")
+            break
+        
+        if c2 == c1 - 1 and c3 == c2 - 1:
+            errors.append("Password contains sequential characters")
+            break
+    
+    if not errors:
+        return {
+            "is_strong": True,
+            "errors": []
+        }
+    else:
+        return {
+            "is_strong": False,
+            "errors": errors
+        }
 
 if __name__ == '__main__':
-    sample_input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
-    odd_numbers = filter_odd_numbers(sample_input)
-    
-    print("Original list:", sample_input)
-    print("Filtered odd numbers:", odd_numbers)
+    test_password = "Str0ng!Pass"
+    result = validate_password_strength(test_password)
+    print(result)

@@ -1,20 +1,13 @@
-def sort_by_descending(numbers):
-    """
-    Sorts a list of integers in descending order using Python's built-in Timsort,
-    which is highly optimized (O(n log n) average time complexity).
-    
-    Args:
-        numbers (list[int]): A list containing integer values.
-        
-    Returns:
-        list[int]: A new list with the same elements sorted from largest to smallest.
-    """
-    return sorted(numbers, reverse=True)
+def find_max_of_three(a, b, c):
+    if a >= b and a >= c:
+        return a
+    if b >= a and b >= c:
+        return b
+    return c
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_data = [34, 789, -120, 56, 0]
-
-    result = sort_by_descending(sample_data)
-
-    print("Sorted list (descending):", result)
+    num1 = 10
+    num2 = 25
+    num3 = 15
+    result = find_max_of_three(num1, num2, num3)
+    print(result)

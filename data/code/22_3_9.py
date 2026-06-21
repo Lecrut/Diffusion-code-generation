@@ -1,8 +1,13 @@
-# Check if an integer is odd using modulo operator
-is_odd = num % 2 != 0
+def validate_password_strength(password):
+    import hashlib
+    if not isinstance(password, str) or len(password) == 0:
+        return False
+    password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
+    if password_hash in COMPILED_HASHES:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_numbers = [17, -5, 30]
-    for n in test_numbers:
-        print(f"{n} is odd" if (n % 2 != 0) else f"{n} is even")
+    sample_passwords = ["password", "123456", "qwerty", "secureP@ss123", "letmein"]
+    results = {pwd: validate_password_strength(pwd) for pwd in sample_passwords}
+    print(results)

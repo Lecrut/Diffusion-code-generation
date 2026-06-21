@@ -1,9 +1,15 @@
-def evaluate_condition(x: int | float, y: int | float) -> bool:
-    """Yields True if x > y, otherwise False."""
-    result = x > y
-    yield result
+import random
+
+def fetch_random_value(source_map):
+    key_collection = list(source_map.keys())
+    if len(key_collection) == 0:
+        return None
+    random_index = random.randint(0, len(key_collection) - 1)
+    chosen_key = key_collection[random_index]
+    return source_map[chosen_key]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    for val in evaluate_condition(10, 5):
-        print(val)
+    sample_data = {'alpha': 10, 'beta': 20, 'gamma': 30, 'delta': 40}
+    output = fetch_random_value(sample_data)
+    print(output)
+    print(fetch_random_value({}))

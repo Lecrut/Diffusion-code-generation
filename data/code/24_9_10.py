@@ -1,27 +1,18 @@
-import math
+LEAP_DIVISOR_4 = 4
+LEAP_DIVISOR_100 = 100
+LEAP_DIVISOR_400 = 400
 
-class NegativityUtils:
-    """Utility class containing methods to check negativity."""
-
-    @staticmethod
-    def is_negative(value):
-        """
-        Check if a number is negative.
-
-        Args:
-            value (int or float): The numerical value to evaluate.
-
-        Returns:
-            bool: True if the value is less than zero, False otherwise.
-        """
-        return value < 0
+def is_leap_year(year):
+    if year % LEAP_DIVISOR_400 == 0:
+        return True
+    if year % LEAP_DIVISOR_100 == 0:
+        return False
+    return year % LEAP_DIVISOR_4 == 0
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_values = [-5, -0.1, 0, 3.14]
-
-    print("Testing negativity check:")
-    for val in test_values:
-        result = NegativityUtils.is_negative(val)
-        status = "Negative" if result else "Non-negative"
-        print(f"{val} is {status}")
+    print(is_leap_year(2400))
+    print(is_leap_year(2300))
+    print(is_leap_year(2404))
+    print(is_leap_year(2401))
+    print(is_leap_year(1600))
+    print(is_leap_year(1700))

@@ -1,25 +1,32 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd numbers from the input list.
+def score_password_strength(password):
+    length = len(password)
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
     
-    Optimized by using a generator expression within a list constructor,
-    which avoids creating intermediate lists and is memory efficient for large inputs.
-    Integer comparison (n % 2 != 0) is used to check parity without division overhead 
-    where possible in Python's optimized C implementation of modulo on small integers.
-
-    Args:
-        numbers (list[int]): A list of integers.
-
-    Returns:
-        list[int]: A new list containing only the odd integers from the input.
-    """
-    return [n for n in numbers if n % 2 != 0]
+    diversity_score = 0
+    if has_lower:
+        diversity_score += 2
+    if has_upper:
+        diversity_score += 2
+    if has_digit:
+        diversity_score += 2
+    if has_special:
+        diversity_score += 2
+        
+    length_score = 0
+    if length >= 8:
+        length_score += 3
+    elif length >= 5:
+        length_score += 2
+    elif length >= 3:
+        length_score += 1
+        
+    total_score = diversity_score + length_score
+    return min(10, total_score)
 
 if __name__ == '__main__':
-    sample_data = [-5, 3, -1, 8, 7, 0, 9, 4, 11, -6]
-    
-    # Process the data using our optimized function
-    result = filter_odd_numbers(sample_data)
-
-    print("Original list:", sample_data)
-    print("Filtered odd numbers:", result)
+    print(score_password_strength("abc"))
+    print(score_password_strength("Abc123!"))
+    print(score_password_strength("StrongP@ssw0rd123"))

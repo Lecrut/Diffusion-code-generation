@@ -1,6 +1,11 @@
-# Check if 'a' is greater than 'b' using a comparison operator in one line
-result = (lambda: a > b)()  # This evaluates to True or False based on values of a and b
+def get_middle_element(data):
+    return data[len(data) // 2]
 
 if __name__ == '__main__':
-    a, b = 10, 5
-    print(result)
+    sample_list_1 = [10, 20, 30, 40, 50]
+    sample_list_2 = [1, 2, 3, 4, 5, 6, 7]
+    sample_list_3 = [99, 88, 77, 66, 55, 44]
+    
+    print(get_middle_element(sample_list_1))
+    print(get_middle_element(sample_list_2))
+    print(get_middle_element(sample_list_3))

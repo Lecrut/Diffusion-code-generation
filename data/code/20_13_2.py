@@ -1,24 +1,11 @@
-def compare_values(a, b):
-    if type(a) == type(b):
-        if a == b:
-            print("The two values are equal.")
-        else:
-            print("The two values are not equal.")
-    else:
-        print("Error: Cannot compare values of different types.")
+def is_even_by_lookup(n: int) -> bool:
+    sample_values = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+    return n in sample_values
+
 if __name__ == '__main__':
-    value1 = 10
-    value2 = 10
-    compare_values(value1, value2)
-    value3 = "hello"
-    value4 = "hello"
-    compare_values(value3, value4)
-    value5 = 5.5
-    value6 = 5.5
-    compare_values(value5, value6)
-    value7 = 5
-    value8 = 6
-    compare_values(value7, value8)
-    value9 = 10
-    value10 = "10"
-    compare_values(value9, value10)
+    test_values = [2, 5, 10, 11, 0, 7]
+    results = []
+    for val in test_values:
+        results.append(is_even_by_lookup(val))
+    for val, res in zip(test_values, results):
+        print(f"{val}: {res}")

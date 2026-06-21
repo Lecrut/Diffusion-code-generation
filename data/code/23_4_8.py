@@ -1,43 +1,44 @@
-def compare_sequences(a_seq, b_seq):
-    """
-    Generator function that yields comparison results between pairs of values 
-    from two input sequences a_seq and b_seq.
+GRADING_THRESHOLDS = [
+    (90, "A"),
+    (80, "B"),
+    (70, "C"),
+    (60, "D"),
+]
 
-    Args:
-        a_seq (iterable): First sequence of comparable items.
-        b_seq (iterable): Second sequence of comparable items. Must match length to a_seq ideally, but the generator handles iteration safely up to the shortest iterable.
+class ScoreValidator:
+    def __init__(self, min_value=0, max_value=100):
+        self.min_value = min_value
+        self.max_value = max_value
 
-    Yields:
-        str: Comparison result string ('A is greater', 'B is smaller', or 'Equal').
-    
-    Raises:
-        TypeError: If inputs are not iterables.
-    """
-    if not hasattr(a_seq, '__iter__') or not hasattr(b_seq, '__iter__'):
-        raise TypeError("Both arguments must be iterable.")
+    def validate(self, score):
+        if not isinstance(score, (int, float)):
+            raise TypeError("Score must be a numeric type")
+        if score < self.min_value or score > self.max_value:
+            raise ValueError("Score out of range")
 
-    a_iter = iter(a_seq)
-    b_iter = iter(b_seq)
+class GradeLookup:
+    def __init__(self, thresholds):
+        self.thresholds = sorted(thresholds, key=lambda x: x[0], reverse=True)
+        self.fallback = "F"
 
-    while True:
-        try:
-            item_a = next(a_iter)
-            item_b = next(b_iter)
-            
-            if item_a > item_b:
-                yield "A is greater"
-            elif item_b > item_a:
-                yield "B is smaller"
-            else:
-                yield "Equal"
-        except StopIteration:
-            # Both iterators exhausted at the same time (or one ran out and we stop)
-            break
+    def find_grade(self, score):
+        for threshold, grade in self.thresholds:
+            if score >= threshold:
+                return grade
+        return self.fallback
+
+class GradeService:
+    def __init__(self, validator=None, lookup=None):
+        self.validator = validator or ScoreValidator()
+        self.lookup = lookup or GradeLookup(GRADING_THRESHOLDS)
+
+    def determine_letter_grade(self, score):
+        self.validator.validate(score)
+        return self.lookup.find_grade(score)
 
 if __name__ == '__main__':
-    sample_list_a = [3, 10, 5, 2]
-    sample_list_b = [8, 9, 4, 6]
-
-    print("Comparison Results:")
-    for result in compare_sequences(sample_list_a, sample_list_b):
-        print(result)
+    service = GradeService()
+    test_scores = [95, 82, 75, 60, 45, 100, 0]
+    for s in test_scores:
+        grade = service.determine_letter_grade(s)
+        print(f"Score: {s}, Grade: {grade}")

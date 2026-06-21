@@ -1,18 +1,9 @@
-import copy
-
-class ItemComparer:
-    def check_equality(self, a, b):
-        """
-        Performs a deep comparison between two items (lists or dictionaries),
-        handling nested structures of arbitrary depth.
-        
-        Args:
-            a (hashable | dict | list): The first item to compare.
-            b (hashable | dict | list): The second item to compare.
-            
-        Returns:
-            bool: True if both items are structurally and value-wise equal, False otherwise.
-        """
-
+def is_even(number):
+    if not isinstance(number, int):
+        raise TypeError('Input must be an integer')
+    return number % 2 == 0
 if __name__ == '__main__':
-    pass
+    test_values = [-4, -3, 0, 3, 4, 100, -100]
+    for val in test_values:
+        result = is_even(val)
+        print(f'{val}: {result}')

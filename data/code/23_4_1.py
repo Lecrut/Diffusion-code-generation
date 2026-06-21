@@ -1,14 +1,32 @@
-def compare_pairs(seq1, seq2):
-    for val1, val2 in zip(seq1, seq2):
-        if val1 > val2:
-            yield f"{val1} is greater"
-        elif val1 < val2:
-            yield f"{val1} is smaller"
+class GradeThresholds:
+    def __init__(self):
+        self.thresholds = [
+            (90, 'A'),
+            (80, 'B'),
+            (70, 'C'),
+            (60, 'D'),
+        ]
+
+    def get_grade(self, score):
+        for threshold, grade in self.thresholds:
+            if score >= threshold:
+                return grade
+        return 'F'
+
+class GradeCalculator:
+    def __init__(self, thresholds=None):
+        if thresholds is None:
+            self.thresholds = GradeThresholds()
         else:
-            yield "Equal"
+            self.thresholds = thresholds
+
+    def get_letter_grade(self, score):
+        return self.thresholds.get_grade(score)
+
 if __name__ == '__main__':
-    list_a = [1, 5, 3, 8]
-    list_b = [4, 2, 3, 9]
-    results = list(compare_pairs(list_a, list_b))
-    for result in results:
-        print(result)
+    calculator = GradeCalculator()
+    print(calculator.get_letter_grade(95))
+    print(calculator.get_letter_grade(85))
+    print(calculator.get_letter_grade(75))
+    print(calculator.get_letter_grade(65))
+    print(calculator.get_letter_grade(55))

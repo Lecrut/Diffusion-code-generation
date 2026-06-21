@@ -1,20 +1,12 @@
-import sys
-
-def compare_numbers(num1: float, num2: float) -> None:
-    """
-    Compares two numbers and prints if the first is greater than the second.
-    
-    Parameters:
-        num1 (float): The first number provided by the user or sample value.
-        num2 (float): The second number provided by the user or sample value.
-    """
-    result = "Yes, the first number is greater." if num1 > num2 else "No, the first number is not greater."
-    
-    print(result)
+def get_center_element(data):
+    if not data:
+        raise ValueError("List cannot be empty")
+    return data[len(data) // 2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to satisfy non-interactive requirements
-    sample_value_1: float = 5.0
-    sample_value_2: float = 3.0
-    
-    compare_numbers(sample_value_1, sample_value_2)
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_center_element(sample_list)
+    print(result)
+    sample_list_two = [1, 2, 3, 4]
+    result_two = get_center_element(sample_list_two)
+    print(result_two)

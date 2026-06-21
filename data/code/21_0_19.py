@@ -1,14 +1,13 @@
-import sys
-
-def main():
-    # Hard-coded sample values as per requirements (no user input, args, or files)
-    unsorted_numbers = [64, 34, 25, 12, 22, 11, 90]
-
-    # Use the built-in sorted() function which uses Timsort (efficient for most data types and sizes)
-    sorted_numbers = sorted(unsorted_numbers)
-
-    # Print each number on a new line to standard output
-    print('\n'.join(map(str, sorted_numbers)))
+def largest_of_three(first: int, second: int, third: int) -> int:
+    result = first
+    if second > result:
+        result = second
+    if third > result:
+        result = third
+    return result
 
 if __name__ == '__main__':
-    main()
+    val_1 = 42
+    val_2 = 99
+    val_3 = 15
+    print(largest_of_three(val_1, val_2, val_3))

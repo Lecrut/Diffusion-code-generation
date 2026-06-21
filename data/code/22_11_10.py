@@ -1,24 +1,18 @@
-def is_odd(number: int) -> bool:
-    """
-    Determines whether a given integer is odd.
+import re
 
-    Args:
-        number (int): The integer to check.
-
-    Returns:
-        bool: True if the number is odd, False otherwise.
-    
-    Implementation Note:
-    Using bitwise AND with 1 is significantly faster than using modulo operator 
-    for large-scale numerical operations in Python due to lower CPU cycles required.
-    """
-    return (number & 1) != 0
+def is_valid_password(password):
+    if len(password) < 8:
+        return False
+    if not re.search(r'\d', password):
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values running without user input or external dependencies
-    test_cases = [5, -3, 10, 0, 42]
-
-    for num in test_cases:
-        result = is_odd(num)
-        status = "Odd" if result else "Even"
-        print(f"{num} is {status}")
+    test_passwords = ["Short1!", "ValidPass1!", "nospaces1", "ALLCAPS1!", "lowercase1!", "Valid@Pass"]
+    for pwd in test_passwords:
+        result = is_valid_password(pwd)
+        print(pwd, result)

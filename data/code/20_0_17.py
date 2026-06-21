@@ -1,21 +1,26 @@
-def are_equal(item1: any, item2: any) -> bool:
-    """
-    Returns True if two items are strictly equal (value-wise), handling various data types correctly.
-    
-    Parameters:
-        item1 (any): The first object to compare.
-        item2 (any): The second object to compare.
-        
-    Returns:
-        bool: True if the objects are deeply equal, False otherwise.
-    
-    Examples:
-        >>> are_equal(5, 6)
-        False
-        >>> are_equal([1], [2])
-        False
-    """
-    return item1 == item2
+def is_even(n: int) -> bool:
+    parity_map = {0: True, 1: False}
+    remainder = n % 2
+    return parity_map.get(remainder, False)
 
 if __name__ == '__main__':
-    pass
+    print(is_even(4))
+    print(is_even(7))
+    print(is_even(0))
+    print(is_even(-3))
+    print(is_even(10))
+    print(is_even(-11))
+    print(is_even(20))
+    print(is_even(-1))
+    print(is_even(1))
+    print(is_even(99))
+    print(is_even(100))
+    print(is_even(-100))
+    print(is_even(50))
+    print(is_even(-50))
+    print(is_even(15))
+    print(is_even(-15))
+    print(is_even(25))
+    print(is_even(-25))
+    print(is_even(30))
+    print(is_even(-30))

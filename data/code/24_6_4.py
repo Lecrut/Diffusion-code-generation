@@ -1,26 +1,7 @@
-import functools
-class NegativeResultError(Exception):
-    pass
-def check_negative(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        if result < 0:
-            raise NegativeResultError(f"Function {func.__name__} returned a negative result: {result}")
-        return result
-    return wrapper
-@check_negative
-def calculate_value(a, b):
-    return a - b
+def is_leap_year(year):
+    return (year & 3 == 0) and ((year & 15 != 0) or (year % 400 == 0))
+
 if __name__ == '__main__':
-    try:
-        result1 = calculate_value(10, 5)
-        print(f"Result 1: {result1}")
-        result2 = calculate_value(3, 8)
-        print(f"Result 2: {result2}")
-        try:
-            calculate_value(5, 10)
-        except NegativeResultError as e:
-            print(f"Caught expected exception: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    sample_years = [2000, 1900, 2004, 2001, 2400, 1800, 2023, 2024]
+    for year in sample_years:
+        print(is_leap_year(year))

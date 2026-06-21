@@ -1,21 +1,38 @@
-def is_odd(n: int) -> bool:
-    """
-    Returns True if n is odd, False otherwise.
+import math
+import re
+
+def is_strong_password(password: str) -> bool:
+    if not isinstance(password, str):
+        return False
     
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if n is odd, False if even or non-integer input passed despite type hint.
-    """
-    return n % 2 != 0
+    if len(password) < 8:
+        return False
+    
+    unique_chars = set(password)
+    charset_size = 0
+    
+    if re.search(r'[a-z]', password):
+        charset_size += 26
+    if re.search(r'[A-Z]', password):
+        charset_size += 26
+    if re.search(r'[0-9]', password):
+        charset_size += 10
+    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        charset_size += 32
+    
+    if charset_size == 0:
+        return False
+    
+    entropy = len(password) * math.log2(charset_size)
+    
+    return entropy >= 60
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction
-    test_cases = [1, -3, 42, 0, 7]
+    result1 = is_strong_password("MyStr0ng!P@ssw0rd")
+    print(result1)
     
-    print("Testing is_odd function:")
-    for num in test_cases:
-        result = is_odd(num)
-        status = "Odd" if result else "Even"
-        print(f"{num} -> {status}")
+    result2 = is_strong_password("weak")
+    print(result2)
+    
+    result3 = is_strong_password("abc")
+    print(result3)

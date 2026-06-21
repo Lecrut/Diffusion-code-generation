@@ -1,10 +1,7 @@
-if __name__ == '__main__':
-    x = -5  # Sample negative value -> True
-    result1 = x < 0
-    print(result1)
-    
-    y = 3   # Sample positive value -> False
-    result2 = y < 0
-    print(result2)
+def is_leap_year(year):
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
 
-# The one-line expression is: lambda x: x < 0
+if __name__ == '__main__':
+    years = [2000, 1900, 2024, 2023, 400]
+    for y in years:
+        print(is_leap_year(y))

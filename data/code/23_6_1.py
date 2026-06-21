@@ -1,14 +1,20 @@
-import math
-if __name__ == '__main__':
-    z1_real = 3.0
-    z1_imag = 4.0
-    z2_real = 5.0
-    z2_imag = 12.0
-    mag_sq_z1 = z1_real**2 + z1_imag**2
-    mag_sq_z2 = z2_real**2 + z2_imag**2
-    if mag_sq_z1 > mag_sq_z2:
-        print("Magnitude squared of z1 is greater.")
-    elif mag_sq_z1 < mag_sq_z2:
-        print("Magnitude squared of z2 is greater.")
+def score_to_grade(score: float) -> str:
+    if score >= 90.0:
+        return 'A'
+    elif score >= 80.0:
+        return 'B'
+    elif score >= 70.0:
+        return 'C'
+    elif score >= 60.0:
+        return 'D'
     else:
-        print("Magnitudes squared are equal.")
+        return 'F'
+
+if __name__ == '__main__':
+    print(score_to_grade(95.5))
+    print(score_to_grade(88.0))
+    print(score_to_grade(72.3))
+    print(score_to_grade(65.1))
+    print(score_to_grade(59.9))
+    print(score_to_grade(100.0))
+    print(score_to_grade(0.0))

@@ -1,11 +1,11 @@
-import sys
-
-def check_first_greater_than_second(lst):
-    """Returns True if the first element is greater than the second, assuming list has at least 2 elements."""
-    return lst[0] > lst[1]
+def get_central_element(arr):
+    if not arr:
+        raise ValueError("Array must not be empty")
+    index = len(arr) // 2
+    return arr[index]
 
 if __name__ == '__main__':
-    sample_list = [5, 3, 8, 2]
-    result = check_first_greater_than_second(sample_list)
-    print(f"List: {sample_list}")
-    print(f"First ({sample_list[0]}) > Second ({sample_list[1]}): {result}")
+    sample_odd = [1, 2, 3, 4, 5]
+    sample_even = [1, 2, 3, 4, 5, 6]
+    print(get_central_element(sample_odd))
+    print(get_central_element(sample_even))

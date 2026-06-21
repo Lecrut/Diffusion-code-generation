@@ -1,12 +1,7 @@
-class Comparator:
-    def check_equality(self, a, b):
-        return a == b
-if __name__ == '__main__':
-    c = Comparator()
-    obj1 = 10
-    obj2 = 10
-    obj3 = "hello"
-    obj4 = "world"
-    print(f"obj1 == obj2: {c.check_equality(obj1, obj2)}")
-    print(f"obj1 == obj3: {c.check_equality(obj1, obj3)}")
-    print(f"obj3 == obj4: {c.check_equality(obj3, obj4)}")
+def is_even(number: int) -> bool:
+    return number % 2 == 0
+
+if __name__ == "__main__":
+    sample_values = [4, 7, 10, 13, 0, -2, -5]
+    for value in sample_values:
+        print(f"{value}: {is_even(value)}")

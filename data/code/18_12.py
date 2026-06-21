@@ -1,12 +1,20 @@
-if __name__ == '__main__':
-    num1 = 15.5
-    num2 = 22.1
-    try:
-        if num1 > num2:
-            print(f"{num1} is greater than {num2}")
-        elif num2 > num1:
-            print(f"{num2} is greater than {num1}")
-        else:
-            print(f"{num1} and {num2} are equal")
-    except ValueError:
-        print("An error occurred during input. Please ensure valid numbers are provided.")
+def get_median_index(values):
+    n = len(values)
+    if n == 0:
+        raise ValueError("List cannot be empty")
+    
+    for i in range(n - 1):
+        for j in range(n - 1 - i):
+            if values[j] > values[j + 1]:
+                values[j], values[j + 1] = values[j + 1], values[j]
+    
+    mid = n // 2
+    if n % 2 == 1:
+        return values[mid]
+    else:
+        return (values[mid - 1] + values[mid]) / 2
+
+if __name__ == "__main__":
+    sample_data = [7, 1, 3, 9, 5, 2, 8]
+    result = get_median_index(sample_data)
+    print(result)

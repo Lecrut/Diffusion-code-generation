@@ -1,14 +1,20 @@
-def main():
-    # Hard-coded sample values to run without user input
-    num1 = 50
-    num2 = 30
-    
-    print(f"Comparing {num1} and {num2}")
-    
-    if num1 > num2:
-        print("The first number is greater than the second.")
-    else:
-        print("The first number is not greater than the second.")
+def get_central_element(data):
+    if not data:
+        return None
+    return data[len(data) // 2]
 
 if __name__ == '__main__':
-    main()
+    sample_list_odd = [10, 20, 30, 40, 50]
+    sample_list_even = [1, 2, 3, 4, 5, 6]
+    empty_list = []
+    single_element = [99]
+
+    result_odd = get_central_element(sample_list_odd)
+    result_even = get_central_element(sample_list_even)
+    result_empty = get_central_element(empty_list)
+    result_single = get_central_element(single_element)
+
+    print(result_odd)
+    print(result_even)
+    print(result_empty)
+    print(result_single)

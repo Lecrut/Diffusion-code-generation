@@ -1,21 +1,24 @@
-import sys
+def _validate_year(year):
+    if not isinstance(year, int):
+        return False
+    if year <= 0:
+        return False
+    return True
 
-def check_number(value):
-    """Checks if a value is negative."""
-    return value < 0
+def check_leap(year):
+    if not _validate_year(year):
+        return False
+    divisible_by_4 = (year % 4 == 0)
+    divisible_by_100 = (year % 100 == 0)
+    divisible_by_400 = (year % 400 == 0)
+    if divisible_by_400:
+        return True
+    if divisible_by_100:
+        return False
+    return divisible_by_4
 
 if __name__ == '__main__':
-    # Hard-coded sample values to simulate input without user interaction, arguments, or files.
-    sample_values = [10, -5, 0, "not_a_number", 3.7, -2] 
-
-    for item in sample_values:
-        try:
-            num = int(item)
-            if check_number(num):
-                print(f"The number {num} is negative.")
-            else:
-                print(f"The number {num} is not negative.")
-        except ValueError as e:
-            # Handles cases where the input cannot be converted to an integer.
-            error_msg = f"Error processing '{item}': Expected an integer, got a non-integer value."
-            print(error_msg)
+    sample_years = [2024, 1900, 2000, 1600, 2023, 2100]
+    for y in sample_years:
+        result = check_leap(y)
+        print(f"{y}: {result}")

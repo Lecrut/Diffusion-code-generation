@@ -1,17 +1,14 @@
-def threshold_generator(numbers, threshold):
-    first_yield = False
-    for number in numbers:
-        if not first_yield:
-            if number > threshold:
-                yield True
-                first_yield = True
-            else:
-                yield False
-        else:
-            yield False
+def get_middle_value(lst):
+    if not lst:
+        raise ValueError("List must not be empty")
+    n = len(lst)
+    mid_index = n // 2
+    if n % 2 == 0:
+        return (lst[mid_index - 1] + lst[mid_index]) / 2
+    else:
+        return lst[mid_index]
+
 if __name__ == '__main__':
-    sample_numbers = [10, 5, 12, 3]
-    sample_threshold = 7
-    generator = threshold_generator(sample_numbers, sample_threshold)
-    results = list(generator)
-    print(results)
+    sample_data = [1, 3, 5, 7, 9]
+    result = get_middle_value(sample_data)
+    print(result)

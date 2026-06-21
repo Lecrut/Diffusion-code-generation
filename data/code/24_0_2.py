@@ -1,25 +1,20 @@
-def check_number(n):
-    """
-    Checks if a number is negative.
-    
-    Args:
-        n (int | float): The number to check.
-        
-    Returns:
-        bool: True if the number is less than zero, False otherwise.
-    """
-    return n < 0
+def validate_year(year):
+    if not isinstance(year, int) or isinstance(year, bool):
+        raise TypeError("Year must be an integer")
+    if year < 1:
+        raise ValueError("Year must be a positive integer")
 
-def main():
-    # Hard-coded sample values for testing without user input or command-line arguments
-    test_values = [10, -5, 0.7, -3.2]
-
-    print("Testing number negativity with hard-coded samples:")
-    
-    for value in test_values:
-        is_negative = check_number(value)
-        status = "Negative" if is_negative else "Non-negative (positive or zero)"
-        print(f"{value}: {status}")
+def is_leap_year(year):
+    validate_year(year)
+    is_div_400 = (year % 400) == 0
+    is_div_100 = (year % 100) == 0
+    is_div_4 = (year % 4) == 0
+    return is_div_400 or (is_div_4 and not is_div_100)
 
 if __name__ == '__main__':
-    main()
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))
+    print(is_leap_year(8))
+    print(is_leap_year(1))

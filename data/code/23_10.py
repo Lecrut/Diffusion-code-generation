@@ -1,12 +1,17 @@
-import math
-def compare_floats(a, b, tolerance):
-    return math.isclose(a, b, abs_tol=tolerance)
+def get_grade(score):
+    if score < 0 or score > 100:
+        return "Invalid Score"
+    if score >= 90:
+        return "A"
+    if score >= 80:
+        return "B"
+    if score >= 70:
+        return "C"
+    if score >= 60:
+        return "D"
+    return "F"
+
 if __name__ == '__main__':
-    num1 = 0.1 + 0.2
-    num2 = 0.3
-    tolerance = 1e-9
-    result = compare_floats(num1, num2, tolerance)
-    print(f"Number 1: {num1}")
-    print(f"Number 2: {num2}")
-    print(f"Tolerance: {tolerance}")
-    print(f"Are the numbers close (within tolerance)? {result}")
+    test_scores = [95, 82, 77, 65, 59, 101, -5]
+    for s in test_scores:
+        print(f"Score {s}: {get_grade(s)}")

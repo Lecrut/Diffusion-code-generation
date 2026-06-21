@@ -1,45 +1,30 @@
-"""
-Utility module containing a static method to check if a number is negative.
-Adheres strictly to Pythonic style guidelines (PEP 8).
-No external dependencies or interactive input required.
-"""
+def _validate_year(year):
+    if not isinstance(year, int):
+        raise TypeError("Year must be an integer")
+    if year <= 0:
+        raise ValueError("Year must be a positive integer")
 
-class NumberChecker:
-    """A utility class for basic numerical checks."""
+def _is_divisible_by_400(year):
+    return year % 400 == 0
 
-    @staticmethod
-    def is_negative(value):
-        """
-        Check if the given value is negative.
+def _is_divisible_by_100(year):
+    return year % 100 == 0
 
-        Args:
-            value (int | float): The number to check.
+def _is_divisible_by_4(year):
+    return year % 4 == 0
 
-        Returns:
-            bool: True if the value is less than zero, False otherwise.
-        """
-        return value < 0
+def is_leap_year(year):
+    _validate_year(year)
+    if _is_divisible_by_400(year):
+        return True
+    if _is_divisible_by_100(year):
+        return False
+    return _is_divisible_by_4(year)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access.
-    test_values = [
-        -5,      # Should be negative
-        0,       # Not negative (zero)
-        3.14,    # Positive float
-        None,    # Will raise TypeError as per Pythonic behavior for type checking logic usually implied here if not handled explicitly by caller, but strictly 'is_negative' checks value < 0 which fails on non-numeric types in a way that raises error or returns False depending on strictness. 
-                # To be purely functional and safe without side effects:
-        -10      # Negative integer
-    ]
-
-    print("Testing NumberChecker.is_negative():")
-    for val in test_values[3:]:  # Skip None to avoid TypeError during < comparison if not handled, demonstrating robustness. 
-                                # Actually, let's include a safe check or just run on valid numbers to keep it simple and runnable as requested without complex error handling unless asked.
-        pass
-
-    results = []
-    for val in [-5, 0, 3.14]:
-        result = NumberChecker.is_negative(val)
-        print(f"is_negative({val}) -> {result}")
-
-    # Demonstration with a negative value specifically requested by logic flow above to show success case clearly if needed, 
-    # but the loop covers -5 which is sufficient.
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))
+    print(is_leap_year(1234))
+    print(is_leap_year(2400))

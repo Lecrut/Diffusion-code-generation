@@ -1,10 +1,14 @@
-import math
-def is_strictly_less_than_zero(x):
-    if x < 0:
+def is_leap_year(year):
+    if year % 4 != 0:
+        return False
+    if year % 100 != 0:
         return True
-    return False
+    if year % 400 != 0:
+        return False
+    return True
+
 if __name__ == '__main__':
-    test_values = [1.0, -0.0000000000000001, -1.0, 0.0, -1e-300, -1e300]
-    for value in test_values:
-        result = is_strictly_less_than_zero(value)
-        print(f"Is {value} strictly less than zero? {result}")
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))

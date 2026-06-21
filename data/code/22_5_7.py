@@ -1,19 +1,21 @@
-def check_parity(number: int) -> str:
-    """
-    Determines if a given integer is odd or even.
-    
-    Args:
-        number (int): The integer to evaluate.
-        
-    Returns:
-        str: 'Odd' if the number is odd, 'Even' otherwise.
-    """
-    return "Odd" if number % 2 != 0 else "Even"
+import re
+
+def validate_password(username: str, email: str, password: str) -> bool:
+    if len(password) < 8:
+        return False
+
+    email_domain = email.split('@')[-1].lower() if '@' in email else email.lower()
+    username_lower = username.lower()
+    password_lower = password.lower()
+
+    if username_lower in password_lower:
+        return False
+
+    if email_domain and email_domain in password_lower:
+        return False
+
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements (no input() or sys.stdin)
-    test_values = [1, -4, 5, 0]
-
-    for val in test_values:
-        result = check_parity(val)
-        print(result)
+    result = validate_password("john_doe", "john@securemail.com", "P@ssw0rd!")
+    print(result)

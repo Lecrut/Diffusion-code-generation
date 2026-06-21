@@ -1,9 +1,15 @@
-def reverse_range_generator(start, end):
-    for i in range(start, end - 1, -1):
-        yield i
+def find_greatest(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
 if __name__ == '__main__':
-    start_value = 10
-    end_value = 1
-    generator = reverse_range_generator(start_value, end_value)
-    result = list(generator)
+    result = find_greatest(10, 42, 5)
+    print(result)
+    result = find_greatest(100, 50, 100)
+    print(result)
+    result = find_greatest(-5, -10, -1)
     print(result)

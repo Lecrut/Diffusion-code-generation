@@ -1,11 +1,19 @@
-def check_negative(number: float) -> bool:
-    """Check if a given number is negative."""
-    return number < 0
+DIVISIBILITY_MAP = {
+    400: 1,
+    100: 2,
+    4: 3
+}
+
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input.
-    samples = [1, -5, 0.34, -0.99]
-
-    for num in samples:
-        is_negative = check_negative(num)
-        print(f"Number {num} {'is negative' if is_negative else 'is not negative'}")
+    test_cases = [2400, 2000, 1900, 1800, 2024, 2025]
+    for y in test_cases:
+        print(is_leap_year(y))

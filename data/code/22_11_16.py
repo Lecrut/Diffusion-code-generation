@@ -1,8 +1,19 @@
-def is_odd(n: int) -> bool:
-    """Check if an integer is odd using bitwise AND operation."""
-    return n & 1 == 1
+import re
+
+def validate_password(password):
+    pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'
+    return bool(re.match(pattern, password))
 
 if __name__ == '__main__':
-    test_values = [-5, -2, 0, 3, 4, 100]
-    for val in test_values:
-        print(f"{val}: {is_odd(val)}")
+    samples = [
+        "Short1!",
+        "NoDigits!",
+        "NoUppercase1!",
+        "NoSpecial1A",
+        "Valid1A!",
+        "Complexity!9z",
+        "12345678",
+        "Aa!b2cD3",
+    ]
+    for sample in samples:
+        print(validate_password(sample))

@@ -1,23 +1,36 @@
-def filter_odd_numbers(numbers):
-    """
-    Filters a list of integers to return only odd numbers.
+def score_password(password):
+    length = len(password)
+    if length == 0:
+        return 0
     
-    Optimized by using a generator expression which is memory efficient 
-    compared to creating an intermediate filtered list, and avoids explicit loops.
+    length_score = min(length * 2, 10)
     
-    Args:
-        numbers (list[int]): A list containing integer values.
-        
-    Returns:
-        list[int]: A new list containing only the odd integers from the input.
-    """
-    return [num for num in numbers if num % 2 != 0]
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
+    
+    diversity_count = sum([has_lower, has_upper, has_digit, has_special])
+    
+    if diversity_count == 0:
+        diversity_score = 0
+    elif diversity_count == 1:
+        diversity_score = 2
+    elif diversity_count == 2:
+        diversity_score = 5
+    elif diversity_count == 3:
+        diversity_score = 8
+    else:
+        diversity_score = 10
+    
+    total_score = min(length_score + diversity_score, 10)
+    
+    if length < 8:
+        total_score = max(0, total_score - (8 - length) * 2)
+    
+    return min(10, max(0, total_score))
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, network, or files)
-    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
-    result = filter_odd_numbers(sample_data)
-    
-    print(f"Input: {sample_data}")
-    print(f"Filtered odd numbers: {result}")
+    print(score_password("Str0ng!Pass#1"))
+    print(score_password("weak"))
+    print(score_password("AllLowercase1"))

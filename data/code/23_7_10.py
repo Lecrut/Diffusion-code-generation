@@ -1,34 +1,21 @@
-def calculate_set_operations(set_x, set_y):
-    """
-    Calculates intersection, union of two sets and reports size difference.
-    
-    Args:
-        set_x (set or list-like): First input dataset
-        set_y (set or list-like): Second input dataset
-    
-    Returns:
-        dict: Contains 'intersection_size', 'union_size', and 'size_difference'
-    """
-    # Convert inputs to sets if they aren't already
-    s1 = set(set_x)
-    s2 = set(set_y)
-    
-    intersection = s1 & s2
-    union = s1 | s2
-    
-    return {
-        "intersection_size": len(intersection),
-        "union_size": len(union),
-        "size_difference": len(union) - len(intersection)
-    }
+def get_grade(score):
+    score_grades = [
+        (100, 'A+'),
+        (90, 'A'),
+        (85, 'A-'),
+        (80, 'B+'),
+        (75, 'B'),
+        (70, 'B-'),
+        (65, 'C+'),
+        (60, 'C'),
+        (50, 'D'),
+        (0, 'F')
+    ]
+    score_grades_sorted = sorted(score_grades, key=lambda x: x[0], reverse=True)
+    for threshold, grade in score_grades_sorted:
+        if score >= threshold:
+            return grade
+    return 'F'
 
 if __name__ == '__main__':
-    # Hard-coded sample values (no user input required)
-    set_x = [1, 2, 3, 4, 5]
-    set_y = [4, 5, 6, 7, 8]
-    
-    result = calculate_set_operations(set_x, set_y)
-    
-    print(f"Intersection size: {result['intersection_size']}")
-    print(f"Union size: {result['union_size']}")
-    print(f"Difference in size (Union - Intersection): {result['size_difference']}")
+    print(get_grade(85))

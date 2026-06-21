@@ -1,8 +1,8 @@
-def are_strings_equal_insensitive(str1, str2):
-    return str1.lower() == str2.lower()
+def is_even(n):
+    return (n & 1) == 0
+
 if __name__ == '__main__':
-    print(are_strings_equal_insensitive("Hello", "hello"))
-    print(are_strings_equal_insensitive("Python", "python"))
-    print(are_strings_equal_insensitive("World", "earth"))
-    print(are_strings_equal_insensitive("Apple", "Banana"))
-    print(are_strings_equal_insensitive("Test", "test"))
+    print(is_even(4))
+    print(is_even(7))
+    print(is_even(0))
+    print(is_even(-2))

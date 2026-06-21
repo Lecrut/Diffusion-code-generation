@@ -1,19 +1,36 @@
-def determine_parity(number: int) -> str:
-    """
-    Determines if a given integer is odd or even using the modulo operator.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        str: 'odd' if the number is not divisible by 2, otherwise 'even'.
-    """
-    return "odd" if number % 2 != 0 else "even"
+def validate_password_strength(password: str) -> bool:
+    if not password or len(password) < 8:
+        return False
+
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        else:
+            has_special = True
+
+    return has_upper and has_lower and has_digit and has_special
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    test_cases = [17, -4, 0, 3]
+    sample_passwords = [
+        "Abc123!",
+        "abc123",
+        "ABCDEFGHI",
+        "12345678",
+        "a1!",
+        "Short1!",
+        "Valid1234$",
+        "AnotherOne#1"
+    ]
 
-    for num in test_cases:
-        result = determine_parity(num)
-        print(f"The number {num} is {result}.")
+    for password in sample_passwords:
+        result = validate_password_strength(password)
+        print(result)

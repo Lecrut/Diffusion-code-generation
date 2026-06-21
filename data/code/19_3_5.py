@@ -1,14 +1,12 @@
-def check_divisibility(first_int: int, second_int: int) -> bool:
-    """Check if first_int is divisible by second_int (second_int must not be zero)."""
-    return second_int != 0 and first_int % second_int == 0
+import random
+
+def get_random_item(t):
+    if not t:
+        return None
+    return random.choice(t)
 
 if __name__ == '__main__':
-    sample_first = 10
-    sample_second = 2
-    
-    result = check_divisibility(sample_first, sample_second)
-    
-    if result:
-        print('True')
-    else:
-        print('False')
+    sample_tuple = (1, 2, 3, 4, 5)
+    print(get_random_item(sample_tuple))
+    print(get_random_item(()))
+    print(get_random_item(('a', 'b', 'c')))

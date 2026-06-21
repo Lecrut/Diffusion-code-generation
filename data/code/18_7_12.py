@@ -1,35 +1,16 @@
-def compare_large_integers(num1: int, num2: int) -> int:
-    """
-    Compares two potentially large integers without overflow concerns.
-    
-    Python natively handles arbitrarily large integers, so direct comparison 
-    is safe and efficient. This function returns a standard integer result:
-        - 0 if the numbers are equal
-        - 1 if num1 > num2
-        - -1 if num1 < num2
-    
-    Args:
-        num1 (int): The first large integer.
-        num2 (int): The second large integer.
-    
-    Returns:
-        int: Result of the comparison (-1, 0, or 1).
-    """
-    return -1 if num1 < num2 else (1 if num1 > num2 else 0)
+def get_middle_item(lst):
+    if not lst:
+        return None
+    mid_index = len(lst) // 2
+    return lst[mid_index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    # Using very large integers to demonstrate handling of big numbers safely.
-    
-    a = int("9" * 5000)       # A number with 5000 nines
-    b = int("-8" + "7" * 4999) # A negative number slightly larger than -1e+...
-    
-    result = compare_large_integers(a, b)
-    
-    print(f"Comparing: {a} vs {b}")
-    if result == 0:
-        print("Result: The numbers are equal.")
-    elif result > 0:
-        print("Result: First number is greater than the second.")
-    else:
-        print("Result: Second number is greater than the first.")
+    sample_list1 = [1, 2, 3, 4, 5]
+    sample_list2 = [10, 20, 30, 40, 50, 60]
+    sample_list3 = [7]
+    sample_list4 = []
+
+    print(get_middle_item(sample_list1))
+    print(get_middle_item(sample_list2))
+    print(get_middle_item(sample_list3))
+    print(get_middle_item(sample_list4))

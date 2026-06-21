@@ -1,11 +1,12 @@
-def decide_truth(val1, val2):
-    return val1 == val2
+import random
+
+def get_random_element(input_set):
+    if not input_set:
+        return None
+    element_list = list(input_set)
+    return random.choice(element_list)
+
 if __name__ == '__main__':
-    result1 = decide_truth(5, 5)
-    print(f"decide_truth(5, 5): {result1}")
-    result2 = decide_truth(10, 3)
-    print(f"decide_truth(10, 3): {result2}")
-    result3 = decide_truth("hello", "hello")
-    print(f"decide_truth(\"hello\", \"hello\"): {result3}")
-    result4 = decide_truth(True, False)
-    print(f"decide_truth(True, False): {result4}")
+    sample_set = {1, 2, 3, 4, 5}
+    result = get_random_element(sample_set)
+    print(result)

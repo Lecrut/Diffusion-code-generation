@@ -1,33 +1,27 @@
-def odd_even_generator(start: int = 1, end: int = None) -> str:
-    """
-    Generator function that yields a string indicating if each number in 
-    the range [start, end] is 'odd' or 'even'.
-    
-    Args:
-        start (int): The starting integer of the range.
-        end (int): The ending integer of the range (inclusive). Defaults to None, which implies 20.
-        
-    Yields:
-        str: A string formatted as "{number}:{parity}" where parity is 'odd' or 'even'.
-    
-    Memory Efficiency:
-        This function uses a generator expression internally and yields one result at a time,
-        ensuring O(1) memory usage regardless of the range size. It does not store 
-        intermediate lists or arrays in memory.
-    """
-    if end is None:
-        end = 20
-    
-    for num in range(start, end + 1):
-        parity = "odd" if num % 2 != 0 else "even"
-        yield f"{num}:{parity}"
+def is_valid_password(password):
+    if len(password) < 8:
+        return False
+    if not any(c.isupper() for c in password):
+        return False
+    if not any(c.islower() for c in password):
+        return False
+    if not any(c.isdigit() for c in password):
+        return False
+    if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in password):
+        return False
+    count = 1
+    for i in range(1, len(password)):
+        if password[i] == password[i - 1]:
+            count += 1
+            if count > 3:
+                return False
+        else:
+            count = 1
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements. 
-    # No user input, command-line arguments, or network access is used.
-    
-    print("Generating odd/even results for range 1 to 20:")
-    result = odd_even_generator(1, 20)
-    
-    for item in result:
-        print(item)
+    sample_passwords = ["Abc12345!", "AAAA1234!", "A1234567!", "abc123", "ValidPass1!"]
+    results = {}
+    for pwd in sample_passwords:
+        results[pwd] = is_valid_password(pwd)
+    print(results)

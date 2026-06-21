@@ -1,32 +1,24 @@
-import sys
+from typing import List, Tuple, Optional
 
-def compare_numbers(num1: float, num2: float) -> None:
-    """
-    Compares two numbers and prints a formatted report detailing 
-    their difference and which one is larger.
+GradeThreshold = Tuple[int, str]
+
+def get_academic_grade(score: int, thresholds: Optional[List[GradeThreshold]] = None) -> str:
+    if thresholds is None:
+        thresholds = [
+            (90, 'A'),
+            (80, 'B'),
+            (70, 'C'),
+            (60, 'D'),
+            (0, 'F')
+        ]
     
-    Args:
-        num1 (float): The first number to compare.
-        num2 (float): The second number to compare.
-    """
-    diff = abs(num1 - num2)
+    for threshold_score, grade in thresholds:
+        if score >= threshold_score:
+            return grade
     
-    print(f"Number 1 ({num1}) vs Number 2 ({num2}):")
-    print("-" * 30)
-    print(f"Difference: {diff:.4f}")
-    
-    if num1 > num2:
-        larger = "First number is larger."
-    elif num2 > num1:
-        larger = "Second number is larger."
-    else:
-        larger = "Both numbers are equal."
-        
-    print(larger)
+    return 'F'
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or args needed)
-    value_a = 10.5
-    value_b = 23.7
-    
-    compare_numbers(value_a, value_b)
+    sample_score = 92
+    result = get_academic_grade(sample_score)
+    print(result)

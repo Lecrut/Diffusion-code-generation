@@ -1,14 +1,23 @@
-import math
-if __name__ == '__main__':
-    a = 3.0
-    b = 4.0
-    c = 5.0
-    d = 12.0
-    mag_sq_1 = a**2 + b**2
-    mag_sq_2 = c**2 + d**2
-    if mag_sq_1 > mag_sq_2:
-        print("Magnitude of z1 is greater.")
-    elif mag_sq_1 < mag_sq_2:
-        print("Magnitude of z2 is greater.")
+from typing import List, Tuple
+
+def calculate_grade(score: float) -> str:
+    if score < 0.0 or score > 100.0:
+        return "INVALID"
+    
+    if score >= 90.0:
+        return "A"
+    elif score >= 80.0:
+        return "B"
+    elif score >= 70.0:
+        return "C"
+    elif score >= 60.0:
+        return "D"
     else:
-        print("Magnitudes are equal.")
+        return "F"
+
+if __name__ == '__main__':
+    scores: List[float] = [95.5, 82.0, 74.2, 59.9, 100.0, -5.0, 101.5]
+    
+    for s in scores:
+        grade: str = calculate_grade(s)
+        print(f"Score: {s} -> Grade: {grade}")

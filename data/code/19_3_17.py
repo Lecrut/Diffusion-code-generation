@@ -1,15 +1,17 @@
-def check_divisibility(first_int: int, second_int: int) -> bool:
-    """Check if first_int is divisible by second_int (excluding zero divisor)."""
-    return second_int != 0 and first_int % second_int == 0
+import random
+import functools
+
+def fetch_random_tuple_element(collection):
+    length = len(collection)
+    if length == 0:
+        return None
+    index = random.randrange(length)
+    return collection[index]
 
 if __name__ == '__main__':
-    sample_first = 12
-    sample_second = 3
-    
-    # Simulate the logic using hard-coded values as per requirements.
-    result = check_divisibility(sample_first, sample_second)
-    
-    if result:
-        print('True')
-    else:
-        print('False')
+    sample_data = (55, 66, 77, 88, 99)
+    empty_data = tuple()
+    val1 = fetch_random_tuple_element(sample_data)
+    val2 = fetch_random_tuple_element(empty_data)
+    print(val1)
+    print(val2)

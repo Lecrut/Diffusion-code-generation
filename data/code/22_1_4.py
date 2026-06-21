@@ -1,21 +1,52 @@
-def is_odd(number: int) -> bool:
-    """
-    Checks if a given integer is odd using the modulo operator.
+import math
+import string
+import re
 
-    Args:
-        number (int): The integer to check.
+def calculate_password_strength(password):
+    if not password:
+        return False
 
-    Returns:
-        bool: True if the number is odd, False otherwise.
-    """
-    return number % 2 == 1
+    length = len(password)
+    
+    charset_size = 0
+    has_lower = bool(re.search(r'[a-z]', password))
+    has_upper = bool(re.search(r'[A-Z]', password))
+    has_digits = bool(re.search(r'[0-9]', password))
+    has_special = bool(re.search(r'[^a-zA-Z0-9]', password))
+    
+    if has_lower:
+        charset_size += 26
+    if has_upper:
+        charset_size += 26
+    if has_digits:
+        charset_size += 10
+    if has_special:
+        charset_size += 32
+    
+    if charset_size == 0:
+        return False
+        
+    entropy = length * math.log2(charset_size)
+    
+    return entropy >= 60
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_values = [0, -5, 3, 42, -7]
-
-    print("Testing is_odd function:\n")
-    for val in test_values:
-        result = is_odd(val)
-        status = "Odd" if result else "Even"
-        print(f"{val}: {status}")
+    samples = [
+        "password",
+        "Password1",
+        "P@ssw0rd!2023",
+        "abcdefghij",
+        "1234567890",
+        "Ab3!xY9#kL2@",
+        "short",
+        "",
+        "VeryLongPasswordWithNumbersAndSymbols!123"
+    ]
+    
+    results = []
+    for sample in samples:
+        strength = calculate_password_strength(sample)
+        results.append((sample, strength))
+    
+    for sample, strength in results:
+        print(f"{sample}: {strength}")

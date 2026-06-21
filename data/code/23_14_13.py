@@ -1,46 +1,21 @@
-import sys
+from typing import Dict, Tuple, List, Union
 
-def compare_numbers(num1: float, num2: float) -> str:
-    """
-    Compare two numbers and return a formatted report of their difference 
-    and which one is larger.
-    
-    Args:
-        num1 (float): The first number to compare.
-        num2 (float): The second number to compare.
-        
-    Returns:
-        str: A string containing the comparison result and difference information.
-    """
-    difference = abs(num1 - num2)
-    if num1 > num2:
-        larger, smaller = f"{num1}", f"{num2}"
-        message = "The first number is larger."
-    elif num2 > num1:
-        larger, smaller = f"{num2}", f"{num1}"
-        message = "The second number is larger."
-    else:
-        larger, smaller = equal_message(num1)
-
-    report = (f"Difference between the two values: {difference}\n" 
-              f"Larger value: {larger}\n"
-              f"Smaller value: {smaller}\n" + message.lstrip())
-    
-    return report
-
-def equal_message(value):
-    """Helper to handle equal numbers"""
-    msg = "Both values are equal."
-    if isinstance(value, float) and (int(value) == value):
-        str_value = f"{value} ({float(int(value))})"
-    else:
-        str_value = value
-    
-    return f"Larger value: {str_value}\nSmaller value: {str_value}"
+def get_grade(score: int, thresholds: Dict[str, Tuple[int, int]]) -> str:
+    grade_order = ["A", "B", "C", "D", "F"]
+    for grade in grade_order:
+        if grade in thresholds:
+            min_score, max_score = thresholds[grade]
+            if min_score <= score <= max_score:
+                return grade
+    return "F"
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or network)
-    num1 = 25.75
-    num2 = 30.49
-    
-    print(compare_numbers(num1, num2))
+    custom_thresholds = {
+        "A": (90, 100),
+        "B": (80, 89),
+        "C": (70, 79),
+        "D": (60, 69),
+        "F": (0, 59)
+    }
+    result = get_grade(92, custom_thresholds)
+    print(result)

@@ -1,13 +1,13 @@
-class Number:
-    def __init__(self, value):
-        self.value = value
-    def compare(self, other):
-        return self.value > other.value
+def get_median(numbers):
+    sorted_numbers = sorted(numbers)
+    length = len(sorted_numbers)
+    mid_index = length // 2
+    if length % 2 == 0:
+        return (sorted_numbers[mid_index - 1] + sorted_numbers[mid_index]) // 2
+    return sorted_numbers[mid_index]
+
 if __name__ == '__main__':
-    num1 = Number(10)
-    num2 = Number(5)
-    num3 = Number(10)
-    print(f"Is num1 greater than num2? {num1.compare(num2)}")
-    print(f"Is num1 greater than num3? {num1.compare(num3)}")
-    print(f"Is num2 greater than num1? {num2.compare(num1)}")
-    print(f"Is num3 greater than num1? {num3.compare(num1)}")
+    test_data_1 = [10, 5, 3, 8, 2]
+    test_data_2 = [1, 2, 3, 4]
+    print(get_median(test_data_1))
+    print(get_median(test_data_2))

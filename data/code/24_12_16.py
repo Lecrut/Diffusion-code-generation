@@ -1,14 +1,6 @@
-# Script to filter negative integers from a list of numbers
-
-def main():
-    # Sample data: Hard-coded list of integers as per requirements
-    sample_numbers = [10, -5, 3, -89, 42, -7]
-    
-    # Use a generator expression within print() to iterate and filter negative numbers.
-    # This avoids creating an intermediate list in memory and prints each number on a new line.
-    for num in sample_numbers:
-        if num < 0:
-            print(num)
+is_leap = lambda y: y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
 
 if __name__ == '__main__':
-    main()
+    test_years = [2000, 1900, 2024, 2023, 1600, 1700, 2004, 1901]
+    results = {year: is_leap(year) for year in test_years}
+    print(results)

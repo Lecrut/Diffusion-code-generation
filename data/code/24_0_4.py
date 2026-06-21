@@ -1,42 +1,24 @@
-import sys
+def _is_divisible_by(value, divisor):
+    return value % divisor == 0
 
-def check_number_negative(user_input: str) -> bool:
-    """
-    Attempts to convert user input to a float and checks if it is negative.
-    
-    Args:
-        user_input (str): String representation of the number entered by the user.
-        
-    Returns:
-        bool: True if the number is less than zero, False otherwise.
-            
-    Raises:
-        ValueError: If the input string cannot be converted to a float.
-    """
-    try:
-        num = float(user_input)
-        return num < 0
-    except (ValueError, TypeError):
-        raise
+def _check_positive_integer(year):
+    if not isinstance(year, int) or isinstance(year, bool):
+        raise TypeError("Year must be an integer")
+    if year < 0:
+        raise ValueError("Year must be non-negative")
+
+def is_leap_year(year):
+    _check_positive_integer(year)
+    if _is_divisible_by(year, 400):
+        return True
+    if _is_divisible_by(year, 100):
+        return False
+    if _is_divisible_by(year, 4):
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Sample values for testing without requiring user input or command-line arguments.
-    test_cases = [
-        "-5",      # Should be negative
-        "10",       # Should not be negative
-        "-3.14",   # Negative float
-        "0",        # Zero is neither positive nor negative
-        "",         # Empty string to test robustness (will raise error)
-    ]
-
-    for case in test_cases:
-        try:
-            result = check_number_negative(case)
-            if result:
-                print(f"'{case}' IS NEGATIVE")
-            else:
-                print(f"'{case}' is NOT negative or zero.")
-        except ValueError as e:
-            # Silently handle invalid inputs in this specific robustness context
-            # to demonstrate error handling without crashing the script unexpectedly.
-            pass
+    print(is_leap_year(2400))
+    print(is_leap_year(1800))
+    print(is_leap_year(2004))
+    print(is_leap_year(2025))

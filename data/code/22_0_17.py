@@ -1,19 +1,18 @@
-def determine_parity(number):
-    """
-    Determines whether a given integer is odd or even.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        str: 'odd' if the number is not divisible by 2, otherwise 'even'.
-    """
-    return "odd" if number % 2 != 0 else "even"
+import re
+
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'\d', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    test_values = [17, -4, 5]
-
-    for value in test_values:
-        result = determine_parity(value)
-        print(f"The number {value} is {result}.")
+    result = validate_password_strength('Str0ng!Pass')
+    print(result)

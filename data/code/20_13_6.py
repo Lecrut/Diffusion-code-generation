@@ -1,40 +1,18 @@
-def check_equality(value1, value2):
-    """
-    Compares two values to determine if they are equal.
-    
-    Args:
-        value1 (any): The first input value.
-        value2 (any): The second input value.
-        
-    Returns:
-        bool: True if the values are equal and comparable, False otherwise.
-    """
-    try:
-        return value1 == value2
-    except TypeError:
-        # Handles cases where types cannot be compared directly (e.g., int vs list)
-        print(f"Error: Cannot compare {type(value1).__name__} with {type(value2).__name__}.")
-        return False
-
-def main():
-    """
-    Main function that runs the program logic.
-    
-    Since interactive input is prohibited, this block uses hard-coded sample values
-    to demonstrate functionality without requiring user interaction or external dependencies.
-    """
-    # Hard-coded sample values for demonstration purposes
-    sample_value1 = 42
-    sample_value2 = "42"
-
-    print("Comparing two values...")
-    
-    result = check_equality(sample_value1, sample_value2)
-    
-    if result:
-        print(f"The values are equal.")
-    else:
-        print(f"The values are not equal (or cannot be compared).")
+def is_even_via_lookup(n):
+    sample_values = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+    if n in sample_values:
+        return True
+    if n in [x for x in sample_values]:
+        return True
+    if n % 2 == 0 and n > 30:
+        return True
+    if n % 2 == 0 and n < 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    main()
+    test_values = [0, 1, 2, 15, 24, 101, 200, -4, -1, 31]
+    results = {}
+    for val in test_values:
+        results[val] = is_even_via_lookup(val)
+    print(results)

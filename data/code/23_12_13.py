@@ -1,19 +1,19 @@
-class ValueComparator:
-    def compare_values(self, val1, val2):
-        """
-        Compares two input values (numeric or string).
-        
-        Returns a tuple indicating which value is greater, less, or equal.
-        - ('>', 'val1', 'val2') if val1 > val2
-        - ('<', 'val1', 'val2') if val1 < val2
-        - ('=', 'val1', 'val2') if val1 == val2
+def get_letter_grade(score):
+    if not isinstance(score, (int, float)):
+        raise TypeError("Score must be a number.")
+    if score < 0 or score > 100:
+        raise ValueError("Score must be between 0 and 100.")
+    if score >= 90:
+        return "A"
+    if score >= 80:
+        return "B"
+    if score >= 70:
+        return "C"
+    if score >= 60:
+        return "D"
+    return "F"
 
-        Handles both numeric and string comparisons. Raises TypeError 
-        for incompatible types (e.g., int vs str).
-        """
-        # Check type compatibility
-        if isinstance(val1, bool) or isinstance(val2, bool):
-            raise TypeError("Boolean values should not be compared to other values.")
-
-if __name__ == '__main__':
-    pass
+if __name__ == "__main__":
+    test_scores = [95, 82, 76, 61, 45, 100, 0, 89.5]
+    for s in test_scores:
+        print(get_letter_grade(s))

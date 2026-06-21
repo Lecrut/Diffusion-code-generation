@@ -1,11 +1,13 @@
-def compare_items(a, b):
-    if type(a) is type(b):
-        return a == b
-    return False
+def is_even(value):
+    if not isinstance(value, int) or isinstance(value, bool):
+        return None
+    return value % 2 == 0
+
 if __name__ == '__main__':
-    print(compare_items(10, 10))
-    print(compare_items(10, 20))
-    print(compare_items("hello", "hello"))
-    print(compare_items(10, "10"))
-    print(compare_items([1, 2], [1, 2]))
-    print(compare_items([1, 2], (1, 2)))
+    print(is_even(2))
+    print(is_even(3))
+    print(is_even(0))
+    print(is_even(-4))
+    print(is_even(1.5))
+    print(is_even("4"))
+    print(is_even(True))

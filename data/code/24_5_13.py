@@ -1,21 +1,15 @@
-import sys
+DIVISOR_FOUR = 4
+DIVISOR_HUNDRED = 100
+DIVISOR_FOUR_HUNDRED = 400
 
-def check_number(value):
-    """Check if a number is negative."""
-    return value < 0
+def check_leap(year):
+    is_div_four = (year % DIVISOR_FOUR == 0)
+    is_div_hundred = (year % DIVISOR_HUNDRED == 0)
+    is_div_four_hundred = (year % DIVISOR_FOUR_HUNDRED == 0)
+    return (is_div_four and not is_div_hundred) or is_div_four_hundred
 
 if __name__ == '__main__':
-    # Hard-coded sample values to simulate input without user interaction
-    samples = [1, -5, "not_a_number", 0.5, -3]
-
-    for item in samples:
-        try:
-            num = int(item)
-            is_negative = check_number(num)
-            if is_negative:
-                print(f"{num} is negative.")
-            else:
-                print(f"{num} is not negative.")
-        except ValueError as e:
-            # Handle non-integer input gracefully
-            print(f"Error processing '{item}': {e}")
+    sample_years = [2024, 1900, 2000, 2023, 2100]
+    for y in sample_years:
+        result = check_leap(y)
+        print(result)

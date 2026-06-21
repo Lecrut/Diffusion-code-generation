@@ -1,15 +1,14 @@
-def is_divisible(dividend: int, divisor: int) -> bool:
-    """Check if dividend is divisible by divisor (divisor must not be zero)."""
-    return divisor != 0 and dividend % divisor == 0
+import random
+
+def get_random_item(tuple_data):
+    if not tuple_data:
+        return None
+    return random.choice(tuple_data)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    num1 = 24
-    num2 = 8
-    
-    result = is_divisible(num1, num2)
-    
-    if result:
-        print('True')
-    else:
-        print('False')
+    sample_tuple = (10, 20, 30, 40, 50)
+    empty_tuple = ()
+    result1 = get_random_item(sample_tuple)
+    result2 = get_random_item(empty_tuple)
+    print(result1)
+    print(result2)

@@ -1,27 +1,67 @@
-def filter_odd_numbers(data):
-    odd_numbers = []
-    for number in data:
-        if number % 2 != 0:
-            odd_numbers.append(number)
-    return odd_numbers
-if __name__ == '__main__':
-    sample_list_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    result_1 = filter_odd_numbers(sample_list_1)
-    print(f"Input: {sample_list_1}")
-    print(f"Output: {result_1}")
-    sample_list_2 = [2, 4, 6, 8, 10]
-    result_2 = filter_odd_numbers(sample_list_2)
-    print(f"Input: {sample_list_2}")
-    print(f"Output: {result_2}")
-    sample_list_3 = [11, 22, 33, 44, 55]
-    result_3 = filter_odd_numbers(sample_list_3)
-    print(f"Input: {sample_list_3}")
-    print(f"Output: {result_3}")
-    sample_list_4 = []
-    result_4 = filter_odd_numbers(sample_list_4)
-    print(f"Input: {sample_list_4}")
-    print(f"Output: {result_4}")
-    sample_list_5 = [1, 3, 5, 7]
-    result_5 = filter_odd_numbers(sample_list_5)
-    print(f"Input: {sample_list_5}")
-    print(f"Output: {result_5}")
+COMMON_WEAK_PASSWORDS = {
+    "123456", "password", "12345678", "qwerty", "abc123",
+    "monkey", "1234567", "letmein", "trustno1", "dragon",
+    "baseball", "iloveyou", "master", "sunshine", "ashley",
+    "bailey", "shadow", "superman", "qazwsx", "123123"
+}
+
+def validate_password_strength(password):
+    if not password:
+        return False
+    
+    if len(password) < 8:
+        return False
+    
+    if password.lower() in COMMON_WEAK_PASSWORDS:
+        return False
+    
+    has_lower = False
+    has_upper = False
+    has_digit = False
+    has_special = False
+    
+    for char in password:
+        if char.islower():
+            has_lower = True
+        elif char.isupper():
+            has_upper = True
+        elif char.isdigit():
+            has_digit = True
+        else:
+            has_special = True
+            
+    if not (has_lower and has_upper and (has_digit or has_special)):
+        return False
+    
+    for i in range(len(password) - 2):
+        c1, c2, c3 = ord(password[i]), ord(password[i+1]), ord(password[i+2])
+        if c2 == c1 + 1 and c3 == c2 + 1:
+            return False
+        if c2 == c1 - 1 and c3 == c2 - 1:
+            return False
+            
+    for i in range(len(password) - 3):
+        c1, c2 = ord(password[i]), ord(password[i+1])
+        c3, c4 = ord(password[i+2]), ord(password[i+3])
+        if c1 == c2 == c3 == c4:
+            return False
+            
+    return True
+
+if __name__ == "__main__":
+    test_cases = [
+        "SecureP@ssw0rd",
+        "password123",
+        "abcdefgh",
+        "MyStr0ng!",
+        "123456",
+        "Qwerty!@#",
+        "aaabbbbcccc"
+    ]
+    
+    results = []
+    for pwd in test_cases:
+        results.append((pwd, validate_password_strength(pwd)))
+        
+    for pwd, is_valid in results:
+        print(f"{pwd}: {is_valid}")

@@ -1,12 +1,16 @@
-def compare_sums_and_lists(list_a, list_b):
-    sum_a = sum(list_a)
-    sum_b = sum(list_b)
-    sum_difference = sum_a - sum_b
-    list_difference = abs(len(list_a) - len(list_b))
-    list_content_difference = sum(abs(x - y) for x, y in zip(list_a, list_b))
-    return sum_difference, list_content_difference, list_difference
+import bisect
+
+def score_to_grade(score):
+    thresholds = [0, 60, 70, 80, 90, 100]
+    grades = ['F', 'D', 'C', 'B', 'A']
+    index = bisect.bisect_right(thresholds, score) - 1
+    if index < 0:
+        return 'F'
+    if index >= len(grades):
+        return 'A'
+    return grades[index]
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4, 5]
-    list2 = [10, 20, 30, 40, 50]
-    result = compare_sums_and_lists(list1, list2)
-    print(result)
+    sample_scores = [55, 65, 75, 85, 95, 100, 105, -5]
+    for s in sample_scores:
+        print(score_to_grade(s))

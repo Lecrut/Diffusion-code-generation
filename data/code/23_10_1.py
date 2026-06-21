@@ -1,12 +1,24 @@
-import math
-def compare_floats(a, b, tolerance):
-    return math.isclose(a, b, abs_tol=tolerance)
+def score_to_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+
 if __name__ == '__main__':
-    num1 = 0.1 + 0.2
-    num2 = 0.3
-    tolerance = 1e-9
-    result = compare_floats(num1, num2, tolerance)
-    print(f"Number 1: {num1}")
-    print(f"Number 2: {num2}")
-    print(f"Tolerance: {tolerance}")
-    print(f"Are the numbers close? {result}")
+    print(score_to_grade(95))
+    print(score_to_grade(85))
+    print(score_to_grade(75))
+    print(score_to_grade(65))
+    print(score_to_grade(55))
+    print(score_to_grade(90))
+    print(score_to_grade(80))
+    print(score_to_grade(70))
+    print(score_to_grade(60))
+    print(score_to_grade(0))
+    print(score_to_grade(100))

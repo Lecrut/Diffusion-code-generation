@@ -1,6 +1,13 @@
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
+
 if __name__ == '__main__':
-    number = -10
-    if number < 0:
-        print(f"The entered value {number} is negative.")
-    else:
-        print(f"The entered value {number} is not negative.")
+    test_years = [2000, 1900, 2024]
+    for year in test_years:
+        print(f"{year}: {is_leap_year(year)}")

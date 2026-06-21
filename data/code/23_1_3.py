@@ -1,46 +1,31 @@
-def compare_and_report(a, b):
-    if a == b:
-        return {
-            "result": "Equal",
-            "difference": 0,
-            "ratio": 1.0
-        }
-    elif a > b:
-        larger = a
-        smaller = b
-        difference = a - b
-        ratio = a / b
-    else:
-        larger = b
-        smaller = a
-        difference = b - a
-        ratio = b / a
-    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
-        return {
-            "result": "Greater Than",
-            "difference": difference,
-            "ratio": ratio
-        }
-    else:
-        return {
-            "result": "Less Than",
-            "difference": abs(difference),
-            "ratio": 1.0 / ratio if ratio != 0 else float('inf')
-        }
+SCORE_TO_GRADE = {
+    4.0: "A+",
+    3.7: "A",
+    3.3: "A-",
+    3.0: "B+",
+    2.7: "B",
+    2.3: "B-",
+    2.0: "C+",
+    1.7: "C",
+    1.3: "C-",
+    1.0: "D+",
+    0.7: "D",
+    0.3: "D-",
+    0.0: "F"
+}
+
+def convert_scores_to_grades(scores):
+    grade_boundaries = sorted(SCORE_TO_GRADE.keys(), reverse=True)
+    
+    def get_grade(score):
+        for boundary in grade_boundaries:
+            if score >= boundary:
+                return SCORE_TO_GRADE[boundary]
+        return SCORE_TO_GRADE[0.0]
+    
+    return [get_grade(score) for score in scores]
+
 if __name__ == '__main__':
-    value1 = 15.5
-    value2 = 10.0
-    report1 = compare_and_report(value1, value2)
-    print(report1)
-    value3 = -5
-    value4 = 10
-    report2 = compare_and_report(value3, value4)
-    print(report2)
-    value5 = 7.2
-    value6 = 7.2
-    report3 = compare_and_report(value5, value6)
-    print(report3)
-    value7 = 20.0
-    value8 = 4.0
-    report4 = compare_and_report(value7, value8)
-    print(report4)
+    raw_scores = [4.0, 3.8, 3.35, 3.0, 2.8, 2.35, 2.0, 1.5, 1.0, 0.5, 0.0]
+    grades = convert_scores_to_grades(raw_scores)
+    print(grades)

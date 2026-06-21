@@ -1,16 +1,12 @@
-def set_operations_and_comparison(set_x, set_y):
-    intersection = set_x.intersection(set_y)
-    union = set_x.union(set_y)
-    intersection_size = len(intersection)
-    union_size = len(union)
-    difference = union_size - intersection_size
-    return intersection, union, difference
+def get_grade(score, grade_boundaries):
+    sorted_scores = sorted(grade_boundaries.items(), key=lambda item: item[0], reverse=True)
+    for boundary, grade in sorted_scores:
+        if score >= boundary:
+            return grade
+    return "F"
+
 if __name__ == '__main__':
-    set_x = {1, 2, 3, 4, 5}
-    set_y = {4, 5, 6, 7, 8}
-    intersection, union, diff = set_operations_and_comparison(set_x, set_y)
-    print(f"Set X: {set_x}")
-    print(f"Set Y: {set_y}")
-    print(f"Intersection: {intersection}")
-    print(f"Union: {union}")
-    print(f"Difference in size (Union - Intersection): {diff}")
+    grade_boundaries = {90: 'A', 80: 'B', 70: 'C', 60: 'D'}
+    score = 85
+    result = get_grade(score, grade_boundaries)
+    print(result)

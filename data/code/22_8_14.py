@@ -1,27 +1,44 @@
-def is_odd(n):
-    """
-    Determine if a number is odd.
+import re
 
-    Args:
-        n (int): The integer to check.
+COMMON_PASSWORDS = {
+    "password", "123456", "12345678", "qwerty", "abc123", "monkey", "1234567",
+    "letmein", "trustno1", "dragon", "baseball", "iloveyou", "master", "sunshine",
+    "ashley", "bailey", "passw0rd", "shadow", "123123", "654321", "superman",
+    "qazwsx", "michael", "football", "password1", "password123", "welcome",
+    "welcome1", "admin", "login", "princess", "starwars"
+}
 
-    Returns:
-        bool: True if n is odd, False otherwise.
+def validate_password_strength(password: str) -> bool:
+    if not isinstance(password, str) or len(password) < 8:
+        return False
     
-    Raises:
-        TypeError: If n is not an integer or float that can be converted to int.
-    """
-    try:
-        num = int(n)
-        return num % 2 != 0
-    except (TypeError, ValueError):
-        raise TypeError("Input must be convertible to an integer.")
-
-if __name__ == '__main__':
-    # Test case 1: Expected True for odd number
-    assert is_odd(7) is True
+    if len(password) > 4096:
+        return False
+        
+    if password.lower() in COMMON_PASSWORDS:
+        return False
     
-    # Test case 2: Expected False for even number
-    assert is_odd(8) is False
+    pattern = r"(?:password|letmein|welcome|admin|login|qwerty|abc123|123456)"
+    if re.search(pattern, password.lower()):
+        return False
+        
+    if re.search(r".*(.)(.)\1\2", password):
+        return False
+        
+    if re.search(r"^(.*)\1$", password):
+        return False
+        
+    return True
 
-    print("All tests passed successfully.")
+if __name__ == "__main__":
+    test_passwords = [
+        "SecurePass1!",
+        "password",
+        "abcdefgh",
+        "MyStr0ngP@ss",
+        "12345678"
+    ]
+    
+    for pwd in test_passwords:
+        result = validate_password_strength(pwd)
+        print(f"{pwd}: {result}")

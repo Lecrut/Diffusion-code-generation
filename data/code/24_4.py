@@ -1,6 +1,12 @@
-def filter_negatives(data):
-    return [x for x in data if x < 0]
+def is_leap_year(year: int) -> bool:
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+def validate_assertions():
+    assert is_leap_year(2000) is True
+    assert is_leap_year(1900) is False
+    assert is_leap_year(2004) is True
+    return True
+
 if __name__ == '__main__':
-    sample_list = [1, -2, 3, -4, 5, -6, 7, -8]
-    result = filter_negatives(sample_list)
+    result = validate_assertions()
     print(result)

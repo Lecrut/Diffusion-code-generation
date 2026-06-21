@@ -1,21 +1,29 @@
-def compare_numbers(num1: float, num2: float) -> None:
-    """Print a formatted report comparing two numbers."""
-    if abs(num1 - num2) < 0.0000001 and (num1 == int(num1) or num2 == int(num2)):
-        diff_str = f"{abs(num1 - num2):.6f}"
-    else:
-        diff_str = str(abs(num1 - num2))
+from typing import Optional, Dict, List, Union
 
-    if num1 > num2:
-        larger, smaller = "First", "Second"
-    elif num2 > num1:
-        larger, smaller = "Second", "First"
-    else:
-        larger, smaller = "Equal", None
+def determine_grade(score: float, thresholds: Optional[Dict[str, int]] = None) -> str:
+    if thresholds is None:
+        thresholds = {
+            "A": 90,
+            "B": 80,
+            "C": 70,
+            "D": 60,
+            "F": 0
+        }
     
-    print(f"Difference between {num1} and {num2}: {diff_str}")
+    grade_map: List[tuple] = [
+        ("A", thresholds.get("A", 90)),
+        ("B", thresholds.get("B", 80)),
+        ("C", thresholds.get("C", 70)),
+        ("D", thresholds.get("D", 60)),
+        ("F", 0)
+    ]
+    
+    for grade, cutoff in grade_map:
+        if score >= cutoff:
+            return grade
+    return "F"
 
 if __name__ == '__main__':
-    sample_1 = 3.5078945678
-    sample_2 = 1.23456789
-    
-    compare_numbers(sample_1, sample_2)
+    sample_score: float = 92
+    result: str = determine_grade(sample_score)
+    print(result)

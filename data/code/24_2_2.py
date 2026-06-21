@@ -1,9 +1,6 @@
-class NumberChecker:
-    def check_if_negative(self, value):
-        return value < 0
+def is_leap_year(year): return bool(year % 4 == 0 and (year % 100 != 0 or year % 400 == 0))
+
 if __name__ == '__main__':
-    checker = NumberChecker()
-    print(checker.check_if_negative(10))
-    print(checker.check_if_negative(-5))
-    print(checker.check_if_negative(0))
-    print(checker.check_if_negative(-100))
+    print(is_leap_year(2024))
+    print(is_leap_year(1900))
+    print(is_leap_year(2000))

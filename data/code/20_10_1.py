@@ -1,11 +1,11 @@
-def are_equal(item1, item2):
-    return item1 == item2
+def is_even_bitwise(n: int) -> bool:
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer")
+    return (n & 1) == 0
+
 if __name__ == '__main__':
-    print(are_equal(10, 10))
-    print(are_equal(5, 3))
-    print(are_equal("hello", "hello"))
-    print(are_equal("hello", "world"))
-    print(are_equal([1, 2, 3], [1, 2, 3]))
-    print(are_equal([1, 2, 3], [3, 2, 1]))
-    print(are_equal(10.5, 10.5))
-    print(are_equal(10, 10.0))
+    print(is_even_bitwise(0))
+    print(is_even_bitwise(1))
+    print(is_even_bitwise(2))
+    print(is_even_bitwise(-3))
+    print(is_even_bitwise(100))

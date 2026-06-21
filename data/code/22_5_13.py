@@ -1,19 +1,49 @@
-def get_parity(n: int) -> str:
-    """
-    Determines if an integer is odd or even.
-    
-    Args:
-        n (int): The number to check
+def validate_password(password, username, email):
+    if not isinstance(password, str) or not isinstance(username, str) or not isinstance(email, str):
+        return False
+
+    if len(password) < 8:
+        return False
+
+    lower_password = password.lower()
+    lower_username = username.lower()
+    lower_email = email.lower()
+
+    if lower_username in lower_password:
+        return False
+
+    if '@' in lower_email:
+        domain = lower_email.split('@')[-1]
+        if domain in lower_password:
+            return False
+
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+    special_chars = set("!@#$%^&*()_+-=[]{}|;:',.<>?/`~")
+
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
         
-    Returns:
-        str: 'Odd' if the number is odd, 'Even' otherwise
-    """
-    return "Odd" if n % 2 != 0 else "Even"
+        if has_upper and has_lower and has_digit:
+            break
+
+    if not (has_upper and has_lower and has_digit):
+        return False
+
+    if not has_special:
+        return False
+
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction
-    test_cases = [17, 42, -3, 0]
-    
-    for num in test_cases:
-        result = get_parity(num)
-        print(f"{num}: {result}")
+    result = validate_password("Str0ng!Pass", "john", "john@example.com")
+    print(result)

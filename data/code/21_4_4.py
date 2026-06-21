@@ -1,29 +1,13 @@
-import os
-input_filename = "input.txt"
-output_filename = "output.txt"
-sample_content = "5 2 8 1 9 3"
-try:
-    with open(input_filename, 'w') as f:
-        f.write(sample_content)
-except IOError as e:
-    print(f"Error writing to {input_filename}: {e}")
-    exit()
-try:
-    with open(input_filename, 'r') as infile:
-        content = infile.read().strip()
-        if not content:
-            print("Input file is empty.")
-            exit()
-        numbers = list(map(int, content.split()))
-        sorted_numbers = sorted(numbers)
-        with open(output_filename, 'w') as outfile:
-            output_content = " ".join(map(str, sorted_numbers))
-            outfile.write(output_content + "\n")
-except FileNotFoundError:
-    print(f"Error: Input file {input_filename} not found.")
-except ValueError:
-    print(f"Error: Could not convert all input to integers in {input_filename}.")
-except IOError as e:
-    print(f"Error during file operation: {e}")
+def get_max(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
 if __name__ == '__main__':
-    pass
+    val1 = 10
+    val2 = 25
+    val3 = 15
+    print(get_max(val1, val2, val3))

@@ -1,41 +1,15 @@
-def compare_and_report(a: float | int, b: float | int) -> dict[str, float]:
-    """
-    Compares two numerical values (int or float) and returns a dictionary
-    containing the comparison result flags, absolute difference, 
-    ratio of larger to smaller value.
+grade_mapping = {0: "F", 1: "F", 2: "F", 3: "F", 4: "F", 5: "F", 6: "F", 7: "F", 8: "F", 9: "D", 10: "D", 11: "D", 12: "D", 13: "D", 14: "C", 15: "C", 16: "C", 17: "C", 18: "B", 19: "B", 20: "B", 21: "B", 22: "A", 23: "A", 24: "A", 25: "A", 26: "A", 27: "A", 28: "A", 29: "A", 30: "A"}
 
-    Args:
-        a: First numerical value.
-        b: Second numerical value.
-
-    Returns:
-        A dictionary with keys 'equal', 'greater_a', 'less_b', 'abs_diff', and 'ratio'.
-    """
-    # Ensure float type for calculations as needed (int precision is usually sufficient 
-    # unless very large integers cause overflow in specific contexts, but Python handles arbitrary precision).
-    
-    if a == b:
-        equal = True
-        greater_a = False
-        less_b = False
-    else:
-        equal = False
-        if a > b:
-            greater_a = True
-            less_b = False
-        elif a < b:
-            greater_a = False
-            less_b = True
-        else:
-            # This case is unreachable if 'equal' was set above correctly based on first branch, 
-            # but kept for logical completeness in strict comparison.
-            equal = True
-            greater_a = False
-            less_b = False
-
-    abs_diff = abs(a - b)
-
-    smaller_val = a if not (a > b) else b
+def convert_scores_to_grades(raw_scores):
+    letter_grades = []
+    for score in raw_scores:
+        index = int(score // 10)
+        if index > 30:
+            index = 30
+        letter_grades.append(grade_mapping[index])
+    return letter_grades
 
 if __name__ == '__main__':
-    pass
+    sample_scores = [45, 67, 82, 91, 55, 23, 30]
+    result = convert_scores_to_grades(sample_scores)
+    print(result)

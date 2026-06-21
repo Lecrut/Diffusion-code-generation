@@ -1,24 +1,10 @@
-def compare_large_integers(a: int, b: int) -> str:
-    """
-    Compares two potentially large integers without overflow concerns.
-    
-    Python's native integer type handles arbitrarily large numbers automatically,
-    so direct comparison is safe and efficient for this purpose. This function
-    encapsulates the logic to return a clear string representation of the result.
-
-    Args:
-        a (int): First integer value.
-        b (int): Second integer value.
-
-    Returns:
-        str: 'a_is_greater', 'b_is_greater', or 'equal'.
-    """
-    if a > b:
-        return "a_is_greater"
-    elif b > a:
-        return "b_is_greater"
-    else:
-        return "equal"
+def get_middle_item(lst):
+    if not lst:
+        raise ValueError("List is empty")
+    mid_index = len(lst) // 2
+    return lst[mid_index]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_middle_item(sample_list)
+    print(result)

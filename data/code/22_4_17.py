@@ -1,21 +1,16 @@
-import sys
-
-def filter_odd_numbers(numbers: list[int]) -> list[int]:
-    """
-    Returns a new list containing only the odd integers from the input list.
-    
-    Args:
-        numbers (list[int]): A list of integers to be filtered.
-        
-    Returns:
-        list[int]: A list of odd integers found in the input.
-    """
-    # Generator expression is used for memory efficiency and concise logic.
-    return [num for num in numbers if num % 2 != 0]
+def score_password_strength(password):
+    if not password:
+        return 0
+    length_score = min(len(password), 10)
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
+    diversity_count = sum([has_lower, has_upper, has_digit, has_special])
+    diversity_score = (diversity_count / 4) * 5
+    total_score = length_score + diversity_score
+    return min(max(0, total_score), 10)
 
 if __name__ == '__main__':
-    sample_data = [-5, 3, -10, 7, 0, 9, 4, 11]
-    result = filter_odd_numbers(sample_data)
-    
-    print("Input:", sample_data)
-    print("Odd numbers:", result)
+    sample_password = "SecureP@ss123"
+    print(score_password_strength(sample_password))

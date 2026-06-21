@@ -1,22 +1,8 @@
-class Sorter:
-    """A class providing sorting utilities."""
-
-    def sort_list(self, data_list):
-        """Sorts a list of numbers in reverse (descending) order.
-
-        Args:
-            data_list (list): A list containing numerical values to be sorted.
-
-        Returns:
-            list: The same list object now sorted in descending order.
-        """
-        return sorted(data_list, reverse=True)
+def largest_of_three(a, b, c):
+    if not all(isinstance(x, (int, float)) for x in (a, b, c)):
+        raise TypeError("All arguments must be numeric.")
+    return a if a >= b and a >= c else (b if b >= c else c)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_data = [5, 2, 89, -3, 10]
-
-    sorter_instance = Sorter()
-    result = sorter_instance.sort_list(sample_data)
-
-    print("Sorted list (descending):", result)
+    result = largest_of_three(10, 25, 15)
+    print(result)

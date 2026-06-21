@@ -1,9 +1,11 @@
-def reverse_range_generator(start, end):
-    for i in range(start, end - 1, -1):
-        yield i
+def greatest_of_three(a, b, c):
+    return a if a >= b and a >= c else (b if b >= c else c)
+
 if __name__ == '__main__':
-    start_val = 10
-    end_val = 1
-    generator = reverse_range_generator(start_val, end_val)
-    result = list(generator)
-    print(result)
+    print(greatest_of_three(1, 2, 3))
+    print(greatest_of_three(3, 1, 2))
+    print(greatest_of_three(2, 3, 1))
+    print(greatest_of_three(5, 5, 5))
+    print(greatest_of_three(-1, -2, -3))
+    print(greatest_of_three(0, -1, 1))
+    print(greatest_of_three(10, 20, 15))

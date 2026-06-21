@@ -1,19 +1,13 @@
-def is_negative(number):
-    """
-    Returns True if number is less than zero, False otherwise.
-    
-    Args:
-        number (int or float): The numerical value to check.
-        
-    Returns:
-        bool: True if number < 0, else False.
-    """
-    return number < 0
+import calendar
+
+def is_leap_year(year):
+    if not isinstance(year, int) or isinstance(year, bool):
+        raise ValueError("Year must be an integer")
+    if year < 1:
+        raise ValueError("Year must be positive")
+    return calendar.isleap(year)
 
 if __name__ == '__main__':
-    # Hard-coded sample values; no user input required
-    test_cases = [-5, 0, -3.14, float('inf'), -float('inf')]
-    
-    for val in test_cases:
-        result = is_negative(val)
-        print(f"is_negative({val}) = {result}")
+    test_cases = [2000, 1900, 2024]
+    for y in test_cases:
+        print(is_leap_year(y))

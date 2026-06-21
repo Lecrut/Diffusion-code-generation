@@ -1,25 +1,41 @@
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determine if an integer is odd using bitwise operations.
-    
-    An integer n is odd if its least significant bit (LSB) is 1.
-    This can be checked by performing a bitwise AND with 1.
-    If the result is non-zero, the number is odd; otherwise, it is even.
-    
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if n is odd, False otherwise.
-    """
-    return n & 1
+import unicodedata
+
+class PasswordValidator:
+    def __init__(self, password: str):
+        self.password = password
+        self._unicode_valid = self._verify_unicode()
+        self._class_count = self._count_classes() if self._unicode_valid else 0
+
+    def _verify_unicode(self) -> bool:
+        for char in self.password:
+            code_point = ord(char)
+            if 0xD800 <= code_point <= 0xDFFF:
+                return False
+            if code_point > 0x10FFFF:
+                return False
+        return True
+
+    def _count_classes(self) -> int:
+        classes_count = 0
+        for char in self.password:
+            category = unicodedata.category(char)
+            if category.startswith('L'):
+                classes_count |= 1
+            elif category.startswith('N') and not category.startswith('No'):
+                classes_count |= 2
+            elif category.startswith('S'):
+                classes_count |= 4
+            elif char in string.punctuation:
+                classes_count |= 4
+        return bin(classes_count).count('1')
+
+import string
+
+def is_valid(password: str) -> bool:
+    validator = PasswordValidator(password)
+    return validator._unicode_valid and validator._class_count >= 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [0, 1, -3, 42, 99]
-    
-    print("Testing odd/even determination using bitwise AND:")
-    for num in test_cases:
-        result = is_odd_bitwise(num)
-        status = "Odd" if result else "Even"
-        print(f"{num}: {status}")
+    sample_password = "Røld@123"
+    result = is_valid(sample_password)
+    print(result)

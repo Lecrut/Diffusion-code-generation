@@ -1,18 +1,14 @@
-def is_negative(value: float) -> bool:
-    """
-    Returns True if value is strictly less than zero, False otherwise.
-    
-    Args:
-        value (float): The numerical argument to check.
-        
-    Returns:
-        bool: True if value < 0, else False.
-    """
-    return value < 0
+def is_leap_year(year: int) -> bool:
+    if year % 4 != 0:
+        return False
+    if year % 100 != 0:
+        return True
+    if year % 400 != 0:
+        return False
+    return True
 
 if __name__ == '__main__':
-    test_cases = [-5.5, -1, 0, 3.14]
-    
-    for num in test_cases:
-        result = is_negative(num)
-        print(f"is_negative({num}) = {result}")
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))

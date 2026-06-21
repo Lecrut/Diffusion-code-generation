@@ -1,21 +1,12 @@
-class ConditionChecker:
-    def check_condition(self, a, b):
-        """Returns True if 'a' is equal to 'b', otherwise False."""
-        return a == b
+import random
+
+def pick_random_character(s):
+    if not s:
+        return None
+    index = random.randint(0, len(s) - 1)
+    return s[index]
 
 if __name__ == '__main__':
-    checker = ConditionChecker()
-    
-    # Test cases with hard-coded sample values
-    test_cases = [
-        (5, 5),      # Should be True
-        (10, 20),    # Should be False
-        ("hello", "world"),  # Should be False
-        (3.14, 3.14),   # Should be True
-        ([1], [1]),     # Should be True
-        ({'a': 1}, {'b': 2}),  # Should be False
-    ]
-
-    for a, b in test_cases:
-        result = checker.check_condition(a, b)
-        print(f"check_condition({a!r}, {b!r}) = {result}")
+    sample_string = "HelloWorld"
+    result = pick_random_character(sample_string)
+    print(result)

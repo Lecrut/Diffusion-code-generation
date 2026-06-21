@@ -1,16 +1,59 @@
-class NumberChecker:
-    """A class to check properties of integers."""
+import re
+import itertools
 
-    def check_odd(self, number: int) -> bool:
-        """Returns True if the number is odd, False otherwise."""
-        return number % 2 != 0
+class PasswordValidator:
+    def __init__(self):
+        self.min_length = 12
+        self.special_chars = set("!@#$%^&*()_+-=[]{}|;:',.<>?/~`")
+        self.keyboard_rows = [
+            "1234567890-=",
+            "qwertyuiop[]\\" ,
+            "asdfghjkl;'",
+            "zxcvbnm,./"
+        ]
+
+    @staticmethod
+    def validate(password):
+        if len(password) < 12:
+            return False
+
+        special_count = sum(1 for c in password if c in "!@#$%^&*()_+-=[]{}|;:',.<>?/~`")
+        if special_count < 2:
+            return False
+
+        if PasswordValidator._has_sequential_pattern(password):
+            return False
+
+        return True
+
+    @staticmethod
+    def _has_sequential_pattern(password):
+        keyboard_rows = [
+            "1234567890-=",
+            "qwertyuiop[]\\",
+            "asdfghjkl;'",
+            "zxcvbnm,./"
+        ]
+
+        password_lower = password.lower()
+        pattern_len = 3
+
+        for row in keyboard_rows:
+            row_lower = row.lower()
+            for i in range(len(row_lower) - pattern_len + 1):
+                seq = row_lower[i:i+pattern_len]
+                if seq in password_lower:
+                    return True
+                rev_seq = seq[::-1]
+                if rev_seq in password_lower:
+                    return True
+
+        return False
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Hard-coded sample values to test without user input or file access
-    samples = [17, 45, -3, 0, 8]
-
-    for num in samples:
-        result = checker.check_odd(num)
-        print(f"{num} is {'odd' if result else 'even'}")
+    validator = PasswordValidator()
+    print(validator.validate("Abcdefghijkl"))
+    print(validator.validate("Abcdef!@ghijk"))
+    print(validator.validate("Abcdef!@ghijkl"))
+    print(validator.validate("Pass!@word123"))
+    print(validator.validate("qwe!@#1234567"))

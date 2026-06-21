@@ -1,37 +1,24 @@
-class NumberChecker:
-    def check_negativity(self, value):
-        """
-        Determines if the input value is negative.
-        
-        Args:
-            value (int or float): The number to check.
-            
-        Returns:
-            bool: True if value < 0, False otherwise.
-        """
-        return value < 0
+def is_leap_year(year):
+    return (year & 3 == 0) and ((year & 15 != 0) or (year % 400 == 0))
+
+def test_leap_year():
+    assert is_leap_year(4) == True
+    assert is_leap_year(100) == False
+    assert is_leap_year(400) == True
+    assert is_leap_year(2000) == True
+    assert is_leap_year(1900) == False
+    assert is_leap_year(2024) == True
+    assert is_leap_year(2023) == False
+    assert is_leap_year(0) == True
+    assert is_leap_year(-4) == True
+    assert is_leap_year(-100) == False
+    assert is_leap_year(-400) == True
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample test cases with hard-coded values
-    test_values = [
-        -5,      # Negative integer
-        0,       # Zero (not negative)
-        -3.14,   # Negative float
-        42,      # Positive integer
-        -0.001,  # Small negative float
-        None     # Edge case: should raise TypeError as per standard behavior for numeric checks
-    ]
-    
-    print("Testing NumberChecker.check_negativity():")
-    for val in test_values[:-1]:  # Skip None to avoid runtime error during demo output unless handled
-        result = checker.check_negativity(val)
-        status = "Negative" if result else "Non-negative"
-        print(f"Value: {val} -> Status: {status}")
-    
-    # Demonstrate exception handling for non-numeric input (optional but good practice)
-    try:
-        is_negative = checker.check_negativity(None)
-    except TypeError as e:
-        print(f"\nHandling invalid type 'None': Error occurred - {e}")
+    test_leap_year()
+    print(is_leap_year(2024))
+    print(is_leap_year(1900))
+    print(is_leap_year(2000))
+    print(is_leap_year(2023))
+    print(is_leap_year(4))
+    print(is_leap_year(100))

@@ -1,10 +1,17 @@
 def get_central_element(lst):
     if not lst:
-        return None
-    central_index = len(lst) // 2
-    return lst[central_index]
+        raise ValueError("List is empty")
+    index = len(lst) // 2
+    return lst[index]
 
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50, 60, 70]
-    result = get_central_element(sample_list)
-    print(result)
+    sample_lists = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30, 40],
+        [100],
+        [1, 2],
+        [5, 6, 7, 8, 9, 10]
+    ]
+    for sample in sample_lists:
+        result = get_central_element(sample)
+        print(result)

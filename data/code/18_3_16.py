@@ -1,15 +1,12 @@
-# Command-line script to compare two numbers using conditional logic
-def main():
-    # Hard-coded sample values as per requirements (no user input)
-    num1 = 42
-    num2 = 37
-    
-    print(f"Comparing {num1} and {num2}")
-
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}.")
+def get_center_element(lst):
+    center_index = len(lst) // 2
+    if len(lst) % 2 == 1:
+        return lst[center_index]
     else:
-        print(f"{num1} is not greater than {num2}.")
+        return lst[center_index - 1], lst[center_index]
 
 if __name__ == '__main__':
-    main()
+    odd_list = [1, 2, 3, 4, 5]
+    even_list = [1, 2, 3, 4]
+    print(get_center_element(odd_list))
+    print(get_center_element(even_list))

@@ -1,25 +1,20 @@
-class Number:
-    """A class representing a numeric value with comparison capabilities."""
-    
-    def __init__(self, value):
-        """Initialize the number object with a given integer or float value."""
-        self.value = int(value) if isinstance(value, str) else value
-    
-    def compare(self, other_number):
-        """Compare this Number instance against another passed argument.
-        
-        Args:
-            other_number (Number | int | float): Another number to compare with.
-            
-        Returns:
-            dict: A dictionary containing the result of comparisons ('greater', 'less', 'equal').
-        """
-        # Convert if necessary for comparison logic consistency
-        self_actual = self.value
-        
-        is_self_greater = False
-        is_self_less = False
-        is_equal = False
+def get_median_via_int_div(lst):
+    sorted_list = sorted(lst)
+    n = len(sorted_list)
+    mid = n // 2
+    if n % 2 == 0:
+        return (sorted_list[mid - 1] + sorted_list[mid]) / 2
+    else:
+        return sorted_list[mid]
 
 if __name__ == '__main__':
-    pass
+    arrays = [
+        [3, 1, 2],
+        [4, 1, 3, 2],
+        [10, 20, 30, 40, 50],
+        [7],
+        [-5, 0, 5, 10, -10, 15]
+    ]
+    for arr in arrays:
+        median_val = get_median_via_int_div(arr)
+        print(median_val)

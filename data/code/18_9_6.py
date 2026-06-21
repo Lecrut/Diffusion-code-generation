@@ -1,36 +1,23 @@
-class Number:
-    def __init__(self, value):
-        """Initialize a Number object with an integer value."""
-        self.value = int(value) if isinstance(value, (int, float)) else value
-    
-    def compare(self, other_value, comparison_operator='=='):
-        """Compare this number's value against another provided as argument.
-        
-        Args:
-            other_value (Number or int/float): The object to compare against.
-            comparison_operator (str): One of '>', '<', '=', or '!='. Default is '='.
-            
-        Returns:
-            bool: Result of the comparison operation between self.value and other_value's value.
-        """
-        # Handle if other_value is already a Number instance, otherwise convert it
-        try:
-            other = float(other_value)
-        except (TypeError, ValueError):
-            raise TypeError(f"Comparison failed for object {other_value!r} of type {type(other_value).__name__}")
-
-        comparisons = {
-            '>': self.value > other,
-            '<': self.value < other,
-            '=': self.value == other,
-            '!=': self.value != other
-        }
-        
-        return comparisons.get(comparison_operator.lower(), NotImplemented)
+def get_median_via_division(lst):
+    sorted_list = sorted(lst)
+    n = len(sorted_list)
+    if n == 0:
+        return None
+    mid_index = (n - 1) // 2
+    if n % 2 == 0:
+        left_index = mid_index - 1
+        if left_index < 0:
+            left_index = 0
+        median = (sorted_list[left_index] + sorted_list[mid_index]) / 2.0
+    else:
+        median = sorted_list[mid_index]
+    return median
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    num1 = Number(10)
-    num2 = Number(5)
-
-    print(f"Comparing {num1.value} with {num2.value}")
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [10, 20, 30, 40]
+    list3 = [7]
+    
+    print(get_median_via_division(list1))
+    print(get_median_via_division(list2))
+    print(get_median_via_division(list3))

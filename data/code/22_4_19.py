@@ -1,26 +1,28 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd integers from the input list.
-    
-    Optimization: Uses a generator expression within list() to create the result,
-    avoiding an intermediate boolean list which reduces memory usage and improves cache locality.
-    Additionally, checking for the bit-wise operation (num & 1) is generally slightly faster 
-    than using modulo (%) in tight loops due to CPU instruction sets, though Python's C-level optimization 
-    makes this difference negligible; it remains a standard practice for readability and intent clarity.
-
-    Args:
-        numbers (list[int]): A list of integers.
-        
-    Returns:
-        list[int]: A new list containing the odd integers from 'numbers'.
-    """
-    return [num for num in numbers if num % 2 != 0]
+def score_password_strength(password):
+    score = 0
+    length = len(password)
+    if length >= 8:
+        score += 2
+    if length >= 12:
+        score += 2
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_symbol = any(not c.isalnum() for c in password)
+    diversity = sum([has_lower, has_upper, has_digit, has_symbol])
+    if diversity == 1:
+        score += 1
+    if diversity == 2:
+        score += 2
+    if diversity == 3:
+        score += 3
+    if diversity == 4:
+        score += 4
+    return min(score, 10)
 
 if __name__ == '__main__':
-    # Hard-coded sample values ensuring no user input, CLI args, network access, or file dependencies.
-    test_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-    result = filter_odd_numbers(test_data)
-
-    print(f"Input: {test_data}")
-    print(f"Odd numbers only: {result}")
+    print(score_password_strength("abc"))
+    print(score_password_strength("Abc123"))
+    print(score_password_strength("StrongP@ssw0rd"))
+    print(score_password_strength("aB3#xY9$z"))
+    print(score_password_strength("1234567890"))

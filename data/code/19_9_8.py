@@ -1,5 +1,12 @@
+import random
+from collections import namedtuple
+
+def random_access_namedtuple(nt):
+    index = random.randint(0, len(nt) - 1)
+    return nt[index]
+
 if __name__ == '__main__':
-    x = 12
-    y = 45
-    result = (x > 10) and (y < 50)
-    print(f"x={x}, y={y} -> {result}")
+    Point = namedtuple('Point', ['x', 'y', 'z'])
+    sample_point = Point(10, 20, 30)
+    result = random_access_namedtuple(sample_point)
+    print(result)

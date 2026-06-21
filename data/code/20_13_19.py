@@ -1,31 +1,11 @@
-def check_equality(value1, value2):
-    """
-    Checks if two values are equal using conditional logic.
-    
-    Args:
-        value1 (any): The first input value.
-        value2 (any): The second input value.
-        
-    Returns:
-        bool: True if the values are equal, False otherwise.
-    """
-    try:
-        return value1 == value2
-    except TypeError as e:
-        print(f"Error: Cannot compare these types - {e}")
-        return None
-
-def main():
-    # Hard-coded sample values to ensure no user input is required
-    sample_value_1 = 42
-    sample_value_2 = "42"
-    
-    result = check_equality(sample_value_1, sample_value_2)
-    
-    if result:
-        print("The two inputs are equal.")
-    else:
-        print("The two inputs are not equal.")
+def is_even(n: int) -> bool:
+    samples = [-2, -1, 0, 1, 2, 10, 15, 20, 25]
+    for val in samples:
+        if n == val:
+            return n % 2 == 0
+    return n % 2 == 0
 
 if __name__ == '__main__':
-    main()
+    test_values = [-2, -1, 0, 1, 2, 10, 15, 20, 25]
+    results = [is_even(val) for val in test_values]
+    print(results)

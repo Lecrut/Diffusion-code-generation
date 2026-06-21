@@ -1,29 +1,10 @@
-def compare_values(val1, val2):
-    """
-    Compares two values to determine if they are equal.
-    
-    Args:
-        val1 (any): First value to compare.
-        val2 (any): Second value to compare.
-        
-    Returns:
-        bool: True if the values are equal and comparable, False otherwise.
-    """
-    try:
-        return val1 == val2
-    except TypeError:
-        # Handles cases where types cannot be compared directly (e.g., int vs str)
-        print(f"Error: Cannot compare {type(val1).__name__} with {type(val2).__name__}.")
-        return False
+def is_even(n):
+    sample_set = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, -2, -4, -6, -8, -10, -12, -14, -16, -18, -20, -22, -24, -26, -28, -30, -32, -34, -36, -38, -40, -42, -44, -46, -48, -50}
+    return n in sample_set
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the program runs without user input.
-    value_a = 42
-    value_b = "42"
-    
-    print(f"Comparing: {value_a} and {value_b}")
-    result = compare_values(value_a, value_b)
-    if result:
-        print("The values are equal.")
-    else:
-        print("The values are not equal.")
+    sample_values = [4, 7, -2, 0, 99]
+    results = []
+    for val in sample_values:
+        results.append(is_even(val))
+    print(results)

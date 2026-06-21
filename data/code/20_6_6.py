@@ -1,16 +1,8 @@
-class Object:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-    def is_identical(self, other):
-        if not isinstance(other, Object):
-            return False
-        return self.a == other.a and self.b == other.b
+def is_even(n: int) -> bool:
+    return n % 2 == 0
+
 if __name__ == '__main__':
-    obj1 = Object(10, "hello")
-    obj2 = Object(10, "hello")
-    obj3 = Object(20, "world")
-    print(f"obj1 is identical to obj2: {obj1.is_identical(obj2)}")
-    print(f"obj1 is identical to obj3: {obj1.is_identical(obj3)}")
-    obj4 = Object(10, "hello")
-    print(f"obj1 is identical to obj4: {obj1.is_identical(obj4)}")
+    test_values = [0, 1, 2, 3, 4, 100, 101, -2, -3, 7]
+    for value in test_values:
+        result = is_even(value)
+        print(f"{value}: {result}")

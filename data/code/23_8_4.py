@@ -1,26 +1,23 @@
-class VectorComparator:
-    @staticmethod
-    def compare_elementwise_le(vec1, vec2):
-        n = len(vec1)
-        if len(vec2) != n:
-            return False
-        for i in range(n):
-            if vec1[i] > vec2[i]:
-                return False
-            if vec1[i] < vec2[i]:
-                return True
-        return True
+def grade_generator(scores):
+    for score in scores:
+        if not isinstance(score, (int, float)):
+            continue
+        if score < 0:
+            continue
+        if score > 100:
+            continue
+        if score < 60:
+            yield 'F'
+        elif score < 70:
+            yield 'D'
+        elif score < 80:
+            yield 'C'
+        elif score < 90:
+            yield 'B'
+        else:
+            yield 'A'
+
 if __name__ == '__main__':
-    vec_a = [1, 5, 3]
-    vec_b = [1, 4, 3]
-    vec_c = [2, 5, 3]
-    vec_d = [1, 5, 4]
-    vec_e = [1, 5, 3]
-    vec_f = [1, 5, 3]
-    vec_g = [1, 5, 5]
-    print(f"Compare {vec_a} and {vec_b}: {VectorComparator.compare_elementwise_le(vec_a, vec_b)}")
-    print(f"Compare {vec_a} and {vec_c}: {VectorComparator.compare_elementwise_le(vec_a, vec_c)}")
-    print(f"Compare {vec_a} and {vec_d}: {VectorComparator.compare_elementwise_le(vec_a, vec_d)}")
-    print(f"Compare {vec_a} and {vec_e}: {VectorComparator.compare_elementwise_le(vec_a, vec_e)}")
-    print(f"Compare {vec_a} and {vec_f}: {VectorComparator.compare_elementwise_le(vec_a, vec_f)}")
-    print(f"Compare {vec_a} and {vec_g}: {VectorComparator.compare_elementwise_le(vec_a, vec_g)}")
+    sample_scores = [55, 72, 88, 95, -10, 'abc', None, 100, 101, 45]
+    grades = list(grade_generator(sample_scores))
+    print(grades)

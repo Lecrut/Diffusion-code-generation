@@ -1,25 +1,22 @@
-# Script to determine if an integer is odd or even without user interaction via input().
-# This module demonstrates parity checking using a sample block that runs autonomously.
+import re
 
-def check_parity(number):
-    """
-    Determines whether the given integer is odd or even.
-    
-    Args:
-        number (int): The integer to evaluate.
-        
-    Returns:
-        str: A string indicating 'odd' if the number is not divisible by 2, 
-             and 'even' otherwise.
-    """
-    return "odd" if number % 2 != 0 else "even"
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'\d', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input or external dependencies.
-    # These values ensure the script runs immediately upon execution in any environment.
-    
-    test_numbers = [1, -3, 42, 0]
-
-    for num in test_numbers:
-        result_type = check_parity(num)
-        print(f"The number {num} is {result_type}.")
+    print(validate_password_strength('Short1!'))
+    print(validate_password_strength('longpassword1!'))
+    print(validate_password_strength('Longpassword1!'))
+    print(validate_password_strength('LongPassword1!'))
+    print(validate_password_strength('ComplexP@ssw0rd'))
+    print(validate_password_strength('Simple'))

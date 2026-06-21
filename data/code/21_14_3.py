@@ -1,6 +1,9 @@
-def sort_pairs(pairs):
-    return sorted(pairs, key=lambda item: item[0], reverse=True)
+def max_of_three(a: float, b: float, c: float) -> float:
+    if a >= b and a >= c:
+        return a
+    if b >= a and b >= c:
+        return b
+    return c
+
 if __name__ == '__main__':
-    sample_data = [(3, 10), (1, 5), (4, 20), (2, 15)]
-    sorted_result = sort_pairs(sample_data)
-    print(sorted_result)
+    print(max_of_three(1.5, 3.2, 2.8))

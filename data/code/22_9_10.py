@@ -1,52 +1,79 @@
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determine if an integer is odd using bitwise operations.
-    
-    An integer n is odd if its least significant bit (LSB) is 1.
-    The expression (n & 1) checks the LSB directly without division or modulo.
-    If the result is non-zero, the number is odd; otherwise, it is even.
+import unicodedata
+import string
 
-    Args:
-        n (int): The integer to check.
+class PasswordValidator:
+    UNICODE_MAX = 0x10FFFF
+    SURROGATE_START = 0xD800
+    SURROGATE_END = 0xDFFF
+    ASCII_DIGITS = string.digits
+    ASCII_LOWERCASE = string.ascii_lowercase
+    ASCII_UPPERCASE = string.ascii_uppercase
+    SPECIAL_CHARS = set(string.punctuation)
 
-    Returns:
-        bool: True if n is odd, False otherwise.
-    """
-    return (n & 1) == 1
+    def __init__(self, password: str):
+        self.password = password
+        self._is_unicode_valid = self._verify_unicode()
+        self._class_count = 0
+        if self._is_unicode_valid:
+            self._class_count = self._count_character_classes()
+
+    def _verify_unicode(self) -> bool:
+        if not isinstance(self.password, str):
+            return False
+        for char in self.password:
+            code_point = ord(char)
+            if code_point > self.UNICODE_MAX:
+                return False
+            if self.SURROGATE_START <= code_point <= self.SURROGATE_END:
+                return False
+        return True
+
+    def _count_character_classes(self) -> int:
+        flags = {
+            'digit': False,
+            'lower': False,
+            'upper': False,
+            'special': False
+        }
+        
+        for char in self.password:
+            if char in self.ASCII_DIGITS:
+                flags['digit'] = True
+            elif char in self.ASCII_LOWERCASE:
+                flags['lower'] = True
+            elif char in self.ASCII_UPPERCASE:
+                flags['upper'] = True
+            elif char in self.SPECIAL_CHARS:
+                flags['special'] = True
+            elif unicodedata.category(char).startswith('L'):
+                flags['lower'] = True
+            elif unicodedata.category(char).startswith('Nd'):
+                flags['digit'] = True
+        
+        return sum(flags.values())
+
+    def is_valid(self) -> bool:
+        if not self._is_unicode_valid:
+            return False
+        return self._class_count >= 3
+
+    def get_class_count(self) -> int:
+        return self._class_count
+
+    def is_unicode_valid(self) -> bool:
+        return self._is_unicode_valid
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        (-5),   # negative odd number
-        -4      # negative even number
+    sample_passwords = [
+        "SecurePass123!",
+        "weak",
+        "Mix3dChars#",
+        "InvalidSurrogate\uDBFF\uDC00",
+        "Привет123!",
+        "12345678",
+        "ALLUPPERCASE1"
     ]
-
-    print("Testing is_odd_bitwise function using bitwise AND operation:")
-    for num in test_cases:
-        result = is_odd_bitwise(num)
-        expected_str = "odd" if (num % 2 != 0) else "even"
-        status = "Correct" if result == ((num % 2) != 0) else "Incorrect"
-        print(f"{num} -> {status} ({expected_str})")
-
-    # Additional explicit test for positive cases to ensure completeness without user input
-    pos_tests = [3, 15]
-    neg_test = [-7]
-
-    print("\nAdditional tests:")
-    sample_data = list(test_cases) + pos_tests + [neg_test[0]]
     
-    all_correct = True
-    for n in sample_data:
-        is_odd_result = (n & 1) != 0
-        
-        # Standard modulo check as reference definition of oddness
-        standard_check = (n % 2 == 1 or n % 2 == -1)
-        
-        match = "Pass" if is_odd_result == standard_check else "Fail"
-        all_correct &= (is_odd_result == standard_check)
-        print(f"{n} -> Bitwise: {bool(is_odd_result)}, Modulo check matches? {match}")
-
-    # Performance explanation note embedded in logic verification
-    # The bitwise AND operation (& 1) is significantly faster than the modulo operator (%) 
-    # because it maps directly to a single CPU instruction (AND), whereas modulo often requires
-    # more complex arithmetic circuits or division hardware, especially for negative numbers.
+    for pwd in sample_passwords:
+        validator = PasswordValidator(pwd)
+        print(f"Password: {pwd!r} | Valid: {validator.is_valid()} | Classes: {validator.get_class_count()} | UnicodeOK: {validator.is_unicode_valid()}")

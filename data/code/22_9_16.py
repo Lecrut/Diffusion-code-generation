@@ -1,40 +1,74 @@
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determine if an integer is odd using bitwise operations.
-    
-    A number n is even or divisible by 2 iff (n & 1) == 0, because 
-    the least significant bit represents whether the number is odd or not.
-    If any other bits are set, they do not affect divisibility by 2 for integers;
-    thus checking only LSB provides an optimized check without modulo overhead.
-    
-    Args:
-        n (int): The integer to evaluate
-        
-    Returns:
-        bool: True if the number is odd, False otherwise
-    """
-    return bool(n & 1)
+import unicodedata
+import re
+
+class PasswordValidator:
+    VALID_MAX = 0x10FFFF
+    SURROGATE_START = 0xD800
+    SURROGATE_END = 0xDFFF
+    MIN_CLASSES = 3
+
+    def __init__(self, password: str):
+        self.password = password
+        self.is_valid = self._run_validation()
+
+    def _run_validation(self) -> bool:
+        if not self._check_unicode_support():
+            return False
+        return self._check_character_classes() >= self.MIN_CLASSES
+
+    def _check_unicode_support(self) -> bool:
+        for char in self.password:
+            code = ord(char)
+            if code > self.VALID_MAX:
+                return False
+            if self.SURROGATE_START <= code <= self.SURROGATE_END:
+                return False
+        return True
+
+    def _check_character_classes(self) -> int:
+        has_lower = False
+        has_upper = False
+        has_digit = False
+        has_special = False
+
+        for char in self.password:
+            if not has_lower:
+                if char.islower():
+                    has_lower = True
+            if not has_upper:
+                if char.isupper():
+                    has_upper = True
+            if not has_digit:
+                if char.isdigit():
+                    has_digit = True
+            if not has_special:
+                if not char.isalnum():
+                    has_special = True
+            if has_lower and has_upper and has_digit and has_special:
+                return 4
+
+        return sum([has_lower, has_upper, has_digit, has_special])
 
 if __name__ == '__main__':
-    # Sample values for testing without user input or external dependencies
-    test_cases = [-5, -4, 0, 3, 7, 89]
-    
-    print("Testing is_odd_bitwise function:")
-    all_passed = True
-    
-    for num in test_cases:
-        result = is_odd_bitwise(num)
-        expected = num % 2 != 0
-        
-        if result == expected:
-            status_str = "PASS"
-        else:
-            status_str = "FAIL"
-            all_passed = False
-            
-        print(f"is_odd({num}) => {result} (Expected: {expected}), Status: {status_str}")
-    
-    if all_passed:
-        print("\nAll tests passed!")
-    else:
-        print("\nSome tests failed.")
+    samples = [
+        "Short",
+        "123456",
+        "P@ssw0rd!",
+        "abcdef",
+        "Abc!123",
+        "NoSpecial123",
+        "NoDigits!abc",
+        "NOLOWERCASE123!",
+        "ALLGOOD123!",
+        "üñíçödéP@ss1",
+        "\uD800",
+        "Valid_Unicode_123!",
+        "JustLetters",
+        "123Numbers",
+        "SymbolsOnly!!!",
+        "A1!b",
+    ]
+
+    for sample in samples:
+        validator = PasswordValidator(sample)
+        print(f"Password: {repr(sample)}, Valid: {validator.is_valid}")

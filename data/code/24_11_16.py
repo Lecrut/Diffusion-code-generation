@@ -1,24 +1,22 @@
-class NumberChecker:
-    def check_negativity(self, value):
-        """
-        Determines if the input value is negative.
-        
-        Args:
-            value (int or float): The number to check.
-            
-        Returns:
-            bool: True if value < 0, False otherwise.
-        """
-        return value < 0
+def is_leap_year(year):
+    not_divisible_by_4 = year & 3
+    if not_divisible_by_4:
+        return False
+    if not (year & 0xFF00):
+        return bool(year & 0x400)
+    return True
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Hard-coded sample values for testing without user input or arguments
-    test_values = [10, -5, 0.0, -3.14, 2]
-
-    print("Testing check_negativity method:")
-    for val in test_values:
-        result = checker.check_negativity(val)
-        status = "Negative" if result else "Non-negative (zero or positive)"
-        print(f"{val} -> {status}")
+    test_years = [1600, 1700, 1800, 1900, 2000, 2004, 2100, 2400, 1999, 2024]
+    for y in test_years:
+        print(is_leap_year(y))
+    assert is_leap_year(1600) is True
+    assert is_leap_year(1700) is False
+    assert is_leap_year(1800) is False
+    assert is_leap_year(1900) is False
+    assert is_leap_year(2000) is True
+    assert is_leap_year(2004) is True
+    assert is_leap_year(2100) is False
+    assert is_leap_year(2400) is True
+    assert is_leap_year(1999) is False
+    assert is_leap_year(2024) is True

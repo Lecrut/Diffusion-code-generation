@@ -1,15 +1,13 @@
-def sort_strings(strings):
-    """Sorts a list of strings alphabetically (lexicographically).
-    
-    Args:
-        strings: A list of strings to be sorted.
-        
-    Returns:
-        The same list with elements reordered in ascending order.
-    """
-    return sorted(strings)
+import math
+
+def find_largest(a: float, b: float, c: float) -> float:
+    if a >= b and a >= c:
+        return a
+    if b >= a and b >= c:
+        return b
+    return c
 
 if __name__ == '__main__':
-    sample_data = ["banana", "Apple", "cherry", "apple", "Date"]
-    result = sort_strings(sample_data)
+    x, y, z = 3.14, 1.41, 2.72
+    result = find_largest(x, y, z)
     print(result)

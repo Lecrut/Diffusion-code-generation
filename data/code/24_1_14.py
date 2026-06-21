@@ -1,19 +1,21 @@
-def is_negative(number: float) -> bool:
-    """
-    Returns True if the number is less than zero, False otherwise.
-    
-    Args:
-        number (float): The numerical value to check.
-        
-    Returns:
-        bool: True if number < 0, else False.
-    """
-    return number < 0
+class LeapYearChecker:
+    DIVISOR_FOUR = 4
+    DIVISOR_HUNDRED = 100
+    DIVISOR_FOUR_HUNDRED = 400
+
+    @staticmethod
+    def check(year):
+        if LeapYearChecker._is_multiple(year, LeapYearChecker.DIVISOR_FOUR_HUNDRED):
+            return True
+        if LeapYearChecker._is_multiple(year, LeapYearChecker.DIVISOR_HUNDRED):
+            return False
+        return LeapYearChecker._is_multiple(year, LeapYearChecker.DIVISOR_FOUR)
+
+    @staticmethod
+    def _is_multiple(number, divisor):
+        return number % divisor == 0
 
 if __name__ == '__main__':
-    # Sample test cases run without user input or external dependencies
-    test_values = [-5.2, -1, 0, 3.7]
-    
+    test_values = [2000, 1900, 2024]
     for val in test_values:
-        result = is_negative(val)
-        print(f"is_negative({val}) = {result}")
+        print(LeapYearChecker.check(val))

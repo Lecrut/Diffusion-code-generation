@@ -1,10 +1,8 @@
-import sys
+def largest_of_three(a: int, b: int, c: int) -> int:
+    return max(a, b, c)
+
 if __name__ == '__main__':
-    input_data = [5, 2, 8, 1, 9, 3, 7, 4, 6]
-    input_numbers = list(map(int, sys.stdin.read().split()))
-    if not input_numbers:
-        numbers_to_sort = input_data
-    else:
-        numbers_to_sort = input_numbers
-    numbers_to_sort.sort()
-    print(*(numbers_to_sort))
+    a = 10
+    b = 25
+    c = 15
+    print(largest_of_three(a, b, c))

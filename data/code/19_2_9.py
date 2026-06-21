@@ -1,25 +1,12 @@
-class ConditionChecker:
-    """A class that provides methods to check conditions between two values."""
+import random
 
-    def check_condition(self, a, b):
-        """Returns True if 'a' is equal to 'b', and False otherwise.
-
-        Args:
-            a (any): The first value to compare.
-            b (any): The second value to compare.
-
-        Returns:
-            bool: True if values are equal, False otherwise.
-        """
-        return a == b
+def pick_random_char(s: str) -> str:
+    if len(s) == 0:
+        raise ValueError("String must not be empty")
+    index = random.randint(0, len(s) - 1)
+    return s[index]
 
 if __name__ == '__main__':
-    checker = ConditionChecker()
-
-    # Sample test cases with hard-coded values
-    assert checker.check_condition(5, 5) is True
-    assert checker.check_condition("hello", "world") is False
-    assert checker.check_condition(True, True) is True
-    assert checker.check_condition([], []) is True
-
-    print("All condition checks passed.")
+    sample_string = "Hello World"
+    result = pick_random_char(sample_string)
+    print(result)

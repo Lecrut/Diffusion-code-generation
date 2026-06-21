@@ -1,19 +1,14 @@
-def is_greater_than_threshold(value, threshold):
-    return value > threshold
+def get_middle_value(array):
+    if len(array) == 0:
+        raise ValueError("Array cannot be empty")
+    index = len(array) // 2
+    return array[index]
+
 if __name__ == '__main__':
-    test_value_1 = 10
-    test_threshold_1 = 5
-    assert is_greater_than_threshold(test_value_1, test_threshold_1) == True
-    test_value_2 = 3
-    test_threshold_2 = 5
-    assert is_greater_than_threshold(test_value_2, test_threshold_2) == False
-    test_value_3 = 5
-    test_threshold_3 = 5
-    assert is_greater_than_threshold(test_value_3, test_threshold_3) == False
-    test_value_4 = 100
-    test_threshold_4 = 99
-    assert is_greater_than_threshold(test_value_4, test_threshold_4) == True
-    test_value_5 = -1
-    test_threshold_5 = -5
-    assert is_greater_than_threshold(test_value_5, test_threshold_5) == True
-    print("All test cases passed!")
+    test_data_odd = [10, 20, 30, 40, 50]
+    test_data_even = [1, 2, 3, 4, 5, 6]
+    test_data_single = [42]
+    
+    print(get_middle_value(test_data_odd))
+    print(get_middle_value(test_data_even))
+    print(get_middle_value(test_data_single))

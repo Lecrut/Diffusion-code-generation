@@ -1,23 +1,40 @@
-def filter_odd_numbers(data):
-    return [x for x in data if x % 2 != 0]
+import string
+import re
+
+COMMON_WEAK_PASSWORDS = {
+    "123456", "password", "12345678", "qwerty", "abc123",
+    "111111", "123456789", "letmein", "welcome", "monkey"
+}
+
+def is_sequential(password):
+    if len(password) < 3:
+        return False
+    for i in range(len(password) - 2):
+        if ord(password[i+1]) == ord(password[i]) + 1 and ord(password[i+2]) == ord(password[i+1]) + 1:
+            return True
+        if ord(password[i+1]) == ord(password[i]) - 1 and ord(password[i+2]) == ord(password[i+1]) - 1:
+            return True
+    return False
+
+def validate_password_strength(password):
+    if password in COMMON_WEAK_PASSWORDS:
+        return False
+    if len(password) < 8:
+        return False
+    if is_sequential(password):
+        return False
+    if not re.search(r"[a-z]", password):
+        return False
+    if not re.search(r"[A-Z]", password):
+        return False
+    if not re.search(r"\d", password):
+        return False
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        return False
+    return True
+
 if __name__ == '__main__':
-    sample_list_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    result_1 = filter_odd_numbers(sample_list_1)
-    print(f"Input: {sample_list_1}")
-    print(f"Output: {result_1}")
-    sample_list_2 = [2, 4, 6, 8, 10]
-    result_2 = filter_odd_numbers(sample_list_2)
-    print(f"Input: {sample_list_2}")
-    print(f"Output: {result_2}")
-    sample_list_3 = [11, 21, 31, 41]
-    result_3 = filter_odd_numbers(sample_list_3)
-    print(f"Input: {sample_list_3}")
-    print(f"Output: {result_3}")
-    sample_list_4 = []
-    result_4 = filter_odd_numbers(sample_list_4)
-    print(f"Input: {sample_list_4}")
-    print(f"Output: {result_4}")
-    sample_list_5 = [0, -1, 2, -3, 4]
-    result_5 = filter_odd_numbers(sample_list_5)
-    print(f"Input: {sample_list_5}")
-    print(f"Output: {result_5}")
+    test_cases = ["Password1!", "123456", "Abcdefgh1!", "Qwerty123!", "Str0ngP@ss"]
+    for case in test_cases:
+        result = validate_password_strength(case)
+        print(result)

@@ -1,14 +1,11 @@
-import random
-def quicksort(arr):
-    if len(arr) <= 1:
-        return arr
+def find_largest(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
     else:
-        pivot = arr[len(arr) // 2]
-        left = [x for x in arr if x < pivot]
-        middle = [x for x in arr if x == pivot]
-        right = [x for x in arr if x > pivot]
-        return quicksort(left) + middle + quicksort(right)
+        return c
+
 if __name__ == '__main__':
-    data = [10, 7, 8, 9, 1, 5, 22, 3]
-    sorted_data = quicksort(data)
-    print(sorted_data)
+    result = find_largest(10, 20, 15)
+    print(result)

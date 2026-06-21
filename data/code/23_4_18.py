@@ -1,39 +1,36 @@
-def compare_sequences(seq_a: list, seq_b: list) -> str:
-    """
-    Generator function that yields comparison results between pairs of values 
-    from two input sequences.
-    
-    Args:
-        seq_a (list): First sequence of comparable values.
-        seq_b (list): Second sequence of comparable values.
-        
-    Yields:
-        str: Description of the relationship ('A is greater', 'B is smaller', or 'Equal').
-       """
-    if len(seq_a) != len(seq_b):
-        raise ValueError("Both sequences must have the same length.")
+class GradingPolicy:
+    def __init__(self):
+        self._boundaries = [
+            (90, "A"),
+            (80, "B"),
+            (70, "C"),
+            (60, "D"),
+            (0, "F")
+        ]
 
-    for val_a, val_b in zip(seq_a, seq_b):
-        try:
-            comparison = val_a > val_b
-        except TypeError:
-            # If values cannot be compared (e.g., mixed types), skip or handle as needed.
-            continue
-        
-        if comparison:
-            yield "A is greater"
-        elif val_a < val_b:
-            yield "B is smaller"
-        else:
-            yield "Equal"
+    def add_boundary(self, min_score, grade):
+        self._boundaries.append((min_score, grade))
+        self._boundaries.sort(key=lambda x: x[0], reverse=True)
 
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    sequence_one = [10, 5, 20, 3]
-    sequence_two = [8, 6, 19, 4]
+    def evaluate(self, score):
+        if not isinstance(score, (int, float)):
+            raise TypeError("Score must be a numeric type")
+        if score < 0 or score > 100:
+            raise ValueError("Score must be between 0 and 100")
+        for threshold, grade in self._boundaries:
+            if score >= threshold:
+                return grade
+        return "F"
 
-    print("Comparison results:")
-    result_generator = compare_sequences(sequence_one, sequence_two)
-    
-    for comparison_result in result_generator:
-        print(comparison_result)
+if __name__ == "__main__":
+    policy = GradingPolicy()
+    result_a = policy.evaluate(95)
+    result_b = policy.evaluate(85)
+    result_c = policy.evaluate(75)
+    result_d = policy.evaluate(65)
+    result_f = policy.evaluate(50)
+    print(result_a)
+    print(result_b)
+    print(result_c)
+    print(result_d)
+    print(result_f)

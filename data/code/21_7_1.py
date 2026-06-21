@@ -1,12 +1,9 @@
-def sort_by_custom_rule(data_list, key_index):
-    return sorted(data_list, key=lambda item: item[key_index], reverse=True)
+def get_max_of_three(a, b, c):
+    return max([a, b, c])
+
 if __name__ == '__main__':
-    sample_data = [
-        (10, 1),
-        (5, 2),
-        (20, 3),
-        (15, 4)
-    ]
-    key = 0
-    sorted_data = sort_by_custom_rule(sample_data, key)
-    print(sorted_data)
+    x = 10
+    y = 42
+    z = 7
+    result = get_max_of_three(x, y, z)
+    print(result)

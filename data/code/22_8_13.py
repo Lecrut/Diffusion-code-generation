@@ -1,29 +1,59 @@
-def is_odd(n: int) -> bool:
-    """
-    Determine if a given integer is odd.
+import re
 
-    Args:
-        n (int): The integer to check.
+COMMON_PASSWORDS = {
+    "password", "123456", "12345678", "qwerty", "abc123", "monkey", "master",
+    "dragon", "111111", "baseball", "iloveyou", "trustno1", "sunshine", "letmein",
+    "football", "shadow", "simple", "michael", "ninja", "mustang", "password1",
+    "access", "batman", "test", "pass", "god", "admin", "welcome", "login",
+    "master", "hello", "charlie", "donald", "starwars", "passw0rd", "summer",
+    "winter", "spring", "autumn", "love", "sex", "money", "power", "god",
+    "angel", "devil", "angel1", "devil1", "love1", "hottie", "soccer", "hockey",
+    "buddy", "buster", "ginger", "ranger", "buster", "ginger", "ginger", "ginger"
+}
 
-    Returns:
-        bool: True if the number is odd, False otherwise.
-    
-    Raises:
-        TypeError: If 'n' is not an instance of int or float representing an integer value.
-    """
-    # Ensure input is effectively an integer by converting from float if necessary and checking type safety for non-numeric inputs
-    try:
-        n = int(n)
-    except (TypeError, ValueError):
-        raise TypeError("Input must be convertible to a valid integer.")
+DICTIONARY_WORDS = {
+    "the", "be", "to", "of", "and", "a", "in", "that", "have", "I",
+    "it", "for", "not", "on", "with", "he", "as", "you", "do", "at",
+    "this", "but", "his", "by", "from", "they", "we", "her", "she", "an",
+    "will", "my", "one", "all", "would", "there", "their", "what", "so",
+    "up", "out", "if", "about", "who", "get", "which", "go", "me",
+    "when", "make", "can", "like", "time", "no", "just", "him", "know",
+    "take", "people", "into", "year", "your", "good", "some", "could",
+    "them", "see", "other", "than", "then", "now", "look", "only", "come",
+    "its", "over", "think", "also", "back", "after", "use", "two",
+    "how", "our", "work", "first", "well", "way", "even", "new", "want",
+    "because", "any", "these", "give", "day", "most", "us", "great",
+    "between", "need", "large", "under", "never", "children", "small",
+    "begin", "place", "here", "right", "still", "life", "hand", "high",
+    "keep", "next", "child", "world", "show", "head", "old", "try",
+    "house", "call", "school", "thing", "very", "next", "left", "own",
+    "last", "long", "same", "tell", "low", "move", "home", "night",
+    "light", "point", "face", "air", "war", "line", "change", "story",
+    "run", "number", "part", "name", "man", "system", "problem", "fact"
+}
 
-    return n % 2 != 0
+def check_password_strength(password):
+    if not isinstance(password, str):
+        return False
+    if len(password) < 8:
+        return False
+    lower_password = password.lower()
+    if lower_password in COMMON_PASSWORDS:
+        return False
+    for word in DICTIONARY_WORDS:
+        if word in lower_password:
+            return False
+    return True
 
 if __name__ == '__main__':
-    # Test case 1: Verify that an odd number returns True
-    assert is_odd(7) is True
-    
-    # Test case 2: Verify that an even number returns False
-    assert is_odd(4) is False
-
-    print("All sample tests passed.")
+    sample_passwords = [
+        "short",
+        "password",
+        "StrongP@ss1",
+        "12345678",
+        "abcdefgh",
+        "Complex#Pass99",
+        "thequickbrownfox"
+    ]
+    results = [check_password_strength(p) for p in sample_passwords]
+    print(results)

@@ -1,25 +1,17 @@
-def is_negative(number):
-    """
-    Returns True if number is less than zero, False otherwise.
-    
-    Args:
-        number (int or float): The numerical value to check.
-        
-    Returns:
-        bool: True if number < 0, else False.
-    """
-    return number < 0
+YEAR_DIVISOR = 4
+HUNDRED = 100
+FOUR_HUNDRED = 400
+
+def check_leap_status(yr):
+    if yr % FOUR_HUNDRED == 0:
+        return True
+    if yr % HUNDRED == 0:
+        return False
+    if yr % YEAR_DIVISOR == 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_cases = [
-        -5,      # Should be True
-        0,       # Should be False (zero is not negative)
-        3.14,    # Should be False
-        float('-inf'),  # Should be True
-        float('inf')   # Should be False
-    ]
-
-    for value in test_cases:
-        result = is_negative(value)
-        print(f"is_negative({value}) = {result}")
+    print(check_leap_status(2024))
+    print(check_leap_status(1900))
+    print(check_leap_status(2000))

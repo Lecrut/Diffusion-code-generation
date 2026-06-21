@@ -1,17 +1,28 @@
-import sys
+import re
 
-def is_odd_or_even(number):
-    """Determine if a given integer is odd or even."""
-    return number % 2 == 0
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'[0-9]', password):
+        return False
+    if not re.search(r'[^A-Za-z0-9]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample values to test the logic without user input
-    sample_values = [1, -3, 4, 10]
-
-    for value in sample_values:
-        if is_odd_or_even(value):
-            status = "even"
-        else:
-            status = "odd"
-        
-        print(f"The number {value} is {status}.")
+    passwords = [
+        "Short1!",
+        "nouppercase1!",
+        "NOLOWERCASE1!",
+        "NoSpecial1",
+        "Nodigits!",
+        "ValidPass1!",
+        "Weak",
+        "AnotherValid2#Password"
+    ]
+    results = {pw: validate_password_strength(pw) for pw in passwords}
+    print(results)

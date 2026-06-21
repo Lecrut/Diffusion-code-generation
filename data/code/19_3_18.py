@@ -1,9 +1,14 @@
-def is_divisible(a: int, b: int) -> bool:
-    """Check if integer a is divisible by non-zero integer b."""
-    return b != 0 and (a % b == 0)
+import random
+
+def get_random_item(data_tuple):
+    if not data_tuple:
+        return None
+    return random.choice(data_tuple)
 
 if __name__ == '__main__':
-    sample_a = 12
-    sample_b = 3
-    result = is_divisible(sample_a, sample_b)
-    print('True' if result else 'False')
+    sample_tuple = (10, 20, 30, 40, 50)
+    result1 = get_random_item(sample_tuple)
+    print(result1)
+    empty_tuple = ()
+    result2 = get_random_item(empty_tuple)
+    print(result2)

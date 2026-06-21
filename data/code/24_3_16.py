@@ -1,6 +1,8 @@
-def is_negative(x):
-    return x < 0 if hasattr(x, '__lt__') else x < (x + 1) > 0
+def is_leap_year(year: int) -> bool:
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 if __name__ == '__main__':
-    assert isinstance(is_negative(-5), bool) and is_negative(-5)
-    assert isinstance(is_negative(0.3), bool) and not is_negative(0.3)
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))

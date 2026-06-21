@@ -1,4 +1,13 @@
-result = (lambda x: lambda y: bool((1 if x > 10 else 0) and not (y >= 50)))(x, y); print(result)
+import random
+from collections import namedtuple
+
+Point = namedtuple('Point', ['x', 'y', 'z'])
+
+def get_random_element(data):
+    index = random.randint(0, len(data) - 1)
+    return data[index]
 
 if __name__ == '__main__':
-    pass
+    sample_point = Point(10, 20, 30)
+    result = get_random_element(sample_point)
+    print(result)

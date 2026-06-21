@@ -1,18 +1,14 @@
-def sort_by_descending(numbers):
-    """
-    Sorts a list of integers in descending order using Timsort, 
-    which is highly optimized for real-world data including partially sorted sequences.
-    
-    Args:
-        numbers (list[int]): A list of integers to be sorted.
-        
-    Returns:
-        list[int]: A new list containing the same integers in descending order.
-    """
-    # Timsort's default behavior is ascending; reverse it for descending order efficiently.
-    return sorted(numbers, reverse=True)
+def find_maximum(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
 
 if __name__ == '__main__':
-    sample_data = [5, 2, 9, 1, 7, 3]
-    result = sort_by_descending(sample_data)
+    x = 10
+    y = 25
+    z = 15
+    result = find_maximum(x, y, z)
     print(result)

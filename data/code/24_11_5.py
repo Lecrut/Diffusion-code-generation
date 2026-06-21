@@ -1,38 +1,32 @@
-class NumberChecker:
-    """A class to check properties of numbers."""
-
-    def check_negativity(self, value):
-        """
-        Determines if the input value is negative.
-
-        Args:
-            value (int or float): The number to check.
-
-        Returns:
-            bool: True if the value is less than zero, False otherwise.
-        """
-        return value < 0
+def is_leap_year_bitwise(year):
+    if year < 0:
+        return False
+    if (year & 3) != 0:
+        return False
+    if (year & 0xFF) != 0:
+        return True
+    if (year & 0xF000) != 0:
+        return False
+    return (year % 4000) == 0 or (year % 100) != 0
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Hard-coded sample values for testing without user input or network access
-    test_values = [10, -5, 0.0, -3.14, 2, None]
-
-    print("Testing Negative Value Checker:")
-    for val in test_values:
-        try:
-            result = checker.check_negativity(val) if val is not None else "Value cannot be checked"
-            status = "Negative" if result else "Non-negative or Invalid Type"
-            print(f"{val}: {status}")
-        except TypeError as e:
-            # Handle cases where type might cause issues, though logic assumes valid numeric input for negative check
-            print(f"{val} raised an error (expected behavior): {e}")
-
-    # Additional explicit test with a known positive and negative number to ensure clean execution
-    sample_positive = 42
-    sample_negative = -99
-    assert checker.check_negativity(sample_positive) == False, "Positive check failed"
-    assert checker.check_negativity(sample_negative) == True, "Negative check failed"
-
-    print("\nAll assertions passed successfully.")
+    test_years = [2000, 1900, 2004, 2001, 2400, 1800, 2100, 2200, 2300, 2024, 1600, 1700, 100, 400, 1, 0, -2000]
+    results = []
+    for y in test_years:
+        results.append(is_leap_year_bitwise(y))
+    expected = [True, False, True, False, True, False, False, False, False, True, True, False, True, True, False, False, False]
+    for i in range(len(test_years)):
+        assert results[i] == expected[i], f"Failed for year {test_years[i]}"
+    print(f"2000 is leap: {is_leap_year_bitwise(2000)}")
+    print(f"1900 is leap: {is_leap_year_bitwise(1900)}")
+    print(f"2004 is leap: {is_leap_year_bitwise(2004)}")
+    print(f"2001 is leap: {is_leap_year_bitwise(2001)}")
+    print(f"2400 is leap: {is_leap_year_bitwise(2400)}")
+    print(f"1800 is leap: {is_leap_year_bitwise(1800)}")
+    print(f"2100 is leap: {is_leap_year_bitwise(2100)}")
+    print(f"1600 is leap: {is_leap_year_bitwise(1600)}")
+    print(f"1700 is leap: {is_leap_year_bitwise(1700)}")
+    print(f"100 is leap: {is_leap_year_bitwise(100)}")
+    print(f"400 is leap: {is_leap_year_bitwise(400)}")
+    print(f"0 is leap: {is_leap_year_bitwise(0)}")
+    print(f"-2000 is leap: {is_leap_year_bitwise(-2000)}")

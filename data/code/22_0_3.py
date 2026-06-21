@@ -1,21 +1,28 @@
-def determine_parity(number):
-    """
-    Determines whether a given integer is odd or even.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        str: 'odd' if the number is odd, 'even' otherwise.
-    """
-    return "odd" if number % 2 != 0 else "even"
+import re
+
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    has_upper = bool(re.search(r'[A-Z]', password))
+    has_lower = bool(re.search(r'[a-z]', password))
+    has_digit = bool(re.search(r'[0-9]', password))
+    has_special = bool(re.search(r'[^A-Za-z0-9]', password))
+    return has_upper and has_lower and has_digit and has_special
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or command-line arguments
-    test_values = [10, 7, -3, 0]
-
-    print("Testing parity determination with hard-coded samples:")
-    
-    for value in test_values:
-        result = determine_parity(value)
-        print(f"The number {value} is {result}.")
+    test_cases = [
+        "Short",
+        "NoSpecialChar1!",
+        "NoDigitAbc!",
+        "NounpP1!",
+        "ValidPass123!",
+        "AnotherG0odP@ss",
+        "weakpass",
+        "WEAKPASSWORD"
+    ]
+    results = []
+    for case in test_cases:
+        result = validate_password_strength(case)
+        results.append((case, result))
+    for item in results:
+        print(item)

@@ -1,37 +1,24 @@
-"""
-Module to determine if an integer is odd or even using the modulo operator.
-
-This script defines a function that takes an integer input, checks its parity 
-using the modulo (%) operator, and returns 'odd' or 'even'. The main execution block 
-contains hard-coded sample values for demonstration purposes without requiring user interaction.
-"""
-
-def check_parity(number: int) -> str:
-    """
-    Determines whether a given integer is odd or even.
-
-    Args:
-        number (int): The integer to be checked.
-
-    Returns:
-        str: 'odd' if the number is not divisible by 2, otherwise 'even'.
-    
-    Examples:
-        >>> check_parity(5)
-        'odd'
-        >>> check_parity(4)
-        'even'
-    """
-    # Use modulo operator to check divisibility by 2. 
-    # If remainder is 0, the number is even; otherwise, it's odd.
-    if number % 2 == 0:
-        return "even"
-    else:
-        return "odd"
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+    special_chars = set("!@#$%^&*()-_=+[]{}|;:,.<>?/~`")
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+    return has_upper and has_lower and has_digit and has_special
 
 if __name__ == '__main__':
-    sample_values = [13, -4, 0, 7]
-
-    for val in sample_values:
-        result = check_parity(val)
-        print(f"The number {val} is {result}.")
+    print(validate_password_strength("SecureP@ss1"))
+    print(validate_password_strength("weak"))
+    print(validate_password_strength("NoSpecialChar1"))
+    print(validate_password_strength("ALLUPPERCASE1!"))

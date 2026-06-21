@@ -1,11 +1,10 @@
-def is_condition_true(a, b):
-    return a == b
+import secrets
+
+def get_random_element(numbers):
+    index = secrets.randbelow(len(numbers))
+    return numbers[index]
+
 if __name__ == '__main__':
-    result1 = is_condition_true(5, 5)
-    print(result1)
-    result2 = is_condition_true(10, 20)
-    print(result2)
-    result3 = is_condition_true("hello", "hello")
-    print(result3)
-    result4 = is_condition_true(3.14, 3.1400000000000004)
-    print(result4)
+    numbers = [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 10.0]
+    result = get_random_element(numbers)
+    print(result)

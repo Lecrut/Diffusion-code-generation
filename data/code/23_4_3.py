@@ -1,14 +1,24 @@
-def compare_sequences(seq1, seq2):
-    for val1, val2 in zip(seq1, seq2):
-        if val1 > val2:
-            yield f"{val1} is greater"
-        elif val1 < val2:
-            yield f"{val1} is smaller"
+class GradeCalculator:
+    def __init__(self, grade_ranges=None):
+        if grade_ranges is None:
+            self.grade_ranges = [
+                (90, 100, 'A'),
+                (80, 89, 'B'),
+                (70, 79, 'C'),
+                (60, 69, 'D'),
+                (0, 59, 'F')
+            ]
         else:
-            yield "Equal"
+            self.grade_ranges = grade_ranges
+
+    def get_letter_grade(self, score):
+        for lower, upper, grade in self.grade_ranges:
+            if lower <= score <= upper:
+                return grade
+        raise ValueError("Score out of defined range")
+
 if __name__ == '__main__':
-    sequence_a = [1, 5, 3, 8]
-    sequence_b = [4, 2, 3, 9]
-    results = list(compare_sequences(sequence_a, sequence_b))
-    for result in results:
-        print(result)
+    calculator = GradeCalculator()
+    scores = [95, 85, 75, 65, 55, 100, 0]
+    for score in scores:
+        print(calculator.get_letter_grade(score))

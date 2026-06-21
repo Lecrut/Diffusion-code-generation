@@ -1,13 +1,15 @@
-import math
-def compare_floats(a, b, tolerance):
-    difference = math.fabs(a - b)
-    return difference <= tolerance
+def get_grade(score):
+    if score >= 90:
+        return 'A'
+    if score >= 80:
+        return 'B'
+    if score >= 70:
+        return 'C'
+    if score >= 60:
+        return 'D'
+    return 'F'
+
 if __name__ == '__main__':
-    num1 = 0.1 + 0.2
-    num2 = 0.3
-    tolerance = 1e-9
-    is_equal = compare_floats(num1, num2, tolerance)
-    print(f"Number 1: {num1}")
-    print(f"Number 2: {num2}")
-    print(f"Tolerance: {tolerance}")
-    print(f"Are the numbers equal within tolerance? {is_equal}")
+    test_scores = [95, 82, 76, 59, 45]
+    for s in test_scores:
+        print(get_grade(s))

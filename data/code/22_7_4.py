@@ -1,29 +1,23 @@
-def get_remainder_and_parity(number: int) -> tuple[int, bool]:
-    """
-    Returns a tuple containing the remainder of number divided by 2 
-    and whether the number is odd (True) or even (False).
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        tuple[int, bool]: A tuple where the first element is the remainder 
-                          modulo 2, and the second element indicates if the number 
-                          is odd (True) or even (False).
-    """
-    remainder = number % 2
-    is_odd = remainder == 1
-    
-    return remainder, is_odd
+def check_password_strength(password):
+    has_upper = 0
+    has_lower = 0
+    has_digit = 0
+    has_special = 0
+    for char in password:
+        code = ord(char)
+        if 65 <= code <= 90:
+            has_upper = 1
+        if 97 <= code <= 122:
+            has_lower = 1
+        if 48 <= code <= 57:
+            has_digit = 1
+        if not (has_upper or has_lower or has_digit):
+            has_special = 1
+    return (has_upper << 3) | (has_lower << 2) | (has_digit << 1) | has_special
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test functionality without user input
-    samples = [4, 7, -3, 0]
-
-    for num in samples:
-        rem, odd_status = get_remainder_and_parity(num)
-        
-        if is_odd := (rem == 1):
-            print(f"The number {num} has a remainder of {rem}. It is ODD.")
-        else:
-            print(f"The number {num} has a remainder of {rem}. It is EVEN.")
+    print(check_password_strength("Password1!"))
+    print(check_password_strength("hello"))
+    print(check_password_strength("12345"))
+    print(check_password_strength("ABCDEF"))
+    print(check_password_strength("!@#$%"))

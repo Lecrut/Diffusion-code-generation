@@ -1,26 +1,20 @@
-def compare_and_report(a, b):
-    if a == b:
-        return {
-            "result": "Equal",
-            "difference": 0,
-            "ratio": 1.0
-        }
-    if a > b:
-        larger = a
-        smaller = b
-    else:
-        larger = b
-        smaller = a
-    difference = larger - smaller
-    ratio = larger / smaller
-    return {
-        "result": "Greater" if a > b else "Lesser",
-        "difference": difference,
-        "ratio": ratio
+def convert_scores(raw_scores):
+    score_map = {
+        range(90, 101): 'A',
+        range(80, 90): 'B',
+        range(70, 80): 'C',
+        range(60, 70): 'D',
+        range(-1, 60): 'F'
     }
+    result = []
+    for score in raw_scores:
+        for grade_range, letter in score_map.items():
+            if score in grade_range:
+                result.append(letter)
+                break
+    return result
+
 if __name__ == '__main__':
-    print(compare_and_report(10, 5))
-    print(compare_and_report(3.14, 2.71))
-    print(compare_and_report(7, 7))
-    print(compare_and_report(0.5, 1.5))
-    print(compare_and_report(-10, -5))
+    raw_scores = [95, 82, 76, 65, 55, 100, 59]
+    grades = convert_scores(raw_scores)
+    print(grades)

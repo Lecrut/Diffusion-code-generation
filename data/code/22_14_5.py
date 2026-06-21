@@ -1,18 +1,56 @@
-def filter_odd_numbers(data):
-    return [x for x in data if x % 2 != 0]
+COMMON_WEAK_PASSWORDS = {
+    "password", "123456", "12345678", "qwerty", "abc123",
+    "monkey", "master", "dragon", "111111", "baseball",
+    "iloveyou", "trustno1", "sunshine", "princess", "football",
+    "shadow", "superman", "michael", "letmein", "password1"
+}
+
+def _has_sequential_chars(password, length=3):
+    for i in range(len(password) - length + 1):
+        segment = password[i:i + length]
+        if all(ord(segment[j]) == ord(segment[0]) + j for j in range(len(segment))):
+            return True
+        if all(ord(segment[j]) == ord(segment[0]) - j for j in range(len(segment))):
+            return True
+    return False
+
+def validate_password_strength(password):
+    if not password:
+        return False
+
+    if len(password) < 8:
+        return False
+
+    if password.lower() in COMMON_WEAK_PASSWORDS:
+        return False
+
+    if _has_sequential_chars(password):
+        return False
+
+    has_upper = any(c.isupper() for c in password)
+    has_lower = any(c.islower() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(not c.isalnum() for c in password)
+
+    character_types_present = sum([has_upper, has_lower, has_digit, has_special])
+    if character_types_present < 3:
+        return False
+
+    return True
+
 if __name__ == '__main__':
-    sample_list_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    result_1 = filter_odd_numbers(sample_list_1)
-    print(result_1)
-    sample_list_2 = [2, 4, 6, 8, 10]
-    result_2 = filter_odd_numbers(sample_list_2)
-    print(result_2)
-    sample_list_3 = [11, 22, 33, 44, 55]
-    result_3 = filter_odd_numbers(sample_list_3)
-    print(result_3)
-    sample_list_4 = []
-    result_4 = filter_odd_numbers(sample_list_4)
-    print(result_4)
-    sample_list_5 = [1, 3, 5, 7]
-    result_5 = filter_odd_numbers(sample_list_5)
-    print(result_5)
+    test_passwords = [
+        "password",
+        "Short1!",
+        "Str0ng!Pass",
+        "abcdef123",
+        "MyP@ssw0rd123",
+        "12345678",
+        "Aa1!bcdef",
+        "Weakpass",
+        "Strong@Pass1",
+        "abcABC123!"
+    ]
+    for pwd in test_passwords:
+        result = validate_password_strength(pwd)
+        print(result)

@@ -1,25 +1,27 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd numbers from the input list.
-    
-    Optimized logic: Uses a generator expression within a constructor to 
-    avoid creating an intermediate list, improving memory efficiency for large inputs.
-    Alternatively, in Python 3, this is often just as fast or faster than manual loops 
-    due to internal optimizations of built-in functions and CPython's implementation details.
+import string
 
-    Args:
-        numbers (list[int]): A list of integers.
-        
-    Returns:
-        list[int]: A new list containing only the odd integers from input.
-    """
-    return [n for n in numbers if n % 2 != 0]
+def score_password_strength(password):
+    if not password:
+        return 0
+    
+    length = len(password)
+    has_lower = any(c in string.ascii_lowercase for c in password)
+    has_upper = any(c in string.ascii_uppercase for c in password)
+    has_digit = any(c in string.digits for c in password)
+    has_special = any(c in string.punctuation for c in password)
+    
+    diversity_score = sum([has_lower, has_upper, has_digit, has_special])
+    
+    length_score = min(5, length // 4)
+    
+    total_score = diversity_score + length_score
+    
+    return min(10, max(0, total_score))
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input, network access, or file dependencies are needed.
-    test_list = [-5, 3, 8, -1, 7, 42, 9, 11]
-    
-    result = filter_odd_numbers(test_list)
-    
-    # Output the result for verification (no printing to external files required by task constraints).
-    print(result)
+    print(score_password_strength(""))
+    print(score_password_strength("a"))
+    print(score_password_strength("password"))
+    print(score_password_strength("Passw0rd!"))
+    print(score_password_strength("Tr0ub4dor&3"))
+    print(score_password_strength("CorrectHorseBatteryStaple!"))

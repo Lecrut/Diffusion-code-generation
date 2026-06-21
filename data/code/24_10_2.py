@@ -1,8 +1,7 @@
-def is_negative(number):
-    return number < 0
+def is_leap_year(year: int) -> bool:
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
 if __name__ == '__main__':
-    print(is_negative(5))
-    print(is_negative(-5))
-    print(is_negative(0))
-    print(is_negative(-0.001))
-    print(is_negative(100))
+    years = [2000, 1900, 2024, 2023]
+    for y in years:
+        print(is_leap_year(y))

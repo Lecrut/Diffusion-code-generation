@@ -1,18 +1,17 @@
-def is_odd(n: int) -> bool:
-    """
-    Returns True if n is odd, False otherwise.
-    
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if the number is odd, False if even or not an integer.
-    """
-    return n % 2 != 0
+import re
+
+def is_valid_password(password: str) -> bool:
+    return bool(re.fullmatch(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};\':"|,.<>\/?]).{8,}$', password))
 
 if __name__ == '__main__':
-    test_cases = [1, -3, 42, 0, 7]
-    
-    for case in test_cases:
-        result = is_odd(case)
-        print(f"is_odd({case}) = {result}")
+    test_passwords = [
+        "Ab1!xxxx",
+        "short",
+        "alllowercase1!",
+        "ALLUPPERCASE1!",
+        "NoDigitsHere!",
+        "NoSpecial1Ab",
+        "Perfect1Pass!"
+    ]
+    results = [(p, is_valid_password(p)) for p in test_passwords]
+    print(results)

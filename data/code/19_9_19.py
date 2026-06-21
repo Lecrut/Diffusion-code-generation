@@ -1,7 +1,16 @@
-result = x > 10 and y < 50 if (x := 12) else False; result = True if ((x := 12), (y := 48)) else False # Sample block below is incorrect logic for assignment in one line, corrected version follows:
+import random
+from collections import namedtuple
 
-# Correct single-line evaluation with hard-coded sample values inside the module
-result = x > 10 and y < 50; print(result) if __name__ == '__main__' else None
+Point = namedtuple('Point', ['x', 'y', 'z'])
+
+def get_random_field(obj):
+    fields = obj._fields
+    if not fields:
+        raise ValueError("The named tuple has no fields")
+    random_index = random.randint(0, len(fields) - 1)
+    return obj[random_index]
 
 if __name__ == '__main__':
-    result = (x := 12) > 10 and (y := 48) < 50
+    sample_point = Point(10, 20, 30)
+    result = get_random_field(sample_point)
+    print(result)

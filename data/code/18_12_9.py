@@ -1,48 +1,79 @@
-import sys
-
-def get_float_input(prompt="Enter a number: ") -> float:
-    """Prompt user to input a floating-point number."""
-    try:
-        # Simulating interactive prompt by reading from stdin if available, 
-        # but the task forbids actual prompts. We will use sample values in main instead.
-        return None  # Placeholder for logic that would normally call input()
-    except (ValueError, EOFError):
-        raise ValueError("Invalid number format.")
-
-def compare_numbers(a: float, b: float) -> str:
-    """Compare two numbers and determine which is greater."""
-    if a > b:
-        return f"{a} is greater than {b}"
-    elif b > a:
-        return f"{b} is greater than {a}"
-    else:
-        return "Both numbers are equal"
-
-def main():
-    """Main function to demonstrate number comparison with sample values."""
+def median_index_value(data):
+    if not data:
+        raise ValueError("Input list must not be empty")
     
-    # Hard-coded sample values as per requirements (no user input, args, or network)
-    num1 = 5.7
-    num2 = 3.2
+    n = len(data)
+    indexed_values = list(enumerate(data))
     
-    try:
-        result = compare_numbers(num1, num2)
-        print(result)
+    target_low = (n - 1) // 2
+    target_high = n // 2
+    
+    if target_low == target_high:
+        k = target_low
+        left = 0
+        right = n - 1
         
-        # Additional demonstration with another pair to show 'if' logic explicitly
-        sample_a = -10.5
-        sample_b = 4.8
-        
-        if sample_a > sample_b:
-            print(f"{sample_a} is greater than {sample_b}")
-        elif sample_b > sample_a:
-            print(f"{sample_b} is greater than {sample_a}")
-        else:
-            print("Both numbers are equal")
+        while left < right:
+            pivot = indexed_values[(left + right) // 2][1]
+            pivot_val = data[pivot]
             
-    except ValueError as e:
-        # Graceful error handling for invalid inputs (though not triggered with hardcoded values)
-        print(f"Error: {e}", file=sys.stderr)
+            mid = right
+            indexed_values[left], indexed_values[mid] = indexed_values[mid], indexed_values[left]
+            
+            store = left
+            for i in range(left, right):
+                if data[indexed_values[i][1]] < pivot_val:
+                    indexed_values[store], indexed_values[i] = indexed_values[i], indexed_values[store]
+                    store += 1
+            
+            indexed_values[store], indexed_values[right] = indexed_values[right], indexed_values[store]
+            
+            if store == k:
+                break
+            elif store < k:
+                left = store + 1
+            else:
+                right = store - 1
+                
+        return indexed_values[k][1]
+    else:
+        indices_to_find = [target_low, target_high]
+        found_indices = {}
+        
+        remaining = list(range(n))
+        current_data = [(data[i], i) for i in range(n)]
+        
+        for k in indices_to_find:
+            sub_left = 0
+            sub_right = len(current_data) - 1
+            
+            while sub_left < sub_right:
+                pivot_idx = (sub_left + sub_right) // 2
+                pivot_item = current_data[pivot_idx]
+                pivot_val = pivot_item[0]
+                pivot_orig_idx = pivot_item[1]
+                
+                current_data[sub_left], current_data[sub_right] = current_data[sub_right], current_data[sub_left]
+                
+                store = sub_left
+                for i in range(sub_left, sub_right):
+                    if current_data[i][0] < pivot_val:
+                        current_data[store], current_data[i] = current_data[i], current_data[store]
+                        store += 1
+                current_data[store], current_data[sub_right] = current_data[sub_right], current_data[store]
+                
+                if store == k:
+                    break
+                elif store < k:
+                    sub_left = store + 1
+                else:
+                    sub_right = store - 1
+            
+            found_indices[k] = current_data[k][1]
+            
+        return found_indices[target_low], found_indices[target_high]
 
 if __name__ == '__main__':
-    main()
+    sample_values = [10, 20, 30, 40, 50, 60, 70]
+    result = median_index_value(sample_values)
+    print(result)

@@ -1,12 +1,15 @@
-# Check if 'a' is greater than 'b' using a single comparison operator in an expression context
-result = (lambda: lambda x, y: "Yes" if x > y else "No")(10, 5) or print("Test passed:", result)
+def get_middle_element(lst):
+    if not lst:
+        return None
+    mid_index = len(lst) // 2
+    return lst[mid_index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    a = 10
-    b = 5
-    
-    # The one-line expression to determine if 'a' is greater than 'b'
-    comparison_result = (lambda: "Greater" if a > b else "Not Greater")()
-    
-    print(f"{a} compared to {b}: {comparison_result}")
+    sample1 = [1, 2, 3, 4, 5]
+    sample2 = [10, 20, 30, 40]
+    sample3 = [7]
+    sample4 = []
+    print(get_middle_element(sample1))
+    print(get_middle_element(sample2))
+    print(get_middle_element(sample3))
+    print(get_middle_element(sample4))

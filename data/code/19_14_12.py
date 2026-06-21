@@ -1,5 +1,14 @@
-def evaluate_condition(x: int | float, y: int | float) -> bool:
-    """Yields True if x > y, otherwise False."""
+import random
+
+def get_random_value(d):
+    if not d:
+        return None
+    keys = list(d.keys())
+    key = random.choice(keys)
+    return d[key]
 
 if __name__ == '__main__':
-    pass
+    sample_dict = {"a": 1, "b": 2, "c": 3}
+    result = get_random_value(sample_dict)
+    print(result)
+    print(get_random_value({}))

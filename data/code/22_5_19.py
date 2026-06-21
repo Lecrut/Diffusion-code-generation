@@ -1,19 +1,32 @@
-def check_parity(number: int) -> str:
-    """
-    Determines if a given integer is odd or even.
-    
-    Args:
-        number (int): The integer to evaluate.
-        
-    Returns:
-        str: 'Odd' if the number is not divisible by 2, otherwise 'Even'.
-    """
-    return "Odd" if number % 2 != 0 else "Even"
+def validate_password(password, username=None, email_domain=None):
+    if password is None or len(password) < 8:
+        return False
+    if username is not None:
+        lower_username = username.lower()
+        if lower_username and lower_username in password.lower():
+            return False
+    if email_domain is not None:
+        lower_domain = email_domain.lower()
+        if lower_domain and lower_domain in password.lower():
+            return False
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        if has_upper and has_lower and has_digit:
+            break
+    else:
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input or arguments.
-    test_cases = [1, 4, -3, 0]
-    
-    for num in test_cases:
-        result = check_parity(num)
-        print(result)
+    print(validate_password("Str0ng!Pass", "john", "example.com"))
+    print(validate_password("johnStr0ng!Pass", "john", "example.com"))
+    print(validate_password("Str0ng!Pass@example.com", "john", "example.com"))
+    print(validate_password("weak", "john", "example.com"))

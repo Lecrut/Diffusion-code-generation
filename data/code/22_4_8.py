@@ -1,23 +1,17 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd numbers from the input list.
-    
-    Optimized using a generator expression within the list constructor, 
-    which is generally more memory-efficient than creating an intermediate iterator object.
-    
-    Args:
-        numbers (list[int]): A list of integers.
-        
-    Returns:
-        list[int]: A new list containing only odd integers from the input.
-    """
-    return [num for num in numbers if num % 2 != 0]
+def score_password(password: str) -> int:
+    if not password:
+        return 0
+    length_score = min(len(password) * 1, 5)
+    has_lower = any(c.islower() for c in password)
+    has_upper = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_symbol = any(not c.isalnum() for c in password)
+    diversity_count = sum([has_lower, has_upper, has_digit, has_symbol])
+    diversity_score = min(diversity_count * 1.5, 5)
+    total_score = length_score + diversity_score
+    return int(min(total_score, 10))
 
 if __name__ == '__main__':
-    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    
-    # Processing the input list to filter odd numbers
-    result = filter_odd_numbers(sample_data)
-    
-    print(f"Original: {sample_data}")
-    print(f"Odds only: {result}")
+    sample_password = "MyStr0ng!Pass"
+    result = score_password(sample_password)
+    print(result)

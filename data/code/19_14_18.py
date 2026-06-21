@@ -1,11 +1,15 @@
-def evaluate_condition(x: int | float, y: int | float) -> bool:
-    """Yields True if x is strictly greater than y, otherwise False."""
-    return (x > y)
+import random
+
+def get_random_value(d):
+    if not d:
+        return None
+    random_key = random.choice(list(d.keys()))
+    return d[random_key]
 
 if __name__ == '__main__':
-    # Sample execution with hard-coded values
-    result = evaluate_condition(10, 5)
-    assert result is True
-
-    result2 = evaluate_condition(3.7, 4.2)
-    assert result2 is False
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    result = get_random_value(sample_dict)
+    print(result)
+    empty_dict = {}
+    result_empty = get_random_value(empty_dict)
+    print(result_empty)

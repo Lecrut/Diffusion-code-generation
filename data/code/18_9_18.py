@@ -1,49 +1,20 @@
-class Number:
-    """A class representing a number with comparison capabilities."""
-    
-    def __init__(self, value):
-        """Initialize the Number object with an integer or float value."""
-        self.value = int(value) if isinstance(value, (int, float)) else value
-    
-    def compare(self, other_number: 'Number') -> str:
-        """Compare this number against another Number passed as argument.
-        
-        Args:
-            other_number: Another Number object to compare against.
-            
-        Returns:
-            A string indicating the relationship between self and other_number.
-            Possible values are "self is greater", "self is equal", or "self is smaller".
-        """
-        if isinstance(other_number, Number):
-            comparison = self.value > other_number.value
-            equality = self.value == other_number.value
-            
-            if comparison:
-                return f"{type(self).__name__}({self.value}) is greater than {type(other_number).__name__}({other_number.value})"
-            elif not comparison and equality:
-                return f"{type(self).__name__}({self.value}) is equal to {type(other_number).__name__}({other_number.value})"
-            else:
-                return f"{type(self).__name__}({self.value}) is smaller than {type(other_number).__name__}({other_number.value})"
-        else:
-            raise TypeError("Argument must be an instance of Number")
+def median_via_integer_division(numbers):
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+    if n % 2 == 1:
+        return sorted_numbers[n // 2]
+    else:
+        lower = sorted_numbers[(n - 1) // 2]
+        upper = sorted_numbers[n // 2]
+        return (lower + upper) // 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the comparison functionality
-    
-    num_a = Number(10)
-    num_b = Number(25)
-    num_c = Number(30)
-    
-    print("Comparing 10 and 25:")
-    result_1 = num_a.compare(num_b)
-    print(result_1)
-    
-    print("\nComparing 25 and 30:")
-    result_2 = num_b.compare(num_c)
-    print(result_2)
-    
-    print("\nComparing equal values (30 vs 30):")
-    num_d = Number(30)
-    result_3 = num_a.compare(num_d)
-    print(result_3)
+    sample_lists = [
+        [3, 1, 2, 4, 5],
+        [10, 20, 30, 40],
+        [5],
+        [7, 3],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    ]
+    for sample in sample_lists:
+        print(median_via_integer_division(sample))

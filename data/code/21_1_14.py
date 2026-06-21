@@ -1,18 +1,12 @@
-def sort_by_descending(numbers):
-    """
-    Sorts a list of integers in descending order using Python's built-in 
-    highly optimized Timsort algorithm via reverse=True.
-    
-    Args:
-        numbers (list[int]): A list of integers to be sorted.
-        
-    Returns:
-        list[int]: A new list containing the same integers sorted in descending order.
-    """
-    # Using sort with key and reverse flag is efficient for standard integer lists.
-    return sorted(numbers, reverse=True)
+def find_maximum(a, b, c):
+    if a >= b and a >= c:
+        return a
+    if b >= a and b >= c:
+        return b
+    return c
 
 if __name__ == '__main__':
-    sample_data = [5, 2, 9, 1, 7, 3]
-    result = sort_by_descending(sample_data)
-    print(result)
+    x = 10
+    y = 45
+    z = 23
+    print(find_maximum(x, y, z))

@@ -1,9 +1,12 @@
-class ConditionChecker:
-    def check_condition(self, a, b):
-        return a == b
+import random
+
+def pick_random_char(s):
+    if not s:
+        return None
+    index = random.randint(0, len(s) - 1)
+    return s[index]
+
 if __name__ == '__main__':
-    checker = ConditionChecker()
-    print(checker.check_condition(5, 5))
-    print(checker.check_condition(10, 5))
-    print(checker.check_condition(3.14, 3.14))
-    print(checker.check_condition(1, 2))
+    sample_string = "deterministic_random"
+    result = pick_random_char(sample_string)
+    print(result)

@@ -1,6 +1,13 @@
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
+
 if __name__ == '__main__':
-    x = -5  # Sample negative value -> True
-    assert (x < 0) is True, "Expression failed"
-    
-    y = 10   # Sample non-negative value -> False
-    assert (y < 0) is False, "Expression failed for positive number"
+    test_years = [2000, 1900, 2024, 2023, 2100, 2400]
+    for y in test_years:
+        print(is_leap_year(y))

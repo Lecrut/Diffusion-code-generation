@@ -1,6 +1,13 @@
-def sort_by_descending(data):
-    return sorted(data, reverse=True)
+def find_max_of_three(a, b, c):
+    if a >= b and a >= c:
+        return a
+    if b >= a and b >= c:
+        return b
+    return c
+
 if __name__ == '__main__':
-    sample_list = [5, 2, 8, 1, 9, 3]
-    sorted_list = sort_by_descending(sample_list)
-    print(sorted_list)
+    x = 10
+    y = 25
+    z = 15
+    result = find_max_of_three(x, y, z)
+    print(result)

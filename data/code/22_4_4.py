@@ -1,23 +1,30 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd integers from the input list.
+import re
+
+def score_password(password: str) -> int:
+    if not password:
+        return 0
     
-    Optimized by using a generator expression within list() to avoid creating
-    an intermediate list, which improves memory efficiency for large inputs.
+    length_score = min(len(password) // 2, 5)
     
-    Args:
-        numbers (list of int): The input list of integers.
-        
-    Returns:
-        list of int: A new list containing only the odd numbers from the input.
-    """
-    return [num for num in numbers if num % 2 != 0]
+    has_lower = bool(re.search(r'[a-z]', password))
+    has_upper = bool(re.search(r'[A-Z]', password))
+    has_digit = bool(re.search(r'\d', password))
+    has_special = bool(re.search(r'[^a-zA-Z0-9]', password))
+    
+    diversity_score = 0
+    if has_lower:
+        diversity_score += 1
+    if has_upper:
+        diversity_score += 1
+    if has_digit:
+        diversity_score += 1
+    if has_special:
+        diversity_score += 1
+    
+    final_score = length_score + diversity_score
+    return min(final_score, 10)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or external dependencies are needed.
-    sample_data = [-5, 3, 8, -1, 42, 7, 0, 99, -3]
-    
-    result = filter_odd_numbers(sample_data)
-    
-    print("Input list:", sample_data)
-    print("Filtered odd numbers:", result)
+    passwords = ["abc", "abc123", "Abc123!", "STRONG_P@ssw0rd_123"]
+    for p in passwords:
+        print(score_password(p))

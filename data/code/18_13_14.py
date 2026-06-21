@@ -1,8 +1,12 @@
-def check_first_greater_than_second(lst):
-    """Returns True if lst[0] > lst[1], assuming len(lst) >= 2."""
-    return lst[0] > lst[1]
+def get_central_element(arr):
+    if not arr:
+        return None
+    index = len(arr) // 2
+    return arr[index]
 
 if __name__ == '__main__':
-    sample_list = [5, 3, 8, 1]
-    result = check_first_greater_than_second(sample_list)
-    print(f"{sample_list}[0] ({sample_list[0]}) is greater than {sample_list}[1] ({sample_list[1]}): {result}")
+    odd_list = [10, 20, 30, 40, 50]
+    even_list = [10, 20, 30, 40]
+
+    print(get_central_element(odd_list))
+    print(get_central_element(even_list))

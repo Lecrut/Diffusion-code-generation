@@ -1,20 +1,21 @@
-def is_max_greater_than_second_to_last(numbers):
-    if len(numbers) < 2:
-        return False
-    
-    max_value = numbers[0]
-    
-    # Find maximum value in list (excluding potential duplicates logic, 
-    # but strictly looking for the highest value regardless of position)
-    actual_max_index = -1
-    for idx, val in enumerate(numbers):
-        if val > max_value:
-            max_value = val
-            actual_max_index = idx
-            
-    second_to_last_element = numbers[-2]
-    
-    return max_value > second_to_last_element
+def get_middle(lst):
+    n = len(lst)
+    if n == 0:
+        return None
+    mid_index = n // 2
+    if n % 2 == 1:
+        return lst[mid_index]
+    else:
+        return (lst[mid_index - 1] + lst[mid_index]) / 2
 
 if __name__ == '__main__':
-    pass
+    samples = [
+        [1, 3, 5],
+        [1, 2, 3, 4],
+        [10, 20, 30, 40, 50],
+        [1],
+        [1, 2]
+    ]
+    for arr in samples:
+        result = get_middle(arr)
+        print(result)

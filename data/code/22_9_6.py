@@ -1,30 +1,80 @@
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determine if an integer is odd using bitwise operations.
-    
-    An integer n is odd if its least significant bit (LSB) is 1.
-    This can be checked by performing a bitwise AND with 1.
-    If the result is non-zero, the number is odd; otherwise, it is even.
-    
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if n is odd, False otherwise.
-    """
-    return n & 1
+import unicodedata
+import re
+
+class PasswordPolicyEnforcer:
+    MAX_UNICODE_CODEPOINT = 0x10FFFF
+    SURROGATE_START = 0xD800
+    SURROGATE_END = 0xDFFF
+    MIN_CLASSES = 3
+
+    def __init__(self, password_string):
+        self.raw_input = password_string
+        self.is_unicode_compliant = self._verify_unicode_safety()
+        self.classes_found = self._identify_present_classes()
+
+    def _verify_unicode_safety(self):
+        if not isinstance(self.raw_input, str):
+            return False
+        try:
+            self.raw_input.encode('utf-32')
+        except UnicodeError:
+            return False
+        for character in self.raw_input:
+            code_val = ord(character)
+            if code_val > self.MAX_UNICODE_CODEPOINT:
+                return False
+            if self.SURROGATE_START <= code_val <= self.SURROGATE_END:
+                return False
+        return True
+
+    def _identify_present_classes(self):
+        if not self.is_unicode_compliant:
+            return set()
+        detected_classes = set()
+        for character in self.raw_input:
+            category = unicodedata.category(character)
+            if category.startswith('Lu'):
+                detected_classes.add('upper')
+            elif category.startswith('Ll'):
+                detected_classes.add('lower')
+            elif category.startswith('Nd'):
+                detected_classes.add('digit')
+            else:
+                if not character.isalnum():
+                    detected_classes.add('special')
+        return detected_classes
+
+    def is_valid(self):
+        if not self.is_unicode_compliant:
+            return False
+        return len(self.classes_found) >= self.MIN_CLASSES
+
+    def get_details(self):
+        return {
+            "unicode_ok": self.is_unicode_compliant,
+            "classes": sorted(list(self.classes_found)),
+            "count": len(self.classes_found),
+            "valid": self.is_valid()
+        }
+
+def check_password_strength(candidate):
+    enforcer = PasswordPolicyEnforcer(candidate)
+    return enforcer.get_details()
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_values = [0, 1, -2, -3, 456789]
-    
-    print("Testing odd/even determination using bitwise AND:")
-    for val in test_values:
-        result = is_odd_bitwise(val)
-        status = "Odd" if result else "Even"
-        print(f"{val} -> {status}")
+    test_cases = [
+        "Secure123!",
+        "alllowercase",
+        "ABC123",
+        "Special@#%",
+        "Mix3dW1thSymb0ls",
+        "12345678",
+        "UPPERCASEONLY",
+        "NoDigitsHere!",
+        "JustLetters",
+        "!@#$%^&*()"
+    ]
 
-# Performance Explanation (for context, not part of the executable output):
-# The modulo operator (%) involves division logic which can be computationally expensive 
-# especially for large numbers or in tight loops. Bitwise AND (&) operates directly on bits,
-# making it significantly faster and more efficient at the CPU level. It avoids arithmetic overhead.
+    for pwd in test_cases:
+        result = check_password_strength(pwd)
+        print(f"Password: '{pwd}' -> {result}")

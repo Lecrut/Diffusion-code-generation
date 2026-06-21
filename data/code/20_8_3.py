@@ -1,15 +1,8 @@
-def check_equality(a: any, b: any) -> bool:
-    """Check if two values are equal with exact type matching."""
-    return a == b and type(a) is type(b)
+def is_even(number: int) -> bool:
+    return number % 2 == 0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to avoid interactive prompts
-    val1 = 42
-    val2 = "42"
-
-    result = check_equality(val1, val2)
-    
-    if result:
-        print("The values are equal.")
-    else:
-        print("The values are not equal (either different value or mismatched type).")
+    test_values = [-2, -1, 0, 1, 2, 10, 11]
+    results = [is_even(val) for val in test_values]
+    for val, result in zip(test_values, results):
+        print(f"is_even({val}) = {result}")

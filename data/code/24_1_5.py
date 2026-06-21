@@ -1,26 +1,21 @@
-def is_negative(value):
-    """Returns True if value is less than zero, False otherwise."""
-    return value < 0
+def _validate_year_input(year):
+    if not isinstance(year, int):
+        raise TypeError("Year must be an integer")
+    if year <= 0:
+        raise ValueError("Year must be positive")
+
+def check_leap_status(year):
+    _validate_year_input(year)
+    divisible_by_four = year % 4 == 0
+    divisible_by_hundred = year % 100 == 0
+    divisible_by_four_hundred = year % 400 == 0
+    if divisible_by_four_hundred:
+        return True
+    if divisible_by_hundred:
+        return False
+    return divisible_by_four
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input or external dependencies.
-    samples = [
-        -5,      # Should be negative
-        0,       # Not less than zero
-        3.14,    # Positive float
-        -2.718,  # Negative float
-        -float('inf'),  # Negative infinity
-        float('-inf')   # Alternative syntax for negative infinity (Python allows both)
-    ]
-
-    results = []
-    for sample in samples:
-        result = is_negative(sample)
-        results.append((sample, result))
-
-    print("Testing is_negative function:")
-    for num, expected_negative in results:
-        status = "PASS" if (num < 0 and not isinstance(num, float) or 
-                           (num == -float('inf') and True)) else "FAIL"
-        # Note: For the specific logic requested (< 0), negative infinity satisfies it.
-        print(f"is_negative({num}) -> {result}")
+    print(check_leap_status(2400))
+    print(check_leap_status(1700))
+    print(check_leap_status(2024))

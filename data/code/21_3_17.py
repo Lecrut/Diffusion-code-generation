@@ -1,22 +1,14 @@
-def sort_strings(strings):
-    """
-    Sorts a list of strings alphabetically (lexicographically).
-    
-    Args:
-        strings (list[str]): A list of string elements to be sorted.
-        
-    Returns:
-        list[str]: A new list containing the sorted strings.
-                 Standard lexicographical order is used, which respects 
-                 ASCII values where uppercase letters precede lowercase.
-                 
-    Note: While case-insensitive sorting can be achieved via key=str.lower(),
-          this implementation uses standard Python string comparison (case-sensitive)
-          to prioritize 'standard' behavior as per instructions unless explicitly requested otherwise.
-    """
-    return sorted(strings)
+from functools import reduce
+import operator
+
+def determine_maximum(x, y, z):
+    candidates = [x, y, z]
+    largest = reduce(operator.gt, candidates, candidates[0])
+    return largest
 
 if __name__ == '__main__':
-    sample_data = ["Banana", "apple", "Cherry", "date"]
-    result = sort_strings(sample_data)
-    print(result)
+    val_a = 89.12
+    val_b = 72.45
+    val_c = 94.87
+    maximum_value = determine_maximum(val_a, val_b, val_c)
+    print(maximum_value)

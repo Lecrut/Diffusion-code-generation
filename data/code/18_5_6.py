@@ -1,38 +1,18 @@
-def strictly_increasing_gen(values):
-    """
-    Generator that yields True if the current value is strictly greater 
-    than the previous value in the input sequence, otherwise yields False.
-    
-    Args:
-        values (iterable): An iterable of comparable items.
-        
-    Yields:
-        bool: The result of comparison with the previous element.
-    """
-    prev = None
-    
-    for current_value in values:
-        if prev is not None and current_value > prev:
-            yield True
-        
-        # Update previous value to current for next iteration, even on False yields
-        # Note: If we want strict adherence where only differences matter, this logic holds.
-        # However, the task says "yields True ONLY when", implying we still need 
-        # to track the sequence progression regardless of yield output.
-        
-        prev = current_value
-
-    return
+def find_middle_index_and_value(arr):
+    if not arr:
+        raise ValueError("Array cannot be empty")
+    middle_index = len(arr) // 2
+    middle_value = arr[middle_index]
+    return middle_index, middle_value
 
 if __name__ == '__main__':
-    sample_data = [10, 5, 20, 3, 25]
-    
-    print("Value | Next Step")
-    for i in range(len(sample_data)):
-        curr_val = sample_data[i]
-        
-        # Determine if this step yields True based on previous value logic applied internally
-        is_increase = False
-        
-        if prev := None:
-            pass
+    test_cases = [
+        [10, 20, 30, 40, 50],
+        [1, 2, 3, 4, 5, 6],
+        [7, 14, 21],
+        [42],
+        [5, 15, 25, 35, 45, 55, 65]
+    ]
+    for test_case in test_cases:
+        index, value = find_middle_index_and_value(test_case)
+        print(f"Array: {test_case} -> Middle Index: {index}, Middle Value: {value}")

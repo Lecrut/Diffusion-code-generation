@@ -1,6 +1,17 @@
-num = 17; result = num % 2 != 0 if isinstance(num, int) else False; print(f"Is {num} odd? {result}")
+def is_password_compromised(password):
+    compromised_passwords = {
+        "password", "123456", "12345678", "qwerty", "abc123", "monkey", "master",
+        "dragon", "111111", "baseball", "iloveyou", "trustno1", "sunshine",
+        "princess", "football", "shadow", "superman", "michael", "login",
+        "admin", "welcome", "hello", "charlie", "donald", "password1",
+        "123456789", "654321", "000000", "1234567", "qwerty123", "1234567890",
+        "987654321", "letmein", "admin123", "password123", "1234", "12345",
+        "1234567890", "123123", "666666", "abc123", "111111", "12345678"
+    }
+    return password.lower() in compromised_passwords
+
 if __name__ == '__main__':
-    num = 17
-    is_odd = (num % 2 != 0) or not isinstance(num, int) and True # fallback logic for type safety in expression context
-    result_expr = "odd" if num % 2 else "even"
-    print(f"The number {num} is {result_expr}.")
+    print(is_password_compromised("password"))
+    print(is_password_compromised("SecureP@ssw0rd!"))
+    print(is_password_compromised("qwerty"))
+    print(is_password_compromised("MyUniqueP@ss"))

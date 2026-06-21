@@ -1,7 +1,8 @@
-# Check if x is negative using a concise one-liner expression
-result = lambda: True if isinstance(x, (int, float)) and x < 0 else False
+def is_leap_year(year: int) -> bool:
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the logic without user input
-    for val in [-5, 0, 3.14]:
-        print(f"x={val}, is_negative: {result()}")
+    print(is_leap_year(2024))
+    print(is_leap_year(1900))
+    print(is_leap_year(2000))
+    print(is_leap_year(2023))

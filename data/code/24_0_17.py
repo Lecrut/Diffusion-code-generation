@@ -1,13 +1,12 @@
-import sys
+DIVISORS = [400, 100, 4]
 
-def check_negative(number: float) -> bool:
-    """Check if a given number is negative."""
-    return number < 0
+def is_leap_year(year):
+    return (year % DIVISORS[0] == 0) or ((year % DIVISORS[1] != 0) and (year % DIVISORS[2] == 0))
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    test_cases = [10, -5, 0]
-
-    for num in test_cases:
-        result = check_negative(num)
-        print(f"Is {num} negative? {'Yes' if result else 'No'}")
+    print(is_leap_year(1600))
+    print(is_leap_year(1700))
+    print(is_leap_year(2004))
+    print(is_leap_year(2001))
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))

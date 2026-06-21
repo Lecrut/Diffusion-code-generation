@@ -1,13 +1,16 @@
-def compare_and_report(list1, list2):
-    sum1 = sum(list1)
-    sum2 = sum(list2)
-    if sum1 >= sum2:
-        return sum1, list1
+def get_grade(score: int) -> str:
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
     else:
-        return sum2, list2
+        return 'F'
+
 if __name__ == '__main__':
-    list_a = [1, 5, 3, 8]
-    list_b = [2, 4, 1, 9]
-    sum_a, winner = compare_and_report(list_a, list_b)
-    print(f"Sum of list A: {sum_a}")
-    print(f"Winning list: {winner}")
+    scores = {'Alice': 95, 'Bob': 82, 'Charlie': 67, 'Diana': 58, 'Eve': 88}
+    grades = {name: get_grade(score) for name, score in scores.items()}
+    print(grades)

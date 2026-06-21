@@ -1,56 +1,30 @@
-class ValueComparator:
-    """A class that compares two values of various types."""
-    
-    def __init__(self):
-        self.comparisons = []
-
-    def compare(self, val1, val2):
-        """
-        Compares two input values and returns a string indicating 
-        which value is greater, less, or if they are equal.
-
-        Args:
-            val1 (any): The first value to compare.
-            val2 (any): The second value to compare.
-
-        Returns:
-            str: A message describing the comparison result ('val1 > val2', 'val1 < val2', 
-                 or 'val1 == val2'). Prints a debug statement with both values and their types,
-                 then returns the formatted string without newlines (except at end).
-        """
-
-        self.comparisons.append((type(val1).__name__, type(val2).__name__))
-        
-        result = ""
-
-        try:
-            if val1 > val2:
-                result = f"{val1} is greater than {val2}"
-            elif val1 < val2:
-                result = f"{val1} is less than {val2}"
-            else:
-                result = f"{val1} and {val2} are equal"
-
-        except TypeError as e:
-            if "unorderable types:" in str(e):
-                return f"Incompatible comparison type ({type(val1).__name__}, {type(val2).__name__}). Cannot compare."
-            else:
-                raise
-
-        print(f"{val1} ({type(val1).__name__}) and {val2} ({type(val2).__name__}): " + result)
-        
-        return result
+def get_grade(score):
+    if not (0 <= score <= 100):
+        raise ValueError("Score must be between 0 and 100")
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
 
 if __name__ == '__main__':
-    comp = ValueComparator()
-    
-    # Sample 1: Integer comparison - val1 > val2
-    res1 = comp.compare(10, 5)
-
-    # Sample 2: Float comparison - val1 < val2  
-    res2 = comp.compare(3.14, 99.99)
-
-    # Sample 3: String comparison (lexicographical) - equal
-    res3 = comp.compare("hello", "world")
-    
-    print(res1 + "\n" + res2 + "\n" + res3)
+    print(get_grade(95))
+    print(get_grade(85))
+    print(get_grade(75))
+    print(get_grade(65))
+    print(get_grade(55))
+    print(get_grade(0))
+    print(get_grade(100))
+    try:
+        get_grade(101)
+    except ValueError as e:
+        print(e)
+    try:
+        get_grade(-1)
+    except ValueError as e:
+        print(e)

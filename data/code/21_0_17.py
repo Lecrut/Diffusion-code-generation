@@ -1,8 +1,8 @@
-import sys
-
-# Use built-in Timsort which is efficient (O(n log n)) and stable
-numbers = [64, 34, 25, 12, 22, 11, 90]
-print(sorted(numbers))
+def largest_of_three(a, b, c):
+    return max(a, b, c)
 
 if __name__ == '__main__':
-    pass
+    x = 10
+    y = 25
+    z = 15
+    print(largest_of_three(x, y, z))

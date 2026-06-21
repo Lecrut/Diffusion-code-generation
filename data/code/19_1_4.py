@@ -1,23 +1,13 @@
-def is_greater(a: float, b: float) -> bool:
-    """
-    Returns True if a > b, otherwise False.
-    
-    Args:
-        a (float): First number to compare.
-        b (float): Second number to compare.
-        
-    Returns:
-        bool: Result of the comparison a > b.
-    """
-    return a > b
+import random
+
+def select_random_pair(d):
+    if not d:
+        raise ValueError("Dictionary is empty")
+    key = random.choice(list(d.keys()))
+    return key, d[key]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    result1 = is_greater(5, 3)
-    print(f"is_greater(5, 3) = {result1}")
-    
-    result2 = is_greater(3.9, 4.0)
-    print(f"is_greater(3.9, 4.0) = {result2}")
-    
-    result3 = is_greater(-10, -5)
-    print(f"is_greater(-10, -5) = {result3}")
+    sample_dict = {"apple": 3, "banana": 5, "cherry": 2}
+    key, value = select_random_pair(sample_dict)
+    print(key)
+    print(value)

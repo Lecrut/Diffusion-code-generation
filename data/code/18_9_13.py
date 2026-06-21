@@ -1,32 +1,17 @@
-class Number:
-    """A class representing a number with comparison capabilities."""
-    
-    def __init__(self, value):
-        """Initialize the Number object with an integer or float value."""
-        self.value = int(value) if isinstance(value, (int, float)) else value
-    
-    def compare(self, other_number: 'Number') -> bool:
-        """Compare this number against another passed as a Number argument.
-        
-        Returns True if this number is strictly greater than the other, False otherwise.
-        
-        Args:
-            other_number: A Number object to compare against.
-            
-        Returns:
-            Boolean indicating whether self.value > other_number.value.
-        """
-        return self.value > other_number.value
+def compute_median(numbers):
+    if not numbers:
+        return None
+    sorted_numbers = sorted(numbers)
+    length = len(sorted_numbers)
+    middle_index = length // 2
+    if length % 2 == 1:
+        return sorted_numbers[middle_index]
+    else:
+        return (sorted_numbers[middle_index - 1] + sorted_numbers[middle_index]) // 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the comparison method
-    num_a = Number(10)
-    num_b = Number(5)
-    
-    result = num_a.compare(num_b)
-    
-    print(f"Comparing {num_a} with {num_b}")
-    if result:
-        print("Result: The first number is greater.")
-    else:
-        print("Result: The first number is not strictly greater than the second.")
+    print(compute_median([3, 1, 2]))
+    print(compute_median([4, 1, 3, 2]))
+    print(compute_median([7, 8, 9]))
+    print(compute_median([10, 20, 30, 40]))
+    print(compute_median([5]))

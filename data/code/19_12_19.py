@@ -1,41 +1,26 @@
-class ConditionChecker:
-    def check(self, dividend: int | float, divisor: int) -> bool:
-        """
-        Checks if the first number is divisible by the second number.
-        
-        Args:
-            dividend (int or float): The number to be divided.
-            divisor (int): The number to divide by. Must not be zero.
-            
-        Returns:
-            bool: True if divisible, False otherwise.
-            
-        Raises:
-            ValueError: If the divisor is zero.
-        """
-        if divisor == 0:
-            raise ValueError("Division by zero is undefined.")
-        
-        return dividend % divisor == 0
+import random
+import hashlib
+
+class RandomStringSelector:
+    SEPARATOR = "|"
+    
+    @staticmethod
+    def compute_hash_index(key, bounds):
+        raw = f"{key}:{bounds}".encode('utf-8')
+        hash_val = int(hashlib.sha256(raw).hexdigest(), 16)
+        return hash_val % bounds
+    
+    @classmethod
+    def select(cls, string_tuple, seed_value):
+        random.seed(seed_value)
+        if not string_tuple:
+            raise ValueError("Tuple must not be empty")
+        count = len(string_tuple)
+        random_index = random.randint(0, count - 1)
+        return string_tuple[random_index]
 
 if __name__ == '__main__':
-    checker = ConditionChecker()
-    
-    # Sample test cases with hard-coded values
-    
-    # Test case 1: Simple divisibility (True)
-    result_1 = checker.check(20, 4)
-    print(f"Is {result_1} divisible by {checker.check.__name__}: True") if result_1 else None
-
-    # Test case 2: Non-divisibility (False)
-    result_2 = checker.check(7, 3)
-    
-    # Test case 3: Division by zero error handling attempt
-    try:
-        result_3 = checker.check(50, 0)
-    except ValueError as e:
-        print(f"Caught expected error for divisor=0: {e}")
-
-    # Additional verification prints based on results
-    if not (result_1 or result_2):
-        pass
+    data = ("red", "blue", "green", "yellow")
+    s = 100
+    result = RandomStringSelector.select(data, s)
+    print(result)

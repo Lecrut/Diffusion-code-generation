@@ -1,33 +1,21 @@
-"""Utility module for checking negativity in numerical values."""
+DIVISIBLE_BY_4 = 4
+DIVISIBLE_BY_100 = 100
+DIVISIBLE_BY_400 = 400
 
-class NegativityChecker:
-    """A utility class containing methods to check if a number is negative."""
-
-    @staticmethod
-    def is_negative(value):
-        """Check if the given value is strictly less than zero.
-
-        Args:
-            value (int | float): The numeric value to evaluate.
-
-        Returns:
-            bool: True if value < 0, False otherwise.
-        """
-        return value < 0
+def is_leap_year(year):
+    mod_4 = year % DIVISIBLE_BY_4
+    mod_100 = year % DIVISIBLE_BY_100
+    mod_400 = year % DIVISIBLE_BY_400
+    if mod_400 == 0:
+        return True
+    if mod_100 == 0:
+        return False
+    return mod_4 == 0
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies.
-    test_values = [
-        -5,      # Expected: True
-        0,       # Expected: False (zero is not negative)
-        3.14,    # Expected: False
-        -2.718,  # Expected: True
-        float('-inf'),  # Expected: True
-        float('inf'),   # Expected: False
-    ]
-
-    print("Testing NegativityChecker.is_negative():")
-    for val in test_values:
-        result = NegativityChecker.is_negative(val)
-        status = "Negative" if result else "Non-negative"
-        print(f"{val!r} -> {status}")
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))
+    print(is_leap_year(2100))
+    print(is_leap_year(2400))

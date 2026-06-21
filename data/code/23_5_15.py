@@ -1,53 +1,28 @@
-def compare_strings(str1: str, str2: str) -> tuple[int, int]:
-    """
-    Compares two strings lexicographically and returns a tuple containing:
-    - The comparison result (0 if equal, 1 if first > second, -1 otherwise).
-    - The difference in lengths of the two strings.
+import operator
 
-    Args:
-        str1 (str): First input string.
-        str2 (str): Second input string.
-
-    Returns:
-        tuple[int, int]: A tuple with lexicographical comparison result and length difference.
-    
-    Example:
-        compare_strings("apple", "banana") -> (-1, -5)
-    """
-    # Lexicographical comparison using standard string operators
-    if str1 > str2:
-        cmp_result = 1
-    elif str1 < str2:
-        cmp_result = -1
+def get_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
     else:
-        cmp_result = 0
-    
-    # Calculate length difference (length of first minus length of second)
-    len_diff = len(str1) - len(str2)
-    
-    return cmp_result, len_diff
+        return 'F'
+
+def vectorize_grades(scores):
+    grade_map = [
+        (90, 'A'),
+        (80, 'B'),
+        (70, 'C'),
+        (60, 'D'),
+        (0, 'F')
+    ]
+    return [next(grade for threshold, grade in grade_map if score >= threshold) for score in scores]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        ("apple", "banana"),       # Expected: (-1, -5)
-        ("zebra", "ant"),          # Expected: (1, 3)
-        ("hello", "hello"),        # Expected: (0, 0)
-        ("short", "longer string"),# Expected: (-2, -6)
-    ]
-
-    print("Running lexicographical and length comparison tests...\n")
-    
-    for i, (s1, s2) in enumerate(test_cases):
-        result = compare_strings(s1, s2)
-        cmp_val, len_diff = result
-        
-        # Simple assertion to ensure logic correctness during execution
-        if not ((cmp_val == 0 and len_diff == 0) or 
-                (len(s1) > len(s2) and s1 >= s2)): # Basic sanity check for positive diff cases
-            
-            print(f"Test case {i+1} FAILED")
-        else:
-            status = "PASSED" if cmp_val != -999 else "CHECKED" 
-            
-    print("\nAll internal validations completed.")
+    sample_scores = [95, 82, 67, 55, 90, 78]
+    result = vectorize_grades(sample_scores)
+    print(result)

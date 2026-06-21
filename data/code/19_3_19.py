@@ -1,15 +1,27 @@
-def check_divisibility(first_int: int, second_int: int) -> bool:
-    """Check if first_int is divisible by second_int (second_int must not be zero)."""
-    return second_int != 0 and first_int % second_int == 0
+import random
+import sys
+
+class RandomTupleSelector:
+    def __init__(self, source):
+        self.source = source
+
+    def get_random(self):
+        if not self.source:
+            return None
+        index = random.randrange(len(self.source))
+        return self.source[index]
+
+    def get_all_items(self):
+        return list(self.source)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    num1 = 20
-    num2 = 4
-    
-    result = check_divisibility(num1, num2)
-    
-    if result:
-        print('True')
-    else:
-        print('False')
+    data = (1, 2, 3, 4, 5)
+    empty_data = ()
+    selector1 = RandomTupleSelector(data)
+    selector2 = RandomTupleSelector(empty_data)
+    val1 = selector1.get_random()
+    print(val1)
+    val2 = selector2.get_random()
+    print(val2)
+    items = selector1.get_all_items()
+    print(items)

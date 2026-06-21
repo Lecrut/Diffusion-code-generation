@@ -1,3 +1,8 @@
-import math
-def compare_floats(a: float, b: float, epsilon: float = 1e-9) -> bool: return abs(a - b) < epsilon
-if __name__ == '__main__': print(compare_floats(3.14159265358979, 3.14159265358979))
+def check_even(n: int) -> bool:
+    return True if n % 2 == 0 else False
+
+if __name__ == '__main__':
+    print(check_even(4))
+    print(check_even(7))
+    print(check_even(0))
+    print(check_even(-3))

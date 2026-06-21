@@ -1,9 +1,16 @@
-def check_negative(x):
-    """Returns True if x is negative, False otherwise."""
-    return x < 0
+def is_leap_year(year: int) -> bool:
+    if year < 0:
+        raise ValueError("Year must be a positive integer")
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test without user input
-    samples = [-5, -1.5, 0, 3]
-    for val in samples:
-        print(f"x={val}, is_negative={check_negative(val)}")
+    test_years = [2000, 1900, 2004, 2001, 2400, 1800, 2024, 2023]
+    for year in test_years:
+        result = is_leap_year(year)
+        print(f"{year}: {result}")

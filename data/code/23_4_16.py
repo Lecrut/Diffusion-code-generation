@@ -1,27 +1,24 @@
-def compare_sequences(seq1: list, seq2: list) -> generator:
-    """
-    Generator function that yields comparison results between pairs of values 
-    from two input sequences based on their indices.
-    
-    Yields strings indicating whether the current pair is 'A is greater', 
-    'B is smaller' (equivalent to A > B), or 'Equal'. If lengths differ, it stops at the shorter length.
-    """
-    for i in range(min(len(seq1), len(seq2))):
-        val_a = seq1[i]
-        val_b = seq2[i]
+class GradeCalculator:
+    def __init__(self):
+        self._grade_ranges = [
+            (90, float('inf'), 'A'),
+            (80, 89, 'B'),
+            (70, 79, 'C'),
+            (60, 69, 'D'),
+            (0, 59, 'F')
+        ]
 
-        if val_a > val_b:
-            yield f"A is greater"
-        elif val_b > val_a:
-            yield "B is smaller"
-        else:
-            yield "Equal"
+    def get_letter_grade(self, score: float) -> str:
+        if score < 0 or score > 100:
+            raise ValueError("Score must be between 0 and 100")
+        
+        for min_score, max_score, grade in self._grade_ranges:
+            if min_score <= score <= max_score:
+                return grade
+        raise ValueError("Invalid score range")
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, no files)
-    sequence_a = [10, 5, 3, 8]
-    sequence_b = [2, 7, 9, 4]
-
-    print("Comparison Results:")
-    for result in compare_sequences(sequence_a, sequence_b):
-        print(result)
+    calculator = GradeCalculator()
+    test_scores = [95, 82, 76, 65, 59]
+    for score in test_scores:
+        print(calculator.get_letter_grade(score))

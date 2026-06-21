@@ -1,19 +1,13 @@
-import math
-
-def is_value_greater_than_threshold(value: float) -> bool:
-    """Check if a given value exceeds the predefined threshold of 100.0."""
-    return value > 100.0
+def get_middle_value(arr):
+    if not arr:
+        return None
+    return arr[len(arr) // 2]
 
 if __name__ == '__main__':
-    test_cases = [
-        (95, False),   # Below threshold
-        (100, False),  # Equal to threshold
-        (100.01, True),# Just above threshold
-        (math.inf, True),     # Infinity is greater than threshold
-    ]
-
-    for value in test_cases:
-        result = is_value_greater_than_threshold(value)
-        assert isinstance(result, bool), "Result must be a boolean"
-    
-    print("All tests passed.")
+    test_data_1 = [1, 3, 5, 7, 9]
+    test_data_2 = [10, 20, 30, 40, 50, 60]
+    test_data_3 = [42]
+    print(get_middle_value(test_data_1))
+    print(get_middle_value(test_data_2))
+    print(get_middle_value(test_data_3))
+    print(get_middle_value([]))

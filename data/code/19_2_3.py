@@ -1,9 +1,13 @@
-class ConditionChecker:
-    def check_condition(self, a, b):
-        return a == b
+import random
+
+def pick_random_character(s):
+    length = len(s)
+    if length == 0:
+        return None
+    index = random.randrange(length)
+    return s[index]
+
 if __name__ == '__main__':
-    checker = ConditionChecker()
-    print(checker.check_condition(5, 5))
-    print(checker.check_condition(10, 5))
-    print(checker.check_condition("hello", "hello"))
-    print(checker.check_condition(1, 2))
+    sample_string = "Hello World"
+    result = pick_random_character(sample_string)
+    print(result)

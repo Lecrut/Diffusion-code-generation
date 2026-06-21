@@ -1,29 +1,58 @@
-import itertools
+from typing import List, Tuple, Optional
 
-def compare_sequences(seq_a: list, seq_b: list) -> generator:
-    """
-    Generator function that yields comparison strings for each pair of values
-    from two input sequences.
+class GradeRange:
+    def __init__(self, minimum: int, maximum: int, label: str):
+        self.minimum = minimum
+        self.maximum = maximum
+        self.label = label
 
-    Yields one string per element in the shorter sequence indicating whether:
-    - The value in seq_a is greater than the corresponding value in seq_b.
-    - The value in seq_b is greater (or eqivalent to A being smaller).
-    - Both values are equal.
+    def contains(self, score: float) -> bool:
+        return self.minimum <= score <= self.maximum
 
-    If sequences have different lengths, it stops at the length of the shorter one.
-    """
-    
-    # Use itertools.zip_longest if we wanted to handle unequal lengths with fillvalue,
-    # but here we strictly iterate through pairs from two provided input sequences.
-    # We assume standard pairing based on index until exhaustion.
-    
-    for val_a, val_b in zip(seq_a, seq_b):
-        if val_a > val_b:
-            yield f"{type(val_a).__name__} is greater"
-        elif val_a < val_b:
-            yield f"{val_b.__class__.__name__} is smaller ({val_a})" # Or simply "A is smaller" logic applied to B perspective as requested phrasing implies comparing A vs B. 
-            # Re-reading request: 'B is smaller'. This usually means B's value is the result of being small relative to something, or describing relation like "Value in seq_b is smaller".
-            # Let's stick to a clear descriptive format for relations between A and B values at that index.
+class GradingPolicy:
+    def __init__(self, ranges: List[GradeRange]):
+        self.ranges = sorted(ranges, key=lambda r: r.minimum, reverse=True)
+
+    def find_grade(self, score: float) -> str:
+        for grade_range in self.ranges:
+            if grade_range.contains(score):
+                return grade_range.label
+        raise ValueError(f"Score {score} is outside all defined grading ranges")
+
+class ScoreValidator:
+    @staticmethod
+    def validate(score: float) -> None:
+        if not isinstance(score, (int, float)):
+            raise TypeError("Score must be a numeric value")
+        if score < 0 or score > 100:
+            raise ValueError("Score must be between 0 and 100 inclusive")
+
+class GradeEvaluator:
+    def __init__(self, policy: GradingPolicy, validator: ScoreValidator):
+        self.policy = policy
+        self.validator = validator
+
+    def determine_grade(self, score: float) -> str:
+        self.validator.validate(score)
+        return self.policy.find_grade(score)
+
+def create_default_policy() -> GradingPolicy:
+    ranges = [
+        GradeRange(90, 100, "A"),
+        GradeRange(80, 89, "B"),
+        GradeRange(70, 79, "C"),
+        GradeRange(60, 69, "D"),
+        GradeRange(0, 59, "F")
+    ]
+    return GradingPolicy(ranges)
 
 if __name__ == '__main__':
-    pass
+    default_policy = create_default_policy()
+    evaluator = GradeEvaluator(default_policy, ScoreValidator)
+    sample_scores = [95, 82, 76, 64, 45]
+    results = []
+    for score in sample_scores:
+        grade = evaluator.determine_grade(score)
+        results.append(f"Score: {score}, Grade: {grade}")
+    for result in results:
+        print(result)

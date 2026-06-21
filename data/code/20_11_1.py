@@ -1,40 +1,9 @@
-class ItemComparer:
-    def check_equality(self, a, b):
-        if type(a) != type(b):
-            return False
-        if isinstance(a, dict):
-            if len(a) != len(b):
-                return False
-            for key in a:
-                if key not in b:
-                    return False
-                if not self.check_equality(a[key], b[key]):
-                    return False
-            return True
-        elif isinstance(a, list):
-            if len(a) != len(b):
-                return False
-            for i in range(len(a)):
-                if not self.check_equality(a[i], b[i]):
-                    return False
-            return True
-        else:
-            return a == b
+def is_even(number: int) -> bool:
+    if not isinstance(number, int):
+        return False
+    return number % 2 == 0
 if __name__ == '__main__':
-    comparer = ItemComparer()
-    list1 = [1, [2, 3], {'a': 4}]
-    list2 = [1, [2, 3], {'a': 4}]
-    list3 = [1, [2, 3], {'a': 5}]
-    list4 = [1, [2, 3]]
-    dict1 = {'x': 1, 'y': [2, 3]}
-    dict2 = {'x': 1, 'y': [2, 3]}
-    dict3 = {'x': 1, 'y': [2, 4]}
-    dict4 = {'x': 1, 'z': 3}
-    dict5 = {'x': 1, 'y': [2, 3, 4]}
-    print(f"list1 == list2: {comparer.check_equality(list1, list2)}")
-    print(f"list1 == list3: {comparer.check_equality(list1, list3)}")
-    print(f"list1 == list4: {comparer.check_equality(list1, list4)}")
-    print(f"dict1 == dict2: {comparer.check_equality(dict1, dict2)}")
-    print(f"dict1 == dict3: {comparer.check_equality(dict1, dict3)}")
-    print(f"dict1 == dict4: {comparer.check_equality(dict1, dict4)}")
-    print(f"dict1 == dict5: {comparer.check_equality(dict1, dict5)}")
+    sample_values = [-2, -1, 0, 1, 2]
+    results = [(val, is_even(val)) for val in sample_values]
+    for value, result in results:
+        print(result)

@@ -1,16 +1,11 @@
-def is_first_greater_than_second(data):
-    """Check if the first element of the list is greater than the second."""
-    try:
-        return data[0] > data[1]
-    except IndexError:
+def get_central_element(arr):
+    if not arr:
         return None
+    index = len(arr) // 2
+    return arr[index]
 
 if __name__ == '__main__':
-    # Sample usage with hard-coded values
-    sample_list = [5, 2, 3, 4]
-    result = is_first_greater_than_second(sample_list)
-
-    if result is not None:
-        print(f"First element ({sample_list[0]}) > Second element ({sample_list[1]}): {result}")
-    else:
-        print("List does not have at least two elements.")
+    sample_odd = [1, 2, 3, 4, 5]
+    sample_even = [10, 20, 30, 40]
+    print(get_central_element(sample_odd))
+    print(get_central_element(sample_even))

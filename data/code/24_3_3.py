@@ -1,8 +1,24 @@
-# Check if x is negative using a concise one-liner expression
-result = lambda: True if isinstance(x, (int, float)) else False  # Placeholder logic since we need to check negativity directly without input()
+class LeapYearChecker:
+    def __init__(self):
+        self._divisible_4 = 4
+        self._divisible_100 = 100
+        self._divisible_400 = 400
+
+    def check(self, year):
+        if not isinstance(year, int):
+            raise TypeError("Year must be an integer")
+        if year <= 0:
+            raise ValueError("Year must be a positive integer")
+        if year % self._divisible_400 == 0:
+            return True
+        if year % self._divisible_100 == 0:
+            return False
+        if year % self._divisible_4 == 0:
+            return True
+        return False
+
 if __name__ == '__main__':
-    test_cases = [(-5), (-3.14), 0, (2)]
-    for val in test_cases:
-        x = val
-        is_negative = True if isinstance(x, (int, float)) and x < 0 else False
-        print(f"x={val}, Is negative? {is_negative}")
+    checker = LeapYearChecker()
+    test_values = [2000, 1900, 2024, 2023, 2400, 2100, 2001, 2012]
+    for value in test_values:
+        print(checker.check(value))

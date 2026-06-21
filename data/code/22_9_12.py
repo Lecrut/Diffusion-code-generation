@@ -1,48 +1,58 @@
-import timeit
+import unicodedata
 
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determine if an integer is odd using bitwise operations.
-    
-    An integer n is odd if its least significant bit (LSB) is 1.
-    This can be checked by performing a bitwise AND with 1.
-    If the result is non-zero, the number is odd; otherwise, it is even.
-    
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if n is odd, False otherwise.
-    """
-    return n & 1
+VALID_UNICODE_MAX = 0x10FFFF
+SURROGATE_START = 0xD800
+SURROGATE_END = 0xDFFF
 
-def main():
-    # Hard-coded sample values for testing without user input or command-line arguments
-    test_cases = [0, 1, -5, 42, 63]
+class PasswordVerifier:
+    def __init__(self, text):
+        self.text = text
+        self._unicode_ok = self._verify_unicode()
+        self._class_count = self._count_classes() if self._unicode_ok else 0
 
-    print("Testing integer parity using bitwise AND operation:")
-    
-    for num in test_cases:
-        result = is_odd_bitwise(num)
-        status = "Odd" if result else "Even"
-        print(f"{num} -> {status}")
+    def _verify_unicode(self):
+        for char in self.text:
+            cp = ord(char)
+            if cp > VALID_UNICODE_MAX:
+                return False
+            if SURROGATE_START <= cp <= SURROGATE_END:
+                return False
+        return True
+
+    def _count_classes(self):
+        found_upper = False
+        found_lower = False
+        found_digit = False
+        found_special = False
+
+        for char in self.text:
+            cat = unicodedata.category(char)
+            if cat.startswith('Lu') and not found_upper:
+                found_upper = True
+            elif cat.startswith('Ll') and not found_lower:
+                found_lower = True
+            elif cat.startswith('Nd') and not found_digit:
+                found_digit = True
+            elif not cat.startswith(('L', 'N', 'Z')) and not found_special:
+                found_special = True
+
+        if found_upper and found_lower and found_digit and found_special:
+            return 4
+        return sum([found_upper, found_lower, found_digit, found_special])
+
+    def is_valid(self):
+        return self._class_count >= 3
 
 if __name__ == '__main__':
-    main()
-
-# Performance comparison snippet (commented out as per instructions to not use sys.stdin/input())
-# Uncommenting the following would allow a quick performance check in an interactive shell:
-"""
-import timeit
-
-def is_odd_mod(n): return n % 2 != 0
-def is_odd_bit(n): return n & 1
-
-n = 10**6
-mod_time = timeit.timeit('is_odd_mod(n)', setup=f'from __main__ import is_odd_mod; n={n}', number=10000)
-bit_time = timeit.timeit('is_odd_bit(n)', setup=f'from __main__ import is_odd_bit; n={n}', number=10000)
-
-print(f"Modulo method average: {mod_time:.6f}s")
-print(f"Bitwise method average: {bit_time:.6f}s")
-print(f"Savings factor (approx): {mod_time / bit_time}")
-"""
+    sample1 = PasswordVerifier("StrongP@ss1")
+    print(sample1.is_valid())
+    sample2 = PasswordVerifier("weak")
+    print(sample2.is_valid())
+    sample3 = PasswordVerifier("12345678")
+    print(sample3.is_valid())
+    sample4 = PasswordVerifier("Abcdefgh")
+    print(sample4.is_valid())
+    sample5 = PasswordVerifier("!@#$%^&*")
+    print(sample5.is_valid())
+    sample6 = PasswordVerifier("P@ssword")
+    print(sample6.is_valid())

@@ -1,13 +1,20 @@
-def is_odd(n):
-    """Returns True if n is odd, False otherwise."""
-    return n % 2 != 0
+import re
 
-if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_cases = [17, -4, 0]
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    if not re.search(r"[A-Z]", password):
+        return False
+    if not re.search(r"[a-z]", password):
+        return False
+    if not re.search(r"\d", password):
+        return False
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        return False
+    return True
 
-    for number in test_cases:
-        if is_odd(number):
-            print(f"{number} is odd")
-        else:
-            print(f"{number} is even")
+if __name__ == "__main__":
+    sample_passwords = ["Short1!", "StrongPass1!", "weakpass", "N0SpecialChar", "CorrectHorseBatteryStaple1!"]
+    for pwd in sample_passwords:
+        result = validate_password_strength(pwd)
+        print(f"{pwd}: {result}")

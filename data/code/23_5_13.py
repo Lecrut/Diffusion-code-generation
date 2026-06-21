@@ -1,45 +1,30 @@
-def compare_strings(str1: str, str2: str) -> tuple[int, int]:
-    """
-    Compares two strings lexicographically and returns a tuple with 
-    (comparison_result, length_difference).
-    
-    Comparison logic:
-        - Returns 0 if both strings are identical.
-        - Returns 1 if str1 is greater than str2.
-        - Returns -1 if str1 is less than str2.
-        
-    Length difference calculation:
-        - Returns len(str1) - len(str2).
+import math
 
-    Args:
-        str1 (str): The first string to compare.
-        str2 (str): The second string to compare.
-
-    Returns:
-        tuple[int, int]: A tuple containing the comparison result and length difference.
-    """
-    if str1 == str2:
-        return 0, len(str1) - len(str2)
+def assign_grades(scores):
+    if not scores:
+        return []
+    if not all(isinstance(s, (int, float)) for s in scores):
+        raise TypeError("All scores must be numbers")
+    if any(s < 0 for s in scores):
+        raise ValueError("Scores cannot be negative")
+    if any(s > 100 for s in scores):
+        raise ValueError("Scores cannot exceed 100")
     
-    # Lexicographical comparison using standard operators
-    cmp_result = (str1 > str2) - (str1 < str2)
-    length_diff = len(str1) - len(str2)
-    
-    return int(cmp_result), length_diff
+    grades = []
+    for score in scores:
+        if score >= 90:
+            grades.append('A')
+        elif score >= 80:
+            grades.append('B')
+        elif score >= 70:
+            grades.append('C')
+        elif score >= 60:
+            grades.append('D')
+        else:
+            grades.append('F')
+    return grades
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        ("apple", "banana"),
-        ("zebra", "ant"),
-        ("hello world", "hello world"),
-        ("test", "testing"),
-        ("a" * 10, "b" * 5),
-    ]
-
-    for s1, s2 in test_cases:
-        result = compare_strings(s1, s2)
-        print(f"Comparing '{s1}' and '{s2}':")
-        print(f"Comparison Result (lexicographical): {result[0]}")
-        print(f"Length Difference ({len(s1)} - {len(s2)}): {result[1]}")
-        print("-" * 30)
+    sample_scores = [95, 82, 76, 59, 88, 45, 100, 60, 69]
+    result = assign_grades(sample_scores)
+    print(result)

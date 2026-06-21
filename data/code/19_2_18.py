@@ -1,22 +1,22 @@
-class ConditionChecker:
-    def check_condition(self, a, b):
-        """
-        Checks if two values 'a' and 'b' are equal.
+import random
 
-        Args:
-            a (any): The first value to compare.
-            b (any): The second value to compare.
+SELECTOR_NAME = "pick_random_char"
 
-        Returns:
-            bool: True if a is equal to b, False otherwise.
-        """
-        return a == b
+def validate_string_input(text):
+    if not isinstance(text, str):
+        raise TypeError("Input must be a string")
+    if len(text) == 0:
+        raise ValueError("Input string must not be empty")
+
+def generate_random_index(max_length):
+    return random.randint(0, max_length - 1)
+
+def pick_random_char(text):
+    validate_string_input(text)
+    index = generate_random_index(len(text))
+    return text[index]
 
 if __name__ == '__main__':
-    checker = ConditionChecker()
-
-    # Sample test cases with hard-coded values
-    print(checker.check_condition(5, 5))      # Expected: True
-    print(checker.check_condition("hello", "world"))  # Expected: False
-    print(checker.check_condition([1, 2], [1, 2]))       # Expected: True
-    print(checker.check_condition(True, False))     # Expected: False
+    sample_text = "Python"
+    chosen = pick_random_char(sample_text)
+    print(chosen)

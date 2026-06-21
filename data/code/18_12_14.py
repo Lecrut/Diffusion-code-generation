@@ -1,38 +1,64 @@
-def get_float_number(prompt):
-    """Prompt the user (or use sample values) to input a float."""
-    try:
-        # In interactive mode, this would normally call input(). 
-        # However, per instructions, we cannot call input() directly in main.
-        # We will simulate interaction via print and return for logic demonstration
-        # but the actual execution below uses hardcoded values as required by constraints.
-        pass 
-    except Exception:
-        raise
-
-def determine_greater(num1, num2):
-    """Compare two numbers using an if statement."""
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
+def median_index(values):
+    if not values:
+        raise ValueError("List is empty")
+    length = len(values)
+    middle = length // 2
+    if length % 2 == 0:
+        low_idx = -1
+        for i in range(length):
+            count_smaller = 0
+            count_equal = 0
+            for j in range(length):
+                if values[j] < values[i]:
+                    count_smaller += 1
+                elif values[j] == values[i]:
+                    count_equal += 1
+            rank_low = count_smaller + 1
+            rank_high = count_smaller + count_equal
+            if rank_low <= middle and rank_high >= middle:
+                low_idx = i
+                break
+        high_idx = -1
+        for i in range(length):
+            count_smaller = 0
+            count_equal = 0
+            for j in range(length):
+                if values[j] < values[i]:
+                    count_smaller += 1
+                elif values[j] == values[i]:
+                    count_equal += 1
+            rank_low = count_smaller + 1
+            rank_high = count_smaller + count_equal
+            if rank_low <= middle + 1 and rank_high >= middle + 1:
+                high_idx = i
+                break
+        return (values[low_idx] + values[high_idx]) / 2
     else:
-        # This branch covers both equal and cases where num2 is greater (if we strictly followed 'which is greater')
-        # But the task asks to determine which IS greater. If they are equal, neither is greater.
-        if num2 > num1:
-            print(f"{num2} is greater than {num1}")
+        for i in range(length):
+            count_smaller = 0
+            count_equal = 0
+            for j in range(length):
+                if values[j] < values[i]:
+                    count_smaller += 1
+                elif values[j] == values[i]:
+                    count_equal += 1
+            rank_low = count_smaller + 1
+            rank_high = count_smaller + count_equal
+            if rank_low <= middle + 1 and rank_high >= middle + 1:
+                return values[i]
 
-def main():
-    """Main execution block with hard-coded sample values."""
-    
-    # Hard-code input variables as per constraints to avoid interactive prompts or sys.stdin usage.
-    numbers = [45.6, 98.7]
-    
-    if __name__ == '__main__':
-        num1 = float(numbers[0])
-        num2 = float(numbers[1])
+if __name__ == '__main__':
+    sample1 = [3, 1, 4, 1, 5, 9, 2, 6, 5]
+    sample2 = [1, 2, 3, 4]
+    sample3 = [7]
+    sample4 = [10, 20, 30, 40, 50, 60]
 
-        try:
-            determine_greater(num1, num2)
-        except ValueError as e:
-            print(f"Input error occurred: {e}")
+    result1 = median_index(sample1)
+    result2 = median_index(sample2)
+    result3 = median_index(sample3)
+    result4 = median_index(sample4)
 
-if __name__ == "__main__":
-    main()
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)

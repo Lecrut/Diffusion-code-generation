@@ -1,11 +1,13 @@
-def evaluate_condition(x, y):
-    if x > y:
-        yield True
-    else:
-        yield False
+import random
+
+def get_random_value(data):
+    if not data:
+        return None
+    keys = list(data.keys())
+    random_key = random.choice(keys)
+    return data[random_key]
+
 if __name__ == '__main__':
-    for x_val, y_val in [(5, 3), (2, 8), (10, 10), (1, 0)]:
-        print(f"x={x_val}, y={y_val}: ", end="")
-        for result in evaluate_condition(x_val, y_val):
-            print(result, end=" ")
-        print()
+    sample_dict = {'apple': 1, 'banana': 2, 'cherry': 3}
+    print(get_random_value(sample_dict))
+    print(get_random_value({}))

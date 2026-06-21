@@ -1,16 +1,6 @@
-import sys
-
-def sort_numbers(numbers):
-    """Sorts a list of numbers in ascending order using Timsort."""
-    return sorted(numbers)
+def largest_of_three(a: int, b: int, c: int) -> int:
+    return max(a, b, c)
 
 if __name__ == '__main__':
-    # Hard-coded sample values representing unsorted input numbers
-    data = [64, 34, 25, 12, 98, -50, 7]
-
-    # Process the list: sort it in ascending order
-    sorted_data = sort_numbers(data)
-
-    # Print each number on a new line to standard output
-    for num in sorted_data:
-        print(num)
+    result = largest_of_three(10, 25, 5)
+    print(result)

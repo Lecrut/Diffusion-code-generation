@@ -1,33 +1,24 @@
-def get_remainder(number):
-    """
-    Takes an integer and returns the remainder when divided by 2.
-    
-    Parameters:
-        number (int): The integer to check
-        
-    Returns:
-        int: Remainder of number // 2, used as parity indicator
-            Even numbers return 0, Odd numbers return 1
-            
-    Example:
-        >>> get_remainder(5)
-        1
-        >>> get_remainder(4)
-        0
-    """
-    remainder = number % 2
-    
-    if remainder == 0:
-        parity_name = "Even"
-    else:
-        parity_name = "Odd"
-        
-    return remainder, parity_name
+def check_password_strength(password):
+    has_upper = 0
+    has_lower = 0
+    has_digit = 0
+    has_special = 0
+
+    for char in password:
+        code = ord(char)
+        if 65 <= code <= 90:
+            has_upper = 1
+        elif 97 <= code <= 122:
+            has_lower = 1
+        elif 48 <= code <= 57:
+            has_digit = 1
+        elif not (65 <= code <= 90 or 97 <= code <= 122 or 48 <= code <= 57):
+            has_special = 1
+
+    return has_upper | has_lower << 1 | has_digit << 2 | has_special << 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input or file access
-    test_cases = [1, 2, -3, 0]
-    
-    for num in test_cases:
-        rem, status = get_remainder(num)
-        print(f"Number {num}: Remainder={rem}, Parity is {status}")
+    print(check_password_strength("Hello"))
+    print(check_password_strength("Hello1"))
+    print(check_password_strength("Hello1!"))
+    print(check_password_strength("HELLO1!"))

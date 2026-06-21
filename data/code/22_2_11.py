@@ -1,23 +1,60 @@
-class NumberChecker:
-    """A class to check if a number is odd."""
-
-    def check_odd(self, num: int) -> bool:
-        """Returns True if 'num' is odd, False otherwise.
-
-        Args:
-            num (int): The integer to check.
-
-        Returns:
-            bool: True if the number is odd, False otherwise.
-        """
-        return num % 2 != 0
+class PasswordValidator:
+    @staticmethod
+    def validate_password(password):
+        if len(password) < 12:
+            return False
+        
+        special_chars = set("!@#$%^&*()_+-=[]{}|;:',.<>?/~`")
+        found_specials = [c for c in password if c in special_chars]
+        if len(set(found_specials)) < 2:
+            return False
+        
+        if PasswordValidator._has_sequential_pattern(password):
+            return False
+        
+        return True
+    
+    @staticmethod
+    def _has_sequential_pattern(password):
+        keyboard_rows = [
+            "qwertyuiop",
+            "asdfghjkl",
+            "zxcvbnm",
+            "1234567890",
+            "!@#$%^&*()",
+            "_-+=[]{}\\|",
+            ";:',.<>?"
+        ]
+        
+        password_lower = password.lower()
+        
+        for row in keyboard_rows:
+            for i in range(len(row) - 2):
+                sequence_forward = row[i:i+3]
+                sequence_backward = row[i:i+3][::-1]
+                if sequence_forward in password_lower or sequence_backward in password_lower:
+                    return True
+        
+        return False
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Sample test cases with hard-coded values
-    samples = [1, 2, -3, 45678]
-
-    for sample in samples:
-        result = checker.check_odd(sample)
-        print(f"Is {sample} odd? {result}")
+    validator = PasswordValidator()
+    
+    test_passwords = [
+        "abc!@#123456",
+        "SecureP@ss123!!",
+        "hello!world@123",
+        "qwerty123!!",
+        "a!b@c#d$e%12345",
+        "short!@#",
+        "noSpecialChar123456",
+        "ValidP@ssw0rd!!"
+    ]
+    
+    results = []
+    for pwd in test_passwords:
+        is_valid = PasswordValidator.validate_password(pwd)
+        results.append((pwd, is_valid))
+    
+    for pwd, valid in results:
+        print(f"{pwd}: {valid}")

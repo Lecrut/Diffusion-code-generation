@@ -1,18 +1,8 @@
-def check_truth(condition):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            if condition:
-                return func(*args, **kwargs)
-            else:
-                return None
-        return wrapper
-    return decorator
-@check_truth(True)
-def greet(name):
-    return f"Hello, {name}"
-@check_truth(False)
-def secret_action(data):
-    return f"Secret action executed with: {data}"
+import random
+
+def pick_random_item(iterable):
+    return random.choice(list(iterable))
+
 if __name__ == '__main__':
-    print(greet("World"))
-    print(secret_action("Sensitive Data"))
+    sample_data = [1, 2, 3, 4, 5]
+    print(pick_random_item(sample_data))

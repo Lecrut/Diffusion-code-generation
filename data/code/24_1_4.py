@@ -1,25 +1,20 @@
-def is_negative(number):
-    """
-    Returns True if number is less than zero, False otherwise.
-    
-    Args:
-        number (int or float): The numerical value to check.
-        
-    Returns:
-        bool: True if number < 0, else False.
-    """
-    return number < 0
+class LeapYearCalculator:
+    def __init__(self, year):
+        self.year = year
+
+    def is_leap(self):
+        if self.year % 400 == 0:
+            return True
+        if self.year % 100 == 0:
+            return False
+        if self.year % 4 == 0:
+            return True
+        return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_cases = [
-        -5,      # Should be True
-        0,       # Should be False (zero is not negative)
-        -3.14,   # Should be True
-        2.718,   # Should be False
-        float('-inf'),  # Should be True
-    ]
-
-    for value in test_cases:
-        result = is_negative(value)
-        print(f"is_negative({value}) = {result}")
+    calc1 = LeapYearCalculator(2000)
+    print(calc1.is_leap())
+    calc2 = LeapYearCalculator(1900)
+    print(calc2.is_leap())
+    calc3 = LeapYearCalculator(2024)
+    print(calc3.is_leap())

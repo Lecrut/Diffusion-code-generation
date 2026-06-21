@@ -1,10 +1,6 @@
-class Sorter:
-    def sort_list(self, data_list):
-        """Sorts a list of numbers in descending order."""
-        return sorted(data_list, reverse=True)
+def find_largest(a: float, b: float, c: float) -> float:
+    return a if (a >= b and a >= c) else (b if b >= c else c)
 
 if __name__ == '__main__':
-    sample_data = [34, 78, -12, 56, 90]
-    sorter = Sorter()
-    result = sorter.sort_list(sample_data.copy())
-    print("Sorted list (descending):", result)
+    result = find_largest(10, 20, 15)
+    print(result)

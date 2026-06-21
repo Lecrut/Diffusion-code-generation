@@ -1,3 +1,12 @@
-result = True if (x := 15) > 10 and y < 50 else False; x, y = 20, -10; result = True if (x := 20) > 10 and y < 50 else False
+import random
+from collections import namedtuple
+
+def random_access_namedtuple(namedtuple_instance):
+    index = random.randint(0, len(namedtuple_instance) - 1)
+    return namedtuple_instance[index]
+
 if __name__ == '__main__':
-    pass
+    Point = namedtuple('Point', ['x', 'y', 'z'])
+    p = Point(1, 2, 3)
+    result = random_access_namedtuple(p)
+    print(result)

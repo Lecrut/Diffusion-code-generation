@@ -1,10 +1,13 @@
-def is_negative(value):
-    """Returns True if value < 0, False otherwise."""
-    return value < 0
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    test_values = [ -5, 10 ]
-    
-    for val in test_values:
-        negative_status = "negative" if is_negative(val) else "not negative (non-negative)"
-        print(f"The number {val} is considered {negative_status}.")
+    test_years = [2000, 1900, 2024]
+    for year in test_years:
+        print(is_leap_year(year))

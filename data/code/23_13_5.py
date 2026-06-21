@@ -1,32 +1,28 @@
-def compare_strings(str1, str2):
-    len1 = len(str1)
-    len2 = len(str2)
-    min_len = min(len1, len2)
-    diff_index = -1
-    for i in range(min_len):
-        if str1[i] != str2[i]:
-            diff_index = i
-            break
-    return {
-        "str1": str1,
-        "str2": str2,
-        "length_diff": len1 - len2,
-        "first_diff_index": diff_index
-    }
+import bisect
+
+def get_grade(score):
+    thresholds = [60, 70, 80, 90]
+    grades = ['D', 'C', 'B', 'A']
+    if score < 60:
+        return 'F'
+    index = bisect.bisect_right(thresholds, score)
+    return grades[index]
+
+def build_grading_scale():
+    thresholds = [60, 70, 80, 90]
+    grades = ['D', 'C', 'B', 'A']
+    scale = {}
+    scale['fail'] = 'Score < 60'
+    for i in range(len(thresholds)):
+        start = thresholds[i]
+        if i + 1 < len(thresholds):
+            end = thresholds[i + 1]
+        else:
+            end = 100
+        scale[f'{start}-{end}'] = grades[i]
+    return scale
+
 if __name__ == '__main__':
-    string_a = "apple"
-    string_b = "apply"
-    comparison_result = compare_strings(string_a, string_b)
-    print(comparison_result)
-    string_c = "banana"
-    string_d = "bandana"
-    comparison_result = compare_strings(string_c, string_d)
-    print(comparison_result)
-    string_e = "cat"
-    string_f = "dog"
-    comparison_result = compare_strings(string_e, string_f)
-    print(comparison_result)
-    string_g = "hello"
-    string_h = "hell"
-    comparison_result = compare_strings(string_g, string_h)
-    print(comparison_result)
+    sample_score = 85
+    result = get_grade(sample_score)
+    print(result)

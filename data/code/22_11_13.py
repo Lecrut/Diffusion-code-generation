@@ -1,19 +1,26 @@
-def is_odd(n: int) -> bool:
-    """
-    Returns True if n is odd, False otherwise.
-    
-    Args:
-        n (int): The integer to check.
-        
-    Returns:
-        bool: True if the number is odd, False otherwise.
-    """
-    return n % 2 != 0
+import re
+
+def validate_password(password):
+    if not isinstance(password, str) or len(password) < 8:
+        return False
+    if not re.search(r'\d', password):
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    test_cases = [1, -3, 42, 0, 7]
-    
-    for num in test_cases:
-        result = is_odd(num)
-        print(f"is_odd({num}) = {result}")
+    test_cases = [
+        "Weak1!",
+        "StrongP@ss1",
+        "NoSpecial1a",
+        "NOdigit1!",
+        "ValidP@ss8",
+        "Sh0rtP@ss",
+        "ValidP@ss!1234"
+    ]
+    for case in test_cases:
+        result = validate_password(case)
+        print(f"{case}: {result}")

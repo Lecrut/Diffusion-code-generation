@@ -1,36 +1,22 @@
-class NumberUtility:
-    """A utility class containing helper methods to perform numeric checks."""
+class LeapYearChecker:
+    def __init__(self):
+        self.divisors = [4, 100, 400]
 
-    @staticmethod
-    def is_negative(number):
-        """Check if a number is negative.
+    def is_leap(self, year):
+        divisible_by_4 = year % self.divisors[0] == 0
+        divisible_by_100 = year % self.divisors[1] == 0
+        divisible_by_400 = year % self.divisors[2] == 0
 
-        Args:
-            number (int | float): The value to check.
-
-        Returns:
-            bool: True if the number is strictly less than zero, False otherwise.
-        """
-        return number < 0
+        if divisible_by_400:
+            return True
+        if divisible_by_100:
+            return False
+        return divisible_by_4
 
 if __name__ == '__main__':
-    # Sample test cases without user input or external dependencies
-    test_values = [
-        -5,
-        0,
-        3.14,
-        "-7",
-        float('-inf'),
-        None  # This will cause an exception during execution to demonstrate error handling in practice, 
-              # but per task constraints we run it directly; a real app should handle type errors gracefully elsewhere.
-    ]
-
-    for val in test_values:
-        try:
-            result = NumberUtility.is_negative(val) if isinstance(val, (int, float)) else "Not numeric"
-            print(f"is_negative({val}) => {result}")
-        except TypeError as te:
-            # Expected behavior when passing None or unsupported types directly here for demonstration of robustness
-            # In a production environment with CLI arguments removed, input validation happens before this call.
-            result = False if isinstance(val, (int, float)) else "Not numeric"  # Fallback based on logic check only
-            print(f"is_negative({val}) => {result}")
+    checker = LeapYearChecker()
+    print(checker.is_leap(2000))
+    print(checker.is_leap(1900))
+    print(checker.is_leap(2024))
+    print(checker.is_leap(2023))
+    print(checker.is_leap(2004))

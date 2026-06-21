@@ -1,3 +1,13 @@
-result = (lambda x: lambda y: True if (x > 10) and (y < 50) else False)(25)(30)
+import random
+import collections
+
+Point = collections.namedtuple('Point', ['x', 'y'])
+
+def random_access(element):
+    length = len(element)
+    index = random.randint(0, length - 1)
+    return element[index]
+
 if __name__ == '__main__':
-    result = (lambda x, y: bool(x > 10 and y < 50))(25)(30)
+    p = Point(10, 20)
+    print(random_access(p))

@@ -1,32 +1,13 @@
-def check_for_positive(filename):
-    has_positive = False
-    try:
-        with open(filename, 'r') as file:
-            for line in file:
-                try:
-                    number = float(line.strip())
-                    if number > 0:
-                        has_positive = True
-                        break
-                except ValueError:
-                    continue
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
+import random
+
+def get_random_value_from_index(value_list):
+    if not value_list:
         return None
-    except IOError as e:
-        print(f"Error reading file '{filename}': {e}")
-        return None
-    return has_positive
+    indices = range(len(value_list))
+    random_index = random.choice(indices)
+    return value_list[random_index]
+
 if __name__ == '__main__':
-    sample_filename = "numbers.txt"
-    with open(sample_filename, 'w') as f:
-        f.write("10\n")
-        f.write("-5\n")
-        f.write("0\n")
-        f.write("3.14\n")
-    result = check_for_positive(sample_filename)
-    if result is not None:
-        if result:
-            print("At least one number in the list is positive.")
-        else:
-            print("No positive numbers found in the list.")
+    numbers = [10, 20, 30, 40, 50]
+    result = get_random_value_from_index(numbers)
+    print(result)

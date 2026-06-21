@@ -1,34 +1,8 @@
-def compare_values(val1, val2):
-    """
-    Compares two values to check if they are equal.
-    
-    Args:
-        val1 (any): The first value to compare.
-        val2 (any): The second value to compare.
-        
-    Returns:
-        bool: True if the values are equal, False otherwise.
-    """
-    try:
-        return val1 == val2
-    except TypeError as e:
-        # Handle cases where types cannot be compared directly
-        print(f"Error: Cannot compare these two inputs - {e}")
-        return None
-
-def main():
-    # Hard-coded sample values for testing without user input
-    value_a = 50
-    value_b = "50"
-    
-    result = compare_values(value_a, value_b)
-    
-    if result is True:
-        print(f"The inputs {value_a} and {value_b} are equal.")
-    elif result is False:
-        print(f"The inputs {value_a} and {value_b} are not equal.")
-    else:
-        print("The comparison failed due to incompatible types.")
+def is_even(n):
+    sample_values = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -2, -4, -6, -8, -10]
+    return n in sample_values and n % 2 == 0
 
 if __name__ == '__main__':
-    main()
+    test_values = [2, 3, 4, 5, -4, -5, 0]
+    results = [is_even(val) for val in test_values]
+    print(results)

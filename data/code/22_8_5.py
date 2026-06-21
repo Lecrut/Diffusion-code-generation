@@ -1,29 +1,65 @@
-def is_odd(n):
-    """
-    Determine if a given integer n is odd.
+import re
+import collections
 
-    Args:
-        n (int): The integer to check.
+COMMON_WORDS = {
+    "password", "123456", "12345678", "qwerty", "abc123", "monkey", "1234567",
+    "letmein", "trustno1", "dragon", "baseball", "iloveyou", "master", "sunshine",
+    "ashley", "bailey", "shadow", "superman", "qazwsx", "123123", "football",
+    "password1", "password123", "welcome", "admin", "login", "princess", "starwars"
+}
 
-    Returns:
-        bool: True if n is odd, False otherwise.
+def is_common_word(password):
+    lower_password = password.lower()
+    if lower_password in COMMON_WORDS:
+        return True
+    for word in COMMON_WORDS:
+        if len(word) <= 6:
+            continue
+        if word in lower_password:
+            return True
+    return False
 
-    Raises:
-        TypeError: If the input 'n' is not an instance of int or other numeric types.
-    """
-    try:
-        return isinstance(n, (int, float)) and n % 2 != 0
-    except Exception:
-        raise TypeError("Input must be a number.")
+def validate_password_strength(password):
+    if not isinstance(password, str):
+        return False
+    
+    if len(password) < 8:
+        return False
+    
+    if is_common_word(password):
+        return False
+    
+    has_letter = any(c.isalpha() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    
+    if not (has_letter and has_digit):
+        return False
+    
+    consecutive_chars = 0
+    for i in range(len(password) - 2):
+        if password[i] == password[i+1] == password[i+2]:
+            consecutive_chars += 1
+    
+    if consecutive_chars > 0:
+        return False
+        
+    return True
 
 if __name__ == '__main__':
-    # Test case 1: Verify correct odd identification.
-    assert is_odd(7) is True
-    print(f"Test case 1 passed: is_odd(7) = {is_odd(7)}")
-
-    # Test case 2: Verify correct even identification and boundary behavior (0).
-    assert is_odd(0) is False
-    assert is_odd(-3) is True, "Negative odd number should return True."
-    print(f"Test cases passed. Examples:")
-    print("is_odd(7) = ", is_odd(7))
-    print("is_odd(0) = ", is_odd(0))
+    test_cases = [
+        "Password1",
+        "12345678",
+        "Str0ng!Pass",
+        "aaaaaaa1",
+        "ValidP@ss1",
+        "abc123",
+        "Short1"
+    ]
+    
+    results = []
+    for pwd in test_cases:
+        is_valid = validate_password_strength(pwd)
+        results.append(f"{pwd}: {is_valid}")
+    
+    for res in results:
+        print(res)

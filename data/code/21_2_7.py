@@ -1,10 +1,8 @@
-class Sorter:
-    def sort_list(self, data_list):
-        """Sorts a list of numbers in reverse (descending) order."""
-        return sorted(data_list, reverse=True)
+def max_of_three(a, b, c):
+    if not all(isinstance(x, (int, float)) for x in (a, b, c)):
+        raise TypeError("All arguments must be numeric")
+    return a if (a >= b and a >= c) else (b if b >= c else c)
 
 if __name__ == '__main__':
-    sample_data = [5, 2, 9, 1, 7]
-    sorter = Sorter()
-    result = sorter.sort_list(sample_data)
+    result = max_of_three(10, 20, 5)
     print(result)

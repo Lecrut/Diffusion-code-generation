@@ -1,21 +1,10 @@
-def are_equal(item1, item2):
-    """
-    Returns True if item1 is equal to item2 using Python's equality operator (==),
-    False otherwise. Handles integers, strings, lists, and other types correctly.
-
-    Args:
-        item1: The first value to compare.
-        item2: The second value to compare.
-
-    Returns:
-        bool: True if item1 == item2, False otherwise.
-    """
-    return item1 == item2
+def is_even(n: int) -> bool:
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise TypeError("Argument must be an integer")
+    return (n & 1) == 0
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    print(are_equal(5, 5))           # True (integers)
-    print(are_equal("hello", "world"))   # False (strings)
-    print(are_equal([1, 2], [3, 4]))     # False (lists)
-    print(are_equal([1, 2], [1, 2]))     # True (equal lists)
-    print(are_equal(True, 1))            # True (True == 1 in Python)
+    print(is_even(4))
+    print(is_even(7))
+    print(is_even(-2))
+    print(is_even(0))

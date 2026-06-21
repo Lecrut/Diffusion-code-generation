@@ -1,14 +1,15 @@
-import sys
-
-def main():
-    """Main function to handle number comparison logic."""
-    num1 = 50
-    num2 = 30
-    
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+def get_middle_element(data):
+    return data[len(data) // 2]
 
 if __name__ == '__main__':
-    main()
+    sample_list_1 = [10, 20, 30, 40, 50]
+    sample_list_2 = [1, 2, 3, 4, 5, 6]
+    sample_list_3 = ['a', 'b', 'c']
+    
+    result_1 = get_middle_element(sample_list_1)
+    result_2 = get_middle_element(sample_list_2)
+    result_3 = get_middle_element(sample_list_3)
+    
+    print(result_1)
+    print(result_2)
+    print(result_3)

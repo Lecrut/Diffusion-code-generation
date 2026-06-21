@@ -1,16 +1,24 @@
-def set_operations_comparison(set_x, set_y):
-    intersection = set_x.intersection(set_y)
-    union = set_x.union(set_y)
-    intersection_size = len(intersection)
-    union_size = len(union)
-    difference = union_size - intersection_size
-    return intersection, union, difference
+import bisect
+
+score_grade_tuples = [
+    (90, 'A'),
+    (80, 'B'),
+    (70, 'C'),
+    (60, 'D'),
+    (0, 'F')
+]
+
+score_thresholds = sorted([(s, g) for s, g in score_grade_tuples], key=lambda x: x[0])
+grades_lookup = sorted([g for _, g in score_thresholds], reverse=True)
+scores_lookup = sorted([s for s, _ in score_thresholds], reverse=True)
+
+def get_grade(score):
+    index = bisect.bisect_left(scores_lookup, score)
+    if index < len(grades_lookup):
+        return grades_lookup[index]
+    return 'F'
+
 if __name__ == '__main__':
-    set_x = {1, 2, 3, 4, 5}
-    set_y = {4, 5, 6, 7, 8}
-    intersection_result, union_result, diff_result = set_operations_comparison(set_x, set_y)
-    print(f"Set X: {set_x}")
-    print(f"Set Y: {set_y}")
-    print(f"Intersection: {intersection_result}")
-    print(f"Union: {union_result}")
-    print(f"Difference in size (Union size - Intersection size): {diff_result}")
+    test_scores = [95, 85, 75, 65, 55, 100]
+    results = list(map(lambda s: get_grade(s), test_scores))
+    print(results)

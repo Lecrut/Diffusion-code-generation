@@ -1,6 +1,13 @@
-def sort_pairs(pairs):
-    return sorted(pairs, key=lambda item: item[0], reverse=True)
+def find_largest(a, b, c):
+    if a >= b and a >= c:
+        return a
+    if b >= a and b >= c:
+        return b
+    return c
+
 if __name__ == '__main__':
-    sample_data = [(3, 1), (1, 5), (4, 2), (2, 8), (5, 3)]
-    sorted_result = sort_pairs(sample_data)
-    print(sorted_result)
+    x = 12.5
+    y = 30.1
+    z = 5.7
+    result = find_largest(x, y, z)
+    print(result)

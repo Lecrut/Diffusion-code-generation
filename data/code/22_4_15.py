@@ -1,23 +1,61 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd numbers from the input list.
+def score_password(password: str) -> int:
+    length = len(password)
+    if length == 0:
+        return 0
     
-    Optimized by using a generator expression within list() which is memory efficient 
-    and avoids creating intermediate lists during iteration.
+    has_lower = False
+    has_upper = False
+    has_digit = False
+    has_special = False
     
-    Args:
-        numbers (list of int): The input list of integers.
-        
-    Returns:
-        list of int: A new list containing only the odd integers from the input.
-    """
-    return [num for num in numbers if num % 2 != 0]
+    special_chars = set("!@#$%^&*()_+-=[]{}|;:,.<>?/~`")
+    
+    for char in password:
+        if char.islower():
+            has_lower = True
+        elif char.isupper():
+            has_upper = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+    
+    diversity_score = 0
+    if has_lower:
+        diversity_score += 1
+    if has_upper:
+        diversity_score += 1
+    if has_digit:
+        diversity_score += 1
+    if has_special:
+        diversity_score += 1
+    
+    length_score = 0
+    if length >= 8:
+        length_score += 1
+    if length >= 12:
+        length_score += 1
+    if length >= 16:
+        length_score += 1
+    if length >= 20:
+        length_score += 1
+    
+    total = (diversity_score * 2) + (length_score * 1)
+    
+    if total > 10:
+        total = 10
+    
+    return total
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or network)
-    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
-    result = filter_odd_numbers(sample_data)
-    
-    print("Original list:", sample_data)
-    print("Filtered odd numbers:", result)
+    samples = [
+        "abc",
+        "abcdef",
+        "Abcdef1",
+        "Abcdefgh1!",
+        "Abcdefgh1!Xy",
+        "Short1!",
+        "VeryLongComplexPassword123!@#"
+    ]
+    for s in samples:
+        print(score_password(s))

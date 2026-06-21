@@ -1,12 +1,10 @@
-def is_positive(number: int) -> bool:
-    """Return True if number > 0, else False."""
-    return number > 0
+import numpy as np
+
+def get_random_element(arr):
+    idx = np.random.randint(arr.size)
+    return arr.flat[idx]
 
 if __name__ == '__main__':
-    test_cases = [1, 0, -5]
-    
-    for value in test_cases:
-        result = is_positive(value)
-        
-        # Simulate reading from input by printing the result directly.
-        print('True' if result else 'False')
+    sample_array = np.arange(1000000)
+    result = get_random_element(sample_array)
+    print(result)

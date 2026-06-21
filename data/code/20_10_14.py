@@ -1,12 +1,9 @@
-def are_equal(item1: any, item2: any) -> bool:
-    """Returns True if item1 equals item2 using Python's equality operator."""
-    return item1 == item2
+def is_even_bitwise(n: int) -> bool:
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise TypeError("Input must be an integer")
+    return (n & 1) == 0
 
 if __name__ == '__main__':
-    # Test cases with hard-coded values
-    assert are_equal(5, 5) is True      # integers equal
-    assert are_equal("hello", "hello") is True   # strings equal
-    assert are_equal([1, 2, 3], [1, 2, 3]) is True        # lists equal
-    
-    print(f"{are_equal(5, 6) = }")         # False
-    print(f"{are_equal('a', 'b') = }")   # False
+    test_values = [0, 1, 2, 3, -1, -2, 100, 99]
+    for val in test_values:
+        print(f"is_even_bitwise({val}) = {is_even_bitwise(val)}")

@@ -1,10 +1,5 @@
-# Script to filter negative integers from a list using generator expression
-def main():
-    # Hard-coded sample values as per requirements (no user input)
-    numbers = [10, -5, 3, -20, 7, -8]
-    
-    # Use a generator expression within print() to yield only negative numbers
-    # This avoids creating an intermediate list in memory while filtering
-
+is_leap_year = lambda y: y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
 if __name__ == '__main__':
-    pass
+    test_years = [1600, 1700, 1800, 1900, 2000, 2004, 2005, 2024, 2100]
+    for year in test_years:
+        print(f"{year}: {is_leap_year(year)}")

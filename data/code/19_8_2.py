@@ -1,33 +1,19 @@
-def check_for_positive(filename):
-    has_positive = False
-    try:
-        with open(filename, 'r') as file:
-            for line in file:
-                try:
-                    number = float(line.strip())
-                    if number > 0:
-                        has_positive = True
-                        break
-                except ValueError:
-                    continue
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
-        return None
-    except IOError as e:
-        print(f"Error reading file: {e}")
-        return None
-    return has_positive
+import random
+
+def get_random_value_from_range(start, stop, step, values):
+    if not values:
+        raise IndexError("Cannot select from an empty list")
+    
+    indices_count = len(values)
+    random_index = random.randint(0, indices_count - 1)
+    
+    return values[random_index]
+
 if __name__ == '__main__':
-    sample_filename = "numbers.txt"
-    try:
-        with open(sample_filename, 'w') as f:
-            f.write("10\n")
-            f.write("-5\n")
-            f.write("0\n")
-            f.write("22\n")
-            f.write("-1\n")
-        result = check_for_positive(sample_filename)
-        if result is not None:
-            print(f"Does the list contain at least one positive number? {result}")
-    except IOError as e:
-        print(f"An error occurred during file setup: {e}")
+    start = 1
+    stop = 100
+    step = 2
+    pre_defined_values = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    
+    result = get_random_value_from_range(start, stop, step, pre_defined_values)
+    print(result)

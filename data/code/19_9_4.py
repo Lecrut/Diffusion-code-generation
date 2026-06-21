@@ -1,4 +1,16 @@
-result = (12 < 50) if (4 > 10 and 30 < 50) else False; print(result); result = (x := True if ((12 > 10) and (30 < 50)) else False)
+import random
+from collections import namedtuple
+
+def random_access_namedtuple(data, index=None):
+    if index is None:
+        index = random.randint(0, len(data) - 1)
+    return data[index]
 
 if __name__ == '__main__':
-    pass
+    Point = namedtuple('Point', ['x', 'y', 'z'])
+    sample_point = Point(10, 20, 30)
+    result = random_access_namedtuple(sample_point)
+    print(result)
+    random_index = random.randint(0, 2)
+    explicit_result = random_access_namedtuple(sample_point, random_index)
+    print(explicit_result)

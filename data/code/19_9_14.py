@@ -1,2 +1,11 @@
+import random
+from collections import namedtuple
+
+def random_element_from_namedtuple(nt_instance):
+    return random.choice(nt_instance)
+
 if __name__ == '__main__':
-    x = 12; y = 40; result = (x > 10) and (y < 50); print(result)
+    Point = namedtuple('Point', ['x', 'y'])
+    p = Point(10, 20)
+    result = random_element_from_namedtuple(p)
+    print(result)

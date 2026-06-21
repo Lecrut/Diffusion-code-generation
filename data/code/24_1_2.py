@@ -1,11 +1,18 @@
-def is_negative(number):
-    """Returns True if number is less than zero, False otherwise."""
-    return number < 0
+def is_leap_year(year):
+    is_divisible_by_four = year % 4 == 0
+    is_divisible_by_hundred = year % 100 == 0
+    is_divisible_by_four_hundred = year % 400 == 0
+    
+    if is_divisible_by_four_hundred:
+        return True
+    if is_divisible_by_hundred:
+        return False
+    if is_divisible_by_four:
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input
-    samples = [1, -5.5, 0, float('-inf'), float('inf')]
-
-    for val in samples:
-        result = is_negative(val)
-        print(f"is_negative({val}) = {result}")
+    test_cases = [2020, 2100, 2400]
+    for current_year in test_cases:
+        result = is_leap_year(current_year)
+        print(result)

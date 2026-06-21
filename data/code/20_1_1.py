@@ -1,9 +1,8 @@
-def compare_strings_case_insensitive(str1, str2):
-    return str1.lower() == str2.lower()
+def is_even(n):
+    return (n & 1) == 0
+
 if __name__ == '__main__':
-    print(compare_strings_case_insensitive("Hello", "hello"))
-    print(compare_strings_case_insensitive("Python", "python"))
-    print(compare_strings_case_insensitive("Apple", "Orange"))
-    print(compare_strings_case_insensitive("Test", "test"))
-    print(compare_strings_case_insensitive("aBc", "abc"))
-    print(compare_strings_case_insensitive("abc", "ABC"))
+    print(is_even(4))
+    print(is_even(7))
+    print(is_even(0))
+    print(is_even(25))

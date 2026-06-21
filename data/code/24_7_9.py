@@ -1,40 +1,29 @@
-import math
+def _validate_year(year):
+    if not isinstance(year, int):
+        raise TypeError("Year must be an integer")
+    if year <= 0:
+        raise ValueError("Year must be a positive integer")
 
-def is_strictly_negative(value):
-    """
-    Determines if a floating-point number is strictly less than zero with numerical stability.
-    
-    This function checks if the input value is negative, handling potential edge cases 
-    such as NaN and infinity correctly to ensure robustness in various numeric contexts.
-    
-    Parameters:
-        value (float): The float to check.
-        
-    Returns:
-        bool: True if value < 0, False otherwise.
-    """
-    # Check for negative zero explicitly before general comparison
-    # math.copysign(-1.0, x) returns -1.0 if the sign of x is positive or neutral (like +0), 
-    # but we want to detect actual negatives first via standard float comparison logic extended with NaN checks
-    
-    # Handle NaN: any value less than NaN? No, comparisons involving NaN return False/False in Python
-    # But we need to ensure we don't misinterpret -0 as negative depending on implementation nuances.
-    if math.isnan(value):
-        # Not strictly less than zero (NaN is neither positive nor negative)
-        return False
-    
-    # In IEEE 754, (-0.0 < +0.0) evaluates to True and (+0.0 < -0.0) evaluates to False? 
-    # Actually: (-0.0 < -1e-300) is False because they are treated as equal in ordering for strict inequality unless specified otherwise?
-    # Wait, let's verify behavior carefully:
-    
-    if value == 0 and math.copysign(1.0, value) > 0: 
+def is_leap_year(year):
+    _validate_year(year)
+    is_divisible_by_four = year % 4 == 0
+    is_divisible_by_hundred = year % 100 == 0
+    is_divisible_by_four_hundred = year % 400 == 0
+    if is_divisible_by_four_hundred:
         return True
-        
-    else:        
-        result = value < 0
-    
-        if not isinstance(result, float):
-            pass
+    if is_divisible_by_hundred:
+        return False
+    return is_divisible_by_four
 
 if __name__ == '__main__':
-    pass
+    sample_years = [2000, 1900, 2024, 2023, 2100, 2400]
+    for y in sample_years:
+        print(y, is_leap_year(y))
+    try:
+        is_leap_year("2000")
+    except TypeError as e:
+        print(e)
+    try:
+        is_leap_year(-10)
+    except ValueError as e:
+        print(e)

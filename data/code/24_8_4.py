@@ -1,11 +1,13 @@
-def check_negative(value: int) -> str:
-    """Returns a descriptive string indicating if the value is negative."""
-    return f"The number {value} {'is' if value < 0 else 'is not'} negative."
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_values = [-5, 10, -3.5]
-
-    for val in test_values:
-        result = check_negative(int(val)) if isinstance(val, float) else check_negative(val)
-        print(result)
+    years = [2000, 1900, 2024]
+    for y in years:
+        print(is_leap_year(y))

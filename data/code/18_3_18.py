@@ -1,14 +1,10 @@
-def main():
-    # Simulate user prompts with hard-coded sample values as per requirements
-    num1 = 50
-    num2 = 30
-    
-    print(f"Comparing {num1} and {num2}")
-    
-    if num1 > num2:
-        print(f"{num1} is greater than {num2}")
-    else:
-        print(f"{num1} is not greater than {num2}")
+def get_center_element(lst):
+    mid = len(lst) // 2
+    return lst[mid]
 
 if __name__ == '__main__':
-    main()
+    print(get_center_element([1, 2, 3]))
+    print(get_center_element([1, 2, 3, 4, 5]))
+    print(get_center_element([10]))
+    print(get_center_element([1, 2]))
+    print(get_center_element([5, 15, 25, 35, 45, 55, 65]))

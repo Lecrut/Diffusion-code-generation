@@ -1,16 +1,8 @@
-def set_operations_comparison(set_x, set_y):
-    intersection = set_x.intersection(set_y)
-    union = set_x.union(set_y)
-    intersection_size = len(intersection)
-    union_size = len(union)
-    difference = union_size - intersection_size
-    return intersection, union, difference
+def get_grade(score, grade_boundaries):
+    return next((grade for score_val, grade in reversed(grade_boundaries) if score >= score_val), 'F')
+
 if __name__ == '__main__':
-    set_x_data = {1, 2, 3, 4, 5}
-    set_y_data = {4, 5, 6, 7, 8}
-    intersection_result, union_result, size_difference = set_operations_comparison(set_x_data, set_y_data)
-    print(f"Set X: {set_x_data}")
-    print(f"Set Y: {set_y_data}")
-    print(f"Intersection: {intersection_result}")
-    print(f"Union: {union_result}")
-    print(f"Difference in size (Union size - Intersection size): {size_difference}")
+    grades = [(90, 'A'), (80, 'B'), (70, 'C'), (60, 'D'), (0, 'F')]
+    test_scores = [95, 85, 75, 65, 55]
+    results = [get_grade(s, grades) for s in test_scores]
+    print(results)

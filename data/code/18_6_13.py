@@ -1,7 +1,8 @@
-# Check if 'a' is greater than 'b' using a single comparison operator within an expression block.
-result = (lambda: print("a > b" if "a" > "b" else False))()  # Placeholder logic to demonstrate structure; actual check would be on variables below.
+def get_middle_element(lst):
+    return lst[len(lst) // 2]
 
 if __name__ == '__main__':
-    a = 10
-    b = 5
-    is_greater = (lambda: print(f"{a} is greater than {b}" if a > b else f"{a} is not greater than {b}")())()
+    print(get_middle_element([1, 2, 3, 4, 5]))
+    print(get_middle_element([10, 20, 30]))
+    print(get_middle_element([7]))
+    print(get_middle_element([1, 2]))

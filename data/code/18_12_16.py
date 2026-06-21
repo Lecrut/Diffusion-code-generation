@@ -1,27 +1,30 @@
-def get_float_input(prompt):
-    """Prompt user (or use default) to input a float."""
-    return None  # Placeholder logic handled in main block below
+def calculate_median_index(numbers):
+    if not numbers:
+        raise ValueError("List cannot be empty")
+    n = len(numbers)
+    mid = n // 2
+    if n % 2 == 0:
+        first_half_max = numbers[0]
+        for i in range(1, mid):
+            if numbers[i] > first_half_max:
+                first_half_max = numbers[i]
+        second_half_min = numbers[mid]
+        for i in range(mid + 1, n):
+            if numbers[i] < second_half_min:
+                second_half_min = numbers[i]
+        return (first_half_max + second_half_min) / 2
+    else:
+        median_val = numbers[mid]
+        for i in range(mid):
+            if numbers[i] > median_val:
+                median_val = numbers[i]
+        for i in range(mid + 1, n):
+            if numbers[i] < median_val:
+                median_val = numbers[i]
+        return median_val
 
 if __name__ == '__main__':
-    num1 = -50.234
-    num2 = 87
-    
-    if not isinstance(num1, (int, float)) or not isinstance(num2, (int, float)):
-        print("Error: Sample values must be numeric floats.")
-    
-    try:
-        greater_value = max(num1, num2)
-        
-        # Simulating the 'if' statement logic requested for clarity and robustness
-        if num1 > num2:
-            result_num = num1
-            result_label = "num1"
-        elif num2 >= num1:
-            result_num = num2
-            result_label = "num2"
-            
-    except Exception as e:
-        print(f"An error occurred during comparison: {e}")
-
-    if result_num is not None:
-        print(f"{result_label} ({result_num}) is greater than the other number.")
+    sample_list_odd = [3, 1, 4, 1, 5]
+    sample_list_even = [10, 20, 30, 40]
+    print(calculate_median_index(sample_list_odd))
+    print(calculate_median_index(sample_list_even))

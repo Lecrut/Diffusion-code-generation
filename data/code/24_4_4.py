@@ -1,23 +1,18 @@
-def filter_negative_numbers(numbers):
-    """
-    Returns a new list containing only the negative integers from the input list.
-    
-    Optimized by using a generator expression within list() which is memory efficient 
-    and faster than explicit loops in Python due to C-level implementation optimizations.
-    
-    Args:
-        numbers (list of int): The input list of integers.
-        
-    Returns:
-        list of int: A new list containing only the negative integers from the input.
-    """
-    return [num for num in numbers if num < 0]
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    if year % 4 == 0:
+        return True
+    return False
+
+assert is_leap_year(2000) is True
+assert is_leap_year(2024) is True
+assert is_leap_year(1900) is False
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, network access, or files)
-    sample_data = [-5, -1, 3, -2.5, 7, -8, 0, -9]
-    
-    result = filter_negative_numbers(sample_data)
-    
-    print("Input:", sample_data)
-    print("Negative elements only:", result)
+    test_years = [2000, 2024, 1900, 2023, 2100]
+    for year in test_years:
+        result = is_leap_year(year)
+        print(f"{year}: {result}")

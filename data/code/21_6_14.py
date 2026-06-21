@@ -1,42 +1,18 @@
-def reverse_range_generator(start: int, end: int):
-    """
-    Generator function that yields numbers from start down to end (inclusive).
-    
-    Args:
-        start (int): The upper bound of the range.
-        end (int): The lower bound of the range.
-        
-    Yields:
-        int: Numbers in descending order starting from 'start' and ending at 'end'.
-        
-    Example:
-        >>> list(reverse_range_generator(5, 1))
-        [5, 4, 3, 2, 1]
-    """
-    if start < end:
-        raise ValueError("Start value must be greater than or equal to end value.")
+class MaxFinder:
+    COMPARISON_TYPE = "max"
 
-    current = start
-    while True:
-        yield current
-        current -= 1
-        if current == end:
-            break
+    @staticmethod
+    def find_greatest(a, b, c):
+        return a if a >= b and a >= c else b if b >= c else c
+
+def greatest_of_three(a, b, c):
+    return MaxFinder.find_greatest(a, b, c)
 
 if __name__ == '__main__':
-    # Sample usage with hard-coded values, no user input required.
-    lower_bound = 50
-    upper_bound = 20
-    
-    print("Generating numbers from", upper_bound, "down to", lower_bound)
-    
-    for num in reverse_range_generator(upper_bound, lower_bound):
-        # Yielding one number at a time is memory efficient as it doesn't store the entire list.
-        pass
-
-    # Demonstrate by collecting into a list (for verification purposes only).
-    result = []
-    for n in reverse_range_generator(100, 95):
-        result.append(n)
-    
-    print("Generated sequence:", result)
+    print(greatest_of_three(1, 5, 3))
+    print(greatest_of_three(9, 2, 4))
+    print(greatest_of_three(7, 7, 1))
+    print(greatest_of_three(-10, -20, -5))
+    print(greatest_of_three(0, 0, 0))
+    print(greatest_of_three(100, 200, 150))
+    print(greatest_of_three(3.5, 3.1, 3.9))

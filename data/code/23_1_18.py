@@ -1,72 +1,20 @@
-def compare_and_report(value1: float | int, value2: float | int) -> dict[str, float]:
-    """
-    Compares two numerical values and returns a dictionary with comparison details.
+grade_map = {
+    0: 'F', 1: 'F', 2: 'F', 3: 'F', 4: 'F', 5: 'F', 6: 'F', 7: 'F', 8: 'F', 9: 'F',
+    10: 'D-', 11: 'D-', 12: 'D-', 13: 'D-', 14: 'D-', 15: 'D-', 16: 'D-', 17: 'D-', 18: 'D-', 19: 'D-',
+    20: 'D', 21: 'D', 22: 'D', 23: 'D', 24: 'D', 25: 'D', 26: 'D', 27: 'D', 28: 'D', 29: 'D',
+    30: 'C-', 31: 'C-', 32: 'C-', 33: 'C-', 34: 'C-', 35: 'C-', 36: 'C-', 37: 'C-', 38: 'C-', 39: 'C-',
+    40: 'C', 41: 'C', 42: 'C', 43: 'C', 44: 'C', 45: 'C', 46: 'C', 47: 'C', 48: 'C', 49: 'C',
+    50: 'B-', 51: 'B-', 52: 'B-', 53: 'B-', 54: 'B-', 55: 'B-', 56: 'B-', 57: 'B-', 58: 'B-', 59: 'B-',
+    60: 'B', 61: 'B', 62: 'B', 63: 'B', 64: 'B', 65: 'B', 66: 'B', 67: 'B', 68: 'B', 69: 'B',
+    70: 'A-', 71: 'A-', 72: 'A-', 73: 'A-', 74: 'A-', 75: 'A-', 76: 'A-', 77: 'A-', 78: 'A-', 79: 'A-',
+    80: 'A', 81: 'A', 82: 'A', 83: 'A', 84: 'A', 85: 'A', 86: 'A', 87: 'A', 88: 'A', 89: 'A',
+    90: 'A+', 91: 'A+', 92: 'A+', 93: 'A+', 94: 'A+', 95: 'A+', 96: 'A+', 97: 'A+', 98: 'A+', 99: 'A+', 100: 'A+'
+}
 
-    Args:
-        value1 (int or float): First arbitrary numerical value.
-        value2 (int or float): Second arbitrary numerical value.
-
-    Returns:
-        dict: A dictionary containing the following keys:
-            - 'comparison': "greater", "less", or "equal" indicating relationship between values.
-            - 'difference': Absolute difference |value1 - value2|.
-            - 'ratio': Ratio of larger value to smaller (if equal, returns 1.0).
-
-    Notes:
-        Uses efficient direct comparison without external libraries. Handles floats and ints uniformly.
-    """
-    # Ensure values are treated as floats for consistent arithmetic operations with potential precision issues in division
-    v1 = float(value1) if not isinstance(value1, (int, bool)) else value1
-    v2 = float(value2) if not isinstance(v2, (int, bool)) else v2
-
-    diff = abs(v1 - v2)
-    
-    # Handle edge case where both values are zero to avoid division by zero error implicitly in ratio logic below
-    is_zero_sum = (v1 == 0 and v2 == 0)
-    
-    if is_zero_sum:
-        comparison = "equal"
-        return {
-            'comparison': str(comparison),
-            'difference': float(diff),
-            'ratio': 1.0
-        }
-
-    larger_val, smaller_val = (v1, v2) if abs(v1 - min(v1, v2)) == diff else (min(val for val in [v1, v2]), max(val for val in [v1, v2]))[::-1]
-    
-    # Simpler logic for larger and smaller:
-    if v1 > v2:
-        comparison = "greater"
-        larger_val, smaller_val = v1, v2
-    elif v2 > v1:
-        comparison = "less"
-        larger_val, smaller_val = v2, v1
-    else:
-        comparison = "equal"
-
-    ratio = abs(larger_val / smaller_val) if not is_zero_sum and (comparison != 'greater' or v1 != 0) else float(diff * -1) # Placeholder fix for logic clarity
-    
-    # Refined Logic Flow:
-    # Calculate diff correctly first. Then determine which is larger/smaller. 
-    # If equal, ratio is 1. Otherwise, divide the positive result of abs() by smaller_val to ensure positivity or just standard division since we know sizes relative order if not zero sum? Wait, simply math.max/abs(math.min) logic:
-    
-    actual_diff = float(diff)
-
-    if v1 == v2:
-        comparison_str = "equal"
-        ratio_value = 1.0
-    elif abs(v1 - smaller_of_two) < 1e-9 and v1 != 0: # Precision check not required per task unless specified, assume standard float div
-         pass 
-
-    # Simple logic for max/min without sorting overhead which is already minimal here
-    if v1 > v2:
-        larger = v1; smaller = v2
-        comp_res = "greater"
-    else: 
-        larger = v2; smaller = v1
-        comp_res = "less"
-
-    # Ratio of larger to smaller. If either is zero, handle carefully? Task says arbitrary numerical values. 0/anything=0 or anything/0->inf. Python handles float('inf').
+def convert_scores_to_grades(scores):
+    return [grade_map.get(score, 'Invalid Score') for score in scores]
 
 if __name__ == '__main__':
-    pass
+    raw_scores = [95, 82, 76, 61, 55, 49, 35, 20, 10, 5]
+    letter_grades = convert_scores_to_grades(raw_scores)
+    print(letter_grades)

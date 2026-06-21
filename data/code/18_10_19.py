@@ -1,44 +1,15 @@
-import numpy as np
-
-def is_greater(a: float | int, b: float | int) -> bool:
-    """
-    Check if a numerical value 'a' is strictly greater than another value 'b'.
-
-    Parameters
-    ----------
-    a : number
-        The first numerical argument. Can be an integer or floating-point number.
-    
-    b : number
-        The second numerical argument. Can be an integer or floating-point number.
-
-    Returns
-    -------
-    bool
-        True if 'a' is strictly greater than 'b', False otherwise.
-
-    Notes
-    -----
-    This function performs a direct comparison and returns the result immediately,
-    ensuring high efficiency for both integers and floats. It handles standard numeric
-    types but does not perform any type conversion or validation beyond basic usage.
-
-    Examples
-    --------
-    >>> is_greater(5, 3)
-    True
-    >>> is_greater(2, 7)
-    False
-    
-    References
-    ----------
-    Python's built-in comparison operators (`>`) are used for optimal performance.
-    """
-    return a > b
+def get_middle_element(lst):
+    if not lst:
+        return None
+    return lst[len(lst) // 2]
 
 if __name__ == '__main__':
-    sample_a = 10
-    sample_b = 5
+    sample_list_odd = [1, 2, 3, 4, 5]
+    sample_list_even = [1, 2, 3, 4]
+    sample_list_empty = []
+    sample_list_single = [42]
 
-    result = is_greater(sample_a, sample_b)
-    print(f"is_greater({sample_a}, {sample_b}) = {result}")
+    print(get_middle_element(sample_list_odd))
+    print(get_middle_element(sample_list_even))
+    print(get_middle_element(sample_list_empty))
+    print(get_middle_element(sample_list_single))

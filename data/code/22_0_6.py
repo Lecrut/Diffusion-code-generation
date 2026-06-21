@@ -1,28 +1,26 @@
-# python_odd_even_checker.py
+import re
+SPECIAL_CHARS = re.compile(r'[!@#$%^&*(),.?":{}|<>]')
+UPPER_PATTERN = re.compile(r'[A-Z]')
+LOWER_PATTERN = re.compile(r'[a-z]')
+DIGIT_PATTERN = re.compile(r'[0-9]')
 
-import sys
-    
-def check_parity(number: int) -> None:
-    """
-    Determines whether a given integer is odd or even and prints the result.
-    
-    A number is considered even if it can be divided by 2 with no remainder (modulo == 0).
-    Otherwise, it is classified as odd.
-    
-    Args:
-        number (int): The integer to check for parity
-        
-    Prints a descriptive message indicating whether 'number' is odd or even.
-    """
-    if number % 2 == 0:
-        print(f"The integer {number} is Even.")
-    else:
-        print(f"The integer {number} is Odd.")
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    if not UPPER_PATTERN.search(password):
+        return False
+    if not LOWER_PATTERN.search(password):
+        return False
+    if not DIGIT_PATTERN.search(password):
+        return False
+    if not SPECIAL_CHARS.search(password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or command-line arguments.
-    
-    samples = [1, 2, -3, 0]
-    
-    for val in samples:
-        check_parity(val)
+    print(validate_password_strength('Weak1!'))
+    print(validate_password_strength('ValidPass1!'))
+    print(validate_password_strength('AllLower1!'))
+    print(validate_password_strength('AllUpper1!'))
+    print(validate_password_strength('NoDigit!Aa'))
+    print(validate_password_strength('ComplexP@ss99'))

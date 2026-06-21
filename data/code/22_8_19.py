@@ -1,33 +1,30 @@
-def is_odd(number):
-    """
-    Determines if a given integer is odd.
+import string
+import re
 
-    Args:
-        number (int): The integer to check.
+def is_weak_password(password: str) -> bool:
+    common_words = [
+        "password", "123456", "12345678", "qwerty", "abc123",
+        "monkey", "master", "dragon", "111111", "baseball",
+        "iloveyou", "trustno1", "sunshine", "princess", "football"
+    ]
+    for word in common_words:
+        if word in password.lower():
+            return True
+    return False
 
-    Returns:
-        bool: True if the number is odd, False otherwise.
-    
-    Raises:
-        TypeError: If 'number' is not an instance of int or float representing an integer value.
-    """
-    # Ensure input is numeric and effectively an integer (handles floats like 5.0)
-    try:
-        num = int(number)
-    except (TypeError, ValueError):
-        raise TypeError(f"Expected a number type, got {type(number).__name__}")
-
-    return num % 2 != 0
+def validate_password_strength(password: str) -> dict:
+    result = {
+        "length_ok": len(password) >= 8,
+        "has_upper": any(c.isupper() for c in password),
+        "has_lower": any(c.islower() for c in password),
+        "has_digit": any(c.isdigit() for c in password),
+        "has_special": any(c in string.punctuation for c in password),
+        "not_weak": not is_weak_password(password)
+    }
+    result["overall_valid"] = all(result.values())
+    return result
 
 if __name__ == '__main__':
-    # Test Case 1: Verify that an even number returns False
-    test_value_1 = 4
-    result_1 = is_odd(test_value_1)
-    assert result_1 is False, f"Expected {test_value_1} to be not odd."
-
-    # Test Case 2: Verify that an odd number returns True
-    test_value_2 = -7
-    result_2 = is_odd(test_value_2)
-    assert result_2 is True, f"Expected {-abs(test_value_2)} (or {test_value_2}) to be odd."
-
-    print("All tests passed successfully.")
+    test_password = "Str0ng!Pass"
+    output = validate_password_strength(test_password)
+    print(output)

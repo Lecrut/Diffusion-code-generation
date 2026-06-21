@@ -1,23 +1,15 @@
-def is_max_greater_than_second_last(numbers):
-    """
-    Returns True if the maximum value in the list is greater than 
-    the second-to-last element, otherwise False.
-    
-    Args:
-        numbers (list of int or float): The input list of numbers.
-        
-    Returns:
-        bool: True if max > second_last, else False.
-    """
-    if len(numbers) < 2:
-        return False
-    
-    maximum = max(numbers)
-    second_to_last = numbers[-2]
-    
-    return maximum > second_to_last
+def get_middle_value(items):
+    index = len(items) // 2
+    return items[index]
 
 if __name__ == '__main__':
-    sample_list = [3, 7, 1, 9, 4]
-    result = is_max_greater_than_second_last(sample_list)
-    print(result)  # Expected output: True (max=9, second-to-last=4)
+    list_one = [1, 2, 3]
+    list_two = [10, 20, 30, 40, 50]
+    list_three = [100, 200, 300, 400]
+    list_four = [7, 5, 9, 1, 3, 8, 2]
+    list_five = [42]
+    print(get_middle_value(list_one))
+    print(get_middle_value(list_two))
+    print(get_middle_value(list_three))
+    print(get_middle_value(list_four))
+    print(get_middle_value(list_five))

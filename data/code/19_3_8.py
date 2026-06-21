@@ -1,15 +1,12 @@
-def is_divisible(first_int: int, second_int: int) -> bool:
-    """Check if first_int is divisible by second_int (second_int != 0)."""
-    return second_int != 0 and first_int % second_int == 0
+import random
+
+def get_random_item(t):
+    if not t:
+        return None
+    return random.choice(t)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    val1 = 20
-    val2 = 4
-    
-    result = is_divisible(val1, val2)
-    
-    if result:
-        print('True')
-    else:
-        print('False')
+    sample_tuple = (1, 2, 3, 4, 5)
+    empty_tuple = ()
+    print(get_random_item(sample_tuple))
+    print(get_random_item(empty_tuple))

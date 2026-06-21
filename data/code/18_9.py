@@ -1,20 +1,18 @@
-class Number:
-    def __init__(self, value):
-        self.value = value
-    def compare(self, other):
-        if self.value > other.value:
-            return 1
-        elif self.value < other.value:
-            return -1
-        else:
-            return 0
+def get_median(lst):
+    if not lst:
+        raise ValueError("List must not be empty")
+    sorted_lst = sorted(lst)
+    n = len(sorted_lst)
+    mid_idx = n // 2
+    if n % 2 == 1:
+        return sorted_lst[mid_idx]
+    else:
+        lower = sorted_lst[mid_idx - 1]
+        upper = sorted_lst[mid_idx]
+        return (lower + upper) // 2
+
 if __name__ == '__main__':
-    num1 = Number(10)
-    num2 = Number(20)
-    num3 = Number(10)
-    result1 = num1.compare(num2)
-    result2 = num2.compare(num1)
-    result3 = num1.compare(num3)
-    print(f"Comparison of {num1.value} and {num2.value}: {result1}")
-    print(f"Comparison of {num2.value} and {num1.value}: {result2}")
-    print(f"Comparison of {num1.value} and {num3.value}: {result3}")
+    print(get_median([1, 3, 5, 7, 9]))
+    print(get_median([1, 2, 3, 4]))
+    print(get_median([10]))
+    print(get_median([4, 8, 1, 9, 3, 7]))

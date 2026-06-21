@@ -1,10 +1,9 @@
-def is_positive(n: int) -> bool:
-    """Check if a number is positive."""
-    return n > 0
+import numpy
+
+def get_random_element(arr):
+    return arr[numpy.random.randint(0, arr.size)]
 
 if __name__ == '__main__':
-    test_values = [1, -5, 0]
-    
-    for value in test_values:
-        result = is_positive(value)
-        print('True' if result else 'False')
+    large_array = numpy.arange(1000000)
+    result = get_random_element(large_array)
+    print(result)

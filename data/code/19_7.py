@@ -1,17 +1,7 @@
-def check_truth(condition):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            if condition:
-                return func(*args, **kwargs)
-            return None
-        return wrapper
-    return decorator
-@check_truth(True)
-def greet(name):
-    return f"Hello, {name}"
-@check_truth(False)
-def calculate(a, b):
-    return a + b
+import random
+def pick_random(iterable):
+    return random.choice(iterable)
 if __name__ == '__main__':
-    print(greet("World"))
-    print(calculate(5, 10))
+    sample_list = [10, 20, 30, 40, 50]
+    result = pick_random(sample_list)
+    print(result)

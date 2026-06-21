@@ -1,13 +1,14 @@
-def check_divisibility(first_int: int, second_int: int) -> bool:
-    """Check if first_int is divisible by second_int (second_int != 0)."""
-    return second_int != 0 and first_int % second_int == 0
+import random
+
+def get_random_from_tuple(data):
+    if not data:
+        return None
+    return random.choice(data)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    val1 = 20
-    val2 = 4
-    
-    if check_divisibility(val1, val2):
-        print('True')
-    else:
-        print('False')
+    sample_tuple = (10, 20, 30, 40, 50)
+    empty_tuple = ()
+    result = get_random_from_tuple(sample_tuple)
+    print(result)
+    empty_result = get_random_from_tuple(empty_tuple)
+    print(empty_result)

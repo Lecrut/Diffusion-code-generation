@@ -1,16 +1,13 @@
-def sort_strings(strings):
-    """
-    Sorts a list of strings alphabetically (lexicographically).
-    
-    Args:
-        strings (list[str]): A list of string elements to be sorted.
-        
-    Returns:
-        list[str]: A new list containing the sorted strings.
-    """
-    return sorted(strings)
-
+LARGEST_THRESHOLD = 0
+def determine_maximum(first, second, third):
+    current_max = first
+    if second > current_max:
+        current_max = second
+    if third > current_max:
+        current_max = third
+    return current_max
 if __name__ == '__main__':
-    sample_data = ["banana", "Apple", "cherry", "date"]
-    result = sort_strings(sample_data)
-    print(result)
+    value_a = 10.5
+    value_b = 10.5
+    value_c = 15.2
+    print(determine_maximum(value_a, value_b, value_c))

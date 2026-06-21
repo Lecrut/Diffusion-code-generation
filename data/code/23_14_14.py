@@ -1,34 +1,21 @@
-import sys
-
-def compare_two_numbers(a: float, b: float) -> None:
-    """Prints a formatted report comparing two numbers."""
-    difference = round(abs(a - b), 2)
+def calculate_grade(score: float, thresholds: dict = None) -> str:
+    if thresholds is None:
+        thresholds = {
+            'A': 90,
+            'B': 80,
+            'C': 70,
+            'D': 60,
+            'F': 0
+        }
     
-    print("=" * 40)
-    print("NUMBER COMPARISON REPORT")
-    print("=" * 40)
-    print(f"Value A ({a}): {difference} greater than Value B ({b}") if a > b else ""
-
-    # Note: Since we round the absolute difference, 'greater' and 'lesser' are relative to |diff|, not specific sign. 
-    # To determine which is larger based on value magnitude alone (not just abs diff):
+    sorted_grades = sorted(thresholds.items(), key=lambda x: x[1], reverse=True)
     
-    print(f"Difference ({a} - {b}): +/-{difference}")
-
-    if a > b:
-        print("\nLarger Value:")
-        print("  -> A")
-    elif b > a:
-        print("\nLarger Value:")
-        print("  -> B")
+    for grade, threshold in sorted_grades:
+        if score >= threshold:
+            return grade
     
-    else: 
-        print(f"\nResult:\nValues are equal.\nDifference is {difference}")
+    return 'F'
 
-        
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no input, arguments, or network access.
-    val_a = 105.6789
-    
-    b_val = -42.3
-            
-    compare_two_numbers(val_a, b_val)
+    result = calculate_grade(92)
+    print(result)

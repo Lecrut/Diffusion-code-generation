@@ -1,29 +1,28 @@
-class ValueComparator:
-    """A class that compares two values and returns a descriptive string."""
-    
-    def compare(self, val1, val2):
-        """
-        Compares two input values (integers or floats) and returns 
-        a string indicating the relationship between them.
-        
-        Args:
-            val1 (int | float): The first value to compare.
-            val2 (int | float): The second value to compare.
-            
-        Returns:
-            str: A message stating whether 'val1' is greater than, 
-                 less than, or equal to 'val2'.
-        
-        Raises:
-            TypeError: If the inputs are not numeric types.
-        """
-        if isinstance(val1, (int, float)) and isinstance(val2, (int, float)):
-            result = None
-            
-            # Use a small epsilon for floating-point comparison accuracy
-            if val1 == int(val1) and val2 == int(val2):
-                # Exact integer equality check first to avoid precision issues later
-                is_equal_ints = abs(val1 - val2) < 0.000000001
+def get_letter_grade(score):
+    if not (0 <= score <= 100):
+        raise ValueError("Score must be between 0 and 100")
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
 
 if __name__ == '__main__':
-    pass
+    print(get_letter_grade(95))
+    print(get_letter_grade(85))
+    print(get_letter_grade(75))
+    print(get_letter_grade(65))
+    print(get_letter_grade(55))
+    try:
+        get_letter_grade(101)
+    except ValueError:
+        print("ValueError raised for 101")
+    try:
+        get_letter_grade(-1)
+    except ValueError:
+        print("ValueError raised for -1")

@@ -1,35 +1,52 @@
-import timeit
+import unicodedata
+import string
 
-def is_odd_bitwise(n: int) -> bool:
-    """Check if an integer is odd using bitwise AND with 1."""
-    return n & 1 != 0
+class UnicodePasswordValidator:
+    VALID_UNICODE_RANGE = (0, 0x10FFFF)
+    SURROGATE_START = 0xD800
+    SURROGATE_END = 0xDFFF
+
+    def __init__(self, password):
+        self.password = password
+        self.is_unicode_valid = self._verify_unicode_integrity()
+
+    def _verify_unicode_integrity(self):
+        for char in self.password:
+            code_point = ord(char)
+            if code_point < self.VALID_UNICODE_RANGE[0] or code_point > self.VALID_UNICODE_RANGE[1]:
+                return False
+            if self.SURROGATE_START <= code_point <= self.SURROGATE_END:
+                return False
+        return True
+
+    def _get_char_categories(self):
+        categories = set()
+        for char in self.password:
+            if char.isupper():
+                categories.add('upper')
+            if char.islower():
+                categories.add('lower')
+            if char.isdigit():
+                categories.add('digit')
+            if not char.isalnum() and unicodedata.category(char).startswith('S') or unicodedata.category(char).startswith('P') or unicodedata.category(char) in ('Cs', 'Co', 'Cn', 'Cc', 'Cf', 'Zl', 'Zp', 'Zs'):
+                categories.add('special')
+        return categories
+
+    def validate(self):
+        if not self.is_unicode_valid:
+            return False
+        categories = self._get_char_categories()
+        return len(categories) >= 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing and demonstration
-    samples = [3, -20, 0, 7]
+    validator1 = UnicodePasswordValidator("P@ssw0rd")
+    print(validator1.validate())
 
-    print("Testing 'is_odd_bitwise' function:")
-    for num in samples:
-        result = is_odd_bitwise(num)
-        expected = num % 2 != 0
-        status = "OK" if result == expected else "FAIL"
-        print(f"is_odd({num}) -> {result} (expected {expected}) [{status}]")
+    validator2 = UnicodePasswordValidator("hello")
+    print(validator2.validate())
 
-    # Performance demonstration: compare bitwise vs modulo for large iterations
-    setup_code = """\nimport timeit, random\nlarge_num = 2**63 - 1"""
-    
-    bit_ops_time = timeit.timeit(
-        stmt="is_odd_bitwise(large_num)", 
-        globals={}, 
-        number=1_000_000
-    )
+    validator3 = UnicodePasswordValidator("A1b!")
+    print(validator3.validate())
 
-    mod_op_time = timeit.timeit(
-        stmt="(large_num % 2) != 0", 
-        globals={"large_num": (lambda: large_num)}, 
-        number=1_000_000
-    )
-
-    print(f"\nPerformance comparison over 1,000,000 iterations:")
-    print(f"Bitwise operation time: {bit_ops_time:.4f} seconds")
-    print(f"Modulo operation time:   {mod_op_time:.4f} seconds")
+    validator4 = UnicodePasswordValidator("\ud800")
+    print(validator4.validate())

@@ -1,29 +1,17 @@
-def get_remainder_and_parity(number: int) -> tuple[int, str]:
-    """
-    Takes an integer and returns a tuple containing:
-        1. The remainder of the number divided by 2 (0 or 1).
-        2. A string indicating if the number is 'even' or 'odd'.
-
-    Args:
-        number (int): The integer to evaluate.
-
-    Returns:
-        tuple[int, str]: A tuple with the remainder and the parity description.
-    """
-    remainder = number % 2
-    
-    # Determine parity based on the remainder
-    if remainder == 0:
-        parity_description = "even"
-    else:
-        parity_description = "odd"
-
-    return (remainder, parity_description)
+def check_password_strength(password):
+    mask = 0
+    for char in password:
+        code = ord(char)
+        if 48 <= code <= 57:
+            mask |= 1
+        elif 65 <= code <= 90:
+            mask |= 2
+        elif 97 <= code <= 122:
+            mask |= 4
+        elif 33 <= code <= 47 or 58 <= code <= 64 or 91 <= code <= 96 or 123 <= code <= 126:
+            mask |= 8
+    return mask
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test without user input or external dependencies
-    samples = [10, 7, -3, 0]
-
-    for num in samples:
-        remainder, is_even_or_odd = get_remainder_and_parity(num)
-        print(f"Number: {num}, Remainder mod 2: {remainder}, Parity: {is_even_or_odd}")
+    result = check_password_strength("MyP@ssw0rd!")
+    print(result)

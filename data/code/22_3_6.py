@@ -1,10 +1,42 @@
-if __name__ == '__main__':
-    num = 17; expr = lambda n: n % 2 != 0; check_result = expr(num); print(f"The number {num} is odd" if check_result else f"{num} is even") # This is a multi-line block inside the single line statement above? No, I need to ensure it's all one logical expression or code block.
-# Re-reading: "Write a concise, single-line Python expression... Provide an example using 17". 
-# And "Return only a single complete runnable Python module." with `if __name__ == '__main__':` block.
-# The expression itself doesn't have to be the entire script content if it's inside the main block? No, usually these prompts want the logic defined cleanly. Let's make the check happen in one line within the main execution flow as requested by "single-line Python expression".
+COMMON_COMPROMISED_PASSWORDS = frozenset([
+    "password",
+    "123456",
+    "12345678",
+    "qwerty",
+    "abc123",
+    "monkey",
+    "1234567",
+    "letmein",
+    "trustno1",
+    "dragon",
+    "baseball",
+    "iloveyou",
+    "master",
+    "sunshine",
+    "ashley",
+    "bailey",
+    "shadow",
+    "superman",
+    "qazwsx"
+])
 
-num = 17; print("Odd" if num % 2 != 0 else "Even") # This is a single statement block effectively doing the work but technically two statements (assignment and call). 
-# To make it strictly one line of code in the main block:
+def validate_password_strength(password: str) -> bool:
+    if not password or len(password) == 0:
+        return False
+    if password.lower() in COMMON_COMPROMISED_PASSWORDS:
+        return False
+    if len(password) < 8:
+        return False
+    has_lower = any(char.islower() for char in password)
+    has_upper = any(char.isupper() for char in password)
+    has_digit = any(char.isdigit() for char in password)
+    has_special = any(not char.isalnum() for char in password)
+    if not (has_lower and has_upper and has_digit and has_special):
+        return False
+    return True
+
 if __name__ == '__main__':
-    num = 17; print("Odd" if num % 2 != 0 else "Even")
+    test_passwords = ["Password1!", "password", "Str0ng@Pass", "123456", "MyS3cure!P@ss"]
+    results = {pwd: validate_password_strength(pwd) for pwd in test_passwords}
+    for pwd, is_valid in results.items():
+        print(f"{pwd}: {is_valid}")

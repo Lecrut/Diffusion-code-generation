@@ -1,9 +1,7 @@
+def is_even(n):
+    return n % 2 == 0
+
 if __name__ == '__main__':
-    value1 = 10
-    value2 = 10.0
-    type1 = type(value1)
-    type2 = type(value2)
-    if type1 == type2:
-        print("Values are equal and have the same type.")
-    else:
-        print("Values are not equal or have different types.")
+    test_values = [0, 1, 2, -1, -2, 4, -4, 7, -7]
+    for value in test_values:
+        print(value, is_even(value))

@@ -1,18 +1,22 @@
-import math
-
-def is_above_threshold(value: float) -> bool:
-    """Check if a given value is greater than 100."""
-    return value > 100
+def get_middle_value(numbers):
+    length = len(numbers)
+    if length == 0:
+        return None
+    middle_index = length // 2
+    return numbers[middle_index]
 
 if __name__ == '__main__':
-    # Test case 1: Value clearly above threshold
-    assert is_above_threshold(250.5), "Value should be above threshold"
-
-    # Test case 2: Value exactly at threshold (should fail)
-    assert not is_above_threshold(100.0), "Threshold value should not pass check"
-
-    # Test case 3: Negative value below threshold
-    assert not is_above_threshold(-50), "Negative values should be below threshold"
-
-    # Test case 4: Float slightly above integer threshold
-    assert is_above_threshold(100.0001), "Value just above threshold should pass"
+    sample_data_even = [10, 20, 30, 40, 50, 60]
+    sample_data_odd = [1, 3, 5, 7, 9]
+    sample_data_single = [42]
+    sample_data_empty = []
+    
+    result1 = get_middle_value(sample_data_even)
+    result2 = get_middle_value(sample_data_odd)
+    result3 = get_middle_value(sample_data_single)
+    result4 = get_middle_value(sample_data_empty)
+    
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)

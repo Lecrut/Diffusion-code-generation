@@ -1,12 +1,15 @@
-def sort_list_of_dicts(data, key):
-    return sorted(data, key=lambda x: x[key])
+def find_largest(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
 if __name__ == '__main__':
-    data = [
-        {'name': 'Alice', 'age': 30, 'score': 88},
-        {'name': 'Bob', 'age': 25, 'score': 92},
-        {'name': 'Charlie', 'age': 35, 'score': 85},
-        {'name': 'David', 'age': 25, 'score': 95}
-    ]
-    key_to_sort_by = 'age'
-    sorted_data = sort_list_of_dicts(data, key_to_sort_by)
-    print(sorted_data)
+    result = find_largest(10, 25, 15)
+    print(result)
+    result2 = find_largest(-5, -1, -10)
+    print(result2)
+    result3 = find_largest(100, 100, 50)
+    print(result3)

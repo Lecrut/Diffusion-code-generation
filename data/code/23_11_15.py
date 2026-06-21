@@ -1,27 +1,30 @@
-def compare_and_report(list_a, list_b):
-    """
-    Compares two lists of integers to determine which has a larger sum.
-    
-    Parameters:
-        list_a (list[int]): First list of integers.
-        list_b (list[int]): Second list of integers.
-        
-    Returns:
-        tuple: A 4-element tuple containing:
-            - sum_of_list_a (int): Sum of elements in list_a.
-            - has_larger_sum_a (bool): True if list_a's sum is larger, False otherwise.
-            - sum_of_list_b (int): Sum of elements in list_b.
-            - name_of_winner (str): Name ('a' or 'b') of the list with the larger sum.
-    """
-    
-    # Use built-in sum for efficiency as it is implemented in C internally
-    total_a = sum(list_a)
-    total_b = sum(list_b)
-    
-    if total_a > total_b:
-        winner_name = "a"
-    else:
-        winner_name = "b"
+SCORE_RANGES = {
+    'A': (90, 100),
+    'B': (80, 89),
+    'C': (70, 79),
+    'D': (60, 69),
+    'F': (0, 59)
+}
+
+def get_grade(score: int) -> str:
+    if score > 100 or score < 0:
+        raise ValueError("Score must be between 0 and 100.")
+    for grade, (low, high) in SCORE_RANGES.items():
+        if low <= score <= high:
+            return grade
+    return 'F'
+
+def calculate_grades(scores: dict[str, int]) -> dict[str, str]:
+    return {name: get_grade(s) for name, s in scores.items()}
 
 if __name__ == '__main__':
-    pass
+    student_scores = {
+        'Alice': 95,
+        'Bob': 82,
+        'Charlie': 71,
+        'David': 55,
+        'Eve': 100
+    }
+    result = calculate_grades(student_scores)
+    for name, grade in result.items():
+        print(f"{name}: {grade}")

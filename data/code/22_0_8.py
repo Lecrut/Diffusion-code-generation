@@ -1,21 +1,23 @@
-# Determine whether an integer is odd or even based on modulo 2 result
+import re
 
-def check_parity(number: int) -> str:
-    """
-    Returns a string indicating if 'number' is odd or even.
-    
-    Args:
-        number (int): The integer to evaluate.
-        
-    Returns:
-        str: "Even" if the number is divisible by 2, otherwise "Odd".
-    """
-    return "Odd" if number % 2 == 1 else "Even"
+def validate_password_strength(password: str) -> bool:
+    if len(password) < 8:
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'[0-9]', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    test_values = [0, 3, -5, 42]
-
-    for value in test_values:
-        result = check_parity(value)
-        print(f"The number {value} is {result}.")
+    print(validate_password_strength("Secure1!"))
+    print(validate_password_strength("weak"))
+    print(validate_password_strength("NoDigitsHere!"))
+    print(validate_password_strength("nouppercase1!"))
+    print(validate_password_strength("NOLOWERCASE1!"))
+    print(validate_password_strength("NoSpecial1"))
+    print(validate_password_strength("Short1!"))

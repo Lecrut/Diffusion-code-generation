@@ -1,14 +1,19 @@
-def is_greater(a: float, b: float) -> bool:
-    """Returns True if a > b, otherwise False."""
-    return a > b
+import random
+
+def select_random_pair(d):
+    keys = list(d.keys())
+    if not keys:
+        return None, None
+    key = random.choice(keys)
+    value = d[key]
+    return key, value
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    result1 = is_greater(5.0, 3.0)
-    assert result1 is True
-
-    result2 = is_greater(4.0, 7.0)
-    assert result2 is False
-
-    print(f"is_greater(5.0, 3.0) = {result1}")
-    print(f"is_greater(4.0, 7.0) = {result2}")
+    sample_dict = {
+        'apple': 1,
+        'banana': 2,
+        'cherry': 3,
+        'date': 4
+    }
+    k, v = select_random_pair(sample_dict)
+    print(k, v)

@@ -1,16 +1,7 @@
-class DataContainer:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-    def is_identical(self, other):
-        if not isinstance(other, DataContainer):
-            return False
-        return self.a == other.a and self.b == other.b
+def is_even(n):
+    return n % 2 == 0
+
 if __name__ == '__main__':
-    obj1 = DataContainer(10, "hello")
-    obj2 = DataContainer(10, "hello")
-    obj3 = DataContainer(20, "world")
-    print(f"obj1 is identical to obj2: {obj1.is_identical(obj2)}")
-    print(f"obj1 is identical to obj3: {obj1.is_identical(obj3)}")
-    obj4 = DataContainer(10, "hello")
-    print(f"obj1 is identical to obj4: {obj1.is_identical(obj4)}")
+    test_values = [0, 1, 2, 3, 4, 5, 100, 999, -2, -1]
+    results = [is_even(val) for val in test_values]
+    print(results)

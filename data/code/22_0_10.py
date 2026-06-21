@@ -1,15 +1,30 @@
-import sys
+import re
 
-def is_even(n: int) -> bool:
-    """Check if an integer n is even."""
-    return n % 2 == 0
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'\d', password):
+        return False
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        return False
+    return True
 
 if __name__ == '__main__':
-    # Sample values provided directly without user input or command-line arguments.
-    test_cases = [1, 2, -3, 4]
-
-    for number in test_cases:
-        if is_even(number):
-            print(f"{number} is even")
-        else:
-            print(f"{number} is odd")
+    samples = [
+        "Short1!",
+        "nouppercase1!",
+        "NoLowercase1!",
+        "NoDigits!",
+        "NoSpecial1",
+        "ValidPass1!",
+        "12345678",
+        "ABCDEFGHI",
+        "abcdefghi",
+        "A1!b2@c3"
+    ]
+    for s in samples:
+        print(validate_password_strength(s))

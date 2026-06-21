@@ -1,7 +1,13 @@
-# Check if 'a' is greater than 'b' using a single comparison operator in an expression context (e.g., boolean result)
-result = a > b  # This returns True or False based on whether a > b
+def find_middle(lst):
+    return lst[len(lst) // 2]
 
 if __name__ == '__main__':
-    a, b = 10, 5
-    if a > b:
-        print("a is greater than b")
+    data1 = [1, 2, 3, 4, 5]
+    data2 = [10, 20, 30, 40, 50, 60]
+    data3 = [99]
+    data4 = [1, 2]
+
+    print(find_middle(data1))
+    print(find_middle(data2))
+    print(find_middle(data3))
+    print(find_middle(data4))

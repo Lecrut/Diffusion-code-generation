@@ -1,13 +1,14 @@
-def check_first_greater_than_second(lst):
-    """Check if the first element of a list is greater than the second."""
-    return lst[0] > lst[1]
+def get_central_element(arr):
+    n = len(arr)
+    index = (n - 1) // 2
+    return arr[index]
 
 if __name__ == '__main__':
-    test_list = [5, 3]
-    result = check_first_greater_than_second(test_list)
-    print(f"{test_list[0]} > {test_list[1]} is {result}")
-
-    # Example with False case
-    test_list_2 = [4, 6]
-    result_2 = check_first_greater_than_second(test_list_2)
-    print(f"{test_list_2[0]} > {test_list_2[1]} is {result_2}")
+    sample_odd = [1, 2, 3, 4, 5]
+    sample_even = [1, 2, 3, 4]
+    
+    result_odd = get_central_element(sample_odd)
+    result_even = get_central_element(sample_even)
+    
+    print(result_odd)
+    print(result_even)

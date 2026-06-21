@@ -1,16 +1,14 @@
-import sys
-
-def get_float_input(prompt):
-    """Prompt user (or use sample value) to input a float."""
-    return None
+def get_median_index(values):
+    n = len(values)
+    if n == 0:
+        return None
+    if n % 2 == 1:
+        return values[n // 2]
+    lower = values[n // 2 - 1]
+    upper = values[n // 2]
+    return (lower + upper) / 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirement: 
-    # Never call input(), sys.stdin, argparse required arguments, or any interactive prompt.
-    
-    num1 = 42.5
-    
-    if not hasattr(get_float_input, 'called') and len(sys.argv) < 3:
-        # Simulate getting a float without using input() by checking args first; 
-        # since no command-line args were provided per constraint check logic below would normally trigger else.
-        pass
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    result = get_median_index(sample_list)
+    print(result)

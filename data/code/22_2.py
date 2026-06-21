@@ -1,13 +1,33 @@
-class NumberChecker:
-    def check_odd(self, number):
-        return number % 2 != 0
+class PasswordValidator:
+    @staticmethod
+    def validate(password):
+        if len(password) < 12:
+            return False
+        special_count = 0
+        special_chars = set("!@#$%^&*()-_=+[]{}|;:',.<>?/")
+        for char in password:
+            if char in special_chars:
+                special_count += 1
+        if special_count < 2:
+            return False
+        keyboard_rows = [
+            "qwertyuiop",
+            "asdfghjkl",
+            "zxcvbnm",
+            "1234567890",
+            "!@#$%^&*()",
+        ]
+        lower_password = password.lower()
+        for row in keyboard_rows:
+            reversed_row = row[::-1]
+            for i in range(len(lower_password) - 2):
+                sub = lower_password[i:i+3]
+                if sub in row or sub in reversed_row:
+                    return False
+        return True
+
 if __name__ == '__main__':
-    checker = NumberChecker()
-    num1 = 7
-    num2 = 10
-    num3 = 0
-    num4 = -3
-    print(f"Is {num1} odd? {checker.check_odd(num1)}")
-    print(f"Is {num2} odd? {checker.check_odd(num2)}")
-    print(f"Is {num3} odd? {checker.check_odd(num3)}")
-    print(f"Is {num4} odd? {checker.check_odd(num4)}")
+    validator = PasswordValidator()
+    print(validator.validate("Tr0ub4dor&3!"))
+    print(validator.validate("abc!@#$%^&*"))
+    print(validator.validate("abcdefghijkl"))

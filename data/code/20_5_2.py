@@ -1,4 +1,6 @@
+def is_even(n):
+    return "Even" if n % 2 == 0 else "Odd"
+
 if __name__ == '__main__':
-    a, b, epsilon = 1e-9, 2.718281828459045, 1e-12
-    compare = lambda x, y, eps: abs(x - y) < eps
-    print(compare(a, b, epsilon))
+    print(is_even(10))
+    print(is_even(7))

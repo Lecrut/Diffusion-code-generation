@@ -1,13 +1,7 @@
-import sys
-
-def check_negative(num: float) -> bool:
-    """Check if a given number is negative."""
-    return num < 0
+def is_leap_year(year):
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 if __name__ == '__main__':
-    # Sample values to test without user input
-    sample_values = [-5.2, 10, -3]
-
-    for value in sample_values:
-        result = check_negative(value)
-        print(f"Is {value} negative? {result}")
+    test_years = [2000, 1900, 2024, 2023]
+    for year in test_years:
+        print(is_leap_year(year))

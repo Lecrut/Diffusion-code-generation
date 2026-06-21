@@ -1,15 +1,7 @@
-def check_values_equal(value1, value2):
-    """Check if two values are exactly equal in both content and type."""
-    return (value1 == value2) and (type(value1) is type(value2))
+def is_even(n):
+    return n % 2 == 0
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    val_a = 5
-    val_b = 5
-    
-    result = check_values_equal(val_a, val_b)
-    
-    if result:
-        print("The values are exactly equal in both content and type.")
-    else:
-        print("The values are not exactly equal or their types differ.")
+    test_values = [0, 1, -1, 2, -2, 3, -3, 4, -4, 100, -100, 99, -99]
+    for value in test_values:
+        print(f"is_even({value}) = {is_even(value)}")

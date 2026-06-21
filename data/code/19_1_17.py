@@ -1,8 +1,12 @@
-def is_greater(a: any, b: any) -> bool:
-    """Return True if a > b, otherwise False."""
-    return a > b
+import random
+
+def get_random_item(d):
+    if not d:
+        raise ValueError("Dictionary cannot be empty")
+    key = random.choice(list(d.keys()))
+    return key, d[key]
 
 if __name__ == '__main__':
-    result1 = is_greater(5.0, 3.0)
-    result2 = is_greater("apple", "banana")
-    print(f"Test case 1 ({result1})")
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    key, value = get_random_item(sample_dict)
+    print(key, value)

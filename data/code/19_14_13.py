@@ -1,7 +1,12 @@
-def evaluate_condition(x: float, y: float) -> bool:
-    """Yields True if x is greater than y, otherwise False."""
-    yield x > y
+import random
+
+def get_random_value(d):
+    if not d:
+        return None
+    key = random.choice(list(d.keys()))
+    return d[key]
 
 if __name__ == '__main__':
-    results = list(evaluate_condition(10.5, 3.2))
-    print(results[0])
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    result = get_random_value(sample_dict)
+    print(result)

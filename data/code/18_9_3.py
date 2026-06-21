@@ -1,22 +1,23 @@
-class Number:
-    def __init__(self, value):
-        self.value = value
-    def compare(self, other):
-        if self.value > other.value:
-            return 1
-        elif self.value < other.value:
-            return -1
-        else:
-            return 0
+def median_of_list(data):
+    if not data:
+        return None
+    sorted_data = sorted(data)
+    length = len(sorted_data)
+    mid = (length - 1) // 2
+    if length % 2 == 0:
+        val1 = sorted_data[mid]
+        val2 = sorted_data[mid + 1]
+        return (val1 + val2) // 2
+    else:
+        return sorted_data[mid]
+
 if __name__ == '__main__':
-    num1 = Number(10)
-    num2 = Number(20)
-    num3 = Number(10)
-    result1 = num1.compare(num2)
-    print(f"Comparing {num1.value} and {num2.value}: {result1}")
-    result2 = num2.compare(num1)
-    print(f"Comparing {num2.value} and {num1.value}: {result2}")
-    result3 = num1.compare(num3)
-    print(f"Comparing {num1.value} and {num3.value}: {result3}")
-    result4 = num3.compare(num1)
-    print(f"Comparing {num3.value} and {num1.value}: {result4}")
+    sample1 = [1, 3, 5, 7, 9]
+    sample2 = [2, 4, 6, 8]
+    sample3 = [10]
+    sample4 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    print(median_of_list(sample1))
+    print(median_of_list(sample2))
+    print(median_of_list(sample3))
+    print(median_of_list(sample4))

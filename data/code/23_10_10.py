@@ -1,24 +1,13 @@
-import math
-
-def is_float_equal(a: float, b: float, rtol=1e-05, atol=1e-8) -> bool:
-    """
-    Compare two floating-point numbers for equality within a specified tolerance.
-    
-    This function uses the relative and absolute tolerances to handle cases where 
-    very large or very small differences might occur due to precision limitations.
-    
-    Parameters:
-        a (float): The first number to compare.
-        b (float): The second number to compare.
-        rtol (float): The relative tolerance parameter; the default is 1e-05.
-                      Larger values indicate more lenient comparison requirements for 
-                      differences larger than absolute_difference / (max(|a|, |b|) + atol).
-        atol (float): The absolute tolerance parameter; the default is 1e-8.
-    
-    Returns:
-        bool: True if abs(a - b) <= max(atol, rtol * max(abs(a), abs(b))), False otherwise.
-    """
-    return math.isclose(a, b, rel_tol=rtol, abs_tol=atol)
+def get_grade(score):
+    if not isinstance(score, (int, float)) or score < 0 or score > 100:
+        return "Invalid"
+    grade_boundaries = [(90, "A"), (80, "B"), (70, "C"), (60, "D")]
+    for threshold, letter in grade_boundaries:
+        if score >= threshold:
+            return letter
+    return "F"
 
 if __name__ == '__main__':
-    pass
+    sample_scores = [100, 90, 89, 80, 79, 70, 69, 60, 59, 0, 101, -1]
+    for s in sample_scores:
+        print(f"{s}: {get_grade(s)}")

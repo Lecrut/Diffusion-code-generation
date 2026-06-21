@@ -1,7 +1,10 @@
-import random
-def even_odd_generator(start, end):
-    for num in range(start, end + 1):
-        yield num % 2 == 0
+import secrets
+
+def select_random_byte_index(byte_array):
+    index = secrets.randbelow(len(byte_array))
+    return index
+
 if __name__ == '__main__':
-    for result in even_odd_generator(1, 10):
-        print(result)
+    sample_bytes = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09'
+    result = select_random_byte_index(sample_bytes)
+    print(result)

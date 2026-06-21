@@ -1,4 +1,12 @@
-import math; print("a:", 0.1+0.2, "b:", 0.3, "(diff abs<1e-9):", abs((0.1+0.2)-0.3)<1e-9)
+class NumberChecker:
+    MODUS_EVEN = 2
+
+    @staticmethod
+    def check_even(value):
+        return True if value % NumberChecker.MODUS_EVEN == 0 else False
 
 if __name__ == '__main__':
-    pass
+    print(NumberChecker.check_even(1024))
+    print(NumberChecker.check_even(753))
+    print(NumberChecker.check_even(-22))
+    print(NumberChecker.check_even(0))

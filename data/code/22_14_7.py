@@ -1,36 +1,49 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd integers from the input list.
-    
-    Args:
-        numbers (list[int]): A list of integers to process.
-        
-    Returns:
-        list[int]: A list containing only the odd numbers found in the input.
-                   Returns an empty list if no odd numbers are present or 
-                   if the input is not a list-like structure with iterables.
-    
-    Examples:
-        >>> filter_odd_numbers([1, 2, 3])
-        [1, 3]
-        >>> filter_odd_numbers([])
-        []
-        >>> filter_odd_numbers([-5, -4, -3])
-        [-5, -3]
-        >>> filter_odd_numbers("not a list")
-    """
-    # Using a generator expression within list constructor for memory efficiency.
-    return [n for n in numbers if isinstance(n, int) and not (n % 2 == 0)]
+WEAK_PASSWORDS = {"password", "123456", "12345678", "qwerty", "abc123", "monkey", "master", "dragon", "111111", "baseball", "iloveyou", "trustno1", "sunshine", "princess", "football", "shadow", "superman", "michael", "password1", "letmein", "123123", "654321", "qazwsx", "login", "starwars", "solo", "hello", "charlie", "donald", "qwerty123", "admin", "root", "pass", "test", "guest"}
+
+def check_sequentiality(text):
+    if len(text) < 3:
+        return False
+    for i in range(len(text) - 2):
+        c1, c2, c3 = text[i], text[i + 1], text[i + 2]
+        if ord(c2) == ord(c1) + 1 and ord(c3) == ord(c2) + 1:
+            return True
+        if ord(c2) == ord(c1) - 1 and ord(c3) == ord(c2) - 1:
+            return True
+    return False
+
+def validate_password_strength(password):
+    if not isinstance(password, str) or len(password) < 8:
+        return False
+    if password.lower() in WEAK_PASSWORDS:
+        return False
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        else:
+            has_special = True
+    if not (has_upper and has_lower and has_digit and has_special):
+        return False
+    if check_sequentiality(password) or check_sequentiality(password.lower()):
+        return False
+    return True
 
 if __name__ == '__main__':
-    sample_data = [10, 7, 34, 59, 8, -1]
+    sample_password = "Str0ng!Pass"
+    result = validate_password_strength(sample_password)
+    print(result)
     
-    # Process the sample data to demonstrate functionality
-    odd_numbers = filter_odd_numbers(sample_data)
+    sample_weak = "password123"
+    result_weak = validate_password_strength(sample_weak)
+    print(result_weak)
     
-    print("Original list:", sample_data)
-    print("Odd numbers extracted:", odd_numbers)
-
-# Note: The type hint `list[int]` assumes Python 3.9+. 
-# For older versions, it would need to be `List[int]`, but given the requirement for a single runnable module, 
-# modern syntax is preferred unless backward compatibility was explicitly requested beyond basic execution.
+    sample_sequential = "Abc123!@#"
+    result_seq = validate_password_strength(sample_sequential)
+    print(result_seq)

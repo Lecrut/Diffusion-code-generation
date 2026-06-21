@@ -1,13 +1,12 @@
-import sys
-
-def check_negative(number: float) -> bool:
-    """Check if a given number is negative."""
-    return number < 0
+def is_leap_year(year):
+    if year % 4 != 0:
+        return False
+    if year % 100 != 0:
+        return True
+    return year % 400 == 0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    test_cases = [1, -5, 0, 3.14]
-
-    for num in test_cases:
-        is_negative = check_negative(num)
-        print(f"Number {num} is negative? {is_negative}")
+    print(is_leap_year(1996))
+    print(is_leap_year(2100))
+    print(is_leap_year(2000))
+    print(is_leap_year(2023))

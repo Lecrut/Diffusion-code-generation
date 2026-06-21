@@ -1,72 +1,26 @@
-"""
-Script to check if a number is negative using best practices for input handling.
-This module avoids interactive prompts by providing hard-coded sample values in the main block.
-It demonstrates robust error handling, type conversion safety, and clean logic structure.
-No external libraries or file I/O are used.
-"""
+def _is_positive_integer(value):
+    return isinstance(value, int) and not isinstance(value, bool) and value > 0
 
-def get_number_from_user():
-    """
-    Simulates user interaction for input validation purposes without using sys.stdin or argparse.
-    
-    Returns:
-        int | None: The number entered by the 'user' (simulated here via hard-coded values), 
-                   or None if an error occurs during conversion.
-    
-    Raises:
-        ValueError: If the converted value is not a valid integer.
-    """
-    # In a real interactive scenario, this would be user_input = input("Enter a number: ")
-    # For this script's requirements (no prompts), we simulate inputs in the main block directly.
-    
-    try:
-        return int(123)  # Simulated successful input
-    except ValueError as e:
-        raise ValueError(f"Failed to convert simulated user input to integer: {e}")
+def _validate_year(year):
+    if not _is_positive_integer(year):
+        raise ValueError("Year must be a positive integer")
+    return year
 
-def is_negative(number):
-    """
-    Checks if a number is negative.
-    
-    Args:
-        number (int or float): The numerical value to check.
-        
-    Returns:
-        bool: True if the number is less than zero, False otherwise.
-    """
-    return number < 0
-
-def main():
-    """
-    Main execution block containing hard-coded sample values as per requirements.
-    Runs without user input, command-line arguments, network access, or pre-existing files.
-    Demonstrates both valid and invalid scenarios for negative checking logic.
-    
-    Sample inputs tested:
-        1. A positive integer (should return False)
-        2. Zero (should return False)
-        3. A negative float (should return True)
-    """
-    # Define sample values to test the is_negative function directly without prompts
-    
-    test_cases = [
-        ("Positive Integer", 45),
-        ("Zero", 0),
-        ("Negative Float", -12.5),
-        ("Large Negative Int", -98765)
-    ]
-
-    print("Testing negative number check logic with sample values...")
-    
-    for label, num in test_cases:
-        try:
-            result = is_negative(num)
-            status = "Negative" if result else "Not Negative"
-            print(f"{label}: {num} -> Is {status}")
-            
-        except Exception as ex:
-            # Fallback handling just in case of unexpected errors during simulation
-            print(f"Error processing {label}: {ex}")
+def is_leap_year(year):
+    _validate_year(year)
+    remainder_400 = year % 400
+    remainder_100 = year % 100
+    remainder_4 = year % 4
+    if remainder_400 == 0:
+        return True
+    if remainder_100 == 0:
+        return False
+    if remainder_4 == 0:
+        return True
+    return False
 
 if __name__ == '__main__':
-    main()
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))

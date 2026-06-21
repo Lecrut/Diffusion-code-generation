@@ -1,13 +1,15 @@
-def check_divisibility(first_num: int, second_num: int) -> bool:
-    if second_num == 0:
-        return False
-    
-    return first_num % second_num == 0
+import random
+
+def random_from_tuple(t: tuple):
+    if not t:
+        return None
+    return random.choice(t)
 
 if __name__ == '__main__':
-    sample_first = 12
-    sample_second = 3
+    sample_data = (10, 20, 30, 40, 50)
+    result = random_from_tuple(sample_data)
+    print(result)
     
-    result = check_divisibility(sample_first, sample_second)
-    
-    print('True' if result else 'False')
+    empty_data = ()
+    empty_result = random_from_tuple(empty_data)
+    print(empty_result)

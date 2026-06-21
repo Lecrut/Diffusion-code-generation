@@ -1,25 +1,66 @@
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determines if an integer is odd using bitwise operations.
-    
-    An integer n in binary representation has its least significant bit (LSB) set 
-    to 1 if it is odd, and 0 if it is even. The expression 'n & 1' performs a bitwise AND 
-    between the number and 1. If the result is truthy (non-zero), the number is odd; otherwise, it is even.
-    
-    This approach avoids division/modulo operations which are computationally more expensive than bit shifts/ANDs.
+import unicodedata
 
-    :param n: The integer to check.
-    :return: True if n is odd, False otherwise.
-    """
-    return (n & 1) != 0
+class PasswordValidationEngine:
+    def __init__(self, password):
+        self.password = password
+
+    def validate_unicode_support(self):
+        for char in self.password:
+            code_point = ord(char)
+            if code_point < 0 or code_point > 0x10FFFF:
+                return False
+            if 0xD800 <= code_point <= 0xDFFF:
+                return False
+        return True
+
+    def count_satisfied_classes(self):
+        if not self.validate_unicode_support():
+            return 0
+
+        has_uppercase = False
+        has_lowercase = False
+        has_digit = False
+        has_special = False
+
+        for char in self.password:
+            if not has_uppercase and char.isupper():
+                has_uppercase = True
+            if not has_lowercase and char.islower():
+                has_lowercase = True
+            if not has_digit and char.isdigit():
+                has_digit = True
+            if not has_special and not char.isalnum():
+                has_special = True
+
+        count = sum([has_uppercase, has_lowercase, has_digit, has_special])
+        return count
+
+    def is_valid(self):
+        satisfied_classes = self.count_satisfied_classes()
+        return satisfied_classes >= 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access
-    test_cases = [3, -5, 42, -7]
+    test_pass_1 = "Str0ng!Pass"
+    test_pass_2 = "weak"
+    test_pass_3 = "12345678"
+    test_pass_4 = "ABCDEF"
+    test_pass_5 = "!@#$%^&*"
+    test_pass_6 = "ValidP@ss1"
 
-    print("Testing odd/even detection using bitwise AND:")
-    for num in test_cases:
-        result = is_odd_bitwise(num)
-        status = "Odd" if result else "Even"
-        binary_repr = f"{num:b}"[:30].ljust(32, ' ')  # Pad with spaces to align bits visually up to sign bit range roughly
-        print(f"Number: {num} (Binary approx: ...{binary_repr[-4:]}) -> Status: {status}")
+    validator_1 = PasswordValidationEngine(test_pass_1)
+    print(validator_1.is_valid())
+
+    validator_2 = PasswordValidationEngine(test_pass_2)
+    print(validator_2.is_valid())
+
+    validator_3 = PasswordValidationEngine(test_pass_3)
+    print(validator_3.is_valid())
+
+    validator_4 = PasswordValidationEngine(test_pass_4)
+    print(validator_4.is_valid())
+
+    validator_5 = PasswordValidationEngine(test_pass_5)
+    print(validator_5.is_valid())
+
+    validator_6 = PasswordValidationEngine(test_pass_6)
+    print(validator_6.is_valid())

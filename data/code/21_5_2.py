@@ -1,11 +1,11 @@
-def sort_and_count(numbers):
-    sorted_numbers = sorted(numbers)
-    even_count = 0
-    for number in numbers:
-        if number % 2 == 0:
-            even_count += 1
-    return (sorted_numbers, even_count)
+def largest_of_three(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
 if __name__ == '__main__':
-    sample_list = [5, 2, 8, 1, 10, 3, 6, 4]
-    result = sort_and_count(sample_list)
+    result = largest_of_three(10, 25, 15)
     print(result)

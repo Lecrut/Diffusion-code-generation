@@ -1,20 +1,10 @@
-import sys
-
-def check_number(value: str) -> None:
-    """Check if a string represents an integer and print its sign status."""
-    try:
-        num = int(value)
-        if num < 0:
-            print(f"{value} is negative.")
-        else:
-            print(f"{value} is not negative (zero or positive).")
-    except ValueError:
-        print(f"Error: '{value}' is not a valid integer.", file=sys.stderr)
+def check_leap(year):
+    if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+        return True
+    return False
 
 if __name__ == '__main__':
-    # Hard-coded sample values to run without user input, command-line arguments, 
-    # network access, or pre-existing files.
-    samples = ["-5", "0", "10", "-3.5", "abc"]
-
-    for item in samples:
-        check_number(item)
+    print(check_leap(2000))
+    print(check_leap(1900))
+    print(check_leap(2024))
+    print(check_leap(2023))

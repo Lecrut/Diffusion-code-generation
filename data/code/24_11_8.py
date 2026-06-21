@@ -1,33 +1,29 @@
-class NumberChecker:
-    """A class to check properties of numeric values."""
-    
-    def check_negativity(self, value):
-        """
-        Determines if the given input value is negative.
-        
-        Parameters:
-            value (int or float): The number to check.
-            
-        Returns:
-            bool: True if value is strictly less than zero, False otherwise.
-        """
-        return value < 0
+def is_leap_year(year):
+    if year & 3:
+        return False
+    if year & 192 == 0:
+        if year & 32767 == 0:
+            return False
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    test_values = [
-        -5,     # Should be negative
-        0,      # Not negative (zero)
-        3.14,   # Positive float
-        None,   # Will raise TypeError as expected with built-in comparison
-        "abc",  # Will raise TypeError as expected
-    ]
-
-    checker = NumberChecker()
-
-    for val in test_values:
-        try:
-            result = checker.check_negativity(val)
-            print(f"Value {val} is negative? {result}")
-        except TypeError:
-            print(f"Value {val} cannot be compared (non-numeric)")
+    assert is_leap_year(2000) is True
+    assert is_leap_year(1900) is False
+    assert is_leap_year(2024) is True
+    assert is_leap_year(2100) is False
+    assert is_leap_year(4) is True
+    assert is_leap_year(100) is False
+    assert is_leap_year(400) is True
+    assert is_leap_year(1) is False
+    assert is_leap_year(2023) is False
+    assert is_leap_year(2400) is True
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2100))
+    print(is_leap_year(4))
+    print(is_leap_year(100))
+    print(is_leap_year(400))
+    print(is_leap_year(1))
+    print(is_leap_year(2023))
+    print(is_leap_year(2400))

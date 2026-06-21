@@ -1,41 +1,19 @@
-class NumberChecker:
-    """A class designed to check properties of numerical values."""
-
-    def __init__(self):
-        """Initialize the NumberChecker instance with no specific parameters required."""
-        pass
-
-    def check_negativity(self, value) -> bool:
-        """
-        Determines if the input value is negative.
-
-        Args:
-            value (int or float): The numerical value to be checked.
-
-        Returns:
-            bool: True if the value is less than zero, False otherwise.
-        
-        Examples:
-            >>> checker = NumberChecker()
-            >>> checker.check_negativity(-5)
-            True
-            >>> checker.check_negativity(0)
-            False
-            >>> checker.check_negativity("not a number")  # Raises TypeError implicitly as Python handles this naturally, but logic assumes numeric input. For pure efficiency and correctness with expected types:
-        """
-        if not isinstance(value, (int, float)):
-            raise TypeError(f"Expected int or float, got {type(value).__name__}")
-
-        return value < 0
+def is_leap(year):
+    year_val = year
+    bitwise_and_4 = year_val & 3
+    bitwise_and_15 = year_val & 15
+    bitwise_and_63 = year_val & 63
+    bitwise_and_255 = year_val & 255
+    
+    div_4 = bitwise_and_4 == 0
+    div_100 = (year_val % 100) == 0
+    div_400 = (year_val % 400) == 0
+    
+    is_leap_result = div_4 and (not div_100 or div_400)
+    
+    return is_leap_result
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    checker = NumberChecker()
-
-    test_values = [-10, -3.5, 0, 42, 0.0]
-
-    print("Testing NumberChecker.check_negativity:")
-    for val in test_values:
-        result = checker.check_negativity(val)
-        status = "Negative" if result else "Non-negative or Zero"
-        print(f"{val} is {status}")
+    test_years = [2000, 1900, 2024, 2023, 400, 100, 4, 1]
+    results = [is_leap(y) for y in test_years]
+    print(results)

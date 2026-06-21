@@ -1,6 +1,12 @@
-class Vector:
-    def __init__(self, values):
-        self.values = list(values)  # Ensure it's a mutable copy
+def is_even(n: int) -> bool:
+    return n & 1 == 0
 
 if __name__ == '__main__':
-    pass
+    print(is_even(0))
+    print(is_even(1))
+    print(is_even(2))
+    print(is_even(3))
+    print(is_even(-2))
+    print(is_even(-3))
+    print(is_even(1000000))
+    print(is_even(1000001))

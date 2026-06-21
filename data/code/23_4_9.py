@@ -1,52 +1,33 @@
-def compare_sequences(seq_a: list, seq_b: list):
-    """
-    Generator function that yields comparison results between corresponding elements 
-    of two input sequences.
-    
-    Args:
-        seq_a (list): First sequence of values.
-        seq_b (list): Second sequence of values.
-        
-    Yields:
-        str: Description of the relationship ('A is greater', 'B is smaller', or 'Equal').
-    """
-    # Validate that both sequences have equal length
-    if len(seq_a) != len(seq_b):
-        raise ValueError("Both input sequences must be of equal length.")
+class GradeThresholds:
+    def __init__(self):
+        self.thresholds = [
+            (90, "A"),
+            (80, "B"),
+            (70, "C"),
+            (60, "D"),
+            (0, "F"),
+        ]
 
-    for val_a, val_b in zip(seq_a, seq_b):
-        if not isinstance(val_a, (int, float)) or not isinstance(val_b, (int, float)):
-            # Attempt numeric conversion; fall back to direct comparison logic below
-            try:
-                num_a = float(val_a)
-                num_b = float(val_b)
-            except ValueError:
-                # If strings cannot be converted and aren't already numbers, 
-                # use lexicographical string comparison as a fallback behavior.
-                if val_a > val_b:
-                    yield "A is greater"
-                elif val_a < val_b:
-                    yield "B is smaller"
-                else:
-                    yield "Equal"
+    def get_grade(self, score):
+        if score < 0 or score > 100:
+            raise ValueError("Score must be between 0 and 100")
+        for threshold, grade in self.thresholds:
+            if score >= threshold:
+                return grade
+        return "F"
+
+class Grader:
+    def __init__(self, thresholds=None):
+        if thresholds is None:
+            self.thresholds = GradeThresholds()
         else:
-            num_a = float(val_a)
-            num_b = float(val_b)
+            self.thresholds = thresholds
 
-            if num_a > num_b:
-                yield "A is greater"
-            elif num_a < num_b:
-                yield "B is smaller"
-            else:
-                yield "Equal"
+    def determine_grade(self, score):
+        return self.thresholds.get_grade(score)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies.
-    sequence_one = [10, 25, -3, 4.5]
-    sequence_two = [7, 25, 0, 6.5]
-
-    print("Comparison Results:")
-    results = list(compare_sequences(sequence_one, sequence_two))
-    
-    for result in results:
-        print(result)
+    grader = Grader()
+    scores = [95, 85, 75, 65, 55, 100, 0]
+    for score in scores:
+        print(f"Score {score}: {grader.determine_grade(score)}")

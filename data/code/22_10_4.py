@@ -1,29 +1,35 @@
-def get_number():
-    """Prompt the user to enter an integer."""
-    
-def is_odd_or_even(number):
-    """Determine if a number is odd or even using the modulo operator.
-    
-    Args:
-        number (int): The integer input by the user.
-        
-    Returns:
-        str: 'Odd' if the number is not divisible by 2, otherwise 'Even'.
-    """
-    remainder = number % 2
-    
-    # Using a list comprehension for efficiency in checking conditions across multiple values
-    result_list = [f"The number {number} is {'odd' if r else 'even'}." 
-                   for r in (remainder)] 
-    
-    return ''.join(result_list)
+def validate_password_strength(password):
+    if not password or len(password) < 8:
+        return False
+
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+
+    special_characters = set("!@#$%^&*()_+-=[]{}|;:',.<>?/`~")
+
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_characters:
+            has_special = True
+
+    return has_upper and has_lower and has_digit and has_special
 
 if __name__ == '__main__':
-    sample_values = [1, 2, -3]
+    sample_passwords = [
+        "Short1!",
+        "alllowercase1",
+        "ALLUPPERCASE1",
+        "NoDigitsHere!",
+        "Valid1!Pass",
+        "Valid1!Passx"
+    ]
 
-    # Hard-coded test cases to run without user input
-    print("Testing with the following values:")
-    
-    for num in sample_values:
-        output_message = is_odd_or_even(num)
-        print(output_message)
+    for pwd in sample_passwords:
+        print(validate_password_strength(pwd))

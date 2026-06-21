@@ -1,20 +1,20 @@
-class Number:
-    def __init__(self, value):
-        self.value = value
-    def compare(self, other):
-        if self.value > other.value:
-            return 1
-        elif self.value < other.value:
-            return -1
-        else:
-            return 0
+def compute_median(values):
+    sorted_values = sorted(values)
+    n = len(sorted_values)
+    if n % 2 == 1:
+        return sorted_values[n // 2]
+    else:
+        mid1 = sorted_values[n // 2 - 1]
+        mid2 = sorted_values[n // 2]
+        return (mid1 + mid2) // 2
+
 if __name__ == '__main__':
-    num1 = Number(10)
-    num2 = Number(20)
-    num3 = Number(10)
-    result1 = num1.compare(num2)
-    print(f"Comparing {num1.value} and {num2.value}: {result1}")
-    result2 = num1.compare(num3)
-    print(f"Comparing {num1.value} and {num3.value}: {result2}")
-    result3 = num2.compare(num1)
-    print(f"Comparing {num2.value} and {num1.value}: {result3}")
+    array1 = [3, 1, 4, 1, 5, 9, 2]
+    array2 = [10, 20, 30, 40]
+    array3 = [7]
+    array4 = [5, 5, 5, 5]
+
+    print(compute_median(array1))
+    print(compute_median(array2))
+    print(compute_median(array3))
+    print(compute_median(array4))

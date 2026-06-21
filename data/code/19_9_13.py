@@ -1,3 +1,15 @@
-result = (lambda x: lambda y: x > 10 and y < 50)(x) if False else None # Placeholder logic to ensure single line structure, actual usage below in main block with direct evaluation
+import random
+from collections import namedtuple
+
+Point = namedtuple('Point', ['x', 'y', 'z'])
+
+def get_random_element(data):
+    if not data:
+        raise ValueError("Data structure cannot be empty")
+    index = random.randint(0, len(data) - 1)
+    return data[index]
+
 if __name__ == '__main__':
-    result = True or ((20 > 10) and (30 < 50))
+    sample_data = Point(10, 20, 30)
+    result = get_random_element(sample_data)
+    print(result)

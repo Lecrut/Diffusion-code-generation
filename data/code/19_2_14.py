@@ -1,22 +1,26 @@
-class ConditionChecker:
-    def check_condition(self, a, b):
-        return a == b
+class RandomCharSelector:
+    _DEFAULT_VALUE = ""
+
+    @staticmethod
+    def _validate_input(text):
+        if text is None:
+            return RandomCharSelector._DEFAULT_VALUE
+        return text
+
+    @staticmethod
+    def _compute_index(length):
+        import random
+        return random.randint(0, length - 1)
+
+    def pick(self, text):
+        cleaned = self._validate_input(text)
+        if not cleaned:
+            return self._DEFAULT_VALUE
+        idx = self._compute_index(len(cleaned))
+        return cleaned[idx]
 
 if __name__ == '__main__':
-    checker = ConditionChecker()
-    
-    # Test case 1: Equal values (integers)
-    result_1 = checker.check_condition(5, 5)
-    print(f"check_condition(5, 5) returned {result_1}")
-
-    # Test case 2: Different integers
-    result_2 = checker.check_condition(3, 7)
-    print(f"check_condition(3, 7) returned {result_2}")
-
-    # Test case 3: Equal strings
-    result_3 = checker.check_condition("hello", "hello")
-    print(f'check_condition("hello", "hello") returned {result_3}')
-
-    # Test case 4: Different types that might look similar but are not (e.g., int vs float)
-    result_4 = checker.check_condition(2, 2.0)
-    print(f"check_condition(2, 2.0) returned {result_4}")
+    selector = RandomCharSelector()
+    sample = "pymath_random"
+    char = selector.pick(sample)
+    print(char)

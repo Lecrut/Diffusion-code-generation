@@ -1,24 +1,34 @@
-class NumberChecker:
-    def check_odd(self, number):
-        """
-        Checks if a given integer is odd.
+import re
+import string
 
-        Args:
-            number (int): The integer to be checked.
+class PasswordValidator:
 
-        Returns:
-            bool: True if the number is odd, False otherwise.
-        """
-        return number % 2 != 0
+    @staticmethod
+    def validate(password):
+        if len(password) < 12:
+            return False
+        special_chars = set(string.punctuation)
+        special_in_password = set((char for char in password if char in special_chars))
+        if len(special_in_password) < 2:
+            return False
+        if PasswordValidator._has_sequential_keyboard_pattern(password):
+            return False
+        return True
 
+    @staticmethod
+    def _has_sequential_keyboard_pattern(password):
+        keyboard_rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
+        lower_password = password.lower()
+        for row in keyboard_rows:
+            for i in range(len(row) - 2):
+                forward_seq = row[i:i + 3]
+                backward_seq = forward_seq[::-1]
+                if forward_seq in lower_password or backward_seq in lower_password:
+                    return True
+        return False
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Hard-coded sample values for testing without user input
-    test_numbers = [1, 2, -3, 0, 5]
-
-    print("Testing Odd/Even Checker:")
-    for num in test_numbers:
-        result = checker.check_odd(num)
-        status = "Odd" if result else "Even"
-        print(f"{num} is {status}")
+    samples = ['short!@', 'longenough12345', 'validP@ssw0rd!##', 'qwerty12345!@', 'secureP@ss123!!', '123456789012!!', 'asdfgh12345!@', 'zxcvbn12345!@', 'Complex!Pass#123', 'NoSpecialsHere1234', 'OneSpecialOnly!1234567890', 'TwoSpecials!@123456789']
+    validator = PasswordValidator()
+    for sample in samples:
+        result = validator.validate(sample)
+        print(f'{sample}: {result}')

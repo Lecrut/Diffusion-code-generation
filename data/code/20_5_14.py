@@ -1,14 +1,8 @@
-class MyClass:
+def is_even(n):
+    return n % 2 == 0
 
-    def __init__(self, value):
-        self.value = value
-
-    @classmethod
-    def is_identical(cls, instance1, instance2):
-        return instance1.__dict__ == instance2.__dict__
 if __name__ == '__main__':
-    obj1 = MyClass(10)
-    obj2 = MyClass(10)
-    obj3 = MyClass(20)
-    print(MyClass.is_identical(obj1, obj2))
-    print(MyClass.is_identical(obj1, obj3))
+    print(is_even(4))
+    print(is_even(7))
+    print(is_even(0))
+    print(is_even(-3))

@@ -1,11 +1,20 @@
-import sys
+import random
 
-def evaluate_condition(x: float, y: float) -> bool:
-    """Yields True if x is greater than y, otherwise False."""
-    result = x > y
-    yield result
+class RandomValueFetcher:
+    def __init__(self, data):
+        self.data = data
+
+    def fetch_random(self):
+        if not self.data:
+            return None
+        keys = list(self.data.keys())
+        target = random.choice(keys)
+        return self.data[target]
 
 if __name__ == '__main__':
-    test_x, test_y = 10.5, 5.2
-    for val in evaluate_condition(test_x, test_y):
-        print(val)
+    inventory = {'hammer': 10, 'screwdriver': 15, 'wrench': 5, 'pliers': 8}
+    empty_inventory = {}
+    fetcher1 = RandomValueFetcher(inventory)
+    fetcher2 = RandomValueFetcher(empty_inventory)
+    print(fetcher1.fetch_random())
+    print(fetcher2.fetch_random())

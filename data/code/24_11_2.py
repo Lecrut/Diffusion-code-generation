@@ -1,28 +1,21 @@
-class NumberChecker:
-    def check_negativity(self, value):
-        """
-        Determines if the input value is negative.
-        
-        Args:
-            value (int or float): The number to check.
-            
-        Returns:
-            bool: True if the value is strictly less than zero, False otherwise.
-        """
-        return isinstance(value, (int, float)) and value < 0
+def is_leap_year(year):
+    return (year & 3) == 0 and ((year % 100 != 0) or (year & 15) == 0 and (year & 240) == 0)
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-
-    # Sample test cases with hard-coded values
-    test_values = [
-        -5,      # Negative integer -> True
-        -3.14,   # Negative float -> True
-        0,       # Zero -> False (not negative)
-        10,      # Positive int -> False
-        2.718,   # Positive float -> False
+    test_cases = [
+        (2000, True),
+        (1900, False),
+        (2004, True),
+        (2001, False),
+        (400, True),
+        (100, False),
+        (1, False),
+        (0, True),
+        (1700, False),
+        (2400, True)
     ]
 
-    for val in test_values:
-        result = checker.check_negativity(val)
-        print(f"Is {val} negative? {result}")
+    for year, expected in test_cases:
+        result = is_leap_year(year)
+        assert result == expected
+        print(f"{year}: {result}")

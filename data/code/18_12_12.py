@@ -1,26 +1,65 @@
-import sys
-
-def get_float_input(prompt):
-    """
-    Attempts to read a float from standard input.
-    Handles potential conversion errors gracefully by printing an error message,
-    then attempting again if not reached end of file or interrupted.
+def median_index(lst):
+    if not lst:
+        return None
     
-    However, per the task constraint 'Never call input(), sys.stdin', this function 
-    is defined for logical structure but will be bypassed in favor of hardcoded values 
-    via direct assignment and execution flow manipulation to satisfy all constraints:
-    1. No interactive prompts (input() called).
-    2. Sample block runs without user input.
+    n = len(lst)
+    count_map = {}
     
-    To strictly adhere to "Never call input()", we must simulate the behavior internally 
-    using a try-except structure around arithmetic logic on variables that are already populated, 
-    rather than attempting to read from stdin which is prohibited for interactive prompts.
-    Since no `input()` calls are allowed in any form (including simulated interaction), 
-    the script will rely solely on pre-defined values within main or helper functions 
-    called via direct execution context without external IO.
-
-def compare_values(a, b):
-    """
+    for val in lst:
+        if val in count_map:
+            count_map[val] += 1
+        else:
+            count_map[val] = 1
+    
+    unique_vals = list(count_map.keys())
+    
+    i = 0
+    while i < len(unique_vals):
+        max_idx = i
+        for j in range(i + 1, len(unique_vals)):
+            if unique_vals[j] > unique_vals[max_idx]:
+                max_idx = j
+        unique_vals[i], unique_vals[max_idx] = unique_vals[max_idx], unique_vals[i]
+        i += 1
+    
+    sorted_unique = []
+    for val in unique_vals:
+        sorted_unique.append(val)
+        
+    sorted_unique.sort()
+    
+    left_val = None
+    right_val = None
+    
+    current_count = 0
+    
+    for val in sorted_unique:
+        freq = count_map[val]
+        
+        left_boundary = current_count
+        right_boundary = current_count + freq - 1
+        
+        if n % 2 == 1:
+            mid_idx = (n - 1) // 2
+            if left_boundary <= mid_idx <= right_boundary:
+                left_val = val
+                right_val = val
+                break
+        else:
+            mid1_idx = (n // 2) - 1
+            mid2_idx = (n // 2)
+            if left_boundary <= mid1_idx <= right_boundary:
+                left_val = val
+            if left_boundary <= mid2_idx <= right_boundary:
+                right_val = val
+            if left_val is not None and right_val is not None:
+                break
+                
+        current_count += freq
+    
+    return (left_val + right_val) / 2
 
 if __name__ == '__main__':
-    pass
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    result = median_index(sample_list)
+    print(result)

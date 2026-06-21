@@ -1,10 +1,7 @@
-class Sorter:
-    def sort_list(self, data_list):
-        """Sorts a list of numbers in reverse (descending) order."""
-        return sorted(data_list, reverse=True)
+def find_largest(a, b, c):
+    if not all(isinstance(x, (int, float)) for x in (a, b, c)):
+        raise TypeError("All arguments must be numeric")
+    return a if a > b else b if b > c else c
 
 if __name__ == '__main__':
-    sample_data = [34.5, 12, -7, 890, 6]
-    sorter = Sorter()
-    result = sorter.sort_list(sample_data)
-    print(result)
+    print(find_largest(10, 25, 15))

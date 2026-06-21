@@ -1,23 +1,7 @@
-class NegativeResultError(Exception):
-    pass
-def check_negative(func):
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        if result < 0:
-            raise NegativeResultError("Function returned a negative result")
-        return result
-    return wrapper
-@check_negative
-def calculate_value(a, b):
-    return a - b
+def is_leap_year(year):
+    return (year & 3 == 0) and ((year % 100 != 0) or (year % 400 == 0))
+
 if __name__ == '__main__':
-    try:
-        result = calculate_value(5, 10)
-        print(f"Result: {result}")
-    except NegativeResultError as e:
-        print(f"Caught exception: {e}")
-    try:
-        result = calculate_value(10, 5)
-        print(f"Result: {result}")
-    except NegativeResultError as e:
-        print(f"Caught exception: {e}")
+    years_to_check = [2000, 1900, 2024, 2023, 2400, 1600, 1700, 2004]
+    results = {year: is_leap_year(year) for year in years_to_check}
+    print(results)

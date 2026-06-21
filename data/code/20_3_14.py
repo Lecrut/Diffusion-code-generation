@@ -1,7 +1,11 @@
-import sys
-
-def safe_read_number(prompt_str):
-    """Attempts to read a number from standard input with error handling."""
+def is_divisible_by_two(n: int) -> bool:
+    return n % 2 == 0
 
 if __name__ == '__main__':
-    pass
+    test_values = [10, 15, 20, 23, 100, 99]
+    results = []
+    for value in test_values:
+        result = is_divisible_by_two(value)
+        results.append(result)
+    for value, result in zip(test_values, results):
+        print(value, result)

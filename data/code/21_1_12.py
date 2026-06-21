@@ -1,21 +1,13 @@
-def sort_by_descending(numbers):
-    """
-    Sorts a list of integers in descending order using Python's built-in Timsort,
-    which is highly optimized (O(n log n) average time complexity).
-    
-    Args:
-        numbers (list[int]): A list of integers to be sorted.
-        
-    Returns:
-        list[int]: A new list containing the same integers in descending order.
-    """
-    return sorted(numbers, reverse=True)
+def get_maximum(a, b, c):
+    if a >= b and a >= c:
+        return a
+    if b >= c:
+        return b
+    return c
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_data = [34, 789, -102, 56, 0, 1234]
-    
-    result = sort_by_descending(sample_data)
-    
-    print("Original list:", sample_data)
-    print("Sorted (descending):", result)
+    val_a = 5
+    val_b = 50
+    val_c = 20
+    maximum = get_maximum(val_a, val_b, val_c)
+    print(maximum)

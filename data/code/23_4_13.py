@@ -1,40 +1,41 @@
-def compare_sequences(seq_a: list, seq_b: list) -> str:
-    """
-    Generator function that yields comparison results between pairs of values 
-    from two input sequences.
-    
-    Args:
-        seq_a (list): First sequence of comparable items.
-        seq_b (list): Second sequence of comparable items.
-        
-    Yields:
-        str: A string describing the relationship ('A is greater', 'B is smaller', or 'Equal') 
-             for each corresponding pair. Assumes sequences are of equal length.
-    
-    Raises:
-        ValueError: If the input sequences have different lengths.
-    """
-    if len(seq_a) != len(seq_b):
-        raise ValueError("Input sequences must be of equal length.")
+GRADE_THRESHOLDS = [
+    (90, "A"),
+    (80, "B"),
+    (70, "C"),
+    (60, "D"),
+    (0, "F"),
+]
 
-    for val_a, val_b in zip(seq_a, seq_b):
-        try:
-            result = (val_a > val_b) - (val_a < val_b)
-            
-            if result == 1:
-                yield "A is greater"
-            elif result == -1:
-                yield "B is smaller"
-            else:
-                yield "Equal"
-        except TypeError as e:
-            # In case items are not directly comparable (e.g., mixed types)
-            raise ValueError(f"Incompatible item types for comparison at index {seq_a.index(val_a)}") from e
+class ScoreValidator:
+    def validate(self, score):
+        if not isinstance(score, (int, float)):
+            raise TypeError("Score must be a number")
+        if score < 0 or score > 100:
+            raise ValueError("Score must be between 0 and 100")
 
-if __name__ == '__main__':
-    sample_seq_1 = [3, 5, 2.5, 'a', 7]
-    sample_seq_2 = [4, 6, 2.5, 'b', 8]
+class GradeMapping:
+    def __init__(self, thresholds=None):
+        self.thresholds = thresholds if thresholds is not None else GRADE_THRESHOLDS
 
-    print("Comparison Results:")
-    for result in compare_sequences(sample_seq_1, sample_seq_2):
-        print(result)
+    def map(self, score):
+        for minimum, grade in self.thresholds:
+            if score >= minimum:
+                return grade
+        return "F"
+
+class GradeCalculator:
+    def __init__(self, validator=None, mapping=None):
+        self.validator = validator if validator is not None else ScoreValidator()
+        self.mapping = mapping if mapping is not None else GradeMapping()
+
+    def calculate(self, score):
+        self.validator.validate(score)
+        return self.mapping.map(score)
+
+if __name__ == "__main__":
+    calculator = GradeCalculator()
+    print(calculator.calculate(95))
+    print(calculator.calculate(85))
+    print(calculator.calculate(72))
+    print(calculator.calculate(60))
+    print(calculator.calculate(45))

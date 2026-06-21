@@ -1,20 +1,8 @@
-import numpy as np
-def is_greater(a, b):
-    return a > b
+def get_middle_element(data):
+    return data[len(data) // 2]
+
 if __name__ == '__main__':
-    a_val = 10
-    b_val = 5
-    result1 = is_greater(a_val, b_val)
-    print(f"is_greater({a_val}, {b_val}) is: {result1}")
-    a_val = 3
-    b_val = 7
-    result2 = is_greater(a_val, b_val)
-    print(f"is_greater({a_val}, {b_val}) is: {result2}")
-    a_val = 10
-    b_val = 10
-    result3 = is_greater(a_val, b_val)
-    print(f"is_greater({a_val}, {b_val}) is: {result3}")
-    a_val = -1
-    b_val = -5
-    result4 = is_greater(a_val, b_val)
-    print(f"is_greater({a_val}, {b_val}) is: {result4}")
+    odd_list = [10, 20, 30, 40, 50]
+    even_list = [5, 15, 25, 35]
+    print(get_middle_element(odd_list))
+    print(get_middle_element(even_list))

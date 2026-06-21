@@ -1,36 +1,34 @@
-def compare_strings(str1: str, str2: str) -> tuple[int, int]:
-    """
-    Compares two strings lexicographically and their lengths.
-    
-    Returns a tuple (lexicographic_result, length_difference).
-    - lexicographic_result is 0 if equal, 1 if str1 > str2, -1 otherwise.
-    - length_difference is len(str1) - len(str2).
+import functools
+import operator
 
-    :param str1: First string to compare.
-    :param str2: Second string to compare.
-    :return: A tuple containing the lexicographic comparison result and the length difference.
-    """
-    # Normalize strings for case-insensitive comparison if needed, 
-    # but standard lex order implies ASCII/Unicode value based unless specified otherwise.
-    # We'll use direct < operator for default behavior (case-sensitive).
+def calculate_grades(scores: list[int] | list[float]) -> list[str]:
+    if not scores:
+        return []
     
-    len_diff = len(str1) - len(str2)
-
-    lexicographic_result = 0
+    min_score = min(scores)
+    max_score = max(scores)
+    score_range = max_score - min_score
     
-    try:
-        if str1 > str2:
-            lexicographic_result = 1
-        elif str1 < str2:
-            lexicographic_result = -1
+    if score_range == 0:
+        return ["A"] * len(scores)
+    
+    grades = []
+    for score in scores:
+        normalized = (score - min_score) / score_range
+        if normalized >= 0.9:
+            grades.append("A")
+        elif normalized >= 0.8:
+            grades.append("B")
+        elif normalized >= 0.7:
+            grades.append("C")
+        elif normalized >= 0.6:
+            grades.append("D")
         else:
-            # Lengths are equal and content is same, result remains 0.
-            pass
+            grades.append("F")
             
-    except TypeError as e:
-        raise ValueError(f"Strings must be comparable for lex comparison: {str(e)}") from e
-
-    return (lexicographic_result, len_diff)
+    return grades
 
 if __name__ == '__main__':
-    pass
+    sample_scores = [55, 72, 88, 95, 100, 65, 82]
+    result = calculate_grades(sample_scores)
+    print(result)

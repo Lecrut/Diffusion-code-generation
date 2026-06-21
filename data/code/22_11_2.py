@@ -1,9 +1,10 @@
-def is_odd(n: int) -> bool:
-    return n % 2 != 0
+import re
+
+def validate_password_complexity(password: str) -> bool:
+    pattern = re.compile(r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\/?]).{8,}$')
+    return bool(pattern.search(password))
+
 if __name__ == '__main__':
-    print(is_odd(4))
-    print(is_odd(7))
-    print(is_odd(0))
-    print(is_odd(-3))
-    print(is_odd(1))
-    print(is_odd(-2))
+    samples = ["Password1!", "short1A!", "alllowercase1!", "NOdigit!Here", "Has1Special#"]
+    for pwd in samples:
+        print(validate_password_complexity(pwd))

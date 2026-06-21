@@ -1,19 +1,19 @@
-def sort_strings_alphabetically(strings):
-    """
-    Sorts a list of strings alphabetically (lexicographically).
-    
-    Args:
-        strings (list[str]): A list of strings to be sorted.
-        
-    Returns:
-        list[str]: A new list containing the sorted strings.
-    """
-    # Python's default sort is stable and lexicographical based on Unicode code points.
-    # By default, uppercase letters come before lowercase letters in ASCII/Unicode order 
-    # (e.g., 'Apple' comes before 'banana'). This satisfies "prioritize standard string sorting".
-    return sorted(strings)
+class NumberComparator:
+    def __init__(self, val_a, val_b, val_c):
+        if not all(isinstance(x, (int, float)) for x in (val_a, val_b, val_c)):
+            raise TypeError("All inputs must be numeric")
+        self.val_a = val_a
+        self.val_b = val_b
+        self.val_c = val_c
+
+    def get_largest(self):
+        max_val = self.val_a
+        if self.val_b > max_val:
+            max_val = self.val_b
+        if self.val_c > max_val:
+            max_val = self.val_c
+        return max_val
 
 if __name__ == '__main__':
-    sample_data = ["Banana", "apple", "Cherry", "date", "Elderberry"]
-    result = sort_strings_alphabetically(sample_data.copy())
-    print(result)
+    comparator = NumberComparator(12.5, 8.9, 15.2)
+    print(comparator.get_largest())

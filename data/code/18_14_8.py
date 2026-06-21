@@ -1,20 +1,19 @@
-THRESHOLD = 10
-
-def generator():
-    """Yields True if the current number is strictly greater than THRESHOLD, else False."""
-    # Predefined sequence of numbers to test against the threshold
-    values = [5, 8, 3, 9, 2, 6, 7, 12, 4]
+def get_middle_value(lst):
+    if not lst:
+        return None
     
-    for val in values:
-        yield (val > THRESHOLD)
+    sorted_lst = sorted(lst)
+    n = len(sorted_lst)
+    middle_index = n // 2
+    
+    if n % 2 == 0:
+        val1 = sorted_lst[middle_index - 1]
+        val2 = sorted_lst[middle_index]
+        return (val1 + val2) / 2
+    
+    return sorted_lst[middle_index]
 
 if __name__ == '__main__':
-    # Execute the generator and print results directly to console
-    result = generator()
-    count = 0
-    for is_greater in result:
-        if is_greater:
-            print(f"{count + 1}: True (Value > {THRESHOLD})")
-        else:
-            print(f"{count + 1}: False (Value <= {THRESHOLD})")
-        count += 1
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    result = get_middle_value(sample_list)
+    print(result)

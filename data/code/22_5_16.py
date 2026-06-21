@@ -1,19 +1,23 @@
-def determine_parity(number: int) -> str:
-    """
-    Determines if a given integer is odd or even.
+def validate_password(password, username, email):
+    if not password or not username or not email:
+        return False
+    if username.lower() in password.lower():
+        return False
+    if "@" in email:
+        domain = email.split("@")[1]
+        if domain.lower() in password.lower():
+            return False
+    return True
 
-    Args:
-        number (int): The integer to check.
-
-    Returns:
-        str: 'Odd' if the number is odd, 'Even' otherwise.
-    """
-    return "Odd" if number % 2 != 0 else "Even"
-
-if __name__ == "__main__":
-    # Hard-coded sample values as per constraints (no input() or sys.stdin)
-    test_values = [10, -3, 5, 0]
-
-    for val in test_values:
-        result = determine_parity(val)
-        print(result)
+if __name__ == '__main__':
+    sample_username = "john_doe"
+    sample_email = "john.doe@example.com"
+    test_passwords = [
+        "SecurePass123",
+        "john_doeSecret",
+        "MyExamplePass",
+        "password123"
+    ]
+    for p in test_passwords:
+        result = validate_password(p, sample_username, sample_email)
+        print(f"Password '{p}' valid: {result}")

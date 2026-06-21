@@ -1,17 +1,12 @@
-def compare_items(a: object, b: object) -> bool:
-    """
-    Compares two items first by checking if their types are identical.
-    If the types match, it proceeds to check value equality using ==.
-    
-    Args:
-        a: First item to be compared.
-        b: Second item to be compared.
-        
-    Returns:
-        bool: True if both types and values are equal; False otherwise.
-    """
-    type_check = type(a) is type(b)
-    return type_check and (a == b)
+def check_parity(value):
+    if not isinstance(value, int) or isinstance(value, bool):
+        return "ERROR_INVALID_TYPE"
+    return value % 2 == 0
 
 if __name__ == '__main__':
-    pass
+    print(check_parity(4))
+    print(check_parity(7))
+    print(check_parity(0))
+    print(check_parity("text"))
+    print(check_parity(3.14))
+    print(check_parity(True))

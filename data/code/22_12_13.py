@@ -1,24 +1,52 @@
-class NumberChecker:
-    def check_odd(self, number):
-        """
-        Checks if a given integer is odd.
+import string
 
-        Args:
-            number (int): The integer to be checked.
+def check_password_strength(password):
+    length = len(password)
+    if length < 12:
+        return False, 0
 
-        Returns:
-            bool: True if the number is odd, False otherwise.
-        """
-        return number % 2 != 0
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+
+    upper_mask = 0
+    lower_mask = 0
+    digit_mask = 0
+    special_mask = 0
+
+    upper_chars = set(string.ascii_uppercase)
+    lower_chars = set(string.ascii_lowercase)
+    digit_chars = set(string.digits)
+    special_chars = set(string.punctuation)
+
+    for char in password:
+        if char in upper_chars:
+            has_upper = True
+            upper_mask |= 1 << (ord(char) - ord('A'))
+        if char in lower_chars:
+            has_lower = True
+            lower_mask |= 1 << (ord(char) - ord('a'))
+        if char in digit_chars:
+            has_digit = True
+            digit_mask |= 1 << (ord(char) - ord('0'))
+        if char in special_chars:
+            has_special = True
+            special_mask |= 1 << (ord(char) % 32)
+
+    criteria_met = has_upper & has_lower & has_digit & has_special
+
+    diversity_score = (
+        bin(upper_mask).count('1') +
+        bin(lower_mask).count('1') +
+        bin(digit_mask).count('1') +
+        bin(special_mask).count('1')
+    )
+
+    return criteria_met, diversity_score
 
 if __name__ == '__main__':
-    checker = NumberChecker()
-    
-    # Sample values for testing
-    test_values = [17, 42, -3, 0]
-
-    print("Testing check_odd method:")
-    for val in test_values:
-        result = checker.check_odd(val)
-        status = "Odd" if result else "Even"
-        print(f"{val} is {status}")
+    test_password = "Str0ng!Pass#2024"
+    is_strong, score = check_password_strength(test_password)
+    print(is_strong)
+    print(score)

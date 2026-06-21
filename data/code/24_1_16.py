@@ -1,25 +1,25 @@
-def is_negative(number):
-    """
-    Returns True if number is less than zero, False otherwise.
+def check_divisibility_by_n(year, divisor):
+    return year % divisor == 0
+
+def determine_leap_year(year):
+    div_400_rules = {
+        400: check_divisibility_by_n(year, 400)
+    }
+    if div_400_rules[400]:
+        return True
     
-    Args:
-        number (int | float): The numerical value to check.
-        
-    Returns:
-        bool: True if number < 0, else False.
-    """
-    return number < 0
+    div_100_rules = {
+        100: check_divisibility_by_n(year, 100)
+    }
+    if div_100_rules[100]:
+        return False
+    
+    div_4_rules = {
+        4: check_divisibility_by_n(year, 4)
+    }
+    return div_4_rules[4]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        -5,      # Should be True
-        0,       # Should be False (zero is not negative)
-        -3.14,   # Should be True
-        2.718,   # Should be False
-        float('-inf'),  # Should be True
-    ]
-
-    for value in test_cases:
-        result = is_negative(value)
-        print(f"is_negative({value}) = {result}")
+    sample_years = [2000, 1900, 2024]
+    for test_year in sample_years:
+        print(determine_leap_year(test_year))

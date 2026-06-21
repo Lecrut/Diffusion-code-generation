@@ -1,38 +1,56 @@
-def filter_odd_numbers(numbers):
-    """
-    Returns a new list containing only the odd integers from the input list.
-    
-    Args:
-        numbers (list[int]): A list of integers to process.
-        
-    Returns:
-        list[int]: A list of odd integers found in the input.
-        
-    Raises:
-        TypeError: If 'numbers' is not a list or contains non-integer elements.
-    """
-    if not isinstance(numbers, list):
-        raise TypeError("Input must be a list.")
-    
-    result = []
-    for num in numbers:
-        if not isinstance(num, int) or isinstance(num, bool):
-            continue  # Skip booleans and non-integers
-        
-        if num % 2 != 0:
-            result.append(num)
-            
+import re
+
+COMMON_WEAK_PASSWORDS = {
+    "password", "123456", "12345678", "qwerty", "abc123",
+    "monkey", "1234567", "letmein", "trustno1", "dragon",
+    "baseball", "iloveyou", "master", "sunshine", "ashley",
+    "bailey", "shadow", "123123", "654321", "superman"
+}
+
+def is_sequential_chars(password: str) -> bool:
+    if len(password) < 3:
+        return False
+    for i in range(len(password) - 2):
+        if ord(password[i]) + 1 == ord(password[i + 1]) and ord(password[i + 1]) + 1 == ord(password[i + 2]):
+            return True
+        if ord(password[i]) - 1 == ord(password[i + 1]) and ord(password[i + 1]) - 1 == ord(password[i + 2]):
+            return True
+    return False
+
+def validate_password_strength(password: str) -> dict:
+    result = {
+        "is_valid": False,
+        "errors": []
+    }
+
+    if password.lower() in COMMON_WEAK_PASSWORDS:
+        result["errors"].append("Password is too common")
+
+    if len(password) < 8:
+        result["errors"].append("Password must be at least 8 characters long")
+
+    if not re.search(r"[a-z]", password):
+        result["errors"].append("Password must contain a lowercase letter")
+
+    if not re.search(r"[A-Z]", password):
+        result["errors"].append("Password must contain an uppercase letter")
+
+    if not re.search(r"\d", password):
+        result["errors"].append("Password must contain a digit")
+
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        result["errors"].append("Password must contain a special character")
+
+    if is_sequential_chars(password):
+        result["errors"].append("Password contains sequential characters")
+
+    if not result["errors"]:
+        result["is_valid"] = True
+
     return result
 
-if __name__ == '__main__':
-    sample_input = [1, 24, 7, -3, 8, 9, 0]
-    
-    # Process the input and print results with explanation
-    odd_numbers = filter_odd_numbers(sample_input)
-    
-    if len(odd_numbers) > 0:
-        print(f"Odd numbers found in {sample_input}:")
-        for num in odd_numbers:
-            print(num)
-    else:
-        print("No odd numbers were found.")
+if __name__ == "__main__":
+    sample_passwords = ["SecurePass1!", "password", "abc123XYZ!", "P@ssw0rd", "Abcdef1!", "MyStr0ngP@ss"]
+    for pwd in sample_passwords:
+        validation_result = validate_password_strength(pwd)
+        print(f"Password: {pwd} -> Valid: {validation_result['is_valid']}, Errors: {validation_result['errors']}")

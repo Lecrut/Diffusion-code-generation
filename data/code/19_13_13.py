@@ -1,11 +1,12 @@
-def is_positive(n: int) -> bool:
-    """Return True if n is positive, False otherwise."""
-    return n > 0
+import numpy as np
+
+def get_random_element(array):
+    if array.size == 0:
+        raise ValueError("Array must not be empty")
+    index = np.random.randint(0, array.size)
+    return array.flat[index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function without user input
-    samples = [10, -5, 0]
-
-    for value in samples:
-        result = is_positive(value)
-        print(str(result).lower())
+    sample_array = np.arange(1000)
+    result = get_random_element(sample_array)
+    print(result)

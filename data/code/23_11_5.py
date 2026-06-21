@@ -1,18 +1,23 @@
-def compare_and_report(list1, list2):
-    sum1 = sum(list1)
-    sum2 = sum(list2)
-    if sum1 >= sum2:
-        return sum1, list1
-    else:
-        return sum2, list2
+def get_grade(score: int) -> str:
+    if score >= 90:
+        return "A"
+    if score >= 80:
+        return "B"
+    if score >= 70:
+        return "C"
+    if score >= 60:
+        return "D"
+    return "F"
+
+def convert_scores_to_grades(scores: dict[str, int]) -> dict[str, str]:
+    return {name: get_grade(score) for name, score in scores.items()}
+
 if __name__ == '__main__':
-    list_a = [1, 5, 3, 7]
-    list_b = [2, 4, 1, 8]
-    sum_a, winner = compare_and_report(list_a, list_b)
-    print(f"Sum of list A: {sum_a}")
-    print(f"Winning list: {winner}")
-    list_c = [10, 20]
-    list_d = [1, 1, 1]
-    sum_c, winner = compare_and_report(list_c, list_d)
-    print(f"Sum of list C: {sum_c}")
-    print(f"Winning list: {winner}")
+    sample_scores = {
+        "Alice": 95,
+        "Bob": 82,
+        "Charlie": 67,
+        "Diana": 45
+    }
+    result = convert_scores_to_grades(sample_scores)
+    print(result)

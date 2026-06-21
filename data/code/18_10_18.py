@@ -1,38 +1,11 @@
-import numpy as np
-
-def is_greater(a: float, b: float) -> bool:
-    """
-    Determine if a strictly greater than b.
-
-    Parameters
-    ----------
-    a : float or numeric type comparable to float
-        The first numerical value to compare against the second argument.
-    
-    b : float or numeric type comparable to float
-        The second numerical value to compare against the first argument.
-
-    Returns
-    -------
-    bool
-        True if a > b, otherwise False.
-
-    Examples
-    --------
-    >>> is_greater(5.0, 3)
-    True
-    """
-    return a > b
+def get_middle_element(lst):
+    if not lst:
+        raise ValueError("List cannot be empty")
+    mid_index = len(lst) // 2
+    return lst[mid_index]
 
 if __name__ == '__main__':
-    test_cases = [
-        (10, 5),       # Expected: True
-        (3.5, 4),      # Expected: False
-        (-1, -2),      # Expected: True
-        (int(float("inf")), float("-inf")),  # Edge case with infinity
-    ]
-
-    for i, args in enumerate(test_cases):
-        a, b = args
-        result = is_greater(a, b)
-        print(f"is_greater({a}, {b}) == {result}")
+    sample_list_odd = [1, 2, 3, 4, 5]
+    sample_list_even = [1, 2, 3, 4, 5, 6]
+    print(get_middle_element(sample_list_odd))
+    print(get_middle_element(sample_list_even))

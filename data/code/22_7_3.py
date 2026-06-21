@@ -1,26 +1,24 @@
-def get_remainder_and_parity(n: int) -> tuple[int, str]:
-    """
-    Returns a tuple containing (remainder, parity_string).
+def check_password(password):
+    has_lower = 0
+    has_upper = 0
+    has_digit = 0
+    has_symbol = 0
     
-    Args:
-        n (int): The integer input to evaluate
+    for char in password:
+        code = ord(char)
         
-    Returns:
-        tuple: A tuple where the first element is remainder modulo 2 
-               and the second element is "odd" or "even".
-    """
-    remainder = n % 2
-    if remainder == 0:
-        parity_str = "even"
-    else:
-        parity_str = "odd"
+        if 97 <= code <= 122:
+            has_lower |= 1
+        elif 65 <= code <= 90:
+            has_upper |= 2
+        elif 48 <= code <= 57:
+            has_digit |= 4
+        elif code in (33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 58, 59, 60, 61, 62, 63, 64, 91, 92, 93, 94, 95, 96, 123, 124, 125, 126):
+            has_symbol |= 8
     
-    return (remainder, parity_str)
+    return (has_lower == 1) and (has_upper == 2) and (has_digit == 4) and (has_symbol == 8)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the function
-    samples = [15, -32, 0, 7]
-    
-    for num in samples:
-        remainder, result_type = get_remainder_and_parity(num)
-        print(f"Number: {num}, Remainder ({'mod 2'}): {remainder} -> Is {result_type}")
+    sample_password = "Test1234!"
+    result = check_password(sample_password)
+    print(result)

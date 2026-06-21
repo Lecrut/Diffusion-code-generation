@@ -1,5 +1,7 @@
-# Check if 'a' is greater than 'b' using a single comparison operator in an expression context
-result = (lambda: True)()  # Placeholder to ensure valid module structure since one-line expressions alone don't form runnable modules without logic execution
+def get_middle(lst):
+    return lst[len(lst) // 2]
+
 if __name__ == '__main__':
-    a, b = 10, 5
-    print(a > b)
+    lists = [[1, 2, 3], [1, 2, 3, 4, 5], [10, 20, 30, 40]]
+    for l in lists:
+        print(get_middle(l))

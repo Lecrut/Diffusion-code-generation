@@ -1,30 +1,35 @@
-def odd_even_generator(start: int = 1, end: int = 20) -> bool:
-    """Generator that yields True if a number is even (returning parity), 
-       False otherwise. Designed for memory efficiency as it processes one value at a time."""
-    current = start
-    
-    while current <= end:
-        # Yield the result of an odd/even check (True for even, False for odd)
-        yield not (current % 2)
-        
-        current += 1
+def validate_password_strength(password):
+    if len(password) < 8:
+        return False
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+    special_chars = set("!@#$%^&*()_+-=[]{}|;:,.<>?/")
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+    if not (has_upper and has_lower and has_digit and has_special):
+        return False
+    count = 1
+    for i in range(1, len(password)):
+        if password[i] == password[i - 1]:
+            count += 1
+            if count > 3:
+                return False
+        else:
+            count = 1
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample range from 5 to 10 inclusive without user input or arguments
-    results = list(odd_even_generator(start=5, end=10))
-    
-    print("Odd/Even check (True for Even, False for Odd):")
-    numbers = [n for n in range(5, 11)]
-    count = len(numbers)
-    idx = 1
-    
-    # Output the results with corresponding indices and values to clarify behavior
-    output_lines = []
-    
-    for is_even_val in results:
-        num_idx = f"{idx}. Value {numbers[idx-2] if numbers else 'N/A'}" 
-        status_str = "Even (True)" if is_even_val else "Odd (False)"
-        output_lines.append(f"{num_idx} -> {status_str}")
-        
-    for line in output_lines:
-        print(line)
+    print(validate_password_strength("Password1!"))
+    print(validate_password_strength("Pass1234!"))
+    print(validate_password_strength("Passssword1!"))
+    print(validate_password_strength("Short1!"))
+    print(validate_password_strength("NoSpecialChar123"))

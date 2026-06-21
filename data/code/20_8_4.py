@@ -1,21 +1,12 @@
-def compare_values():
-    """Compares two values based on exact type matching."""
-    
-# Hard-coded sample values to run without user input
-value_a = 10
-value_b = "10"
+def is_even(n: int) -> bool:
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise TypeError("Input must be an integer")
+    return n % 2 == 0
 
-print(f"Value A: {value_a} (Type: {type(value_a).__name__})")
-print(f"Value B: {value_b} (Type: {type(value_b).__name__})")
-
-# Check if types are exactly the same using type() and direct comparison
-if type(value_a) == type(value_b):
-    # Then check equality directly
-    result = value_a == value_b
-else:
-    result = False
-
-print(f"Are they equal with exact type matching? {result}")
+def main():
+    test_values = [0, 1, -1, 2, -2, 3, -3, 100, -100, 99, -99]
+    for value in test_values:
+        print(f"Input: {value}, Even: {is_even(value)}")
 
 if __name__ == '__main__':
-    compare_values()
+    main()

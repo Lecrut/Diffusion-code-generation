@@ -1,35 +1,21 @@
-class Number:
-    def __init__(self, value):
-        """Initialize a Number object with an integer value."""
-        self.value = int(value)
-    
-    def compare(self, other_number):
-        """Compare this number against another number passed as an argument.
-        
-        Returns a tuple (is_greater, is_equal, is_less).
-        
-        Args:
-            other_number: A Number object to compare against.
-            
-        Returns:
-            Tuple of three booleans indicating if self > other, self == other, or self < other.
-        """
-        return self.value > other_number.value, \
-               self.value == other_number.value, \
-               self.value < other_number.value
+def get_median(lst):
+    sorted_lst = sorted(lst)
+    n = len(sorted_lst)
+    mid = n // 2
+    if n % 2 == 1:
+        return sorted_lst[mid]
+    else:
+        return (sorted_lst[mid - 1] + sorted_lst[mid]) / 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the Number class comparison method
-    
-    num_a = Number(10)
-    num_b = Number(5)
-    
-    result = num_a.compare(num_b)
-    
-    print(f"Comparing {num_a.value} vs {num_b.value}:")
-    if result[0]:
-        print("Greater: True, Equal: False, Less: False")
-    elif result[1]:
-        print("Greater: False, Equal: True, Less: False")
-    else:
-        print("Greater: False, Equal: False, Less: True")
+    sample1 = [3, 1, 2]
+    sample2 = [4, 1, 3, 2]
+    sample3 = [7, 7, 7, 7, 7]
+
+    result1 = get_median(sample1)
+    result2 = get_median(sample2)
+    result3 = get_median(sample3)
+
+    print(result1)
+    print(result2)
+    print(result3)

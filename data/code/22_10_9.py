@@ -1,26 +1,24 @@
-def is_odd_or_even(number):
-    """
-    Determines if a given integer is odd or even using the modulo operator.
-    
-    Args:
-        number (int): The integer to check.
-        
-    Returns:
-        str: A string indicating whether the number is 'odd' or 'even'.
-    """
-    remainder = number % 2
-    
-    if remainder == 0:
-        return "even"
-    else:
-        return "odd"
+def validate_password_strength(password):
+    if not isinstance(password, str) or len(password) < 8:
+        return False
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+    special_chars = "!@#$%^&*()-_=+[]{}|;:,.<>?/"
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+    return has_upper and has_lower and has_digit and has_special
 
 if __name__ == '__main__':
-    # Sample values to test without user input, command-line arguments, 
-    # network access, or pre-existing files.
-    
-    sample_numbers = [1, -2, 0, 45]
-
-    for num in sample_numbers:
-        result = is_odd_or_even(num)
-        print(f"The number {num} is {result}.")
+    sample_passwords = ["WeakPass", "StrongP@ss1", "short1!", "N0SpecialChar", "AllGood@123"]
+    for pwd in sample_passwords:
+        result = validate_password_strength(pwd)
+        print(f"{pwd}: {result}")

@@ -1,10 +1,8 @@
-class Comparator:
-    def check_equality(self, a, b):
-        return a == b
+def is_even(number):
+    return number % 2 == 0
+
 if __name__ == '__main__':
-    c = Comparator()
-    print(c.check_equality(10, 10))
-    print(c.check_equality("hello", "hello"))
-    print(c.check_equality(5, 6))
-    print(c.check_equality([1, 2], [1, 2]))
-    print(c.check_equality(3.14, 3.1400000000000004))
+    sample_values = [1, 2, 3, 4, 5]
+    results = [is_even(val) for val in sample_values]
+    for val, res in zip(sample_values, results):
+        print(res)

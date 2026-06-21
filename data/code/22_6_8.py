@@ -1,30 +1,48 @@
-def odd_even_generator(start=1, end=None):
-    """
-    A generator function that yields results of odd/even checks 
-    for every number in a given range [start, end).
+def validate_password_strength(password):
+    if not isinstance(password, str) or len(password) == 0:
+        return False
     
-    Parameters:
-        start (int): The starting integer.
-        end (int or None): The ending integer. If None, defaults to 100.
+    if len(password) < 8:
+        return False
     
-    Yields:
-        tuple: A tuple containing the current number and its parity ('odd' or 'even').
+    has_upper = any(char.isupper() for char in password)
+    if not has_upper:
+        return False
     
-    Memory Efficiency:
-        This function uses a generator which yields one value at a time 
-        rather than storing all results in memory (e.g., as a list).
-    """
-    if end is None:
-        end = 100
+    has_lower = any(char.islower() for char in password)
+    if not has_lower:
+        return False
     
-    for number in range(start, end):
-        parity = 'odd' if number % 2 != 0 else 'even'
-        yield number, parity
+    has_digit = any(char.isdigit() for char in password)
+    if not has_digit:
+        return False
+    
+    has_special = any(not char.isalnum() for char in password)
+    if not has_special:
+        return False
+    
+    consecutive_count = 1
+    for i in range(1, len(password)):
+        if password[i] == password[i - 1]:
+            consecutive_count += 1
+            if consecutive_count > 3:
+                return False
+        else:
+            consecutive_count = 1
+    
+    return True
 
 if __name__ == '__main__':
-    # Sample execution without user input or command-line arguments
-    sample_range_start = 1
-    sample_range_end = 20
+    test_cases = [
+        "Abc123!!",
+        "Aa1!aA1!",
+        "AAAA1234",
+        "StrongPass1!",
+        "weak",
+        "ValidStr0ng!",
+        "Aa1!Aa1!Aa1!"
+    ]
     
-    for num_info in odd_even_generator(sample_range_start, sample_range_end):
-        print(num_info)
+    for case in test_cases:
+        result = validate_password_strength(case)
+        print(f"{case}: {result}")

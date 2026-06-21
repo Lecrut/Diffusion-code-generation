@@ -1,11 +1,9 @@
-def are_equal(item1, item2):
-    return item1 == item2
+def is_even(n):
+    return n % 2 == 0
+
 if __name__ == '__main__':
-    print(are_equal(10, 10))
-    print(are_equal(3.14, 3.14))
-    print(are_equal("hello", "hello"))
-    print(are_equal([1, 2], [1, 2]))
-    print(are_equal(None, None))
-    print(are_equal(1, 2))
-    print(are_equal("a", "b"))
-    print(are_equal(5.0, 5))
+    print(is_even(4))
+    print(is_even(7))
+    print(is_even(0))
+    print(is_even(-3))
+    print(is_even(-8))

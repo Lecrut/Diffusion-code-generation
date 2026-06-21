@@ -1,8 +1,23 @@
-def is_odd(n):
-    return n % 2 != 0
+import re
+
+def validate_password(password):
+    pattern = re.compile(r'^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$')
+    return bool(pattern.match(password))
+
 if __name__ == '__main__':
-    print(f"is_odd(4): {is_odd(4)}")
-    print(f"is_odd(7): {is_odd(7)}")
-    print(f"is_odd(0): {is_odd(0)}")
-    print(f"is_odd(-3): {is_odd(-3)}")
-    print(f"is_odd(100): {is_odd(100)}")
+    test_passwords = [
+        "short",
+        "NoSpecial1",
+        "NoDigit!",
+        "nouppercase1!",
+        "Valid1!",
+        "A1!bcdefg",
+        "ALLUPPERCASE1!",
+        "alllowercase1!",
+        "12345678",
+        "ABCDEFGH",
+        "!@#$%^&*",
+        "ValidPass1!",
+    ]
+    for pwd in test_passwords:
+        print(validate_password(pwd))

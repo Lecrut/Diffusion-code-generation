@@ -1,14 +1,13 @@
-class Sorter:
-    """A utility class to sort lists of numbers."""
-
-    def sort_list(self, data_list):
-        # Returns a new list containing elements from `data_list` sorted in descending order.
-        return sorted(data_list, reverse=True)
+def find_largest(num1, num2, num3):
+    if not all(isinstance(n, (int, float)) for n in (num1, num2, num3)):
+        raise TypeError("All arguments must be numeric")
+    max_val = num1 if num1 > num2 else num2
+    return max_val if max_val > num3 else num3
 
 if __name__ == '__main__':
-    sample_data = [50, 20, -10, 90, 30]
-    sorter_instance = Sorter()
-    result_sorted = sorter_instance.sort_list(sample_data)
-
-    print("Original list:", sample_data)
-    print("Sorted (descending):", result_sorted)
+    result = find_largest(10, 25, 15)
+    print(result)
+    result = find_largest(3.5, 2.1, 4.8)
+    print(result)
+    result = find_largest(-5, -2, -10)
+    print(result)

@@ -1,75 +1,50 @@
-def odd_even_generator(start: int = 1, end: int = None) -> bool:
-    """
-    Generator function that yields True if a number is even, False otherwise.
+def validate_password(password):
+    if len(password) < 8:
+        return False
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
+    special_chars = set("!@#$%^&*()_+-=[]{}|;:',.<>?/")
     
-    Args:
-        start (int): The starting integer of the range (inclusive).
-        end (int): The ending integer of the range (exclusive). Defaults to 100 for efficiency demonstration without hard limits.
-
-    Yields:
-        bool: True if the current number is even, False otherwise.
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
     
-    Memory Efficiency Note:
-        This function uses a generator which processes numbers one at a time,
-        storing only state in local variables rather than creating lists or arrays.
-    """
-    # If end is not provided, default to 100 for the sample run logic if needed later, 
-    # but here we allow dynamic ranges as per task description flexibility.
-    if end is None:
-        raise ValueError("End value must be provided when calling this function directly.")
-
-    current = start
+    if not (has_upper and has_lower and has_digit):
+        return False
     
-    while True:
-        yield (current % 2 == 0)
+    max_repeats = 1
+    current_repeats = 1
+    
+    for i in range(1, len(password)):
+        if password[i] == password[i - 1]:
+            current_repeats += 1
+            if current_repeats > max_repeats:
+                max_repeats = current_repeats
+        else:
+            current_repeats = 1
         
-        try:
-            # Check for StopIteration manually to allow controlled iteration in main block without exception handling overhead inside generator logic if desired, 
-            # but standard range usage is cleaner. Let's switch to a simpler loop structure based on input arguments directly.
-            pass
-        except Exception:
-            break
-            
-    # Re-implementing with explicit stop condition for clarity and robustness against infinite loops in testing scenarios without external inputs.
-
-def odd_even_generator_v2(start: int, end: int) -> bool:
-    """
-    Generator function that yields True if a number is even, False otherwise.
+        if max_repeats > 3:
+            return False
     
-    Args:
-        start (int): The starting integer of the range (inclusive).
-        end (int): The ending integer of the range (exclusive).
-
-    Yields:
-        bool: True if the current number is even, False otherwise.
-    """
-    for num in range(start, end):
-        yield num % 2 == 0
+    return True
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirement (1 to 20)
-    start_num = 1
-    end_num = 20
+    result = validate_password("Abc123!")
+    print(result)
     
-    print("Odd/Even Check Results for range [", start_num, ", ", end_num, "):")
+    result2 = validate_password("Aaa123!")
+    print(result2)
     
-    results = odd_even_generator_v2(start_num, end_num)
+    result3 = validate_password("Abc1")
+    print(result3)
     
-    # Iterate through the generator to demonstrate memory efficiency (no list storage in main scope before printing)
-    count = 0
-    while True:
-        try:
-            is_even = next(results)
-            num = start_num + count
-            
-            if is_even:
-                print(f"{num}: Even")
-            else:
-                print(f"{num}: Odd")
-            
-            count += 1
-            # Stop after processing the full range to ensure termination without infinite loops in test environments
-        except StopIteration:
-            break
-    
-    print("\nGenerator completed successfully.")
+    result4 = validate_password("aaaa123A!")
+    print(result4)

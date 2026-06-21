@@ -1,25 +1,8 @@
-class Comparator:
-    def check_equality(self, a, b):
-        """
-        Compares two arbitrary objects for equality using the built-in == operator.
-        
-        Args:
-            a (object): The first object to compare.
-            b (object): The second object to compare.
-            
-        Returns:
-            bool: True if a and b are equal, False otherwise.
-        """
-        return a == b
+def check_even(number):
+    return number % 2 == 0
 
 if __name__ == '__main__':
-    comp = Comparator()
-
-    # Sample test cases with hard-coded values
-    assert comp.check_equality(10, 10) is True
-    
-    assert comp.check_equality([1, 2], [1, 2]) is True
-    
-    assert comp.check_equality({"key": "value"}, {"key": "value"}) is True
-    
-    print("All sample equality checks passed.")
+    sample_values = [0, 1, 2, 3, 4, -2, 100]
+    for val in sample_values:
+        result = check_even(val)
+        print(f"{val}: {result}")

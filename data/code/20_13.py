@@ -1,10 +1,9 @@
+def is_even_via_lookup(n: int) -> bool:
+    sample_values = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+    return n in sample_values
+
 if __name__ == '__main__':
-    a = 10
-    b = 10
-    if type(a) == type(b):
-        if a == b:
-            print("The two values are equal.")
-        else:
-            print("The two values are not equal.")
-    else:
-        print("The types of the two values are different, comparison is not directly applicable.")
+    test_values = [0, 1, 2, 3, 4, 5, 10, 11, 100, 101]
+    for value in test_values:
+        result = is_even_via_lookup(value)
+        print(result)

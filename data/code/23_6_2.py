@@ -1,15 +1,21 @@
-import math
-if __name__ == '__main__':
-    z1_real = 3.0
-    z1_imag = 4.0
-    z2_real = 5.0
-    z2_imag = 12.0
-    mag_sq_z1 = z1_real**2 + z1_imag**2
-    mag_sq_z2 = z2_real**2 + z2_imag**2
-    if mag_sq_z1 > mag_sq_z2:
-        result = "z1 has a larger squared magnitude"
-    elif mag_sq_z2 > mag_sq_z1:
-        result = "z2 has a larger squared magnitude"
+def get_grade(score: float) -> str:
+    epsilon = 1e-9
+    if score + epsilon < 0.0:
+        return "Invalid"
+    elif score - epsilon < 60.0:
+        return "F"
+    elif score - epsilon < 70.0:
+        return "D"
+    elif score - epsilon < 80.0:
+        return "C"
+    elif score - epsilon < 90.0:
+        return "B"
+    elif score - epsilon <= 100.0:
+        return "A"
     else:
-        result = "The squared magnitudes are equal"
-    print(result)
+        return "Invalid"
+
+if __name__ == '__main__':
+    sample_scores = [95.5, 88.0, 74.3, 61.0, 59.9, 0.0, 100.0, -5.0, 101.0]
+    for s in sample_scores:
+        print(get_grade(s))

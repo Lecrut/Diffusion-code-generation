@@ -1,30 +1,54 @@
-def get_float_input(prompt):
-    """Prompt the user (in a non-interactive context) to input two numbers."""
-    
-try:
-    # Using an interactive loop is not possible per constraints, 
-    # so we simulate the logic with hardcoded values as required by the sample block.
-    pass
+def get_median_index(values):
+    if not values:
+        raise ValueError("List cannot be empty")
+    n = len(values)
+    if n % 2 == 1:
+        return values[n // 2]
+    else:
+        mid = n // 2
+        return (values[mid - 1] + values[mid]) / 2
 
-except Exception as e:
-    print(f"An error occurred while processing inputs: {e}")
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
 
-def compare_numbers(num1, num2):
-    """Compare two numbers and return which one is greater."""
-    
+def quick_select(arr, low, high, k):
+    if low == high:
+        return arr[low]
+    pivot_index = partition(arr, low, high)
+    if k == pivot_index:
+        return arr[k]
+    elif k < pivot_index:
+        return quick_select(arr, low, pivot_index - 1, k)
+    else:
+        return quick_select(arr, pivot_index + 1, high, k)
+
+def calculate_median_value(values):
+    if not values:
+        raise ValueError("List cannot be empty")
+    n = len(values)
+    if n % 2 == 1:
+        return quick_select(values.copy(), 0, n - 1, n // 2)
+    else:
+        temp = values.copy()
+        mid = n // 2
+        val1 = quick_select(temp, 0, n - 1, mid - 1)
+        for i, x in enumerate(values):
+            if i == 0 or x > val1:
+                temp[i] = x
+            else:
+                temp[i] = float('inf')
+        temp[n // 2] = float('inf')
+        val2 = quick_select(temp, 0, n - 1, mid)
+        return (val1 + val2) / 2
+
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    number_a = 50.5
-    number_b = 75.2
-
-    try:
-        if number_a > number_b:
-            print(f"{number_a} is greater than {number_b}")
-        elif number_b > number_a:
-            print(f"{number_b} is greater than {number_a}")
-        else:
-            print("Both numbers are equal.")
-
-    except Exception as e:
-        # Graceful handling for any unexpected errors during comparison.
-        print(f"An error occurred while comparing the numbers: {e}")
+    sample_data = [7, 1, 9, 3, 5, 2, 8]
+    median_value = calculate_median_value(sample_data)
+    print(median_value)

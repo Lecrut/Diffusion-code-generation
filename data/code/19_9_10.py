@@ -1,3 +1,13 @@
-result = (lambda x: lambda y: True if x > 10 and y < 50 else False)(x)
+import collections
+import random
+
+Coordinate = collections.namedtuple('Coordinate', ['x', 'y'])
+
+def get_random_element(coord):
+    idx = random.randrange(len(coord))
+    return coord[idx]
+
 if __name__ == '__main__':
-    result = (lambda x, y: bool(x > 10 and y < 50))(42, -3.7)
+    point = Coordinate(10, 20)
+    result = get_random_element(point)
+    print(result)

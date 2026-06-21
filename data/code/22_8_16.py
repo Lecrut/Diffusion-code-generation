@@ -1,29 +1,54 @@
-import math
+import re
 
-def is_odd(number: int) -> bool:
-    """
-    Determine if a given integer number is odd.
+COMMON_PASSWORDS = {
+    "password", "123456", "12345678", "qwerty", "abc123", "monkey", "master",
+    "dragon", "111111", "baseball", "iloveyou", "trustno1", "sunshine", "letmein",
+    "welcome", "shadow", "superman", "michael", "football", "cheese", "princess",
+    "access", "charlie", "maggie", "passw0rd", "login", "admin", "guest", "root"
+}
 
-    This function returns True if 'number' has an odd parity (i.e., not divisible by 2),
-    and False otherwise. It handles both positive integers and negative integers correctly.
-    
-    Args:
-        number (int): The integer to check for oddness.
-        
-    Returns:
-        bool: True if the number is odd, False otherwise.
+def validate_password_strength(password: str) -> dict:
+    results = {
+        "length_ok": False,
+        "uppercase_ok": False,
+        "lowercase_ok": False,
+        "digit_ok": False,
+        "special_ok": False,
+        "not_common": False,
+        "is_valid": False
+    }
 
-    Examples:
-        >>> is_odd(5)
-        True
-        >>> is_even(10)
-        True  # Note: This example references a non-existent helper; removed per task requirements below for clarity in test cases directly calling this function's logic or standard checks if needed, but here we strictly use the return value of is_odd.
+    if len(password) >= 8:
+        results["length_ok"] = True
 
-    Raises:
-        TypeError: If 'number' is not an integer type (excluding bool which is subclass of int).
-    """
-    if isinstance(number, bool):
-        raise TypeError("Input must be an integer excluding boolean types.")
+    if re.search(r'[A-Z]', password):
+        results["uppercase_ok"] = True
+
+    if re.search(r'[a-z]', password):
+        results["lowercase_ok"] = True
+
+    if re.search(r'\d', password):
+        results["digit_ok"] = True
+
+    if re.search(r'[^A-Za-z0-9]', password):
+        results["special_ok"] = True
+
+    if password.lower() not in COMMON_PASSWORDS:
+        results["not_common"] = True
+
+    all_criteria_met = all([
+        results["length_ok"],
+        results["uppercase_ok"],
+        results["lowercase_ok"],
+        results["digit_ok"],
+        results["special_ok"],
+        results["not_common"]
+    ])
+    results["is_valid"] = all_criteria_met
+
+    return results
 
 if __name__ == '__main__':
-    pass
+    test_password = "MyP@ssw0rd!"
+    result = validate_password_strength(test_password)
+    print(result)

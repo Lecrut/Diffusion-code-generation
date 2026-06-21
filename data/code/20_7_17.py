@@ -1,17 +1,11 @@
-def is_deep_equal(a: any, b: any) -> bool:
-    """
-    Recursively checks if two nested data structures (lists/dicts/primitives) are equal.
-    
-    Args:
-        a: First object to compare.
-        b: Second object to compare.
-        
-    Returns:
-        True if objects are deeply equal, False otherwise.
-    """
-    # Handle immediate equality for primitives or non-dict/list structures
-    if type(a) != type(b):
-        return False
+EVEN_MASK = 1
+
+def is_even(n):
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer")
+    return (n & EVEN_MASK) == 0
 
 if __name__ == '__main__':
-    pass
+    test_values = [2, 3, 0, -4, -5]
+    for val in test_values:
+        print(is_even(val))

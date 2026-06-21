@@ -1,17 +1,19 @@
-class ValueComparator:
-    def compare_values(self, val1, val2):
-        """
-        Compares two input values (numeric or string) and returns a tuple indicating
-        which value is greater ('>', '<', '=') or the type mismatch result (-1).
-        
-        Parameters:
-            val1 (int, float, str): First value to compare.
-            val2 (int, float, str): Second value to compare.
-            
-        Returns:
-            tuple: A string indicating relationship ('>', '=', '<', 'type_error') or -1 for uncomparable types.
-        """
-        # Check if both are numeric and compatible with each other (float handles int comparison)
+def get_letter_grade(score):
+    if score >= 90:
+        return 'A'
+    if score >= 80:
+        return 'B'
+    if score >= 70:
+        return 'C'
+    if score >= 60:
+        return 'D'
+    return 'F'
 
 if __name__ == '__main__':
-    pass
+    print(get_letter_grade(95))
+    print(get_letter_grade(85))
+    print(get_letter_grade(75))
+    print(get_letter_grade(65))
+    print(get_letter_grade(55))
+    print(get_letter_grade(100))
+    print(get_letter_grade(0))

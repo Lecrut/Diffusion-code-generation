@@ -1,8 +1,15 @@
-def is_negative(value):
-    """Returns True if value is strictly less than zero, False otherwise."""
-    return value < 0
+LEAP_DIVISORS = (4, 100, 400)
+
+def check_leap_status(year_value):
+    divisible_by_four = year_value % LEAP_DIVISORS[0] == 0
+    if not divisible_by_four:
+        return False
+    divisible_by_hundred = year_value % LEAP_DIVISORS[1] == 0
+    if not divisible_by_hundred:
+        return True
+    return year_value % LEAP_DIVISORS[2] == 0
 
 if __name__ == '__main__':
-    samples = [-5, -3.14, 0, 2]
-    for s in samples:
-        print(f"is_negative({s}) -> {is_negative(s)}")
+    sample_inputs = [2000, 1900, 2024, 2023, 1600, 1700]
+    for val in sample_inputs:
+        print(check_leap_status(val))

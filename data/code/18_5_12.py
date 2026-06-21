@@ -1,52 +1,19 @@
-def strictly_increasing_generator(sequence):
-    """
-    Generator that yields True if the current value is strictly greater 
-    than the previous value in the input sequence, otherwise yields False.
-    
-    Args:
-        sequence (iterable): An iterable of comparable values.
-        
-    Yields:
-        bool: True if current > previous, else False. The first element always 
-              yields False as there is no predecessor to compare against.
-    """
-    try:
-        prev_value = next(sequence)
-    except StopIteration:
-        return
-    
-    for current_value in sequence:
-        yield (current_value > prev_value)
-        prev_value = current_value
+def find_middle_index_and_value(arr):
+    if not arr:
+        return None, None
+    length = len(arr)
+    middle_index = length // 2
+    middle_value = arr[middle_index]
+    return middle_index, middle_value
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test the generator without user input
-    sample_data = [10, 5, 20, 30, 40, 80]
-    
-    print("Input sequence:", sample_data)
-    print("\nComparison results:")
-    
-    result_generator = strictly_increasing_generator(sample_data)
-    
-    for is_greater in result_generator:
-        # We need to track the index or value context manually since 
-        # we consumed the generator. Let's re-run logic inline for clarity in output.
-        pass
-    
-    # Re-implementing slightly inside main loop for direct printing with values
-    iterator = iter(sample_data)
-    try:
-        prev_val = next(iterator)
-    except StopIteration:
-        print("Sequence is empty.")
-    
-    else:
-        print(f"First value ({prev_val}): No previous comparison -> False")
-        
-        for curr_val in iterator:
-            result = (curr_val > prev_val)
-            status_str = "True" if result else "False"
-            relation_desc = f"{prev_val} < {curr_val}" if result else f"{prev_val} >= {curr_val}"
-            print(f"Current value ({curr_val}): {status_str} ({relation_desc})")
-            
-            prev_val = curr_val
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30],
+        [100],
+        [],
+        [5, 10, 15, 20, 25, 30]
+    ]
+    for arr in test_cases:
+        idx, val = find_middle_index_and_value(arr)
+        print(f"Array: {arr}, Middle Index: {idx}, Middle Value: {val}")

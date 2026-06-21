@@ -1,67 +1,61 @@
-import timeit
+import unicodedata
+import string
 
-def is_odd_bitwise(n: int) -> bool:
-    """
-    Determine if an integer is odd using bitwise AND operation with 1.
+class PasswordValidator:
+    VALID_UNICODE_MAX = 0x10FFFF
+    SURROGATE_LOW = 0xD800
+    SURROGATE_HIGH = 0xDFFF
     
-    An integer n is odd if and only if its least significant bit (LSB) is set to 1.
-    The expression (n & 1) evaluates the LSB directly without division or modulo operations.
+    def __init__(self, password):
+        self.password = password
 
-    Args:
-        n (int): The integer to check.
+    def _is_unicode_valid(self):
+        for char in self.password:
+            code = ord(char)
+            if code > self.VALID_UNICODE_MAX:
+                return False
+            if self.SURROGATE_LOW <= code <= self.SURROGATE_HIGH:
+                return False
+        return True
 
-    Returns:
-        bool: True if n is odd, False otherwise.
-    """
-    return (n & 1) == 1
-
-def main():
-    # Hard-coded sample values for testing without user input or arguments
-    samples = [0, 1, -32, -5, 4294967295]
-
-    print("Testing is_odd_bitwise function:")
-    
-    # Verify correctness on known odd and even numbers including negatives
-    test_cases_correctness = {
-        0: False,      # Even
-        1: True,       # Odd
-        -32: False,    # Negative even (binary ends in ...0)
-        -5: True,      # Negative odd (two's complement ends in ...1)
-        4294967295: True  # Large positive odd
-    }
-
-    all_passed = True
-    for num, expected_is_odd in test_cases_correctness.items():
-        result = is_odd_bitwise(num)
-        status = "PASS" if result == expected_is_odd else "FAIL"
-        print(f"{num}: Expected {expected_is_odd}, Got {result} -> {status}")
-        all_passed and (all_passed := False)
-
-    # Performance comparison: Bitwise vs Modulo on a tight loop
-    iterations = 10_000_000
-    
-    time_bitwise = timeit.timeit(
-        stmt=f"is_odd_bitwise({2**31 + 1})", 
-        number=iterations, 
-        setup="from __main__ import is_odd_bitwise"
-    )
-
-    def is_odd_modulo(n: int) -> bool:
-        return n % 2 != 0
-    
-    time_modulo = timeit.timeit(
-        stmt=f"is_odd_modulo({2**31 + 1})", 
-        number=iterations, 
-        setup="from __main__ import is_odd_modulo"
-    )
-
-    print(f"\nPerformance Benchmark ({iterations:,} iterations):")
-    print(f"Bitwise method time: {time_bitwise:.4f}s")
-    print(f"Modulo method time:  {time_modulo:.4f}s")
-    
-    if time_bitwise < time_modulo:
-        speedup = (time_modulo / time_bitwise) * 100
-        print(f"\nBitwise approach is approximately {speedup:.2f}% faster.")
+    def _count_categories(self):
+        has_upper = False
+        has_lower = False
+        has_digit = False
+        has_symbol = False
         
+        for char in self.password:
+            category = unicodedata.category(char)
+            
+            if category.startswith('Lu'):
+                has_upper = True
+            elif category.startswith('Ll') or category.startswith('Lt') or category.startswith('Lm') or category.startswith('Lo'):
+                has_lower = True
+            elif category.startswith('Nd'):
+                has_digit = True
+            else:
+                has_symbol = True
+                
+        count = sum([has_upper, has_lower, has_digit, has_symbol])
+        return count
+
+    def validate(self):
+        if not self._is_unicode_valid():
+            return False
+        return self._count_categories() >= 3
+
 if __name__ == '__main__':
-    main()
+    validator1 = PasswordValidator("Hello123!World")
+    print(validator1.validate())
+    
+    validator2 = PasswordValidator("abc")
+    print(validator2.validate())
+    
+    validator3 = PasswordValidator("A1!")
+    print(validator3.validate())
+    
+    validator4 = PasswordValidator("Test_42")
+    print(validator4.validate())
+    
+    validator5 = PasswordValidator("\ud800")
+    print(validator5.validate())

@@ -1,26 +1,49 @@
-def get_remainder_and_parity(number: int) -> tuple[int, bool]:
-    """
-    Returns a tuple containing (remainder_div_2, is_odd).
-    
-    The remainder of an integer divided by 2 determines its parity:
-        - Remainder 0 indicates the number is even.
-        - Remainder 1 indicates the number is odd.
+def check_password_strength(password):
+    if not isinstance(password, str) or len(password) == 0:
+        return 0
 
-    Args:
-        number (int): An integer to evaluate.
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_special = False
 
-    Returns:
-        tuple[int, bool]: A tuple where the first element is remainder_div_2 
-                          and the second element is True if odd, False otherwise.
-    """
-    remainder = abs(number) % 2
-    
-    # If remainder is 1, it's an odd number; else, it's even
-    return (remainder, remainder == 1)
+    special_chars = set("!@#$%^&*()-_=+[]{}|;:',.<>?/`~\"\\")
+
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+
+    strength = 0
+    if has_upper:
+        strength |= 0b1
+    if has_lower:
+        strength |= 0b10
+    if has_digit:
+        strength |= 0b100
+    if has_special:
+        strength |= 0b1000
+
+    return strength
 
 if __name__ == '__main__':
-    test_values = [-50, -3, 0, 7]
+    sample_passwords = [
+        "Hello",
+        "hello123",
+        "Hello123",
+        "Hello123!",
+        "",
+        "12345",
+        "ABCDEF",
+        "!@#$%",
+        "StrongP@ssw0rd!"
+    ]
 
-    for val in test_values:
-        rem, is_odd = get_remainder_and_parity(val)
-        print(f"Number: {val}, Remainder mod 2: {rem}, Is Odd: {is_odd}")
+    for pwd in sample_passwords:
+        result = check_password_strength(pwd)
+        print(result)

@@ -1,40 +1,38 @@
-def compare_sequences(seq_a, seq_b):
-    """
-    Generator function that yields comparison results between corresponding elements 
-    of two input sequences.
-    
-    Args:
-        seq_a (iterable): First sequence of values.
-        seq_b (iterable): Second sequence of values.
+class GradeCalculator:
+    def __init__(self, grading_scheme):
+        self._scheme = grading_scheme
+
+    def calculate_grade(self, score):
+        if not isinstance(score, (int, float)):
+            raise TypeError("Score must be a number")
         
-    Yields:
-        str: Description of the relationship ('A is greater', 'B is smaller', or 'Equal').
-             If lengths differ, yields for common length and then stops if one runs out 
-             unless specified otherwise; here we assume equal length pairs as per typical 
-             pairwise comparison tasks. If sequences are unequal in length, it will yield 
-             up to the minimum length pair.
-    """
-    # Convert inputs to lists to handle iteration safely even with generators
-    list_a = list(seq_a)
-    list_b = list(seq_b)
-    
-    min_len = min(len(list_a), len(list_b))
-    
-    for i in range(min_len):
-        val_a, val_b = list_a[i], list_b[i]
+        if score < 0 or score > 100:
+            raise ValueError("Score must be between 0 and 100")
         
-        if val_a > val_b:
-            yield f"{val_a} is greater than {val_b}"
-        elif val_a < val_b:
-            yield f"{val_b} is smaller than {val_a}"
-        else:
-            yield "Equal"
+        for threshold, grade in reversed(self._scheme):
+            if score >= threshold:
+                return grade
+        
+        return "F"
+
+class DefaultGradingScheme:
+    def __init__(self):
+        self._scheme = [
+            (90, "A"),
+            (80, "B"),
+            (70, "C"),
+            (60, "D"),
+            (0, "F")
+        ]
+
+    def get_scheme(self):
+        return self._scheme
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or files)
-    sequence_one = [10, 25, 3.5, 'apple', True]
-    sequence_two = [7, 25, 4.0, 'banana', False]
-
-    print("Comparison results:")
-    for result in compare_sequences(sequence_one, sequence_two):
-        print(result)
+    scheme_provider = DefaultGradingScheme()
+    calculator = GradeCalculator(scheme_provider.get_scheme())
+    
+    scores = [95, 87, 72, 65, 58, 0, 100]
+    for score in scores:
+        grade = calculator.calculate_grade(score)
+        print(f"Score: {score}, Grade: {grade}")

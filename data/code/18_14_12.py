@@ -1,9 +1,9 @@
-def gen(threshold):
-          n = 0
-          while True:
-              if n > threshold:
-                  yield True   # Only happens ONCE since we'll handle subsequent differently or just keep yielding based on same rule? 
-                              # Wait wording says "yields True ONLY WHEN the first number ...". Implies exclusivity.
-
+def get_middle_value(lst):
+    if not lst:
+        raise ValueError('List cannot be empty')
+    mid_index = len(lst) // 2
+    return lst[mid_index]
 if __name__ == '__main__':
-    pass
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_middle_value(sample_list)
+    print(result)

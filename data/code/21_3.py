@@ -1,6 +1,10 @@
-def sort_strings(string_list):
-    return sorted(string_list)
+def find_largest(a, b, c):
+    if a >= b and a >= c:
+        return a
+    elif b >= a and b >= c:
+        return b
+    else:
+        return c
+
 if __name__ == '__main__':
-    sample_list = ["Banana", "apple", "Cherry", "date", "apricot"]
-    sorted_list = sort_strings(sample_list)
-    print(sorted_list)
+    print(find_largest(3.14, 2.71, 1.41))

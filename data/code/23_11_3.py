@@ -1,18 +1,31 @@
-def compare_and_report(list1, list2):
-    sum1 = sum(list1)
-    sum2 = sum(list2)
-    if sum1 >= sum2:
-        return sum1, list1
-    else:
-        return sum2, list2
+SCORES = {
+    "alice": 92,
+    "bob": 85,
+    "charlie": 76,
+    "diana": 68,
+    "eve": 45
+}
+
+GRADE_BOUNDARIES = [
+    (90, 'A'),
+    (80, 'B'),
+    (70, 'C'),
+    (60, 'D'),
+    (0, 'F')
+]
+
+def calculate_grades(scores: dict[str, int]) -> dict[str, str]:
+    result = {}
+    for name, score in scores.items():
+        grade = 'F'
+        for boundary, letter in GRADE_BOUNDARIES:
+            if score >= boundary:
+                grade = letter
+                break
+        result[name] = grade
+    return result
+
 if __name__ == '__main__':
-    list_a = [1, 5, 2, 8]
-    list_b = [3, 4, 1, 6]
-    sum_a, winner = compare_and_report(list_a, list_b)
-    print(f"Sum of list A: {sum_a}")
-    print(f"Winning list: {winner}")
-    list_c = [10, 20]
-    list_d = [5, 5, 5]
-    sum_c, winner = compare_and_report(list_c, list_d)
-    print(f"Sum of list C: {sum_c}")
-    print(f"Winning list: {winner}")
+    grades = calculate_grades(SCORES)
+    for name in grades:
+        print(f"{name}: {grades[name]}")

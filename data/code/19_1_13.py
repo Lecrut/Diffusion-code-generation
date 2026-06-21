@@ -1,22 +1,11 @@
-import sys
+import random
 
-def is_greater(a: int | float, b: int | float) -> bool:
-    """
-    Returns True if a > b, otherwise False.
-    
-    This function performs an efficient comparison between two numeric arguments.
-    It avoids unnecessary operations to ensure high performance for large-scale usage.
-
-    Parameters:
-        a (int or float): The first number.
-        b (int or float): The second number.
-
-    Returns:
-        bool: True if a is strictly greater than b, False otherwise.
-    
-    Raises:
-        TypeError: If either argument cannot be interpreted as numeric types comparable for >.
-    """
+def get_random_key_value(d):
+    keys = list(d.keys())
+    key = random.choice(keys)
+    return key, d[key]
 
 if __name__ == '__main__':
-    pass
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    k, v = get_random_key_value(sample_dict)
+    print(f"Key: {k}, Value: {v}")
