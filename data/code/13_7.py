@@ -1,11 +1,19 @@
-import datetime
-def calculate_duration(date1_str, date2_str):
-    date1 = datetime.datetime.strptime(date1_str, "%Y-%m-%d")
-    date2 = datetime.datetime.strptime(date2_str, "%Y-%m-%d")
-    duration = date2 - date1
-    return duration.days
+import numpy as np
+
+def safe_extract_value(array: np.ndarray, index: tuple) -> object:
+    if not isinstance(array, np.ndarray):
+        raise TypeError("Input must be a numpy array")
+    if not isinstance(index, tuple):
+        raise TypeError("Index must be a tuple")
+    if len(index) != array.ndim:
+        raise ValueError(f"Index tuple length {len(index)} does not match array dimension {array.ndim}")
+    try:
+        return array[index]
+    except IndexError:
+        raise IndexError(f"Index {index} is out of bounds for array with shape {array.shape}")
+
 if __name__ == '__main__':
-    start_date = "2020-03-01"
-    end_date = "2024-03-01"
-    duration_days = calculate_duration(start_date, end_date)
-    print(duration_days)
+    sample_data = np.array([[10, 20, 30], [40, 50, 60], [70, 80, 90]])
+    sample_index = (1, 2)
+    result = safe_extract_value(sample_data, sample_index)
+    print(result)

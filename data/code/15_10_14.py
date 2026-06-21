@@ -1,20 +1,25 @@
-def check_match(value1: any, value2: any) -> bool:
-    """
-    Checks if two values are exactly equal.
-
-    Args:
-        value1 (any): The first value to compare.
-        value2 (any): The second value to compare.
-
-    Returns:
-        bool: True if value1 is exactly equal to value2, False otherwise.
-    """
-    return value1 == value2
+def get_penultimate_element(lst):
+    if len(lst) < 2:
+        raise ValueError("List must have at least two elements to get the penultimate element")
+    return lst[-2]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert check_match(5, 5) is True
-    assert check_match("hello", "world") is False
-    assert check_match([1, 2], [1, 2]) is True
-    assert check_match(None, None) is True
-    print("All tests passed.")
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_penultimate_element(sample_list)
+    print(result)
+
+    another_list = ['a', 'b', 'c']
+    result2 = get_penultimate_element(another_list)
+    print(result2)
+
+    try:
+        empty_list = []
+        get_penultimate_element(empty_list)
+    except ValueError as e:
+        print(e)
+
+    single_element_list = [42]
+    try:
+        get_penultimate_element(single_element_list)
+    except ValueError as e:
+        print(e)

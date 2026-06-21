@@ -1,12 +1,22 @@
-import math
-def ratio_conversion(ratio_a, ratio_b):
-    if ratio_b == 0:
-        return float('inf') if ratio_a != 0 else float('nan')
-    numerator = ratio_a * ratio_b
-    denominator = ratio_b * ratio_b
-    return numerator / denominator
+def get_middle_element(sequence):
+    if not sequence:
+        raise ValueError("Sequence is empty")
+    length = len(sequence)
+    if length % 2 == 1:
+        return sequence[length // 2]
+    else:
+        return (sequence[length // 2 - 1], sequence[length // 2])
+
 if __name__ == '__main__':
-    ratio1 = 123456789012345
-    ratio2 = 987654321098765
-    result = ratio_conversion(ratio1, ratio2)
-    print(result)
+    print(get_middle_element([1, 2, 3]))
+    print(get_middle_element([1, 2, 3, 4]))
+    print(get_middle_element([1]))
+    print(get_middle_element([1, 2]))
+    print(get_middle_element("abc"))
+    print(get_middle_element("abcd"))
+    print(get_middle_element("a"))
+    print(get_middle_element("ab"))
+    try:
+        get_middle_element([])
+    except ValueError as e:
+        print(str(e))

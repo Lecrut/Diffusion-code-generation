@@ -1,83 +1,73 @@
-"""Refactored conversion script with custom exception handling."""
-
-class ConversionError(Exception):
-    """Base exception for all conversion errors."""
-    pass
-
-class InvalidFormatError(ConversionError):
-    """Raised when input data is not in the expected format."""
-    def __init__(self, message: str = "Invalid input format"):
+class ConversionBaseError(Exception):
+    def __init__(self, message, context):
         super().__init__(message)
+        self.context = context
 
-class UnsupportedTypeException(ConversionError):
-    """Raised for unsupported conversion types."""
-    pass
+class UnsupportedUnitError(ConversionBaseError):
+    def __init__(self, unit, supported_units):
+        message = f"Unit '{unit}' is not supported. Supported units: {', '.join(supported_units)}"
+        super().__init__(message, {"unit": unit, "supported_units": supported_units})
 
-def convert_value(value: any, target_type: type) -> any:
-    """Convert a value to the specified type with custom error handling.
+class InvalidValueError(ConversionBaseError):
+    def __init__(self, value):
+        message = f"Value must be a positive number, got: {value}"
+        super().__init__(message, {"value": value})
 
-    Args:
-        value: The input value to be converted.
-        target_type: The type to convert 'value' into.
+class NegativeValueError(ConversionBaseError):
+    def __init__(self, value):
+        message = f"Value cannot be negative: {value}"
+        super().__init__(message, {"value": value})
 
-    Returns:
-        The converted value of the specified type.
+SUPPORTED_UNITS = {'celsius', 'fahrenheit', 'kelvin'}
 
-    Raises:
-        UnsupportedTypeException: If the conversion is not supported for the given types.
-        InvalidFormatError: If the provided value cannot be formatted as expected.
-        ConversionError: For any other unexpected errors during conversion.
-    """
-    if target_type == int and isinstance(value, str):
-        try:
-            return int(value)
-        except ValueError:
-            raise InvalidFormatError(f"Cannot convert '{value}' to integer")
+def _convert_to_kelvin(value, from_unit):
+    if from_unit == 'kelvin':
+        return value
+    if from_unit == 'celsius':
+        return value + 273.15
+    if from_unit == 'fahrenheit':
+        return (value - 32) * 5 / 9 + 273.15
+    return value
 
-    elif target_type == float and isinstance(value, (int, str)):
-        try:
-            result = float(value) if isinstance(value, str) else float(value)
-            # Handle special case where string is "inf" or "-inf" which might be invalid in some contexts
-            if value.lower() not in ("infinity", "-infinity") and not (isinstance(result, float) and (result == result)):  # NaN check
-                return result
-        except ValueError:
-            raise InvalidFormatError(f"Cannot convert '{value}' to float")
+def _convert_from_kelvin(value, to_unit):
+    if to_unit == 'kelvin':
+        return value
+    if to_unit == 'celsius':
+        return value - 273.15
+    if to_unit == 'fahrenheit':
+        return (value - 273.15) * 9 / 5 + 32
+    return value
 
-    elif target_type == str and isinstance(value, int):
-        return str(value)
+def convert_temperature(value, from_unit, to_unit):
+    from_unit = from_unit.lower()
+    to_unit = to_unit.lower()
 
-    else:
-        if not issubclass(target_type, type):
-            raise UnsupportedTypeException("Target type must be a valid Python class")
-        
-        # Basic fallback for other supported types like bool or list
-        try:
-            return target_type(value)
-        except (ValueError, TypeError):
-            raise ConversionError(f"Failed to convert '{value}' to {target_type.__name__}")
+    if from_unit not in SUPPORTED_UNITS:
+        raise UnsupportedUnitError(from_unit, SUPPORTED_UNITS)
+    if to_unit not in SUPPORTED_UNITS:
+        raise UnsupportedUnitError(to_unit, SUPPORTED_UNITS)
+
+    if not isinstance(value, (int, float)):
+        raise InvalidValueError(value)
+
+    if value < 0 and from_unit != 'celsius' and from_unit != 'fahrenheit':
+        raise NegativeValueError(value)
+
+    if from_unit == to_unit:
+        return value
+
+    kelvin_value = _convert_to_kelvin(value, from_unit)
+    result = _convert_from_kelvin(kelvin_value, to_unit)
+    return result
 
 if __name__ == '__main__':
-    # Sample values running without user input or external dependencies
-    
-    test_cases = [
-        ("123", int),           # Valid integer string
-        ("abc", int),          # Invalid integer string
-        (456, str),            # Integer to string conversion
-        (True, float),         # Boolean to float conversion attempt
-        ([1, 2], list),        # List to list identity check logic simulation
-        
-        "infinity"             # Test infinity handling if applicable in future extensions
-    ]
-
-    for input_data, target_type in test_cases:
-        try:
-            converted = convert_value(input_data, target_type)
-            print(f"Input: {input_data!r} (type: {type(target_type).__name__}) -> Output: {converted}")
-        except UnsupportedTypeException as e:
-            print(f"[Error] Type Support Issue for input '{input_data}' to type {target_type.__name__}: {e}")
-        except InvalidFormatError as e:
-            print(f"[Validation Error] Input format invalid for '{input_data}': {e}")
-        except ConversionError as e:
-            # This catches general conversion failures not covered by specific subclasses above if needed, 
-            # though our logic attempts to be exhaustive.
-            print(f"[General Error] Failed during conversion of '{input_data}' to {target_type.__name__}: {e}")
+    try:
+        result1 = convert_temperature(100, 'celsius', 'fahrenheit')
+        print(result1)
+        result2 = convert_temperature(32, 'fahrenheit', 'celsius')
+        print(result2)
+        result3 = convert_temperature(300, 'kelvin', 'celsius')
+        print(result3)
+        print(convert_temperature(0, 'celsius', 'kelvin'))
+    except ConversionBaseError as e:
+        print(f"Error: {e}")

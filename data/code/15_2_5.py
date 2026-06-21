@@ -1,16 +1,9 @@
-def main():
-    # Hard-coded sample values to run without user input
-    num1 = 5
-    num2 = 7
-    
-    try:
-        if num1 == num2:
-            print(f"The numbers {num1} and {num2} match.")
-        else:
-            print(f"The numbers {num1} and {num2} do not match.")
-    except Exception as e:
-        # Graceful handling for any unexpected errors, though none should occur with hard-coded values
-        print(f"An error occurred while processing the comparison: {e}")
+def get_second_to_last_element(items):
+    if len(items) < 2:
+        raise ValueError("List must contain at least two elements")
+    return items[-2]
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_to_last_element(sample_list)
+    print(result)

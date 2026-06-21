@@ -1,53 +1,41 @@
 import numpy as np
 
-def convert_volume(volume_liters: float) -> dict:
-    """Convert a single volume in liters to cubic meters, gallons (US), quarts (US), pints (US), and milliliters."""
-    m3 = volume_liters * 0.001
-    gal_us = volume_liters * 264.172052
-    qt_us = volume_liters * 8.79876913
-    pt_us = volume_liters * 17.5975383
-    ml = volume_liters * 1000
-
-    return {
-        'cubic_meters': m3,
-        'gallons_us': gal_us,
-        'quarts_us': qt_us,
-        'pints_us': pt_us,
-        'milliliters': ml
+def convert_volumes(measurements, from_unit, to_unit):
+    to_liters = {
+        'liters': 1.0,
+        'milliliters': 0.001,
+        'gallons_us': 3.78541,
+        'quarts_us': 0.946353,
+        'pints_us': 0.473176,
+        'cups_us': 0.236588,
+        'fluid_ounces_us': 0.0295735,
+        'cubic_meters': 1000.0,
+        'cubic_inches': 0.0163871,
+        'cubic_feet': 28.3168
     }
-
-def vectorized_convert(volumes: np.ndarray) -> dict:
-    """Perform volume conversions for an entire array of measurements using NumPy vectorization."""
-    return {
-        'cubic_meters': volumes * 0.001,
-        'gallons_us': volumes * 264.172052,
-        'quarts_us': volumes * 8.79876913,
-        'pints_us': volumes * 17.5975383,
-        'milliliters': volumes * 1000
-    }
+    
+    if from_unit not in to_liters:
+        raise ValueError(f"Unsupported unit: {from_unit}")
+    if to_unit not in to_liters:
+        raise ValueError(f"Unsupported unit: {to_unit}")
+    
+    factors_from = to_liters[from_unit]
+    factors_to = to_liters[to_unit]
+    
+    measurements_array = np.asarray(measurements, dtype=np.float64)
+    result = (measurements_array * factors_from) / factors_to
+    
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_volumes = np.array([1.5, 2.0, 5.75])
-
-    result_vectorized = vectorized_convert(sample_volumes)
-
-    print("Vectorized Volume Conversion Results:")
-    print("-" * 40)
+    sample_data = np.array([10.0, 50.0, 100.0, 1.5])
+    converted = convert_volumes(sample_data, 'gallons_us', 'liters')
+    print(converted)
     
-    # Print results for each input value to demonstrate the array operation clearly
-    for i in range(len(result_vectorized['cubic_meters'])):
-        v_liters = sample_volumes[i]
-        conversions = {
-            'liters': f"{v_liters}",
-            'm3': result_vectorized['cubic_meters'][i],
-            'gal_us': round(result_vectorized['gallons_us'][i], 2),
-            'qt_us': round(result_vectorized['quarts_us'][i], 2),
-            'pt_us': round(result_vectorized['pints_us'][i], 2),
-            'ml': result_vectorized['milliliters'][i]
-        }
-
-        print(f"Input: {conversions['liters']} L")
-        for unit, value in conversions.items():
-            if unit != 'liters':
-                print(f"{unit}: {value}")
+    sample_data_2 = np.array([1000.0, 2500.0])
+    converted_2 = convert_volumes(sample_data_2, 'liters', 'milliliters')
+    print(converted_2)
+    
+    sample_data_3 = np.array([5.0])
+    converted_3 = convert_volumes(sample_data_3, 'cubic_feet', 'cubic_meters')
+    print(converted_3)

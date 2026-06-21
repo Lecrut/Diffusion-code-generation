@@ -1,5 +1,7 @@
-def same_value(x: int = 10, y: int = 20) -> bool:
-    return x == y if isinstance(x, (int, float)) else False
+def get_second_last_element(data):
+    return data[-2]
 
 if __name__ == '__main__':
-    print(same_value(5, 5), "should be True")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_last_element(sample_list)
+    print(result)

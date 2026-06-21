@@ -1,33 +1,35 @@
-from datetime import datetime
-import pytz
-class TimeScaleManager:
-    def convert_timezone(self, dt_str, from_tz_str, to_tz_str):
-        dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
-        from_tz = pytz.timezone(from_tz_str)
-        to_tz = pytz.timezone(to_tz_str)
-        dt_aware = from_tz.localize(dt)
-        dt_converted = dt_aware.astimezone(to_tz)
-        return dt_converted.strftime("%Y-%m-%d %H:%M:%S %Z%z")
+class BoundsError(Exception):
+    def __init__(self, requested_index, container_size):
+        self.requested = requested_index
+        self.size = container_size
+        message = f"Requested index {requested_index} exceeds container size {container_size}"
+        super().__init__(message)
+
+def validate_index(index, length):
+    if not isinstance(index, int):
+        raise TypeError("Index must be an integer")
+    if length == 0:
+        return False
+    if index < 0:
+        return -index <= length
+    return index < length
+
+def safe_extract(data_tuple, target_index):
+    container_length = len(data_tuple)
+    is_valid = validate_index(target_index, container_length)
+    if not is_valid:
+        raise BoundsError(target_index, container_length)
+    return data_tuple[target_index]
+
+def main_runner():
+    items = ("apple", "banana", "cherry", "date", "elderberry")
+    index_ok = 1
+    index_fail = -6
+    print(safe_extract(items, index_ok))
+    try:
+        safe_extract(items, index_fail)
+    except BoundsError as err:
+        print(err)
+
 if __name__ == '__main__':
-    manager = TimeScaleManager()
-    date_time_str_1 = "2023-03-12 10:00:00"
-    from_tz_1 = "America/New_York"
-    to_tz_1 = "Europe/London"
-    result_1 = manager.convert_timezone(date_time_str_1, from_tz_1, to_tz_1)
-    print(f"Original: {date_time_str_1} in {from_tz_1}")
-    print(f"Converted: {result_1}")
-    print("-" * 20)
-    date_time_str_2 = "2023-03-12 01:30:00"
-    from_tz_2 = "America/New_York"
-    to_tz_2 = "UTC"
-    result_2 = manager.convert_timezone(date_time_str_2, from_tz_2, to_tz_2)
-    print(f"Original: {date_time_str_2} in {from_tz_2}")
-    print(f"Converted: {result_2}")
-    print("-" * 20)
-    date_time_str_3 = "2023-10-27 15:30:00"
-    from_tz_3 = "Asia/Tokyo"
-    to_tz_3 = "Australia/Sydney"
-    result_3 = manager.convert_timezone(date_time_str_3, from_tz_3, to_tz_3)
-    print(f"Original: {date_time_str_3} in {from_tz_3}")
-    print(f"Converted: {result_3}")
-    print("-" * 20)
+    main_runner()

@@ -1,23 +1,6 @@
-def check_match(value1: any, value2: any) -> bool:
-    """
-    Returns True if value1 is exactly equal to value2, False otherwise.
-    
-    Args:
-        value1 (any): The first value to compare.
-        value2 (any): The second value to compare.
-        
-    Returns:
-        bool: True if values are identical, False otherwise.
-    """
-    return value1 == value2
+def get_second_to_last(lst):
+    return lst[-2]
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert check_match(5, 5) is True
-    assert check_match("hello", "world") is False
-    assert check_match([1, 2], [3, 4]) is False
-    assert check_match(True, 1) is False
-    
-    # Additional edge cases
-    assert check_match(None, None) is True
-    assert check_match(0.5, 0.5) is True
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_second_to_last(sample_list))

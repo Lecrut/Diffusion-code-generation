@@ -1,17 +1,9 @@
-import sys
+def extract_last_item(lst):
+    if not lst:
+        return None
+    max_index = max(range(len(lst)))
+    return [item for index, item in enumerate(lst) if index == max_index][0]
+
 if __name__ == '__main__':
-    data = [10, 20, 30, 40, 50]
-    results = []
-    for i in range(len(data) - 1):
-        numerator = data[i]
-        denominator = data[i+1]
-        if denominator != 0:
-            ratio = numerator / denominator
-            results.append((numerator, denominator, ratio))
-        else:
-            results.append((numerator, denominator, float('inf')))
-    print("Length Ratio Table")
-    print("--------------------")
-    print(f"{'Length 1':<10}{'Length 2':<10}{'Ratio':<10}")
-    for num1, num2, ratio in results:
-        print(f"{num1:<10}{num2:<10}{ratio:<10.4f}")
+    sample_list = [1, 2, 3, 4, 5]
+    print(extract_last_item(sample_list))

@@ -1,19 +1,10 @@
-import random
-def are_lists_identical(list1, list2):
-    if len(list1) != len(list2):
-        return False
-    for i in range(len(list1)):
-        if list1[i] != list2[i]:
-            return False
-    return True
+def get_penultimate_element(data):
+    if not isinstance(data, list):
+        raise TypeError("Input must be a list")
+    if len(data) < 2:
+        raise IndexError("List must contain at least two elements")
+    return data[-2]
+
 if __name__ == '__main__':
-    list_a = list(range(1000000))
-    list_b = list(range(1000000))
-    list_c = list(range(1000000, 2000000))
-    list_d = list(range(1000000))
-    list_e = list(range(1000000))
-    print(f"List A and List B identical: {are_lists_identical(list_a, list_b)}")
-    print(f"List A and List C identical: {are_lists_identical(list_a, list_c)}")
-    print(f"List D and List E identical: {are_lists_identical(list_d, list_e)}")
-    print(f"List A and List D identical: {are_lists_identical(list_a, list_d)}")
-    print(f"List A and List E identical: {are_lists_identical(list_a, list_e)}")
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_penultimate_element(sample_list))

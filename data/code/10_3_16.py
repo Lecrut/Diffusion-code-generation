@@ -1,9 +1,11 @@
-def calculate_temperature_difference(t_actual: float, t_expected: float) -> int:
-    """Calculates the absolute difference between actual and expected temperatures."""
-    return abs(int(t_actual - t_expected))
+class NameList:
+    def __init__(self, names):
+        self.names = names
+
+    def get_first(self):
+        return self.names[0] if self.names else None
 
 if __name__ == '__main__':
-    t_actual = 23.5
-    t_expected = 24.0
-    diff = calculate_temperature_difference(t_actual, t_expected)
-    print(f"Absolute difference: {diff}")
+    sample_names = ["Elena", "Mark", "Priya", "Omar"]
+    roster = NameList(sample_names)
+    print(roster.get_first())

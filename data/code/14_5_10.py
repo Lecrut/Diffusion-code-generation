@@ -1,24 +1,16 @@
-def calculate_absolute_difference(vol1: float, vol2: float) -> str:
-    """
-    Calculates the absolute difference between two volume measurements
-    and returns it formatted to two decimal places as a string.
-
-    Args:
-        vol1 (float): First volume measurement.
-        vol2 (float): Second volume measurement.
-
-    Returns:
-        str: The absolute difference rounded to two decimal places, 
-             represented in the format "X.XX".
-    """
-    diff = abs(vol1 - vol2)
-    return f"{diff:.2f}"
+def get_third_item(sequence):
+    if len(sequence) < 3:
+        raise IndexError("Sequence must have at least three elements")
+    return sequence[2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input.
-    measurement_a = 50.789
-    measurement_b = 34.12
+    data_tuple = (1, 2, 3, 4, 5)
+    data_string = "abcdefg"
+    data_short = [1, 2]
 
-    result = calculate_absolute_difference(measurement_a, measurement_b)
-    
-    print(result)
+    print(get_third_item(data_tuple))
+    print(get_third_item(data_string))
+    try:
+        get_third_item(data_short)
+    except IndexError as err:
+        print(err)

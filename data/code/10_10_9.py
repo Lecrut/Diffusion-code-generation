@@ -1,13 +1,11 @@
-def calculate_mean(temp1: float, temp2: float) -> str:
-    """Calculate the arithmetic mean of two temperature readings formatted to two decimal places."""
-    average = (temp1 + temp2) / 2
-    return f"{average:.2f}"
+def extract_first(items):
+    lookup_map = {
+        'alpha': items,
+        'beta': [100, 200, 300]
+    }
+    target_list = lookup_map['alpha']
+    return target_list[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements.
-    reading_a = 23.456789
-    reading_b = 24.012345
-    
-    result = calculate_mean(reading_a, reading_b)
-    
-    print(result)
+    sample_data = [99, 88, 77, 66]
+    print(extract_first(sample_data))

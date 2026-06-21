@@ -1,18 +1,16 @@
-import math
-def simplify_ratio(ratio1, ratio2):
-    if not ratio1 or not ratio2:
-        return None
-    num1, den1 = ratio1
-    num2, den2 = ratio2
-    if den1 == 0 or den2 == 0:
-        return None
-    gcd = math.gcd(num1, num2)
-    simplified_num1 = num1 // gcd
-    simplified_num2 = num2 // gcd
-    return (simplified_num1, simplified_num2)
+def get_middle_element(sequence):
+    if not sequence:
+        raise ValueError("Sequence must not be empty")
+    
+    length = len(sequence)
+    if length % 2 == 1:
+        return sequence[length // 2]
+    else:
+        mid = length // 2
+        return (sequence[mid - 1] + sequence[mid]) / 2
+
 if __name__ == '__main__':
-    ratio_a = (12, 18)
-    ratio_b = (24, 36)
-    simplified = simplify_ratio(ratio_a, ratio_b)
-    if simplified:
-        print(simplified)
+    print(get_middle_element([1, 3, 5]))
+    print(get_middle_element([1, 2, 3, 4]))
+    print(get_middle_element([42]))
+    print(get_middle_element([10, 20]))

@@ -1,65 +1,49 @@
-def convert_volume(value: float, source_unit: str, target_unit: str = None) -> dict:
-    """
-    Converts a volume value from one unit to another using predefined rates.
-    
-    Parameters:
-        value (float): The volume value to convert.
-        source_unit (str): The original unit of the volume (e.g., 'liter', 'gallon').
-        target_unit (str or None): The desired output unit. If None, converts back to source units with identity mapping logic if needed for consistency checks, 
-                                  otherwise defaults to a standard conversion path based on common pairs provided in rates dict.
+import argparse
+import sys
 
-    Returns:
-        dict: A dictionary containing the converted value and both original and target units strings.
-    
-    Raises:
-        ValueError: If input parameters are invalid or unsupported unit conversions occur.
-        TypeError: If input types do not match expected formats.
-    """
-    supported_units = ['liter', 'milliliter', 'gallon_us', 'quart_us', 'pint_us', 
-                       'cup_us', 'fluid_ounce_us']
-    
-    if source_unit not in supported_units or target_unit is None:
-        # Default to identity conversion logic when no explicit target provided for safety check context,
-        # but per task requirement we return a structure regardless; however, strict mode enforces target presence.
-        raise ValueError("target_unit must be specified and valid.")
-
-    if not isinstance(value, (int, float)) or value < 0:
-        raise TypeError(f"Volume value must be a non-negative number, got {type(value).__name__}.")
-
-    rates = {
-        'liter': {'milliliter': 1000.0},
-        'gallon_us': {'quart_us': 4.0, 'pint_us': 8.0, 'cup_us': 16.0, 'fluid_ounce_us': 32.0}
+class VolumeConverter:
+    UNIT_FACTORS = {
+        "ml": 1.0,
+        "l": 1000.0,
+        "us_fluid_ounce": 29.5735,
+        "us_cup": 236.588,
+        "us_gallon": 3785.41,
+        "us_pint": 473.176,
+        "uk_fluid_ounce": 28.4131,
+        "uk_gallon": 4546.09,
+        "uk_pint": 568.261,
     }
 
-    # Normalize rates if needed (simple bidirectional logic for demonstration)
-    
-    rate = rates.get(source_unit, {}).get(target_unit)
-    
-    if not rate:
-        raise ValueError(f"Conversion from {source_unit} to {target_unit} is currently unsupported.")
+    def __init__(self, value, from_unit, to_unit):
+        self.value = value
+        self.from_unit = from_unit.lower()
+        self.to_unit = to_unit.lower()
 
-    converted_value = value * rate
+    def convert(self):
+        if self.from_unit not in self.UNIT_FACTORS:
+            raise ValueError(f"Unsupported input unit: {self.from_unit}")
+        if self.to_unit not in self.UNIT_FACTORS:
+            raise ValueError(f"Unsupported output unit: {self.to_unit}")
+        
+        if self.value < 0:
+            raise ValueError("Volume cannot be negative.")
+
+        volume_in_ml = self.value * self.UNIT_FACTORS[self.from_unit]
+        result = volume_in_ml / self.UNIT_FACTORS[self.to_unit]
+        return result
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert volume units.")
+    parser.add_argument("value", type=float, help="Volume value to convert")
+    parser.add_argument("from_unit", type=str, help="Input unit (e.g., ml, l, us_gallon)")
+    parser.add_argument("to_unit", type=str, help="Output unit (e.g., ml, l, us_gallon)")
     
-    return {
-        'original_value': value,
-        'from_unit': source_unit,
-        'to_unit': target_unit,
-        'converted_value': converted_value
-    }
+    args = parser.parse_args()
+
+    converter = VolumeConverter(args.value, args.from_unit, args.to_unit)
+    result = converter.convert()
+    print(f"{args.value} {args.from_unit} is equal to {result:.6f} {args.to_unit}")
 
 if __name__ == '__main__':
-    # Hard-coded sample values without user input or network access
-    test_cases = [
-        ('liter', 2.5),
-        ('gallon_us', 10.0)
-    ]
-
-    for source, volume in test_cases:
-        result = convert_volume(volume=volume, source_unit=source, target_unit='milliliter')
-        print(f"Converted {result['original_value']} {result['from_unit']} to "
-              f"{result['converted_value']:.2f} {result['to_unit']}")
-        
-        # Optional second conversion demo for gallon_us -> quart_us
-    result_gal = convert_volume(volume=10.0, source_unit='gallon_us', target_unit='quart_us')
-    print(f"Converted {result_gal['original_value']} {result_gal['from_unit']} to "
-          f"{result_gal['converted_value']:.2f} {result_gal['to_unit']}")
+    sys.argv = ["script_name", "1", "us_gallon", "ml"]
+    main()

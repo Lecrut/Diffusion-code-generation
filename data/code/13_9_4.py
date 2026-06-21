@@ -1,16 +1,16 @@
-import datetime
-import pytz
-def convert_and_calculate_difference(pst_time_str):
-    pst_tz = pytz.timezone('America/Los_Angeles')
-    est_tz = pytz.timezone('America/New_York')
-    pst_time = datetime.datetime.strptime(pst_time_str, '%Y-%m-%d %H:%M:%S')
-    pst_tz_aware = pst_tz.localize(pst_time)
-    est_tz_aware = pst_tz_aware.astimezone(est_tz)
-    time_difference = est_tz_aware - pst_tz_aware
-    return pst_time, est_tz_aware, time_difference
+def get_circular_buffer_element(buffer, size, logical_index):
+    if size <= 0:
+        return None
+    if logical_index < 0:
+        logical_index = -(-logical_index) % size
+    actual_index = logical_index % size
+    return buffer[actual_index]
+
 if __name__ == '__main__':
-    sample_time = "2023-10-27 10:00:00"
-    pst_time, est_time_aware, diff = convert_and_calculate_difference(sample_time)
-    print(f"PST Time: {pst_time}")
-    print(f"EST Time: {est_time_aware}")
-    print(f"Time Difference (EST - PST): {diff}")
+    buffer = [10, 20, 30, 40, 50]
+    size = 5
+    
+    print(get_circular_buffer_element(buffer, size, 2))
+    print(get_circular_buffer_element(buffer, size, 7))
+    print(get_circular_buffer_element(buffer, size, -1))
+    print(get_circular_buffer_element(buffer, size, 0))

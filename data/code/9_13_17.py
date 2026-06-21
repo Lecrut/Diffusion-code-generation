@@ -1,73 +1,62 @@
-import argparse
+def convert_volume(value: float, from_unit: str, to_unit: str) -> float:
+    conversion_to_liters = {'L': 1.0, 'mL': 0.001, 'm3': 1000.0, 'gal': 3.78541}
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    if from_unit_lower not in conversion_to_liters:
+        raise ValueError(f'Unsupported from_unit: {from_unit}')
+    if to_unit_lower not in conversion_to_liters:
+        raise ValueError(f'Unsupported to_unit: {to_unit}')
+    liters = value * conversion_to_liters[from_unit_lower]
+    result = liters / conversion_to_liters[to_unit_lower]
+    return result
 
-def get_conversion_rate(base_unit: str, target_unit: str) -> float | None:
-    """Calculate conversion rate between two volume units."""
-    # Define standard unit to liter rates
-    base_to_liter = {
-        "liters": 1.0,
-        "milliliters": 0.001,
-        "kiloliters": 1000.0,
-        "gallons_us": 3.785411784,
-    }
+def liters_to_milliliters(liters: float) -> float:
+    return convert_volume(liters, 'L', 'mL')
 
-    target_to_liter = {
-        "liters": 1.0,
-        "milliliters": 0.001,
-        "kiloliters": 1000.0,
-        "gallons_us": 3.785411784,
-    }
+def milliliters_to_liters(milliliters: float) -> float:
+    return convert_volume(milliliters, 'mL', 'L')
 
-    if base_unit not in base_to_liter or target_unit not in target_to_liter:
-        return None
-    
-    rate = (base_to_liter[base_unit] / target_to_liter[target_unit])
-    
-    # Check for division by zero error implicitly handled via valid inputs, 
-    # but explicitly check if rate is effectively 0 to prevent floating point artifacts.
-    if abs(rate) < float('inf') and not isinstance(rate, (int, float)):
-        return None
-        
-    return round(rate, 6)
+def cubic_meters_to_liters(cubic_meters: float) -> float:
+    return convert_volume(cubic_meters, 'm3', 'L')
 
-def convert_volume(volume: int | float, unit_from: str, unit_to: str) -> tuple[int | float]:
-    """Convert volume from one unit to another."""
-    if get_conversion_rate(unit_from, unit_to) is None:
-        raise ValueError(f"Invalid combination of units '{unit_from}' and '{unit_to}'.")
+def liters_to_gallons(liters: float) -> float:
+    return convert_volume(liters, 'L', 'gal')
 
-    conversion_factor = get_conversion_rate(unit_from, unit_to)
-    result = round(volume * conversion_factor, 2)
-    
-    # If the result has a decimal part but looks very close to an integer (unlikely here), 
-    # ensure it's returned as float if decimals are present due to multiplication.
-    return volume
+def gallons_to_liters(gallons: float) -> float:
+    return convert_volume(gallons, 'gal', 'L')
 
-def parse_arguments():
-    """Set up argument parser with required input/output specifications."""
-    parser = argparse.ArgumentParser(description="CLI Volume Conversion Tool")
+def cubic_meters_to_gallons(cubic_meters: float) -> float:
+    return convert_volume(cubic_meters, 'm3', 'gal')
 
-    parser.add_argument(
-        "volume", type=float, help="The input volume value."
-    )
-    
-    # Ensure non-interactive usage by not marking any as 'required' for optional flags 
-    # and relying on hard-coded samples later. Here we just ensure valid types.
-    parser.add_argument("--unit-from", required=True)
-    parser.add_argument("--unit-to", required=True)
+def gallons_to_cubic_meters(gallons: float) -> float:
+    return convert_volume(gallons, 'gal', 'm3')
 
-    return parser.parse_args()
+def milliliters_to_gallons(milliliters: float) -> float:
+    return convert_volume(milliliters, 'mL', 'gal')
 
-def main():
-    """Run the script logic."""
-    try:
-        args = parse_arguments()
-        
-        # Convert input to float for consistency even if provided as int string (though argparse handles this).
-        value_as_float = round(float(args.volume), 2)
+def gallons_to_milliliters(gallons: float) -> float:
+    return convert_volume(gallons, 'gal', 'mL')
 
-        print(f"Converted {value_as_float} unit_of_{args.unit_from}.") 
-    except Exception:
-        print("An error occurred during processing.")
+def cubic_meters_to_milliliters(cubic_meters: float) -> float:
+    return convert_volume(cubic_meters, 'm3', 'mL')
 
+def milliliters_to_cubic_meters(milliliters: float) -> float:
+    return convert_volume(milliliters, 'mL', 'm3')
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or network access is needed.
-    main()
+    sample_liters = 2.5
+    sample_milliliters = 500
+    sample_cubic_meters = 1.0
+    sample_gallons = 1.0
+    print(f'{sample_liters} L to mL: {liters_to_milliliters(sample_liters)}')
+    print(f'{sample_milliliters} mL to L: {milliliters_to_liters(sample_milliliters)}')
+    print(f'{sample_cubic_meters} m³ to L: {cubic_meters_to_liters(sample_cubic_meters)}')
+    print(f'{sample_liters} L to gal: {liters_to_gallons(sample_liters)}')
+    print(f'{sample_gallons} gal to L: {gallons_to_liters(sample_gallons)}')
+    print(f'{sample_cubic_meters} m³ to gal: {cubic_meters_to_gallons(sample_cubic_meters)}')
+    print(f'{sample_gallons} gal to m³: {gallons_to_cubic_meters(sample_gallons)}')
+    print(f'{sample_milliliters} mL to gal: {milliliters_to_gallons(sample_milliliters)}')
+    print(f'{sample_gallons} gal to mL: {gallons_to_milliliters(sample_gallons)}')
+    print(f'{sample_cubic_meters} m³ to mL: {cubic_meters_to_milliliters(sample_cubic_meters)}')
+    print(f'{sample_milliliters} mL to m³: {milliliters_to_cubic_meters(sample_milliliters)}')
+    print(f"Generic: {sample_liters} L to gal: {convert_volume(sample_liters, 'L', 'gal')}")
+    print(f"Generic: {sample_gallons} gal to L: {convert_volume(sample_gallons, 'gal', 'L')}")

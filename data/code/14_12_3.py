@@ -1,13 +1,8 @@
-class VolumeComparator:
-    def compare(self, volume1, volume2):
-        if volume1 > volume2:
-            print(f"{volume1} is greater than {volume2}")
-        elif volume1 < volume2:
-            print(f"{volume1} is smaller than {volume2}")
-        else:
-            print(f"{volume1} is equal to {volume2}")
+def extract_third_value(data):
+    if len(data) < 3:
+        raise IndexError('List must contain at least three elements.')
+    return data[2]
 if __name__ == '__main__':
-    comparator = VolumeComparator()
-    comparator.compare(150.5, 120.0)
-    comparator.compare(300, 300)
-    comparator.compare(55.2, 60.1)
+    sample_data = [10, 20, 30, 40, 50]
+    result = extract_third_value(sample_data)
+    print(result)

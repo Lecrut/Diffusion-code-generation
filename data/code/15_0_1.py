@@ -1,9 +1,9 @@
-def check_match(value1, value2):
-    return value1 == value2
+def get_second_to_last(lst):
+    if len(lst) < 2:
+        raise IndexError("List must contain at least two elements")
+    return lst[-2]
+
 if __name__ == '__main__':
-    print(check_match(5, 5))
-    print(check_match(10, 5))
-    print(check_match("hello", "hello"))
-    print(check_match(1, 2))
-    print(check_match(3.14, 3.14))
-    print(check_match(3.14, 3.15))
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_to_last(sample_list)
+    print(result)

@@ -1,53 +1,47 @@
-import datetime
-from typing import List
+import json
 
-def calculate_elapsed_time(timestamps: List[str]) -> int:
-    """
-    Calculates the total elapsed time in seconds between the earliest 
-    and latest timestamp provided as ISO 8601 strings.
+class NestedAccessor:
+    def __init__(self, data):
+        self.data = data
 
-    Args:
-        timestamps (List[str]): A list of ISO 8601 formatted timestamp strings.
-
-    Returns:
-        int: The difference in seconds between the last and first date/time objects.
-    
-    Raises:
-        ValueError: If no timestamps are provided or if a string cannot be parsed as datetime.
-    """
-    if not timestamps:
-        raise ValueError("The list of timestamps must contain at least one element.")
-
-    try:
-        # Parse all strings into datetime objects and sort them to find min/max implicitly
-        sorted_timestamps = [datetime.datetime.fromisoformat(ts) for ts in timestamps]
-        
-        earliest = sorted_timestamps[0]
-        latest = sorted_timestamps[-1]
-        
-        elapsed_seconds = (latest - earliest).total_seconds()
-
-    except ValueError as e:
-        raise ValueError(f"Error parsing timestamp(s): {e}") from e
-    
-    return int(elapsed_seconds)
+    def get(self, path):
+        keys = path.split('.')
+        current = self.data
+        for key in keys:
+            if isinstance(current, dict) and key in current:
+                current = current[key]
+            elif isinstance(current, list) and key.isdigit():
+                index = int(key)
+                if 0 <= index < len(current):
+                    current = current[index]
+                else:
+                    raise KeyError(f"Index {index} out of range for list")
+            else:
+                raise KeyError(f"Key '{key}' not found in path: {'.'.join(keys)}")
+        return current
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or network access.
-    sample_timestamps = [
-        "2023-10-05T14:30:00",
-        "2023-10-06T10:15:30",
-        "2023-10-07T09:00:00"
-    ]
+    sample_data = {
+        "user": {
+            "profile": {
+                "contact": {
+                    "email": "alice@example.com"
+                },
+                "address": {
+                    "city": "New York",
+                    "zip": "10001"
+                }
+            },
+            "orders": [
+                {"id": 101, "item": "Book"},
+                {"id": 102, "item": "Pen"}
+            ]
+        },
+        "status": "active"
+    }
 
-    try:
-        result = calculate_elapsed_time(sample_timestamps)
-        print(f"The elapsed time between the earliest and latest timestamp is {result} seconds.")
-        
-        # Optional debug info to show start/end times for clarity without cluttering main output too much if needed later.
-        sorted_list = sorted([datetime.datetime.fromisoformat(ts) for ts in sample_timestamps])
-        print(f"Earliest: {sorted_list[0]}")
-        print(f"Latest:   {sorted_list[-1]}")
-        
-    except ValueError as ve:
-        print(f"Error occurred while calculating elapsed time: {ve}")
+    accessor = NestedAccessor(sample_data)
+    
+    print(accessor.get("user.profile.contact.email"))
+    print(accessor.get("user.orders.1.item"))
+    print(accessor.get("status"))

@@ -1,12 +1,6 @@
-def calculate_mean(temp1: float, temp2: float) -> str:
-    """Calculates the arithmetic mean of two temperature readings formatted to two decimal places."""
-    return f"{(temp1 + temp2) / 2:.2f}"
+def get_first_element():
+    sample_list = [10, 20, 30]
+    return sample_list[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or files needed)
-    reading_a = 23.56789
-    reading_b = 24.10123
-    
-    mean_temperature = calculate_mean(reading_a, reading_b)
-    
-    print(mean_temperature)
+    print(get_first_element())

@@ -1,11 +1,15 @@
-import math
-def calculate_length_ratio(length_a, length_b):
-    if length_a == 0 or length_b == 0:
-        raise ValueError("Lengths must be positive")
-    common_divisor = math.gcd(length_a, length_b)
-    return (length_a // common_divisor, length_b // common_divisor)
+def safe_pop_last(items):
+    try:
+        return items.pop()
+    except IndexError:
+        return None
+
 if __name__ == '__main__':
-    print(calculate_length_ratio(12, 18))
-    print(calculate_length_ratio(100, 75))
-    print(calculate_length_ratio(7, 13))
-    print(calculate_length_ratio(30, 60))
+    test_list = [10, 20, 30]
+    result = safe_pop_last(test_list)
+    print(result)
+    print(test_list)
+    empty_list = []
+    result_empty = safe_pop_last(empty_list)
+    print(result_empty)
+    print(empty_list)

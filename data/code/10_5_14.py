@@ -1,30 +1,20 @@
-import os
+class DictionaryInspector:
+    @staticmethod
+    def retrieve_first_value(data):
+        if not data:
+            return None
+        value_iterator = iter(data.values())
+        return next(value_iterator)
 
-def read_temperature(filename):
-    """Reads a temperature value from a file."""
-    try:
-        with open(filename, 'r') as f:
-            content = f.read().strip()
-            return float(content)
-    except FileNotFoundError:
-        raise ValueError(f"File '{filename}' not found.")
-
-def compare_temperatures(t1, t2):
-    """Compares two temperatures and flags discrepancies greater than 5 degrees."""
-    difference = abs(t1 - t2)
-    if difference > 5:
-        return True, f"Difference of {difference:.2f}°C exceeds the threshold."
-    else:
-        return False, "Difference is within acceptable limits."
+    @staticmethod
+    def get_demo_dictionary():
+        return {
+            "alpha": 100,
+            "beta": 200,
+            "gamma": 300
+        }
 
 if __name__ == '__main__':
-    # Hard-coded sample values simulating file reads since no pre-existing files are allowed.
-    temp_a = 20.5
-    temp_b = 16.8
-    
-    discrepancy_flagged, message = compare_temperatures(temp_a, temp_b)
-    
-    if discrepancy_flagged:
-        print(f"FLAGGED: {message}")
-    else:
-        print("No significant temperature difference detected.")
+    sample_data = DictionaryInspector.get_demo_dictionary()
+    result = DictionaryInspector.retrieve_first_value(sample_data)
+    print(result)

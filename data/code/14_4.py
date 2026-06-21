@@ -1,9 +1,9 @@
+def get_third_item(items: list[str]) -> str:
+    if len(items) < 3:
+        raise IndexError("List must contain at least three items")
+    return items[2]
+
 if __name__ == '__main__':
-    volume1 = 10
-    volume2 = 15
-    if volume1 > volume2:
-        print("Volume 1 is greater than Volume 2")
-    elif volume1 < volume2:
-        print("Volume 1 is less than Volume 2")
-    else:
-        print("Volume 1 is equal to Volume 2")
+    sample_list = ["first", "second", "third", "fourth"]
+    result = get_third_item(sample_list)
+    print(result)

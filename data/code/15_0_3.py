@@ -1,8 +1,7 @@
-def check_match(value1, value2):
-    return value1 == value2
+def second_to_last_element(data):
+    return data[-2]
+
 if __name__ == '__main__':
-    print(check_match(10, 10))
-    print(check_match(5, 3))
-    print(check_match("hello", "hello"))
-    print(check_match(True, True))
-    print(check_match(1.5, 1.50))
+    sample_list = [10, 20, 30, 40, 50]
+    result = second_to_last_element(sample_list)
+    print(result)

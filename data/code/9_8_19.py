@@ -1,20 +1,36 @@
 import numpy as np
 
-def convert_volume_to_cubic_meters(volumes_liters: np.ndarray) -> np.ndarray:
-    """Converts an array of volumes from liters to cubic meters using vectorized NumPy operations."""
-    return volumes_liters * 0.001
+def convert_volumes(values, from_unit, to_unit):
+    units_to_liters = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'gallon': 3.785411784,
+        'quart': 0.946352946,
+        'pint': 0.473176473,
+        'cup': 0.2365882365,
+        'fluid_ounce': 0.0295735295625,
+        'cubic_meter': 1000.0,
+        'cubic_centimeter': 0.001,
+        'cubic_inch': 0.016387064,
+        'cubic_foot': 28.316846592
+    }
+
+    if from_unit not in units_to_liters:
+        raise ValueError(f"Unsupported source unit: {from_unit}")
+    if to_unit not in units_to_liters:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
+
+    from_factor = units_to_liters[from_unit]
+    to_factor = units_to_liters[to_unit]
+
+    values_array = np.array(values, dtype=float)
+    liters = values_array * from_factor
+    result = liters / to_factor
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or files)
-    sample_volumes = np.array([250, 5000, 73948, 0])
-
-    converted_results = convert_volume_to_cubic_meters(sample_volumes)
-
-    print(f"Input volumes in liters: {sample_volumes}")
-    print("Converted values to cubic meters:")
-    for vol_liters, vol_m3 in zip(sample_volumes, converted_results):
-        if len(vol_m3.shape) > 1:
-            # Handle scalar array case by wrapping with list comprehension implicitly done via loop logic above since input is 0-dim per item effectively or just a flat view
-            print(f"{vol_liters} L -> {float(vol_m3)} m³")
-        else:
-            print(f"{int(vol_liters)} L -> {float(vol_m3):.6f} m³")
+    sample_measurements = [1.0, 5.0, 10.0, 2.5, 100.0]
+    source = 'gallon'
+    target = 'liter'
+    converted_values = convert_volumes(sample_measurements, source, target)
+    print(converted_values)

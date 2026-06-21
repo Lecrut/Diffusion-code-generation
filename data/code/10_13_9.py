@@ -1,12 +1,9 @@
-def parse_temperature(value: str) -> float | None:
-    """Parse a string into a temperature value if valid numeric."""
-    try:
-        return float(value.strip())
-    except ValueError:
+def get_head(lst: list) -> object:
+    if not lst:
         return None
-
-def compare_temperatures(temp_a: float, temp_b: float) -> str:
-    """Compare two temperatures and return a formatted result."""
+    return lst[0]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [10, 20, 30]
+    result = get_head(sample_list)
+    print(result)

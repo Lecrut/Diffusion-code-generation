@@ -1,20 +1,9 @@
-import math
-def simplify_ratio(numerator, denominator):
-    common = math.gcd(numerator, denominator)
-    return numerator // common, denominator // common
-def calculate_and_simplify_ratio(ratio1_str, ratio2_str):
-    parts1 = ratio1_str.split(':')
-    A = int(parts1[0])
-    B = int(parts1[1])
-    parts2 = ratio2_str.split(':')
-    C = int(parts2[0])
-    D = int(parts2[1])
-    numerator = A * D
-    denominator = B * C
-    num_simplified, den_simplified = simplify_ratio(numerator, denominator)
-    return f"{num_simplified}:{den_simplified}"
+def get_middle_element(sequence):
+    return sequence[len(sequence) // 2]
+
 if __name__ == '__main__':
-    ratio1 = "2:3"
-    ratio2 = "4:5"
-    result = calculate_and_simplify_ratio(ratio1, ratio2)
-    print(result)
+    assert get_middle_element([1, 2, 3]) == 2
+    assert get_middle_element([1, 2, 3, 4, 5]) == 3
+    assert get_middle_element([10, 20, 30, 40]) == 20
+    print(get_middle_element([5, 10, 15, 20, 25]))
+    print(get_middle_element([1, 2, 3, 4, 5, 6]))

@@ -1,22 +1,13 @@
-def sort_volume_measurements_descending(volumes):
-    """
-    Sorts a list of volume measurements in descending order using Timsort,
-    which is Python's built-in highly optimized sorting algorithm (O(n log n)).
-    
-    Args:
-        volumes (list[float]): List of numeric volume values.
-        
-    Returns:
-        list[float]: New sorted list with elements in descending order.
-    """
-    return sorted(volumes, reverse=True)
+class DataAccessor:
+    INDEX_TARGET = 2
+
+    @staticmethod
+    def retrieve_element(container):
+        if len(container) <= DataAccessor.INDEX_TARGET:
+            raise IndexError("Insufficient elements in container")
+        return container[DataAccessor.INDEX_TARGET]
 
 if __name__ == '__main__':
-    # Hard-coded sample data representing various volume measurements
-    sample_volumes = [120.5, 45.3, 89.7, 200.0, 67.8, 12.1]
-
-    sorted_volumes = sort_volume_measurements_descending(sample_volumes)
-
-    print("Sorted volumes (descending):")
-    for vol in sorted_volumes:
-        print(vol)
+    test_sequence = [100, 200, 300, 400, 500]
+    value = DataAccessor.retrieve_element(test_sequence)
+    print(value)

@@ -1,81 +1,66 @@
-"""
-Refactored conversion script with custom exception handling.
-This module demonstrates proper error management using specific custom exceptions
-for a data processing scenario without external dependencies or user input.
-"""
-
 class ConversionError(Exception):
-    """Base exception for all conversion errors."""
-    pass
+    def __init__(self, message, context):
+        super().__init__(message)
+        self.context = context
 
-class InvalidFormatException(ConversionError):
-    """Raised when the input format cannot be parsed according to rules."""
-    pass
+class UnitNotFoundError(ConversionError):
+    def __init__(self, unit, available_units):
+        message = f"Unit '{unit}' not found. Available units: {', '.join(available_units)}"
+        super().__init__(message, {"requested_unit": unit, "available": available_units})
 
-class OutOfRangeValueError(ConversionError):
-    """Raised when a value exceeds defined limits after conversion attempt."""
-    pass
+class NegativeValueError(ConversionError):
+    def __init__(self, value):
+        message = f"Value cannot be negative: {value}"
+        super().__init__(message, {"value": value})
 
-def convert_value(raw_input: str) -> float | int:
-    """
-    Attempts to convert raw string input into a numeric type.
+class ZeroValueError(ConversionError):
+    def __init__(self, value):
+        message = f"Value cannot be zero: {value}"
+        super().__init__(message, {"value": value})
 
-    Args:
-        raw_input (str): The string representation of the number.
+UNIT_FACTORS = {
+    "meter": 1.0,
+    "kilometer": 1000.0,
+    "centimeter": 0.01,
+    "millimeter": 0.001,
+    "mile": 1609.344,
+    "yard": 0.9144,
+    "foot": 0.3048,
+    "inch": 0.0254
+}
 
-    Returns:
-        float or int: The converted numerical value.
+def validate_value(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Value must be a number")
+    if value < 0:
+        raise NegativeValueError(value)
+    if value == 0:
+        raise ZeroValueError(value)
 
-    Raises:
-        InvalidFormatException: If the string is not a valid number format.
-        OutOfRangeValueError: If the resulting numeric value exceeds limits.
-        ConversionError: For any other unexpected conversion issues.
-    """
-    try:
-        # Attempt to parse as integer first, then fall back to float if needed
-        val = int(raw_input.strip())
-        
-        # Simulate a range check (e.g., must be between 0 and 100)
-        if not (0 <= val <= 100):
-            raise OutOfRangeValueError(f"Value {val} is out of the allowed range [0, 100].")
-            
-        return val
+def validate_unit(unit, available_units):
+    if unit not in available_units:
+        raise UnitNotFoundError(unit, available_units)
 
-    except ValueError:
-        # Handles cases where the string isn't a valid integer or float
-        raise InvalidFormatException(f"Invalid input format for conversion. Got: '{raw_input}'." 
-                                  f" Expected digits only.") from None
+def convert_length(value, from_unit, to_unit):
+    validate_value(value)
+    validate_unit(from_unit, UNIT_FACTORS.keys())
+    validate_unit(to_unit, UNIT_FACTORS.keys())
     
-    except Exception as e:
-        # Catch any unexpected exceptions to wrap them in our custom base exception
-        raise ConversionError(f"Unexpected error during numeric conversion process") from e
+    base_value = value * UNIT_FACTORS[from_unit]
+    result = base_value / UNIT_FACTORS[to_unit]
+    return result
 
-if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes.
-    # These run without user input, network access, or pre-existing files.
-    
+if __name__ == "__main__":
     test_cases = [
-        "50",           # Valid integer within range
-        "-10",          # Invalid: negative number out of range
-        "abc",          # Invalid format (non-numeric)
-        "200",          # Invalid: exceeds upper limit
-        "",             # Edge case: empty string
+        (100, "centimeter", "meter"),
+        (5, "mile", "kilometer"),
+        (1, "foot", "inch"),
+        (1000, "meter", "kilometer")
     ]
-
-    for test_case in test_cases:
-        print(f"Processing input: '{test_case}'...")
-        
-        try:
-            result = convert_value(test_case)
-            print(f"Success! Converted value: {result}")
-            
-        except (InvalidFormatException, OutOfRangeValueError):
-            # These are specific custom exceptions that provide clear feedback.
-            error_type_name = type(sys.exc_info()[1]).__name__ if 'sys' in dir() else "Unknown Custom Error"
-            print(f"Error caught: {error_type_name} - Details provided by the exception.")
-            
-        except ConversionError as e:
-            # Catches any unexpected conversion failure.
-            print(f"General Conversion Failure occurred: {e}")
-
-    print("Conversion process completed successfully for all sample cases.")
+    
+    results = []
+    for val, f_unit, t_unit in test_cases:
+        converted = convert_length(val, f_unit, t_unit)
+        results.append(converted)
+    
+    print(results)

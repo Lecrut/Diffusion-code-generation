@@ -1,22 +1,31 @@
-import math
+THIRD_INDEX = 2
+MIN_LENGTH = 3
 
-def volumes_are_equal(vol1: float, vol2: float) -> bool:
-    """
-    Determines if two volume measurements are effectively equal within a small tolerance.
+class ThirdItemRetriever:
+    def __init__(self, data: list) -> None:
+        if not isinstance(data, list):
+            raise TypeError(f"Expected list, got {type(data).__name__}")
+        self._data = data
 
-    Args:
-        vol1 (float): First volume measurement.
-        vol2 (float): Second volume measurement.
+    def retrieve(self) -> object:
+        length = len(self._data)
+        if length < MIN_LENGTH:
+            raise IndexError(f"Need at least {MIN_LENGTH} items, found {length}")
+        return self._data[THIRD_INDEX]
 
-    Returns:
-        bool: True if the volumes are close, False otherwise.
-    """
-    return math.isclose(vol1, vol2)
+def get_third_item(lst: list) -> object:
+    retriever = ThirdItemRetriever(lst)
+    return retriever.retrieve()
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    sample_vol_1 = 50.0
-    sample_vol_2 = 49.8
-
-    result = volumes_are_equal(sample_vol_1, sample_vol_2)
-    print(f"Volumes {sample_vol_1} and {sample_vol_2}: {'Equal' if result else 'Not Equal'}")
+    test_list = [100, 200, 300, 400]
+    result = get_third_item(test_list)
+    print(result)
+    try:
+        get_third_item([1, 2])
+    except IndexError as exc:
+        print(str(exc))
+    try:
+        get_third_item("string")
+    except TypeError as exc:
+        print(str(exc))

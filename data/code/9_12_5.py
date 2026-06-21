@@ -1,41 +1,57 @@
-def convert_volume(volume, source_unit, target_unit=None):
-    conversion_rates = {
-        "liter": 1.0,
-        "milliliter": 0.001,
-        "gallon": 3.78541,
-        "quart": 0.946353,
-        "ounce": 0.0283495,
-        "cubic_meter": 1000.0,
-        "cubic_foot": 28.3168,
+import argparse
+import sys
+
+VALID_UNITS = {'ml', 'l', 'cup', 'tbsp', 'tsp', 'pt', 'qt', 'gal', 'floz'}
+
+def convert_volume(value, from_unit, to_unit):
+    if from_unit not in VALID_UNITS:
+        raise ValueError(f"Invalid input unit: {from_unit}. Valid units are: {', '.join(sorted(VALID_UNITS))}")
+    if to_unit not in VALID_UNITS:
+        raise ValueError(f"Invalid output unit: {to_unit}. Valid units are: {', '.join(sorted(VALID_UNITS))}")
+    if value < 0:
+        raise ValueError("Volume cannot be negative.")
+
+    conversion_to_ml = {
+        'ml': 1.0,
+        'l': 1000.0,
+        'cup': 236.588,
+        'tbsp': 14.787,
+        'tsp': 4.929,
+        'pt': 473.176,
+        'qt': 946.353,
+        'gal': 3785.41,
+        'floz': 29.5735
     }
-    if source_unit not in conversion_rates:
-        raise ValueError(f"Unknown source unit: {source_unit}")
-    if target_unit is None:
-        return volume
-    if target_unit not in conversion_rates:
-        raise ValueError(f"Unknown target unit: {target_unit}")
-    if source_unit == target_unit:
-        return volume
-    base_unit = "liter"
-    if source_unit != base_unit:
-        source_rate = conversion_rates[source_unit]
-        volume_in_liters = volume / source_rate
-    else:
-        volume_in_liters = volume
-    target_rate = conversion_rates[target_unit]
-    result = volume_in_liters * target_rate
+
+    ml_value = value * conversion_to_ml[from_unit]
+    result = ml_value / conversion_to_ml[to_unit]
     return result
+
+def build_parser():
+    parser = argparse.ArgumentParser(description='Convert volume units.')
+    parser.add_argument('--value', type=float, help='The volume value to convert.')
+    parser.add_argument('--from-unit', type=str, help='The input unit (e.g., l, ml, cup).')
+    parser.add_argument('--to-unit', type=str, help='The desired output unit.')
+    return parser
+
+def main(args=None):
+    parser = build_parser()
+    parsed_args = parser.parse_args(args)
+
+    value = parsed_args.value
+    from_unit = parsed_args.from_unit
+    to_unit = parsed_args.to_unit
+
+    if value is None or from_unit is None or to_unit is None:
+        raise ValueError("Missing required arguments: --value, --from-unit, --to-unit")
+
+    try:
+        result = convert_volume(value, from_unit, to_unit)
+        return result
+    except ValueError as e:
+        print(str(e), file=sys.stderr)
+        sys.exit(1)
+
 if __name__ == '__main__':
-    print(convert_volume(10, "liter"))
-    print(convert_volume(1, "gallon", "liter"))
-    print(convert_volume(5, "cubic_meter", "liter"))
-    print(convert_volume(100, "milliliter", "liter"))
-    print(convert_volume(1, "ounce", "gallon"))
-    try:
-        convert_volume(10, "furlong", "meter")
-    except ValueError as e:
-        print(f"Error caught: {e}")
-    try:
-        convert_volume(10, "liter", "furlong")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    result = main(['--value', '1.5', '--from-unit', 'l', '--to-unit', 'gal'])
+    print(result)

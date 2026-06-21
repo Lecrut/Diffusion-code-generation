@@ -1,28 +1,17 @@
-"""
-Module to convert relative weight ratios into absolute weights based on a total mass.
-
-This module provides functions to calculate individual weights from a set of 
-relative proportions (ratios) given an absolute total weight. It supports floating-point 
-precision handling and includes validation for invalid input combinations such as zero 
-total weights or negative ratios where they might be physically nonsensical in this context
-(but allows them if the user explicitly provides them, though typically ratios are positive).
-
-Usage:
-    from ratio_converter import convert_ratios_to_weights
-    
-    # Example usage within main block would look like:
-    ratios = [1.0, 2.0]
-    total_weight = 30.0
-    result = convert_ratios_to_weights(ratios, total_weight)
-    print(result)
-
-Functions exposed by this module include 'convert_ratios_to_weights' for the core logic 
-and helper functions if needed internally (though minimal helpers are used to keep it clean).
-"""
-
-def _calculate_sum_of_ratios(total_ratio: float | None = 1.0, individual_ratio=None):
-    """Calculate sum of ratios passed or defaulting to single ratio provided."""
-    return total_ratio + (individual_ratio if isinstance(individual_ratio, (int, float)) else 0.0)
+def get_middle_element(sequence):
+    if not hasattr(sequence, '__getitem__'):
+        raise TypeError("Input must be a sequence")
+    length = len(sequence)
+    if length == 0:
+        raise ValueError("Sequence must not be empty")
+    if length % 2 == 1:
+        return sequence[length // 2]
+    else:
+        mid_index = length // 2
+        return (sequence[mid_index - 1] + sequence[mid_index]) / 2
 
 if __name__ == '__main__':
-    pass
+    odd_seq = [1, 2, 3, 4, 5]
+    even_seq = [1, 2, 3, 4]
+    print(get_middle_element(odd_seq))
+    print(get_middle_element(even_seq))

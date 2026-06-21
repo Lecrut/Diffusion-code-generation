@@ -1,20 +1,23 @@
-import math
-def convert_ratios(ratios):
-    result = []
-    for a, b in ratios:
-        if b == 0:
-            result.append(float('inf') if a != 0 else float('nan'))
-        else:
-            result.append(a / b)
-    return result
+def get_middle_element(sequence):
+    if len(sequence) == 0:
+        raise ValueError("Sequence cannot be empty")
+    mid_index = len(sequence) // 2
+    if len(sequence) % 2 == 1:
+        return sequence[mid_index]
+    else:
+        return sequence[mid_index - 1]
+
 if __name__ == '__main__':
-    sample_ratios = [
-        (1000000000, 500000000),
-        (1234567890123, 9876543210987),
-        (0, 100),
-        (5, 0),
-        (10, 2)
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30, 40],
+        "hello",
+        ("a", "b", "c", "d", "e"),
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        [100, 200],
+        [5]
     ]
-    converted = convert_ratios(sample_ratios)
-    for ratio in converted:
-        print(ratio)
+    
+    for case in test_cases:
+        result = get_middle_element(case)
+        print(f"Input: {case}, Middle Element: {result}")

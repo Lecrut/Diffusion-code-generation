@@ -1,5 +1,7 @@
-def check_equal(x: any, y: any) -> bool:
-    return x == y
+def get_second_last(lst):
+    return lst[-2]
 
 if __name__ == '__main__':
-    print(check_equal(10, 20))
+    numbers = [10, 20, 30, 40, 50]
+    result = get_second_last(numbers)
+    print(result)

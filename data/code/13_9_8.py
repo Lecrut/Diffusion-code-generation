@@ -1,17 +1,17 @@
-def convert_time_and_difference(pst_time_str):
-    pst_time = pst_time_str.split(':')[0]
-    pst_minutes = int(pst_time_str.split(':')[1])
-    pst_hour = int(pst_time)
-    pst_minute = pst_minutes
-    est_hour = pst_hour + 3
-    if est_hour >= 24:
-        est_hour -= 24
-    est_time = f"{est_hour}:{pst_minute}"
-    time_difference_hours = 3
-    return est_time, time_difference_hours
+def fetch_from_circular_buffer(buffer, index):
+    if not buffer:
+        raise IndexError("Cannot fetch from empty buffer")
+    normalized_index = index % len(buffer)
+    return buffer[normalized_index]
+
 if __name__ == '__main__':
-    sample_pst_time = "10:30"
-    est_time, difference = convert_time_and_difference(sample_pst_time)
-    print(f"PST Time: {sample_pst_time}")
-    print(f"EST Time: {est_time}")
-    print(f"Time Difference (EST - PST): {difference} hours")
+    sample_buffer = [10, 20, 30, 40, 50]
+    index_positive = 2
+    index_negative = -1
+    index_large = 7
+    result1 = fetch_from_circular_buffer(sample_buffer, index_positive)
+    result2 = fetch_from_circular_buffer(sample_buffer, index_negative)
+    result3 = fetch_from_circular_buffer(sample_buffer, index_large)
+    print(result1)
+    print(result2)
+    print(result3)

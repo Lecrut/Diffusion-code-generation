@@ -1,42 +1,16 @@
-import math
-def volume_to_liters(volume: float, unit: str) -> float:
-    if unit == "L":
-        return volume
-    elif unit == "m^3":
-        return volume * 1000.0
-    elif unit == "mL":
-        return volume / 1000.0
-    elif unit == "cm^3":
-        return volume * 1e-6
-    elif unit == "in^3":
-        return volume * 16.387064e-6
-    elif unit == "ft^3":
-        return volume * 28.316846592
-    elif unit == "gal":
-        return volume * 3.785411784
-    elif unit == "qt":
-        return volume * 0.946352946
-    elif unit == "fl_oz":
-        return volume * 0.0295735295625
-    else:
-        raise ValueError(f"Unsupported unit: {unit}")
+def convert_volume_to_liters(value, unit):
+    unit = unit.lower().strip()
+    conversion_factors = {'liter': 1.0, 'liters': 1.0, 'l': 1.0, 'milliliter': 0.001, 'milliliters': 0.001, 'ml': 0.001, 'milliliter': 0.001, 'kiloliter': 1000.0, 'kiloliters': 1000.0, 'kl': 1000.0, 'centiliter': 0.01, 'centiliters': 0.01, 'cl': 0.01, 'deciliter': 0.1, 'deciliters': 0.1, 'dl': 0.1, 'gallon': 3.785411784, 'gallons': 3.785411784, 'gal': 3.785411784, 'quart': 0.946352946, 'quarts': 0.946352946, 'qt': 0.946352946, 'pint': 0.473176473, 'pints': 0.473176473, 'pt': 0.473176473, 'cup': 0.2365882365, 'cups': 0.2365882365, 'tablespoon': 0.01478676478125, 'tablespoons': 0.01478676478125, 'tbsp': 0.01478676478125, 'teaspoon': 0.00492892159375, 'teaspoons': 0.00492892159375, 'tsp': 0.00492892159375, 'fluid ounce': 0.0295735295625, 'fluid ounces': 0.0295735295625, 'floz': 0.0295735295625, 'cubic meter': 1000.0, 'cubic meters': 1000.0, 'm3': 1000.0, 'cubic centimeter': 0.001, 'cubic centimeters': 0.001, 'cc': 0.001, 'cm3': 0.001, 'cubic millimeter': 1e-06, 'cubic millimeters': 1e-06, 'mm3': 1e-06, 'cubic foot': 28.316846592, 'cubic feet': 28.316846592, 'ft3': 28.316846592, 'cubic inch': 0.016387064, 'cubic inches': 0.016387064, 'in3': 0.016387064}
+    if unit not in conversion_factors:
+        raise ValueError(f'Unsupported unit: {unit}')
+    return value * conversion_factors[unit]
 if __name__ == '__main__':
-    test_cases = [
-        (1.0, "L"),
-        (1.0, "m^3"),
-        (1000.0, "mL"),
-        (1000000.0, "cm^3"),
-        (1.0, "in^3"),
-        (1.0, "ft^3"),
-        (1.0, "gal"),
-        (1.0, "qt"),
-        (1.0, "fl_oz")
-    ]
-    for volume, unit in test_cases:
-        try:
-            result = volume_to_liters(volume, unit)
-            print(f"Volume: {volume} {unit} -> Liters: {result}")
-        except ValueError as e:
-            print(f"Error processing {volume} {unit}: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred for {volume} {unit}: {e}")
+    gallons_value = 1.0
+    liters_result = convert_volume_to_liters(gallons_value, 'gallon')
+    print(liters_result)
+    milliliters_value = 1000.0
+    liters_from_ml = convert_volume_to_liters(milliliters_value, 'ml')
+    print(liters_from_ml)
+    cubic_feet_value = 1.0
+    liters_from_cf = convert_volume_to_liters(cubic_feet_value, 'cubic foot')
+    print(liters_from_cf)

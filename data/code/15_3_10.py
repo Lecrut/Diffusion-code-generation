@@ -1,4 +1,6 @@
-sample_x = 10; sample_y = "ten" # Intentionally different types to test edge case where equality fails despite string representation match
+def get_second_last(lst):
+    return lst[-2]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [1, 2, 3, 4, 5]
+    print(get_second_last(sample_list))

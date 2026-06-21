@@ -1,29 +1,25 @@
-import random
-def are_lists_identical(list1, list2):
-    if len(list1) != len(list2):
-        return False
-    for i in range(len(list1)):
-        if list1[i] != list2[i]:
-            return False
-    return True
+MIN_LENGTH = 2
+
+def validate_list_and_get_penultimate(data):
+    if not isinstance(data, list):
+        raise TypeError("Input must be a list")
+    if len(data) < MIN_LENGTH:
+        raise ValueError("List must contain at least two elements")
+    return retrieve_second_to_last(data)
+
+def retrieve_second_to_last(sequence):
+    index = len(sequence) - 2
+    return sequence[index]
+
 if __name__ == '__main__':
-    list_a = list(range(1000000))
-    list_b = list(range(1000000))
-    list_c = list(range(1000000))
-    list_d = list(range(1000001))
-    print(f"A and B are identical: {are_lists_identical(list_a, list_b)}")
-    print(f"A and C are identical: {are_lists_identical(list_a, list_c)}")
-    print(f"A and D are identical: {are_lists_identical(list_a, list_d)}")
-    list_e = [1, 2, 3, 4]
-    list_f = [1, 2, 3, 5]
-    list_g = [1, 2, 3, 4]
-    print(f"E and F are identical: {are_lists_identical(list_e, list_f)}")
-    print(f"E and G are identical: {are_lists_identical(list_e, list_g)}")
-    list_h = [10, 20, 30]
-    list_i = [10, 20, 30]
-    list_j = [10, 20, 31]
-    print(f"H and I are identical: {are_lists_identical(list_h, list_i)}")
-    print(f"H and J are identical: {are_lists_identical(list_h, list_j)}")
-    list_k = [1, 2]
-    list_l = [1, 2, 3]
-    print(f"K and L are identical: {are_lists_identical(list_k, list_l)}")
+    sample_data = [100, 200, 300, 400, 500]
+    result = validate_list_and_get_penultimate(sample_data)
+    print(result)
+    try:
+        validate_list_and_get_penultimate("not a list")
+    except TypeError:
+        print("Error: Input must be a list")
+    try:
+        validate_list_and_get_penultimate([1])
+    except ValueError:
+        print("Error: List must contain at least two elements")

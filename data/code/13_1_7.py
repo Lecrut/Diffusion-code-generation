@@ -1,18 +1,20 @@
-from datetime import datetime
-from datetime import timedelta
-import pytz
-def calculate_time_delta(dt1: datetime, dt2: datetime) -> timedelta:
-    if dt1.tzinfo is None or dt2.tzinfo is None:
-        raise ValueError("Input datetimes must be timezone-aware")
-    return dt2 - dt1
+def get_element(data, row_idx, col_idx, fallback=None):
+    try:
+        return data[row_idx][col_idx]
+    except IndexError:
+        return fallback
+
 if __name__ == '__main__':
-    tz_london = pytz.timezone('Europe/London')
-    tz_new_york = pytz.timezone('America/New_York')
-    dt_london_start = datetime(2023, 10, 26, 10, 0, 0, tzinfo=tz_london)
-    dt_london_end = datetime(2023, 10, 26, 12, 30, 0, tzinfo=tz_london)
-    dt_ny_start = datetime(2023, 10, 26, 14, 0, 0, tzinfo=tz_new_york)
-    dt_ny_end = datetime(2023, 10, 26, 16, 0, 0, tzinfo=tz_new_york)
-    delta1 = calculate_time_delta(dt_london_start, dt_london_end)
-    print(f"Delta 1: {delta1}")
-    delta2 = calculate_time_delta(dt_ny_start, dt_ny_end)
-    print(f"Delta 2: {delta2}")
+    sample_data = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    
+    result_valid = get_element(sample_data, 1, 2)
+    result_out_of_bounds = get_element(sample_data, 5, 1)
+    result_negative = get_element(sample_data, -1, 0)
+    
+    print(result_valid)
+    print(result_out_of_bounds)
+    print(result_negative)

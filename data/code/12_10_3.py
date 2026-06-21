@@ -1,24 +1,17 @@
-import statistics
-def calculate_weighted_average(ratios, weights):
-    if len(ratios) != len(weights):
-        raise ValueError("Ratios and weights must have the same length")
-    if not ratios:
+def get_middle_element(lst):
+    if not lst:
         return None
-    weighted_sum = 0
-    total_weight = 0
-    for ratio, weight in zip(ratios, weights):
-        weighted_sum += ratio * weight
-        total_weight += weight
-    if total_weight == 0:
-        return 0                                                                              
-    return weighted_sum / total_weight
+    return lst[len(lst) // 2]
+
 if __name__ == '__main__':
-    weight_ratios = [1.2, 0.8, 1.5, 0.5]
-    weights = [10, 5, 20, 3]
-    try:
-        weighted_avg = calculate_weighted_average(weight_ratios, weights)
-        print(weighted_avg)
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    sample_list_odd = [1, 2, 3, 4, 5]
+    sample_list_even = [1, 2, 3, 4, 5, 6]
+    sample_list_empty = []
+
+    result_odd = get_middle_element(sample_list_odd)
+    result_even = get_middle_element(sample_list_even)
+    result_empty = get_middle_element(sample_list_empty)
+
+    print(result_odd)
+    print(result_even)
+    print(result_empty)

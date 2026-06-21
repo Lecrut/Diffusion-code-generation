@@ -1,22 +1,9 @@
-def compare_volumes(vol1: float, vol2: float) -> tuple[float, float, float]:
-    if vol1 >= vol2:
-        larger = vol1
-        smaller = vol2
-    else:
-        larger = vol2
-        smaller = vol1
-    difference = abs(vol1 - vol2)
-    return larger, smaller, difference
+def get_third_item(data):
+    if len(data) >= 3:
+        return data[2]
+    return None
+
 if __name__ == '__main__':
-    a = 15.75
-    b = 22.31
-    larger, smaller, diff = compare_volumes(a, b)
-    print(f"Larger: {larger}")
-    print(f"Smaller: {smaller}")
-    print(f"Difference: {diff}")
-    c = 100.0
-    d = 99.999
-    larger_2, smaller_2, diff_2 = compare_volumes(c, d)
-    print(f"Larger: {larger_2}")
-    print(f"Smaller: {smaller_2}")
-    print(f"Difference: {diff_2}")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_third_item(sample_list)
+    print(result)

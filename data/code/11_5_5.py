@@ -1,23 +1,10 @@
-import math
-def find_ratio_of_lengths(l1, l2):
-    if l2 == 0:
-        return "Undefined"
-    common_divisor = math.gcd(l1, l2)
-    return (l1 // common_divisor, l2 // common_divisor)
+def get_last_item(items):
+    last = None
+    for item in items:
+        last = item
+    return last
+
 if __name__ == '__main__':
-    l1_val = 48
-    l2_val = 18
-    ratio = find_ratio_of_lengths(l1_val, l2_val)
-    print(f"{l1_val}: {l2_val} -> {ratio[0]}: {ratio[1]}")
-    l1_val = 101
-    l2_val = 33
-    ratio = find_ratio_of_lengths(l1_val, l2_val)
-    print(f"{l1_val}: {l2_val} -> {ratio[0]}: {ratio[1]}")
-    l1_val = 50
-    l2_val = 0
-    ratio = find_ratio_of_lengths(l1_val, l2_val)
-    print(f"{l1_val}: {l2_val} -> {ratio}")
-    l1_val = 12
-    l2_val = 12
-    ratio = find_ratio_of_lengths(l1_val, l2_val)
-    print(f"{l1_val}: {l2_val} -> {ratio[0]}: {ratio[1]}")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_item(sample_list)
+    print(result)

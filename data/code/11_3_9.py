@@ -1,15 +1,12 @@
-def calculate_ratio(length_a: float, length_b: float) -> None:
-    """Calculate and print the ratio of two lengths."""
-    if length_b == 0:
-        print("Error: Division by zero is not allowed.")
-        return
-    
-    ratio = length_a / length_b
-    print(f"The ratio of {length_a} to {length_b} is {ratio}.")
+def safe_get_last(lst, default=None):
+    if lst:
+        return lst[-1]
+    return default
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements.
-    len1 = 10.5
-    len2 = 3
-    
-    calculate_ratio(len1, len2)
+    result1 = safe_get_last([1, 2, 3])
+    print(result1)
+    result2 = safe_get_last([], default="empty")
+    print(result2)
+    result3 = safe_get_last([])
+    print(result3)

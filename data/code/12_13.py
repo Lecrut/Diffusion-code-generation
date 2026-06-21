@@ -1,23 +1,15 @@
-def calculate_weight_distribution(ratios, total_weight):
-    distribution = {}
-    if total_weight == 0:
-        for item in ratios:
-            distribution[item] = 0.0
-        return distribution
-    total_ratio = sum(ratios.values())
-    if total_ratio == 0:
-        for item in ratios:
-            distribution[item] = 0.0
-        return distribution
-    for item, ratio in ratios.items():
-        if ratio != 0:
-            actual_weight = (ratio / total_ratio) * total_weight
-            distribution[item] = actual_weight
-        else:
-            distribution[item] = 0.0
-    return distribution
+def get_median_index_value(numbers):
+    n = len(numbers)
+    if n == 0:
+        raise ValueError("List cannot be empty")
+    if n % 2 == 1:
+        middle_index = n // 2
+        return numbers[middle_index]
+    else:
+        middle_index = n // 2
+        return numbers[middle_index]
+
 if __name__ == '__main__':
-    ratios_data = {'A': 2, 'B': 3, 'C': 0, 'D': 5}
-    total_w = 100
-    result = calculate_weight_distribution(ratios_data, total_w)
+    sample_data = [3, 5, 1, 9, 2, 8, 4]
+    result = get_median_index_value(sample_data)
     print(result)

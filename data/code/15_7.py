@@ -1,8 +1,11 @@
+from typing import TypeVar, List
+
+T = TypeVar('T')
+
+def get_second_last(lst: List[T]) -> T:
+    return lst[-2]
+
 if __name__ == '__main__':
-    data = {'a': 10, 'b': 20, 'c': 10, 'd': 40}
-    key1 = 'a'
-    key2 = 'c'
-    result = {
-        'are_equal': data[key1] == data[key2]
-    }
+    sample_list = [10, 20, 30, 40]
+    result = get_second_last(sample_list)
     print(result)

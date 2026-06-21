@@ -1,11 +1,10 @@
-def compare_temperatures(temp1, temp2):
-    if temp1 > temp2:
-        return f"Temperature 1 is warmer by {temp1 - temp2} degrees"
-    elif temp2 > temp1:
-        return f"Temperature 2 is warmer by {temp2 - temp1} degrees"
-    else:
-        return "Temperatures are the same"
+class ArrayProcessor:
+    def __init__(self, data):
+        self.data = data
+
+    def get_first_element(self):
+        return self.data[0]
+
 if __name__ == '__main__':
-    for t1, t2 in [(30, 25), (15, 10), (22, 22), (40, 35)]:
-        result = compare_temperatures(t1, t2)
-        print(result)
+    processor = ArrayProcessor([1, 2, 3, 4, 5])
+    print(processor.get_first_element())

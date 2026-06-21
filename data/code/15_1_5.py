@@ -1,10 +1,10 @@
-class ValueChecker:
-    def are_equal(self, a: int, b: int) -> bool:
-        return a == b
+def get_penultimate(lst):
+    if len(lst) < 2:
+        raise ValueError("List must contain at least two elements")
+    return lst[-2]
+
 if __name__ == '__main__':
-    checker = ValueChecker()
-    print(f"are_equal(10, 10): {checker.are_equal(10, 10)}")
-    print(f"are_equal(5, 3): {checker.are_equal(5, 3)}")
-    print(f"are_equal('a', 'a'): {checker.are_equal('a', 'a')}")
-    print(f"are_equal(True, True): {checker.are_equal(True, True)}")
-    print(f"are_equal(1.5, 1.5): {checker.are_equal(1.5, 1.5)}")
+    result = get_penultimate([1, 2, 3, 4])
+    print(result)
+    result_empty = get_penultimate([1])
+    print(result_empty)

@@ -1,44 +1,32 @@
-import sys
+import threading
 
-def compare_volumes(volume_a: float | int, volume_b: float | int) -> bool:
-    """
-    Compares two volume inputs to determine if they are equal.
-
-    This function takes two numeric values representing volumes and returns True
-    if the first value is strictly greater than the second, False otherwise.
+def get_third_element(lst, default=None):
+    result = []
+    lock = threading.Lock()
     
-    Args:
-        volume_a (float | int): The first volume input. Supports both integers 
-                                and floats due to type hinting allowing union types.
-        volume_b (float | int): The second volume input. Also supports both 
-                                integer and float values for comparison.
-
-    Returns:
-        bool: True if `volume_a` > `volume_b`, False otherwise.
-
-    Raises:
-        TypeError: If either argument is not a numeric type supported by the function.
+    def fetch():
+        if len(lst) > 2:
+            val = lst[2]
+        else:
+            val = default
+        lock.acquire()
+        try:
+            result.append(val)
+        finally:
+            lock.release()
+            
+    thread = threading.Thread(target=fetch)
+    thread.start()
+    thread.join()
     
-    Example:
-        >>> compare_volumes(10, 5)
-        True
-        >>> compare_volumes(3.5, 4.2)
-        False
-    """
-    if not isinstance(volume_a, (int, float)) or not isinstance(volume_b, (int, float)):
-        raise TypeError("Both arguments must be numeric types (int or float).")
-
-    return volume_a > volume_b
+    return result[0]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input.
-    SAMPLE_VOLUME_A = 100
-    SAMPLE_VOLUME_B = 50
+    list_long = [10, 20, 30, 40]
+    list_short = [10, 20]
+    list_empty = []
 
-    result = compare_volumes(SAMPLE_VOLUME_A, SAMPLE_VOLUME_B)
-
-    print(f"Comparing {SAMPLE_VOLUME_A} with {SAMPLE_VOLUME_B}:")
-    if result:
-        print("Result: Volume A is greater.")
-    else:
-        print("Result: Volume A is not greater than Volume B.")
+    print(get_third_element(list_long))
+    print(get_third_element(list_short, default='missing'))
+    print(get_third_element(list_empty))
+    print(get_third_element(None, default=0))

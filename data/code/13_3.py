@@ -1,18 +1,27 @@
-import datetime
-def calculate_total_elapsed_time(timestamps):
-    if not timestamps:
-        return None
-    datetime_objects = [datetime.datetime.fromisoformat(ts) for ts in timestamps]
-    earliest = min(datetime_objects)
-    latest = max(datetime_objects)
-    time_difference = latest - earliest
-    return time_difference
+def resolve_nested_value(data, path):
+    keys = path.split('.')
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key in current:
+                current = current[key]
+            else:
+                return None
+        elif isinstance(current, list):
+            try:
+                index = int(key)
+                if 0 <= index < len(current):
+                    current = current[index]
+                else:
+                    return None
+            except ValueError:
+                return None
+        else:
+            return None
+    return current
 if __name__ == '__main__':
-    sample_timestamps = [
-        "2023-01-01T10:00:00",
-        "2023-01-05T12:30:00",
-        "2023-01-03T08:00:00"
-    ]
-    elapsed_time = calculate_total_elapsed_time(sample_timestamps)
-    if elapsed_time:
-        print(elapsed_time)
+    sample_data = {'user': {'profile': {'name': 'Alice', 'age': 30}, 'settings': {'notifications': {'email': True, 'sms': False}}}, 'items': [{'id': 1, 'val': 'first'}, {'id': 2, 'val': 'second'}]}
+    print(resolve_nested_value(sample_data, 'user.profile.name'))
+    print(resolve_nested_value(sample_data, 'user.settings.notifications.sms'))
+    print(resolve_nested_value(sample_data, 'items.1.val'))
+    print(resolve_nested_value(sample_data, 'missing.key'))

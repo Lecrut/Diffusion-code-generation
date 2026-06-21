@@ -1,73 +1,131 @@
 import unittest
+import math
 
-class TestVolumeConversion(unittest.TestCase):
-    """Test suite for volume conversion logic covering edge cases."""
+class VolumeConverter:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit.lower()
 
-    def test_convert_liters_to_milliliters_zero(self):
-        # Edge case: Zero input should result in zero output
-        self.assertEqual(convert_volume(0, "liters", "milliliters"), 0)
+    def to_liters(self):
+        if self.value < 0:
+            raise ValueError("Volume cannot be negative")
+        conversions = {
+            'liter': 1.0,
+            'milliliter': 0.001,
+            'gallon': 3.78541,
+            'quart': 0.946353,
+            'pint': 0.473176,
+            'cup': 0.236588,
+            'cubic_meter': 1000.0,
+            'cubic_foot': 28.3168,
+            'fluid_ounce': 0.0295735,
+            'tablespoon': 0.0147868,
+            'teaspoon': 0.00492892,
+            'imperial_gallon': 4.54609,
+            'imperial_quart': 1.13652,
+            'imperial_pint': 0.568261,
+            'imperial_cup': 0.284131,
+            'imperial_fluid_ounce': 0.0284131
+        }
+        if self.unit not in conversions:
+            raise ValueError(f"Unsupported unit: {self.unit}")
+        return self.value * conversions[self.unit]
 
-    def test_convert_liters_to_gallons_large_number(self):
-        # Test with a large number of liters to ensure no overflow or precision loss issues
-        large_liters = 1_000_000
-        expected_gallons = convert_volume(large_liters, "liters", "gallons")
-        self.assertEqual(expected_gallons, round(264.1720512415655 * large_liters))
+    def to_unit(self, target_unit):
+        liters = self.to_liters()
+        if target_unit == 'liter':
+            return liters
+        conversions = {
+            'milliliter': 1000.0,
+            'gallon': 1.0 / 3.78541,
+            'quart': 1.0 / 0.946353,
+            'pint': 1.0 / 0.473176,
+            'cup': 1.0 / 0.236588,
+            'cubic_meter': 0.001,
+            'cubic_foot': 1.0 / 28.3168,
+            'fluid_ounce': 1.0 / 0.0295735,
+            'tablespoon': 1.0 / 0.0147868,
+            'teaspoon': 1.0 / 0.00492892,
+            'imperial_gallon': 1.0 / 4.54609,
+            'imperial_quart': 1.0 / 1.13652,
+            'imperial_pint': 1.0 / 0.568261,
+            'imperial_cup': 1.0 / 0.284131,
+            'imperial_fluid_ounce': 1.0 / 0.0284131
+        }
+        if target_unit.lower() not in conversions:
+            raise ValueError(f"Unsupported target unit: {target_unit}")
+        return liters * conversions[target_unit.lower()]
 
-    def test_convert_milliliters_to_liters_zero(self):
-        # Edge case: Zero milliliters should result in zero liters
-        self.assertEqual(convert_volume(0, "milliliters", "liters"), 0)
+class TestVolumeConverter(unittest.TestCase):
+    def test_zero_volume(self):
+        converter = VolumeConverter(0, 'liter')
+        self.assertEqual(converter.to_liters(), 0.0)
 
-    def test_convert_gallons_to_liters_large_number(self):
-        # Test with a large number of gallons
-        large_gallons = 1_000_000
-        expected_liters = convert_volume(large_gallons, "gallons", "liters")
-        self.assertEqual(expected_liters, round(3.785411784 * large_gallons))
+    def test_liter_to_milliliter(self):
+        converter = VolumeConverter(1, 'liter')
+        self.assertAlmostEqual(converter.to_liters(), 1.0)
+        self.assertAlmostEqual(converter.to_unit('milliliter'), 1000.0)
 
-    def test_convert_invalid_unit_raises_error(self):
-        # Ensure invalid units raise an appropriate error
+    def test_gallon_to_liter(self):
+        converter = VolumeConverter(1, 'gallon')
+        self.assertAlmostEqual(converter.to_liters(), 3.78541, places=5)
+
+    def test_large_number_conversion(self):
+        converter = VolumeConverter(1000000, 'gallon')
+        expected = 3785410.0
+        result = converter.to_liters()
+        self.assertAlmostEqual(result, expected, delta=1.0)
+
+    def test_negative_volume_raises_error(self):
         with self.assertRaises(ValueError):
-            convert_volume(10, "invalid", "liters")
+            VolumeConverter(-5, 'liter')
 
-def convert_volume(volume: float, from_unit: str, to_unit: str) -> float:
-    """Convert volume between liters and gallons.
+    def test_invalid_unit_raises_error(self):
+        with self.assertRaises(ValueError):
+            VolumeConverter(5, 'invalid_unit')
 
-    Args:
-        volume (float): The volume value.
-        from_unit (str): Source unit ('liters' or 'milliliters').
-        to_unit (str): Target unit ('gallons', 'liters', or 'milliliters').
+    def test_imperial_gallon_conversion(self):
+        converter = VolumeConverter(1, 'imperial_gallon')
+        self.assertAlmostEqual(converter.to_liters(), 4.54609, places=5)
 
-    Returns:
-        float: Converted volume.
+    def test_cubic_meter_conversion(self):
+        converter = VolumeConverter(1, 'cubic_meter')
+        self.assertAlmostEqual(converter.to_liters(), 1000.0)
 
-    Raises:
-        ValueError: If units are invalid.
-    """
-    if from_unit not in ("liters", "milliliters") or to_unit not in (
-        "gallons",
-        "liters",
-        "milliliters",
-    ):
-        raise ValueError("Invalid unit specified.")
+    def test_cubic_foot_conversion(self):
+        converter = VolumeConverter(1, 'cubic_foot')
+        self.assertAlmostEqual(converter.to_liters(), 28.3168, places=4)
 
-    # Conversion factors relative to liters: 1 liter = 0.264172 gallons, 1 liter = 1000 milliliters
-    if from_unit == "liters":
-        value_in_liters = volume
-    elif from_unit == "milliliters":
-        value_in_liters = volume / 1000
+    def test_round_trip_conversion(self):
+        converter = VolumeConverter(50, 'pint')
+        liters = converter.to_liters()
+        back_to_pints = VolumeConverter(liters, 'liter').to_unit('pint')
+        self.assertAlmostEqual(back_to_pints, 50.0, places=3)
 
-    # Convert to target unit
-    if to_unit == "gallons":
-        return round(value_in_liters * 0.264172, 5)
-    elif to_unit == "liters":
-        return value_in_liters
-    else:  # milliliters
-        return round(value_in_liters * 1000, 2)
+    def test_small_fractional_volume(self):
+        converter = VolumeConverter(0.000001, 'milliliter')
+        result = converter.to_liters()
+        self.assertAlmostEqual(result, 1e-9)
 
-if __name__ == "__main__":
-    # Hard-coded sample values for demonstration without user input or external dependencies
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestVolumeConversion)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
+    def test_teaspoon_to_fluid_ounce(self):
+        converter = VolumeConverter(3, 'teaspoon')
+        result = converter.to_unit('fluid_ounce')
+        self.assertAlmostEqual(result, 0.5, places=5)
 
-    if not result.wasSuccessful():
-        exit(result.failures[0][1] if result.failures else result.errors[0][1])
+if __name__ == '__main__':
+    sample_liter_to_gallon = VolumeConverter(100, 'liter').to_unit('gallon')
+    print(f"100 liters to gallons: {sample_liter_to_gallon}")
+    
+    sample_zero_milliliter = VolumeConverter(0, 'milliliter').to_liters()
+    print(f"0 milliliters to liters: {sample_zero_milliliter}")
+    
+    sample_large_cubic_feet = VolumeConverter(50000, 'cubic_foot').to_liters()
+    print(f"50000 cubic feet to liters: {sample_large_cubic_feet}")
+    
+    sample_imperial_to_metric = VolumeConverter(10, 'imperial_gallon').to_liters()
+    print(f"10 imperial gallons to liters: {sample_imperial_to_metric}")
+    
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.loadTestsFromTestCase(TestVolumeConverter)
+    runner = unittest.TextTestRunner(verbosity=0)
+    runner.run(test_suite)

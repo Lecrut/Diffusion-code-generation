@@ -1,18 +1,18 @@
-import datetime
-import pytz
-def convert_and_compare_time(pst_time_str):
-    pst_tz = pytz.timezone('America/Los_Angeles')
-    est_tz = pytz.timezone('America/New_York')
-    pst_time_str = pst_time_str.strip()
-    pst_time = datetime.datetime.strptime(pst_time_str, '%Y-%m-%d %H:%M:%S')
-    pst_tz_aware = pst_tz.localize(pst_time)
-    est_tz_aware = est_tz.localize(pst_time)
-    est_time = est_tz_aware.astimezone(est_tz)
-    time_difference = (est_time - pst_tz_aware).total_seconds()
-    return pst_time_str, est_time.strftime('%Y-%m-%d %H:%M:%S'), time_difference
+def fetch_from_circular_buffer(buffer, logical_index):
+    if not buffer:
+        return None
+    actual_index = logical_index % len(buffer)
+    return buffer[actual_index]
+
 if __name__ == '__main__':
-    sample_pst_time = "2023-10-27 10:00:00"
-    pst_time_str, est_time_str, diff = convert_and_compare_time(sample_pst_time)
-    print(f"PST Time: {pst_time_str}")
-    print(f"EST Time: {est_time_str}")
-    print(f"Time Difference (EST - PST): {diff / 3600:.2f} hours")
+    buffer = [10, 20, 30, 40, 50]
+    print(fetch_from_circular_buffer(buffer, 0))
+    print(fetch_from_circular_buffer(buffer, 4))
+    print(fetch_from_circular_buffer(buffer, 5))
+    print(fetch_from_circular_buffer(buffer, 7))
+    print(fetch_from_circular_buffer(buffer, -1))
+    print(fetch_from_circular_buffer(buffer, -6))
+    print(fetch_from_circular_buffer([], 5))
+    print(fetch_from_circular_buffer([1], 100))
+    print(fetch_from_circular_buffer([1, 2], 3))
+    print(fetch_from_circular_buffer([1, 2], -3))

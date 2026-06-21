@@ -1,16 +1,8 @@
-def compare_temperatures(temp1, temp2):
-    if temp1 > temp2:
-        return "temp1 is greater"
-    elif temp1 < temp2:
-        return "temp1 is less"
-    else:
-        return "temperatures are equal"
-def test_compare_temperatures():
-    assert compare_temperatures(30, 20) == "temp1 is greater"
-    assert compare_temperatures(10, 30) == "temp1 is less"
-    assert compare_temperatures(25, 25) == "temperatures are equal"
-    assert compare_temperatures(5, 1) == "temp1 is greater"
-    assert compare_temperatures(100, 50) == "temp1 is greater"
-    assert compare_temperatures(1, 100) == "temp1 is less"
+def get_first_element(lst):
+    result = lst[:1]
+    print(result[0] if result else None)
+    return result[0] if result else None
+
 if __name__ == '__main__':
-    test_compare_temperatures()
+    mixed_list = [1, "hello", 3.14, True, None]
+    get_first_element(mixed_list)

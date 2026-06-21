@@ -1,54 +1,57 @@
-import datetime
-from typing import List
+import functools
+import operator
 
-def calculate_total_elapsed_time(timestamps: List[str]) -> float:
-    """
-    Calculates the total elapsed time in seconds between the earliest 
-    and latest timestamp provided as ISO 8601 strings.
-    
-    Args:
-        timestamps (List[str]): A list of ISO 8601 formatted date-time strings.
-        
-    Returns:
-        float: The duration in seconds between the first and last timestamp.
-              Returns 0.0 if fewer than two unique valid dates are provided.
-    """
+def get_nested_value(data, path):
+    if not path:
+        return data
+    if not isinstance(data, (dict, list)):
+        return None
+    keys = path.split('.')
+    current = data
     try:
-        parsed_dates = []
-        for ts_str in timestamps:
-            # Handle both naive and aware datetimes (though ISO usually implies timezone or UTC)
-            dt_obj = datetime.datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
-            if not isinstance(dt_obj, datetime.datetime):
-                raise ValueError(f"Invalid date format for timestamp: {ts_str}")
-            parsed_dates.append(dt_obj)
-        
-        # Sort the dates to find earliest and latest
-        sorted_dates = sorted(parsed_dates)
-        
-        if len(sorted_dates) < 2:
-            return 0.0
-        
-        start_time = min(sorted_dates)
-        end_time = max(sorted_dates)
-        
-        elapsed_seconds = (end_time - start_time).total_seconds()
-        return float(elapsed_seconds)
-    
-    except ValueError as e:
-        # In a real scenario, we might log this error. Here we just re-raise 
-        # or handle it gracefully by returning 0 to prevent crashing the script silently.
-        print(f"Error processing timestamps: {e}", file=__import__('sys').stderr)
-        return 0.0
+        for key in keys:
+            if isinstance(current, list):
+                index = int(key)
+                current = current[index]
+            elif isinstance(current, dict):
+                current = current[key]
+            else:
+                return None
+        return current
+    except (KeyError, IndexError, ValueError, TypeError):
+        return None
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, files, or network access)
-    sample_timestamps = [
-        "2023-10-05T14:30:00",
-        "2023-10-06T09:15:30.123456+00:00",
-        "2023-10-07T23:59:59Z"
-    ]
-
-    result = calculate_total_elapsed_time(sample_timestamps)
+    sample_data = {
+        'user': {
+            'profile': {
+                'contact': {
+                    'email': 'example@test.com',
+                    'phone': '123-456-7890'
+                },
+                'settings': {
+                    'theme': 'dark',
+                    'notifications': True
+                }
+            }
+        },
+        'items': [
+            {'id': 1, 'name': 'alpha'},
+            {'id': 2, 'name': 'beta'}
+        ]
+    }
     
-    # Output the result directly to stdout without any markdown or extra text
-    print(f"Total elapsed time between timestamps: {result} seconds")
+    path1 = 'user.profile.contact.email'
+    path2 = 'user.profile.settings.theme'
+    path3 = 'items.1.name'
+    path4 = 'user.profile.invalid.key'
+    
+    result1 = get_nested_value(sample_data, path1)
+    result2 = get_nested_value(sample_data, path2)
+    result3 = get_nested_value(sample_data, path3)
+    result4 = get_nested_value(sample_data, path4)
+    
+    print(result1)
+    print(result2)
+    print(result3)
+    print(result4)

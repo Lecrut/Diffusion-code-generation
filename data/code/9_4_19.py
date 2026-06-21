@@ -1,56 +1,40 @@
 import argparse
-from decimal import Decimal, ROUND_HALF_UP
 
-# Supported units: 'L', 'mL' (liters to milliliters)
-UNITS = {'L': 1000, 'mL': 1}
+def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'gallon': 3.78541,
+        'quart': 0.946353,
+        'pint': 0.473176,
+        'cup': 0.24,
+        'fluid_ounce': 0.0295735,
+        'tablespoon': 0.0147868,
+        'teaspoon': 0.00492892,
+        'cubic_meter': 1000.0,
+        'cubic_centimeter': 0.001,
+    }
+    if from_unit not in conversion_factors:
+        raise ValueError(f"Unsupported starting unit: {from_unit}")
+    if to_unit not in conversion_factors:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
+    liters = value * conversion_factors[from_unit]
+    result = liters / conversion_factors[to_unit]
+    return result
 
-def parse_args():
-    """Parse command-line arguments for volume and unit conversion."""
-    parser = argparse.ArgumentParser(
-        description="Convert between liters and milliliters."
-    )
-    
-    # Volume argument (float) with default value of 5.0 L
-    parser.add_argument('volume', type=float, nargs='?', default=5.0, 
-                        help=f"Volume to convert in {list(UNITS.keys())[0]}")
-
-    return parser.parse_args()
-
-def get_unit_multiplier(unit: str):
-    """Return the multiplier for a specific unit."""
-    if unit not in UNITS:
-        raise ValueError(f"Unsupported unit '{unit}'. Supported units are {', '.join(list(UNITS.keys()))}")
-    return Decimal(str(UNITS[unit]))
-
-def convert_volume(volume_in_l, target_unit):
-    """Convert volume from liters to the specified target unit."""
-    multiplier = get_unit_multiplier(target_unit)
-    
-    # Perform conversion using Decimal for precision
-    result_decimal = Decimal(str(volume_in_l)) * multiplier
-    
-    # Round to 2 decimal places if necessary (though usually exact for these units)
-    rounded_result = result_decimal.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-    
-    return float(rounded_result), target_unit
+def create_parser():
+    parser = argparse.ArgumentParser(description='Convert volume units.')
+    parser.add_argument('--value', type=float, required=True, help='The volume value to convert.')
+    parser.add_argument('--from', dest='from_unit', type=str, required=True, help='The starting unit.')
+    parser.add_argument('--to', dest='to_unit', type=str, required=True, help='The target unit.')
+    return parser
 
 def main():
-    """Main entry point running with hard-coded sample values."""
-    args = parse_args()
-
-    # Hard-coded sample execution if no arguments provided
-    volume_in_l = 5.0
-    starting_unit = 'L'
-    target_unit = 'mL'
-
-    try:
-        converted_value, output_unit = convert_volume(volume_in_l, target_unit)
-        
-        print(f"Conversion from {volume_in_l} {starting_unit}:")
-        print(f"{converted_value:.2f} {output_unit}")
-    
-    except ValueError as e:
-        print(f"Error: {e}", file=__import__('sys').stderr)
+    sample_value = 1.0
+    sample_from_unit = 'gallon'
+    sample_to_unit = 'liter'
+    result = convert_volume(sample_value, sample_from_unit, sample_to_unit)
+    print(result)
 
 if __name__ == '__main__':
     main()

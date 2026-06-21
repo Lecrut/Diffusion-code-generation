@@ -1,20 +1,20 @@
-import datetime
-def scale_time_differences(time_diff_strings):
-    result = []
-    for t_str in time_diff_strings:
-        try:
-            delta = datetime.timedelta(seconds=int(t_str))
-            result.append(delta)
-        except ValueError:
-            pass
-    return result
+def get_nth_element(s: str, n: int) -> str:
+    length = len(s)
+    if length == 0:
+        raise IndexError("string index out of range")
+    if n < 0:
+        normalized_index = length + n
+        if normalized_index < 0:
+            raise IndexError("string index out of range")
+    else:
+        normalized_index = n
+        if normalized_index >= length:
+            raise IndexError("string index out of range")
+    return s[normalized_index]
+
 if __name__ == '__main__':
-    sample_inputs = [
-        "60",
-        "3600",
-        "86400",
-        "invalid_time",
-        "120000"
-    ]
-    scaled_deltas = scale_time_differences(sample_inputs)
-    print(scaled_deltas)
+    sample_string = "Hello, World!"
+    positive_index = 7
+    negative_index = -2
+    print(get_nth_element(sample_string, positive_index))
+    print(get_nth_element(sample_string, negative_index))

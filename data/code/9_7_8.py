@@ -1,82 +1,62 @@
 import unittest
 
-class TestVolumeConversion(unittest.TestCase):
-    """Test suite for volume conversion logic."""
-
-    def setUp(self):
-        # Mock helper function to simulate the conversion logic from the previous step.
-        # Converts liters to gallons using standard approximation (1 L ≈ 0.264172 gal).
-        self.converter = {
-            'liters_to_gallons': lambda l: round(l * 0.264172, 3),
-            'gallons_to_liters': lambda g: round(g / 0.264172, 3),
+class VolumeConverter:
+    def convert(self, volume: float, from_unit: str, to_unit: str) -> float:
+        factors = {
+            ('liter', 'milliliter'): 1000.0,
+            ('liter', 'gallon'): 0.264172,
+            ('liter', 'cup'): 4.22675,
+            ('milliliter', 'liter'): 0.001,
+            ('milliliter', 'gallon'): 0.000264172,
+            ('milliliter', 'cup'): 0.00422675,
+            ('gallon', 'liter'): 3.78541,
+            ('gallon', 'milliliter'): 3785.41,
+            ('gallon', 'cup'): 16.0,
+            ('cup', 'liter'): 0.236588,
+            ('cup', 'milliliter'): 236.588,
+            ('cup', 'gallon'): 0.0625,
         }
+        if from_unit == to_unit:
+            return volume
+        key = (from_unit, to_unit)
+        if key not in factors:
+            raise ValueError(f"Unsupported conversion: {from_unit} to {to_unit}")
+        return volume * factors[key]
 
+def convert_volume(volume: float, from_unit: str, to_unit: str) -> float:
+    converter = VolumeConverter()
+    return converter.convert(volume, from_unit, to_unit)
+
+class TestVolumeConversion(unittest.TestCase):
     def test_zero_volume(self):
-        """Test conversion of zero volume."""
-        self.assertEqual(
-            self.converter['liters_to_gallons'](0), 
-            0.0,
-            "Converting zero liters should result in zero gallons"
-        )
-        self.assertEqual(
-            self.converter['gallons_to_liters'](0), 
-            0.0, 
-            "Converting zero gallons should result in zero liters"
-        )
+        result = convert_volume(0, 'liter', 'gallon')
+        self.assertEqual(result, 0.0)
 
-    def test_large_numbers(self):
-        """Test conversion with large numbers to ensure precision handling."""
-        # Test a very large value (e.g., one million)
-        large_liters = 1_000_000
-        expected_gallons_expected_approx = large_liters * 0.264172
-        self.assertAlmostEqual(
-            self.converter['liters_to_gallons'](large_liters), 
-            round(expected_gallons_expected_approx, 3),
-            msg="Large number conversion should be accurate"
-        )
+    def test_large_volume(self):
+        result = convert_volume(1e12, 'milliliter', 'gallon')
+        expected = 1e12 * 0.000264172
+        self.assertAlmostEqual(result, expected, places=5)
 
-        # Test a very large value in reverse (one million gallons)
-        large_gallons = 1_000_000
-        expected_liters_expected_approx = large_gallons / 0.264172
-        self.assertAlmostEqual(
-            self.converter['gallons_to_liters'](large_gallons), 
-            round(expected_liters_expected_approx, 3),
-            msg="Large number conversion back to liters should be accurate"
-        )
+    def test_same_unit(self):
+        result = convert_volume(5.5, 'cup', 'cup')
+        self.assertEqual(result, 5.5)
 
-    def test_negative_volume(self):
-        """Test handling of negative volume values."""
-        # While physical volumes can't typically be negative in real life, logic tests often include this.
-        neg_liters = -50
-        self.assertEqual(
-            self.converter['liters_to_gallons'](neg_liters), 
-            round(neg_liters * 0.264172, 3)
-        )
+    def test_liter_to_gallon(self):
+        result = convert_volume(1.0, 'liter', 'gallon')
+        self.assertAlmostEqual(result, 0.264172, places=6)
 
-    def test_decimal_precision(self):
-        """Test conversion with decimal inputs."""
-        # Test a value that results in repeating decimals to check rounding behavior
-        input_val = 0.5
-        result_gal = self.converter['liters_to_gallons'](input_val)
-        expected_result = round(0.5 * 0.264172, 3)
-        self.assertEqual(result_gal, expected_result)
+    def test_gallon_to_liter(self):
+        result = convert_volume(1.0, 'gallon', 'liter')
+        self.assertAlmostEqual(result, 3.78541, places=5)
 
-    def test_round_trip_conversion(self):
-        """Test that converting liters to gallons and back yields approximately the original value."""
-        # Pick a non-terminating decimal example
-        liters = 0.354
-        
-        converted_back_to_liters = self.converter['gallons_to_liters'](self.converter['liters_to_gallons'](liters))
-        
-        # Allow for small floating point discrepancies due to rounding in the intermediate step
-        diff = abs(liters - converted_back_to_liters)
-        self.assertLessEqual(diff, 0.15, "Round-trip conversion should stay within acceptable tolerance")
+    def test_invalid_conversion(self):
+        with self.assertRaises(ValueError):
+            convert_volume(1.0, 'liter', 'foot')
 
 if __name__ == '__main__':
-    # Run tests with hard-coded sample values as per requirements
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestVolumeConversion)
-    
-    # Execute and print results directly to stdout without user prompts or args
-    result = unittest.TextTestRunner(verbosity=2).run(suite)
-
-    exit(result.wasSuccessful())
+    conv = VolumeConverter()
+    res1 = conv.convert(1.0, 'liter', 'gallon')
+    print(res1)
+    res2 = convert_volume(100, 'gallon', 'liter')
+    print(res2)
+    unittest.main()

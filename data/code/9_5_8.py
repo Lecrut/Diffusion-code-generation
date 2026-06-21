@@ -1,40 +1,36 @@
-import math
 def convert_to_liters(volume: float, unit: str) -> float:
-    conversion_factors = {
-        "L": 1.0,
-        "liter": 1.0,
-        "liters": 1.0,
-        "mL": 0.001,
-        "ml": 0.001,
-        "cm3": 0.000001,
-        "cc": 0.001,
-        "m3": 1000.0,
-        "cubic meter": 1000.0,
-        "m3": 1000.0,
-        "cubic meter": 1000.0
-    }
-    unit_lower = unit.lower().strip()
-    if unit_lower in conversion_factors:
-        factor = conversion_factors[unit_lower]
-        return volume * factor
-    else:
-        raise ValueError(f"Unsupported unit: {unit}")
+    unit = unit.lower().strip()
+    if unit in ("l", "liter", "litre", "liters", "litres"):
+        return volume
+    if unit in ("ml", "milliliter", "millilitre", "milliliters", "millilitres"):
+        return volume / 1000.0
+    if unit in ("kl", "kiloliter", "kilolitres"):
+        return volume * 1000.0
+    if unit in ("gal", "gallon", "gallons"):
+        return volume * 3.785411784
+    if unit in ("qt", "quart", "quarts"):
+        return volume * 0.946352946
+    if unit in ("pt", "pint", "pints"):
+        return volume * 0.473176473
+    if unit in ("cup", "cups"):
+        return volume * 0.2365882365
+    if unit in ("fl oz", "fluidounce", "fluidounces"):
+        return volume * 0.0295735295625
+    if unit in ("tbsp", "tablespoon", "tablespoons"):
+        return volume * 0.01478676478125
+    if unit in ("tsp", "teaspoon", "teaspoons"):
+        return volume * 0.00492892159375
+    if unit in ("m3", "cubicmeter", "cubicmeters"):
+        return volume * 1000.0
+    if unit in ("cm3", "cc", "cubiccentimeter", "cubiccentimeters"):
+        return volume / 1000.0
+    if unit in ("in3", "cubicinch", "cubicinches"):
+        return volume * 0.016387064
+    if unit in ("ft3", "cubicfoot", "cubicfeet"):
+        return volume * 28.316846592
+    raise ValueError(f"Unsupported unit: {unit}")
+
 if __name__ == '__main__':
-    test_cases = [
-        (1.0, "L"),
-        (2.5, "liter"),
-        (1000.0, "mL"),
-        (500.0, "cm3"),
-        (0.001, "cc"),
-        (1.0, "m3"),
-        (1000.0, "cubic meter"),
-        (10.0, "L")
-    ]
-    for volume, unit in test_cases:
-        try:
-            result = convert_to_liters(volume, unit)
-            print(f"Volume: {volume} {unit} -> Liters: {result}")
-        except ValueError as e:
-            print(f"Error processing {volume} {unit}: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred for {volume} {unit}: {e}")
+    print(convert_to_liters(1, "gal"))
+    print(convert_to_liters(500, "ml"))
+    print(convert_to_liters(1, "m3"))

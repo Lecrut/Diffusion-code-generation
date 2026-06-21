@@ -1,158 +1,114 @@
-"""
-Refactored conversion script with custom exception handling.
-This module demonstrates error management using specific custom exceptions
-adhering to best-practice Python principles (PEP 3154).
-No external dependencies or interactive input is required.
-"""
+class ConversionBaseError(Exception):
+    def __init__(self, message, context):
+        super().__init__(message)
+        self.context = context
 
-class ConversionError(Exception):
-    """Base class for all conversion-related errors."""
+class UnitNotSupportedError(ConversionBaseError):
+    def __init__(self, target_unit, supported_units):
+        message = f"Target unit '{target_unit}' is not supported. Supported units: {supported_units}"
+        super().__init__(message, {"target_unit": target_unit, "supported_units": supported_units})
 
-    pass
+class InvalidValueError(ConversionBaseError):
+    def __init__(self, value):
+        message = f"Conversion value must be a positive number, received: {value}"
+        super().__init__(message, {"value": value, "type": type(value).__name__})
 
-class InvalidInputType(ConversionError):
-    """Raised when the input data type does not match expected types."""
+class ZeroValueError(ConversionBaseError):
+    def __init__(self, value):
+        message = f"Conversion value cannot be zero, received: {value}"
+        super().__init__(message, {"value": value})
 
-    def __init__(self, value: any, expected_type: type) -> None:
-        self.value = value
-        super().__init__(f"Invalid input type {type(value).__name__}. Expected {expected_type.__name__}." if isinstance(expected_type, type) else f"Expected a type matching the pattern of {expected_type}.")
+class TemperatureUnitError(ConversionBaseError):
+    def __init__(self, unit):
+        message = f"Invalid temperature unit format: '{unit}'. Expected 'C', 'F', or 'K'."
+        super().__init__(message, {"unit": unit})
 
-class InvalidValueRange(ConversionError):
-    """Raised when a value falls outside acceptable limits."""
+CONVERSION_FACTORS = {
+    "C": {"F": 9 / 5 + 32, "K": 273.15, "C": 1.0},
+    "F": {"C": 5 / 9, "K": 5 / 9 * (9 / 5) + 32, "F": 1.0},
+    "K": {"C": 1.0, "F": 9 / 5 * (1.0), "K": 1.0}
+}
 
-    def __init__(self, value: any, min_val=None, max_val=None) -> None:
-        self.value = value
-        if min_val is not None or max_val is not None:
-            message_parts = []
-            if min_val is not None and value < min_val:
-                message_parts.append(f"value {value} must be at least {min_val}")
-            if max_val is not None and value > max_val:
-                message_parts.append(f"value {value} cannot exceed {max_val}")
-        else:
-            message_parts = [f"Invalid conversion for value {value}"]
-        
-        super().__init__(", ".join(message_parts))
+UNIT_MAP = {
+    "C": {"C": 1.0, "F": 1.8, "K": 1.0},
+    "F": {"C": 5 / 9, "F": 1.0, "K": 5 / 9},
+    "K": {"C": 1.0, "F": 9 / 5, "K": 1.0}
+}
 
-class ConversionScriptError(Exception):
-    """Base class for errors occurring during the execution of the script logic."""
+def get_scale_factor(from_unit, to_unit):
+    if from_unit == to_unit:
+        return 1.0
+    if from_unit == "C" and to_unit == "F":
+        return 1.8
+    if from_unit == "F" and to_unit == "C":
+        return 5 / 9
+    if from_unit == "C" and to_unit == "K":
+        return 1.0
+    if from_unit == "K" and to_unit == "C":
+        return 1.0
+    if from_unit == "F" and to_unit == "K":
+        return 5 / 9
+    if from_unit == "K" and to_unit == "F":
+        return 9 / 5
+    raise UnitNotSupportedError(to_unit, ["C", "F", "K"])
 
-    pass
+def validate_unit(unit, valid_units):
+    if unit not in valid_units:
+        raise UnitNotSupportedError(unit, list(valid_units))
 
-def validate_input(value: any, expected_type: type) -> None:
-    """Validates that the input value matches the expected type.
-    
-    Args:
-        value: The data to be validated.
-        expected_type: The class or instance type required for validation.
-        
-    Raises:
-        InvalidInputType: If the type of 'value' does not match 'expected_type'.
-    """
-    if isinstance(value, expected_type):
-        return
-    
-    raise InvalidInputType(value, expected_type)
+def validate_value(value):
+    if not isinstance(value, (int, float)):
+        raise InvalidValueError(value)
+    if value <= 0:
+        if value == 0:
+            raise ZeroValueError(value)
+        raise InvalidValueError(value)
 
-def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
-    """Converts temperature between Celsius and Fahrenheit.
-    
-    Args:
-        value (float): The temperature in the source unit.
-        from_unit (str): Source unit ('C' or 'F').
-        to_unit (str): Target unit ('C' or 'F').
-        
-    Returns:
-        float: Temperature converted to the target unit.
-        
-    Raises:
-        InvalidValueRange: If temperature is physically impossible for context (e.g., absolute zero).
-        ConversionScriptError: For invalid units provided.
-    
-    Note: This function assumes standard physics constraints where T >= -273.15 C.
-    """
-    if from_unit not in ('C', 'F') or to_unit not in ('C', 'F'):
-        raise ConversionScriptError(f"Unsupported unit conversion: {from_unit} -> {to_unit}")
+def convert_temperature(value, from_unit, to_unit):
+    valid_units = {"C", "F", "K"}
+    validate_unit(from_unit, valid_units)
+    validate_unit(to_unit, valid_units)
+    validate_value(value)
+    if from_unit == "C" and to_unit == "F":
+        return value * 1.8 + 32
+    if from_unit == "F" and to_unit == "C":
+        return (value - 32) * 5 / 9
+    if from_unit == "C" and to_unit == "K":
+        return value + 273.15
+    if from_unit == "K" and to_unit == "C":
+        return value - 273.15
+    if from_unit == "F" and to_unit == "K":
+        return (value - 32) * 5 / 9 + 273.15
+    if from_unit == "K" and to_unit == "F":
+        return (value - 273.15) * 9 / 5 + 32
+    return value
 
-    # Validate physical possibility (approximate check)
-    celsius = None
-    
-    try:
-        if from_unit == 'C':
-            celsius = value
-            if celsius < -273.15:
-                raise InvalidValueRange(celsius, min_val=-273.15)
-        
-        elif from_unit == 'F':
-            # Convert F to C first for validation logic consistency or direct check
-            temp_c = (value - 32) * 5 / 9
-            
-            if celsius is None: 
-                celsius = temp_c
-                
-            if celsius < -273.15:
-                raise InvalidValueRange(celsius, min_val=-273.15)
+class TemperatureConverter:
+    def __init__(self):
+        self.history = []
 
-    except ValueError as ve:
-        # Re-raise specific conversion errors or wrap generic ones appropriately
-        if isinstance(ve, (InvalidInputType, InvalidValueRange)):
-            raise
-        
-        raise ConversionScriptError(f"Internal error during temperature calculation: {str(ve)}") from ve
-    
-    target_celsius = celsius
+    def convert(self, value, from_unit, to_unit):
+        result = convert_temperature(value, from_unit, to_unit)
+        self.history.append({"input": value, "from": from_unit, "to": to_unit, "output": result})
+        return result
 
-    if to_unit == 'C':
-        return target_celsius
-    elif to_unit == 'F':
-        result_fahrenheit = (target_celsius * 9 / 5) + 32
-        # Final sanity check on output
-        if result_fahrenheit < -459.67: 
-            raise InvalidValueRange(result_fahrenheit, min_val=-459.67)
-        
-        return result_fahrenheit
-    
-    else:
-        raise ConversionScriptError(f"Target unit '{to_unit}' is not supported.")
+    def get_last_result(self):
+        if not self.history:
+            return None
+        return self.history[-1]["output"]
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    
+    converter = TemperatureConverter()
     test_cases = [
-        {
-            "description": "Valid Celsius conversion",
-            "value": 25, 
-            "from_unit": "C", 
-            "to_unit": "F"
-        },
-        {
-            "description": "Invalid type input (string instead of float)",
-            "value": "twenty five", 
-            "from_unit": "C", 
-            "to_unit": "F"
-        },
-        {
-            "description": "Valid Fahrenheit conversion to Celsius",
-            "value": 32, 
-            "from_unit": "F", 
-            "to_unit": "C"
-        }
+        (100, "C", "F"),
+        (212, "F", "C"),
+        (273.15, "K", "C"),
+        (0, "C", "K")
     ]
-
-    for case in test_cases:
+    for val, src, dest in test_cases:
         try:
-            result = convert_temperature(case["value"], case["from_unit"], case["to_unit"])
-            
-            # Handle type coercion if input wasn't originally a float (though validation should catch this)
-            final_result = float(result) if not isinstance(result, float) else result
-            
-            print(f"Success: {case['description']}")
-            print(f"Input ({case['from_unit']}) {case['value']} -> Output ({case['to_unit']}) {final_result}")
-            
-        except InvalidInputType as e:
-            print(f"Error (Invalid Input Type): {e.__class__.__name__}: {e}")
-        
-        except InvalidValueRange as e:
-            print(f"Error (Invalid Value Range): {e.__class__.__name__}: {e}")
-            
-        except ConversionScriptError as e:
-            print(f"Error (Conversion Script Error): {e.__class__.__name__}: {e}")
+            res = converter.convert(val, src, dest)
+            print(f"Converted {val} {src} to {res} {dest}")
+        except ConversionBaseError as e:
+            print(f"Error: {e}")
+    print(f"Last computed value: {converter.get_last_result()}")

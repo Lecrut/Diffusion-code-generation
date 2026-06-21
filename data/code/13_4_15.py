@@ -1,22 +1,10 @@
-import datetime
+import itertools
 
-def time_difference_seconds(time1_str: str, time2_str: str) -> int:
-    """
-    Calculates the difference in total seconds between two time strings formatted as "HH:MM:SS".
-    
-    Args:
-        time1_str (str): First time point string.
-        time2_str (str): Second time point string.
-
-    Returns:
-        int: The absolute difference in seconds. Negative result indicates if we want order-dependent, 
-             though typically differences are magnitude or t2 - t1 based on input logic below.
-             
-       Note: Assumes valid HH:MM:SS format where HH is 0-23 (for time only).
-
-    Raises:
-        ValueError: If either string cannot be parsed as a valid time.
-    """
+def nth_element(stream, n, default=None):
+    return next(itertools.islice(stream, n, None), default)
 
 if __name__ == '__main__':
-    pass
+    sample_stream = (x * x for x in range(1, 10))
+    target_index = 4
+    result = nth_element(sample_stream, target_index)
+    print(result)

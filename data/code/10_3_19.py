@@ -1,13 +1,15 @@
-def calculate_temperature_difference(t_actual: float, t_expected: float) -> float:
-    """Calculate the absolute difference between actual and expected temperature readings."""
-    return abs(t_actual - t_expected)
+def _is_valid_name_list(value):
+    return isinstance(value, (list, tuple)) and len(value) > 0
+
+def _get_first_element(seq):
+    return seq[0]
+
+def get_first_name(names):
+    if not _is_valid_name_list(names):
+        return None
+    return _get_first_element(names)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing
-    t_actual = 25.0
-    t_expected = 24.8
-    
-    diff = calculate_temperature_difference(t_actual, t_expected)
-    
-    print(f"Actual: {t_actual}, Expected: {t_expected}")
-    print(f"Absolute difference: {diff:.2f} degrees")
+    sample_names = ("Eve", "Frank", "Grace")
+    result = get_first_name(sample_names)
+    print(result)

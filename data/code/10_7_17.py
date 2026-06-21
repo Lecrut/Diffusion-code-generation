@@ -1,46 +1,25 @@
-def analyze_temperature_difference(temp_a: float, temp_b: float) -> dict:
-    """
-    Analyzes two temperature values to determine their difference 
-    and relative magnitude.
-    
-    Args:
-        temp_a (float): First temperature value.
-        temp_b (float): Second temperature value.
-        
-    Returns:
-        dict: A dictionary containing the absolute difference, sign of difference,
-             which is higher, and a descriptive status string.
-    """
-    diff = abs(temp_a - temp_b)
-    
-    if temp_a > temp_b:
-        magnitude_status = "A is hotter"
-        relative_sign = 1
-    elif temp_b > temp_a:
-        magnitude_status = "B is hotter"
-        relative_sign = -1
-    else:
-        magnitude_status = "Both temperatures are equal"
-        relative_sign = 0
-        
-    return {
-        'absolute_difference': diff,
-        'relative_sign': relative_sign,
-        'hotter_temperature_label': temp_a if temp_a > temp_b or temp_a == temp_b else temp_b,
-        'magnitude_status': magnitude_status
-    }
+class IntegerProducer:
+    def __init__(self):
+        self.values = (100, 200, 300)
+        self.index = 0
+
+    def get_next(self):
+        if self.index < len(self.values):
+            val = self.values[self.index]
+            self.index += 1
+            return val
+        raise StopIteration
+
+    def get_all(self):
+        result = []
+        temp_index = self.index
+        for i in range(temp_index, len(self.values)):
+            result.append(self.values[i])
+        return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    temperature_celsius_1 = 25.0
-    temperature_celsius_2 = 30.5
-    
-    result = analyze_temperature_difference(temperature_celsius_1, temperature_celsius_2)
-    
-    print(f"Temperature A: {temperature_celsius_1}°C")
-    print(f"Temperature B: {temperature_celsius_2}°C")
-    print("-" * 30)
-    print(f"Absolute Difference: {result['absolute_difference']}°C")
-    print(f"Relative Sign Indicator: {result['relative_sign']} (Positive=A higher, Negative=B higher)")
-    print(f"Hotter Temperature Label: {result['hotter_temperature_label']}°C")
-    print(f"Magnitude Status: {result['magnitude_status']}")
+    producer = IntegerProducer()
+    first_value = producer.get_next()
+    print(first_value)
+    remaining = producer.get_all()
+    print(remaining)

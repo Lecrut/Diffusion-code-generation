@@ -1,49 +1,45 @@
-def convert_volume(volume, source_unit, target_unit=None):
-    conversion_rates = {
-        "liter": 1.0,
-        "milliliter": 0.001,
-        "gallon": 3.78541,
-        "quart": 0.946353,
-        "ounce": 0.0283495,
-        "cubic_meter": 1000.0,
-        "cubic_foot": 28.3168,
-    }
-    if source_unit not in conversion_rates:
-        raise ValueError(f"Unknown source unit: {source_unit}")
-    if target_unit is None:
-        return volume
-    if target_unit not in conversion_rates:
-        raise ValueError(f"Unknown target unit: {target_unit}")
-    if source_unit == target_unit:
-        return volume
-    base_unit = "liter"
-    if source_unit == "milliliter":
-        volume_in_base = volume / 1000.0
-    elif source_unit == "gallon":
-        volume_in_base = volume * 3.78541
-    elif source_unit == "quart":
-        volume_in_base = volume * 0.946353
-    elif source_unit == "ounce":
-        volume_in_base = volume * 0.0283495
-    elif source_unit == "cubic_meter":
-        volume_in_base = volume * 1000.0
-    elif source_unit == "cubic_foot":
-        volume_in_base = volume * 28.3168
-    else:
-        volume_in_base = volume
-    target_unit_factor = conversion_rates[target_unit]
-    result = volume_in_base / target_unit_factor
-    return result
+import argparse
+import sys
+
+UNITS = {
+    'ml': {'name': 'milliliters', 'factor': 1.0},
+    'l': {'name': 'liters', 'factor': 1000.0},
+    'gal': {'name': 'gallons (US)', 'factor': 3785.41},
+    'qt': {'name': 'quarts (US)', 'factor': 946.353},
+    'pt': {'name': 'pints (US)', 'factor': 473.176},
+    'cup': {'name': 'cups (US)', 'factor': 236.588},
+    'floz': {'name': 'fluid ounces (US)', 'factor': 29.5735},
+    'tbsp': {'name': 'tablespoons', 'factor': 14.7868},
+    'tsp': {'name': 'teaspoons', 'factor': 4.92892},
+}
+
+def convert_volume(value, from_unit, to_unit):
+    if from_unit not in UNITS:
+        raise ValueError(f"Unknown input unit: {from_unit}")
+    if to_unit not in UNITS:
+        raise ValueError(f"Unknown output unit: {to_unit}")
+    
+    base_value = value * UNITS[from_unit]['factor']
+    converted_value = base_value / UNITS[to_unit]['factor']
+    return converted_value
+
+def main():
+    parser = argparse.ArgumentParser(description='Convert volume between units.')
+    parser.add_argument('--value', type=float, required=True, help='Input volume value')
+    parser.add_argument('--from-unit', type=str, required=True, help='Input unit (e.g., ml, l, gal)')
+    parser.add_argument('--to-unit', type=str, required=True, help='Output unit (e.g., ml, l, gal)')
+    
+    try:
+        args = parser.parse_args()
+        result = convert_volume(args.value, args.from_unit.lower(), args.to_unit.lower())
+        print(result)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
 if __name__ == '__main__':
-    print(convert_volume(10, "liter"))
-    print(convert_volume(1, "gallon", "liter"))
-    print(convert_volume(500, "milliliter", "liter"))
-    print(convert_volume(1, "cubic_meter", "gallon"))
-    try:
-        convert_volume(10, "furlong", "meter")
-    except ValueError as e:
-        print(f"Error caught: {e}")
-    try:
-        convert_volume(10, "liter", "furlong")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    sample_value = 2.5
+    sample_from = 'gal'
+    sample_to = 'l'
+    sample_result = convert_volume(sample_value, sample_from, sample_to)
+    print(sample_result)

@@ -1,30 +1,26 @@
 import numpy as np
 
-def convert_volumes(volume_array: np.ndarray) -> tuple[np.ndarray, str]:
-    """
-    Performs vectorized volume conversions (Liters to Cubic Meters) on an entire array.
-    
-    Args:
-        volume_array: A NumPy array of values in Liters.
-        
-    Returns:
-        A tuple containing the converted array and a conversion factor string.
-    """
-    # Conversion factor from Liters to Cubic Meters (1 L = 0.001 m³)
-    factor = 1e-3
-    
-    result = volume_array * factor
-    return result, f"{factor} cubic meters per liter"
+CONVERSION_FACTORS = {
+    'liters': 1.0,
+    'milliliters': 0.001,
+    'gallons': 3.78541,
+    'quarts': 0.946353,
+    'pints': 0.473176,
+    'cups': 0.24,
+    'cubic_meters': 1000.0,
+    'cubic_inches': 0.0163871,
+}
+
+def convert_volumes(values, from_unit, to_unit):
+    factor_from = CONVERSION_FACTORS.get(from_unit)
+    factor_to = CONVERSION_FACTORS.get(to_unit)
+    if factor_from is None or factor_to is None:
+        raise ValueError(f"Unsupported unit: {from_unit} or {to_unit}")
+    base_values = np.asarray(values, dtype=float) / factor_from
+    result = base_values * factor_to
+    return result
 
 if __name__ == '__main__':
-    # Hard-coded sample values representing measurements in Liters
-    sample_measurements_liters = np.array([50.0, 120.5, -10.3], dtype=float)
-    
-    print("Input Measurements (Liters):")
-    print(sample_measurements_liters)
-    
-    converted_array, conversion_info = convert_volumes(sample_measurements_liters)
-    
-    print("\nConverted to Cubic Meters:")
-    print(converted_array)
-    print(f"\nConversion Factor: {conversion_info}")
+    sample_values = np.array([1.0, 2.5, 10.0, 0.5])
+    result_liters_to_gallons = convert_volumes(sample_values, 'liters', 'gallons')
+    print(result_liters_to_gallons)

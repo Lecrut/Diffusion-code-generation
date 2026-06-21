@@ -1,17 +1,11 @@
-def calculate_weight_distribution(ratios, total_weight):
-    distribution = {}
-    if total_weight == 0:
-        for item in ratios:
-            distribution[item] = 0.0
-        return distribution
-    for item, ratio in ratios.items():
-        if ratio == 0:
-            distribution[item] = 0.0
-        else:
-            distribution[item] = (ratio / sum(ratios.values())) * total_weight
-    return distribution
+def get_median_index_value(numbers):
+    if not numbers:
+        raise ValueError("List cannot be empty")
+    sorted_numbers = sorted(numbers)
+    middle_index = len(sorted_numbers) // 2
+    return sorted_numbers[middle_index]
+
 if __name__ == '__main__':
-    ratios_data = {'A': 2, 'B': 3, 'C': 0}
-    total_w = 100
-    result = calculate_weight_distribution(ratios_data, total_w)
+    sample_data = [3, 1, 4, 1, 5, 9, 2]
+    result = get_median_index_value(sample_data)
     print(result)

@@ -1,24 +1,30 @@
-import math
-def convert_ratios_to_weights(ratios, total_weight):
-    if not ratios:
-        return []
-    sum_ratios = sum(ratios)
-    if sum_ratios == 0:
-        return [0.0] * len(ratios)
-    weights = []
-    for ratio in ratios:
-        weight = (ratio / sum_ratios) * total_weight
-        weights.append(weight)
-    return weights
-if __name__ == '__main__':
-    sample_ratios = {
-        "A": 1.0,
-        "B": 2.0,
-        "C": 3.0
-    }
-    total_weight_value = 150.0
-    ratio_list = [sample_ratios[key] for key in sorted(sample_ratios.keys())]
-    absolute_weights = convert_ratios_to_weights(ratio_list, total_weight_value)
-    print(f"Ratios: {ratio_list}")
-    print(f"Total Weight: {total_weight_value}")
-    print(f"Absolute Weights: {absolute_weights}")
+def get_middle_element(sequence):
+    if not isinstance(sequence, (list, tuple, str, range, bytes, bytearray)):
+        raise TypeError("Input must be a sequence type such as list, tuple, string, or bytes.")
+    length = len(sequence)
+    if length == 0:
+        raise ValueError("Sequence cannot be empty.")
+    if length % 2 == 1:
+        return sequence[length // 2]
+    mid_index = length // 2
+    return sequence[mid_index - 1], sequence[mid_index]
+
+if __name__ == "__main__":
+    test_list_odd = [1, 2, 3, 4, 5]
+    test_tuple_even = (10, 20, 30, 40)
+    test_string_odd = "hello"
+    test_string_even = "python"
+    empty_list = []
+    invalid_input = 123
+    print(get_middle_element(test_list_odd))
+    print(get_middle_element(test_tuple_even))
+    print(get_middle_element(test_string_odd))
+    print(get_middle_element(test_string_even))
+    try:
+        get_middle_element(empty_list)
+    except ValueError as e:
+        print(str(e))
+    try:
+        get_middle_element(invalid_input)
+    except TypeError as e:
+        print(str(e))

@@ -1,47 +1,11 @@
-import math
-def volume_to_liters(volume: float, unit: str) -> float:
-    if unit.lower() == "liter":
-        return volume
-    elif unit.lower() == "l":
-        return volume
-    elif unit.lower() == "ml":
-        return volume / 1000.0
-    elif unit.lower() == "milliliter":
-        return volume / 1000.0
-    elif unit.lower() == "cm3":
-        return volume / 1000000.0
-    elif unit.lower() == "cc":
-        return volume / 1000.0
-    elif unit.lower() == "m3":
-        return volume * 1000.0
-    elif unit.lower() == "cubic meter":
-        return volume * 1000.0
-    elif unit.lower() == "cubic meter":
-        return volume * 1000.0
-    else:
-        raise ValueError(f"Unsupported unit: {unit}")
+def convert_volume_to_liters(value: float, unit: str) -> float:
+    unit_lower = unit.lower().strip()
+    factors = {'l': 1.0, 'liter': 1.0, 'liters': 1.0, 'ml': 0.001, 'milliliter': 0.001, 'milliliters': 0.001, 'm3': 1000.0, 'cubic meter': 1000.0, 'cm3': 0.001, 'cubic centimeter': 0.001, 'mm3': 1e-06, 'cubic millimeter': 1e-06, 'gal': 3.785411784, 'gallon': 3.785411784, 'gallons': 3.785411784, 'qt': 0.946352946, 'quart': 0.946352946, 'quarts': 0.946352946, 'pt': 0.473176473, 'pint': 0.473176473, 'pints': 0.473176473, 'cup': 0.2365882365, 'cups': 0.2365882365, 'fl_oz': 0.0295735295625, 'fluid ounce': 0.0295735295625, 'fluid ounces': 0.0295735295625}
+    if unit_lower not in factors:
+        raise ValueError(f'Unsupported unit: {unit}')
+    return value * factors[unit_lower]
 if __name__ == '__main__':
-    test_cases = [
-        (1.0, "liter"),
-        (2.5, "L"),
-        (500.0, "ml"),
-        (1000.0, "cc"),
-        (0.001, "cm3"),
-        (1.0, "cubic meter"),
-        (10.0, "m3"),
-        (123.456789, "liter"),
-        (987654321.0, "milliliter")
-    ]
-    for volume, unit in test_cases:
-        try:
-            result = volume_to_liters(volume, unit)
-            print(f"Volume: {volume} {unit} -> Liters: {result}")
-        except ValueError as e:
-            print(f"Error for Volume: {volume} {unit}: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred for Volume: {volume} {unit}: {e}")
-    print("-" * 20)
-    try:
-        volume_to_liters(10.0, "gallon")
-    except ValueError as e:
-        print(f"Test unsupported unit: {e}")
+    sample_values = [(1.0, 'l'), (500.0, 'ml'), (1.0, 'gal'), (1.0, 'qt'), (1.0, 'pt'), (1.0, 'cup'), (1.0, 'fl_oz'), (1.0, 'm3'), (1.0, 'cm3'), (1.0, 'mm3')]
+    for val, unit in sample_values:
+        result = convert_volume_to_liters(val, unit)
+        print(f'{val} {unit} = {result} liters')

@@ -1,12 +1,12 @@
-def compare_temperatures(temp1, temp2):
-    if temp1 > temp2:
-        return "Temperature 1 is higher"
-    elif temp1 < temp2:
-        return "Temperature 2 is higher"
-    else:
-        return "Temperatures are equal"
+def get_first_item(array):
+    try:
+        return array[0]
+    except (IndexError, TypeError):
+        return None
+
 if __name__ == '__main__':
-    print(compare_temperatures(25.5, 20.0))
-    print(compare_temperatures(30, 30))
-    print(compare_temperatures(15, 45))
-    print(compare_temperatures(100, 99.9))
+    data = [1, 2, 3]
+    print(get_first_item(data))
+    print(get_first_item([]))
+    print(get_first_item(None))
+    print(get_first_item([42]))

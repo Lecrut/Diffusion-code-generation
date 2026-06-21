@@ -1,32 +1,14 @@
-import math
-def simplify_ratio(numerator, denominator):
-    common = math.gcd(numerator, denominator)
-    return numerator // common, denominator // common
-def calculate_and_simplify_ratio(ratio1_str, ratio2_str):
-    parts1 = ratio1_str.split(':')
-    parts2 = ratio2_str.split(':')
-    if len(parts1) != 2 or len(parts2) != 2:
-        raise ValueError("Invalid ratio format. Expected A:B and C:D.")
-    A = int(parts1[0])
-    B = int(parts1[1])
-    C = int(parts2[0])
-    D = int(parts2[1])
-    numerator = A * D
-    denominator = B * C
-    if denominator == 0:
-        raise ZeroDivisionError("Denominator is zero.")
-    num_simplified, den_simplified = simplify_ratio(numerator, denominator)
-    return f"{num_simplified}:{den_simplified}"
+def middle_element(sequence):
+    if not sequence:
+        raise ValueError("Sequence is empty")
+    mid_index = len(sequence) // 2
+    return sequence[mid_index]
+
 if __name__ == '__main__':
-    ratio1 = "2:3"
-    ratio2 = "4:5"
-    result = calculate_and_simplify_ratio(ratio1, ratio2)
-    print(result)
-    ratio1_2 = "10:15"
-    ratio2_2 = "20:25"
-    result_2 = calculate_and_simplify_ratio(ratio1_2, ratio2_2)
-    print(result_2)
-    ratio1_3 = "1:2"
-    ratio2_3 = "3:4"
-    result_3 = calculate_and_simplify_ratio(ratio1_3, ratio2_3)
-    print(result_3)
+    assert middle_element([1, 2, 3]) == 2
+    assert middle_element([4, 5]) == 4
+    assert middle_element([7]) == 7
+    assert middle_element([1, 2, 3, 4, 5]) == 3
+    print(middle_element([10, 20, 30, 40, 50]))
+    print(middle_element([1, 2]))
+    print(middle_element([99]))

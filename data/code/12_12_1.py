@@ -1,16 +1,15 @@
-class WeightRatioConverter:
-    def convert_ratios_to_distribution(self, ratios):
-        if not ratios:
-            return {}
-        total_ratio = sum(ratios)
-        if total_ratio == 0:
-            return {ratio: 0.0 for ratio in ratios}
-        distribution = {}
-        for ratio in ratios:
-            distribution[ratio] = ratio / total_ratio
-        return distribution
+import numpy as np
+
+def get_middle_element(arr):
+    if not isinstance(arr, np.ndarray):
+        raise TypeError("Input must be a numpy array")
+    if arr.ndim != 1:
+        raise ValueError("Input must be a 1-dimensional array")
+    if arr.size == 0:
+        raise ValueError("Array must not be empty")
+    return arr[arr.size // 2]
+
 if __name__ == '__main__':
-    converter = WeightRatioConverter()
-    sample_ratios = [10, 30, 60, 100]
-    normalized_distribution = converter.convert_ratios_to_distribution(sample_ratios)
-    print(normalized_distribution)
+    data = np.array([10, 20, 30, 40, 50, 60, 70])
+    result = get_middle_element(data)
+    print(result)

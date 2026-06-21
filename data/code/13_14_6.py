@@ -1,39 +1,13 @@
-def aggregate_time_differences(time_strings):
-    total_seconds = 0
-    for time_str in time_strings:
-        parts = time_str.split()
-        if not parts:
-            continue
-        value = 0
-        unit = ""
-        if len(parts) == 2:
-            try:
-                value = int(parts[0])
-                unit = parts[1]
-            except ValueError:
-                continue
-        elif len(parts) == 1:
-            try:
-                value = int(parts[0])
-                unit = "seconds"
-            except ValueError:
-                continue
-        else:
-            continue
-        if unit == "hours":
-            total_seconds += value * 3600
-        elif unit == "minutes":
-            total_seconds += value * 60
-        elif unit == "seconds":
-            total_seconds += value
-    return total_seconds
+def get_value_at_index(generator, index):
+    current_index = 0
+    for value in generator:
+        if current_index == index:
+            return value
+        current_index += 1
+    raise IndexError("index out of range")
+
 if __name__ == '__main__':
-    sample_times = [
-        "1 hour 30 minutes",
-        "2 hours",
-        "10 minutes",
-        "3600 seconds",
-        "5 minutes 10 seconds"
-    ]
-    total = aggregate_time_differences(sample_times)
-    print(total)
+    sample_generator = (x * x for x in range(10))
+    target_index = 5
+    result = get_value_at_index(sample_generator, target_index)
+    print(result)

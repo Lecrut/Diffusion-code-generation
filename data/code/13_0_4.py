@@ -1,17 +1,33 @@
-import datetime
-import pytz
-def calculate_time_difference(dt1_str, dt2_str):
-    try:
-        tz1 = pytz.timezone("America/New_York")
-        tz2 = pytz.timezone("Europe/London")
-        dt1 = pytz.timezone("UTC").localize(datetime.datetime.strptime(dt1_str, "%Y-%m-%d %H:%M:%S"))
-        dt2 = pytz.timezone("UTC").localize(datetime.datetime.strptime(dt2_str, "%Y-%m-%d %H:%M:%S"))
-        diff = dt2 - dt1
-        return diff
-    except Exception as e:
-        return f"Error: {e}"
+def get_nested_value(data, path, default=None):
+    current = data
+    for key in path:
+        if not isinstance(current, dict):
+            return default
+        if key not in current:
+            return default
+        current = current[key]
+    return current
+
 if __name__ == '__main__':
-    time_string_1 = "2023-10-27 10:00:00"
-    time_string_2 = "2023-10-27 14:30:00"
-    time_difference = calculate_time_difference(time_string_1, time_string_2)
-    print(time_difference)
+    sample_data = {
+        'user': {
+            'profile': {
+                'name': 'Alice',
+                'settings': {
+                    'theme': 'dark',
+                    'notifications': True
+                }
+            }
+        }
+    }
+    path_found = ['user', 'profile', 'settings', 'theme']
+    path_missing = ['user', 'profile', 'settings', 'language']
+    path_invalid = ['user', 'profile', 'invalid_key']
+    
+    result_found = get_nested_value(sample_data, path_found, 'Not Found')
+    result_missing = get_nested_value(sample_data, path_missing, 'Not Found')
+    result_invalid = get_nested_value(sample_data, path_invalid, 'Not Found')
+    
+    print(result_found)
+    print(result_missing)
+    print(result_invalid)

@@ -1,50 +1,43 @@
-def calculate_offset_difference(offsets):
-    """
-    Calculates the difference between the earliest and latest time zone offset.
+from collections import defaultdict
+from functools import partial
+
+class CompositeKeyStore:
+    def __init__(self, default_factory):
+        self.store = defaultdict(partial(self._nested_default, default_factory))
     
-    Parameters:
-        offsets (list[int | float]): A list of numeric timezone offsets relative to UTC.
+    def _nested_default(self, factory, key):
+        return defaultdict(lambda: defaultdict(factory))
+
+    def get_or_init(self, key1, key2, key3):
+        if key1 not in self.store:
+            self.store[key1] = self._nested_default(self.store.default_factory.default_factory.default_factory, key1)
         
-    Returns:
-        int or float: The absolute difference in hours/minutes represented by 
-                     the maximum minus minimum value in the input list.
-                     
-    Raises:
-        ValueError: If the input is not a non-empty list containing only numbers.
-        TypeError: If any element in the list cannot be converted to a number (int or float).
-    
-    Examples:
-        >>> calculate_offset_difference([0, 5, -3])
-        8
-        >>> calculate_offset_difference([-2, -1, 4])
-        6.0
-    """
-    if not isinstance(offsets, list):
-        raise TypeError("Input must be a list.")
-    
-    if len(offsets) == 0:
-        return None
+        inner = self.store[key1]
+        
+        if key2 not in inner:
+            inner[key2] = self._nested_default(self.store.default_factory.default_factory.default_factory, key2)
+        
+        inner2 = inner[key2]
+        
+        if key3 not in inner2:
+            inner2[key3] = self.store.default_factory.default_factory.default_factory()
+        
+        return inner2[key3]
 
-    # Validate and convert all elements to float for calculation precision
-    try:
-        numeric_offsets = [float(x) for x in offsets]
-    except (TypeError, ValueError):
-        raise TypeError("All elements in the list must be integers or floats.")
+def create_number():
+    return 42
 
-    max_offset = max(numeric_offsets)
-    min_offset = min(numeric_offsets)
-    
-    return abs(max_offset - min_offset)
+def create_string():
+    return "default_value"
+
+def create_list():
+    return []
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, no network, no files)
-    test_cases = [
-        ([0, 5, -3], "Test case 1: Mixed positive and negative offsets"),
-        ([-2.5, -1.5, 4.0], "Test case 2: Floats with decimals"),
-        ([+8, +9, +7], "Test case 3: Positive only"),
-        ([-12, -6, -18], "Test case 4: Negative only")
-    ]
-
-    for offsets, description in test_cases:
-        result = calculate_offset_difference(offsets)
-        print(f"{description}: Difference is {result}")
+    store = CompositeKeyStore(create_list)
+    result_a = store.get_or_init("category", "subcategory", "item")
+    result_b = store.get_or_init("category", "subcategory", "item")
+    result_c = store.get_or_init("new_cat", "new_sub", "new_item")
+    print(result_a)
+    print(result_b)
+    print(result_c)

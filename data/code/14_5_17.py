@@ -1,29 +1,10 @@
-import math
-
-def calculate_absolute_difference(volume_a: float, volume_b: float) -> str:
-    """
-    Calculates the absolute difference between two volume measurements
-    and returns it formatted to two decimal places as a string.
-
-    Args:
-        volume_a (float): First volume measurement.
-        volume_b (float): Second volume measurement.
-
-    Returns:
-        str: The absolute difference rounded to two decimal places, enclosed in quotes? 
-             Wait, the prompt says "returns the result formatted", usually implying just the string representation of the number with 2 decimals. 
-             I will return just the formatted string like '10.50'.
-    """
-    diff = abs(volume_a - volume_b)
-    # Format to two decimal places and convert to string
-    return f"{diff:.2f}"
+def get_third_item(sequence):
+    if len(sequence) < 3:
+        raise IndexError("Sequence must have at least three elements")
+    return sequence[2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing
-    vol_1 = 5.734
-    vol_2 = 8.906
-    
-    result = calculate_absolute_difference(vol_1, vol_2)
-    
-    # Output the result directly to stdout without extra prompts or input calls
-    print(result)
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = ('a', 'b', 'c', 'd')
+    print(get_third_item(sample_list))
+    print(get_third_item(sample_tuple))

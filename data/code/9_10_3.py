@@ -1,61 +1,82 @@
-import math
-def convert_volume(value, unit, target_unit):
-    conversion_factors = {
-        "L": 1.0,
-        "mL": 0.001,
-        "m^3": 1000.0,
-        "gal": 3.78541
+class VolumeConverter:
+    FACTORS_TO_LITER = {
+        'liter': 1.0,
+        'litre': 1.0,
+        'milliliter': 0.001,
+        'millilitre': 0.001,
+        'gallon_us': 3.785411784,
+        'gallon_uk': 4.54609,
+        'quart_us': 0.946352946,
+        'quart_uk': 1.1365225,
+        'pint_us': 0.473176473,
+        'pint_uk': 0.56826125,
+        'cup_us': 0.2365882365,
+        'cup_uk': 0.284130625,
+        'fluid_ounce_us': 0.0295735295625,
+        'fluid_ounce_uk': 0.0284130625,
+        'tablespoon_us': 0.01478676478125,
+        'tablespoon_uk': 0.0177581640625,
+        'teaspoon_us': 0.00492892159375,
+        'teaspoon_uk': 0.005919388203125,
+        'cubic_meter': 1000.0,
+        'cubic_centimeter': 0.001,
+        'cubic_inch': 0.016387064,
+        'cubic_foot': 28.316846592,
+        'barrel_oil': 158.987294928,
     }
-    if unit == target_unit:
-        return value
-    if unit == "L" or unit == "mL":
-        base_value = value
-        if unit == "L":
-            base_value = value
-        elif unit == "mL":
-            base_value = value * 0.001
-        if target_unit == "L":
-            return base_value
-        elif target_unit == "mL":
-            return base_value * 1000.0
-        elif target_unit == "m^3":
-            return base_value / 1000.0
-        elif target_unit == "gal":
-            return base_value / 3.78541
-    if unit == "m^3" or unit == "L":
-        base_value = value
-        if unit == "m^3":
-            base_value = value * 1000.0
-        elif unit == "L":
-            base_value = value
-        if target_unit == "m^3":
-            return base_value / 1000.0
-        elif target_unit == "L":
-            return base_value
-        elif target_unit == "mL":
-            return base_value * 1000.0
-        elif target_unit == "gal":
-            return base_value / 3.78541
-    if unit == "gal":
-        base_value = value
-        if target_unit == "L":
-            return base_value * 3.78541
-        elif target_unit == "mL":
-            return base_value * 3.78541 * 1000.0
-        elif target_unit == "m^3":
-            return base_value * (1 / 3.78541) * (1 / 1000.0)
-        elif target_unit == "gal":
-            return base_value
-    return None
-def main():
-    sample_value = 5.5
-    sample_unit = "L"
-    target_unit = "gal"
-    print(f"Original Value: {sample_value} {sample_unit}")
-    result = convert_volume(sample_value, sample_unit, target_unit)
-    if result is not None:
-        print(f"Converted Value: {result:.4f} {target_unit}")
-    else:
-        print("Conversion failed.")
+
+    def __init__(self, value, from_unit, to_unit=None):
+        if to_unit is None:
+            self.value = value
+            self.from_unit = from_unit
+            self.to_unit = None
+        else:
+            self.value = value
+            self.from_unit = from_unit
+            self.to_unit = to_unit
+
+    def _get_factor(self, unit):
+        normalized = unit.lower().strip()
+        if normalized in self.FACTORS_TO_LITER:
+            return self.FACTORS_TO_LITER[normalized]
+        raise ValueError(f"Unsupported unit: {unit}")
+
+    def to_liter(self):
+        factor = self._get_factor(self.from_unit)
+        return self.value * factor
+
+    def convert(self, to_unit):
+        if self.to_unit is not None and to_unit is None:
+            target = self.to_unit
+        else:
+            target = to_unit
+        
+        if self.value is None or self.from_unit is None or target is None:
+            return None
+
+        from_factor = self._get_factor(self.from_unit)
+        to_factor = self._get_factor(target)
+        
+        base_volume = self.value * from_factor
+        result = base_volume / to_factor
+        
+        return result
+
+    def __str__(self):
+        if self.to_unit is None:
+            return f"{self.value} {self.from_unit} in liters is {self.to_liter()}"
+        return f"{self.value} {self.from_unit} is {self.convert(self.to_unit)} {self.to_unit}"
+
 if __name__ == '__main__':
-    main()
+    converter = VolumeConverter(10, 'gallon_us', 'liter')
+    print(converter)
+    
+    direct_conversion = VolumeConverter(10, 'gallon_us')
+    liter_value = direct_conversion.to_liter()
+    print(f"Direct to liter: {liter_value}")
+    
+    converter2 = VolumeConverter(5, 'cubic_meter', 'gallon_us')
+    print(converter2)
+    
+    converter3 = VolumeConverter(1, 'liter', 'milliliter')
+    print(converter3)

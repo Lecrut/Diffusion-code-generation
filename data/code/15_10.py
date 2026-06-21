@@ -1,8 +1,17 @@
-def check_match(value1, value2):
-    return value1 == value2
+def get_penultimate_element(lst):
+    if not lst:
+        raise ValueError("List must contain at least two elements")
+    if len(lst) < 2:
+        raise ValueError("List must contain at least two elements")
+    return lst[-2]
+
 if __name__ == '__main__':
-    print(check_match(5, 5))
-    print(check_match(10, 5))
-    print(check_match("hello", "hello"))
-    print(check_match(1, 2))
-    print(check_match(3.14, 3.1400000000000004))
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_penultimate_element(sample_list)
+    print(result)
+    
+    sample_list_empty = []
+    try:
+        get_penultimate_element(sample_list_empty)
+    except ValueError as e:
+        print(f"ValueError raised as expected: {e}")

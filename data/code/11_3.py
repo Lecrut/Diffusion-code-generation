@@ -1,18 +1,12 @@
-def calculate_ratio(a, b):
-    if b == 0:
-        return "Error: Division by zero is not allowed."
-    else:
-        return a / b
+def safe_last_item(items, default=None):
+    if len(items) == 0:
+        return default
+    return items[-1]
+
 if __name__ == '__main__':
-    length1 = 10
-    length2 = 5
-    result = calculate_ratio(length1, length2)
-    print(f"Length 1: {length1}")
-    print(f"Length 2: {length2}")
-    print(f"Ratio: {result}")
-    length1 = 10
-    length2 = 0
-    result = calculate_ratio(length1, length2)
-    print(f"Length 1: {length1}")
-    print(f"Length 2: {length2}")
-    print(f"Ratio: {result}")
+    data_list = [10, 20, 30, 40, 50]
+    empty_list = []
+    result_existing = safe_last_item(data_list)
+    result_empty = safe_last_item(empty_list, default="No items")
+    print(result_existing)
+    print(result_empty)

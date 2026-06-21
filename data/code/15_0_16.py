@@ -1,21 +1,10 @@
-def check_match(value1: any, value2: any) -> bool:
-    """
-    Returns True if value1 is exactly equal to value2, otherwise False.
-    
-    Args:
-        value1 (any): The first value to compare.
-        value2 (any): The second value to compare.
-        
-    Returns:
-        bool: True if values are identical, False otherwise.
-    """
-    return value1 == value2
+def get_second_to_last(sequence):
+    length = len(sequence)
+    if length < 2:
+        raise ValueError("Sequence must contain at least two elements")
+    return sequence[-2]
 
 if __name__ == '__main__':
-    # Sample test cases running without user input or external dependencies
-    assert check_match(5, 5) is True
-    assert check_match("hello", "hello") is True
-    assert check_match([1, 2], [1, 2]) is True
-    assert check_match(True, False) is False
-    assert check_match(None, None) is True
-    print("All sample checks passed.")
+    test_data = [1, 2, 3, 4, 5]
+    value = get_second_to_last(test_data)
+    print(value)

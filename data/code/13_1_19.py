@@ -1,39 +1,30 @@
-import datetime
-from zoneinfo import ZoneInfo
-
-def calculate_time_delta(dt1: datetime.datetime, dt2: datetime.datetime) -> datetime.timedelta:
-    """
-    Calculates the time difference between two timezone-aware datetime objects.
-
-    Args:
-        dt1 (datetime.datetime): The first date and time object with timezone info.
-        dt2 (datetime.datetime): The second date and time object with timezone info.
-
-    Returns:
-        datetime.timedelta: A fixed length of timedelta representing the absolute difference between dt1 and dt2.
-    
-    Raises:
-        TypeError: If either argument is not a datetime instance or lacks required fields/zoneinfo support in Python version.
-    """
-    if not isinstance(dt1, datetime.datetime):
-        raise TypeError("dt1 must be an instance of datetime.datetime")
-    if not isinstance(dt2, datetime.datetime):
-        raise TypeError("dt2 must be an instance of datetime.datetime")
-
-    # Convert to UTC if they are naive (no timezone info) to ensure accuracy comparison logic works as expected.
-    # Note: If the inputs are already aware, we convert them directly; otherwise assume 'naive' handling is needed for robustness in older envs or specific scenarios where explicit conversion isn't done on input but required internally if one was naive and other not - however, per prompt requirement of "timezone-aware", both should ideally be aware.
-    # To strictly follow the logic that requires them to be already timezone-aware (as implied by 'accepts two timezone-aware datetime objects'):
-
-    # Ensure we handle cases where inputs might have different timezones correctly for absolute difference magnitude.
-    return abs(dt1 - dt2)
+def get_2d_element(matrix, row_index, col_index, fallback=None):
+    if not isinstance(matrix, (list, tuple)):
+        return fallback
+    if row_index < 0 or row_index >= len(matrix):
+        return fallback
+    row = matrix[row_index]
+    if not isinstance(row, (list, tuple)):
+        return fallback
+    if col_index < 0 or col_index >= len(row):
+        return fallback
+    return row[col_index]
 
 if __name__ == '__main__':
-    # Sample values representing fixed dates in specific zones without external dependencies or input prompts
-    zone_a = ZoneInfo("America/New_York")
-    zone_b = ZoneInfo("Europe/London")
-
-    datetime_aware_1 = datetime.datetime(2023, 5, 15, 10, 30, tzinfo=ZoneInfo("UTC"))
-    datetime_aware_2 = datetime.datetime(2024, 7, 8, 9, 15, tzinfo="US/Pacific")
-
-    result_delta = calculate_time_delta(datetime_aware_1, datetime_aware_2)
-    print(f"Time delta: {result_delta}")
+    matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    result1 = get_2d_element(matrix, 1, 2)
+    print(result1)
+    result2 = get_2d_element(matrix, 3, 3)
+    print(result2)
+    result3 = get_2d_element(matrix, 0, 0, fallback="default")
+    print(result3)
+    result4 = get_2d_element(matrix, -1, 0)
+    print(result4)
+    result5 = get_2d_element([], 0, 0, fallback=42)
+    print(result5)
+    result6 = get_2d_element([[1]], 0, 5, fallback="out")
+    print(result6)
+    result7 = get_2d_element("not a list", 0, 0)
+    print(result7)
+    result8 = get_2d_element([[1, 2], "not a list"], 1, 0)
+    print(result8)

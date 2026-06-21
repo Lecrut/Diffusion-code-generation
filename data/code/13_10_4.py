@@ -1,56 +1,13 @@
-import re
-from datetime import timedelta
-def parse_time_string(time_str):
-    total_seconds = 0
-    parts = time_str.lower().split()
-    for part in parts:
-        if part.isdigit():
-            try:
-                value = int(part)
-                if 'hour' in parts or 'hr' in parts:
-                    total_seconds += value * 3600
-                elif 'minute' in parts or 'min' in parts:
-                    total_seconds += value * 60
-                elif 'second' in parts or 'sec' in parts:
-                    total_seconds += value
-            except ValueError:
-                continue
-        elif 'hours' in parts or 'hr' in parts:
-            try:
-                index = parts.index('hours') if 'hours' in parts else parts.index('hr')
-                if index + 1 < len(parts) and parts[index+1].isdigit():
-                    total_seconds += int(parts[index+1]) * 3600
-            except (ValueError, IndexError):
-                continue
-        elif 'minutes' in parts or 'min' in parts:
-            try:
-                index = parts.index('minutes') if 'minutes' in parts else parts.index('min')
-                if index + 1 < len(parts) and parts[index+1].isdigit():
-                    total_seconds += int(parts[index+1]) * 60
-            except (ValueError, IndexError):
-                continue
-        elif 'seconds' in parts or 'sec' in parts:
-            try:
-                index = parts.index('seconds') if 'seconds' in parts else parts.index('sec')
-                if index + 1 < len(parts) and parts[index+1].isdigit():
-                    total_seconds += int(parts[index+1])
-            except (ValueError, IndexError):
-                continue
-    return total_seconds
-def calculate_total_minutes(time_list):
-    total_minutes = 0
-    for time_str in time_list:
-        total_seconds = parse_time_string(time_str)
-        total_minutes += total_seconds / 60
-    return total_minutes
+def get_value_at_index(lst, index):
+    if index < 0 or index >= len(lst):
+        raise ValueError("Index is out of bounds")
+    return lst[index]
+
 if __name__ == '__main__':
-    time_differences = [
-        '2 hours 30 minutes',
-        '1 day 5 hours',
-        '45 minutes',
-        '1 hour 15 minutes and 30 seconds',
-        '10 min'
-    ]
-    total_minutes = calculate_total_minutes(time_differences)
-    print(f"Time differences provided: {time_differences}")
-    print(f"Total elapsed time in minutes: {total_minutes}")
+    sample_list = [10, 20, 30, 40, 50]
+    sample_index = 2
+    try:
+        result = get_value_at_index(sample_list, sample_index)
+        print(result)
+    except ValueError as e:
+        print(e)

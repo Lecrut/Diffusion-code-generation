@@ -1,13 +1,15 @@
-def compare_strings(str1: str, str2: str) -> bool:
-    """Check if two strings are equal ignoring case sensitivity."""
-    return str1.lower() == str2.lower()
+def get_penultimate_element(data_list):
+    if len(data_list) < 2:
+        return None
+    return data_list[-2]
 
 if __name__ == '__main__':
-    # Sample test cases with no user input required
-    result1 = compare_strings("Hello", "HELLO")
-    result2 = compare_strings("Python 3.9", "python 3.9")
-    result3 = compare_strings("Test", "test case")
-
-    print(f"'Hello' vs 'HELLO': {result1}")
-    print(f'"Python 3.9" vs "python 3.9": {result2}')
-    print(f'"Test" vs "test case": {result3}')
+    sample_list_1 = [10, 20, 30, 40, 50]
+    sample_list_2 = []
+    sample_list_3 = [42]
+    sample_list_4 = [100, 200]
+    
+    print(get_penultimate_element(sample_list_1))
+    print(get_penultimate_element(sample_list_2))
+    print(get_penultimate_element(sample_list_3))
+    print(get_penultimate_element(sample_list_4))

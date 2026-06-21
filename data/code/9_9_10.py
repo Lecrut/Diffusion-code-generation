@@ -1,65 +1,126 @@
-class ConversionError(Exception):
-    pass
-class InvalidSourceError(ConversionError):
-    pass
-class InvalidTargetError(ConversionError):
-    pass
-def convert_data(source_data, target_type):
-    if not isinstance(source_data, (list, tuple)):
-        raise InvalidSourceError("Source data must be a list or tuple.")
-    if not isinstance(target_type, type):
-        raise InvalidTargetError("Target type must be a Python type.")
-    if not source_data:
-        raise ConversionError("Source data cannot be empty.")
-    result = []
-    for item in source_data:
-        try:
-            if target_type is int:
-                converted_item = int(item)
-            elif target_type is float:
-                converted_item = float(item)
-            elif target_type is str:
-                converted_item = str(item)
-            else:
-                raise InvalidTargetError(f"Unsupported target type: {target_type}")
-            result.append(converted_item)
-        except ValueError as e:
-            raise ConversionError(f"Failed to convert item '{item}' to {target_type.__name__}: {e}")
-        except Exception as e:
-            raise ConversionError(f"An unexpected error occurred during conversion of '{item}': {e}")
-    return result
+class UnitConversionError(Exception):
+    def __init__(self, message, context=None):
+        self.context = context or {}
+        super().__init__(message)
+
+class UnsupportedUnitError(UnitConversionError):
+    def __init__(self, unit, supported):
+        self.supported_units = supported
+        message = f"Unit '{unit}' is not supported. Supported: {', '.join(supported)}"
+        super().__init__(message, {"unit": unit, "supported": supported})
+
+class InvalidValueError(UnitConversionError):
+    def __init__(self, value):
+        message = f"Value must be a non-negative number, got: {value}"
+        super().__init__(message, {"value": value})
+
+class ZeroValueError(UnitConversionError):
+    def __init__(self, value):
+        message = f"Value cannot be zero: {value}"
+        super().__init__(message, {"value": value})
+
+METERS_PER_INCH = 0.0254
+METERS_PER_FOOT = 0.3048
+METERS_PER_YARD = 0.9144
+METERS_PER_MILE = 1609.344
+METERS_PER_CM = 0.01
+METERS_PER_MM = 0.001
+METERS_PER_KM = 1000.0
+
+SUPPORTED_LENGTH_UNITS = {
+    'm': METERS_PER_MILE, 
+    'ft': METERS_PER_FOOT, 
+    'in': METERS_PER_INCH, 
+    'km': METERS_PER_KM, 
+    'cm': METERS_PER_CM, 
+    'mm': METERS_PER_MM, 
+    'mi': METERS_PER_MILE, 
+    'yd': METERS_PER_YARD
+}
+
+SUPPORTED_LENGTH_UNITS['m'] = 1.0
+
+def convert_length(value, from_unit, to_unit):
+    if from_unit not in SUPPORTED_LENGTH_UNITS:
+        raise UnsupportedUnitError(from_unit, list(SUPPORTED_LENGTH_UNITS.keys()))
+    if to_unit not in SUPPORTED_LENGTH_UNITS:
+        raise UnsupportedUnitError(to_unit, list(SUPPORTED_LENGTH_UNITS.keys()))
+    if value < 0:
+        raise InvalidValueError(value)
+    if value == 0:
+        raise ZeroValueError(value)
+    
+    meters = value * SUPPORTED_LENGTH_UNITS[from_unit]
+    
+    if to_unit == 'm':
+        return meters
+    
+    return meters / SUPPORTED_LENGTH_UNITS[to_unit]
+
+def convert_temperature(value, from_unit, to_unit):
+    if from_unit not in ('C', 'F', 'K'):
+        raise UnsupportedUnitError(from_unit, ['C', 'F', 'K'])
+    if to_unit not in ('C', 'F', 'K'):
+        raise UnsupportedUnitError(to_unit, ['C', 'F', 'K'])
+    
+    if value < -273.15:
+        raise InvalidValueError(value)
+    
+    if from_unit == to_unit:
+        return value
+    
+    celsius = value
+    
+    if from_unit == 'F':
+        celsius = (value - 32) * 5 / 9
+    elif from_unit == 'K':
+        celsius = value - 273.15
+    
+    if to_unit == 'C':
+        return celsius
+    elif to_unit == 'F':
+        return (celsius * 9 / 5) + 32
+    elif to_unit == 'K':
+        return celsius + 273.15
+
+def convert_weight(value, from_unit, to_unit):
+    if from_unit not in ('kg', 'g', 'lb', 'oz'):
+        raise UnsupportedUnitError(from_unit, ['kg', 'g', 'lb', 'oz'])
+    if to_unit not in ('kg', 'g', 'lb', 'oz'):
+        raise UnsupportedUnitError(to_unit, ['kg', 'g', 'lb', 'oz'])
+    
+    if value < 0:
+        raise InvalidValueError(value)
+    
+    grams = value
+    
+    if from_unit == 'kg':
+        grams = value * 1000
+    elif from_unit == 'lb':
+        grams = value * 453.59237
+    elif from_unit == 'oz':
+        grams = value * 28.349523125
+    
+    if to_unit == 'g':
+        return grams
+    elif to_unit == 'kg':
+        return grams / 1000
+    elif to_unit == 'lb':
+        return grams / 453.59237
+    elif to_unit == 'oz':
+        return grams / 28.349523125
+
 if __name__ == '__main__':
-    sample_source = [10, "25.5", "30", "invalid_num"]
-    sample_target_int = int
-    sample_target_float = float
-    sample_target_str = str
-    print("--- Converting to Integer ---")
+    result = convert_length(10, 'ft', 'm')
+    print(f"10 ft in meters: {result}")
+    
+    result = convert_temperature(212, 'F', 'C')
+    print(f"212 F in Celsius: {result}")
+    
+    result = convert_weight(1, 'lb', 'kg')
+    print(f"1 lb in kg: {result}")
+    
     try:
-        result_int = convert_data(sample_source, sample_target_int)
-        print(f"Result (int): {result_int}")
-    except ConversionError as e:
-        print(f"Error during integer conversion: {e}")
-    print("\n--- Converting to Float ---")
-    try:
-        result_float = convert_data(sample_source, sample_target_float)
-        print(f"Result (float): {result_float}")
-    except ConversionError as e:
-        print(f"Error during float conversion: {e}")
-    print("\n--- Converting to String ---")
-    try:
-        result_str = convert_data(sample_source, sample_target_str)
-        print(f"Result (str): {result_str}")
-    except ConversionError as e:
-        print(f"Error during string conversion: {e}")
-    print("\n--- Testing Invalid Source ---")
-    try:
-        convert_data("not a list", int)
-    except InvalidSourceError as e:
-        print(f"Caught expected error: {e}")
-    except ConversionError as e:
-        print(f"Caught unexpected error type: {e}")
-    print("\n--- Testing Empty Source ---")
-    try:
-        convert_data([], int)
-    except ConversionError as e:
-        print(f"Caught expected error: {e}")
+        convert_length(-1, 'ft', 'm')
+    except InvalidValueError as e:
+        print(f"Caught error: {e}")

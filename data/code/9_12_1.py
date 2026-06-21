@@ -1,48 +1,55 @@
-def convert_volume(volume, source_unit, target_unit=None):
-    conversion_rates = {
-        "liter": 1.0,
-        "milliliter": 0.001,
-        "gallon": 3.78541,
-        "quart": 0.946353,
-        "ounce": 0.0283495,
-        "cubic_meter": 1000.0,
-        "cubic_foot": 28.3168
-    }
-    if source_unit not in conversion_rates:
-        raise ValueError(f"Unknown source unit: {source_unit}")
-    if target_unit is None:
+import argparse
+import sys
+
+VOLUME_CONVERSION_FACTORS = {
+    "l_to_ml": 1000.0,
+    "l_to_gal": 0.264172,
+    "ml_to_l": 0.001,
+    "ml_to_gal": 0.000264172,
+    "gal_to_l": 3.78541,
+    "gal_to_ml": 3785.41,
+}
+
+UNIT_TO_BASE = {
+    "l": "l",
+    "ml": "ml",
+    "gal": "gal",
+}
+
+BASE_UNITS = ["l", "ml", "gal"]
+
+def get_conversion_factor(input_unit, output_unit):
+    if input_unit == output_unit:
+        return 1.0
+    key = f"{input_unit}_to_{output_unit}"
+    if key in VOLUME_CONVERSION_FACTORS:
+        return VOLUME_CONVERSION_FACTORS[key]
+    return None
+
+def convert_volume(volume, input_unit, output_unit):
+    input_lower = input_unit.lower().strip()
+    output_lower = output_unit.lower().strip()
+    if input_lower not in UNIT_TO_BASE or output_lower not in UNIT_TO_BASE:
+        raise ValueError(f"Unsupported unit: {input_unit} or {output_unit}")
+    if input_lower == output_lower:
         return volume
-    if target_unit not in conversion_rates:
-        raise ValueError(f"Unknown target unit: {target_unit}")
-    if source_unit == target_unit:
-        return volume
-    base_unit = "liter"
-    if source_unit == "milliliter":
-        volume_in_base = volume / 1000.0
-    elif source_unit == "gallon":
-        volume_in_base = volume * 3.78541
-    elif source_unit == "quart":
-        volume_in_base = volume * 0.946353
-    elif source_unit == "ounce":
-        volume_in_base = volume * 0.0283495
-    elif source_unit == "cubic_meter":
-        volume_in_base = volume * 1000.0
-    elif source_unit == "cubic_foot":
-        volume_in_base = volume * 28.3168
-    else:
-        volume_in_base = volume
-    result = volume_in_base / conversion_rates[target_unit]
-    return result
-if __name__ == '__main__':
-    print(convert_volume(10, "liter"))
-    print(convert_volume(5, "gallon", "liter"))
-    print(convert_volume(1000, "milliliter", "liter"))
-    print(convert_volume(1, "cubic_meter", "gallon"))
+    factor = get_conversion_factor(input_lower, output_lower)
+    if factor is None:
+        raise ValueError(f"Cannot convert from {input_unit} to {output_unit}")
+    return volume * factor
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert volume units.")
+    parser.add_argument("volume", type=float, help="Volume value to convert.")
+    parser.add_argument("input_unit", type=str, help="Unit of the input volume.")
+    parser.add_argument("output_unit", type=str, help="Unit to convert to.")
+    args = parser.parse_args()
     try:
-        convert_volume(10, "furlong", "meter")
+        result = convert_volume(args.volume, args.input_unit, args.output_unit)
+        print(result)
     except ValueError as e:
-        print(f"Error caught: {e}")
-    try:
-        convert_volume(10, "liter", "furlong")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

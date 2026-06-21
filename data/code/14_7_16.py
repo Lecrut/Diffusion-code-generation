@@ -1,26 +1,21 @@
-import math
-
-def volumes_are_equal(val1: float, val2: float) -> bool:
-    """
-    Determine if two volume measurements are effectively equal within a small tolerance.
-
-    Args:
-        val1 (float): First volume measurement.
-        val2 (float): Second volume measurement.
-
-    Returns:
-        bool: True if the volumes are close, False otherwise.
-    """
-    return math.isclose(val1, val2)
+def get_third_item(items: list) -> object:
+    if not isinstance(items, list):
+        raise TypeError("Input must be a list")
+    if len(items) < 3:
+        raise IndexError("List must contain at least three items")
+    return items[2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    v_a = 50.0
-    v_b = 49.8
-
-    result = volumes_are_equal(v_a, v_b)
-
-    if result:
-        print("The volumes are effectively equal.")
-    else:
-        print("The volumes differ significantly.")
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_third_item(sample_list)
+    print(result)
+    
+    try:
+        get_third_item([])
+    except IndexError as e:
+        print(e)
+        
+    try:
+        get_third_item("not a list")
+    except TypeError as e:
+        print(e)

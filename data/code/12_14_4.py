@@ -1,16 +1,34 @@
-def convert_ratios_to_weights(ratios, total_weight):
-    weights = {}
-    if not ratios:
-        return weights
-    ratio_sum = sum(ratios)
-    if ratio_sum == 0:
-        return {ratio: 0.0 for ratio in ratios}
-    for ratio in ratios:
-        weight = (ratio / ratio_sum) * total_weight
-        weights[ratio] = weight
-    return weights
+def get_middle_element(sequence):
+    if not hasattr(sequence, '__len__'):
+        raise TypeError("Input must be a sequence with a length.")
+    
+    seq_len = len(sequence)
+    if seq_len == 0:
+        raise ValueError("Sequence cannot be empty.")
+    
+    middle_index = (seq_len - 1) // 2
+    
+    if isinstance(sequence, str):
+        result = sequence[middle_index]
+        if seq_len % 2 == 0:
+            next_char = sequence[middle_index + 1]
+            return (result + next_char) / 2.0
+        return result
+    elif isinstance(sequence, (list, tuple)):
+        if seq_len % 2 == 0:
+            middle_val = (sequence[middle_index] + sequence[middle_index + 1]) / 2.0
+            return middle_val
+        return sequence[middle_index]
+    else:
+        return sequence[middle_index]
+
 if __name__ == '__main__':
-    relative_ratios = [1, 2, 3]
-    total_weight = 100.0
-    absolute_weights = convert_ratios_to_weights(relative_ratios, total_weight)
-    print(absolute_weights)
+    odd_list = [1, 3, 5]
+    even_list = [1, 2, 3, 4]
+    odd_string = "abc"
+    even_string = "abcd"
+    
+    print(get_middle_element(odd_list))
+    print(get_middle_element(even_list))
+    print(get_middle_element(odd_string))
+    print(get_middle_element(even_string))

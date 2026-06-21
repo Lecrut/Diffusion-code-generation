@@ -1,8 +1,9 @@
-def check_equal(x: any = None, y: any = None) -> bool:
-    """Returns True if x equals y."""
-    return x == y
+def get_second_last(numbers):
+    if len(numbers) < 2:
+        raise ValueError("List must contain at least two elements")
+    return numbers[-2]
 
 if __name__ == '__main__':
-    sample_x = 10
-    sample_y = "Ten"
-    print(f"x={sample_x}, y={sample_y} are equal? {check_equal(sample_x, sample_y)}")
+    sample_data = [10, 25, 30, 45, 50]
+    result = get_second_last(sample_data)
+    print(result)

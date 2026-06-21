@@ -1,7 +1,14 @@
-def check_match(value1, value2):
-    return value1 == value2
+def get_penultimate_element(input_list):
+    if not input_list:
+        raise ValueError("List is empty")
+    return input_list[-2]
+
 if __name__ == '__main__':
-    print(check_match(5, 5))
-    print(check_match(10, 5))
-    print(check_match("hello", "hello"))
-    print(check_match(3.14, 3.1400000000000004))
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_penultimate_element(sample_list)
+    print(result)
+    empty_list = []
+    try:
+        get_penultimate_element(empty_list)
+    except ValueError as e:
+        print(f"Error: {e}")

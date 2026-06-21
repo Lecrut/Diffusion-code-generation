@@ -1,8 +1,9 @@
-def calculate_absolute_difference(volume1, volume2):
-    difference = abs(volume1 - volume2)
-    return f"{difference:.2f}"
+def get_third_item(sequence):
+    if len(sequence) < 3:
+        raise IndexError("Sequence must have at least three elements")
+    return sequence[2]
+
 if __name__ == '__main__':
-    v1 = 10.567
-    v2 = 12.345
-    result = calculate_absolute_difference(v1, v2)
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_third_item(sample_list)
     print(result)

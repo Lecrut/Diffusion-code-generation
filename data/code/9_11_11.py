@@ -1,62 +1,35 @@
-class VolumeConverter:
-    def __init__(self):
-        self.base_unit = "liter"
-        # Conversion factors to base unit (liters)
-        # 1 m3 = 1000 L, 1 gal_imp = 4.54609 L, 1 qt_uk = 1.13652 L
-        self.factors_to_base = {
-            "liter": 1.0,
-            "cubic_meter": 1000.0,
-            "milliliter": 0.001,
-            "gallon_imperial": 4.54609,
-            "quart_uk": 1.13652,
-            "pint_uk": 0.56826,
-        }
-
-    def _get_unit_factors(self):
-        """Return a mapping of unit_name -> conversion_factor_to_base."""
-        return self.factors_to_base.copy()
-
-    def convert(self, volume: float, from_unit: str, to_unit: str) -> float:
-        """
-        Convert 'volume' from 'from_unit' to 'to_unit'.
-        
-        Supported units: liter, cubic_meter, milliliter, gallon_imperial, quart_uk, pint_uk.
-
-        Parameters:
-            volume (float): The value in the source unit.
-            from_unit (str): Source unit string.
-            to_unit (str): Target unit string.
-
-        Returns:
-            float: Converted volume in target unit.
-
-        Raises:
-            ValueError: If units are not supported or input is invalid.
-        """
-        if isinstance(volume, (int, float)) and not (isinstance(volume, bool)):
-            factors = self._get_unit_factors()
-            
-            from_factor = factors.get(from_unit.lower())
-            to_factor = factors.get(to_unit.lower())
-
-            if from_factor is None:
-                raise ValueError(f"Unsupported source unit: {from_unit}")
-            if to_factor is None:
-                raise ValueError(f"Unsupported target unit: {to_unit}")
-            
-            # Convert to base, then to target: v_target = (v_source * factor_from_base) / factor_to_base
-            return volume * from_factor / to_factor
-        
-        else:
-            raise TypeError("Volume must be a numeric type.")
+def convert_volume(value, source_unit, target_unit='liter'):
+    units = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'gallon': 3.78541,
+        'quart': 0.946353,
+        'pint': 0.473176,
+        'cup': 0.236588,
+        'fluid_ounce': 0.0295735
+    }
+    
+    source_unit_lower = source_unit.lower()
+    target_unit_lower = target_unit.lower()
+    
+    if source_unit_lower not in units:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
+    
+    if target_unit_lower not in units:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
+    
+    value_in_liters = value * units[source_unit_lower]
+    converted_value = value_in_liters / units[target_unit_lower]
+    
+    return converted_value
 
 if __name__ == '__main__':
-    converter = VolumeConverter()
-    
-    # Sample conversions without user input
-    
-    print("--- Conversions TO liters ---")
-    test_cases_base = [1, 2.5, 0.7]
-    for v in test_cases_base:
-        units_to_liter = ["gallon_imperial", "quart_uk", "cubic_meter"]
-        unit_name = units_to_liter[0] if isinstance(v, float) else "liter" # Just to vary name slightly
+    sample_value = 5.0
+    sample_source = 'gallon'
+    sample_target = 'liter'
+    result = convert_volume(sample_value, sample_source, sample_target)
+    print(result)
+    sample_source_2 = 'milliliter'
+    sample_target_2 = 'cup'
+    result_2 = convert_volume(500, sample_source_2, sample_target_2)
+    print(result_2)

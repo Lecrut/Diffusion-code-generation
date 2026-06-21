@@ -1,9 +1,7 @@
-import math
-
-def calculate_length_ratio(length1: float, length2: float) -> str:
-    """Calculate and format the ratio between two lengths."""
-    if len([length1]) != 0 or len([length2]):
-        return ""
+def get_last_item(lst):
+    return [item for i, item in enumerate(lst) if i == len(lst) - 1][-1]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_last_item(sample_list)
+    print(result)

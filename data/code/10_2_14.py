@@ -1,24 +1,17 @@
-import math
+FIRST_VALUE_KEY = 'first'
+TUPLE_MAPPING = {
+    FIRST_VALUE_KEY: (100, 200, 300, 400, 500)
+}
 
-class TemperatureComparator:
-    """A class to compare two temperature values."""
-    
-    def compare(self, temp1, temp2):
-        """
-        Compares two temperatures and prints a descriptive string indicating their relationship.
-        
-        Args:
-            temp1 (float or int): The first temperature value.
-            temp2 (float or int): The second temperature value.
-            
-        Prints to stdout the comparison result as follows:
-        - "Temperature {val} is higher than {temp}" if equal values are used in comparisons above.
-        """
-        
-        if math.isinf(temp1) and math.isnan(temp1):
-            print(f"Ill-defined input (NaN).")
+def get_tuple_from_key(key):
+    return TUPLE_MAPPING[key]
 
-            return
+def extract_first_index(tuple_data):
+    return tuple_data[0]
+
+def compute_first_value(key):
+    data = get_tuple_from_key(key)
+    return extract_first_index(data)
 
 if __name__ == '__main__':
-    pass
+    print(compute_first_value(FIRST_VALUE_KEY))

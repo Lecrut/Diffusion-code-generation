@@ -1,16 +1,20 @@
-def convert_ratios_to_weights(ratios, total_weight):
-    weights = {}
-    if not ratios:
-        return weights
-    ratio_sum = sum(ratios)
-    if ratio_sum == 0:
-        return {ratio: 0.0 for ratio in ratios}
-    for ratio in ratios:
-        weight = (ratio / ratio_sum) * total_weight
-        weights[ratio] = weight
-    return weights
+def get_middle_element(sequence):
+    if not isinstance(sequence, (list, tuple, str)):
+        raise TypeError("Input must be a list, tuple, or string")
+    if len(sequence) == 0:
+        raise ValueError("Input sequence cannot be empty")
+    length = len(sequence)
+    if length % 2 == 1:
+        return sequence[length // 2]
+    else:
+        mid_right = length // 2
+        mid_left = mid_right - 1
+        return (sequence[mid_left], sequence[mid_right])
+
 if __name__ == '__main__':
-    sample_ratios = [1, 2, 3]
-    sample_total_weight = 100.0
-    result = convert_ratios_to_weights(sample_ratios, sample_total_weight)
-    print(result)
+    test_odd = [1, 2, 3, 4, 5]
+    test_even = [10, 20, 30, 40]
+    test_string = "hello"
+    print(get_middle_element(test_odd))
+    print(get_middle_element(test_even))
+    print(get_middle_element(test_string))

@@ -1,15 +1,7 @@
-def compare_temperatures(temp1, temp2):
-    if temp1 > temp2:
-        return "greater"
-    elif temp1 < temp2:
-        return "less"
-    else:
-        return "equal"
-def test_compare_temperatures():
-    assert compare_temperatures(30, 20) == "greater"
-    assert compare_temperatures(15, 30) == "less"
-    assert compare_temperatures(25, 25) == "equal"
-    assert compare_temperatures(100, 50) == "greater"
-    assert compare_temperatures(5, 10) == "less"
+def print_first_element(lst):
+    return lst[:1]
+
 if __name__ == '__main__':
-    test_compare_temperatures()
+    sample_list = [42, "hello", 3.14, True, None]
+    result = print_first_element(sample_list)
+    print(result)

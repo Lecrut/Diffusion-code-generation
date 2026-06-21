@@ -1,96 +1,90 @@
 import unittest
+import math
 
-class TestVolumeConversion:
-    """Test suite for volume conversion logic."""
+class VolumeConverter:
+    def __init__(self):
+        self.conversion_factors = {
+            'ml': 0.001,
+            'l': 1.0,
+            'gal': 3.78541,
+            'qt': 0.946353,
+            'pt': 0.473176,
+            'cup': 0.236588,
+            'tbsp': 0.0147868,
+            'tsp': 0.00492892
+        }
 
-    def test_convert_liters_to_milliliters(self):
-        """Tests conversion from liters to milliliters with various inputs including edge cases."""
+    def convert(self, volume, from_unit, to_unit):
+        if volume < 0:
+            raise ValueError("Volume cannot be negative")
+        if from_unit not in self.conversion_factors:
+            raise ValueError(f"Unsupported unit: {from_unit}")
+        if to_unit not in self.conversion_factors:
+            raise ValueError(f"Unsupported unit: {to_unit}")
         
-        # Standard conversions
-        self.assertEqual(convert_volume(0, 'l', 'ml'), 0)
-        self.assertEqual(convert_volume(1, 'l', 'ml'), 1000)
-        self.assertEqual(convert_volume(-5.5, 'l', 'ml'), -5500)
-
-    def test_convert_milliliters_to_liters(self):
-        """Tests conversion from milliliters to liters with various inputs including edge cases."""
+        volume_in_liters = volume * self.conversion_factors[from_unit]
+        converted_volume = volume_in_liters / self.conversion_factors[to_unit]
         
-        # Standard conversions
-        self.assertEqual(convert_volume(1000, 'ml', 'l'), 1.0)
-        self.assertEqual(convert_volume(500, 'ml', 'l'), 0.5)
-        self.assertEqual(convert_volume(-2500, 'ml', 'l'), -2.5)
+        return converted_volume
 
-    def test_convert_liters_to_gallons(self):
-        """Tests conversion from liters to gallons."""
-        
-        # Standard conversions (1 liter ≈ 0.264172 gallons)
-        self.assertEqual(convert_volume(3.785, 'l', 'gal'), 1.0)
-        self.assertEqual(convert_volume(0, 'l', 'gal'), 0)
+class TestVolumeConverter(unittest.TestCase):
+    def setUp(self):
+        self.converter = VolumeConverter()
 
-    def test_convert_gallons_to_liters(self):
-        """Tests conversion from gallons to liters."""
-        
-        # Standard conversions (1 gallon ≈ 3.78541 liters)
-        self.assertEqual(convert_volume(2, 'gal', 'l'), 7.57082)
+    def test_zero_volume(self):
+        result = self.converter.convert(0, 'l', 'ml')
+        self.assertEqual(result, 0.0)
 
-    def test_invalid_unit_conversion_raises_error(self):
-        """Tests that invalid unit combinations raise a ValueError."""
-        
+    def test_negative_volume(self):
         with self.assertRaises(ValueError):
-            convert_volume(10, 'kg', 'ml')
+            self.converter.convert(-1, 'l', 'ml')
 
-def convert_volume(volume: float, from_unit: str, to_unit: str) -> float:
-    """
-    Converts volume between liters (l), milliliters (ml), and gallons (gal).
+    def test_invalid_from_unit(self):
+        with self.assertRaises(ValueError):
+            self.converter.convert(1, 'invalid', 'ml')
 
-    Args:
-        volume (float): The volume value. Can be zero or negative.
-        from_unit (str): Source unit ('l', 'ml', 'gal').
-        to_unit (str): Target unit ('l', 'ml', 'gal').
+    def test_invalid_to_unit(self):
+        with self.assertRaises(ValueError):
+            self.converter.convert(1, 'l', 'invalid')
 
-    Returns:
-        float: Converted volume.
+    def test_large_volume(self):
+        result = self.converter.convert(1e10, 'ml', 'l')
+        expected = 1e7
+        self.assertAlmostEqual(result, expected, places=2)
 
-    Raises:
-        ValueError: If units are invalid or conversion is not supported directly without intermediate step.
-    
-    Note: Direct conversions between ml and gal require passing through liters for precision, 
-             though the logic handles direct calls by normalizing to an internal base if needed.
-             For this specific implementation context assuming a helper function exists that does full normalization:
-    """
-    # Assuming existence of a robust underlying conversion mechanism or simplified math here based on previous steps' context.
-    # Since I cannot see "previous step", I will implement the logic inline to ensure it is self-contained and runnable.
+    def test_small_volume(self):
+        result = self.converter.convert(0.000001, 'ml', 'l')
+        expected = 1e-9
+        self.assertAlmostEqual(result, expected, places=12)
 
-    if from_unit == 'l':
-        if to_unit == 'ml':
-            return volume * 1000
-        elif to_unit == 'gal':
-            return volume / 3.785411784
-    
-    elif from_unit == 'ml':
-        if to_unit == 'l':
-            return volume / 1000
-        elif to_unit == 'gal':
-            # Convert ml -> l -> gal
-            liters = volume / 1000
-            return liters / 3.785411784
+    def test_same_unit_conversion(self):
+        result = self.converter.convert(5, 'l', 'l')
+        self.assertEqual(result, 5.0)
 
-    elif from_unit == 'gal':
-        if to_unit == 'l':
-            return volume * 3.785411784
-        elif to_unit == 'ml':
-            # Convert gal -> l -> ml
-            liters = volume * 3.785411784
-            return liters * 1000
+    def test_ml_to_gal(self):
+        result = self.converter.convert(1000, 'ml', 'gal')
+        expected = 1.0 / 3.78541
+        self.assertAlmostEqual(result, expected, places=5)
 
-    else:
-        raise ValueError(f"Unsupported unit '{from_unit}' or target unit '{to_unit}'. Supported units are 'l', 'ml', 'gal'.")
+    def test_gal_to_ml(self):
+        result = self.converter.convert(1, 'gal', 'ml')
+        expected = 3785.41
+        self.assertAlmostEqual(result, expected, places=2)
+
+    def test_precision_check(self):
+        result = self.converter.convert(1, 'l', 'tsp')
+        expected = 1 / 0.00492892
+        self.assertAlmostEqual(result, expected, places=4)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to run without user input, command-line arguments, network access, or pre-existing files.
+    converter = VolumeConverter()
     
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestVolumeConversion)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    if not result.wasSuccessful():
-        exit(result.failures[0][1] if result.failures else result.errors[0][1]) # Print error details on failure for debugging clarity in console, though standard behavior handles it.
+    print(converter.convert(0, 'l', 'ml'))
+    print(converter.convert(1000, 'ml', 'l'))
+    print(converter.convert(1, 'gal', 'l'))
+    print(converter.convert(5, 'l', 'ml'))
+    print(converter.convert(1e6, 'ml', 'gal'))
+    
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestVolumeConverter)
+    runner = unittest.TextTestRunner(verbosity=0)
+    runner.run(suite)

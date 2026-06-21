@@ -1,70 +1,52 @@
-def convert_volume(volume: float, source_unit: str, target_unit: str = None) -> float | None:
-    """
-    Converts a volume value from one unit to another using predefined rates.
-    
-    Args:
-        volume (float): The volume value to be converted.
-        source_unit (str): The source unit string ('ml', 'l', 'gal').
-        target_unit (str, optional): The target unit string. If None, converts to liters.
+import argparse
+import sys
 
-    Returns:
-        float | None: Converted volume in the target unit or None if conversion fails.
+class VolumeConverter:
+    VALID_UNITS = {"liter", "milliliter", "gallon_us", "gallon_uk", "quart_us", "pint_us", "cup_us", "fluid_ounce_us"}
     
-    Raises:
-        ValueError: If input units are invalid or source/target don't match requirements.
-    """
-    valid_units = {'ml', 'l', 'gal'}
+    def __init__(self):
+        self.factor_to_liter = {
+            "liter": 1.0,
+            "milliliter": 0.001,
+            "gallon_us": 3.785411784,
+            "gallon_uk": 4.54609,
+            "quart_us": 0.946352946,
+            "pint_us": 0.473176473,
+            "cup_us": 0.2365882365,
+            "fluid_ounce_us": 0.0295735295625
+        }
     
-    # Validate inputs
-    if not isinstance(volume, (int, float)):
-        raise TypeError("Volume must be a numeric value.")
-    if volume < 0:
-        raise ValueError("Volume cannot be negative.")
-    
-    source_unit_lower = source_unit.lower()
-    target_unit_lower = target_unit.lower() if target_unit else 'l'
-
-    if source_unit_lower not in valid_units or target_unit_lower not in valid_units:
-        raise ValueError(f"Invalid unit. Supported units are {', '.join(valid_units)}.")
-
-    # Conversion rates to liters (base unit)
-    conversion_to_liters = {'ml': 0.001, 'l': 1.0, 'gal': 3.78541}
-
-    try:
-        volume_in_liters = volume * conversion_to_liters[source_unit_lower]
+    def convert(self, value, input_unit, output_unit):
+        if input_unit not in self.VALID_UNITS:
+            raise ValueError(f"Invalid input unit: {input_unit}. Supported units: {', '.join(sorted(self.VALID_UNITS))}")
+        if output_unit not in self.VALID_UNITS:
+            raise ValueError(f"Invalid output unit: {output_unit}. Supported units: {', '.join(sorted(self.VALID_UNITS))}")
         
-        if target_unit_lower == source_unit_lower:
-            return float(volume)
-            
-        final_volume = volume_in_liters / conversion_to_liters[target_unit_lower]
-        return round(final_volume, 6)
+        if value < 0:
+            raise ValueError("Volume cannot be negative.")
+        
+        liters = value * self.factor_to_liter[input_unit]
+        result = liters / self.factor_to_liter[output_unit]
+        return result
 
-    except KeyError as e:
-        raise ValueError(f"Conversion error for unit {e}.") from e
+def parse_arguments(args):
+    parser = argparse.ArgumentParser(description="Convert volume between different units.")
+    parser.add_argument("volume", type=float, help="The volume value to convert.")
+    parser.add_argument("input_unit", type=str, help="The unit of the input volume.")
+    parser.add_argument("output_unit", type=str, help="The desired output unit.")
+    return parser.parse_args(args)
+
+def main():
+    sample_args = ["10", "gallon_us", "liter"]
+    try:
+        parsed_args = parse_arguments(sample_args)
+        converter = VolumeConverter()
+        result = converter.convert(parsed_args.volume, parsed_args.input_unit, parsed_args.output_unit)
+        print(f"{parsed_args.volume} {parsed_args.input_unit} is equal to {result} {parsed_args.output_unit}")
+    except ValueError as e:
+        print(f"Error: {e}")
+    except SystemExit as e:
+        sys.exit(e.code)
 
 if __name__ == '__main__':
-    # Sample test cases running without user input or external dependencies
-    
-    result1 = convert_volume(500, 'ml', 'l')
-    print(f"{result1} liters in 500 ml")
-
-    result2 = convert_volume(3.78541, 'gal', 'l')
-    print(f"{result2} liters in 3.78541 gallons")
-
-    result3 = convert_volume(1000, 'ml', None)
-    print(f"Default target (liters): {result3}")
-
-    try:
-        invalid_result = convert_volume(-10, 'l')
-    except ValueError as e:
-        print(f"Caught expected error for negative volume: {e}")
-
-    try:
-        bad_unit_convert = convert_volume(50, 'kg', 'ml')  # Invalid unit type logic handled inside function check if extended later but currently checks string validity only against valid_units list which doesn't include kg. However to be safe let's ensure the error message is clear based on current implementation scope.
-        print(f"Unexpected result: {bad_unit_convert}")
-    except ValueError as e:
-        print(f"Caught expected error for invalid unit 'kg': {e}")
-
-    # Test same units conversion
-    result4 = convert_volume(10, 'l', 'l')
-    print(f"{result4} liters in 10 liters")
+    main()

@@ -1,22 +1,19 @@
-from datetime import datetime
-import pytz
-def calculate_time_difference(tz_str1, tz_str2):
-    tz1 = pytz.timezone(tz_str1)
-    tz2 = pytz.timezone(tz_str2)
-    offset1 = tz1.utcoffset(datetime.now().replace(tzinfo=tz1))
-    offset2 = tz2.utcoffset(datetime.now().replace(tzinfo=tz2))
-    if offset1 is None or offset2 is None:
-        raise ValueError("Could not determine timezone offsets.")
-    diff_seconds = abs(offset1.total_seconds() - offset2.total_seconds())
-    diff_hours = diff_seconds / 3600.0
-    return diff_hours
+import typing
+
+def fetch_column_values(data: typing.List[typing.Dict[str, typing.Any]], column_name: str) -> typing.List[typing.Any]:
+    results = []
+    for record in data:
+        if column_name in record:
+            results.append(record[column_name])
+    return results
+
 if __name__ == '__main__':
-    config_tz1 = "America/New_York"
-    config_tz2 = "Europe/London"
-    try:
-        difference = calculate_time_difference(config_tz1, config_tz2)
-        print(difference)
-    except pytz.exceptions.UnknownTimeZoneError as e:
-        print(f"Error: One of the provided timezones is invalid.")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_data = [
+        {'id': 1, 'name': 'Alice', 'age': 30},
+        {'id': 2, 'name': 'Bob', 'age': 25},
+        {'id': 3, 'name': 'Charlie', 'age': 35}
+    ]
+    
+    target_column = 'name'
+    values = fetch_column_values(sample_data, target_column)
+    print(values)

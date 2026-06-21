@@ -1,31 +1,15 @@
 import numpy as np
 
-def convert_volume(volume_liters: np.ndarray) -> tuple[np.ndarray, str]:
-    """
-    Converts a NumPy array of volumes from liters to cubic meters using vectorized operations.
-    
-    Parameters:
-        volume_liters (np.ndarray): Input array of values in liters.
-        
-    Returns:
-        tuple: A tuple containing the converted array and a status message.
-    """
-    # Conversion factor: 1 liter = 0.001 cubic meters
-    conversion_factor = np.array([0.001])
-    
-    # Perform vectorized multiplication to convert liters to cubic meters
-    volume_cubic_meters = volume_liters * conversion_factor
-    
-    return volume_cubic_meters, "Conversion successful"
+def convert_volumes(volumes_in_cubic_meters):
+    liters = volumes_in_cubic_meters * 1000.0
+    gallons = liters / 3.785411784
+    return {
+        'liters': liters,
+        'gallons': gallons
+    }
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes.
-    # These represent a list of water tank capacities in liters.
-    input_data = np.array([100, 500, 2500, 75])
-
-    print("Input Volume (Liters):", input_data)
-
-    converted_array, status_message = convert_volume(input_data)
-
-    print(f"Status: {status_message}")
-    print("Converted Volume (Cubic Meters):", converted_array)
+    sample_values = np.array([1.0, 2.5, 0.5, 10.0])
+    results = convert_volumes(sample_values)
+    print(results['liters'])
+    print(results['gallons'])

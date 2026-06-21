@@ -1,10 +1,7 @@
-def calculate_temperature_difference(temp1, temp2):
-    if temp1 > temp2:
-        return temp1 - temp2
-    else:
-        return temp2 - temp1
+def get_first_element():
+    fixed_list = [10, 20, 30, 40, 50]
+    return fixed_list[0]
+
 if __name__ == '__main__':
-    t1 = 30
-    t2 = 45
-    difference = calculate_temperature_difference(t1, t2)
-    print(difference)
+    result = get_first_element()
+    print(result)

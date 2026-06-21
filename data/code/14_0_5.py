@@ -1,19 +1,12 @@
-def compare_volumes(volume1, volume2):
-    if volume1 > volume2:
-        difference = volume1 - volume2
-        print(f"Volume 1 is greater than Volume 2 by {difference:.4f}")
-    elif volume2 > volume1:
-        difference = volume2 - volume1
-        print(f"Volume 2 is greater than Volume 1 by {difference:.4f}")
-    else:
-        print("The volumes are equal.")
+def get_third_element(items):
+    if len(items) < 3:
+        raise IndexError("List must contain at least three items")
+    return items[2]
+
 if __name__ == '__main__':
-    v1 = 15.75
-    v2 = 12.30
-    compare_volumes(v1, v2)
-    v3 = 50.0
-    v4 = 50.0
-    compare_volumes(v3, v4)
-    v5 = 100.555
-    v6 = 99.999
-    compare_volumes(v5, v6)
+    sample_list = [10, 20, 30, 40]
+    print(get_third_element(sample_list))
+    try:
+        get_third_element([1, 2])
+    except IndexError as e:
+        print(e)

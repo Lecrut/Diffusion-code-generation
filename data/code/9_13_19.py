@@ -1,38 +1,41 @@
-import argparse
-from typing import Optional
+def convert_volume(value: float, from_unit: str, to_unit: str) -> float:
+    units = {
+        "mL": 1e-3,
+        "L": 1.0,
+        "m3": 1000.0,
+        "gal": 3.78541
+    }
+    if from_unit not in units:
+        raise ValueError(f"Unsupported source unit: {from_unit}")
+    if to_unit not in units:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
+    liters = value * units[from_unit]
+    result = liters / units[to_unit]
+    return result
 
-# Conversion factors relative to a base unit (e.g., grams)
-CONVERSION_FACTORS = {
-    "kg": 1000,   # kilograms to grams
-    "g": 1.0,     # grams to grams
-    "mg": 0.001,  # milligrams to grams
-}
+def ml_to_l(ml: float) -> float:
+    return convert_volume(ml, "mL", "L")
 
-# Volume conversions relative to base unit (e.g., liters)
-VOLUME_CONVERSIONS = {
-    "l": 1.0,       # liters to liters
-    "ml": 0.001,    # milliliters to liters
-    "cl": 0.01,     # centiliters to liters
-}
+def l_to_ml(liters: float) -> float:
+    return convert_volume(liters, "L", "mL")
 
-def validate_volume(volume_str: str) -> Optional[float]:
-    """Validate and convert input volume string to float."""
-    if not isinstance(volume_str, (int, float)):
-        try:
-            return float(volume_str.strip())
-        except ValueError:
-            print(f"Error: Invalid numeric value for volume. Got '{volume_str}'")
-            return None
+def l_to_m3(liters: float) -> float:
+    return convert_volume(liters, "L", "m3")
 
-def validate_unit(unit_key: str) -> Optional[str]:
-    """Validate and normalize the input unit key."""
-    valid_keys = set(CONVERSION_FACTORS.keys()) | set(VOLUME_CONVERSIONS.keys())
-    
-    if not isinstance(unit_key, str):
-        print(f"Error: Unit must be a string. Got {type(unit_key).__name__}")
-        return None
-    
-    normalized_unit = unit_key.strip().lower()
+def m3_to_l(m3: float) -> float:
+    return convert_volume(m3, "m3", "L")
+
+def l_to_gal(liters: float) -> float:
+    return convert_volume(liters, "L", "gal")
+
+def gal_to_l(gallons: float) -> float:
+    return convert_volume(gallons, "gal", "L")
 
 if __name__ == '__main__':
-    pass
+    print(ml_to_l(500.0))
+    print(l_to_ml(2.5))
+    print(l_to_m3(100.0))
+    print(m3_to_l(0.5))
+    print(l_to_gal(1.0))
+    print(gal_to_l(1.0))
+    print(convert_volume(1000.0, "mL", "gal"))

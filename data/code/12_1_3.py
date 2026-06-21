@@ -1,23 +1,15 @@
-import math
-def simplify_ratio(ratio1, ratio2):
-    common = math.gcd(ratio1, ratio2)
-    simplified_ratio1 = ratio1 // common
-    simplified_ratio2 = ratio2 // common
-    return (simplified_ratio1, simplified_ratio2)
+def extract_median(data):
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    if n == 0:
+        raise ValueError("List is empty")
+    mid = n // 2
+    if n % 2 == 1:
+        return sorted_data[mid]
+    else:
+        return (sorted_data[mid - 1] + sorted_data[mid]) / 2
+
 if __name__ == '__main__':
-    ratio_a = 12
-    ratio_b = 18
-    result1 = simplify_ratio(ratio_a, ratio_b)
-    print(f"Simplifying ({ratio_a}, {ratio_b}): {result1}")
-    ratio_c = 25
-    ratio_d = 30
-    result2 = simplify_ratio(ratio_c, ratio_d)
-    print(f"Simplifying ({ratio_c}, {ratio_d}): {result2}")
-    ratio_e = 7
-    ratio_f = 11
-    result3 = simplify_ratio(ratio_e, ratio_f)
-    print(f"Simplifying ({ratio_e}, {ratio_f}): {result3}")
-    ratio_g = 100
-    ratio_h = 50
-    result4 = simplify_ratio(ratio_g, ratio_h)
-    print(f"Simplifying ({ratio_g}, {ratio_h}): {result4}")
+    sample_data = [7, 3, 1, 8, 5, 2, 6]
+    result = extract_median(sample_data)
+    print(result)

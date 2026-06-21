@@ -1,21 +1,22 @@
-import datetime
-import pytz
-def calculate_time_difference(dt1, dt2):
-    if dt1.tzinfo is None or dt2.tzinfo is None:
-        raise ValueError("Both datetime objects must be timezone-aware.")
-    dt1_utc = dt1.astimezone(pytz.utc)
-    dt2_utc = dt2.astimezone(pytz.utc)
-    difference = dt2_utc - dt1_utc
-    return difference
+def get_nested_value(nested_dict, path, default=None):
+    result = nested_dict
+    for key in path:
+        if isinstance(result, dict) and key in result:
+            result = result[key]
+        else:
+            return default
+    return result
+
 if __name__ == '__main__':
-    tz_london = pytz.timezone('Europe/London')
-    tz_tokyo = pytz.timezone('Asia/Tokyo')
-    dt_london = datetime.datetime(2023, 10, 26, 10, 0, 0, tzinfo=tz_london)
-    dt_tokyo = datetime.datetime(2023, 10, 26, 20, 0, 0, tzinfo=tz_tokyo)
-    try:
-        time_diff = calculate_time_difference(dt_london, dt_tokyo)
-        print(f"Datetime 1 (London): {dt_london}")
-        print(f"Datetime 2 (Tokyo): {dt_tokyo}")
-        print(f"Time difference (Tokyo - London): {time_diff}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_dict = {
+        "level1": {
+            "level2": {
+                "level3": "deep_value"
+            }
+        },
+        "list_item": [1, 2, 3]
+    }
+
+    print(get_nested_value(sample_dict, ["level1", "level2", "level3"]))
+    print(get_nested_value(sample_dict, ["missing_key"], "fallback"))
+    print(get_nested_value(sample_dict, ["list_item", 0]))

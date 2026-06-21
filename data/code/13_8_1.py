@@ -1,22 +1,16 @@
-def calculate_time_zone_difference(offsets):
-    if not offsets:
-        return 0
-    min_offset = min(offsets)
-    max_offset = max(offsets)
-    return max_offset - min_offset
+from collections import defaultdict
+
+def get_or_init_with_composite_key(default_dict, key, factory):
+    if key not in default_dict:
+        default_dict[key] = factory()
+    return default_dict[key]
+
 if __name__ == '__main__':
-    sample_offsets_1 = [5, -3, 10, -1]
-    result_1 = calculate_time_zone_difference(sample_offsets_1)
-    print(result_1)
-    sample_offsets_2 = [1.5, 0.5, 2.0]
-    result_2 = calculate_time_zone_difference(sample_offsets_2)
-    print(result_2)
-    sample_offsets_3 = [-10, -5, -15]
-    result_3 = calculate_time_zone_difference(sample_offsets_3)
-    print(result_3)
-    sample_offsets_4 = [7, 7, 7]
-    result_4 = calculate_time_zone_difference(sample_offsets_4)
-    print(result_4)
-    sample_offsets_5 = []
-    result_5 = calculate_time_zone_difference(sample_offsets_5)
-    print(result_5)
+    dd = defaultdict(list)
+    composite_key = ('user', 'prefs', 'theme')
+    factory = lambda: {'dark_mode': True, 'font_size': 14}
+    result = get_or_init_with_composite_key(dd, composite_key, factory)
+    print(result)
+    result2 = get_or_init_with_composite_key(dd, composite_key, factory)
+    print(result2)
+    print(result is result2)

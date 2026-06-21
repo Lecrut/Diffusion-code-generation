@@ -1,24 +1,14 @@
-import re
-def aggregate_time_differences(time_diffs):
-    total_seconds = 0
-    for diff_str in time_diffs:
-        total_seconds += parse_time_difference(diff_str)
-    return total_seconds
-def parse_time_difference(diff_str):
-    total_seconds = 0
-    parts = re.findall(r'(\d+)\s*h', diff_str)
-    if parts:
-        total_seconds += sum(int(p) for p in parts) * 3600
-    parts = re.findall(r'(\d+)\s*m', diff_str)
-    if parts:
-        total_seconds += sum(int(p) for p in parts) * 60
-    return total_seconds
+def get_value_at_index(gen, index):
+    if index < 0:
+        raise IndexError("index cannot be negative")
+    current_index = 0
+    for value in gen:
+        if current_index == index:
+            return value
+        current_index += 1
+    raise IndexError(f"index {index} out of range")
+
 if __name__ == '__main__':
-    sample_differences = [
-        "1 hour 30 minutes",
-        "2 hours",
-        "45 minutes",
-        "1 day 5 hours"
-    ]
-    total = aggregate_time_differences(sample_differences)
-    print(total)
+    sample_generator = (x * x for x in range(100))
+    result = get_value_at_index(sample_generator, 10)
+    print(result)

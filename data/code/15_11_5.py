@@ -1,28 +1,25 @@
-class ValueChecker:
-    def are_equal(self, a, b):
-        if a == b:
-            return True
-        if type(a) != type(b):
-            try:
-                if str(a) == str(b):
-                    return True
-            except Exception:
-                pass
-        return False
+def get_penultimate(lst):
+    if len(lst) < 2:
+        raise ValueError("List must contain at least two elements")
+    return lst[-2]
+
 if __name__ == '__main__':
-    checker = ValueChecker()
-    print(f"10 == 10: {checker.are_equal(10, 10)}")
-    print(f"'10' == 10: {checker.are_equal('10', 10)}")
-    print(f"10 == 10.0: {checker.are_equal(10, 10.0)}")
-    print(f"10 == 10.0: {checker.are_equal(10, 10.0)}")
-    print(f"10 == 11: {checker.are_equal(10, 11)}")
-    print(f"'10' == 10.0: {checker.are_equal('10', 10.0)}")
-    print(f"10 == '10': {checker.are_equal(10, '10')}")
-    print(f"5.0 == 5: {checker.are_equal(5.0, 5)}")
-    print(f"5.0 == 6: {checker.are_equal(5.0, 6)}")
-    print(f"None == None: {checker.are_equal(None, None)}")
-    print(f"None == 0: {checker.are_equal(None, 0)}")
-    print(f"'' == '': {checker.are_equal('', '')}")
-    print(f"'' == 0: {checker.are_equal('', 0)}")
-    print(f"True == 1: {checker.are_equal(True, 1)}")
-    print(f"False == 0: {checker.are_equal(False, 0)}")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_penultimate(sample_list)
+    print(result)
+
+    another_list = [1, 2]
+    result2 = get_penultimate(another_list)
+    print(result2)
+
+    try:
+        short_list = [1]
+        get_penultimate(short_list)
+    except ValueError as e:
+        print(e)
+
+    try:
+        empty_list = []
+        get_penultimate(empty_list)
+    except ValueError as e:
+        print(e)

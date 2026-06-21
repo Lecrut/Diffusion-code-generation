@@ -1,26 +1,9 @@
-from typing import Any
-
-class ValueChecker:
-    """A utility class to check if two values are identical."""
-
-    @staticmethod
-    def are_equal(a: Any, b: Any) -> bool:
-        """Check if the two input values are identical.
-
-        This method uses the `is` operator for identity checks in Python 3,
-        which is more efficient than using `==` for certain types like integers
-        and strings due to interning mechanisms. However, logically it often matches
-        behavior with `==` for basic equality unless specific mutability nuances apply.
-
-        Args:
-            a (Any): The first value to compare.
-            b (Any): The second value to compare.
-
-        Returns:
-            bool: True if both values are the same object, False otherwise.
-        """
-        return a is b
+def get_penultimate(items):
+    if len(items) < 2:
+        raise ValueError("List must contain at least two elements")
+    return items[-2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing
-    checker = ValueChecker()
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_penultimate(sample_list)
+    print(result)

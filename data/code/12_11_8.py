@@ -1,14 +1,17 @@
-import math
-def calculate_ratio_conversion(base_weight, ratios):
-    converted_weights = {}
-    for ratio in ratios:
-        if ratio == 0:
-            converted_weights[ratio] = float('inf') if base_weight != 0 else float('nan')
-        else:
-            converted_weights[ratio] = base_weight * ratio
-    return converted_weights
+def find_middle_element(sequence):
+    if not sequence:
+        raise ValueError("Empty sequence has no middle element")
+    if not isinstance(sequence, tuple):
+        raise TypeError("Input must be a tuple")
+    mid_index = len(sequence) // 2
+    return sequence[mid_index]
+
 if __name__ == '__main__':
-    base = 100.0
-    ratios_list = [1.5, 0.5, 2.0, 0.0, -1.2]
-    results = calculate_ratio_conversion(base, ratios_list)
-    print(results)
+    sample_tuple = (1, 2, 3, 4, 5)
+    print(find_middle_element(sample_tuple))
+    sample_tuple_even = (1, 2, 3, 4)
+    print(find_middle_element(sample_tuple_even))
+    try:
+        find_middle_element(())
+    except ValueError as e:
+        print(e)

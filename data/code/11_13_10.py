@@ -1,4 +1,9 @@
-import sys  # Not using sys.stdin or args though per restrictions below? Actually restriction says: "No argparse required arguments... Never call input(), sys.stdin, ..." So importing sys is allowed as long as not calling its stdin/args functions explicitly for CLI parsing here since we're avoiding those specific APIs. But wait - the rule says "Never call ... argparse required arguments". That probably means don't use --flag or similar args in command line execution? Since it's Python code, maybe just avoid importing sys if possible unless necessary? Actually, let me stick to minimal imports since we aren't using anything from sys anyway except potentially... No need. Pure function approach without any external libraries like argparse because that would involve argument parsing which might count as "required arguments" usage implicitly.
+def get_last_element(input_list):
+    if not input_list:
+        return None
+    return input_list[-1:]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_element(sample_list)
+    print(result)

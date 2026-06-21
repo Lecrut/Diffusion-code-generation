@@ -1,14 +1,19 @@
-import math
-def calculate_ratio(a, b):
-    if b == 0:
-        raise ZeroDivisionError("Cannot divide by zero")
-    common_divisor = math.gcd(a, b)
-    return a // common_divisor, b // common_divisor
+class EmptyListException(Exception):
+    def __init__(self):
+        super().__init__("Attempted to access last item of an empty list")
+
+def get_last_item(lst):
+    if len(lst) == 0:
+        raise EmptyListException()
+    return lst[-1]
+
 if __name__ == '__main__':
-    num1 = 1234567890123456789
-    num2 = 9876543210987654321
+    sample_values = [10, 20, 30, 40, 50]
+    last_val = get_last_item(sample_values)
+    print(last_val)
+
+    empty_values = []
     try:
-        result1, result2 = calculate_ratio(num1, num2)
-        print(f"Ratio of {num1} and {num2} simplified: {result1} / {result2}")
-    except ZeroDivisionError as e:
-        print(f"Error: {e}")
+        get_last_item(empty_values)
+    except EmptyListException as e:
+        print(str(e))

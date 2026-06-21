@@ -1,24 +1,28 @@
-def calculate_volume_difference(vol1: float, vol2: float) -> str:
-    """
-    Calculates the absolute difference between two volume measurements
-    and returns it formatted to two decimal places as a string.
-    
-    Args:
-        vol1 (float): First volume measurement.
-        vol2 (float): Second volume measurement.
-        
-    Returns:
-        str: Absolute difference rounded to two decimal places, formatted with 
-             leading zeros if necessary (e.g., "0.50").
-    """
-    absolute_difference = abs(vol1 - vol2)
-    return f"{absolute_difference:.2f}"
+THIRD_INDEX = 2
+MINIMUM_LENGTH = 3
+
+def get_third_item(sequence):
+    sequence_length = len(sequence)
+    if sequence_length < MINIMUM_LENGTH:
+        raise IndexError("Input sequence must contain at least three items")
+    target_value = sequence[THIRD_INDEX]
+    return target_value
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    measurement_a = 12.3456789
-    measurement_b = 8.9012345
+    sample_numbers = [100, 200, 300, 400]
+    third_from_numbers = get_third_item(sample_numbers)
+    print(third_from_numbers)
     
-    result = calculate_volume_difference(measurement_a, measurement_b)
+    sample_characters = ['x', 'y', 'z']
+    third_from_chars = get_third_item(sample_characters)
+    print(third_from_chars)
     
-    print(f"The absolute difference between {measurement_a} and {measurement_b} is: {result}")
+    sample_word = "Python"
+    third_from_word = get_third_item(sample_word)
+    print(third_from_word)
+    
+    short_sequence = [1, 2]
+    try:
+        get_third_item(short_sequence)
+    except IndexError as error_message:
+        print(error_message)

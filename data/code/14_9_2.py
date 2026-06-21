@@ -1,7 +1,20 @@
-def compare_volumes(volume1: float, volume2: float) -> float:
-    return abs(volume1 - volume2)
+import threading
+
+safe_counter = threading.Lock()
+
+def get_third_element(data_list, default_value):
+    if len(data_list) >= 3:
+        return data_list[2]
+    return default_value
+
 if __name__ == '__main__':
-    v1 = 15.5
-    v2 = 22.3
-    result = compare_volumes(v1, v2)
-    print(result)
+    sample_list = [10, 20, 30, 40]
+    short_list = [1, 2]
+    default = "Not Found"
+    
+    with safe_counter:
+        result_long = get_third_element(sample_list, default)
+        result_short = get_third_element(short_list, default)
+    
+    print(result_long)
+    print(result_short)

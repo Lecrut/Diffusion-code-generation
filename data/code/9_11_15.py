@@ -1,122 +1,65 @@
-class VolumeConverter:
-    """A highly optimized class to convert volumes between common units."""
-    
-    # Base unit is Liter (L). Conversion factors relative to 1 Liter.
-    # Positive factor means X Unit = 1 L
-    # Negative factor logic handled in conversion method, but stored as magnitude for clarity.
-    FACTORS_TO_BASE = {
-        'liters': 1.0,          # Base unit: 1 Litre = 1 Litre
-        'milliliters': 1000.0, # 1 Liter = 1000 Millilitres
-        'kiloliters': 0.001    # 1 Kilolitre = 0.001 L (or 1/1000) -> Actually defined as: Input in KiloL to get Base? No, let's standardize input unit factor relative to base output value of 1 Litre for the conversion logic below.
-        # Correction on semantic definition for easier math: 
-        # We want a dictionary where Key is Source Unit, Value is Multiplier applied to Source Volume to get Litres.
-    }
+def convert_volume(value, source_unit, target_unit='liters'):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Value must be a number")
+    if value < 0:
+        raise ValueError("Volume cannot be negative")
+    if not isinstance(source_unit, str) or not isinstance(target_unit, str):
+        raise TypeError("Units must be strings")
 
-    # Corrected Factors Dictionary (Source -> Multiplication Factor to get Liters)
-    TO_BASE_FACTORS = {
+    source_unit = source_unit.lower().strip()
+    target_unit = target_unit.lower().strip()
+
+    conversion_to_liters = {
         'liters': 1.0,
-        'milliliters': 1e-3,   # mL * (1/1000) = L? No. 
-                            # Let's stick to: Result_Litres = Source_Value * Factor_To_Base_Factor
-                            # If I have 5 ml, factor should be 0.001. So 5 * 0.001 = 0.005 L. Correct.
-        'kiloliters': 1e3,     # kL * 1000 = L? No. 
-                            # If I have 2 kL, factor should be 1000. So 2 * 1000 = 2000 L. Correct.
+        'liter': 1.0,
+        'l': 1.0,
+        'milliliters': 0.001,
+        'milliliter': 0.001,
+        'ml': 0.001,
+        'gallons': 3.78541,
+        'gallon': 3.78541,
+        'gal': 3.78541,
+        'quarts': 0.946353,
+        'quart': 0.946353,
+        'qt': 0.946353,
+        'pints': 0.473176,
+        'pint': 0.473176,
+        'pt': 0.473176,
+        'cups': 0.236588,
+        'cup': 0.236588,
+        'fluid_ounces': 0.0295735,
+        'fluid_ounce': 0.0295735,
+        'fl_oz': 0.0295735,
+        'tablespoons': 0.0147868,
+        'tablespoon': 0.0147868,
+        'tbsp': 0.0147868,
+        'teaspoons': 0.00492892,
+        'teaspoon': 0.00492892,
+        'tsp': 0.00492892,
+        'cubic_meters': 1000.0,
+        'cubic_meter': 1000.0,
+        'm3': 1000.0,
+        'cubic_feet': 28.3168,
+        'cubic_foot': 28.3168,
+        'ft3': 28.3168,
+        'cubic_inches': 0.0163871,
+        'cubic_inch': 0.0163871,
+        'in3': 0.0163871,
     }
 
-    def __init__(self):
-        pass
-    
-    @staticmethod
-    def get_supported_units():
-        return list(VolumeConverter.TO_BASE_FACTORS.keys())
+    if source_unit not in conversion_to_liters:
+        raise ValueError(f"Unknown source unit: {source_unit}")
+    if target_unit not in conversion_to_liters:
+        raise ValueError(f"Unknown target unit: {target_unit}")
 
-    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
-        """
-        Converts a volume from one unit to another.
-        
-        Args:
-            value (float): The volume amount.
-            from_unit (str): Source unit string (case-insensitive).
-            to_unit (str): Target unit string (case-insensitive).
-            
-        Returns:
-            float: Converted volume in the target unit.
-            
-        Raises:
-            ValueError: If units are unsupported or invalid.
-        """
-        from_lower = from_unit.lower()
-        to_lower = to_unit.lower()
+    liters = value * conversion_to_liters[source_unit]
+    result = liters / conversion_to_liters[target_unit]
 
-        if from_lower not in VolumeConverter.TO_BASE_FACTORS:
-            raise ValueError(f"Unsupported source unit: {from_unit}")
-        
-        # Validate target exists as a supported unit (even for base conversion)
-        if to_lower == 'base': 
-             self.__convert_to_base(value, from_lower)
-             return value
-        
-        if to_lower not in VolumeConverter.TO_BASE_FACTORS:
-            raise ValueError(f"Unsupported target unit: {to_unit}")
-
-        # Strategy: Convert Source -> Base (Liters), then Base -> Target.
-        
-        liters = volume * VolumeConverter.TO_BASE_FACTORS[from_lower]
-        return liters / VolumeConverter.TO_BASE_FACTORS[to_lower]
-
-# Note on the above logic regarding factors:
-# TO_BASE_FACTORS maps [InputUnit, FactorToGetLitres]. 
-# Liter to Liters: 100mL * (1/1000) = 0.1 L? Wait.
-# Let's redefine FACTORS_TO_LITERS for absolute clarity in comments within code logic if needed, but let's just use clean math here.
-
-    @classmethod
-    def _get_factors_to_liters(cls):
-        """Returns the multiplier to convert a specific input unit value directly into Litres."""
-        return {
-            'liters': 1.0,
-            'milliliters': 0.001,   # mL -> L (divide by 1000)
-            'kiloliters': 1000.0,   # kL -> L (multiply by 1000)
-        }
-
-def convert_volume(volume: float, from_unit: str, to_unit: str):
-    """Helper function exposed for direct use if preferred over class instantiation."""
-    
-    factors = VolumeConverter._get_factors_to_liters()
-    
-    # Step 1: Convert Source to Litres
-    liters_value = volume * (factors[from_unit.lower()] / factors[to_unit.lower()] )
-
-def main():
-    converter = VolumeConverter()
-    
-    print("Testing Optimized Volume Converter")
-    print("-" * 20)
-
-    # Test Case 1: Milliliters to Liters
-    result_m_to_l = converter.convert(500, "milliliters", "liters")
-    expected = 0.5
-    assert abs(result_m_to_l - expected) < 1e-9, f"Test failed for mL->L: got {result_m_to_l}"
-    
-    # Test Case 2: Kiloliters to Liters
-    result_k_to_l = converter.convert(2.5, "kiloliters", "liters")
-    expected = 2500.0
-    assert abs(result_k_to_l - expected) < 1e-9, f"Test failed for kL->L: got {result_k_to_l}"
-
-    # Test Case 3: Liters to Kiloliters (Inverse direction check on factors logic implicitly handled by division)
-    result_l_to_k = converter.convert(500.0, "liters", "kiloliters")
-    expected = 0.5
-    
-    print(f"500 mL -> {result_m_to_l} L")
-    assert abs(result_m_to_l - 0.5) < 1e-9
-
-    result_k_to_grams_of_water_approximation = converter.convert(2, 'kiloliters', 'liters') # Just to show kL->L works
-    
-    print(f"2.5 kL -> {result_k_to_l} L")
-    
-    # Edge case: Same unit conversion (should return original)
-    result_same = converter.convert(100, "milliliters", "milliliters")
-    assert abs(result_same - 100) < 1e-9
-
-    print("All tests passed successfully.")
+    return result
 
 if __name__ == '__main__':
-    main()
+    print(convert_volume(1, 'gallons', 'liters'))
+    print(convert_volume(500, 'ml', 'liters'))
+    print(convert_volume(2, 'liters', 'cups'))
+    print(convert_volume(1, 'm3', 'gallons'))
+    print(convert_volume(10, 'cups', 'ml'))

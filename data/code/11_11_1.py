@@ -1,18 +1,13 @@
-import math
-def calculate_length_ratio(length1: float, length2: float) -> float:
-    if length2 == 0.0:
-        return float('inf') if length1 != 0.0 else float('nan')
-    return length1 / length2
+def get_last_item_or_none(items):
+    if not items:
+        return None
+    return items.pop()
+
 if __name__ == '__main__':
-    a = 10.0
-    b = 3.0
-    result = calculate_length_ratio(a, b)
+    sample_list = [10, 20, 30, 40]
+    result = get_last_item_or_none(sample_list)
     print(result)
-    c = 0.0
-    d = 5.0
-    result2 = calculate_length_ratio(a, c)
-    print(result2)
-    e = 0.0
-    f = 0.0
-    result3 = calculate_length_ratio(e, f)
-    print(result3)
+    print(sample_list)
+    empty_list = []
+    result_empty = get_last_item_or_none(empty_list)
+    print(result_empty)

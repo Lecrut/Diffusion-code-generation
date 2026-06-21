@@ -1,19 +1,15 @@
-def calculate_offset_difference(offsets):
-    if not offsets:
-        return 0
-    min_offset = min(offsets)
-    max_offset = max(offsets)
-    return max_offset - min_offset
+from collections import defaultdict
+
+def get_or_initialize(composite_dict, key, factory):
+    if key not in composite_dict:
+        composite_dict[key] = factory()
+    return composite_dict[key]
+
 if __name__ == '__main__':
-    sample_offsets_1 = [5, -2, 10.5, 0]
-    result_1 = calculate_offset_difference(sample_offsets_1)
-    print(result_1)
-    sample_offsets_2 = [-12, 3, -5, 0]
-    result_2 = calculate_offset_difference(sample_offsets_2)
-    print(result_2)
-    sample_offsets_3 = [1.5, 1.5, 1.5]
-    result_3 = calculate_offset_difference(sample_offsets_3)
-    print(result_3)
-    sample_offsets_4 = []
-    result_4 = calculate_offset_difference(sample_offsets_4)
-    print(result_4)
+    data = defaultdict(list)
+    result = get_or_initialize(data, ('A', 'B'), lambda: [1, 2, 3])
+    print(result)
+    result2 = get_or_initialize(data, ('A', 'B'), lambda: [4, 5, 6])
+    print(result2)
+    result3 = get_or_initialize(data, ('C', 'D'), lambda: [])
+    print(result3)

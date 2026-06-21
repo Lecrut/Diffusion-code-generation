@@ -1,101 +1,75 @@
-"""
-Refactored conversion script using custom exceptions for robust error handling.
-This module converts temperature values between Celsius, Fahrenheit, and Kelvin 
-without any external dependencies or interactive input requirements.
-"""
-
 class ConversionError(Exception):
-    """Custom exception raised when a generic conversion error occurs."""
-    pass
+    def __init__(self, message, metadata):
+        super().__init__(message)
+        self.metadata = metadata
 
-class InvalidValueError(ConversionError):
-    """Raised when the input value is not numeric or invalid for calculation."""
-    pass
+class UnknownUnitError(ConversionError):
+    def __init__(self, unit_name):
+        supported = ["km", "m", "ft", "in"]
+        message = f"Unknown unit '{unit_name}'. Supported units: {supported}"
+        super().__init__(message, {"unit": unit_name, "supported": supported})
 
-class UnsupportedUnitError(ConversionError):
-    """Raised when an unsupported temperature unit is provided."""
-    pass
+class NegativeValueError(ConversionError):
+    def __init__(self, value):
+        message = f"Value cannot be negative: {value}"
+        super().__init__(message, {"value": value})
 
-def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
-    """
-    Convert a temperature value between Celsius (C), Fahrenheit (F), and Kelvin (K).
+class ZeroValueError(ConversionError):
+    def __init__(self, value):
+        message = f"Value cannot be zero: {value}"
+        super().__init__(message, {"value": value})
 
-    Args:
-        value: The numerical temperature value.
-        from_unit: Source unit ('celsius', 'fahrenheit', or 'kelvin').
-        to_unit: Target unit ('celsius', 'fahrenheit', or 'kelvin').
+UNIT_FACTORS_TO_METERS = {
+    "km": 1000.0,
+    "m": 1.0,
+    "ft": 0.3048,
+    "in": 0.0254
+}
 
-    Returns:
-        float: The converted temperature value.
-
-    Raises:
-        InvalidValueError: If the input value is not a valid number.
-        UnsupportedUnitError: If either from_unit or to_unit is invalid.
-    """
+def convert_unit(value, from_unit, to_unit):
+    if from_unit not in UNIT_FACTORS_TO_METERS:
+        raise UnknownUnitError(from_unit)
+    if to_unit not in UNIT_FACTORS_TO_METERS:
+        raise UnknownUnitError(to_unit)
     
-    # Validate units first before attempting conversion logic
-    supported_units = {'celsius', 'fahrenheit', 'kelvin'}
-    if from_unit.lower() not in supported_units:
-        raise UnsupportedUnitError(f"Unsupported source unit: {from_unit}. Supported units are {supported_units}")
-    if to_unit.lower() not in supported_units:
-        raise UnsupportedUnitError(f"Unsupported target unit: {to_unit}. Supported units are {supported_units}")
-
-    # Validate input value is a number (float check covers int and float)
-    try:
-        numeric_value = float(value)
-    except ValueError as e:
-        raise InvalidValueError(f"Invalid temperature value '{value}': must be a valid number.") from e
+    if value < 0:
+        raise NegativeValueError(value)
     
-    if not isinstance(numeric_value, (int, float)):
-        # This check is redundant in Python's type hierarchy for float conversion but 
-        # ensures strict adherence to expected types at the function signature level.
-        raise InvalidValueError(f"Temperature value must be numeric: {type(value).__name__}")
-
-    # Perform conversions relative to Celsius as a base unit
-    celsius_value = 0.0
+    if value == 0:
+        raise ZeroValueError(value)
     
-    if from_unit.lower() == 'celsius':
-        celsius_value = numeric_value
-    elif from_unit.lower() == 'fahrenheit':
-        celsius_value = (numeric_value - 32) * 5 / 9
-    elif from_unit.lower() == 'kelvin':
-        celsius_value = numeric_value - 273.15
-
-    # Convert base Celsius to target unit
-    if to_unit.lower() == 'celsius':
-        return celsius_value
-    
-    if to_unit.lower() == 'fahrenheit':
-        result_f = (celsius_value * 9 / 5) + 32
-        return round(result_f, 2)
-
-    if to_unit.lower() == 'kelvin':
-        result_k = celsius_value + 273.15
-        return round(result_k, 4)
-
-def demonstrate_conversion():
-    """
-    Demonstrates the conversion function with hardcoded sample values 
-    as per task requirements without user input or file access.
-    """
-    
-    test_cases = [
-        {"val": "0", "src": "celsius", "dst": "fahrenheit"},
-        {"val": "32", "src": "fahrenheit", "dst": "kelvin"},
-        {"val": "-40", "src": "fahrenheit", "dst": "celsius"},
-        {"val": "100", "src": "celsius", "dst": "kelvin"},
-    ]
-
-    print("Temperature Conversion Demo")
-    print("-" * 30)
-
-    for case in test_cases:
-        try:
-            result = convert_temperature(case["val"], case["src"], case["dst"])
-            print(f"{case['val']}°{case['src'].capitalize()} -> {result}°{case['dst'].capitalize()}")
-        except (InvalidValueError, UnsupportedUnitError) as e:
-            # Logging the error message directly without printing stack traces unless debug is enabled
-            print(f"ERROR in converting {case['val']} from {case['src']}: {e}")
+    meters = value * UNIT_FACTORS_TO_METERS[from_unit]
+    result = meters / UNIT_FACTORS_TO_METERS[to_unit]
+    return result
 
 if __name__ == '__main__':
-    demonstrate_conversion()
+    try:
+        result1 = convert_unit(1000, "m", "km")
+        print(result1)
+        
+        result2 = convert_unit(5, "km", "m")
+        print(result2)
+        
+        result3 = convert_unit(6, "ft", "m")
+        print(result3)
+        
+        result4 = convert_unit(12, "in", "ft")
+        print(result4)
+        
+        try:
+            convert_unit(10, "m", "invalid")
+        except UnknownUnitError as e:
+            print(str(e))
+            
+        try:
+            convert_unit(-5, "m", "km")
+        except NegativeValueError as e:
+            print(str(e))
+            
+        try:
+            convert_unit(0, "m", "km")
+        except ZeroValueError as e:
+            print(str(e))
+            
+    except Exception as e:
+        print(str(e))

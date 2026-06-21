@@ -1,7 +1,7 @@
+def get_second_last_element(lst):
+    return lst[-2]
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 10
-    if num1 == num2:
-        print("The two numbers match.")
-    else:
-        print("The two numbers do not match.")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_last_element(sample_list)
+    print(result)

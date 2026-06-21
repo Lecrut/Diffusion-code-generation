@@ -1,20 +1,13 @@
-def find_min_max_volumes(volumes):
-    if not volumes:
-        return None, None
-    min_volume = volumes[0]
-    max_volume = volumes[0]
-    for volume in volumes[1:]:
-        if volume < min_volume:
-            min_volume = volume
-        if volume > max_volume:
-            max_volume = volume
-    return max_volume, min_volume
+def get_third_element(iterable):
+    for i, item in enumerate(iterable):
+        if i == 2:
+            return item
+    raise IndexError("Iterable does not have a third element")
+
 if __name__ == '__main__':
-    sample_volumes = [10.5, 22.1, 5.8, 30.0, 15.3, 4.9, 28.7]
-    max_v, min_v = find_min_max_volumes(sample_volumes)
-    print(f"Maximum volume: {max_v}")
-    print(f"Minimum volume: {min_v}")
-    sample_volumes_empty = []
-    max_v_empty, min_v_empty = find_min_max_volumes(sample_volumes_empty)
-    print(f"Maximum volume (empty list): {max_v_empty}")
-    print(f"Minimum volume (empty list): {min_v_empty}")
+    sample_data = [10, 20, 30, 40, 50]
+    try:
+        result = get_third_element(sample_data)
+        print(result)
+    except IndexError as e:
+        print(f"Error: {e}")

@@ -1,18 +1,7 @@
-def match_checker(expected_value):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
-            if result != expected_value:
-                raise AssertionError(f"Expected {expected_value}, but got {result}")
-            return result
-        return wrapper
-    return decorator
-@match_checker(42)
-def get_secret_number(a, b):
-    return a + b
+def get_element_before_last(lst):
+    return lst[-2]
+
 if __name__ == '__main__':
-    try:
-        result = get_secret_number(20, 22)
-        print(f"Result: {result}")
-    except AssertionError as e:
-        print(f"Error: {e}")
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_element_before_last(sample_list)
+    print(result)

@@ -1,41 +1,63 @@
-import math
-
 class VolumeConverter:
-    """A class to handle volume conversions using a dictionary-based system."""
+    def __init__(self):
+        self.units = {
+            "L": "L",
+            "ml": "ml",
+            "m3": "m3",
+            "gal": "gal",
+            "qt": "qt",
+            "pt": "pt",
+            "fl_oz": "fl_oz",
+            "cup": "cup",
+            "tbsp": "tbsp",
+            "tsp": "tsp",
+            "in3": "in3",
+            "ft3": "ft3",
+            "cm3": "cm3"
+        }
+        self.to_base = {
+            "L": 1.0,
+            "ml": 0.001,
+            "m3": 1000.0,
+            "gal": 3.785411784,
+            "qt": 0.946352946,
+            "pt": 0.473176473,
+            "fl_oz": 0.0295735295625,
+            "cup": 0.2365882365,
+            "tbsp": 0.01478676478125,
+            "tsp": 0.00492892159375,
+            "in3": 0.016387064,
+            "ft3": 28.316846592,
+            "cm3": 0.001
+        }
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit not in self.to_base:
+            raise ValueError(f"Unknown source unit: {from_unit}")
+        if to_unit not in self.to_base:
+            raise ValueError(f"Unknown target unit: {to_unit}")
+        if value < 0:
+            raise ValueError("Volume cannot be negative")
+        base_value = value * self.to_base[from_unit]
+        result = base_value / self.to_base[to_unit]
+        return result
+
+if __name__ == "__main__":
+    converter = VolumeConverter()
+    liters = 5
+    ml = converter.convert(liters, "L", "ml")
+    gallons = converter.convert(liters, "L", "gal")
+    cubic_meters = converter.convert(liters, "L", "m3")
+    quarts = converter.convert(liters, "L", "qt")
+    cubic_inches = converter.convert(liters, "L", "in3")
+    print(f"{liters} L = {ml} ml")
+    print(f"{liters} L = {gallons} gal")
+    print(f"{liters} L = {cubic_meters} m3")
+    print(f"{liters} L = {quarts} qt")
+    print(f"{liters} L = {cubic_inches} in3")
     
-    def __init__(self):
-        # Base unit is cubic meters (m³). All other units are defined relative to m³.
-        self._base_unit = "m3"
-        
-        # Mapping of all required conversion factors from base unit (m³) to each target unit.
-        # Value represents: 1 <target_unit> = X * 1_base_unit
-        self._conversion_factors = {
-            "ml": 0.001,           # 1 ml = 0.001 m³
-            "l": 0.001,           # 1 L = 0.001 m³ (Note: Liter is defined as exactly 0.001 cubic meters)
-            "gal_us": 3785411.784,   # 1 US gallon ≈ 3785411.784 ml = ... wait, let's re-calculate relative to m³ directly for precision.
-        }
-        
-        # Correction: Let's define factors as "value in base unit (m³) per one target unit".
-        # So if I have 1 gallon, how many m³ is it? Or conversely, what factor converts input volume of type T to output volume of type B.
-        # Standard approach for decoupled logic: 
-        # Define a dictionary where keys are units and values are the number of base_units in one unit_of_key.
-        # E.g., 1 m3 = 1 * m3_base => factor is 1.0
-        #      1 l   = 0.001 * m3_base => factor is 0.001
-        
-        self._factors_from_base = {
-            "m3": 1.0,
-            "ml": 1e-6,           # 1 ml = 0.000001 m³ (Correction: Liter = cubic decimeter. 1 L = 0.001 m^3. 1 ml = 1e-6 m^3)
-            "l": 1e-3,            # 1 L = 0.001 m³
-            "gal_us": 2834795.747,   # Wait, this is wrong direction. 
-        }
-
-    def __init__(self):
-        """Initialize the converter with precise conversion factors relative to cubic meters (m³)."""
-        self._base_unit = "m3"
-        
-        # Dictionary mapping unit names to their value in terms of 1 base_unit (cubic meter).
-        # This ensures logic is decoupled from constants. To convert A -> B: 
-        # result(A) * factors[A] / factors[B]
-
-if __name__ == '__main__':
-    pass
+    sample_gallons = 10
+    liters_from_gallons = converter.convert(sample_gallons, "gal", "L")
+    ml_from_gallons = converter.convert(sample_gallons, "gal", "ml")
+    print(f"{sample_gallons} gal = {liters_from_gallons} L")
+    print(f"{sample_gallons} gal = {ml_from_gallons} ml")

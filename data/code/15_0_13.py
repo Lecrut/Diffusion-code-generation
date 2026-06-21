@@ -1,6 +1,6 @@
-def check_match(value1: any, value2: any) -> bool:
-    """Check if two values are exactly equal."""
-    return value1 == value2
+def get_second_to_last(items):
+    return items[-2]
 
 if __name__ == '__main__':
-    result = check_match(42, 43)
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_second_to_last(sample_list))

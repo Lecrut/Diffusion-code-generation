@@ -1,45 +1,46 @@
-class ConversionError(Exception):
-    pass
-class InvalidSourceError(ConversionError):
-    pass
-class InvalidTargetError(ConversionError):
-    pass
-def convert_data(source_value, target_type):
-    if not isinstance(source_value, (int, float)):
-        raise InvalidSourceError(f"Source value must be a number, got {source_value}")
-    if target_type == 'int':
-        if source_value != int(source_value):
-            raise ConversionError(f"Cannot convert {source_value} to integer without loss")
-        return int(source_value)
-    elif target_type == 'float':
-        return float(source_value)
+class ConversionBaseError(Exception):
+    def __init__(self, message, data):
+        super().__init__(message)
+        self.data = data
+
+class UnitNotSupportedError(ConversionBaseError):
+    def __init__(self, unit):
+        supported = ['feet', 'meters']
+        message = f"Unit '{unit}' is not supported. Supported: {supported}"
+        super().__init__(message, {"unit": unit, "supported": supported})
+
+class InvalidValueError(ConversionBaseError):
+    def __init__(self, value):
+        message = f"Value must be a positive number, got: {value}"
+        super().__init__(message, {"value": value})
+
+class ZeroValueError(ConversionBaseError):
+    def __init__(self, value):
+        message = f"Value cannot be zero: {value}"
+        super().__init__(message, {"value": value})
+
+def convert(value, unit):
+    if not isinstance(value, (int, float)):
+        raise InvalidValueError(value)
+    if value <= 0:
+        raise ZeroValueError(value)
+    
+    feet_to_meters_factor = 0.3048
+    
+    if unit == 'feet':
+        return value * feet_to_meters_factor
+    elif unit == 'meters':
+        return value / feet_to_meters_factor
     else:
-        raise InvalidTargetError(f"Unsupported target type: {target_type}")
+        raise UnitNotSupportedError(unit)
+
+def format_result(value, unit, converted_value):
+    return f"{value} {unit} = {converted_value:.4f} meters"
+
 if __name__ == '__main__':
-    sample_source = 10.5
-    sample_target = 'float'
     try:
-        result = convert_data(sample_source, sample_target)
-        print(f"Conversion successful. Result: {result}")
-    except InvalidSourceError as e:
-        print(f"Source Error: {e}")
-    except InvalidTargetError as e:
-        print(f"Target Error: {e}")
-    except ConversionError as e:
-        print(f"Conversion Logic Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    print("-" * 20)
-    sample_source_invalid = "hello"
-    sample_target_int = 'int'
-    try:
-        result = convert_data(sample_source_invalid, sample_target_int)
-        print(f"Conversion successful. Result: {result}")
-    except InvalidSourceError as e:
-        print(f"Source Error: {e}")
-    except InvalidTargetError as e:
-        print(f"Target Error: {e}")
-    except ConversionError as e:
-        print(f"Conversion Logic Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        result = convert(10, 'feet')
+        output = format_result(10, 'feet', result)
+        print(output)
+    except ConversionBaseError as e:
+        print(f"Error: {e}")

@@ -1,30 +1,54 @@
-def convert_volume(value: float, source_unit: str, target_unit: str = None) -> float:
-    """
-    Converts a volume value from one unit to another using predefined rates.
-    
-    Args:
-        value (float): The volume value to be converted.
-        source_unit (str): The source unit string (e.g., 'ml', 'L').
-        target_unit (str, optional): The target unit string. If None, returns the original value in the same unit scaled by 10^6 for scientific notation demonstration or simply returns if units match logic is implied but here we assume conversion to liters as default if not specified? 
-                                  Actually re-reading: "returns the equivalent volume in a target unit specified by an optional parameter".
-                                  If target_unit is None, behavior isn't strictly defined in prompt. 
-                                  Let's interpret: if no target provided, maybe return value * 10^6 to show scale or just assume liters? 
-                                  Better interpretation based on "optional": if not given, perhaps it defaults to a standard like 'L' (Liters) for consistency demonstration, OR we can treat None as keeping the unit but that's trivial.
-                                  Let's make target_unit default to 'L' (Liters) so there is always an output unless specified otherwise? 
-                                  Wait, prompt says "specified by an optional parameter". Usually means if not provided, maybe keep original or error? 
-                                  But task says "returns the equivalent volume in a target unit". If no target, what to return?
-                                  Let's assume if None, it defaults to 'L' (Liters) for utility. Or perhaps we can just convert TO Liters by default if not specified.
-                                  Actually, let's look at constraints: "accepts ... and returns the equivalent volume in a target unit". 
-                                  If I don't specify target, maybe return value * 10^6? No that changes meaning.
-                                  Let's assume if target_unit is None, it defaults to 'L' (Liters) for practicality.
-    
-    Returns:
-        float: The converted volume in the target unit.
+import argparse
+import sys
 
-    Raises:
-        ValueError: If units are not recognized or value is invalid.
-    """
-    # Define conversion rates relative to Liters (1 L = 1000 ml, etc.)
+VALID_UNITS = ['cups', 'fluid_ounces', 'pints', 'quarts', 'gallons', 'tablespoons', 'teaspoons', 'milliliters', 'liters']
+
+def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'cups': 236.588,
+        'fluid_ounces': 29.5735,
+        'pints': 473.176,
+        'quarts': 946.353,
+        'gallons': 3785.41,
+        'tablespoons': 14.7868,
+        'teaspoons': 4.92892,
+        'milliliters': 1.0,
+        'liters': 1000.0
+    }
+    
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    
+    if from_unit_lower not in conversion_factors:
+        raise ValueError(f"Invalid input unit: {from_unit}")
+    if to_unit_lower not in conversion_factors:
+        raise ValueError(f"Invalid output unit: {to_unit}")
+        
+    value_in_ml = value * conversion_factors[from_unit_lower]
+    result = value_in_ml / conversion_factors[to_unit_lower]
+    return result
+
+def main():
+    parser = argparse.ArgumentParser(description='Convert volume between different units.')
+    parser.add_argument('--value', type=float, required=True, help='The volume value to convert')
+    parser.add_argument('--from-unit', type=str, required=True, help='The input unit')
+    parser.add_argument('--to-unit', type=str, required=True, help='The desired output unit')
+    
+    args = parser.parse_args()
+    
+    try:
+        result = convert_volume(args.value, args.from_unit, args.to_unit)
+        print(result)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == '__main__':
-    pass
+    sample_value = 2.0
+    sample_from_unit = 'cups'
+    sample_to_unit = 'milliliters'
+    result = convert_volume(sample_value, sample_from_unit, sample_to_unit)
+    print(result)

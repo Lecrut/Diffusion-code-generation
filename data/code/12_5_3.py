@@ -1,32 +1,16 @@
-import math
-def simplify_ratio(numerator, denominator):
-    common = math.gcd(numerator, denominator)
-    return numerator // common, denominator // common
-def calculate_and_simplify_ratio(ratio1_str, ratio2_str):
-    parts1 = ratio1_str.split(':')
-    parts2 = ratio2_str.split(':')
-    if len(parts1) != 2 or len(parts2) != 2:
-        raise ValueError("Input ratios must be in the format A:B")
-    A = int(parts1[0])
-    B = int(parts1[1])
-    C = int(parts2[0])
-    D = int(parts2[1])
-    numerator = A * D
-    denominator = B * C
-    if denominator == 0:
-        raise ZeroDivisionError("Denominator is zero")
-    num_simplified, den_simplified = simplify_ratio(numerator, denominator)
-    return f"{num_simplified}:{den_simplified}"
+def get_middle(seq):
+    mid_index = len(seq) // 2
+    return seq[mid_index]
+
 if __name__ == '__main__':
-    ratio1 = "2:3"
-    ratio2 = "4:5"
-    result = calculate_and_simplify_ratio(ratio1, ratio2)
+    result = get_middle([1, 2, 3, 4, 5])
     print(result)
-    ratio1 = "10:15"
-    ratio2 = "6:8"
-    result = calculate_and_simplify_ratio(ratio1, ratio2)
-    print(result)
-    ratio1 = "1:2"
-    ratio2 = "3:4"
-    result = calculate_and_simplify_ratio(ratio1, ratio2)
-    print(result)
+    assert result == 3, "Middle of [1, 2, 3, 4, 5] should be 3"
+    
+    result2 = get_middle([10, 20])
+    print(result2)
+    assert result2 == 20, "Middle of [10, 20] should be 20"
+    
+    result3 = get_middle([42])
+    print(result3)
+    assert result3 == 42, "Middle of [42] should be 42"

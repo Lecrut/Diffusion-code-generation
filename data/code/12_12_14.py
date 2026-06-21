@@ -1,25 +1,17 @@
-class WeightRatioConverter:
-    """
-    A class to convert multiple weight ratios into a normalized weight distribution.
-    
-    Best Practices Adherence:
-    - Encapsulation of conversion logic within private methods and public interfaces.
-    - Input validation using raise statements for clarity over try/except blocks where appropriate.
-    - Immutability in design by not modifying internal state after initialization.
-    - Clear documentation via docstrings explaining the behavior, parameters, and return values.
-    
-    Attributes:
-        None (stateless class)
-        
-    Methods:
-        normalize(ratios): Normalizes a list of ratios into weights summing to 1.0.
-        convert_weight_to_ratio(weight_value): Converts an absolute weight value back to its relative ratio based on total input.
-    
-    Raises:
-        TypeError: If the input is not a list or contains non-numeric values.
-        ValueError: If any element in the ratios is negative, zero, or infinity.
-        ZeroDivisionError: Specifically raised if all elements are effectively zero after validation (handled internally).
-    """
+import numpy as np
+
+def get_middle_element(arr: np.ndarray) -> float:
+    if arr.ndim != 1:
+        raise ValueError("Input array must be 1-dimensional")
+    if arr.size == 0:
+        raise ValueError("Input array cannot be empty")
+    mid_index = arr.size // 2
+    if arr.size % 2 == 0:
+        return (arr[mid_index - 1] + arr[mid_index]) / 2.0
+    return float(arr[mid_index])
 
 if __name__ == '__main__':
-    pass
+    sample_odd = np.array([1, 3, 5, 7, 9])
+    sample_even = np.array([1, 2, 3, 4])
+    print(get_middle_element(sample_odd))
+    print(get_middle_element(sample_even))

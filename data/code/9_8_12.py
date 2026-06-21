@@ -1,29 +1,24 @@
 import numpy as np
 
-def convert_volume(volume_liters: np.ndarray) -> tuple[np.ndarray, str]:
-    """
-    Converts a NumPy array of volumes from liters to cubic meters using vectorized operations.
-    
-    Args:
-        volume_liters (np.ndarray): Input array containing volume measurements in liters.
-        
-    Returns:
-        tuple: A tuple containing the converted array in cubic meters and a status message.
-    """
-    # Conversion factor: 1 liter = 0.001 cubic meter
-    conversion_factor = np.array([0.001])
-    
-    # Vectorized multiplication to convert all values at once
-    volume_cubic_meters = volume_liters * conversion_factor
-    
-    return volume_cubic_meters, "Conversion successful"
+def convert_volumes_volumes(input_array, from_unit, to_unit):
+    conversions = {
+        ('ml', 'ml'): 1.0,
+        ('ml', 'l'): 0.001,
+        ('ml', 'gal'): 0.000264172,
+        ('l', 'ml'): 1000.0,
+        ('l', 'l'): 1.0,
+        ('l', 'gal'): 0.264172,
+        ('gal', 'ml'): 3785.41,
+        ('gal', 'l'): 3.78541,
+        ('gal', 'gal'): 1.0,
+    }
+    key = (from_unit.lower(), to_unit.lower())
+    if key not in conversions:
+        raise ValueError(f"Unsupported conversion from {from_unit} to {to_unit}")
+    factor = conversions[key]
+    return input_array * factor
 
 if __name__ == '__main__':
-    # Hard-coded sample data representing 5 measurements in liters
-    samples_liters = np.array([10.5, 250.0, 3.75, 1000.0, 0.0])
-    
-    converted_array, status_message = convert_volume(samples_liters)
-    
-    print(f"Status: {status_message}")
-    print("Original values (Liters):", samples_liters)
-    print("Converted values (Cubic Meters):", converted_array)
+    measurements = np.array([100, 250, 500, 1000, 2500])
+    converted = convert_volumes_volumes(measurements, 'ml', 'l')
+    print(converted)

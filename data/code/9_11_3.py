@@ -1,108 +1,45 @@
-import math
+def convert_volume(volume, source_unit, target_unit="liters"):
+    conversion_to_base = {
+        "liters": 1.0,
+        "milliliters": 0.001,
+        "gallons": 3.78541,
+        "quarts": 0.946353,
+        "pints": 0.473176,
+        "cups": 0.236588,
+        "fluid_ounces": 0.0295735,
+        "tablespoons": 0.0147868,
+        "teaspoons": 0.00492892,
+        "cubic_meters": 1000.0,
+        "cubic_centimeters": 0.001,
+        "cubic_inches": 0.0163871
+    }
 
-class VolumeConverter:
-    """
-    Optimized class to convert volume between various units using liters as the base unit.
-    
-    Supported units (abbreviations):
-        - ml   : milliliter
-        - l    : liter
-        - cl   : centiliter
-        - dl   : deciliter
-        - hL   : hectoliter
-        - m3   : cubic meter
-    
-    Conversion factors relative to liters:
-        1 ml = 0.001 L
-        1 l  = 1 L
-        1 cl = 0.01 L
-        1 dl = 0.1 L
-        1 hL = 100 L
-        1 m3 = 1000 L
-    
-    The class handles conversion from any supported unit to liters and vice versa,
-    ensuring high efficiency through direct multiplication/division without repeated lookups.
-    """
+    if not isinstance(volume, (int, float)):
+        raise ValueError("Volume must be a number")
 
-    def __init__(self):
-        # Predefined factors relative to base unit (liters)
-        self._factors = {
-            'ml': 0.001,
-            'l': 1.0,
-            'cl': 0.01,
-            'dl': 0.1,
-            'hL': 100.0,
-            'm3': 1000.0
-        }
+    if volume < 0:
+        raise ValueError("Volume cannot be negative")
 
-    def _validate_unit(self, unit):
-        """Check if the provided unit is supported."""
-        return unit.lower() in self._factors
+    source_unit_lower = source_unit.lower()
+    target_unit_lower = target_unit.lower()
 
-    def to_base_unit(self, value: float, from_unit: str) -> float:
-        """Convert a volume from any supported unit to liters (base unit)."""
-        if not isinstance(value, (int, float)):
-            raise TypeError("Value must be an integer or float.")
-        
-        lower_unit = from_unit.lower()
-        if not self._validate_unit(lower_unit):
-            raise ValueError(f"Unsupported volume unit: {from_unit}. Supported units are ml, l, cl, dl, hL, m3.")
+    if source_unit_lower not in conversion_to_base:
+        raise ValueError(f"Unsupported source unit: {source_unit}")
 
-        return value * self._factors[lower_unit]
+    if target_unit_lower not in conversion_to_base:
+        raise ValueError(f"Unsupported target unit: {target_unit}")
 
-    def to_other_unit(self, value: float, from_unit: str, to_unit: str) -> float:
-        """Convert a volume from one supported unit to another."""
-        if not isinstance(value, (int, float)):
-            raise TypeError("Value must be an integer or float.")
-        
-        lower_from = from_unit.lower()
-        lower_to = to_unit.lower()
+    base_volume = volume * conversion_to_base[source_unit_lower]
+    converted_volume = base_volume / conversion_to_base[target_unit_lower]
 
-        if not self._validate_unit(lower_from) or not self._validate_unit(lower_to):
-            raise ValueError(f"Unsupported volume unit(s). Supported units are ml, l, cl, dl, hL, m3.")
-
-        # Convert from source to base (liters), then to target
-        liters = value * self._factors[lower_from]
-        return liters / self._factors[lower_to]
+    return converted_volume
 
 if __name__ == '__main__':
-    converter = VolumeConverter()
+    result1 = convert_volume(1, "gallons")
+    print(result1)
 
-    # Sample conversions demonstrating functionality without user input or external dependencies
-    
-    # Convert 500 ml to liters
-    result_1 = converter.to_base_unit(500, 'ml')
-    
-    # Convert 2.5 m3 to liters
-    result_2 = converter.to_base_unit(2.5, 'm3')
-    
-    # Convert 1 liter back to milliliters (liters -> ml)
-    result_3 = converter.to_other_unit(result_2, 'l', 'ml')
-    
-    # Convert 0.5 hL to deciliters (hL -> dl)
-    result_4 = converter.to_other_unit(0.5, 'hL', 'dl')
+    result2 = convert_volume(500, "milliliters", "cups")
+    print(result2)
 
-    print(f"Converted {result_1} liters from 500 ml")
-    print(f"Converted {result_2} liters from 2.5 m3")
-    print(f"Converted {result_3} milliliters from the previous result in liters")
-    print(f"Converted {result_4} deciliters from 0.5 hL")
-
-    # Additional test case: direct conversion between non-base units (cl -> dl)
-    cl_value = 125
-    dl_result = converter.to_other_unit(cl_value, 'cl', 'dl')
-    print(f"Converted {dl_result} deciliters from {cl_value} centiliters")
-
-    # Edge case: zero value
-    zero_liters = converter.to_base_unit(0, 'l')
-    assert zero_liters == 0.0
-    
-    # Negative volume (physically possible in some contexts like debt or virtual space)
-    neg_ml = -150
-    neg_liters = converter.to_base_unit(neg_ml, 'ml')
-    print(f"Converted {neg_liters} liters from negative input")
-
-    # Verify factor consistency: 3 cl should be equal to 0.03 L via two steps (cl -> l -> base)
-    step1 = converter.to_other_unit(3, 'cl', 'l')
-    assert abs(step1 - 0.03) < 1e-9
-    
-    print("All sample tests passed successfully.")
+    result3 = convert_volume(10, "cubic_inches", "liters")
+    print(result3)

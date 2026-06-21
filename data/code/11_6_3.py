@@ -1,21 +1,23 @@
-import math
-def calculate_ratio(a, b):
-    if b == 0:
-        raise ZeroDivisionError("Cannot divide by zero")
-    common_divisor = math.gcd(a, b)
-    return a // common_divisor, b // common_divisor
+class EmptySequenceException(Exception):
+    def __init__(self, seq_type):
+        self.seq_type = seq_type
+        super().__init__(f"Cannot access end of empty {seq_type}")
+
+def extract_final_element(collection):
+    if len(collection) == 0:
+        raise EmptySequenceException(type(collection).__name__)
+    return collection[-1]
+
 if __name__ == '__main__':
-    num1 = 1234567890123456789
-    num2 = 9876543210987654321
+    sample_data = [10, 20, 30, 40]
     try:
-        result1, result2 = calculate_ratio(num1, num2)
-        print(f"Ratio of {num1} and {num2} simplified: {result1} / {result2}")
-    except ZeroDivisionError as e:
-        print(f"Error: {e}")
-    num3 = 10000000000000000000000000000000
-    num4 = 5000000000000000000000000000000
+        final_val = extract_final_element(sample_data)
+        print(final_val)
+    except EmptySequenceException as e:
+        print(repr(e))
+
+    empty_data = []
     try:
-        result3, result4 = calculate_ratio(num3, num4)
-        print(f"Ratio of {num3} and {num4} simplified: {result3} / {result4}")
-    except ZeroDivisionError as e:
-        print(f"Error: {e}")
+        extract_final_element(empty_data)
+    except EmptySequenceException as e:
+        print(repr(e))

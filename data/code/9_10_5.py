@@ -1,59 +1,52 @@
-import math
-def convert_volume(value, from_unit, to_unit):
-    conversion_factors = {
-        "L": 1.0,
-        "mL": 1000.0,
-        "m3": 1000.0,
-        "gal": 3.78541,
-        "L": 1.0,
-        "mL": 1000.0,
-        "m3": 1000.0,
-        "gal": 3.78541
+class VolumeConverter:
+    _LITERS_TO_UNIT = {
+        'liter': 1.0,
+        'milliliter': 0.001,
+        'gallon_us': 3.785411784,
+        'gallon_uk': 4.54609,
+        'quart_us': 0.946352946,
+        'quart_uk': 1.1365225,
+        'pint_us': 0.473176473,
+        'pint_uk': 0.56826125,
+        'cup_us': 0.2365882365,
+        'cup_uk': 0.284130625,
+        'fluid_ounce_us': 0.0295735295625,
+        'fluid_ounce_uk': 0.0284130625,
+        'tablespoon_us': 0.01478676478125,
+        'tablespoon_uk': 0.0177581640625,
+        'teaspoon_us': 0.00492892159375,
+        'teaspoon_uk': 0.0059193946875,
+        'cubic_meter': 1000.0,
+        'cubic_foot': 28.316846592,
+        'cubic_inch': 0.016387064,
     }
-    if from_unit == to_unit:
-        return value
-    if from_unit == "L":
-        if to_unit == "mL":
-            return value * 1000.0
-        elif to_unit == "m3":
-            return value / 1000.0
-        elif to_unit == "gal":
-            return value / 3.78541
-    elif from_unit == "mL":
-        if to_unit == "L":
-            return value / 1000.0
-        elif to_unit == "m3":
-            return value / 1000000.0
-        elif to_unit == "gal":
-            return value / 3785.41
-    elif from_unit == "m3":
-        if to_unit == "L":
-            return value * 1000.0
-        elif to_unit == "mL":
-            return value * 1000000.0
-        elif to_unit == "gal":
-            return value * 264.172
-    elif from_unit == "gal":
-        if to_unit == "L":
-            return value * 3.78541
-        elif to_unit == "mL":
-            return value * 3785.41
-        elif to_unit == "m3":
-            return value * 0.00378541
-    else:
-        return "Error: Unknown unit"
-def main():
-    sample_value = 5.0
-    from_unit = "L"
-    to_unit = "gal"
-    result = convert_volume(sample_value, from_unit, to_unit)
-    print(f"Sample Value: {sample_value} {from_unit}")
-    print(f"Conversion to {to_unit}: {result:.4f}")
-    sample_value_2 = 1000.0
-    from_unit_2 = "mL"
-    to_unit_2 = "m3"
-    result_2 = convert_volume(sample_value_2, from_unit_2, to_unit_2)
-    print(f"\nSample Value: {sample_value_2} {from_unit_2}")
-    print(f"Conversion to {to_unit_2}: {result_2:.6f}")
+
+    def to_base(self, value, from_unit):
+        from_unit_lower = from_unit.lower()
+        if from_unit_lower not in self._LITERS_TO_UNIT:
+            raise ValueError(f"Unsupported unit: {from_unit}")
+        liters = value * self._LITERS_TO_UNIT[from_unit_lower]
+        return liters
+
+    def from_base(self, value, to_unit):
+        to_unit_lower = to_unit.lower()
+        if to_unit_lower not in self._LITERS_TO_UNIT:
+            raise ValueError(f"Unsupported unit: {to_unit}")
+        target_value = value / self._LITERS_TO_UNIT[to_unit_lower]
+        return target_value
+
+    def convert(self, value, from_unit, to_unit):
+        base_value = self.to_base(value, from_unit)
+        result = self.from_base(base_value, to_unit)
+        return result
+
 if __name__ == '__main__':
-    main()
+    converter = VolumeConverter()
+    liters_result = converter.to_base(5, 'gallon_us')
+    print(liters_result)
+    
+    gallons_result = converter.from_base(10, 'gallon_us')
+    print(gallons_result)
+    
+    direct_result = converter.convert(1, 'cubic_meter', 'gallon_us')
+    print(direct_result)

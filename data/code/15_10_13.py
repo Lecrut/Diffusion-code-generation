@@ -1,25 +1,19 @@
-def check_match(value1: any, value2: any) -> bool:
-    """
-    Returns True if value1 is exactly equal to value2, False otherwise.
-    
-    Args:
-        value1: First argument to compare.
-        value2: Second argument to compare.
-        
-    Returns:
-        Boolean indicating equality of the two arguments.
-    """
-    return value1 == value2
+def get_penultimate_element(items):
+    length = len(items)
+    if length < 2:
+        raise ValueError("List must contain at least two elements")
+    return items[length - 2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing
-    samples = [
-        (5, 5),           # Should be True
-        ("hello", "world"), # Should be False
-        ([1, 2], [1, 2]), # Should be True
-        ({'a': 1}, {'b': 1}), # Should be False
-    ]
-
-    for val1, val2 in samples:
-        result = check_match(val1, val2)
-        print(f"check_match({val1!r}, {val2!r}) = {result}")
+    numeric_sequence = [5, 12, 19, 26, 33]
+    found_value = get_penultimate_element(numeric_sequence)
+    print(found_value)
+    try:
+        get_penultimate_element([])
+    except ValueError as error:
+        print(error)
+    single_item = [42]
+    try:
+        get_penultimate_element(single_item)
+    except ValueError as error:
+        print(error)

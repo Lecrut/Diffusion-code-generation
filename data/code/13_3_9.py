@@ -1,41 +1,37 @@
-from datetime import datetime
-import time
-
-def calculate_elapsed_time(timestamps):
-    """
-    Calculates the total elapsed time between the earliest and latest timestamp
-    in a list of ISO 8601 formatted strings.
-
-    Args:
-        timestamps (list[str]): List of ISO 8601 date-time strings.
-
-    Returns:
-        float: Elapsed time in seconds. Raises ValueError if input is invalid or empty.
-    """
-    if not isinstance(timestamps, list):
-        raise TypeError("Input must be a list.")
-    
-    if len(timestamps) == 0:
-        return 0.0
-
-    try:
-        parsed_times = [datetime.fromisoformat(ts) for ts in timestamps]
-        earliest_time = min(parsed_times)
-        latest_time = max(parsed_times)
-        
-        elapsed_seconds = (latest_time - earliest_time).total_seconds()
-        return elapsed_seconds
-    except ValueError as e:
-        raise ValueError(f"Invalid timestamp format encountered: {e}")
+def get_nested_value(data, path):
+    keys = path.split('.')
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        elif isinstance(current, list):
+            try:
+                index = int(key)
+                current = current[index]
+            except (ValueError, IndexError):
+                raise KeyError(key)
+        else:
+            raise KeyError(key)
+    return current
 
 if __name__ == '__main__':
-    # Sample data without user input or external dependencies
-    sample_timestamps = [
-        "2023-10-05T09:30:00",
-        "2023-10-06T14:45:30",
-        "2023-10-07T18:00:00"
-    ]
-
-    elapsed_seconds = calculate_elapsed_time(sample_timestamps)
-
-    print(f"The total elapsed time is {elapsed_seconds:.2f} seconds")
+    sample_data = {
+        "level1": {
+            "level2": {
+                "level3": {
+                    "value": 42
+                }
+            }
+        },
+        "array": [
+            {"item": "first"},
+            {"item": "second"},
+            {"item": "third"}
+        ]
+    }
+    
+    result1 = get_nested_value(sample_data, "level1.level2.level3.value")
+    print(result1)
+    
+    result2 = get_nested_value(sample_data, "array.1.item")
+    print(result2)

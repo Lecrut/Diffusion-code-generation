@@ -1,11 +1,7 @@
-def calculate_temperature_difference(actual: float, expected: float) -> float:
-    """Calculate the absolute difference between two temperature readings."""
-    return abs(actual - expected)
+def extract_first_name(name_list):
+    return name_list[0]
 
 if __name__ == '__main__':
-    t_actual = 25.0
-    t_expected = 24.8
-    
-    diff = calculate_temperature_difference(t_actual, t_expected)
-    
-    print(f"Temperature Difference: {diff}")
+    sample_names = ["Alice", "Bob", "Charlie"]
+    first = extract_first_name(sample_names)
+    print(first)

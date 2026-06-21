@@ -1,28 +1,21 @@
-from datetime import datetime, timedelta, timezone
-
-def calculate_time_delta(dt1: datetime, dt2: datetime) -> timedelta:
-    """
-    Calculates the time difference between two timezone-aware datetime objects.
-    
-    Args:
-        dt1 (datetime): First timezone-aware datetime object.
-        dt2 (datetime): Second timezone-aware datetime object.
-        
-    Returns:
-        timedelta: The absolute time difference between the two datetimes.
-    """
-    # Ensure both are in UTC to handle any potential non-UTC offsets correctly,
-    # though subtraction handles mixed zones by converting internally if they differ.
-    utc_dt1 = dt1.astimezone(timezone.utc)
-    utc_dt2 = dt2.astimezone(timezone.utc)
-    
-    return abs(utc_dt2 - utc_dt1)
+def get_nested_element(matrix, row_idx, col_idx, default=None):
+    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+        return default
+    if 0 <= row_idx < len(matrix):
+        row = matrix[row_idx]
+        if 0 <= col_idx < len(row):
+            return row[col_idx]
+    return default
 
 if __name__ == '__main__':
-    # Sample values: two datetime objects in different timezones
-    sample_datetime_1 = datetime(2023, 10, 5, 14, 30, 0, tzinfo=timezone.utc)
-    sample_datetime_2 = datetime(2023, 10, 6, 8, 15, 0, tzinfo=timezone(timedelta(hours=-5)))
-
-    result_delta = calculate_time_delta(sample_datetime_1, sample_datetime_2)
-    
-    print(f"Time difference: {result_delta}")
+    sample_matrix = [
+        [10, 20, 30],
+        [40, 50, 60],
+        [70, 80, 90]
+    ]
+    result_1 = get_nested_element(sample_matrix, 1, 2, default="Not Found")
+    result_2 = get_nested_element(sample_matrix, 5, 0, default="Out of Bounds")
+    result_3 = get_nested_element(sample_matrix, 0, 1, default="Default Val")
+    print(result_1)
+    print(result_2)
+    print(result_3)

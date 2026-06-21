@@ -1,38 +1,16 @@
-def compare_temperatures(temp1: float, temp2: float) -> tuple[int]:
-    """
-    Compare two floating-point temperature values.
+def _validate_list_arg(arg):
+    if not isinstance(arg, list):
+        raise TypeError("Argument must be a list")
+    if len(arg) == 0:
+        raise ValueError("List must not be empty")
+    return arg
 
-    Returns a tuple indicating the relationship between temperatures:
-        (0, ) if they are equal
-        (-1,) if temp1 is lower than temp2
-         1) if temp1 is higher than temp2
-    
-    Args:
-        temp1: First temperature value as float.
-        temp2: Second temperature value as float.
-
-    Returns:
-        A tuple of integers representing the comparison result.
-    """
-    if temp1 < temp2:
-        return (-1,)
-    elif temp1 > temp2:
-        return (1,)
-    else:
-        return ()
+def get_first_element(lst):
+    validated_list = _validate_list_arg(lst)
+    first_index = 0
+    return validated_list[first_index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or files
-    t_a = 23.5
-    t_b = 20.7
-    
-    result = compare_temperatures(t_a, t_b)
-    
-    if not result:
-        print("Temperatures are equal.")
-    else:
-        direction_map = {(-1,), "lower", (1,), "higher"}
-        # Determine string representation based on the tuple value
-        val = 0 if not result[0] == 0 and len(result) > 0 else -1
-        
-        print(f"Temperature A ({t_a}) is {'higher' if val == 1 else 'lower'} than Temperature B ({t_b}).")
+    fruits = ["mango", "orange", "grape", "kiwi"]
+    first_item = get_first_element(fruits)
+    print(first_item)

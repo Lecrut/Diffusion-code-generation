@@ -1,24 +1,16 @@
-def compare_temperatures(temp1: float, temp2: float):
-    """
-    Compares two floating-point temperature values and returns a tuple indicating
-    their relationship.
+def _validate_non_empty_list(data):
+    if not isinstance(data, list):
+        raise TypeError("Argument must be a list")
+    if len(data) == 0:
+        raise ValueError("List must not be empty")
+    return True
 
-    Args:
-        temp1 (float): The first temperature value.
-        temp2 (float): The second temperature value.
-
-    Returns:
-        tuple: A tuple where the first element is 'higher' if temp1 > temp2,
-               'lower' if temp1 < temp2, and 'equal' otherwise.
-    """
-    return ('higher',) if temp1 > temp2 else ('lower',) if temp2 > temp1 else ('equal',)
+def get_first_element(lst):
+    _validate_non_empty_list(lst)
+    first_index = 0
+    return lst[first_index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    t_a = 23.5
-    t_b = 24.0
-    
-    result = compare_temperatures(t_a, t_b)
-    
-    if len(result) > 1:
-        print(f"Temperature {t_a} is {result[1]} than Temperature {t_b}.")
+    sample_strings = ["hello", "world", "test"]
+    result = get_first_element(sample_strings)
+    print(result)

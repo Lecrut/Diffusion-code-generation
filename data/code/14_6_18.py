@@ -1,23 +1,14 @@
-import sys
+def _validate_sequence(data):
+    if not isinstance(data, (list, tuple, range)):
+        raise TypeError("Input must be a list, tuple, or range")
+    if len(data) < 3:
+        raise ValueError("Input must contain at least three elements")
 
-def parse_volume(value: str) -> float | None:
-    """Attempts to convert a string representation of a number to a float."""
-    try:
-        return float(value.strip())
-    except ValueError:
-        return None
-
-def compare_volumes(vol_a: float, vol_b: float) -> tuple[int]:
-    """Compares two volume measurements and returns comparison codes.
-
-    Returns:
-        A tuple (result_code, message).
-        
-    Codes:
-        0 if volumes are equal.
-        -1 if first is less than second.
-        1 if first is greater than second.
-    """
+def access_third_from_end(sequence):
+    _validate_sequence(sequence)
+    return sequence[-3]
 
 if __name__ == '__main__':
-    pass
+    test_data = [5, 15, 25, 35, 45, 55]
+    output_value = access_third_from_end(test_data)
+    print(output_value)

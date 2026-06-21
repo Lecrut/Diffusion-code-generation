@@ -1,15 +1,12 @@
-import math
-def calculate_ratio_conversion(base_weight, ratios):
-    converted_weights = {}
-    for ratio in ratios:
-        if ratio != 0:
-            converted_weight = base_weight * ratio
-            converted_weights[ratio] = converted_weight
-        else:
-            converted_weights[ratio] = float('nan')
-    return converted_weights
+def get_middle_element_of_tuple(tup):
+    if not isinstance(tup, tuple):
+        raise TypeError("Input must be a tuple")
+    if len(tup) == 0:
+        raise ValueError("Tuple must not be empty")
+    mid_index = len(tup) // 2
+    return tup[mid_index]
+
 if __name__ == '__main__':
-    base = 100.0
-    ratios_list = [1.5, 2.0, 0.5, 0.0, -1.2]
-    results = calculate_ratio_conversion(base, ratios_list)
-    print(results)
+    sample_tuple = (1, 2, 3, 4, 5)
+    result = get_middle_element_of_tuple(sample_tuple)
+    print(result)

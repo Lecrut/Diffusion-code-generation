@@ -1,14 +1,13 @@
-import math
-def calculate_length_ratio(length_a, length_b):
-    if length_b == 0:
-        raise ValueError("Denominator cannot be zero")
-    common_divisor = math.gcd(length_a, length_b)
-    simplified_a = length_a // common_divisor
-    simplified_b = length_b // common_divisor
-    return (simplified_a, simplified_b)
+def get_last_item_or_none(lst):
+    if not lst:
+        return None
+    return lst.pop()
+
 if __name__ == '__main__':
-    print(calculate_length_ratio(12, 18))
-    print(calculate_length_ratio(100, 75))
-    print(calculate_length_ratio(17, 34))
-    print(calculate_length_ratio(5, 10))
-    print(calculate_length_ratio(101, 103))
+    sample_list_1 = [10, 20, 30]
+    result_1 = get_last_item_or_none(sample_list_1)
+    print(result_1)
+    print(sample_list_1)
+    sample_list_2 = []
+    result_2 = get_last_item_or_none(sample_list_2)
+    print(result_2)

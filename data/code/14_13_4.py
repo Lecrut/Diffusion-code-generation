@@ -1,35 +1,19 @@
-def compare_volumes(filename):
+def get_third_element(seq):
     try:
-        with open(filename, 'r') as file:
-            lines = file.readlines()
-            if len(lines) < 2:
-                return "Error: Not enough volume measurements found."
-            volume1_str = lines[0].strip()
-            volume2_str = lines[1].strip()
-            if not volume1_str or not volume2_str:
-                return "Error: One or both volume measurements are empty."
-            volume1 = float(volume1_str)
-            volume2 = float(volume2_str)
-            if volume1 > volume2:
-                return f"Volume 1 ({volume1}) is larger than Volume 2 ({volume2})."
-            elif volume2 > volume1:
-                return f"Volume 2 ({volume2}) is larger than Volume 1 ({volume1})."
-            else:
-                return f"Volume 1 ({volume1}) is equal to Volume 2 ({volume2})."
-    except FileNotFoundError:
-        return f"Error: File '{filename}' not found."
-    except ValueError:
-        return f"Error: Could not convert one or both measurements to a number in '{filename}'."
-    except Exception as e:
-        return f"An unexpected error occurred: {e}"
+        return seq[2]
+    except IndexError:
+        raise ValueError("Sequence must have at least three elements")
+
 if __name__ == '__main__':
-    filename = 'volumes.txt'
-    try:
-        with open(filename, 'w') as f:
-            f.write("100\n")
-            f.write("250\n")
-    except IOError:
-        print(f"Error: Could not write sample data to {filename}.")
-        exit()
-    result = compare_volumes(filename)
-    print(result)
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = (100, 200, 300, 400)
+    sample_string = "Hello"
+
+    result_list = get_third_element(sample_list)
+    print(result_list)
+
+    result_tuple = get_third_element(sample_tuple)
+    print(result_tuple)
+
+    result_string = get_third_element(sample_string)
+    print(result_string)

@@ -1,20 +1,23 @@
-def compare_volumes(volume1: float, volume2: float) -> str:
-    if volume1 > volume2:
-        return "Volume 1 is greater"
-    elif volume2 > volume1:
-        return "Volume 2 is greater"
-    else:
-        return "Volumes are equal"
+import threading
+
+_lock = threading.Lock()
+
+def get_third_element(lst, default=None):
+    with _lock:
+        if len(lst) >= 3:
+            return lst[2]
+        return default
+
 if __name__ == '__main__':
-    v_a = 150.75
-    v_b = 200.50
-    result = compare_volumes(v_a, v_b)
-    print(result)
-    v_c = 42.0
-    v_d = 42.0
-    result2 = compare_volumes(v_c, v_d)
+    sample_list = [1, 2, 3, 4, 5]
+    short_list = [1, 2]
+    empty_list = []
+
+    result1 = get_third_element(sample_list)
+    print(result1)
+
+    result2 = get_third_element(short_list, default="N/A")
     print(result2)
-    v_e = 300.0
-    v_f = 100.0
-    result3 = compare_volumes(v_e, v_f)
+
+    result3 = get_third_element(empty_list, default=0)
     print(result3)

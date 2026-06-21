@@ -1,53 +1,62 @@
-import argparse
+def liters_to_milliliters(liters: float) -> float:
+    return liters * 1000.0
 
-def get_conversion_factor(from_unit: str, to_unit: str) -> float:
-    """Returns the conversion factor from 'from_unit' to 'to_unit'."""
-    
-    base_volume = {
-        "liter": 1.0,
-        "milliliter": 0.001,
-        "kiloliter": 1000.0,
-        "gallon_us": 3.785411784,
-        "quart_us": 0.946352946,
-        "pint_us": 0.473176473,
-        "cup_us": 0.236588237,
-    }
+def milliliters_to_liters(milliliters: float) -> float:
+    return milliliters / 1000.0
 
-    if from_unit not in base_volume or to_unit not in base_volume:
-        raise ValueError(f"Unsupported unit '{from_unit}' for source volume type.")
-    
-    factor_from_base = base_volume[from_unit]
-    factor_to_base = base_volume[to_unit]
+def cubic_meters_to_liters(cubic_meters: float) -> float:
+    return cubic_meters * 1000.0
 
-    # Convert from 'from_unit' amount -> liters, then convert liters -> 'to_unit' amount.
-    return (factor_to_base / factor_from_base)
+def liters_to_cubic_meters(liters: float) -> float:
+    return liters / 1000.0
 
-def parse_and_convert(args: argparse.Namespace) -> None:
-    """Performs the volume conversion based on user input."""
-    
-    try:
-        # Parse numeric value for robustness against non-numeric strings in some contexts, though argparsing handles most.
-        amount = float(args.input_value)
-        
-        factor = get_conversion_factor(args.from_unit.lower(), args.to_unit.lower())
+def liters_to_gallons(liters: float) -> float:
+    return liters * 0.264172
 
-        result_amount = amount * factor
-        
-        print(f"{amount} {args.from_unit} is equal to {result_amount:.6f} {args.to_unit}")
+def gallons_to_liters(gallons: float) -> float:
+    return gallons / 0.264172
 
-    except ValueError as e:
-        # Catch cases where argparse didn't catch it (e.g., empty string) or other numeric conversion errors.
-        raise RuntimeError("Invalid input value provided for volume.") from e
+def milliliters_to_gallons(milliliters: float) -> float:
+    liters = milliliters_to_liters(milliliters)
+    return liters_to_gallons(liters)
 
-def create_parser() -> argparse.ArgumentParser:
-    """Creates the argument parser with specific configuration."""
+def gallons_to_milliliters(gallons: float) -> float:
+    liters = gallons_to_liters(gallons)
+    return liters_to_milliliters(liters)
 
-    parser = argparse.ArgumentParser(
-        description="Convert between different volume units.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
+def cubic_meters_to_gallons(cubic_meters: float) -> float:
+    liters = cubic_meters_to_liters(cubic_meters)
+    return liters_to_gallons(liters)
 
-    # Note: We do NOT use --required. Users can pass empty strings or missing values and we handle them gracefully in the logic below if needed (though argparsing usually fails on missing required args).
+def gallons_to_cubic_meters(gallons: float) -> float:
+    liters = gallons_to_liters(gallons)
+    return liters_to_cubic_meters(liters)
+
+def milliliters_to_cubic_meters(milliliters: float) -> float:
+    liters = milliliters_to_liters(milliliters)
+    return liters_to_cubic_meters(liters)
+
+def cubic_meters_to_milliliters(cubic_meters: float) -> float:
+    liters = cubic_meters_to_liters(cubic_meters)
+    return liters_to_milliliters(liters)
 
 if __name__ == '__main__':
-    pass
+    sample_liters = 2.5
+    print(liters_to_milliliters(sample_liters))
+    print(liters_to_gallons(sample_liters))
+    print(liters_to_cubic_meters(sample_liters))
+    
+    sample_milliliters = 500.0
+    print(milliliters_to_liters(sample_milliliters))
+    print(milliliters_to_gallons(sample_milliliters))
+    print(milliliters_to_cubic_meters(sample_milliliters))
+    
+    sample_cubic_meters = 0.5
+    print(cubic_meters_to_liters(sample_cubic_meters))
+    print(cubic_meters_to_gallons(sample_cubic_meters))
+    print(cubic_meters_to_milliliters(sample_cubic_meters))
+    
+    sample_gallons = 10.0
+    print(gallons_to_liters(sample_gallons))
+    print(gallons_to_milliliters(sample_gallons))
+    print(gallons_to_cubic_meters(sample_gallons))

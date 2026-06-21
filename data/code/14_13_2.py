@@ -1,35 +1,13 @@
-def compare_volumes(filename):
-    try:
-        with open(filename, 'r') as file:
-            lines = file.readlines()
-            if len(lines) < 2:
-                return "Error: Not enough volume measurements found."
-            volume1_str = lines[0].strip()
-            volume2_str = lines[1].strip()
-            if not volume1_str or not volume2_str:
-                return "Error: One or both volume measurements are empty."
-            volume1 = float(volume1_str)
-            volume2 = float(volume2_str)
-            if volume1 > volume2:
-                return f"Volume 1 ({volume1}) is larger than Volume 2 ({volume2})."
-            elif volume2 > volume1:
-                return f"Volume 2 ({volume2}) is larger than Volume 1 ({volume1})."
-            else:
-                return f"Volume 1 ({volume1}) is equal to Volume 2 ({volume2})."
-    except FileNotFoundError:
-        return f"Error: File '{filename}' not found."
-    except ValueError:
-        return f"Error: Could not convert one or both measurements to a number in '{filename}'."
-    except Exception as e:
-        return f"An unexpected error occurred: {e}"
+def get_third_element(sequence):
+    sequence_list = list(sequence)
+    if len(sequence_list) < 3:
+        raise IndexError("Sequence must have at least three elements")
+    return sequence_list[2]
+
 if __name__ == '__main__':
-    filename = 'volumes.txt'
-    try:
-        with open(filename, 'w') as f:
-            f.write("100\n")
-            f.write("150\n")
-    except IOError:
-        print("Error: Could not create sample file.")
-        exit()
-    result = compare_volumes(filename)
+    result = get_third_element([10, 20, 30, 40, 50])
+    print(result)
+    result = get_third_element("abcdef")
+    print(result)
+    result = get_third_element((100, 200, 300))
     print(result)

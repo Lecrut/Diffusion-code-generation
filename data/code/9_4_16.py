@@ -1,98 +1,68 @@
 import argparse
 
-def parse_arguments():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(
-        description="Convert volume units."
-    )
-    
-    # Define all possible unit strings for input and output to avoid validation errors later
-    ALL_UNITS = {
-        "ml", "l", "gal", "qt", "pt"  # ml, liters, gallons (US), quarts, pints
+def convert_volume(volume, from_unit, to_unit):
+    conversions = {
+        ('milliliter', 'liter'): 0.001,
+        ('milliliter', 'gallon'): 0.000264172,
+        ('milliliter', 'cup'): 0.00422675,
+        ('milliliter', 'tablespoon'): 0.067628,
+        ('milliliter', 'teaspoon'): 0.202884,
+        ('liter', 'milliliter'): 1000,
+        ('liter', 'gallon'): 0.264172,
+        ('liter', 'cup'): 4.22675,
+        ('liter', 'tablespoon'): 67.628,
+        ('liter', 'teaspoon'): 202.884,
+        ('gallon', 'milliliter'): 3785.41,
+        ('gallon', 'liter'): 3.78541,
+        ('gallon', 'cup'): 16.0,
+        ('gallon', 'tablespoon'): 256.0,
+        ('gallon', 'teaspoon'): 768.0,
+        ('cup', 'milliliter'): 236.588,
+        ('cup', 'liter'): 0.236588,
+        ('cup', 'gallon'): 0.0625,
+        ('cup', 'tablespoon'): 16.0,
+        ('cup', 'teaspoon'): 48.0,
+        ('tablespoon', 'milliliter'): 14.787,
+        ('tablespoon', 'liter'): 0.014787,
+        ('tablespoon', 'gallon'): 0.00390625,
+        ('tablespoon', 'cup'): 0.0625,
+        ('tablespoon', 'teaspoon'): 3.0,
+        ('teaspoon', 'milliliter'): 4.92892,
+        ('teaspoon', 'liter'): 0.00492892,
+        ('teaspoon', 'gallon'): 0.00130208,
+        ('teaspoon', 'cup'): 0.0208333,
+        ('teaspoon', 'tablespoon'): 0.333333,
     }
 
-    parser.add_argument(
-        "--volume", "-v", 
-        type=float, 
-        required=False, 
-        default=1.0,
-        help="The volume to convert."
-    )
+    from_lower = from_unit.lower()
+    to_lower = to_unit.lower()
 
-    parser.add_argument(
-        "--from_unit", "-f", 
-        choices=list(ALL_UNITS), 
-        required=True, 
-        dest='start_unit',
-        help="Starting unit (e.g., ml, l)."
-    )
+    if from_lower == to_lower:
+        return volume
 
-    parser.add_argument(
-        "--to_unit", "-t", 
-        choice=list(ALL_UNITS), 
-        required=False, 
-        default=None, # Will be set to 'l' in the sample block if not provided by user
-        help="Target unit (e.g., l)."
-    )
+    factor = conversions.get((from_lower, to_lower))
+    if factor is None:
+        raise ValueError(f"Unsupported conversion from {from_unit} to {to_unit}")
 
-    return parser.parse_args()
+    return volume * factor
 
-def convert_volume(volume: float, start_unit: str, target_unit: str) -> float:
-    """Convert volume from one unit to another using liters as a base."""
-    
-    # Base conversion factors relative to 1 liter (l = 1.0)
-    BASE_FACTORS = {
-        "ml": 0.001,      # 1 ml = 0.001 l
-        "l": 1.0,         # 1 l = 1.0 l
-        "gal": 3.78541,   # 1 gal (US) ≈ 3.78541 l
-        "qt": 0.946353,   # 1 qt (US) ≈ 0.946353 l
-        "pt": 0.473176    # 1 pt (US) ≈ 0.473176 l
-    }
+def main():
+    parser = argparse.ArgumentParser(description='Volume converter')
+    parser.add_argument('--volume', type=float, required=True, help='Volume to convert')
+    parser.add_argument('--from', dest='from_unit', type=str, required=True, help='Starting unit')
+    parser.add_argument('--to', dest='to_unit', type=str, required=True, help='Target unit')
 
-    try:
-        factor_start = BASE_FACTORS[start_unit]
-        factor_target = BASE_FACTORS[target_unit]
-        
-        # Convert to base unit then to target unit
-        converted_volume_l = volume * (factor_start / factor_target)
-        return rounded(converted_volume_l, 6)
+    args = parser.parse_args()
 
-    except KeyError as e:
-        raise ValueError(f"Invalid unit provided. Available units are {list(BASE_FACTORS.keys())}") from e
-
-def rounded(value: float, decimals: int) -> float:
-    """Round a number to the specified decimal places."""
-    return round(value, decimals)
+    result = convert_volume(args.volume, args.from_unit, args.to_unit)
+    print(result)
 
 if __name__ == '__main__':
+    sample_result = convert_volume(1.0, 'liter', 'milliliter')
+    print(sample_result)
     
-    # Hard-coded sample values as per requirements (no user input or network access needed)
-    SAMPLE_VOLUME = 1.0
-    SAMPLE_START_UNIT = "ml"
-    SAMPLE_TARGET_UNIT = "l"
-
-    try:
-        args = parse_arguments()
-        
-        if not args.volume:
-            # Use the sample volume since argparse didn't get one from CLI
-            vol_to_convert = SAMPLE_VOLUME
-        else:
-            vol_to_convert = args.volume
-        
-        start_unit_used = args.start_unit
-        
-        if not args.to_unit:
-            # If target unit wasn't provided on command line, use the sample value
-            target_unit_used = "l" 
-        else:
-            target_unit_used = args.to_unit
-
-        result = convert_volume(vol_to_convert, start_unit_used, target_unit_used)
-        
-        print(f"{vol_to_convert} {start_unit_used} is equal to {result:.6f} {target_unit_used}")
-
-    except ValueError as e:
-        # Handle invalid unit errors gracefully without crashing the whole script if possible (though task says robust CLI)
-        # Since we are using argparse with choices, this block might not be reached unless internal logic fails.
-        print(f"Error: {e}", file=__import__('sys').stderr)
+    sample_result2 = convert_volume(32.0, 'cup', 'liter')
+    print(sample_result2)
+    
+    sample_result3 = convert_volume(100.0, 'milliliter', 'gallon')
+    print(sample_result3)

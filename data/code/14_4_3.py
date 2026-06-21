@@ -1,15 +1,12 @@
-def compare_volumes(volume_a: float, volume_b: float) -> None:
-    """Compare two volumes and print their relationship."""
-    if volume_a > volume_b:
-        print(f"{volume_a} is greater than {volume_b}")
-    elif volume_a < volume_b:
-        print(f"{volume_a} is less than {volume_b}")
-    else:
-        print(f"{volume_a} is equal to {volume_b}")
-
+def get_third_item(items):
+    if not isinstance(items, list):
+        raise TypeError('Input must be a list.')
+    if not all((isinstance(item, str) for item in items)):
+        raise TypeError('All items in the list must be strings.')
+    if len(items) < 3:
+        raise IndexError('List must have at least three items.')
+    return items[2]
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    vol_1 = 5.0
-    vol_2 = 3.0
-    
-    compare_volumes(vol_1, vol_2)
+    sample_list = ['first', 'second', 'third', 'fourth']
+    result = get_third_item(sample_list)
+    print(result)

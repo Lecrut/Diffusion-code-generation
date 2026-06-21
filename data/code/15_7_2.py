@@ -1,8 +1,9 @@
+def get_second_last_element(lst: list) -> object:
+    if len(lst) < 2:
+        raise ValueError("List must have at least two elements")
+    return lst[-2]
+
 if __name__ == '__main__':
-    data = {'a': 10, 'b': 20, 'c': 10, 'd': 40}
-    key1 = 'a'
-    key2 = 'c'
-    result = {
-        'are_identical': data[key1] == data[key2]
-    }
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_second_last_element(sample_list)
     print(result)

@@ -1,39 +1,56 @@
-def convert_volume(volume, source_unit, target_unit=None):
-    conversion_rates = {
-        "liter": 1.0,
-        "milliliter": 0.001,
-        "gallon": 3.78541,
-        "quart": 0.946353,
-        "ounce": 0.0283495,
-        "cubic_meter": 1000.0,
-        "cubic_foot": 28.3168,
+import argparse
+import sys
+
+def convert_volume(value, from_unit, to_unit):
+    conversion_factors = {
+        'ml': 1.0,
+        'l': 1000.0,
+        'gal': 3785.41,
+        'qt': 946.353,
+        'pt': 473.176,
+        'cup': 236.588,
+        'floz': 29.5735,
+        'tbsp': 14.7868,
+        'tsp': 4.92892
     }
-    if source_unit not in conversion_rates:
-        raise ValueError(f"Unknown source unit: {source_unit}")
-    if target_unit is None:
-        return volume
-    if target_unit not in conversion_rates:
-        raise ValueError(f"Unknown target unit: {target_unit}")
-    if source_unit == target_unit:
-        return volume
-    base_volume = volume * conversion_rates[source_unit]
-    if target_unit == "liter":
-        return base_volume
-    if target_unit == "cubic_meter":
-        return base_volume / 1000.0
-    if target_unit == "cubic_foot":
-        return base_volume / 28.3168
-    return base_volume
+    
+    if from_unit not in conversion_factors:
+        raise ValueError(f"Unsupported input unit: {from_unit}")
+    if to_unit not in conversion_factors:
+        raise ValueError(f"Unsupported output unit: {to_unit}")
+    
+    if value < 0:
+        raise ValueError("Volume cannot be negative")
+    
+    base_value = value * conversion_factors[from_unit]
+    result = base_value / conversion_factors[to_unit]
+    
+    return result
+
+def create_parser():
+    parser = argparse.ArgumentParser(description="Convert volume units")
+    parser.add_argument('--value', type=float, required=True, help="Input volume value")
+    parser.add_argument('--from', dest='from_unit', type=str, required=True, help="Input unit")
+    parser.add_argument('--to', dest='to_unit', type=str, required=True, help="Output unit")
+    return parser
+
+def main():
+    parser = create_parser()
+    args = parser.parse_args()
+    
+    try:
+        result = convert_volume(args.value, args.from_unit, args.to_unit)
+        print(result)
+    except ValueError as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
 if __name__ == '__main__':
-    print(convert_volume(10, "liter"))
-    print(convert_volume(1, "gallon", "liter"))
-    print(convert_volume(500, "milliliter", "liter"))
-    print(convert_volume(1, "cubic_meter", "gallon"))
-    try:
-        convert_volume(10, "furlong", "meter")
-    except ValueError as e:
-        print(f"Error caught: {e}")
-    try:
-        convert_volume(10, "liter", "furlong")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    result = convert_volume(1.0, 'gal', 'l')
+    print(result)
+    
+    result = convert_volume(500, 'ml', 'cup')
+    print(result)
+    
+    result = convert_volume(2.5, 'l', 'gal')
+    print(result)

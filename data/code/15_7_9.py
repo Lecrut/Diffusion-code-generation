@@ -1,27 +1,11 @@
-def check_identical_values(data):
-    """
-    Creates a new dictionary containing keys from 'data' where the values 
-    associated with two specific keys ('key_a' and 'key_b') are identical.
-    
-    Args:
-        data (dict): The input dictionary to process.
-        
-    Returns:
-        dict: A new dictionary with only those original keys that have matching 
-              values for both 'key_a' and 'key_b'. If a key does not exist in the 
-              original dictionary, it is excluded from consideration unless its 
-              presence implies validity (handled by checking existence).
-    """
-    
-    # Determine which two specific keys we are comparing. These must be present 
-    # for any entry to qualify based on the task description logic regarding "two 
-    # specific keys". We will assume these fixed keys as per typical requirements unless specified otherwise,
-    # but here we dynamically check if 'key_a' and 'key_b' exist in a candidate key's context.
-    
-    target_key_1 = 'key_a'
-    target_key_2 = 'key_b'
+from typing import Any, List, Optional
 
-    result_dict = {}
+def get_second_last_element(items: List[Any]) -> Optional[Any]:
+    if len(items) < 2:
+        return None
+    return items[-2]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_last_element(sample_list)
+    print(result)

@@ -1,32 +1,22 @@
-from datetime import datetime
-import pytz
-class TimeScaleManager:
-    def convert_timezone(self, dt_str, from_tz_str, to_tz_str):
-        dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
-        from_tz = pytz.timezone(from_tz_str)
-        to_tz = pytz.timezone(to_tz_str)
-        dt_aware = from_tz.localize(dt)
-        dt_converted = dt_aware.astimezone(to_tz)
-        return dt_converted.strftime("%Y-%m-%d %H:%M:%S %Z%z")
+class InvalidTupleIndexError(Exception):
+    def __init__(self, index, length):
+        super().__init__(f"Index {index} is out of bounds for tuple of length {length}.")
+        self.index = index
+        self.length = length
+
+def extract_by_index(tup, index):
+    if not isinstance(index, int):
+        raise InvalidTupleIndexError(index, len(tup))
+    if index < -len(tup) or index >= len(tup):
+        raise InvalidTupleIndexError(index, len(tup))
+    return tup[index]
+
 if __name__ == '__main__':
-    manager = TimeScaleManager()
-    date_time_str_1 = "2023-03-15 10:00:00"
-    from_tz_1 = "America/New_York"
-    to_tz_1 = "Europe/London"
-    result_1 = manager.convert_timezone(date_time_str_1, from_tz_1, to_tz_1)
-    print(f"Original: {date_time_str_1} in {from_tz_1}")
-    print(f"Converted: {result_1} in {to_tz_1}")
-    print("-" * 20)
-    date_time_str_2 = "2023-03-12 01:30:00"
-    from_tz_2 = "America/New_York"
-    to_tz_2 = "Europe/Paris"
-    result_2 = manager.convert_timezone(date_time_str_2, from_tz_2, to_tz_2)
-    print(f"Original: {date_time_str_2} in {from_tz_2}")
-    print(f"Converted: {result_2} in {to_tz_2}")
-    print("-" * 20)
-    date_time_str_3 = "2024-01-01 12:00:00"
-    from_tz_3 = "Asia/Tokyo"
-    to_tz_3 = "Asia/Tokyo"
-    result_3 = manager.convert_timezone(date_time_str_3, from_tz_3, to_tz_3)
-    print(f"Original: {date_time_str_3} in {from_tz_3}")
-    print(f"Converted: {result_3} in {to_tz_3}")
+    sample_tuple = (10, 20, 30, 40, 50)
+    valid_index = 2
+    result = extract_by_index(sample_tuple, valid_index)
+    print(result)
+    try:
+        extract_by_index(sample_tuple, 10)
+    except InvalidTupleIndexError as e:
+        print(e)

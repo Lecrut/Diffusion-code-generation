@@ -1,54 +1,40 @@
-def convert_volume(value: float, source_unit: str, target_unit: str = None) -> float | None:
-    """
-    Converts a volume value from one unit to another (optional).
-    
-    Parameters:
-        value (float): The volume value to be converted.
-        source_unit (str): The initial unit of the volume.
-        target_unit (str, optional): The desired output unit. If None, returns original value in source units.
+import argparse
+import sys
 
-    Returns:
-        float or None: Converted volume in target units if successful, otherwise None.
+VOLUME_CONVERSION_FACTORS = {
+    ("l", "ml"): 1000,
+    ("ml", "l"): 0.001,
+    ("l", "gal"): 0.264172,
+    ("gal", "l"): 3.78541,
+    ("ml", "oz"): 0.033814,
+    ("oz", "ml"): 29.5735,
+    ("l", "oz"): 33.814,
+    ("oz", "l"): 0.0295735,
+    ("gal", "ml"): 3785.41,
+    ("ml", "gal"): 0.000264172,
+    ("gal", "oz"): 128.0,
+    ("oz", "gal"): 0.0078125,
+}
 
-    Supported Units and Base Conversion Factor to Liters:
-        milliliter -> 0.001
-        liter -> 1.0
-        gallon (US) -> 3.78541
-        quart (US) -> 0.946353
-        pint (US) -> 0.473176
-    """
+def convert_volume(value: float, input_unit: str, output_unit: str) -> float:
+    if input_unit == output_unit:
+        return value
+    key = (input_unit, output_unit)
+    if key not in VOLUME_CONVERSION_FACTORS:
+        raise ValueError(f"Conversion from {input_unit} to {output_unit} is not supported.")
+    return value * VOLUME_CONVERSION_FACTORS[key]
 
-    units_to_liters = {
-        "milliliter": 0.001,
-        "liter": 1.0,
-        "gallon": 3.78541,
-        "quart": 0.946353,
-        "pint": 0.473176,
-    }
+def parse_args(args: list = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Convert volume units.")
+    parser.add_argument("--volume", type=float, required=True, help="The volume to convert.")
+    parser.add_argument("--input-unit", type=str, required=True, help="The unit of the input volume.")
+    parser.add_argument("--output-unit", type=str, required=True, help="The desired output unit.")
+    return parser.parse_args(args)
 
-    if value is None:
-        return None
-    
-    source_lower = source_unit.lower()
-    
-    # Check for valid input units
-    if source_lower not in units_to_liters and target_unit is None:
-        raise ValueError("Input error: Invalid source unit provided.")
-    elif target_unit is not None:
-        target_lower = target_unit.lower()
-        if target_lower not in units_to_liters:
-            return None
-        
-        # Check consistency of input (same value, different inputs)
-        try:
-            base_liters = float(value) * units_to_liters[source_lower]
-            result = base_liters / units_to_liters[target_lower]
-            
-            if target_unit is not None and source_unit == target_unit:
-                return float(result) # Return original value as converted
-        
-        except (ValueError, TypeError):
-            raise ValueError("Input error: Value must be a valid number.")
+def main():
+    args = parse_args(["--volume", "1.5", "--input-unit", "l", "--output-unit", "ml"])
+    result = convert_volume(args.volume, args.input_unit, args.output_unit)
+    print(result)
 
-if __name__ == '__main__':
-    pass
+if __name__ == "__main__":
+    main()

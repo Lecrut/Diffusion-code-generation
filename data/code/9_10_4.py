@@ -1,55 +1,48 @@
-import math
-def convert_volume(value, from_unit, to_unit):
-    conversion_factors = {
-        "L": 1.0,
-        "mL": 1000.0,
-        "m^3": 1000000.0,
-        "gal": 3.78541,
+class VolumeConverter:
+    BASE_UNIT = 'L'
+    _CONVERSION_TO_BASE = {
+        'L': 1.0,
+        'mL': 0.001,
+        'uL': 0.000001,
+        'kL': 1000.0,
+        'm3': 1000.0,
+        'cm3': 0.001,
+        'in3': 0.016387064,
+        'ft3': 28.316846592,
+        'gal': 3.785411784,
+        'qt': 0.946352946,
+        'pt': 0.473176473,
+        'fl_oz': 0.0295735295625,
     }
-    if from_unit == to_unit:
-        return value
-    if from_unit not in conversion_factors or to_unit not in conversion_factors:
-        raise ValueError("Invalid unit specified.")
-    if from_unit == "L":
-        value_in_liters = value
-    elif from_unit == "mL":
-        value_in_liters = value / 1000.0
-    elif from_unit == "m^3":
-        value_in_liters = value * 1000.0
-    elif from_unit == "gal":
-        value_in_liters = value * 3.78541
-    else:
-        raise ValueError("Unknown source unit.")
-    if to_unit == "L":
-        result = value_in_liters
-    elif to_unit == "mL":
-        result = value_in_liters * 1000.0
-    elif to_unit == "m^3":
-        result = value_in_liters / 1000000.0
-    elif to_unit == "gal":
-        result = value_in_liters / 3.78541
-    else:
-        raise ValueError("Unknown target unit.")
-    return result
-def main():
-    sample_value = 5.5
-    from_unit = "L"
-    to_unit = "gal"
-    print(f"Sample Value: {sample_value} {from_unit}")
-    try:
-        result = convert_volume(sample_value, from_unit, to_unit)
-        print(f"Conversion Result: {result:.4f} {to_unit}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    print("-" * 20)
-    sample_value_2 = 2000
-    from_unit_2 = "mL"
-    to_unit_2 = "m^3"
-    print(f"Sample Value: {sample_value_2} {from_unit_2}")
-    try:
-        result_2 = convert_volume(sample_value_2, from_unit_2, to_unit_2)
-        print(f"Conversion Result: {result_2:.6f} {to_unit_2}")
-    except ValueError as e:
-        print(f"Error: {e}")
+
+    def __init__(self):
+        self._conversion_from_base = {
+            unit: (1.0 / factor) for unit, factor in self._CONVERSION_TO_BASE.items()
+        }
+
+    def to_base(self, value, from_unit):
+        if from_unit not in self._CONVERSION_TO_BASE:
+            raise ValueError(f"Unsupported unit: {from_unit}")
+        factor = self._CONVERSION_TO_BASE[from_unit]
+        return value * factor
+
+    def from_base(self, value, to_unit):
+        if to_unit not in self._conversion_from_base:
+            raise ValueError(f"Unsupported unit: {to_unit}")
+        factor = self._conversion_from_base[to_unit]
+        return value * factor
+
+    def convert(self, value, from_unit, to_unit):
+        base_value = self.to_base(value, from_unit)
+        return self.from_base(base_value, to_unit)
+
 if __name__ == '__main__':
-    main()
+    converter = VolumeConverter()
+    gallons_to_liters = converter.to_base(5, 'gal')
+    liters_to_cubic_meters = converter.from_base(1000, 'm3')
+    gallons_to_liters_back = converter.convert(1, 'gal', 'L')
+    liters_to_gallons = converter.convert(3.785411784, 'L', 'gal')
+    print(gallons_to_liters)
+    print(liters_to_cubic_meters)
+    print(gallons_to_liters_back)
+    print(liters_to_gallons)

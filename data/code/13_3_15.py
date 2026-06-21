@@ -1,38 +1,44 @@
-import datetime
-from typing import List
-
-def calculate_total_elapsed_time(timestamps: List[str]) -> int:
-    """
-    Calculates the total elapsed time in seconds between the earliest 
-    and latest timestamp provided as ISO 8601 strings.
-    
-    Args:
-        timestamps (List[str]): A list of datetime string values in ISO 8601 format.
-        
-    Returns:
-        int: The elapsed time in seconds between min and max timestamps.
-    """
-    if not timestamps or len(timestamps) < 2:
-        return 0
-
-    try:
-        parsed_dates = [datetime.datetime.fromisoformat(ts.strip()) for ts in timestamps]
-        earliest_date = min(parsed_dates)
-        latest_date = max(parsed_dates)
-        
-        elapsed_seconds = int((latest_date - earliest_date).total_seconds())
-        return elapsed_seconds
-    except (ValueError, TypeError):
-        raise ValueError("All input strings must be valid ISO 8601 datetime formats.")
+def get_nested_value(data, path):
+    keys = path.split('.')
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key not in current:
+                raise KeyError(f"Key '{key}' not found in dictionary")
+            current = current[key]
+        elif isinstance(current, list):
+            try:
+                index = int(key)
+            except ValueError:
+                raise TypeError(f"Cannot index list with non-integer key '{key}'")
+            if index < 0 or index >= len(current):
+                raise IndexError(f"Index {index} out of range for list of length {len(current)}")
+            current = current[index]
+        else:
+            raise TypeError(f"Cannot access child of non-container type '{type(current).__name__}'")
+    return current
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements
-    sample_timestamps = [
-        "2023-01-01T10:00:00",
-        "2023-01-05T14:30:00",
-        "2023-06-18T09:15:30"
-    ]
-
-    result = calculate_total_elapsed_time(sample_timestamps)
+    sample_data = {
+        'user': {
+            'profile': {
+                'name': 'Alice',
+                'address': {
+                    'city': 'Wonderland',
+                    'zip': '12345'
+                }
+            },
+            'friends': ['Bob', 'Charlie']
+        },
+        'metadata': {
+            'version': 1
+        }
+    }
     
-    print(f"The total elapsed time is {result} seconds.")
+    path1 = 'user.profile.name'
+    path2 = 'user.friends.0'
+    path3 = 'user.profile.address.city'
+    
+    print(get_nested_value(sample_data, path1))
+    print(get_nested_value(sample_data, path2))
+    print(get_nested_value(sample_data, path3))

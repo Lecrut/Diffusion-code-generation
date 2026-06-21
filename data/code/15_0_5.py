@@ -1,8 +1,11 @@
-def check_match(value1, value2):
-    return value1 == value2
+class ListAccessor:
+    def __init__(self, data):
+        self._data = data
+
+    def get_second_to_last(self):
+        return self._data[-2]
+
 if __name__ == '__main__':
-    print(check_match(5, 5))
-    print(check_match(10, 5))
-    print(check_match("hello", "hello"))
-    print(check_match(1, 2))
-    print(check_match(3.14, 3.1400000000000004))
+    sample_list = [5, 12, 8, 23, 7, 99]
+    accessor = ListAccessor(sample_list)
+    print(accessor.get_second_to_last())

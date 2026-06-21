@@ -1,7 +1,15 @@
-import sys
+class ListExtractor:
+    def __init__(self, data):
+        if not isinstance(data, list):
+            raise TypeError("Input must be a list")
+        self.data = data
 
-def get_positive_number(prompt):
-    """Prompts user (or uses default in sample) to input a positive number."""
+    def get_last(self):
+        if not self.data:
+            raise IndexError("list index out of range")
+        return self.data[-1]
 
 if __name__ == '__main__':
-    pass
+    values = [10, 20, 30, 40]
+    extractor = ListExtractor(values)
+    print(extractor.get_last())

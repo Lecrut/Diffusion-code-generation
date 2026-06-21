@@ -1,6 +1,8 @@
-def is_equal(x, y):
-    return x == y
+def get_second_last(items):
+    if len(items) < 2:
+        raise IndexError("List must contain at least two elements")
+    return items[-2]
 
 if __name__ == '__main__':
-    result = is_equal(10, 20)
-    print(f"Are {10} and {20} equal? {result}")
+    sample_list = [10, 20, 30, 40, 50]
+    print(get_second_last(sample_list))

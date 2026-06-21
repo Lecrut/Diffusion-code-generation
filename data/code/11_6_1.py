@@ -1,21 +1,22 @@
-import math
-def calculate_ratio(a, b):
-    if b == 0:
-        raise ZeroDivisionError("Cannot divide by zero")
-    common_divisor = math.gcd(a, b)
-    return a // common_divisor, b // common_divisor
+class CollectionEmptyError(Exception):
+    def __init__(self, source):
+        self.source = source
+        super().__init__(f"Cannot retrieve last item from empty {source}")
+
+def validate_non_empty(data):
+    if not data:
+        raise CollectionEmptyError("list")
+
+def fetch_tail(data):
+    validate_non_empty(data)
+    return data[-1]
+
 if __name__ == '__main__':
-    num1 = 1234567890123456789
-    num2 = 1234567890123456789
+    test_set = [100, 200, 300, 400, 500]
+    print(fetch_tail(test_set))
+    empty_set = []
     try:
-        result1, result2 = calculate_ratio(num1, num2)
-        print(f"Ratio of {num1} and {num2}: {result1} / {result2}")
-    except ZeroDivisionError as e:
-        print(f"Error: {e}")
-    num3 = 10000000000000000000
-    num4 = 5000000000000000000
-    try:
-        result3, result4 = calculate_ratio(num3, num4)
-        print(f"Ratio of {num3} and {num4}: {result3} / {result4}")
-    except ZeroDivisionError as e:
-        print(f"Error: {e}")
+        result = fetch_tail(empty_set)
+        print(result)
+    except CollectionEmptyError as error:
+        print(error)

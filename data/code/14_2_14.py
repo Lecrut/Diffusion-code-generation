@@ -1,34 +1,23 @@
-class VolumeComparator:
-    @staticmethod
-    def compare(volume1, volume2):
-        """
-        Compares two volumes and returns a tuple containing 
-        the comparison result ('less', 'equal', or 'greater') 
-        and their difference.
-        
-        Args:
-            volume1 (float): First numerical value representing a volume.
-            volume2 (float): Second numerical value representing a volume.
-            
-        Returns:
-            tuple: A 2-element tuple containing the comparison result string 
-                   as an element of type str, and the difference between 
-                   volume1 and volume2 as the second element of type float.
-        """
-        if volume1 < volume2:
-            return ("less", volume1 - volume2)
-        elif volume1 == volume2:
-            return ("equal", 0.0)
-        else:
-            return ("greater", volume1 - volume2)
+def get_third_value(data_tuple):
+    if not data_tuple:
+        raise IndexError("Tuple is empty")
+    if len(data_tuple) < 3:
+        raise IndexError("Tuple does not have a third element")
+    return data_tuple[2]
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input
-    val_a = 50.75
-    val_b = 34.5
-    
-    result, diff = VolumeComparator.compare(val_a, val_b)
-    
-    print(f"Comparing {val_a} and {val_b}")
-    print(f"Comparison Result: {result}")
-    print(f"Difference ({val_a} - {val_b}): {diff}")
+    sample_tuple = (1, 2, 3, 4, 5)
+    result = get_third_value(sample_tuple)
+    print(result)
+
+    empty_tuple = ()
+    try:
+        get_third_value(empty_tuple)
+    except IndexError as e:
+        print(str(e))
+
+    short_tuple = (1, 2)
+    try:
+        get_third_value(short_tuple)
+    except IndexError as e:
+        print(str(e))

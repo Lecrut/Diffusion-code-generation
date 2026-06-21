@@ -1,88 +1,84 @@
-class CustomValueError(Exception):
-    """Custom exception raised when a value is invalid."""
-    pass
-
-class CustomConversionError(CustomValueError):
-    """Custom exception raised during conversion operations."""
-    def __init__(self, message: str, original_value=None):
-        self.original_value = original_value
+class TemperatureConversionError(Exception):
+    def __init__(self, message, metadata):
         super().__init__(message)
+        self.metadata = metadata
 
-def safe_convert(value: any, target_type: type) -> any:
-    """
-    Safely convert a value to the specified target type.
+class UnsupportedUnitError(TemperatureConversionError):
+    def __init__(self, unit, supported_units):
+        message = f"Unit '{unit}' is not supported. Supported units: {supported_units}"
+        metadata = {"unit": unit, "supported": list(supported_units)}
+        super().__init__(message, metadata)
 
-    Args:
-        value (any): The input value to be converted.
-        target_type (type): The type to which the value should be converted.
+class InvalidTemperatureError(TemperatureConversionError):
+    def __init__(self, value, absolute_zero):
+        message = f"Temperature {value} is below absolute zero ({absolute_zero})"
+        metadata = {"value": value, "absolute_zero": absolute_zero}
+        super().__init__(message, metadata)
 
-    Returns:
-        any: The converted value if successful.
+class NonNumericValueError(TemperatureConversionError):
+    def __init__(self, value):
+        message = f"Value must be numeric, got {type(value).__name__}: {value}"
+        metadata = {"value": value, "type": type(value).__name__}
+        super().__init__(message, metadata)
 
-    Raises:
-        CustomConversionError: If conversion fails or target is unsupported.
-    """
-    try:
-        return value.__class__(value) if hasattr(value, '__new__') else type(target_type)(value)
-    except (ValueError, TypeError):
-        raise CustomConversionError(f"Failed to convert '{value}' to {target_type}", original_value=value)
-
-def process_data(data_list: list) -> dict:
-    """
-    Process a list of values and return structured data.
-
-    Args:
-        data_list (list): List of raw inputs.
-
-    Returns:
-        dict: A dictionary containing processed results.
-
-    Raises:
-        CustomConversionError: If any item in the list cannot be converted safely.
-    """
-    result = {
-        "input_count": len(data_list),
-        "converted_items": [],
-        "errors": []
-    }
-
-    for idx, item in enumerate(data_list):
-        try:
-            # Attempt to convert each item to an integer as a demonstration of custom handling
-            converted_item = safe_convert(item, int)
-            result["converted_items"].append(converted_item)
-        except CustomConversionError as e:
-            error_record = {
-                "index": idx,
-                "original_value": str(e.original_value),
-                "error_message": str(e)
-            }
-            result["errors"].append(error_record)
-
-    return result
+class TemperatureConverter:
+    SUPPORTED_UNITS = ('celsius', 'fahrenheit', 'kelvin')
+    ABSOLUTE_ZERO_C = -273.15
+    
+    def __init__(self, value, unit):
+        self._validate_value(value)
+        self._validate_unit(unit)
+        self.celsius = self._to_celsius(float(value), unit)
+    
+    def _validate_value(self, value):
+        if not isinstance(value, (int, float)):
+            raise NonNumericValueError(value)
+        celsius_equiv = self._to_celsius(float(value), 'celsius')
+        if celsius_equiv < self.ABSOLUTE_ZERO_C:
+            raise InvalidTemperatureError(float(value), self.ABSOLUTE_ZERO_C)
+    
+    def _validate_unit(self, unit):
+        if unit not in self.SUPPORTED_UNITS:
+            raise UnsupportedUnitError(unit, self.SUPPORTED_UNITS)
+    
+    def _to_celsius(self, value, unit):
+        if unit == 'celsius':
+            return value
+        elif unit == 'fahrenheit':
+            return (value - 32) * 5 / 9
+        elif unit == 'kelvin':
+            return value - 273.15
+    
+    def convert_to(self, target_unit):
+        if target_unit not in self.SUPPORTED_UNITS:
+            raise UnsupportedUnitError(target_unit, self.SUPPORTED_UNITS)
+        
+        if target_unit == 'celsius':
+            return self.celsius
+        elif target_unit == 'fahrenheit':
+            return self.celsius * 9 / 5 + 32
+        elif target_unit == 'kelvin':
+            return self.celsius + 273.15
 
 if __name__ == '__main__':
-    # Hard-coded sample values that do not require external input or files
-    sample_data = [
-        10,      # Valid int
-        "25",     # String convertible to int
-        None,     # Invalid for direct conversion in this context
-        3.7,      # Float (will fail strict int conversion)
-        True      # Boolean (valid but may behave differently based on implementation details)
-    ]
-
+    converter = TemperatureConverter(100, 'celsius')
+    fahrenheit_result = converter.convert_to('fahrenheit')
+    kelvin_result = converter.convert_to('kelvin')
+    print(f"Fahrenheit: {fahrenheit_result}")
+    print(f"Kelvin: {kelvin_result}")
+    
     try:
-        processed_result = process_data(sample_data)
+        invalid_converter = TemperatureConverter(-500, 'celsius')
+        invalid_converter.convert_to('fahrenheit')
+    except InvalidTemperatureError as e:
+        print(f"Caught invalid temperature: {e.metadata['value']}")
+    
+    try:
+        bad_unit_converter = TemperatureConverter(100, 'rankine')
+    except UnsupportedUnitError as e:
+        print(f"Caught unsupported unit: {e.metadata['unit']}")
         
-        print("Conversion Process Completed Successfully")
-        print(f"Input Count: {processed_result['input_count']}")
-        if processed_result["converted_items"]:
-            print(f"Converted Items: {processed_result['converted_items']}")
-        else:
-            print("No items were successfully converted.")
-
-    except CustomConversionError as e:
-        # This block catches errors during the processing of sample data
-        error_details = [f"Index {i}: {e.original_value} -> {str(e)}" for i, item in enumerate(sample_data) if isinstance(item, (int, float)) or str(type(getattr(e, 'original_value', None))) != '<type \'NoneType\'>']
-        # Re-logic error details to match the actual sample data structure for clarity
-        print(f"Error Encountered: {e}")
+    try:
+        non_numeric_converter = TemperatureConverter("not_a_number", 'celsius')
+    except NonNumericValueError as e:
+        print(f"Caught non-numeric value: {e.metadata['type']}")

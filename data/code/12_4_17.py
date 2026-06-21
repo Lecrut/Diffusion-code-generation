@@ -1,23 +1,17 @@
-import math
-
-def simplify_ratio(ratio_list):
-    """
-    Takes a list of weight ratios (as floats) and returns a new list 
-    containing simplified integer representations [a, b] where a/b equals ratio.
-    
-    If the input is None or empty, an empty list is returned.
-    The simplification logic finds integers that approximate the float value with high precision.
-    
-    Args:
-        ratio_list (list of float): List of weight ratios to simplify
-        
-    Returns:
-        list of tuple/list: Each element represents a simplified pair [a, b] or None for invalid inputs
-    """
-    if not isinstance(ratio_list, list) or len(ratio_list) == 0:
-        return []
-        
-    result = []
+def get_middle_value(sequence):
+    if not sequence:
+        return None
+    sorted_seq = sorted(sequence)
+    n = len(sorted_seq)
+    mid = n // 2
+    if n % 2 == 1:
+        return sorted_seq[mid]
+    else:
+        return (sorted_seq[mid - 1] + sorted_seq[mid]) / 2
 
 if __name__ == '__main__':
-    pass
+    print(get_middle_value([3, 1, 2]))
+    print(get_middle_value([4, 1, 3, 2]))
+    print(get_middle_value([5]))
+    print(get_middle_value([]))
+    print(get_middle_value([7, 3, 9, 1]))

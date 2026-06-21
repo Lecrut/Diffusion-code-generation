@@ -1,13 +1,16 @@
-def calculate_mean(temp1: float, temp2: float) -> str:
-    """Calculate the arithmetic mean of two temperature readings formatted to two decimal places."""
-    average = (temp1 + temp2) / 2
-    return f"{average:.2f}"
+def is_valid_list(data):
+    if not isinstance(data, list):
+        raise TypeError("Input must be a list")
+    if len(data) == 0:
+        raise ValueError("List cannot be empty")
+    return True
+
+def get_first_element(sample_list):
+    if is_valid_list(sample_list):
+        return sample_list[0]
+    return None
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements; no user input or external dependencies.
-    reading_a: float = 23.56789
-    reading_b: float = -4.102
-    
-    result_str = calculate_mean(reading_a, reading_b)
-    
-    print(result_str)
+    sample = [5, 12, 9, 2, 8]
+    result = get_first_element(sample)
+    print(result)

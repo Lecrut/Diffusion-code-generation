@@ -1,21 +1,16 @@
-import math
-def simplify_ratio(ratio):
-    if ratio == 0:
-        return (0, 0)
-    common = math.gcd(ratio[0], ratio[1])
-    return (ratio[0] // common, ratio[1] // common)
-def simplify_ratios(weight_ratios):
-    simplified_list = []
-    for ratio in weight_ratios:
-        simplified_list.append(simplify_ratio(ratio))
-    return simplified_list
+def get_middle_value(sequence):
+    if not sequence:
+        return None
+    sorted_seq = sorted(sequence)
+    n = len(sorted_seq)
+    if n % 2 == 1:
+        return sorted_seq[n // 2]
+    else:
+        return (sorted_seq[n // 2 - 1] + sorted_seq[n // 2]) / 2
+
 if __name__ == '__main__':
-    sample_ratios = [
-        (10, 20),
-        (12, 18),
-        (7, 14),
-        (15, 25),
-        (100, 50)
-    ]
-    result = simplify_ratios(sample_ratios)
-    print(result)
+    print(get_middle_value([3, 1, 2]))
+    print(get_middle_value([4, 1, 3, 2]))
+    print(get_middle_value([7]))
+    print(get_middle_value([]))
+    print(get_middle_value([1, 2]))

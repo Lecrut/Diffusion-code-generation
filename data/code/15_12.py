@@ -1,12 +1,7 @@
-def check_equality(num1_str, num2_str):
-    try:
-        num1 = int(num1_str)
-        num2 = int(num2_str)
-        return num1 == num2
-    except ValueError:
-        return False
+def get_second_to_last(data):
+    return data[-2]
+
 if __name__ == '__main__':
-    num1_str = "10"
-    num2_str = "10"
-    result = check_equality(num1_str, num2_str)
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_to_last(sample_list)
     print(result)

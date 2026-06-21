@@ -1,8 +1,11 @@
-def compare_strings(str1, str2):
-    return str1.lower() == str2.lower()
+def get_penultimate(lst):
+    if len(lst) < 2:
+        return None
+    return lst[-2]
+
 if __name__ == '__main__':
-    print(compare_strings("Hello", "hello"))
-    print(compare_strings("World", "world"))
-    print(compare_strings("Python", "java"))
-    print(compare_strings("Apple", "apple"))
-    print(compare_strings("Case", "case"))
+    print(get_penultimate([1, 2, 3, 4, 5]))
+    print(get_penultimate([1]))
+    print(get_penultimate([]))
+    print(get_penultimate(['a', 'b', 'c']))
+    print(get_penultimate([42]))

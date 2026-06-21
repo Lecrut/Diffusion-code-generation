@@ -1,27 +1,7 @@
-def calculate_ratio(length1, length2):
-    if length1 > 0 and length2 > 0:
-        return length1 / length2
-    else:
-        raise ValueError("Both lengths must be positive")
+def get_last_element(lst):
+    return next(reversed(lst))
+
 if __name__ == '__main__':
-    a = 10
-    b = 5
-    try:
-        result = calculate_ratio(a, b)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}")
-    a = 0
-    b = 5
-    try:
-        result = calculate_ratio(a, b)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}")
-    a = 10
-    b = -5
-    try:
-        result = calculate_ratio(a, b)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_element(sample_list)
+    print(result)

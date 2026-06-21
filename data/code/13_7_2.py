@@ -1,11 +1,10 @@
-import datetime
-def calculate_duration(date1_str, date2_str):
-    date1 = datetime.datetime.strptime(date1_str, "%Y-%m-%d")
-    date2 = datetime.datetime.strptime(date2_str, "%Y-%m-%d")
-    duration = date2 - date1
-    return duration.days
+import numpy as np
+
+def extract_value(arr: np.ndarray, index: tuple) -> float:
+    return arr[index]
+
 if __name__ == '__main__':
-    date_a = "2020-03-01"
-    date_b = "2024-03-01"
-    result = calculate_duration(date_a, date_b)
+    array = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+    idx = (1, 0, 1)
+    result = extract_value(array, idx)
     print(result)

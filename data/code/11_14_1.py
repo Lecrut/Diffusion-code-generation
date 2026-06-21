@@ -1,10 +1,11 @@
-def calculate_ratios(length_pairs):
-    ratios = []
-    for length1, length2 in length_pairs:
-        if length2 != 0:
-            ratios.append(length1 / length2)
-    return ratios
+def get_last_item(items):
+    if not isinstance(items, list):
+        raise TypeError("Input must be a list")
+    if len(items) == 0:
+        return None
+    return items[-1]
+
 if __name__ == '__main__':
-    sample_data = [(10, 2), (5, 0), (20, 4), (3, 0), (15, 3)]
-    result = calculate_ratios(sample_data)
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_last_item(sample_list)
     print(result)

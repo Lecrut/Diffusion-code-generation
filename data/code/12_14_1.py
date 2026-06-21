@@ -1,19 +1,24 @@
-def convert_ratios_to_weights(ratios, total_weight):
-    weights = {}
-    if not ratios:
-        return weights
-    sum_ratios = sum(ratios)
-    if sum_ratios == 0:
-        raise ValueError("Sum of ratios cannot be zero")
-    for ratio in ratios:
-        weight = (ratio / sum_ratios) * total_weight
-        weights[ratio] = weight
-    return weights
+def get_middle_element(sequence):
+    if not hasattr(sequence, '__getitem__') or not hasattr(sequence, '__len__'):
+        raise TypeError("Input must be a sequence")
+    length = len(sequence)
+    if length == 0:
+        raise ValueError("Sequence is empty")
+    if length % 2 == 1:
+        return sequence[length // 2]
+    else:
+        return (sequence[length // 2 - 1], sequence[length // 2])
+
 if __name__ == '__main__':
-    relative_ratios = [1, 2, 3]
-    total_weight = 100
+    print(get_middle_element([1, 2, 3, 4, 5]))
+    print(get_middle_element([1, 2, 3, 4]))
+    print(get_middle_element("hello"))
+    print(get_middle_element("abcd"))
     try:
-        absolute_weights = convert_ratios_to_weights(relative_ratios, total_weight)
-        print(absolute_weights)
+        get_middle_element([])
     except ValueError as e:
-        print(f"Error: {e}")
+        print(e)
+    try:
+        get_middle_element(123)
+    except TypeError as e:
+        print(e)

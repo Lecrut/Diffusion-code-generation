@@ -1,15 +1,13 @@
-import math
-def are_volumes_close(volume1, volume2, tolerance=1e-9):
-    return math.isclose(volume1, volume2, abs_tol=tolerance)
-if __name__ == '__main__':
-    v1 = 10.0
-    v2 = 10.000000000000001
-    v3 = 10.000000001
-    v4 = 10.0000001
-    v5 = 10.000001
-    print(f"v1={v1}, v2={v2}: {are_volumes_close(v1, v2)}")
-    print(f"v1={v1}, v3={v3}: {are_volumes_close(v1, v3)}")
-    print(f"v1={v1}, v4={v4}: {are_volumes_close(v1, v4)}")
-    print(f"v1={v1}, v5={v5}: {are_volumes_close(v1, v5)}")
-    print(f"v1={v1}, v1: {are_volumes_close(v1, v1)}")
-    print(f"v1={v1}, v1+1e-15={v1+1e-15}: {are_volumes_close(v1, v1+1e-15)}")
+from typing import Any, List
+
+def get_third_item(items: List[Any]) -> Any:
+    if not isinstance(items, list):
+        raise TypeError("Input must be a list.")
+    if len(items) < 3:
+        raise IndexError("List must contain at least three items to retrieve the third one.")
+    return items[2]
+
+if __name__ == "__main__":
+    sample_data = ["apple", "banana", "cherry", "date", "elderberry"]
+    result = get_third_item(sample_data)
+    print(result)

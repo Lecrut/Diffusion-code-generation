@@ -1,69 +1,66 @@
 import unittest
 
-class TestVolumeConversion:
-    """Test suite for volume conversion logic."""
-
-    def test_convert_liters_to_cubic_meters(self):
-        # Standard case
-        self.assertEqual(10, convert_volume("liters", 5))
-        
-    def test_convert_cubic_meters_to_liters(self):
-        # Reverse direction
-        self.assertEqual(2.5, convert_volume("cubic meters", 3))
-
-    def test_edge_case_zero_volume(self):
-        """Test handling of zero volume."""
-        result = convert_volume("liters", 0)
-        assert abs(result - 0) < 1e-9
-        
-    def test_large_numbers(self):
-        """Test conversion with large numerical values."""
-        # Large liters to cubic meters
-        large_liters = 5_000_000_000
-        result_l_to_m3 = convert_volume("liters", large_liters)
-        expected_m3 = large_liters / 1000.0
-        self.assertAlmostEqual(result_l_to_m3, expected_m3)
-
-    def test_small_numbers(self):
-        """Test conversion with very small numerical values."""
-        # Small liters to cubic meters (e.g., milliliter scale approximated in liters)
-        tiny_liters = 1e-6
-        result_l_to_m3 = convert_volume("liters", tiny_liters)
-        expected_m3 = tiny_liters / 1000.0
-        self.assertAlmostEqual(result_l_to_m3, expected_m3)
-
-    def test_negative_values(self):
-        """Test handling of negative volume values."""
-        result = convert_volume("liters", -50)
-        assert abs(result + 0.05) < 1e-9
-
-def convert_volume(unit: str, value: float) -> float:
-    """Convert a given volume to cubic meters based on the input unit.
-
-    Args:
-        unit (str): The source unit ('liters' or 'cubic_meters').
-        value (float): The numerical value of the volume in the specified unit.
-
-    Returns:
-        float: The converted volume in cubic meters.
+def convert_volume(value, from_unit, to_unit):
+    units = {
+        'ml': 1.0,
+        'l': 1000.0,
+        'us_fl_oz': 29.5735,
+        'us_cup': 236.588,
+        'us_gal': 3785.41,
+        'uk_fl_oz': 28.4131,
+        'uk_pint': 568.261
+    }
     
-    Raises:
-        ValueError: If an unsupported unit is provided.
-    """
-    if unit.lower() == "liters":
-        return value / 1000.0
-    elif unit.lower() == "cubic_meters":
-        return value * 1000.0
-    else:
-        raise ValueError(f"Unsupported unit: {unit}")
+    if from_unit not in units or to_unit not in units:
+        raise ValueError("Unsupported unit")
+    
+    if value < 0:
+        raise ValueError("Volume cannot be negative")
+    
+    value_in_ml = value * units[from_unit]
+    return value_in_ml / units[to_unit]
+
+class TestVolumeConversion(unittest.TestCase):
+    def test_liters_to_ml(self):
+        self.assertEqual(convert_volume(1, 'l', 'ml'), 1000.0)
+    
+    def test_ml_to_liters(self):
+        self.assertAlmostEqual(convert_volume(500, 'ml', 'l'), 0.5, places=2)
+    
+    def test_zero_volume(self):
+        self.assertEqual(convert_volume(0, 'l', 'ml'), 0.0)
+    
+    def test_large_number(self):
+        self.assertEqual(convert_volume(1000000, 'l', 'ml'), 1000000000.0)
+    
+    def test_gallon_to_fl_oz(self):
+        self.assertAlmostEqual(convert_volume(1, 'us_gal', 'us_fl_oz'), 128.0, places=2)
+    
+    def test_cup_to_ml(self):
+        self.assertAlmostEqual(convert_volume(2, 'us_cup', 'ml'), 473.176, places=2)
+    
+    def test_invalid_unit(self):
+        with self.assertRaises(ValueError):
+            convert_volume(1, 'gallon', 'ml')
+    
+    def test_negative_volume(self):
+        with self.assertRaises(ValueError):
+            convert_volume(-5, 'l', 'ml')
+
+def get_converted_volume():
+    return convert_volume(5, 'l', 'us_fl_oz')
+
+def get_large_conversion():
+    return convert_volume(100000, 'us_gal', 'ml')
+
+def get_zero_conversion():
+    return convert_volume(0, 'us_cup', 'l')
 
 if __name__ == '__main__':
-    # Hard-coded sample values to run the tests without user input or external dependencies
-    
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestVolumeConversion)
-    
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    if not result.wasSuccessful():
-        exit(result.failures[0][1] if result.failures else "Error in test execution")
+    result1 = get_converted_volume()
+    print(result1)
+    result2 = get_large_conversion()
+    print(result2)
+    result3 = get_zero_conversion()
+    print(result3)
+    unittest.main(argv=[''], exit=False)

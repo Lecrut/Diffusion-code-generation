@@ -1,10 +1,9 @@
-x == y; x = 10; y = 20; print(x == y) if __name__ == '__main__' else None
-
-# To make it a runnable module with proper structure as per instructions:
-
-def check_equality(a, b):
-    return bool(a == b)
-
-if __name__ == "__main__":
-    result = check_equality(10, 20)
+def get_second_last(lst):
+    if len(lst) < 2:
+        raise ValueError("List must contain at least two elements")
+    index_map = {"second_last": -2}
+    return lst[index_map["second_last"]]
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_second_last(sample_list)
     print(result)

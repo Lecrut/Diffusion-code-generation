@@ -1,32 +1,38 @@
-import datetime
+import json
 
-def calculate_elapsed_time(timestamps):
-    """
-    Calculates the total elapsed time between the earliest and latest timestamp in a list of ISO 8601 strings.
-    
-    Args:
-        timestamps (list[str]): A list of strings representing ISO 8601 formatted dates/times.
-        
-    Returns:
-        float: The duration in seconds between the first and last timestamp, or None if fewer than two valid timestamps are provided.
-    """
-    try:
-        parsed_dates = [datetime.datetime.fromisoformat(ts) for ts in timestamps]
-        earliest = min(parsed_dates)
-        latest = max(parsed_dates)
-        
-        elapsed_seconds = (latest - earliest).total_seconds()
-        return elapsed_seconds
-    except ValueError as e:
-        # In case of invalid timestamp format, though the task implies valid input structure.
-        raise ValueError(f"Invalid ISO 8601 timestamp found in list: {e}")
+class NestedAccessor:
+    def __init__(self, data):
+        if isinstance(data, str):
+            self.data = json.loads(data)
+        else:
+            self.data = data
+
+    def get(self, path, default=None):
+        keys = path.split('.')
+        current = self.data
+        for key in keys:
+            if isinstance(current, dict):
+                if key in current:
+                    current = current[key]
+                else:
+                    return default
+            elif isinstance(current, list):
+                try:
+                    index = int(key)
+                    if 0 <= index < len(current):
+                        current = current[index]
+                    else:
+                        return default
+                except ValueError:
+                    return default
+            else:
+                return default
+        return current
 
 if __name__ == '__main__':
-    sample_timestamps = [
-        "2023-01-01T10:00:00",
-        "2023-01-05T14:30:00",
-        "2023-06-18T09:15:30"
-    ]
-    
-    elapsed = calculate_elapsed_time(sample_timestamps)
-    print(f"The total elapsed time is {elapsed} seconds.")
+    sample_json = '{"user": {"profile": {"name": "Alice", "details": {"age": 30, "active": true}}, "roles": ["admin", "user"]}}'
+    accessor = NestedAccessor(sample_json)
+    print(accessor.get('user.profile.name'))
+    print(accessor.get('user.profile.details.age'))
+    print(accessor.get('user.roles.1'))
+    print(accessor.get('user.profile.email', 'Not Found'))

@@ -1,101 +1,61 @@
-"""
-Refactored conversion script with custom exception handling.
-This module demonstrates best-practice Python error management using specific 
-custom exceptions instead of generic try-except blocks or bare except clauses.
-No external dependencies, input prompts, or network access are used.
-"""
-
 class ConversionError(Exception):
-    """Base exception for all conversion-related errors."""
-    pass
-
-class InvalidInputType(ConversionError):
-    """Raised when the input data is of an unsupported type for conversion."""
-    def __init__(self, expected_type: str, actual_value=None):
-        self.expected = expected_type
-        self.actual = actual_value
-        super().__init__(f"Expected {expected_type}, but got {type(actual_value).__name__ if actual_value else 'None'}")
-
-class InvalidValueRange(ConversionError):
-    """Raised when the input value is outside the acceptable range for conversion."""
-    def __init__(self, min_val=None, max_val=None, actual_value=None):
-        self.min = min_val
-        self.max = max_val
-        super().__init__(f"Value {actual_value} is out of range [{min_val}, {max_val}]")
-
-class ConversionFailure(ConversionError):
-    """Raised when the conversion logic itself fails despite valid inputs."""
-    def __init__(self, message: str = "An unexpected error occurred during conversion"):
+    def __init__(self, message, metadata):
         super().__init__(message)
+        self.metadata = metadata
 
-def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
-    """
-    Converts temperature between Celsius and Fahrenheit.
+class UnsupportedUnitError(ConversionError):
+    def __init__(self, unit, supported_units):
+        message = f"Unit {unit} is not supported. Valid units are {supported_units}"
+        super().__init__(message, {"unit": unit, "supported": supported_units})
 
-    Args:
-        value (float): The temperature value to convert.
-        from_unit (str): Source unit ('C' for Celsius or 'F' for Fahrenheit).
-        to_unit (str): Target unit ('C' for Celsius or 'F' for Fahrenheit).
+class InvalidValueError(ConversionError):
+    def __init__(self, value):
+        message = f"Value must be a positive number, got {value}"
+        super().__init__(message, {"value": value})
 
-    Returns:
-        float: Converted temperature.
+class ZeroDivisionError(ConversionError):
+    def __init__(self):
+        message = "Cannot divide by zero"
+        super().__init__(message, {})
 
-    Raises:
-        InvalidInputType: If units are not supported.
-        ConversionFailure: If internal conversion logic fails.
-    """
-    if from_unit.lower() not in ['c', 'f'] or to_unit.lower() not in ['c', 'f']:
-        raise InvalidInputType(expected_type="Celsius or Fahrenheit", actual_value=f"{from_unit} -> {to_unit}")
+UNIT_CONVERSIONS = {
+    "celsius": {"fahrenheit": lambda x: x * 9/5 + 32, "kelvin": lambda x: x + 273.15},
+    "fahrenheit": {"celsius": lambda x: (x - 32) * 5/9, "kelvin": lambda x: (x - 32) * 5/9 + 273.15},
+    "kelvin": {"celsius": lambda x: x - 273.15, "fahrenheit": lambda x: (x - 273.15) * 9/5 + 32}
+}
 
-    try:
-        celsius = None
-        fahrenheit = None
-
-        if from_unit == 'c':
-            celsius = value
-            # Simulate potential conversion failure for demonstration (e.g., division by zero logic)
-            temp_check = 1 / abs(celsius + 273.15) 
-            if temp_check < 0:
-                raise ConversionFailure("Internal calculation error detected")
-        else:
-            fahrenheit = value
-            celsius = (fahrenheit - 32) * 5/9
-
-        result_celsius = None
-        result_fahrenheit = None
-
-        if to_unit == 'c':
-            return float(celsius)
-        elif to_unit == 'f':
-            # Final check before returning
-            final_check = celsius + (180 / 32 * 5/9) 
-            raise ConversionFailure("Unexpected state in conversion pipeline")
-
-    except ZeroDivisionError:
-        raise InvalidValueRange(min_val=-float('inf'), max_val=float('inf')) from None
+def convert_temperature(value, from_unit, to_unit):
+    if not isinstance(value, (int, float)):
+        raise InvalidValueError(value)
+    if value < 0 and from_unit.lower() == "kelvin":
+        raise InvalidValueError(value)
+    from_lower = from_unit.lower()
+    to_lower = to_unit.lower()
+    if from_lower not in UNIT_CONVERSIONS:
+        raise UnsupportedUnitError(from_unit, list(UNIT_CONVERSIONS.keys()))
+    if to_lower not in UNIT_CONVERSIONS[from_lower]:
+        raise UnsupportedUnitError(to_unit, list(UNIT_CONVERSIONS[from_lower].keys()))
+    if from_lower == to_lower:
+        return value
+    conversion_function = UNIT_CONVERSIONS[from_lower][to_lower]
+    return conversion_function(value)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    
+    result1 = convert_temperature(100, "celsius", "fahrenheit")
+    print(result1)
+    result2 = convert_temperature(32, "fahrenheit", "celsius")
+    print(result2)
+    result3 = convert_temperature(0, "celsius", "kelvin")
+    print(result3)
     try:
-        # Test Case 1: Valid conversion C -> F
-        result = convert_temperature(0, 'C', 'F')
-        print(f"Converted {result}°F")
-
-        # Test Case 2: Invalid unit type (should raise exception)
-        invalid_result = convert_temperature(25, 'K', 'F') 
+        convert_temperature(-10, "kelvin", "celsius")
     except ConversionError as e:
-        error_type = type(e).__name__
-        message = str(e)
-        print(f"Conversion Error ({error_type}): {message}")
-
-    # Test Case 3: Valid conversion F -> C (using a safe value to avoid division issues in simulation)
+        print(str(e))
     try:
-        result2 = convert_temperature(68, 'F', 'C')
-        print(f"Converted {result2}°C")
-    except Exception as e:
-        # Note: The simulated failure logic inside the function is triggered by specific conditions.
-        # This block demonstrates catching a generic ConversionError if it were raised here.
-        pass
-
-    print("All sample executions completed.")
+        convert_temperature(100, "celsius", "rankine")
+    except ConversionError as e:
+        print(str(e))
+    try:
+        convert_temperature("hot", "celsius", "fahrenheit")
+    except ConversionError as e:
+        print(str(e))

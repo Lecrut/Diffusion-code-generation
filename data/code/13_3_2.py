@@ -1,20 +1,38 @@
-import datetime
-def calculate_total_elapsed_time(timestamps):
-    if not timestamps:
-        return None
-    datetime_objects = [datetime.datetime.fromisoformat(ts) for ts in timestamps]
-    earliest = min(datetime_objects)
-    latest = max(datetime_objects)
-    time_difference = latest - earliest
-    return time_difference
+def get_nested_value(data, path):
+    keys = path.split('.')
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key in current:
+                current = current[key]
+            else:
+                raise KeyError(f"Key '{key}' not found in data")
+        elif isinstance(current, list):
+            try:
+                index = int(key)
+                current = current[index]
+            except (ValueError, IndexError):
+                raise IndexError(f"Invalid index '{key}' for list")
+        else:
+            raise TypeError(f"Cannot access key '{key}' on non-container type {type(current).__name__}")
+    return current
+
 if __name__ == '__main__':
-    sample_timestamps = [
-        "2023-01-01T10:00:00",
-        "2023-01-05T12:30:00",
-        "2023-01-03T08:00:00"
-    ]
-    elapsed_time = calculate_total_elapsed_time(sample_timestamps)
-    if elapsed_time:
-        print(elapsed_time)
-    else:
-        print("List of timestamps is empty")
+    sample_data = {
+        "user": {
+            "name": "Alice",
+            "address": {
+                "city": "Wonderland",
+                "zip": "12345"
+            },
+            "hobbies": ["reading", "gaming", "coding"]
+        },
+        "settings": {
+            "theme": "dark",
+            "notifications": True
+        }
+    }
+    print(get_nested_value(sample_data, "user.name"))
+    print(get_nested_value(sample_data, "user.address.city"))
+    print(get_nested_value(sample_data, "user.hobbies.2"))
+    print(get_nested_value(sample_data, "settings.theme"))

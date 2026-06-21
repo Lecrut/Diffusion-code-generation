@@ -1,11 +1,12 @@
-class LengthCalculator:
-    def get_ratio(self, a, b):
-        if b == 0:
-            raise ValueError("Cannot divide by zero")
-        return a / b
+from typing import TypeVar, List
+
+T = TypeVar('T')
+
+def get_last_item(data: List[T]) -> T:
+    index = len(data) - 1
+    return data[index]
+
 if __name__ == '__main__':
-    calculator = LengthCalculator()
-    length_a = 10
-    length_b = 5
-    ratio = calculator.get_ratio(length_a, length_b)
-    print(ratio)
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_last_item(sample_list)
+    print(result)

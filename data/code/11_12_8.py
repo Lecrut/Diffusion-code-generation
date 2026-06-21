@@ -1,37 +1,26 @@
-import math
+from typing import List, TypeVar, Dict, Any
 
-class LengthCalculator:
-    """A class to calculate ratios between two lengths."""
+T = TypeVar('T')
 
-    def get_ratio(self, a: float, b: float) -> float:
-        """
-        Calculates the ratio of length 'a' to length 'b'.
+INDEX_OFFSET: int = 1
+EMPTY_LIST_ERROR: str = "List cannot be empty"
 
-        Args:
-            a (float): The numerator length.
-            b (float): The denominator length.
+def get_last_item(data: List[T]) -> T:
+    length = len(data)
+    if length == 0:
+        raise ValueError(EMPTY_LIST_ERROR)
+    target_index = length - INDEX_OFFSET
+    return data[target_index]
 
-        Returns:
-            float: The calculated ratio if lengths are valid; otherwise raises ValueError.
-
-        Raises:
-            ValueError: If either or both of the provided arguments are zero, 
-                      as division by zero is undefined and can cause runtime errors.
-        """
-        if a == 0 or b == 0:
-            raise ValueError("Length cannot be zero.")
-        
-        return a / b
+def build_test_registry() -> Dict[str, List[int]]:
+    return {
+        "integers": [100, 200, 300, 400],
+        "floats": [1.5, 2.5, 3.5],
+        "mixed": [5, 10, 15]
+    }
 
 if __name__ == '__main__':
-    calculator = LengthCalculator()
-
-    # Sample values for testing the get_ratio method
-    length_a = 12.5
-    length_b = 4.0
-
-    try:
-        ratio_result = calculator.get_ratio(length_a, length_b)
-        print(f"The ratio of {length_a} to {length_b} is: {ratio_result:.2f}")
-    except ValueError as e:
-        print(f"Error occurred: {e}")
+    registry = build_test_registry()
+    for category, values in registry.items():
+        last_val = get_last_item(values)
+        print(f"{category}: {last_val}")

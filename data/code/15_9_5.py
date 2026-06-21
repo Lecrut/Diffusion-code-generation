@@ -1,24 +1,20 @@
-import random
-def are_lists_identical(list1, list2):
-    if len(list1) != len(list2):
-        return False
-    for i in range(len(list1)):
-        if list1[i] != list2[i]:
-            return False
-    return True
+class PenultimateExtractor:
+    MIN_LENGTH = 2
+    EXPECTED_TYPE = list
+
+    @staticmethod
+    def validate_sequence(data):
+        if not isinstance(data, PenultimateExtractor.EXPECTED_TYPE):
+            raise TypeError("Input must be a list")
+        if len(data) < PenultimateExtractor.MIN_LENGTH:
+            raise ValueError("List must contain at least two elements")
+
+    @classmethod
+    def extract(cls, data):
+        cls.validate_sequence(data)
+        return data[-2]
+
 if __name__ == '__main__':
-    list_a = list(range(1000000))
-    list_b = list(range(1000000))
-    list_c = list(range(1000000))
-    list_d = list(range(1000001))
-    list_e = list(range(1000000))
-    print(f"A and B identical: {are_lists_identical(list_a, list_b)}")
-    print(f"A and C identical: {are_lists_identical(list_a, list_c)}")
-    print(f"A and D identical: {are_lists_identical(list_a, list_d)}")
-    print(f"A and E identical: {are_lists_identical(list_a, list_e)}")
-    list_f = [1, 2, 3]
-    list_g = [1, 2, 4]
-    print(f"F and G identical: {are_lists_identical(list_f, list_g)}")
-    list_h = [1, 2, 3, 4]
-    list_i = [1, 2, 3, 4, 5]
-    print(f"H and I identical: {are_lists_identical(list_h, list_i)}")
+    sample_data = [10, 20, 30, 40, 50]
+    result = PenultimateExtractor.extract(sample_data)
+    print(result)

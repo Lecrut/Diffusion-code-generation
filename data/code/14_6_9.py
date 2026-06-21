@@ -1,42 +1,12 @@
-import sys
-
-def is_numeric(value):
-    """Check if a string can be converted to a float."""
+def retrieve_third_from_end(container):
     try:
-        float(value)
-        return True
-    except ValueError:
-        return False
-
-def compare_volumes(vol1_str, vol2_str):
-    """Compare two volume measurements and print the result."""
-    # Validate inputs are numeric
-    if not is_numeric(vol1_str) or not is_numeric(vol2_str):
-        raise TypeError("Both inputs must be valid numbers.")
-
-    vol1 = float(vol1_str)
-    vol2 = float(vol2_str)
-
-    comparison_result = ""
-    if vol1 > vol2:
-        result_msg = f"{vol1} is greater than {vol2}"
-    elif vol1 < vol2:
-        result_msg = f"{vol1} is less than {vol2}"
-    else:
-        result_msg = f"{vol1} equals {vol2}"
-
-    print(result_msg)
-
-def main():
-    # Hard-coded sample values as per requirements to avoid input() or sys.stdin calls
-    vol_1_measurements = "5.0"
-    vol_2_measurements = "3.75"
-
-    try:
-        compare_volumes(vol_1_measurements, vol_2_measurements)
-    except TypeError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        return container[-3]
+    except TypeError:
+        raise TypeError("Object is not a sequence")
+    except IndexError:
+        raise IndexError("Sequence is too short to have a third from last element")
 
 if __name__ == '__main__':
-    main()
+    test_data = [4, 8, 15, 16, 23, 42]
+    third_last_value = retrieve_third_from_end(test_data)
+    print(third_last_value)

@@ -1,23 +1,69 @@
 class VolumeConverter:
-    @staticmethod
-    def metric_to_imperial_liters(volume_liters: float) -> float:
-        return volume_liters * 0.264172
-    @staticmethod
-    def metric_to_imperial_gallons(volume_liters: float) -> float:
-        return volume_liters * 0.264172
-    @staticmethod
-    def imperial_to_metric_liters(volume_gallons: float) -> float:
-        return volume_gallons / 0.264172
-    @staticmethod
-    def imperial_to_metric_gallons(volume_gallons: float) -> float:
-        return volume_gallons
+    LITER_TO_BASE = 1.0
+    MILLILITER_TO_BASE = 0.001
+    GALLON_TO_BASE = 3.785411784
+    QUART_TO_BASE = 0.946352946
+    PINT_TO_BASE = 0.473176473
+    CUP_TO_BASE = 0.236588236
+    FLUID_OUNCE_TO_BASE = 0.0295735296
+
+    CONVERSION_TABLE = {
+        'liter': LITER_TO_BASE,
+        'milliliter': MILLILITER_TO_BASE,
+        'gallon': GALLON_TO_BASE,
+        'quart': QUART_TO_BASE,
+        'pint': PINT_TO_BASE,
+        'cup': CUP_TO_BASE,
+        'fluid_ounce': FLUID_OUNCE_TO_BASE
+    }
+
+    VALID_UNITS = set(CONVERSION_TABLE.keys())
+
+    def __init__(self, value, unit):
+        if unit not in self.VALID_UNITS:
+            raise ValueError(f"Invalid unit: {unit}. Must be one of {self.VALID_UNITS}")
+        self.base_value = value * self.CONVERSION_TABLE[unit]
+
+    def convert(self, target_unit):
+        if target_unit not in self.VALID_UNITS:
+            raise ValueError(f"Invalid target unit: {target_unit}. Must be one of {self.VALID_UNITS}")
+        return self.base_value / self.CONVERSION_TABLE[target_unit]
+
+    def get_base_value(self):
+        return self.base_value
+
+    def to_milliliters(self):
+        return self.convert('milliliter')
+
+    def to_liters(self):
+        return self.convert('liter')
+
+    def to_gallons(self):
+        return self.convert('gallon')
+
+    def to_quarts(self):
+        return self.convert('quart')
+
+    def to_pints(self):
+        return self.convert('pint')
+
+    def to_cups(self):
+        return self.convert('cup')
+
+    def to_fluid_ounces(self):
+        return self.convert('fluid_ounce')
+
+    def __repr__(self):
+        return f"VolumeConverter(base={self.base_value:.4f} liters)"
+
 if __name__ == '__main__':
-    sample_metric_volume_l = 10.0
-    sample_imperial_volume_gal = 3.0
-    print(f"--- Metric to Imperial Conversion ---")
-    print(f"{sample_metric_volume_l} Liters is equal to {VolumeConverter.metric_to_imperial_gallons(sample_metric_volume_l):.4f} Gallons")
-    print(f"\n--- Imperial to Metric Conversion ---")
-    print(f"{sample_imperial_volume_gal} Gallons is equal to {VolumeConverter.imperial_to_metric_liters(sample_imperial_volume_gal):.4f} Liters")
-    sample_metric_volume_ml = 500.0
-    print(f"\n--- Metric to Imperial (mL Example) ---")
-    print(f"{sample_metric_volume_ml} mL is equal to {VolumeConverter.metric_to_imperial_gallons(sample_metric_volume_ml / 1000.0):.4f} Gallons")
+    converter = VolumeConverter(2.5, 'gallon')
+    print(f"Original: 2.5 gallons")
+    print(f"Liters: {converter.to_liters()}")
+    print(f"Milliliters: {converter.to_milliliters()}")
+    print(f"Quarts: {converter.to_quarts()}")
+    print(f"Pints: {converter.to_pints()}")
+    print(f"Cups: {converter.to_cups()}")
+    print(f"Fluid Ounces: {converter.to_fluid_ounces()}")
+    print(f"Custom Conversion to liters: {converter.convert('liter')}")
+    print(f"Repr output: {repr(converter)}")

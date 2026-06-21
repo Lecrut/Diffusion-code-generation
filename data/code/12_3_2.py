@@ -1,21 +1,13 @@
-import math
-def simplify_ratio(a, b):
-    if b == 0:
-        raise ValueError("Denominator cannot be zero")
-    common = math.gcd(a, b)
-    return a // common, b // common
+def get_middle_element(lst):
+    if not lst:
+        return None
+    return lst[len(lst) // 2]
+
 if __name__ == '__main__':
-    ratio1 = 12
-    ratio2 = 18
-    try:
-        num1, den1 = simplify_ratio(ratio1, ratio2)
-        print(f"Simplified ratio for {ratio1}:{ratio2} is {num1}:{den1}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    ratio3 = 20
-    ratio4 = 30
-    try:
-        num2, den2 = simplify_ratio(ratio3, ratio4)
-        print(f"Simplified ratio for {ratio3}:{ratio4} is {num2}:{den2}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_list_1 = [1, 2, 3, 4, 5]
+    sample_list_2 = [10, 20, 30, 40]
+    sample_list_3 = []
+    
+    print(get_middle_element(sample_list_1))
+    print(get_middle_element(sample_list_2))
+    print(get_middle_element(sample_list_3))

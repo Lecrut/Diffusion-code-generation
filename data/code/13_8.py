@@ -1,22 +1,29 @@
-def calculate_time_zone_difference(offsets):
-    if not offsets:
-        return 0
-    min_offset = min(offsets)
-    max_offset = max(offsets)
-    return max_offset - min_offset
+from collections import defaultdict
+from typing import Any, Callable, Dict, Tuple
+
+def get_or_init_composite(
+    dd: Dict[Tuple, Any],
+    key: Tuple,
+    factory: Callable[[], Any],
+) -> Any:
+    if key not in dd:
+        dd[key] = factory()
+    return dd[key]
+
 if __name__ == '__main__':
-    sample_offsets_1 = [5, -2, 10, -5.5]
-    result_1 = calculate_time_zone_difference(sample_offsets_1)
-    print(result_1)
-    sample_offsets_2 = [1, 2, 3, 4]
-    result_2 = calculate_time_zone_difference(sample_offsets_2)
-    print(result_2)
-    sample_offsets_3 = [-10, -5, -15]
-    result_3 = calculate_time_zone_difference(sample_offsets_3)
-    print(result_3)
-    sample_offsets_4 = [3.14, 1.618, 2.718]
-    result_4 = calculate_time_zone_difference(sample_offsets_4)
-    print(result_4)
-    sample_offsets_5 = []
-    result_5 = calculate_time_zone_difference(sample_offsets_5)
-    print(result_5)
+    def make_list():
+        return []
+
+    composite_map: Dict[Tuple, list] = defaultdict(make_list)
+
+    key1 = ('a', 1)
+    key2 = ('b', 2)
+
+    result1 = get_or_init_composite(composite_map, key1, make_list)
+    result2 = get_or_init_composite(composite_map, key2, make_list)
+
+    result1.append('value_for_a1')
+    result2.append('value_for_b2')
+
+    print(composite_map[key1])
+    print(composite_map[key2])

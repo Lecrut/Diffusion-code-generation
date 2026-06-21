@@ -1,44 +1,69 @@
+import tempfile
 import os
 
-def convert_volumes(volume_values):
+def convert_volume_measurements(input_file_path):
+    liters_per_cubic_meter = 1000.0
     results = []
-    for value in volume_values:
-        liters = value * 3.78541
-        cubic_meters = liters / 1000.0
-        results.append({
-            'original_gallons': value,
-            'liters': liters,
-            'cubic_meters': cubic_meters
-        })
-    return results
-
-def process_file(filename):
-    if not os.path.exists(filename):
-        return []
     try:
-        with open(filename, 'r') as f:
+        with open(input_file_path, 'r') as f:
             lines = f.readlines()
-    except IOError:
-        return []
+    except FileNotFoundError:
+        return [("Error", "File not found: " + input_file_path)]
+    except IOError as e:
+        return [("Error", "IO error reading file: " + str(e))]
+    except Exception as e:
+        return [("Error", "Unexpected error: " + str(e))]
 
-    volume_values = []
-    for line in lines:
+    for line_num, line in enumerate(lines, 1):
         stripped = line.strip()
         if not stripped:
             continue
         try:
-            val = float(stripped)
-            volume_values.append(val)
+            volume = float(stripped)
+            liters = volume
+            cubic_meters = volume / liters_per_cubic_meter
+            results.append((volume, liters, cubic_meters))
         except ValueError:
-            continue
-    return convert_volumes(volume_values)
+            results.append(("Error at line " + str(line_num), "Invalid number: " + stripped))
+
+    return results
+
+def print_volume_conversions(results):
+    if not results:
+        print("No data to display.")
+        return
+
+    print(f"{'Original':<12} {'Liters':<12} {'Cubic Meters':<15}")
+    print("-" * 40)
+    for item in results:
+        if isinstance(item[0], str):
+            print(f"{item[0]:<12} {item[1]}")
+        else:
+            original, liters, cubic_meters = item
+            print(f"{original:<12.4f} {liters:<12.4f} {cubic_meters:<15.6f}")
+
+def main():
+    sample_data = [
+        "1.5",
+        "100",
+        "0.001",
+        "-50",
+        "abc",
+        "123.456",
+        "",
+        "999.999"
+    ]
+
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        temp_file_path = f.name
+        f.write('\n'.join(sample_data))
+
+    try:
+        results = convert_volume_measurements(temp_file_path)
+        print_volume_conversions(results)
+    finally:
+        if os.path.exists(temp_file_path):
+            os.remove(temp_file_path)
 
 if __name__ == '__main__':
-    sample_volumes = [10, 5.5, 100, 0.1]
-    results = process_file('dummy_input.txt')
-    
-    if not results:
-        results = convert_volumes(sample_volumes)
-
-    for item in results:
-        print(f"{item['original_gallons']} gallons = {item['liters']} liters = {item['cubic_meters']} cubic meters")
+    main()

@@ -1,27 +1,22 @@
-import math
-def simplify_ratios(ratios):
-    simplified = {}
-    for name, ratio in ratios.items():
-        if ratio == 0:
-            simplified[name] = "0"
-            continue
-        if isinstance(ratio, (int, float)):
-            if ratio == 0:
-                simplified[name] = "0"
-            else:
-                common = math.gcd(int(ratio) if ratio == int(ratio) else int(ratio), int(ratio))
-                simplified[name] = f"{int(ratio) // common}/{int(ratio) // common}"
-        else:
-            simplified[name] = ratio
-    return simplified
-if __name__ == '__main__':
-    sample_ratios = {
-        "A:B": 2,
-        "C:D": 6,
-        "E:F": 10,
-        "G:H": 15,
-        "I:J": 4,
-        "K:L": 8
-    }
-    simplified_ratios = simplify_ratios(sample_ratios)
-    print(simplified_ratios)
+def get_middle_item(sequence):
+    if not sequence:
+        return None
+    length = len(sequence)
+    if length % 2 == 1:
+        return sequence[length // 2]
+    middle_index = (length - 1) // 2
+    return sequence[middle_index]
+
+if __name__ == "__main__":
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30, 40],
+        ["a", "b", "c"],
+        ["x", "y"],
+        [99],
+        [],
+        [1, 2, 3, 4, 5, 6, 7, 8]
+    ]
+    for case in test_cases:
+        result = get_middle_item(case)
+        print(result)

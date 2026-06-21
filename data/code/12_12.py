@@ -1,16 +1,18 @@
-class WeightRatioConverter:
-    def convert_to_normalized_distribution(self, ratios):
-        if not ratios:
-            return {}
-        total = sum(ratios)
-        if total == 0:
-            return {ratio: 0.0 for ratio in ratios}
-        normalized_distribution = {}
-        for ratio in ratios:
-            normalized_distribution[ratio] = ratio / total
-        return normalized_distribution
+import numpy as np
+
+def get_middle_element(arr):
+    if arr.ndim != 1:
+        raise ValueError("Input must be a 1-dimensional array")
+    if arr.size == 0:
+        raise ValueError("Array must not be empty")
+    mid_index = arr.size // 2
+    if arr.size % 2 == 1:
+        return arr[mid_index]
+    else:
+        return arr[mid_index]
+
 if __name__ == '__main__':
-    converter = WeightRatioConverter()
-    sample_ratios = [10, 30, 60, 100]
-    normalized_result = converter.convert_to_normalized_distribution(sample_ratios)
-    print(normalized_result)
+    sample_odd = np.array([1, 2, 3, 4, 5])
+    sample_even = np.array([1, 2, 3, 4])
+    print(get_middle_element(sample_odd))
+    print(get_middle_element(sample_even))

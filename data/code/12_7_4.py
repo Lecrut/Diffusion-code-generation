@@ -1,18 +1,21 @@
-def convert_ratios(ratios):
-    results = []
-    for a, b in ratios:
-        if b == 0:
-            results.append(float('inf') if a != 0 else float('nan'))
-        else:
-            results.append(a / b)
-    return results
+def get_middle_element(seq):
+    if len(seq) == 0:
+        raise ValueError("Sequence cannot be empty")
+    mid_index = len(seq) // 2
+    return seq[mid_index]
+
 if __name__ == '__main__':
-    sample_ratios = [
-        (1000000000, 500000000),
-        (1234567890123, 1000000000000),
-        (0, 5),
-        (10, 0),
-        (12345, 6789)
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [10, 20, 30, 40],
+        "hello",
+        ("a", "b", "c", "d", "e"),
+        [100],
+        range(1, 6)
     ]
-    output = convert_ratios(sample_ratios)
-    print(output)
+    for case in test_cases:
+        print(get_middle_element(case))
+    try:
+        get_middle_element([])
+    except ValueError as e:
+        print(e)

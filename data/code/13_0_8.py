@@ -1,20 +1,27 @@
-import datetime
-import pytz
-def calculate_time_difference(dt1_str, dt2_str, tz1_name, tz2_name):
-    tz1 = pytz.timezone(tz1_name)
-    tz2 = pytz.timezone(tz2_name)
-    dt1 = pytz.timezone(tz1_name).localize(datetime.datetime.strptime(dt1_str, "%Y-%m-%d %H:%M:%S"))
-    dt2 = pytz.timezone(tz2_name).localize(datetime.datetime.strptime(dt2_str, "%Y-%m-%d %H:%M:%S"))
-    dt1_utc = dt1.astimezone(pytz.utc)
-    dt2_utc = dt2.astimezone(pytz.utc)
-    time_difference = dt2_utc - dt1_utc
-    return time_difference
+def get_nested_value(data, path, default=None):
+    current = data
+    for key in path:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return default
+    return current
+
 if __name__ == '__main__':
-    date1_str = "2023-10-26 10:00:00"
-    date2_str = "2023-10-26 14:30:00"
-    tz1 = "America/New_York"
-    tz2 = "Europe/London"
-    difference = calculate_time_difference(date1_str, date2_str, tz1, tz2)
-    print(f"Date 1: {date1_str} in {tz1}")
-    print(f"Date 2: {date2_str} in {tz2}")
-    print(f"Time difference (Date 2 - Date 1): {difference}")
+    sample_data = {
+        "user": {
+            "profile": {
+                "name": "Alice",
+                "age": 30
+            }
+        }
+    }
+    
+    result1 = get_nested_value(sample_data, ["user", "profile", "name"])
+    print(result1)
+    
+    result2 = get_nested_value(sample_data, ["user", "profile", "email"], default="N/A")
+    print(result2)
+    
+    result3 = get_nested_value(sample_data, ["user", "address", "city"], default="Unknown")
+    print(result3)

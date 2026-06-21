@@ -1,73 +1,46 @@
 import unittest
 
-# Mock module representing volume conversion logic from a previous step
-class VolumeConverter:
-    def __init__(self, base_unit="liter"):
-        self.base_unit = "liter"
+def convert_volume(value, from_unit, to_unit):
+    if from_unit == to_unit:
+        return value
+    conversion_factors = {
+        "liter": 1,
+        "milliliter": 0.001,
+        "gallon": 3.78541,
+        "quart": 0.946353,
+        "pint": 0.473176,
+        "cup": 0.236588,
+        "fluid_ounce": 0.0295735
+    }
+    if from_unit not in conversion_factors or to_unit not in conversion_factors:
+        raise ValueError("Unsupported unit")
+    liters = value * conversion_factors[from_unit]
+    return liters / conversion_factors[to_unit]
 
-    def convert_to_liters(self, value):
-        """Converts any unit to liters."""
-        return value * 1.0
-
-    def convert_from_liters(self, value, target_unit=None):
-        """Converts from other units or validates litervalues. Returns a message if invalid input"""
-        
-        # Validate numerical type and range for zero handling (edge case)
-        try:
-            val = float(value)
-            
-            # Handle edge case where volume is negative (optional business rule check, though physically possible in some contexts)
-            if val < 0.0: 
-                return f"Error: Volume cannot be negative."
-
-            return {
-                "input_value": int(val),
-                "target_unit": target_unit or self.base_unit,
-                "converted_liters": round(self.convert_to_liters(val), 2)
-            }
-
-        except (TypeError, ValueError):
-             # Handle edge case where input is not a number
-            return f"Error: Input '{value}' is invalid."
-
-    def convert_from_other_units(self, value_in_unit="ml"):
-        """Converts from common units to liters."""
-        
-        if self.base_unit == "liter":
-            unit_rates = {"ml": 0.001, "L": 1.0, "gal": 3.78541}
-        elif self.base_unit == "gallon":
-             unit_rates = {"L": 264.172, "mL": 395, "ml": .395}
-
-        # Handle edge case: zero volume or empty input string logic is handled in convert_from_liters for general cases 
-        try:
-            if value_in_unit not in unit_rates.keys():
-                raise ValueError("Invalid unit provided.")
-            
-            return round(value * unit_rates[value_in_unit], 2)
-
-        except Exception as e:
-             # Handle potential arithmetic overflow with large numbers (edge case)
-            return f"Error during calculation due to large number or invalid input. {str(e)}"
-
-# Main Test Suite for VolumeConverter logic
 class TestVolumeConversion(unittest.TestCase):
-
-    def setUp(self):
-        self.converter = VolumeConverter()
-
-    # -- Standard Tests --
-    
-    def test_convert_normal_liter_to_liters(self):
-        """Test converting standard liters to liters."""
-        result = self.converter.convert_from_liters(10) 
-        self.assertEqual(result["converted_liters"], 10.0) 
-
-    def test_convert_negative_volume_handling(self):
-        # Test edge case: negative volume (invalid per business logic in this mock)
-            pass
-
-    def test_large_number_conversion(self):
-        """Test converting large numbers to avoid overflow issues."""
+    def test_liter_to_gallon(self):
+        self.assertAlmostEqual(convert_volume(1, "liter", "gallon"), 0.264172, places=6)
+    def test_gallon_to_liter(self):
+        self.assertAlmostEqual(convert_volume(1, "gallon", "liter"), 3.78541, places=5)
+    def test_same_unit(self):
+        self.assertEqual(convert_volume(100, "liter", "liter"), 100)
+    def test_zero_volume(self):
+        self.assertEqual(convert_volume(0, "gallon", "liter"), 0)
+    def test_large_numbers(self):
+        self.assertAlmostEqual(convert_volume(1000000, "liter", "milliliter"), 1000000000)
+    def test_invalid_unit(self):
+        with self.assertRaises(ValueError):
+            convert_volume(10, "liter", "invalid_unit")
+    def test_milliliter_to_fluid_ounce(self):
+        self.assertAlmostEqual(convert_volume(30, "milliliter", "fluid_ounce"), 1.01442, places=5)
 
 if __name__ == '__main__':
-    pass
+    result_liters = convert_volume(50, "liter", "gallon")
+    result_gallons = convert_volume(10, "gallon", "liter")
+    result_zero = convert_volume(0, "pint", "milliliter")
+    result_large = convert_volume(5000000, "milliliter", "liter")
+    print(result_liters)
+    print(result_gallons)
+    print(result_zero)
+    print(result_large)
+    unittest.main()

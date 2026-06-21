@@ -1,32 +1,19 @@
-from datetime import datetime
-import pytz
-class TimeScaleManager:
-    def convert_timezone(self, dt_str, from_tz_str, to_tz_str):
-        dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
-        from_tz = pytz.timezone(from_tz_str)
-        to_tz = pytz.timezone(to_tz_str)
-        dt_aware = from_tz.localize(dt)
-        dt_converted = dt_aware.astimezone(to_tz)
-        return dt_converted.strftime("%Y-%m-%d %H:%M:%S %Z%z")
+class InvalidIndexError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+def extract_item_by_index(t, index):
+    if not isinstance(index, int):
+        raise InvalidIndexError("Index must be an integer")
+    if index < 0 or index >= len(t):
+        raise InvalidIndexError(f"Index {index} is out of range for tuple of length {len(t)}")
+    return t[index]
+
 if __name__ == '__main__':
-    manager = TimeScaleManager()
-    date_time_str_1 = "2023-03-15 10:00:00"
-    from_tz_1 = "America/New_York"
-    to_tz_1 = "Europe/London"
-    result_1 = manager.convert_timezone(date_time_str_1, from_tz_1, to_tz_1)
-    print(f"Original: {date_time_str_1} in {from_tz_1}")
-    print(f"Converted: {result_1} in {to_tz_1}")
-    print("-" * 20)
-    date_time_str_2 = "2023-03-12 01:30:00"
-    from_tz_2 = "America/New_York"
-    to_tz_2 = "Europe/Paris"
-    result_2 = manager.convert_timezone(date_time_str_2, from_tz_2, to_tz_2)
-    print(f"Original: {date_time_str_2} in {from_tz_2}")
-    print(f"Converted: {result_2} in {to_tz_2}")
-    print("-" * 20)
-    date_time_str_3 = "2023-11-05 01:30:00"
-    from_tz_3 = "America/New_York"
-    to_tz_3 = "Europe/Paris"
-    result_3 = manager.convert_timezone(date_time_str_3, from_tz_3, to_tz_3)
-    print(f"Original: {date_time_str_3} in {from_tz_3}")
-    print(f"Converted: {result_3} in {to_tz_3}")
+    sample_tuple = (10, 20, 30, 40, 50)
+    result = extract_item_by_index(sample_tuple, 2)
+    print(result)
+    try:
+        extract_item_by_index(sample_tuple, 5)
+    except InvalidIndexError as e:
+        print(e)

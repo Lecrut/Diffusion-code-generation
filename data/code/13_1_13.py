@@ -1,29 +1,28 @@
-from datetime import timedelta, timezone
-
-def calculate_time_delta(dt1: 'datetime', dt2: 'datetime') -> timedelta:
-    """
-    Calculate the time difference between two timezone-aware datetime objects.
-    
-    Args:
-        dt1 (datetime): First timezone-aware datetime object.
-        dt2 (datetime): Second timezone-aware datetime object.
-        
-    Returns:
-        timedelta: The absolute time difference between dt1 and dt2, converted to UTC for consistency.
-    """
-    # Convert both datetimes to a common reference zone (UTC) if they are not already in it
-    utc_dt1 = dt1.astimezone(timezone.utc)
-    utc_dt2 = dt2.astimezone(timezone.utc)
-
-    return abs(utc_dt1 - utc_dt2)
+def get_2d_element(matrix, row_index, col_index, fallback=None):
+    if not isinstance(matrix, list):
+        return fallback
+    if row_index < 0 or row_index >= len(matrix):
+        return fallback
+    row = matrix[row_index]
+    if not isinstance(row, list):
+        return fallback
+    if col_index < 0 or col_index >= len(row):
+        return fallback
+    return row[col_index]
 
 if __name__ == '__main__':
-    # Hard-coded sample values without user input or network access
-    from datetime import datetime
-    
-    start_time = datetime(2023, 6, 15, 10, 30, 45, tzinfo=timezone.utc)
-    end_time = datetime(2023, 6, 15, 14, 45, 30, tzinfo=timezone(timedelta(hours=-5)))
-
-    delta = calculate_time_delta(start_time, end_time)
-    
-    print(f"Time difference: {delta}")
+    sample_matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    result1 = get_2d_element(sample_matrix, 1, 1, "N/A")
+    print(result1)
+    result2 = get_2d_element(sample_matrix, 5, 5, "N/A")
+    print(result2)
+    result3 = get_2d_element(sample_matrix, 0, 2, "N/A")
+    print(result3)
+    result4 = get_2d_element([], 0, 0, "N/A")
+    print(result4)
+    result5 = get_2d_element([[1, 2], [3]], 1, 5, "N/A")
+    print(result5)

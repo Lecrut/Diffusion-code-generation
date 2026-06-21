@@ -1,27 +1,20 @@
-import calendar
-from datetime import date
+import numpy as np
 
-def calculate_duration_days(start_date: date, end_date: date) -> int:
-    """
-    Calculate the number of days between two dates, handling leap years accurately.
-    
-    Args:
-        start_date (date): The starting date.
-        end_date (date): The ending date.
-        
-    Returns:
-        int: The absolute difference in days between the two dates.
-    """
-    # Ensure we are calculating forward duration for simplicity, 
-    # though logic works regardless of order if taking abs at the end.
-    
-    total_days = 0
-    
-    current_year = start_date.year
-    target_year = end_date.year
-    
-    while True:
-        next_day = date(current_year + 1, 1, 1) - date(current_year, 1, 1)
-
+def extract_value(arr, index):
+    if not isinstance(arr, np.ndarray):
+        raise TypeError('arr must be a numpy array')
+    if not isinstance(index, tuple):
+        raise TypeError('index must be a tuple')
+    if len(index) != arr.ndim:
+        raise IndexError('Index dimensions do not match array dimensions')
+    for i, idx in enumerate(index):
+        if not isinstance(idx, (int, np.integer)):
+            raise TypeError(f'Index element at position {i} must be an integer')
+        if idx < 0 or idx >= arr.shape[i]:
+            raise IndexError(f'Index {idx} out of bounds for dimension {i} with size {arr.shape[i]}')
+    return arr[index]
 if __name__ == '__main__':
-    pass
+    arr = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+    index = (1, 0, 1)
+    result = extract_value(arr, index)
+    print(result)

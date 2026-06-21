@@ -1,39 +1,38 @@
-import datetime
+import json
+import copy
 
-def calculate_elapsed_time(timestamps):
-    """
-    Calculates the total elapsed time between the earliest and latest timestamp in a list of ISO 8601 strings.
-    
-    Args:
-        timestamps (list[str]): List of ISO 8601 formatted date-time strings.
-        
-    Returns:
-        int: Elapsed time in seconds as an integer.
-    """
-    if not timestamps:
-        return 0
-    
-    # Sort the list to ensure we process from earliest to latest
-    sorted_timestamps = sorted(timestamps)
-    
-    try:
-        first_dt = datetime.datetime.fromisoformat(sorted_timestamps[0])
-        last_dt = datetime.datetime.fromisoformat(sorted_timestamps[-1])
-        
-        elapsed_delta = last_dt - first_dt
-        
-        # Return the result as a float representing seconds, or int if no fractional part exists.
-        return int(elapsed_delta.total_seconds())
-    except ValueError:
-        raise ValueError("All timestamps must be valid ISO 8601 formatted strings.")
+def get_nested_value(data, path):
+    keys = path.split('.')
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key not in current:
+                raise KeyError(f"Key '{key}' not found in dictionary")
+            current = current[key]
+        elif isinstance(current, list):
+            if not key.isdigit():
+                raise TypeError(f"List index must be an integer, got '{key}'")
+            index = int(key)
+            if index < 0 or index >= len(current):
+                raise IndexError(f"Index {index} out of range for list of length {len(current)}")
+            current = current[index]
+        else:
+            raise TypeError(f"Cannot traverse into {type(current).__name__} with key '{key}'")
+    return copy.deepcopy(current)
 
 if __name__ == '__main__':
-    sample_timestamps = [
-        "2023-01-01T00:00:00",
-        "2023-01-02T12:30:45",
-        "2023-01-08T09:15:30"
-    ]
+    sample_data = {
+        "level1": {
+            "level2": {
+                "level3": [
+                    {"value": "deep"},
+                    {"value": "target"}
+                ]
+            },
+            "other": "shallow"
+        },
+        "simple": 42
+    }
 
-    result = calculate_elapsed_time(sample_timestamps)
-    
-    print(f"Total elapsed time between earliest and latest timestamp: {result} seconds")
+    result = get_nested_value(sample_data, "level1.level2.level3.1.value")
+    print(result)

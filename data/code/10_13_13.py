@@ -1,22 +1,9 @@
-import sys
-
-def parse_temperature(value: str) -> float | None:
-    """Attempt to convert a string to a float."""
-    try:
-        return float(value.strip())
-    except ValueError:
-        return None
-
-class TemperatureComparisonError(Exception):
-    """Raised when temperature values are invalid or missing."""
-
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-
-def compare_temperatures(temp_a: float | None, temp_b: float | None) -> tuple[str, bool]:
-    """Compare two temperatures and return a formatted result string along with comparison status."""
-    if not isinstance(temp_a, (int, float)) or not isinstance(temp_b, (int, float)):
-        raise TemperatureComparisonError("Both temperature values must be numeric.")
+def get_head(lst):
+    if not lst:
+        raise IndexError("Cannot retrieve head of an empty list")
+    return lst[0]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_head(sample_list)
+    print(result)

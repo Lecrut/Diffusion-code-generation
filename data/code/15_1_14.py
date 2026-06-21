@@ -1,38 +1,13 @@
-from typing import Any
-
-class ValueChecker:
-    """A utility class to check if two input values are identical."""
-
-    def are_equal(self, a: Any, b: Any) -> bool:
-        """
-        Check if the two provided arguments are equal.
-
-        This method compares both the type and the value of `a` and `b`.
-        If they have different types or different values, it returns False.
-        Otherwise, it returns True.
-
-        Args:
-            a (Any): The first input value to compare.
-            b (Any): The second input value to compare.
-
-        Returns:
-            bool: True if `a` and `b` are identical in both type and value; False otherwise.
-        """
-        return a == b
+def get_penultimate(lst):
+    if len(lst) < 2:
+        raise ValueError("List must contain at least two elements")
+    return lst[-2]
 
 if __name__ == '__main__':
-    checker = ValueChecker()
-
-    # Test cases with hard-coded sample values
-    test_cases = [
-        (10, 10),          # Same integers: expected True
-        ("hello", "world"),# Different strings: expected False
-        ([1, 2], [3, 4]), # Different lists: expected False
-        ({'a': 1}, {'b': 2}), # Different dicts: expected False
-        (True, True),      # Same booleans: expected True
-    ]
-
-    for i, inputs in enumerate(test_cases):
-        a, b = inputs
-        result = checker.are_equal(a, b)
-        print(f"Test {i + 1}: are_equal({a}, {b}) -> {result}")
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_penultimate(sample_list)
+    print(result)
+    
+    another_list = [99, 18]
+    result2 = get_penultimate(another_list)
+    print(result2)

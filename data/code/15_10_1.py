@@ -1,7 +1,9 @@
-def check_match(value1, value2):
-    return value1 == value2
+def get_penultimate_element(data):
+    if len(data) < 2:
+        raise ValueError("List must contain at least two elements")
+    return data[-2]
+
 if __name__ == '__main__':
-    print(check_match(5, 5))
-    print(check_match(10, 5))
-    print(check_match("hello", "hello"))
-    print(check_match(1.5, 1.5))
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_penultimate_element(sample_list)
+    print(result)

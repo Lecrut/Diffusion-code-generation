@@ -1,106 +1,82 @@
-class CustomConversionError(Exception):
-    """Base exception for conversion errors."""
-    pass
-
-class ValidationError(CustomConversionError):
-    """Raised when input data fails validation checks."""
-    def __init__(self, message: str = "Validation failed"):
+class TemperatureConversionError(Exception):
+    def __init__(self, message, context):
         super().__init__(message)
+        self.context = context
 
-class ConversionNotFoundError(CustomConversionError):
-    """Raised when the specified conversion type is not found in the supported list."""
-    pass
+class InvalidUnitError(TemperatureConversionError):
+    def __init__(self, unit, valid_units):
+        message = f"Unit '{unit}' is not valid. Valid units are: {valid_units}"
+        super().__init__(message, {"invalid_unit": unit, "valid_units": valid_units})
 
-class InsufficientDataError(CustomConversionError):
-    """Raised when required data for conversion is missing or invalid."""
-    pass
+class OutOfRangeError(TemperatureConversionError):
+    def __init__(self, value, unit, minimum):
+        message = f"Value {value} in {unit} is below absolute zero ({minimum})."
+        super().__init__(message, {"value": value, "unit": unit, "minimum": minimum})
 
-def convert_value(amount: float, from_unit: str, to_unit: str) -> dict[str, any]:
-    """
-    Perform a unit conversion.
+class ConversionLogicError(TemperatureConversionError):
+    def __init__(self, details):
+        message = "Conversion logic failed due to unsupported unit combination or internal error."
+        super().__init__(message, details)
 
-    Supports conversions between 'km' and 'miles'.
+VALID_UNITS = ["C", "F", "K"]
+
+def to_celsius(value, from_unit):
+    if from_unit == "C":
+        return value
+    if from_unit == "F":
+        return (value - 32) * 5 / 9
+    if from_unit == "K":
+        return value - 273.15
+    raise ConversionLogicError({"reason": "Unexpected unit reached in to_celsius", "unit": from_unit})
+
+def from_celsius(value, to_unit):
+    if to_unit == "C":
+        return value
+    if to_unit == "F":
+        return value * 9 / 5 + 32
+    if to_unit == "K":
+        return value + 273.15
+    raise ConversionLogicError({"reason": "Unexpected unit reached in from_celsius", "unit": to_unit})
+
+def validate_physical_constraints(value, unit):
+    if unit == "K" and value < 0:
+        raise OutOfRangeError(value, "K", 0)
+    if unit == "C" and value < -273.15:
+        raise OutOfRangeError(value, "C", -273.15)
+    if unit == "F" and value < -459.67:
+        raise OutOfRangeError(value, "F", -459.67)
+
+def convert_temperature(value, from_unit, to_unit):
+    if from_unit not in VALID_UNITS:
+        raise InvalidUnitError(from_unit, VALID_UNITS)
+    if to_unit not in VALID_UNITS:
+        raise InvalidUnitError(to_unit, VALID_UNITS)
     
-    Args:
-        amount (float): The value to be converted.
-        from_unit (str): Source unit ('km' or 'mile').
-        to_unit (str): Target unit ('km' or 'mile').
-
-    Returns:
-        dict: A dictionary containing the original values and the result.
-
-    Raises:
-        ConversionNotFoundError: If a conversion type is not supported.
-        InsufficientDataError: If input data is invalid (e.g., non-numeric).
-    """
+    validate_physical_constraints(value, from_unit)
     
-    # Define supported rates
-    km_to_mile_rate = 0.621371
-    mile_to_km_rate = 1.60934
-
-    # Validate inputs
-    if not isinstance(amount, (int, float)):
-        raise InsufficientDataError("Amount must be a numeric value.")
-
-    supported_pairs = {('km', 'mile'), ('mile', 'km')}
+    celsius_value = to_celsius(value, from_unit)
+    result = from_celsius(celsius_value, to_unit)
     
-    pair = ((from_unit.lower(), to_unit.lower()),)
+    validate_physical_constraints(result, to_unit)
     
-    # Check for invalid units or unsupported direction
-    if from_unit not in ['km', 'mile'] or to_unit not in ['km', 'mile']:
-        raise ConversionNotFoundError(f"Unsupported unit: {from_unit} -> {to_unit}")
+    return round(result, 2)
 
-    if pair[0] not in supported_pairs and ((pair[1][0], pair[1][1]) != from_unit.lower()): # Logic check for direction
-         pass 
-    
-    actual_pair = (from_unit, to_unit)
-    reverse_check = False
-    
-    if not any(actual_pair == p or tuple(reversed(p)) == actual_pair for p in supported_pairs):
-        raise ConversionNotFoundError(f"Conversion '{actual_pair[0]} -> {actual_pair[1]}' is currently unsupported.")
-
-    
-    result_value = 0.0
-
-    try:
-        
-        if from_unit.lower() == 'km' and to_unit.lower() == 'mile':
-            rate = km_to_mile_rate
-            reverse_check = False
-        
-        elif from_unit.lower() == 'mile' and to_unit.lower() == 'km':
-            rate = mile_to_km_rate
-            reverse_check = True
-
-    except Exception as e:
-        raise ValidationError(f"Internal conversion error occurred") from e
-    
-    result_value = amount * (1 / rate) if reverse_check else amount * rate
-
-# If __name__ block runs without user input or network access.
 if __name__ == '__main__':
+    print(convert_temperature(100, "C", "F"))
+    print(convert_temperature(32, "F", "C"))
+    print(convert_temperature(0, "C", "K"))
     
-    # Hard-coded sample values ensuring no external dependencies are triggered
-    samples = [
-        { 'amount': 10, 'from_unit': 'km', 'to_unit': 'mile' },
-        { 'amount': 5.5, 'from_unit': 'mile', 'to_unit': 'km' }
-    ]
-
-    print("Running sample conversions...")
-
-    for sample in samples:
-        try:
-            converted_data = convert_value(
-                amount=sample['amount'], 
-                from_unit=sample['from_unit'], 
-                to_unit=sample['to_unit']
-            )
-            
-            # Construct output dict directly to avoid printing inside function if desired, but here we print the result safely.
-            print(f"Converted {converted_data.get('original_amount')} {converted_data.get('source_unit')} -> "
-                  f"{converted_data.get('result_value')} {converted_data.get('target_unit')}")
-
-        except CustomConversionError as e:
-            # Handle custom exceptions gracefully for demonstration purposes
-            error_type = type(e).__name__
-            print(f"An error occurred during conversion of sample data. Error Type: {error_type}, Message: {e}")
+    try:
+        convert_temperature(100, "X", "C")
+    except InvalidUnitError as e:
+        print(e)
+        
+    try:
+        convert_temperature(-500, "K", "C")
+    except OutOfRangeError as e:
+        print(e)
+        
+    try:
+        convert_temperature(300, "C", "Y")
+    except InvalidUnitError as e:
+        print(e)

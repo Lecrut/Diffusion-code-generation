@@ -1,52 +1,11 @@
-"""
-Volume Converter Module
-
-This module provides a function to convert any supported volume unit 
-to liters with high precision using standard conversion factors.
-
-Supported units:
-- milliliters (ml)
-- microliters (uL or µl)
-- kiloliters (kL)
-- cubic meters (m³)
-- cubic centimeters (cm³)
-- cubic decimeters (dm³) - equivalent to liters
-- fluid ounces US (fl oz us)
-- fluid ounces UK (fl oz uk)
-- pints US (pt us)
-- pints UK (pt uk)
-- quarts US (qt us)
-- quarts UK (qt uk)
-- gallons US (gal us)
-- gallons UK (gal uk)
-
-Conversion factors are based on the International System of Units 
-definitions and standard approximations for imperial units.
-"""
-
-def convert_volume_to_liters(volume: float, unit: str) -> float:
-    """
-    Convert a volume from any supported unit to liters.
-    
-    Parameters:
-        volume (float): The volume value to convert. Must be non-negative.
-        unit (str): The source unit of the volume. Supported units are 
-                    'ml', 'uL', 'µl', 'kL', 'm3', 'cm3', 'dm3', 
-                    'fl oz us', 'fl oz uk', 'pt us', 'pt uk', 
-                    'qt us', 'qt uk', 'gal us', 'gal uk'.
-    
-    Returns:
-        float: The volume converted to liters.
-    
-    Raises:
-        ValueError: If the unit is not supported or if volume is negative.
-    
-    Examples:
-        >>> convert_volume_to_liters(100, "ml")
-        0.1
-        >>> convert_volume_to_liters(264, "fl oz us")
-        3.785411784
-    """
-
+def convert_volume(value: float, unit: str) -> float:
+    conversion_factors = {'liters': 1.0, 'l': 1.0, 'milliliters': 0.001, 'ml': 0.001, 'microliters': 1e-06, 'ul': 1e-06, 'gallons': 3.785411784, 'gal': 3.785411784, 'cubic_meters': 1000.0, 'm3': 1000.0, 'cubic_feet': 28.316846592, 'ft3': 28.316846592, 'cubic_inches': 0.016387064, 'in3': 0.016387064, 'cubic_centimeters': 0.001, 'cm3': 0.001, 'cubic_millimeters': 1e-06, 'mm3': 1e-06, 'pints': 0.473176473, 'pt': 0.473176473, 'quarts': 0.946352946, 'qt': 0.946352946, 'fluid_ounces': 0.0295735295625, 'floz': 0.0295735295625}
+    unit_lower = unit.lower().strip()
+    if unit_lower not in conversion_factors:
+        raise ValueError(f'Unsupported unit: {unit}')
+    return value * conversion_factors[unit_lower]
 if __name__ == '__main__':
-    pass
+    print(convert_volume(1, 'gallons'))
+    print(convert_volume(500, 'milliliters'))
+    print(convert_volume(1, 'cubic_meters'))
+    print(convert_volume(10.5, 'cubic_feet'))

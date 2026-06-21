@@ -1,17 +1,9 @@
-def compare_volumes(vol1: float, vol2: float) -> str:
-    if vol1 > vol2:
-        return "Volume 1 is larger"
-    elif vol1 < vol2:
-        return "Volume 2 is larger"
-    else:
-        return "Volumes are equal"
+def get_third_item(arr):
+    if len(arr) < 3:
+        raise IndexError("Array has fewer than 3 elements")
+    return arr[2]
+
 if __name__ == '__main__':
-    a = 10.5
-    b = 10.5
-    print(compare_volumes(a, b))
-    a = 25.0
-    b = 15.75
-    print(compare_volumes(a, b))
-    a = 5.0
-    b = 100.0
-    print(compare_volumes(a, b))
+    sample_array = [10, 20, 30, 40, 50]
+    result = get_third_item(sample_array)
+    print(result)

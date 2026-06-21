@@ -1,18 +1,31 @@
-from datetime import datetime
-from datetime import timedelta
-import pytz
-def calculate_time_delta(dt1: datetime, dt2: datetime) -> timedelta:
-    if dt1.tzinfo is None or dt2.tzinfo is None:
-        raise ValueError("Both datetime objects must be timezone-aware")
-    return dt2 - dt1
+def resolve_index(matrix, target_row, target_col, default_value):
+    row_count = len(matrix)
+    if target_row < 0 or target_row >= row_count:
+        return default_value
+    current_row = matrix[target_row]
+    if not isinstance(current_row, (list, tuple)):
+        return default_value
+    col_count = len(current_row)
+    if target_col < 0 or target_col >= col_count:
+        return default_value
+    return current_row[target_col]
+
 if __name__ == '__main__':
-    tz_utc = pytz.utc
-    dt_utc1 = tz_utc.localize(datetime(2023, 1, 1, 10, 0, 0))
-    dt_utc2 = tz_utc.localize(datetime(2023, 1, 3, 12, 30, 0))
-    delta1 = calculate_time_delta(dt_utc1, dt_utc2)
-    print(f"Delta 1: {delta1}")
-    dt_london = pytz.timezone('Europe/London')
-    dt_london1 = dt_london.localize(datetime(2023, 1, 1, 10, 0, 0))
-    dt_london2 = dt_london.localize(datetime(2023, 1, 3, 12, 30, 0))
-    delta2 = calculate_time_delta(dt_london1, dt_london2)
-    print(f"Delta 2: {delta2}")
+    grid = [
+        [100, 200, 300],
+        [400, 500, 600],
+        [700, 800, 900]
+    ]
+    valid_result = resolve_index(grid, 1, 1, -999)
+    print(valid_result)
+    out_of_bounds_row = resolve_index(grid, 10, 1, -999)
+    print(out_of_bounds_row)
+    out_of_bounds_col = resolve_index(grid, 0, 10, -999)
+    print(out_of_bounds_col)
+    jagged_grid = [
+        [1],
+        [2, 2],
+        [3, 3, 3]
+    ]
+    jagged_result = resolve_index(jagged_grid, 1, 5, "MISSING")
+    print(jagged_result)

@@ -1,20 +1,15 @@
-import datetime
-def scale_time_differences(time_difference_strings):
-    result = []
-    for ts in time_difference_strings:
-        try:
-            td = datetime.timedelta(seconds=int(ts))
-            result.append(td)
-        except ValueError:
-            continue
-    return result
+def fetch_nth_element(s, n):
+    if not s:
+        return None
+    length = len(s)
+    if n >= -length and n < length:
+        return s[n]
+    return None
+
 if __name__ == '__main__':
-    sample_strings = [
-        "60",
-        "3600",
-        "86400",
-        "invalid_time",
-        "120000"
-    ]
-    scaled_deltas = scale_time_differences(sample_strings)
-    print(scaled_deltas)
+    sample_string = "HelloWorld"
+    print(fetch_nth_element(sample_string, 0))
+    print(fetch_nth_element(sample_string, -1))
+    print(fetch_nth_element(sample_string, 5))
+    print(fetch_nth_element(sample_string, -100))
+    print(fetch_nth_element(sample_string, 100))

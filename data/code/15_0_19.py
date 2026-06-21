@@ -1,21 +1,22 @@
-def check_match(value1: any, value2: any) -> bool:
-    """
-    Returns True if value1 is exactly equal to value2, False otherwise.
-    
-    Args:
-        value1 (any): The first value to compare.
-        value2 (any): The second value to compare.
-        
-    Returns:
-        bool: True if values are identical, False otherwise.
-    """
-    return value1 == value2
+MIN_LIST_LENGTH = 2
+DEFAULT_SAMPLE_DATA = [100, 200, 300, 400, 500]
+
+def get_second_to_last_element(sequence):
+    if len(sequence) < MIN_LIST_LENGTH:
+        raise IndexError("Sequence must contain at least two elements")
+    return sequence[-2]
+
+class ListAccessor:
+    def __init__(self, data):
+        self.data = data
+
+    def retrieve_second_to_last(self):
+        return get_second_to_last_element(self.data)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    assert check_match(5, 5) is True
-    assert check_match("hello", "hello") is True
-    assert check_match([1, 2], [1, 2]) is True
-    assert check_match(True, False) is False
-    assert check_match(None, None) is True
-    print("All sample tests passed.")
+    test_values = [1, 2, 3, 4, 5]
+    accessor = ListAccessor(test_values)
+    print(accessor.retrieve_second_to_last())
+    
+    sample_values = DEFAULT_SAMPLE_DATA
+    print(get_second_to_last_element(sample_values))

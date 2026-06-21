@@ -1,21 +1,9 @@
-import sys
-
-def calculate_and_print_table(lengths):
-    """
-    Reads a list of lengths, calculates ratios between consecutive pairs,
-    and prints them in a formatted table.
-
-    Args:
-        lengths (list[float]): List of length values.
-    """
-    if len(lengths) < 2:
-        print("Error: At least two length values are required to calculate a ratio.")
-        return
-
-    n = len(lengths)
-    
-    # Calculate ratios for each consecutive pair
-    # Format the output header and rows
+def get_last_item(lst):
+    if not lst:
+        raise IndexError("List is empty")
+    return [item for idx, item in enumerate(lst) if idx == len(lst) - 1][0]
 
 if __name__ == '__main__':
-    pass
+    sample_list = [1, 2, 3, 4, 5]
+    result = get_last_item(sample_list)
+    print(result)

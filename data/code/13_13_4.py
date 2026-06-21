@@ -1,21 +1,9 @@
-def calculate_net_time_difference(time_string, delimiter=';'):
-    time_points = []
-    if not time_string:
-        return 0
-    time_segments = time_string.split(delimiter)
-    for segment in time_segments:
-        if segment:
-            try:
-                time_points.append(float(segment))
-            except ValueError:
-                continue
-    if not time_points:
-        return 0
-    earliest_time = min(time_points)
-    latest_time = max(time_points)
-    return latest_time - earliest_time
+def get_value(d, key, default=None):
+    return d.get(key, default)
+
 if __name__ == '__main__':
-    sample_time_string = "10.5;5.2;12.8;3.1"
-    delimiter_char = ';'
-    result = calculate_net_time_difference(sample_time_string, delimiter_char)
-    print(result)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    result1 = get_value(sample_dict, 'b')
+    result2 = get_value(sample_dict, 'd', 0)
+    print(result1)
+    print(result2)

@@ -1,17 +1,17 @@
-import math
-def simplify_ratio(a, b):
-    if b == 0:
-        raise ValueError("Denominator cannot be zero")
-    common = math.gcd(a, b)
-    return a // common, b // common
+def get_middle_element(lst):
+    length = len(lst)
+    if length == 0:
+        return None
+    mid_index = length // 2
+    return lst[mid_index]
+
 if __name__ == '__main__':
-    ratio1 = 12
-    ratio2 = 18
-    try:
-        num1, den1 = simplify_ratio(ratio1, ratio2)
-        print(f"Input Ratios: {ratio1} and {ratio2}")
-        print(f"Simplified Result: {num1}:{den1}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    sample_list_odd = [1, 2, 3, 4, 5]
+    sample_list_even = [10, 20, 30, 40]
+    sample_list_single = [42]
+    sample_list_empty = []
+    
+    print(get_middle_element(sample_list_odd))
+    print(get_middle_element(sample_list_even))
+    print(get_middle_element(sample_list_single))
+    print(get_middle_element(sample_list_empty))

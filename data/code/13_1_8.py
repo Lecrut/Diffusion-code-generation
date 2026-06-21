@@ -1,27 +1,18 @@
-from datetime import datetime, timedelta, timezone
-
-def calculate_time_delta(dt1: datetime, dt2: datetime) -> timedelta:
-    """
-    Calculates the time difference between two timezone-aware datetime objects.
-
-    Args:
-        dt1 (datetime): The first date and time.
-        dt2 (datetime): The second date and time.
-
-    Returns:
-        timedelta: A fixed-duration object representing the delta between the inputs.
-    
-    Note: This function assumes both input arguments are timezone-aware datetime objects.
-          No external libraries or interactive prompts are used, ensuring standalone execution capability.
-    """
-    return dt1 - dt2
+def get_2d_element(data, row_idx, col_idx, fallback):
+    if row_idx < 0 or row_idx >= len(data):
+        return fallback
+    row = data[row_idx]
+    if col_idx < 0 or col_idx >= len(row):
+        return fallback
+    return row[col_idx]
 
 if __name__ == '__main__':
-    # Sample hard-coded values
-    base_time = datetime(2023, 10, 5, 14, 30, 0, tzinfo=timezone.utc)
-    
-    future_event = datetime(2023, 10, 6, 9, 15, 30, tzinfo=timezone(timezone.utc))
-    
-    result_delta = calculate_time_delta(base_time, future_event)
-
-    print(f"Time Delta: {result_delta}")
+    sample_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    result1 = get_2d_element(sample_data, 1, 2, "NOT_FOUND")
+    print(result1)
+    result2 = get_2d_element(sample_data, 5, 0, "NOT_FOUND")
+    print(result2)
+    result3 = get_2d_element(sample_data, 0, 10, "NOT_FOUND")
+    print(result3)
+    result4 = get_2d_element(sample_data, 0, 0, "NOT_FOUND")
+    print(result4)
