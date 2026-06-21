@@ -1,0 +1,12 @@
+def calculate_range(numbers):
+    if not numbers:
+        raise ValueError("The list is empty")
+    
+    try:
+        return max(numbers) - min(numbers)
+    except TypeError:
+        raise ValueError("The list contains non-numeric types")
+
+if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    print(calculate_range(sample_numbers))

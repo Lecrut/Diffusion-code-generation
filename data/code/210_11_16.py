@@ -1,0 +1,24 @@
+def calculate_data_range(data):
+    if not data:
+        raise ValueError("Input list cannot be empty.")
+    min_val = float('inf')
+    max_val = float('-inf')
+    for value in data:
+        if value < min_val:
+            min_val = value
+        elif value > max_val:
+            max_val = value
+    return max_val - min_val
+
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, 0, 5, -5]
+    empty_list = []
+    try:
+        range1 = calculate_data_range(list1)
+        print(f"Data: {list1}, Range: {range1}")
+        range2 = calculate_data_range(list2)
+        print(f"Data: {list2}, Range: {range2}")
+        calculate_data_range(empty_list)
+    except ValueError as e:
+        print(f"Error caught: {e}")

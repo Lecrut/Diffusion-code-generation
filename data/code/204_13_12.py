@@ -1,0 +1,25 @@
+import numpy as np
+
+def validate_input(arr):
+    if not isinstance(arr, list) or not arr:
+        raise ValueError("Input must be a non-empty list")
+    
+    for item in arr:
+        if not isinstance(item, (int, float)):
+            raise ValueError("All elements in the list must be numbers")
+
+def find_middle_value(arr):
+    validate_input(arr)
+    arr = np.array(arr)
+    sorted_arr = np.sort(arr)
+    length = len(sorted_arr)
+    mid_index = length // 2
+    
+    if length % 2 == 0:
+        return (sorted_arr[mid_index - 1] + sorted_arr[mid_index]) / 2
+    else:
+        return sorted_arr[mid_index]
+
+if __name__ == '__main__':
+    sample_values = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    print(find_middle_value(sample_values))

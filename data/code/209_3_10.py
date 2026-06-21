@@ -1,0 +1,7 @@
+def calculate_average(numbers):
+    return sum(numbers) / len(numbers)
+
+if __name__ == '__main__':
+    sample_numbers = [5, 10, 15, 20, 25]
+    avg = calculate_average(sample_numbers)
+    print(avg)

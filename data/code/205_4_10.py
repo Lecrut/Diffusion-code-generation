@@ -1,0 +1,17 @@
+from operator import itemgetter
+
+def sort_dicts_by_key(dicts, key):
+    if not all(isinstance(d, dict) for d in dicts):
+        raise ValueError("All elements must be dictionaries")
+    if key not in dicts[0]:
+        raise KeyError(f"Key '{key}' not found in dictionaries")
+    return sorted(dicts, key=itemgetter(key))
+
+if __name__ == '__main__':
+    sample_dicts = [
+        {'name': 'Alice', 'age': 25},
+        {'name': 'Bob', 'age': 30},
+        {'name': 'Charlie', 'age': 20}
+    ]
+    sorted_dicts = sort_dicts_by_key(sample_dicts, 'age')
+    print(sorted_dicts)

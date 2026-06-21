@@ -1,0 +1,25 @@
+def find_second_extremes(numbers):
+    if len(numbers) < 2:
+        return None, None
+    
+    min_val = max_val = numbers[0]
+    second_min = second_max = float('inf')
+    
+    for num in numbers:
+        if num < min_val:
+            second_min = min_val
+            min_val = num
+        elif min_val < num < second_min:
+            second_min = num
+        
+        if num > max_val:
+            second_max = max_val
+            max_val = num
+        elif max_val > num > second_max:
+            second_max = num
+    
+    return second_min if second_min != float('inf') else None, second_max if second_max != float('inf') else None
+
+if __name__ == '__main__':
+    sample_values = [4, 1, 2, 3, 5, 6, 7, 8, 9, 0]
+    print(find_second_extremes(sample_values))

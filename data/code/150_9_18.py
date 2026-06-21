@@ -1,0 +1,9 @@
+def safe_remove(lst, item):
+    if item in lst:
+        lst.remove(item)
+
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    item_to_remove = 3
+    safe_remove(sample_list, item_to_remove)
+    print(sample_list)

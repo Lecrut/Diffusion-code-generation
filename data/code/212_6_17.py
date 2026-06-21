@@ -1,0 +1,17 @@
+MIN_VAL = float('-inf')
+MAX_VAL = float('inf')
+
+def running_min_max(iterable):
+    current_min = MIN_VAL
+    current_max = MAX_VAL
+    for value in iterable:
+        if value < current_min:
+            current_min = value
+        if value > current_max:
+            current_max = value
+        yield (current_min, current_max)
+
+if __name__ == '__main__':
+    sample_data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    for min_val, max_val in running_min_max(sample_data):
+        print(f"Min: {min_val}, Max: {max_val}")
