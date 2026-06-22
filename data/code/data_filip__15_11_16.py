@@ -1,0 +1,26 @@
+def run_length_encode(data):
+    if not data:
+        return ""
+    encoded = []
+    count = 1
+    for index in range(1, len(data)):
+        if data[index] == data[index - 1]:
+            count += 1
+        else:
+            encoded.append(f"{data[index - 1]}{count}")
+            count = 1
+    encoded.append(f"{data[-1]}{count}")
+    return "".join(encoded)
+
+if __name__ == '__main__':
+    sample_string = "AABBBCCCCDD"
+    result = run_length_encode(sample_string)
+    print(result)
+    
+    empty_string = ""
+    empty_result = run_length_encode(empty_string)
+    print(empty_result)
+    
+    single_char = "Z"
+    single_result = run_length_encode(single_char)
+    print(single_result)

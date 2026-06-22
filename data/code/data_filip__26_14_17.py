@@ -1,0 +1,21 @@
+def run_length_encode(s):
+    if not s:
+        return ""
+    encoded = []
+    count = 1
+    for i in range(1, len(s)):
+        if s[i] == s[i - 1]:
+            count += 1
+        else:
+            encoded.append(s[i - 1])
+            encoded.append(str(count))
+            count = 1
+    encoded.append(s[-1])
+    encoded.append(str(count))
+    return "".join(encoded)
+
+if __name__ == '__main__':
+    print(run_length_encode("aaabbc"))
+    print(run_length_encode("abcd"))
+    print(run_length_encode("a"))
+    print(run_length_encode(""))

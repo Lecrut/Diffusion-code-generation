@@ -1,0 +1,86 @@
+import heapq
+
+def heuristic(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+def a_star_search(grid, start, goal):
+    rows = len(grid)
+    cols = len(grid[0]) if rows > 0 else 0
+    
+    if rows == 0 or cols == 0:
+        return []
+        
+    if grid[start[0]][start[1]] == 1 or grid[goal[0]][goal[1]] == 1:
+        return []
+        
+    open_set = []
+    heapq.heappush(open_set, (0, start))
+    
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, goal)}
+    
+    closed_set = set()
+    
+    while open_set:
+        current_f, current = heapq.heappop(open_set)
+        
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            path.reverse()
+            return path
+            
+        if current in closed_set:
+            continue
+            
+        closed_set.add(current)
+        
+        row, col = current
+        neighbors = [
+            (row - 1, col),
+            (row + 1, col),
+            (row, col - 1),
+            (row, col + 1)
+        ]
+        
+        for neighbor in neighbors:
+            n_row, n_col = neighbor
+            
+            if n_row < 0 or n_row >= rows or n_col < 0 or n_col >= cols:
+                continue
+                
+            if grid[n_row][n_col] == 1:
+                continue
+                
+            if neighbor in closed_set:
+                continue
+                
+            tentative_g = g_score[current] + 1
+            
+            if neighbor not in g_score or tentative_g < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g
+                f = tentative_g + heuristic(neighbor, goal)
+                f_score[neighbor] = f
+                heapq.heappush(open_set, (f, neighbor))
+                
+    return []
+
+if __name__ == '__main__':
+    grid = [
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    
+    start = (0, 0)
+    goal = (4, 4)
+    
+    path = a_star_search(grid, start, goal)
+    print(path)

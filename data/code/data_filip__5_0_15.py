@@ -1,0 +1,14 @@
+def capitalize_first_letter(s):
+    if not s:
+        return s
+    return s[0].upper() + s[1:]
+
+if __name__ == '__main__':
+    sample_1 = "hello world"
+    sample_2 = "PyThOn is AWESOME"
+    sample_3 = ""
+    sample_4 = "a"
+    print(capitalize_first_letter(sample_1))
+    print(capitalize_first_letter(sample_2))
+    print(capitalize_first_letter(sample_3))
+    print(capitalize_first_letter(sample_4))

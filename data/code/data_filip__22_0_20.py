@@ -1,0 +1,23 @@
+def compress_string(s):
+    if not s:
+        return ""
+    
+    result = []
+    count = 1
+    length = len(s)
+    
+    for i in range(1, length):
+        if s[i] == s[i - 1]:
+            count += 1
+        else:
+            result.append(f"{s[i - 1]}{count}")
+            count = 1
+    
+    result.append(f"{s[-1]}{count}")
+    
+    return "".join(result)
+
+if __name__ == '__main__':
+    sample_input = "AAAABBBCCDAABBB"
+    compressed_output = compress_string(sample_input)
+    print(compressed_output)
