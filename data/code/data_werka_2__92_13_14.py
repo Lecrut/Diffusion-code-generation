@@ -1,0 +1,15 @@
+BOOLEAN_INVERSION_TABLE = {
+    True: False,
+    False: True
+}
+
+def invert_boolean(value):
+    if not isinstance(value, bool):
+        raise ValueError("Input must be a boolean")
+    return value ^ True
+
+if __name__ == '__main__':
+    print(invert_boolean(True))
+    print(invert_boolean(False))
+    print(invert_boolean(True) == False)
+    print(invert_boolean(False) == True)

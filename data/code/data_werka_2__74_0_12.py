@@ -1,0 +1,20 @@
+import datetime
+
+DAY_MAPPING = {
+    0: "Monday",
+    1: "Tuesday",
+    2: "Wednesday",
+    3: "Thursday",
+    4: "Friday",
+    5: "Saturday",
+    6: "Sunday",
+}
+
+def get_current_day():
+    today = datetime.date.today()
+    weekday_index = today.weekday()
+    return DAY_MAPPING[weekday_index]
+
+if __name__ == '__main__':
+    current_day = get_current_day()
+    print(current_day)

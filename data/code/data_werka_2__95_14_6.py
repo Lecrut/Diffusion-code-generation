@@ -1,0 +1,6 @@
+def check_conditions(a: float, b: float, c: float) -> bool:
+    return a > 0 and b < a and c == a + b
+
+if __name__ == '__main__':
+    result = check_conditions(5.0, 2.0, 7.0)
+    print(result)

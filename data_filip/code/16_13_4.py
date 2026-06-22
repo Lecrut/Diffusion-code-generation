@@ -1,0 +1,15 @@
+import itertools
+
+def run_length_encode(data):
+    if not data:
+        return []
+    result = []
+    for value, group in itertools.groupby(data):
+        count = len(list(group))
+        result.append((value, count))
+    return result
+
+if __name__ == '__main__':
+    sample_data = [1, 1, 2, 3, 3, 3, 4, 4, 5, 5, 5, 5]
+    encoded = run_length_encode(sample_data)
+    print(encoded)

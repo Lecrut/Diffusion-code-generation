@@ -1,0 +1,15 @@
+def evaluate_expression(X, Y, Z, W):
+    bool_X = bool(X)
+    bool_Y = bool(Y)
+    bool_Z = bool(Z)
+    bool_W = bool(W)
+    result = (bool_X and bool_Y) or (bool_Z and (not bool_W))
+    return result
+
+if __name__ == '__main__':
+    X_val = True
+    Y_val = False
+    Z_val = True
+    W_val = False
+    result = evaluate_expression(X_val, Y_val, Z_val, W_val)
+    print(result)

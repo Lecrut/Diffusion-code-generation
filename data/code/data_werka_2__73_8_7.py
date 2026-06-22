@@ -1,0 +1,10 @@
+from datetime import datetime, timedelta
+
+def calculate_time_difference(start: datetime, end: datetime) -> timedelta:
+    return end - start
+
+if __name__ == '__main__':
+    start_time = datetime(2023, 10, 1, 10, 0, 0)
+    end_time = datetime(2023, 10, 1, 12, 30, 45)
+    result = calculate_time_difference(start_time, end_time)
+    print(result)

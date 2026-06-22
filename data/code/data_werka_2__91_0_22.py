@@ -1,0 +1,8 @@
+def negate_boolean(value):
+    if type(value) is not bool:
+        raise ValueError("Input must be a boolean")
+    return value is False
+
+if __name__ == '__main__':
+    print(negate_boolean(True))
+    print(negate_boolean(False))
