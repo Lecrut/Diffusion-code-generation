@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -16,8 +17,30 @@ except ImportError as exc:
         "or update the venv from requirements.txt."
     ) from exc
 
+try:
+    from optuna_integration.comet import CometCallback
+except ImportError:
+    try:
+        from optuna_integration import CometCallback
+    except ImportError:
+        CometCallback = None
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+COMET_PARAM_PREFIXES = (
+    "HPO_",
+    "MAX_",
+    "VAL_",
+    "LIMIT_",
+    "BATCH_",
+    "ACCUMULATION_",
+    "HIDDEN_",
+    "NUM_",
+    "DILATION_",
+    "BASE_",
+    "WEIGHT_",
+    "DATASET_",
+)
 
 
 def env_bool(name: str, default: bool = False) -> bool:
@@ -47,11 +70,135 @@ def load_hpo_env() -> None:
         load_dotenv(hpo_env_path, override=True)
 
 
+def hpo_comet_enabled() -> bool:
+    return env_bool("HPO_LOG_COMET", bool(os.getenv("COMET_API_KEY")))
+
+
+def hpo_manual_comet_enabled() -> bool:
+    return env_bool("HPO_LOG_COMET_MANUAL", False)
+
+
+def safe_comet_call(experiment, method_name: str, *args, **kwargs) -> None:
+    if experiment is None:
+        return
+    try:
+        method = getattr(experiment, method_name, None)
+        if method is not None:
+            method(*args, **kwargs)
+    except Exception as exc:
+        print(f"[HPO COMET WARNING] {method_name} failed: {exc}", file=sys.stderr)
+
+
+def create_hpo_comet_experiment(trial: optuna.Trial, trial_dir: Path):
+    if not hpo_manual_comet_enabled():
+        return None
+
+    try:
+        from comet_ml import Experiment
+    except ImportError:
+        print("[HPO COMET WARNING] comet_ml is not installed; HPO trial logging disabled.", file=sys.stderr)
+        return None
+
+    api_key = os.getenv("COMET_API_KEY")
+    if not api_key:
+        print("[HPO COMET WARNING] COMET_API_KEY is missing; HPO trial logging disabled.", file=sys.stderr)
+        return None
+
+    project_name = os.getenv("HPO_COMET_PROJECT_NAME") or os.getenv("COMET_PROJECT_NAME") or "diffcoder-hpo"
+    workspace = os.getenv("HPO_COMET_WORKSPACE") or os.getenv("COMET_WORKSPACE")
+    try:
+        experiment = Experiment(
+            api_key=api_key,
+            project_name=project_name,
+            workspace=workspace,
+            auto_param_logging=False,
+            auto_metric_logging=False,
+            auto_output_logging="simple",
+        )
+    except TypeError:
+        experiment = Experiment(api_key=api_key, project_name=project_name, workspace=workspace)
+    except Exception as exc:
+        print(f"[HPO COMET WARNING] Could not create experiment: {exc}", file=sys.stderr)
+        return None
+
+    study_name = os.getenv("HPO_STUDY_NAME", "diffcoder_hpo")
+    started_at = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    safe_comet_call(experiment, "set_name", f"{study_name}-trial-{trial.number:04d}-{started_at}")
+    safe_comet_call(experiment, "add_tag", "optuna")
+    safe_comet_call(experiment, "add_tag", "hpo")
+    safe_comet_call(experiment, "add_tag", study_name)
+    safe_comet_call(experiment, "log_other", "trial_dir", str(trial_dir))
+    safe_comet_call(experiment, "log_other", "trial_number", trial.number)
+    safe_comet_call(experiment, "log_other", "study_name", study_name)
+    safe_comet_call(experiment, "log_metric", "trial_started", 1, step=0)
+    return experiment
+
+
+def log_hpo_trial_start(experiment, trial: optuna.Trial, env: dict[str, str], trial_dir: Path) -> None:
+    if experiment is None:
+        return
+
+    sampled_params = {f"sampled_{key}": value for key, value in trial.params.items()}
+    fixed_params = {
+        key.lower(): value
+        for key, value in env.items()
+        if key.startswith(COMET_PARAM_PREFIXES)
+        and key not in {"COMET_API_KEY", "COMET_WORKSPACE"}
+    }
+    safe_comet_call(experiment, "log_parameters", sampled_params)
+    safe_comet_call(experiment, "log_parameters", fixed_params)
+
+    env_path = trial_dir / "env.json"
+    if env_path.is_file():
+        safe_comet_call(experiment, "log_text", env_path.read_text(encoding="utf-8"), step=0)
+
+
+def log_hpo_trial_success(experiment, result: dict, trial_dir: Path) -> None:
+    if experiment is None:
+        return
+
+    global_step = int(result.get("global_step") or 0)
+    for metric_name in ["best_val_loss", "final_val_loss", "final_train_loss"]:
+        value = result.get(metric_name)
+        if value is not None:
+            safe_comet_call(experiment, "log_metric", metric_name, float(value), step=global_step)
+
+    safe_comet_call(experiment, "log_metric", "trial_completed", 1, step=global_step)
+    safe_comet_call(experiment, "log_other", "best_model_path", result.get("best_model_path"))
+    safe_comet_call(experiment, "log_other", "last_model_path", result.get("last_model_path"))
+    safe_comet_call(experiment, "log_text", json.dumps(result, ensure_ascii=True, indent=2), step=global_step)
+    log_hpo_trial_log_tails(experiment, trial_dir, step=global_step)
+
+
+def log_hpo_trial_failure(experiment, trial_dir: Path, reason: str, step: int = 0) -> None:
+    if experiment is None:
+        return
+
+    safe_comet_call(experiment, "log_metric", "trial_failed", 1, step=step)
+    safe_comet_call(experiment, "log_other", "failure_reason", reason)
+    log_hpo_trial_log_tails(experiment, trial_dir, step=step)
+
+
+def log_hpo_trial_log_tails(experiment, trial_dir: Path, step: int = 0) -> None:
+    if experiment is None:
+        return
+
+    tail_chars = env_int("HPO_COMET_LOG_TAIL_CHARS", 8000)
+    if tail_chars <= 0:
+        return
+
+    for name in ["stdout.log", "stderr.log"]:
+        path = trial_dir / name
+        if path.is_file():
+            text = path.read_text(encoding="utf-8", errors="replace")[-tail_chars:]
+            safe_comet_call(experiment, "log_text", f"--- {name} tail ---\n{text}", step=step)
+
+
 def suggest_trial_env(trial: optuna.Trial) -> dict[str, str]:
-    batch_choices = [int(value) for value in env_choices("HPO_BATCH_SIZE_CHOICES", "16,24,32,48")]
-    hidden_choices = [int(value) for value in env_choices("HPO_HIDDEN_DIM_CHOICES", "384,512,640")]
-    block_choices = [int(value) for value in env_choices("HPO_NUM_BLOCKS_CHOICES", "4,6,8")]
-    dilation_choices = [int(value) for value in env_choices("HPO_DILATION_FACTOR_CHOICES", "1,2,3")]
+    batch_choices = [int(value) for value in env_choices("HPO_BATCH_SIZE_CHOICES", "8,12,16,24")]
+    hidden_choices = [int(value) for value in env_choices("HPO_HIDDEN_DIM_CHOICES", "256,384,512")]
+    block_choices = [int(value) for value in env_choices("HPO_NUM_BLOCKS_CHOICES", "4,6")]
+    dilation_choices = [int(value) for value in env_choices("HPO_DILATION_FACTOR_CHOICES", "1,2")]
 
     batch_size = trial.suggest_categorical("batch_size", batch_choices)
     hidden_dim = trial.suggest_categorical("hidden_dim", hidden_choices)
@@ -119,6 +266,7 @@ def run_trial_subprocess(trial: optuna.Trial) -> dict:
     trials_root = Path(os.getenv("HPO_TRIALS_DIR", str(REPO_ROOT / "hpo_trials")))
     trial_dir = trials_root / f"trial_{trial.number:04d}"
     trial_dir.mkdir(parents=True, exist_ok=True)
+    comet_experiment = create_hpo_comet_experiment(trial, trial_dir)
 
     env = os.environ.copy()
     env.update(fixed_trial_env(trial.number, trial_dir))
@@ -128,23 +276,33 @@ def run_trial_subprocess(trial: optuna.Trial) -> dict:
         json.dumps({key: env[key] for key in sorted(env) if key.startswith(("HPO_", "MAX_", "VAL_", "LIMIT_", "BATCH_", "ACCUMULATION_", "HIDDEN_", "NUM_", "DILATION_", "BASE_", "WEIGHT_", "CHECKPOINT_", "TRAIN_", "COMET_", "DATASET_"))}, indent=2),
         encoding="utf-8",
     )
+    log_hpo_trial_start(comet_experiment, trial, env, trial_dir)
 
     command = [sys.executable, str(REPO_ROOT / "src" / "train.py")]
     timeout = env_int("HPO_TRIAL_TIMEOUT_SECONDS", 0)
     stdout_path = trial_dir / "stdout.log"
     stderr_path = trial_dir / "stderr.log"
 
-    with stdout_path.open("w", encoding="utf-8") as stdout, stderr_path.open("w", encoding="utf-8") as stderr:
-        completed = subprocess.run(
-            command,
-            cwd=REPO_ROOT,
-            env=env,
-            stdout=stdout,
-            stderr=stderr,
-            timeout=None if timeout <= 0 else timeout,
-            check=False,
-            text=True,
-        )
+    try:
+        with stdout_path.open("w", encoding="utf-8") as stdout, stderr_path.open("w", encoding="utf-8") as stderr:
+            completed = subprocess.run(
+                command,
+                cwd=REPO_ROOT,
+                env=env,
+                stdout=stdout,
+                stderr=stderr,
+                timeout=None if timeout <= 0 else timeout,
+                check=False,
+                text=True,
+            )
+    except subprocess.TimeoutExpired as exc:
+        trial.set_user_attr("trial_dir", str(trial_dir))
+        trial.set_user_attr("stdout", str(stdout_path))
+        trial.set_user_attr("stderr", str(stderr_path))
+        trial.set_user_attr("failure_reason", "timeout")
+        log_hpo_trial_failure(comet_experiment, trial_dir, "timeout")
+        safe_comet_call(comet_experiment, "end")
+        raise RuntimeError(f"Training subprocess timed out after {exc.timeout}s. See {stderr_path}") from exc
 
     trial.set_user_attr("trial_dir", str(trial_dir))
     trial.set_user_attr("stdout", str(stdout_path))
@@ -153,10 +311,29 @@ def run_trial_subprocess(trial: optuna.Trial) -> dict:
     if completed.returncode != 0:
         tail = stderr_path.read_text(encoding="utf-8", errors="replace")[-4000:]
         trial.set_user_attr("failure_stderr_tail", tail)
+        lower_tail = tail.lower()
+        resource_markers = [
+            "cuda out of memory",
+            "outofmemoryerror",
+            "cublas_status_alloc_failed",
+            "cudnn_status_alloc_failed",
+            "defaultcpuallocator",
+            "not enough memory",
+        ]
+        if any(marker in lower_tail for marker in resource_markers):
+            trial.set_user_attr("failure_reason", "resource_limit")
+            log_hpo_trial_failure(comet_experiment, trial_dir, "resource_limit")
+            safe_comet_call(comet_experiment, "end")
+            raise optuna.TrialPruned(f"Trial exceeded available memory. See {stderr_path}")
+        trial.set_user_attr("failure_reason", "subprocess_error")
+        log_hpo_trial_failure(comet_experiment, trial_dir, "subprocess_error")
+        safe_comet_call(comet_experiment, "end")
         raise RuntimeError(f"Training subprocess failed with exit code {completed.returncode}. See {stderr_path}")
 
     result_path = trial_dir / "result.json"
     if not result_path.is_file():
+        log_hpo_trial_failure(comet_experiment, trial_dir, "missing_result_json")
+        safe_comet_call(comet_experiment, "end")
         raise RuntimeError(f"Training finished but did not write {result_path}.")
 
     result = json.loads(result_path.read_text(encoding="utf-8"))
@@ -164,6 +341,8 @@ def run_trial_subprocess(trial: optuna.Trial) -> dict:
     trial.set_user_attr("global_step", result.get("global_step"))
     trial.set_user_attr("train_rows", result.get("train_rows"))
     trial.set_user_attr("val_rows", result.get("val_rows"))
+    log_hpo_trial_success(comet_experiment, result, trial_dir)
+    safe_comet_call(comet_experiment, "end")
     return result
 
 
@@ -174,6 +353,30 @@ def objective(trial: optuna.Trial) -> float:
         raise RuntimeError("Training result did not contain best_val_loss.")
     trial.report(float(best_val_loss), step=int(result.get("global_step") or 0))
     return float(best_val_loss)
+
+
+def build_comet_callback(study):
+    if not hpo_comet_enabled():
+        return None
+    if CometCallback is None:
+        print(
+            "[HPO COMET WARNING] optuna-integration is not installed; "
+            "install `optuna-integration>=4.0.0` for native Optuna Comet logging.",
+            file=sys.stderr,
+        )
+        return None
+    if not os.getenv("COMET_API_KEY"):
+        print("[HPO COMET WARNING] COMET_API_KEY is missing; native Comet logging disabled.", file=sys.stderr)
+        return None
+
+    project_name = os.getenv("HPO_COMET_PROJECT_NAME") or os.getenv("COMET_PROJECT_NAME") or "diffcoder-hpo"
+    workspace = os.getenv("HPO_COMET_WORKSPACE") or os.getenv("COMET_WORKSPACE")
+    return CometCallback(
+        study,
+        workspace=workspace,
+        project_name=project_name,
+        metric_names=["best_val_loss"],
+    )
 
 
 def main() -> None:
@@ -197,12 +400,26 @@ def main() -> None:
         pruner=pruner,
     )
 
+    comet_callback = build_comet_callback(study)
+    objective_fn = objective
+    callbacks = []
+    if comet_callback is not None:
+        objective_fn = comet_callback.track_in_comet()(objective_fn)
+        callbacks.append(comet_callback)
+
     study.optimize(
-        objective,
+        objective_fn,
         n_trials=env_int("HPO_N_TRIALS", 20),
         timeout=None if env_int("HPO_TIMEOUT_SECONDS", 0) <= 0 else env_int("HPO_TIMEOUT_SECONDS", 0),
+        callbacks=callbacks,
+        catch=(RuntimeError,),
         gc_after_trial=True,
     )
+
+    complete_trials = [trial for trial in study.trials if trial.state == optuna.trial.TrialState.COMPLETE]
+    if not complete_trials:
+        print("No completed trials yet. Check hpo_trials/*/stderr.log for failures.")
+        return
 
     print(f"Best value: {study.best_value}")
     print(f"Best params: {study.best_params}")
