@@ -1,9 +1,6 @@
-class GeometryUtils:
-    @staticmethod
-    def calculate_perimeter(length, width):
-        return 2 * (length + width)
+def print_pyramid():
+    for i in range(1, 6):
+        print(str(i) * i)
+
 if __name__ == '__main__':
-    sample_length = 10
-    sample_width = 5
-    perimeter = GeometryUtils.calculate_perimeter(sample_length, sample_width)
-    print(perimeter)
+    print_pyramid()

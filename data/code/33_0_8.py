@@ -1,25 +1,10 @@
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all whitespace characters from the input string efficiently.
-    
-    Args:
-        text (str): The input string containing potential whitespace.
-        
-    Returns:
-        str: A new string with all whitespace removed.
-    """
-    return ''.join(text.split())
+def triangle_area(base, height):
+    if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Base and height must be numeric values.")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    samples = [
-        "Hello, World!",
-        "  Multiple   Spaces  ",
-        "\tNewlines\nand\rCarriageReturns",
-        "NoSpacesHere123"
-    ]
-
-    for sample in samples:
-        result = remove_all_spaces(sample)
-        print(f'Input: {repr(sample)}')
-        print(f'Output: {repr(result)}\n')
+    sample_base = 10
+    sample_height = 5
+    result = triangle_area(sample_base, sample_height)
+    print(result)

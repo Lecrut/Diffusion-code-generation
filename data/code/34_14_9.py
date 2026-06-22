@@ -1,8 +1,10 @@
-def capitalize_words(text: str) -> str:
-    """Capitalize only the first letter of each word in the string."""
-    return ' '.join(word.capitalize() if word else '' for word in text.split())
+import math
+
+def cylinder_surface_area(radius, height):
+    return 2 * math.pi * radius * (radius + height)
 
 if __name__ == '__main__':
-    sample_text = "hello world, this is a test."
-    result = capitalize_words(sample_text)
+    r = 5
+    h = 10
+    result = cylinder_surface_area(r, h)
     print(result)

@@ -1,18 +1,20 @@
-def minify_text(input_string):
-    return input_string.replace(' ', '').replace('\t', '').replace('\n', '').replace('\r', '')
+def calculate_triangle_area(base, height):
+    if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Base and height must be numeric values")
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    sample1 = "  This is a sample string with\n various spaces and tabs. "
-    sample2 = "NoWhitespaceHere"
-    sample3 = "\t\r\nMultiple\nline\nbreaks\t"
-    sample4 = ""
-    print(f"Original 1: '{sample1}'")
-    print(f"Minified 1: '{minify_text(sample1)}'")
-    print("-" * 20)
-    print(f"Original 2: '{sample2}'")
-    print(f"Minified 2: '{minify_text(sample2)}'")
-    print("-" * 20)
-    print(f"Original 3: '{sample3}'")
-    print(f"Minified 3: '{minify_text(sample3)}'")
-    print("-" * 20)
-    print(f"Original 4: '{sample4}'")
-    print(f"Minified 4: '{minify_text(sample4)}'")
+    sample_base = 10
+    sample_height = 5
+    result = calculate_triangle_area(sample_base, sample_height)
+    print(result)
+    try:
+        calculate_triangle_area(-5, 10)
+    except ValueError as e:
+        print(e)
+    try:
+        calculate_triangle_area("10", 5)
+    except TypeError as e:
+        print(e)

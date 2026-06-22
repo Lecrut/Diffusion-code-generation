@@ -1,26 +1,21 @@
-def calculate_perimeter(dimensions):
-    if len(dimensions) != 2:
-        raise ValueError("Input list must contain exactly two dimensions (length and width).")
-    length = dimensions[0]
-    width = dimensions[1]
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Dimensions must be numeric values.")
-    perimeter = 2 * (length + width)
-    return perimeter
+class TestScoreAnalyzer:
+    def __init__(self, scores):
+        self.scores = scores
+
+    def get_count(self):
+        return len(self.scores)
+
+    def get_total(self):
+        return sum(self.scores)
+
+    def calculate_average(self):
+        if len(self.scores) == 0:
+            return 0.0
+        return sum(self.scores) / len(self.scores)
+
 if __name__ == '__main__':
-    sample_dimensions_valid = [10, 5]
-    sample_dimensions_invalid_length = [10]
-    sample_dimensions_invalid_type = [10, "five"]
-    try:
-        perimeter1 = calculate_perimeter(sample_dimensions_valid)
-        print(f"Perimeter for {sample_dimensions_valid}: {perimeter1}")
-    except (ValueError, TypeError) as e:
-        print(f"Error processing {sample_dimensions_valid}: {e}")
-    try:
-        perimeter2 = calculate_perimeter(sample_dimensions_invalid_length)
-    except (ValueError, TypeError) as e:
-        print(f"Error processing {sample_dimensions_invalid_length}: {e}")
-    try:
-        perimeter3 = calculate_perimeter(sample_dimensions_invalid_type)
-    except (ValueError, TypeError) as e:
-        print(f"Error processing {sample_dimensions_invalid_type}: {e}")
+    STATIC_SCORES = [74, 82, 91, 68, 95, 89]
+    analyzer = TestScoreAnalyzer(STATIC_SCORES)
+    print(analyzer.calculate_average())
+    print(analyzer.get_total())
+    print(analyzer.get_count())

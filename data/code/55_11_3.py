@@ -1,22 +1,17 @@
-def calculate_triangle_perimeter(a, b, c):
-    if a > 0 and b > 0 and c > 0:
-        return a + b + c
-    else:
-        raise ValueError("All side lengths must be positive numbers")
+def generate_alphabet_triangle(height):
+    result = []
+    char_code = 65
+    current_line = []
+    for row in range(1, height + 1):
+        line_chars = []
+        for _ in range(row):
+            line_chars.append(chr(char_code))
+            char_code += 1
+            if char_code > 90:
+                char_code = 65
+        result.append("".join(line_chars))
+    return "\n".join(result)
+
 if __name__ == '__main__':
-    side_a = 3
-    side_b = 4
-    side_c = 5
-    try:
-        perimeter = calculate_triangle_perimeter(side_a, side_b, side_c)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
-    side_x = -1
-    side_y = 5
-    side_z = 10
-    try:
-        perimeter = calculate_triangle_perimeter(side_x, side_y, side_z)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
+    height = 5
+    print(generate_alphabet_triangle(height))

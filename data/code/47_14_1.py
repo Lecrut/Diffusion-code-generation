@@ -1,6 +1,11 @@
-def calculate_triangle_area(base: float, height: float) -> float:
-    return 0.5 * base * height
+def calculate_average_grade(grades):
+    total_sum = sum(grades)
+    count = len(grades)
+    if count == 0:
+        return 0.0
+    return total_sum / count
 
 if __name__ == '__main__':
-    result = calculate_triangle_area(10.0, 5.0)
-    print(result)
+    student_grades = [85, 90, 78, 92, 88]
+    average = calculate_average_grade(student_grades)
+    print(average)

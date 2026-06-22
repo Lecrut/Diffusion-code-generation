@@ -1,21 +1,13 @@
-class StringCapitalizer:
-    def capitalize_words(self, input_string):
-        words = input_string.split()
-        capitalized_words = [word.capitalize() for word in words]
-        return " ".join(capitalized_words)
+import math
+
+def calculate_cylinder_areas(radius: float, height: float):
+    lateral_area = 2 * math.pi * radius * height
+    total_area = 2 * math.pi * radius * (radius + height)
+    return lateral_area, total_area
+
 if __name__ == '__main__':
-    capitalizer = StringCapitalizer()
-    sample_string_1 = "hello world this is a test"
-    sample_string_2 = "this is another example for capitalization"
-    sample_string_3 = "a short sentence"
-    result_1 = capitalizer.capitalize_words(sample_string_1)
-    result_2 = capitalizer.capitalize_words(sample_string_2)
-    result_3 = capitalizer.capitalize_words(sample_string_3)
-    print(f"Original: '{sample_string_1}'")
-    print(f"Capitalized: '{result_1}'")
-    print("-" * 20)
-    print(f"Original: '{sample_string_2}'")
-    print(f"Capitalized: '{result_2}'")
-    print("-" * 20)
-    print(f"Original: '{sample_string_3}'")
-    print(f"Capitalized: '{result_3}'")
+    radius_value = 5.0
+    height_value = 10.0
+    lateral, total = calculate_cylinder_areas(radius_value, height_value)
+    print(lateral)
+    print(total)

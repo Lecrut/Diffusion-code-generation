@@ -1,51 +1,13 @@
-def capitalize_first_letter_only(text: str) -> str:
-    """
-    Capitalizes the first letter of each word in a multi-word string,
-    leaving all other letters as they are (no additional capitalization).
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with only the first letter of each word capitalized.
-    """
-    if not isinstance(text, str) or len(text.strip()) == 0:
-        return text
+import math
 
-    # Split into words using whitespace as separator
-    words = text.split()
-    
-    # Capitalize only the first character of each non-empty word
-    processed_words = []
-    for word in words:
-        if not word:
-            continue
-        new_word = ''
-        char_list = list(word)
-        
-        # Handle empty string case within a split result (shouldn't happen normally but safe to check)
-        if len(char_list) == 0:
-            processed_words.append('')
-            continue
-            
-        first_char = char_list[0].upper()
-        rest_chars = ''.join([c for c in char_list[1:]]) # Keep case as is
-        
-        new_word += first_char + rest_chars
-        processed_words.append(new_word)
-
-    return ' '.join(processed_words)
+def calculate_cylinder_surface_area(radius, height):
+    lateral_surface_area = 2 * math.pi * radius * height
+    base_area = math.pi * radius ** 2
+    total_surface_area = lateral_surface_area + 2 * base_area
+    return total_surface_area
 
 if __name__ == '__main__':
-    sample_strings = [
-        "hello world",
-        "PYTHON IS AWESOME",
-        "this sentence has multiple words  here.",
-        "",
-        "   single word ",
-        "A b C d E f"
-    ]
-
-    for s in sample_strings:
-        result = capitalize_first_letter_only(s)
-        print(f'Input: "{s}" -> Output: "{result}"')
+    sample_radius = 5.0
+    sample_height = 10.0
+    result = calculate_cylinder_surface_area(sample_radius, sample_height)
+    print(result)

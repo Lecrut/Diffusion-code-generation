@@ -1,7 +1,5 @@
-def compare_lengths(len1, len2):
-    return (min(len1, len2), max(len1, len2))
+def generate_asterisk_square(size=10):
+    return "\n".join(["* " * size for _ in range(size)])
+
 if __name__ == '__main__':
-    a = 15
-    b = 28
-    result = compare_lengths(a, b)
-    print(result)
+    print(generate_asterisk_square(10))

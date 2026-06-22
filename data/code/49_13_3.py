@@ -1,24 +1,7 @@
-def calculate_lengths(length1, length2):
-    if length1 == 0 or length2 == 0:
-        raise ValueError("Lengths cannot be zero")
-    original_lengths = {
-        "length1": length1,
-        "length2": length2
-    }
-    if length1 > length2:
-        difference = length1 - length2
-        ratio = length1 / length2
-    else:
-        difference = length2 - length1
-        ratio = length2 / length1
-    result = {
-        "original_lengths": original_lengths,
-        "difference": difference,
-        "ratio": ratio
-    }
-    return result
-if __name__ == '__main__':
-    l1 = 10
-    l2 = 4
-    output = calculate_lengths(l1, l2)
-    print(output)
+def print_star_pattern(size):
+    line = "*" * size
+    for _ in range(size):
+        print(line)
+
+if __name__ == "__main__":
+    print_star_pattern(6)

@@ -1,34 +1,8 @@
-def manipulate_case(input_string):
-    """
-    Returns a dictionary containing lowercase, uppercase, and title-cased versions of the input string.
-    
-    Args:
-        input_string (str): The string to be processed.
-        
-    Returns:
-        dict: A dictionary with keys 'lower', 'upper', and 'title' mapping to their respective transformed strings.
-    """
-    if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
-
-    lower = input_string.lower()
-    upper = input_string.upper()
-    
-    # Title case converts the first character of each word to uppercase and the rest to lowercase
-    title = input_string.title()
-
-    return {
-        'lower': lower,
-        'upper': upper,
-        'title': title
-    }
+def compute_rhombus_area(diagonal1: float, diagonal2: float) -> float:
+    return 0.5 * diagonal1 * diagonal2
 
 if __name__ == '__main__':
-    sample_input = "Hello World! This is a test."
-    
-    result = manipulate_case(sample_input)
-    
-    print("Input:", repr(sample_input))
-    print("\nOutput Dictionary:")
-    for key, value in result.items():
-        print(f"{key}: {repr(value)}")
+    d1 = 10.0
+    d2 = 8.0
+    area = compute_rhombus_area(d1, d2)
+    print(area)

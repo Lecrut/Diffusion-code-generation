@@ -1,8 +1,10 @@
-def find_area_difference(area1, area2):
-    result = area1 - area2
-    return result
+def print_pyramid():
+    base_width = 21
+    height = (base_width + 1) // 2
+    for i in range(1, height + 1):
+        spaces = ' ' * (height - i)
+        stars = '*' * (2 * i - 1)
+        print(spaces + stars)
+
 if __name__ == '__main__':
-    area_a = 100
-    area_b = 45
-    difference = find_area_difference(area_a, area_b)
-    print(f"The difference between {area_a} and {area_b} is: {difference}")
+    print_pyramid()

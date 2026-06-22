@@ -1,18 +1,20 @@
 import math
-def area_calculator(shape_type, dimensions):
-    if shape_type == "square":
-        side = dimensions
-        return side * side
-    elif shape_type == "rectangle":
-        length = dimensions[0]
-        width = dimensions[1]
-        return length * width
-    elif shape_type == "circle":
-        radius = dimensions
-        return math.pi * (radius ** 2)
-    else:
-        return "Invalid shape type"
+
+def fibonacci(n):
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    sqrt5 = math.sqrt(5)
+    phi = (1 + sqrt5) / 2
+    psi = (1 - sqrt5) / 2
+    result = (phi ** n - psi ** n) / sqrt5
+    return int(round(result))
+
 if __name__ == '__main__':
-    print(area_calculator("square", 5))
-    print(area_calculator("rectangle", (4, 6)))
-    print(area_calculator("circle", 3))
+    results = []
+    for i in range(80):
+        results.append(fibonacci(i))
+    print(results[-1])

@@ -1,7 +1,8 @@
-def get_string_length(s: str) -> int:
-    return len(s)
+def calculate_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    samples = ["Hello", "", "Python3"]
-    for s in samples:
-        print(f"Length of '{s}' is {get_string_length(s)}")
+    w = 10
+    h = 5
+    result = calculate_area(w, h)
+    print(result)

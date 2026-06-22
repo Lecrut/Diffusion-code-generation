@@ -1,15 +1,14 @@
-def triangle_perimeter(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Side lengths must be positive.")
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("The given side lengths do not form a valid triangle.")
-    return a + b + c
+def print_alphabet_triangle(rows):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    for i in range(rows):
+        if i >= len(alphabet):
+            break
+        row_chars = []
+        for j in range(i + 1):
+            if j < len(alphabet):
+                row_chars.append(alphabet[j])
+        print("".join(row_chars))
+
 if __name__ == '__main__':
-    try:
-        print(triangle_perimeter(3, 4, 5))
-        print(triangle_perimeter(5, 12, 13))
-        print(triangle_perimeter(1, 1, 1))
-        print(triangle_perimeter(-1, 2, 3))
-        print(triangle_perimeter(1, 2, 10))
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_rows = 5
+    print_alphabet_triangle(sample_rows)

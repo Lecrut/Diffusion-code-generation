@@ -1,20 +1,19 @@
-def calculate_string_length(input_text: str) -> int:
-    """
-    Calculates the total character length of a given string, including spaces and punctuation.
-    
-    Args:
-        input_text (str): The string to measure
-        
-    Returns:
-        int: Total number of characters in the string
-    """
-    return len(input_text)
+def _validate_dimension(value, dimension_name):
+    if not isinstance(value, (int, float)):
+        raise TypeError(f"{dimension_name} must be a number")
+    if value <= 0:
+        raise ValueError(f"{dimension_name} must be greater than zero")
+
+def calculate_rectangle_area(width, height):
+    _validate_dimension(width, "Width")
+    _validate_dimension(height, "Height")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing, no external user interaction required.
-    sample_input = "Hello World!"
-
-    result_length = calculate_string_length(sample_input)
-
-    print(f"Input: '{sample_input}'")
-    print(f"Total character length (including spaces and punctuation): {result_length}")
+    test_width = 7.25
+    test_height = 4.1
+    try:
+        computed_area = calculate_rectangle_area(test_width, test_height)
+        print(computed_area)
+    except (TypeError, ValueError) as error:
+        print(error)

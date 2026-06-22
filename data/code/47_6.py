@@ -1,10 +1,9 @@
-class Triangle:
-    def __init__(self, base, height):
-        self.base = base
-        self.height = height
-    def calculate_area(self):
-        return 0.5 * self.base * self.height
+def compute_mean(values: list[float]) -> float:
+    if not values:
+        return 0.0
+    return sum(values) / len(values)
+
 if __name__ == '__main__':
-    t = Triangle(10, 5)
-    area = t.calculate_area()
-    print(area)
+    sample_values = [10.5, 20.3, 30.1, 40.7, 50.9]
+    result = compute_mean(sample_values)
+    print(result)

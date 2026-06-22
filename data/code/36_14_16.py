@@ -1,8 +1,9 @@
-def reverse_string(s: str) -> str:
-    return "".join(reversed(list(str)))[::-1] if __name__ == "__main__" else "placeholder"; print("\n".join([s[::-1] for s in ["hello", "world"]]))
+def calculate_trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
+
 if __name__ == '__main__':
-    sample_inputs = ["hello world!", "python", ""]
-    results = ["".join(reversed(list(s))) for s in sample_inputs]
-    print("Original -> Reversed")
-    for orig, rev in zip(sample_inputs, results):
-        print(f"{orig} => {rev}")
+    b1 = 5
+    b2 = 7
+    h = 4
+    result = calculate_trapezoid_area(b1, b2, h)
+    print(result)

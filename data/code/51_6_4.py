@@ -1,13 +1,16 @@
-def calculate_perimeter(side_lengths):
-    if not side_lengths:
-        return 0
-    return sum(side_lengths)
+def generate_number_pyramid(levels: int=4) -> str:
+    lines = []
+    current_number = 1
+    for level in range(1, levels + 1):
+        nodes_in_level = 2 ** (level - 1)
+        numbers_in_level = []
+        for _ in range(nodes_in_level):
+            numbers_in_level.append(str(current_number))
+            current_number += 1
+        line_content = ' '.join(numbers_in_level)
+        spaces_before = ' ' * ((2 ** (levels - 1) - nodes_in_level) * 2)
+        lines.append(spaces_before + line_content)
+    return '\n'.join(lines)
 if __name__ == '__main__':
-    sample1 = [3, 4, 5]
-    print(calculate_perimeter(sample1))
-    sample2 = [10, 20, 30, 40]
-    print(calculate_perimeter(sample2))
-    sample3 = []
-    print(calculate_perimeter(sample3))
-    sample4 = [7]
-    print(calculate_perimeter(sample4))
+    result = generate_number_pyramid()
+    print(result)

@@ -1,8 +1,9 @@
-def calculate_perimeter(length, width):
-    return 2 * (length + width)
+def calculate_average(results):
+    if not results:
+        return 0.0
+    return sum(results) / len(results)
 
 if __name__ == '__main__':
-    side_length = 5
-    side_width = 10
-    perimeter = calculate_perimeter(side_length, side_width)
-    print(perimeter)
+    exam_results = [85, 92, 78, 90, 88]
+    average_score = calculate_average(exam_results)
+    print(average_score)

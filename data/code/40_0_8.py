@@ -1,26 +1,9 @@
-import sys
-def get_first_letters(text):
-    words = text.split()
-    first_letters = [word[0] for word in words if word]
-    return "".join(first_letters)
+def surface_area_of_rectangular_box(length, width, height):
+    return 2 * (length * width + width * height + height * length)
+
 if __name__ == '__main__':
-    sample_string_1 = "  Hello world  this is a test "
-    sample_string_2 = "multiple   spaces   between words"
-    sample_string_3 = "singleword"
-    sample_string_4 = "  "
-    sample_string_5 = "word1 word2\tword3\nword4"
-    print(f"Input: '{sample_string_1}'")
-    print("Output:", get_first_letters(sample_string_1))
-    print("-" * 20)
-    print(f"Input: '{sample_string_2}'")
-    print("Output:", get_first_letters(sample_string_2))
-    print("-" * 20)
-    print(f"Input: '{sample_string_3}'")
-    print("Output:", get_first_letters(sample_string_3))
-    print("-" * 20)
-    print(f"Input: '{sample_string_4}'")
-    print("Output:", get_first_letters(sample_string_4))
-    print("-" * 20)
-    print(f"Input: '{sample_string_5}'")
-    print("Output:", get_first_letters(sample_string_5))
-    print("-" * 20)
+    length = 5
+    width = 4
+    height = 3
+    result = surface_area_of_rectangular_box(length, width, height)
+    print(result)

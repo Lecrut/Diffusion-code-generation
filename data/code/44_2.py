@@ -1,10 +1,14 @@
-class Rectangle:
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-    def calculate_perimeter(self):
-        return 2 * (self.length + self.width)
+def calculate_mean(values):
+    total = 0.0
+    count = 0
+    for value in values:
+        total += value
+        count += 1
+    if count == 0:
+        return 0.0
+    return total / count
+
 if __name__ == '__main__':
-    rect = Rectangle(10, 5)
-    perimeter = rect.calculate_perimeter()
-    print(perimeter)
+    sample_data = [1.5, 2.5, 3.0, 4.0, 5.5]
+    result = calculate_mean(sample_data)
+    print(result)

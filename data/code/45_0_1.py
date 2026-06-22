@@ -1,9 +1,9 @@
-import math
-
-def calculate_circle_area(radius):
-    return math.pi * (radius ** 2)
+def find_minimum(values):
+    if not values:
+        return None
+    return min(values)
 
 if __name__ == '__main__':
-    print(calculate_circle_area(5))
-    print(calculate_circle_area(0))
-    print(calculate_circle_area(10.5))
+    sample_data = [5, 2, 9, 1, 7]
+    result = find_minimum(sample_data)
+    print(result)

@@ -1,16 +1,8 @@
-def remove_all_spaces(s: str) -> str:
-    return ''.join(ch for ch in s if not ch.isspace())
+def triangle_area(base, height):
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    test_cases = [
-        "Hello World",
-        "  Leading and Trailing Spaces ",
-        "No spaces here",
-        "Multiple   spaces   between words"
-    ]
-    results = []
-    for case in test_cases:
-        result = remove_all_spaces(case)
-        results.append(f'"{case}" -> "{result}"')
-    
-    print('\n'.join(results))
+    base_val = 10.0
+    height_val = 5.0
+    result = triangle_area(base_val, height_val)
+    print(result)

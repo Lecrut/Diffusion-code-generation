@@ -1,18 +1,21 @@
-def find_middle_element(data):
-    n = len(data)
-    middle_index = n // 2
-    if n % 2 == 0:
-        return data[middle_index - 1]
-    else:
-        return data[middle_index]
+def digit_generator(number):
+    if number < 0:
+        raise ValueError('Number must be non-negative')
+    if number == 0:
+        yield 0
+        return
+    digits = []
+    while number > 0:
+        digits.append(number % 10)
+        number //= 10
+    for digit in reversed(digits):
+        yield digit
+
+def sum_digits(number):
+    return sum(digit_generator(number))
 if __name__ == '__main__':
-    list1 = [1.0, 2.0, 3.0, 4.0, 5.0]
-    list2 = [10.0, 20.0, 30.0, 40.0]
-    list3 = [5.5]
-    list4 = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
-    list5 = [100.0]
-    print(find_middle_element(list1))
-    print(find_middle_element(list2))
-    print(find_middle_element(list3))
-    print(find_middle_element(list4))
-    print(find_middle_element(list5))
+    sample_number = 12345
+    digits = list(digit_generator(sample_number))
+    digit_sum = sum_digits(sample_number)
+    print(digits)
+    print(digit_sum)

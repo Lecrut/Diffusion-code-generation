@@ -1,43 +1,23 @@
-import string
+class RhombusGeometry:
+    DIAGONAL_FACTOR: float = 0.5
 
-def manipulate_case(input_string: str) -> dict:
-    """
-    Returns a dictionary containing lowercase, uppercase, and title-cased versions of the input string.
-    
-    Args:
-        input_string (str): The string to process.
-        
-    Returns:
-        dict: A dictionary with keys 'lowercase', 'uppercase', and 'title_case'.
-    """
-    if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
+    @staticmethod
+    def _validate_positive(value: float) -> None:
+        if value <= 0:
+            raise ValueError("Diagonals must be positive")
 
-    # Using built-in methods which are implemented in C for maximum efficiency.
-    lowercase = input_string.lower()
-    uppercase = input_string.upper()
-    
-    # Title casing is efficient as it typically uses optimized internal logic 
-    # to capitalize the first character of each word and lower-case subsequent characters.
-    title_case = input_string.title()
+    def compute_area(self, d1: float, d2: float) -> float:
+        self._validate_positive(d1)
+        self._validate_positive(d2)
+        return self._calculate(d1, d2)
 
-    return {
-        'lowercase': lowercase,
-        'uppercase': uppercase,
-        'title_case': title_case
-    }
+    @staticmethod
+    def _calculate(d1: float, d2: float) -> float:
+        return RhombusGeometry.DIAGONAL_FACTOR * d1 * d2
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user interaction.
-    samples = [
-        "Hello World!",
-        "Python Programming",
-        "  spaced and mixed   ",
-        ""
-    ]
-
-    for test_input in samples:
-        result = manipulate_case(test_input)
-        print(f"Input: \"{test_input}\"")
-        print(result)
-        print("-" * 30)
+    instance = RhombusGeometry()
+    diag_a: float = 12.0
+    diag_b: float = 9.0
+    computed_area: float = instance.compute_area(diag_a, diag_b)
+    print(computed_area)

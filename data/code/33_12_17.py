@@ -1,13 +1,12 @@
-import re
-
-def remove_spaces(text: str) -> str:
-    """Remove all spaces from the input string."""
-    return ''.join(char for char in text if not (char == ' ' or char == '\t' or char == '\n'))
+def calculate_triangle_area(base, height):
+    if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Base and height must be numeric")
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    sample_multi_line = "Hello world\nThis is a test.\nThe end."
-
-    # Process the hard-coded sample string to remove all spaces and whitespace characters.
-    result = remove_spaces(sample_multi_line)
-
-    print(result)
+    sample_base = 10.0
+    sample_height = 5.0
+    area = calculate_triangle_area(sample_base, sample_height)
+    print(area)

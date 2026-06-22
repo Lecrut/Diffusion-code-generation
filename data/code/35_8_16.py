@@ -1,23 +1,14 @@
-def count_vowels(text: str) -> int:
-    """
-    Counts the number of vowels in the input string, ignoring non-alphabetic characters.
-    
-    Args:
-        text (str): The input string to analyze.
-        
-    Returns:
-        int: The total count of vowels found in the string.
-    """
-    vowels = set("aeiouAEIOU")
-    return sum(1 for char in text if char in vowels)
+class CubeCalculator:
+    def __init__(self, edge_length):
+        self.edge_length = edge_length
+
+    def compute_volume(self):
+        return self.edge_length ** 3
+
+    def compute_surface_area(self):
+        return 6 * (self.edge_length ** 2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or external dependencies are needed
-    sample_text_1 = "Hello, World! This is a test."
-    sample_text_2 = "Python 3.9 features advanced data structures like lists and dicts."
-    
-    result_1 = count_vowels(sample_text_1)
-    result_2 = count_vowels(sample_text_2)
-    
-    print(result_1)
-    print(result_2)
+    calculator = CubeCalculator(6)
+    print(calculator.compute_volume())
+    print(calculator.compute_surface_area())

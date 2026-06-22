@@ -1,11 +1,11 @@
-def analyze_string(s):
-    unique_chars = set(s)
-    counts = {}
-    for char in s:
-        counts[char] = counts.get(char, 0) + 1
-    repeated_chars = [char for char, count in counts.items() if count > 1]
-    return (unique_chars, repeated_chars)
+import math
+
+def calculate_cone_volume(radius, height):
+    volume = (1 / 3) * math.pi * (radius ** 2) * height
+    return volume
+
 if __name__ == '__main__':
-    sample_string = "hello world"
-    result = analyze_string(sample_string)
+    radius = 10
+    height = 20
+    result = calculate_cone_volume(radius, height)
     print(result)

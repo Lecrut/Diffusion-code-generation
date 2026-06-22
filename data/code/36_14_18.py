@@ -1,4 +1,9 @@
-print("".join(reversed(input_str)) if (input_str := "Hello") else None) is not None and print(output) or input_str[::-1] if False else ""
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    pass
+    base_a = 10
+    base_b = 20
+    height_val = 5
+    area = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(area)

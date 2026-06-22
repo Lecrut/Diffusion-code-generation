@@ -1,20 +1,15 @@
-class VowelCounter:
-    def __init__(self):
-        self.vowels = set("aeiouAEIOU")
+def _validate_edge(length):
+    if not isinstance(length, (int, float)):
+        raise TypeError("Edge length must be a number")
+    if length < 0:
+        raise ValueError("Edge length must be non-negative")
+    return length
 
-    def count(self, text: str) -> int:
-        return sum(1 for char in text if char in self.vowels)
+def calculate_cube_volume(edge_length):
+    valid_edge = _validate_edge(edge_length)
+    return valid_edge ** 3
 
 if __name__ == '__main__':
-    counter = VowelCounter()
-    
-    sample_texts = [
-        "Hello World",
-        "aeiouAEIOU",
-        "",
-        "Python programming is fun!"
-    ]
-
-    for text in sample_texts:
-        result = counter.count(text)
-        print(f"Text: '{text}' -> Vowel Count: {result}")
+    test_length = 6.0
+    computed_volume = calculate_cube_volume(test_length)
+    print(computed_volume)

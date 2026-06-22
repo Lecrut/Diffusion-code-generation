@@ -1,33 +1,25 @@
-class FirstLetterExtractor:
-    """A class to extract the first letter of every word from a given text."""
+from typing import Tuple
 
-    def __init__(self):
-        pass
+class RectangularBox:
+    def __init__(self, length: float, width: float, height: float) -> None:
+        if length <= 0:
+            raise ValueError("Length must be positive")
+        if width <= 0:
+            raise ValueError("Width must be positive")
+        if height <= 0:
+            raise ValueError("Height must be positive")
+        self._length = length
+        self._width = width
+        self._height = height
 
-    def extract(self, text: str) -> list[str]:
-        """
-        Returns a list containing the first letter of each word in the input text.
-        
-        Args:
-            text (str): The input string to process.
-            
-        Returns:
-            List[str]: A list where each element is the first character 
-                       of a word found in the input text, or an empty list if no words are found.
-                       
-        Example:
-            >>> extractor = FirstLetterExtractor()
-            >>> result = extractor.extract("Hello world")
-            # Returns ['H', 'w']
-        """
-        return [word[0] for word in text.split()]
+    def get_dimensions(self) -> Tuple[float, float, float]:
+        return (self._length, self._width, self._height)
+
+    def calculate_surface_area(self) -> float:
+        l, w, h = self.get_dimensions()
+        return 2 * (l * w + w * h + h * l)
 
 if __name__ == '__main__':
-    sample_texts = ["Python is awesome", "The quick brown fox"]
-    
-    extractor = FirstLetterExtractor()
-    
-    print("First letters extracted:")
-    for original_text in sample_texts:
-        result = extractor.extract(original_text)
-        print(f"Input: '{original_text}' -> Output: {result}")
+    box_instance = RectangularBox(15.5, 8.2, 3.0)
+    area_result = box_instance.calculate_surface_area()
+    print(area_result)

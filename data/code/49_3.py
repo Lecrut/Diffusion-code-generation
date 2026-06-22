@@ -1,9 +1,15 @@
+def print_hollow_square(size):
+    result = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if i == 0 or i == size - 1 or j == 0 or j == size - 1:
+                row.append('*')
+            else:
+                row.append(' ')
+        result.append(''.join(row))
+    return '\n'.join(result)
+
 if __name__ == '__main__':
-    length1 = 15.7
-    length2 = 22.3
-    if length1 > length2:
-        print("Length 1 is longer.")
-    elif length2 > length1:
-        print("Length 2 is longer.")
-    else:
-        print("The lengths are equal.")
+    size = 6
+    print(print_hollow_square(size))

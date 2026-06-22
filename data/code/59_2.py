@@ -1,13 +1,12 @@
-import sys
+def sum_of_digits(n):
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer")
+    if n == 0:
+        return 0
+    return n % 10 + sum_of_digits(n // 10)
+
 if __name__ == '__main__':
-    input_data = "10 20 30 40 50"
-    numbers = list(map(int, input_data.split()))
-    if not numbers:
-        print("Input is empty")
-    else:
-        n = len(numbers)
-        if n % 2 == 1:
-            middle_index = n // 2
-            print(numbers[middle_index])
-        else:
-            print("Input has an even number of elements, no single middle element.")
+    print(sum_of_digits(0))
+    print(sum_of_digits(5))
+    print(sum_of_digits(123))
+    print(sum_of_digits(9876543210))

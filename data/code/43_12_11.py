@@ -1,25 +1,23 @@
-class Square:
-    """A class representing a square with methods to calculate its area."""
+import math
+
+def surface_area_of_square_pyramid(base_length: float, lateral_edge: float) -> float:
+    if base_length <= 0 or lateral_edge <= 0:
+        raise ValueError("Base length and lateral edge must be positive.")
     
-    def __init__(self, side_length):
-        if not isinstance(side_length, (int, float)):
-            raise TypeError("Side length must be an integer or float")
-        self.side = side_length
+    half_base = base_length / 2.0
     
-    def get_area(self):
-        """Calculate and return the square's area.
-        
-        Returns:
-            float: The calculated area of the square.
-        """
-        return self.side ** 2
+    if lateral_edge < half_base:
+        raise ValueError("Lateral edge must be at least half the base length for a valid square pyramid.")
+    
+    slant_height = math.sqrt(lateral_edge ** 2 - half_base ** 2)
+    
+    base_area = base_length ** 2
+    triangular_face_area = (base_length * slant_height) / 2.0
+    
+    total_area = base_area + (4 * triangular_face_area)
+    
+    return total_area
 
 if __name__ == '__main__':
-    # Sample values for testing without user input or external dependencies
-    sample_sides = [5, 10.5]
-
-    print("Square Area Calculations:")
-    for side in sample_sides:
-        square = Square(side)
-        area = square.get_area()
-        print(f"Side length: {side}, Area: {area}")
+    result = surface_area_of_square_pyramid(base_length=10.0, lateral_edge=13.0)
+    print(result)

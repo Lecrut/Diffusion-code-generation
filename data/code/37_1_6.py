@@ -1,12 +1,9 @@
-class StringManipulator:
-    def __init__(self):
-        self.string1 = "Hello"
-        self.string2 = "World"
-
-    def combine_strings(self):
-        return f"{self.string1} {self.string2}"
+class GeometryCalculator:
+    @staticmethod
+    def parallelogram_area(base, height):
+        return base * height
 
 if __name__ == '__main__':
-    manipulator = StringManipulator()
-    result = manipulator.combine_strings()
+    calculator = GeometryCalculator()
+    result = calculator.parallelogram_area(5, 10)
     print(result)

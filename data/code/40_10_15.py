@@ -1,29 +1,24 @@
-def get_first_letters(strings):
-    """
-    Returns a list containing the first letter of each input string.
-    
-    Args:
-        strings (list[str]): A list of strings to process.
-        
-    Returns:
-        list[str]: A list where each element is the first character 
-                   corresponding to the respective input string, or an empty string if None.
-    """
-    result = []
-    for s in strings:
-        # Handle cases where a string might be missing (though task implies valid inputs)
-        if not isinstance(s, str):
-            continue
-        first_char = s[0] if len(s) > 0 else ''
-        result.append(first_char)
-    return result
+class BoxSurfaceCalculator:
+    def __init__(self, length, width, height):
+        self._validate_dimension("length", length)
+        self._validate_dimension("width", width)
+        self._validate_dimension("height", height)
+        self.length = length
+        self.width = width
+        self.height = height
+
+    def _validate_dimension(self, name, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"{name} must be a number")
+        if value <= 0:
+            raise ValueError(f"{name} must be greater than zero")
+
+    def calculate(self):
+        term1 = self.length * self.width
+        term2 = self.width * self.height
+        term3 = self.height * self.length
+        return 2 * (term1 + term2 + term3)
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or files needed)
-    sample_strings = ["Python", "is", "awesome!", "", "Robust"]
-    
-    first_letters = get_first_letters(sample_strings)
-    
-    print("First letters:")
-    for letter in first_letters:
-        print(letter)
+    box = BoxSurfaceCalculator(10, 5, 3)
+    print(box.calculate())

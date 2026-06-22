@@ -1,36 +1,16 @@
-class StringCleaner:
-    """A class to clean strings by removing all spaces."""
+class TriangleCalculator:
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
 
-    def clean(self, text):
-        """
-        Remove all space characters from the input string efficiently.
+    def area(self):
+        return 0.5 * self.base * self.height
 
-        Args:
-            text (str): The input string that may contain spaces.
-
-        Returns:
-            str: A new string with all spaces removed.
-        
-        Examples:
-            >>> cleaner = StringCleaner()
-            >>> cleaner.clean("Hello World")
-            ' HelloWorld' -> 'HellWorld'
-        """
-        # Using replace is efficient and readable for removing a single character type in Python
-        return text.replace(' ', '')
+    def perimeter_approx(self):
+        hypotenuse = (self.base ** 2 + self.height ** 2) ** 0.5
+        return self.base + self.height + hypotenuse
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    samples = [
-        "Hello World",
-        "",
-        "  Leading spaces   ",
-        "NoSpacesHereAtAll",
-        "Multiple   Spaces   InBetween"
-    ]
-
-    cleaner = StringCleaner()
-
-    for text in samples:
-        cleaned_text = cleaner.clean(text)
-        print(f'Input: "{text}" -> Output: "{cleaned_text}"')
+    calc = TriangleCalculator(10, 5)
+    print(calc.area())
+    print(calc.perimeter_approx())

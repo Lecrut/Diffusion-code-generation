@@ -1,24 +1,69 @@
-class FirstLetterExtractor:
-    """A class that extracts the first letter from a list of strings."""
+from functools import lru_cache
 
-    def extract_all(self, string_list):
-        """
-        Extracts the first character from each non-empty string in the input list.
+class RectangularPrism:
+    def __init__(self, length, width, height):
+        self.length = float(length)
+        self.width = float(width)
+        self.height = float(height)
+        self._cached_surface_area = None
 
-        Args:
-            string_list (list[str]): A list of strings to process.
+    @property
+    def length(self):
+        return self._length
 
-        Returns:
-            list[str]: A new list containing only the first letter of each 
-                      corresponding input string, or an empty string if the 
-                      original was empty. Empty strings are skipped in output 
-                      but do not cause errors on invalid types due to type hints.
-        
-                """
-        return [str(item)[0] for item in string_list if str(item)]
+    @length.setter
+    def length(self, value):
+        if value <= 0:
+            raise ValueError("Length must be positive")
+        self._length = value
+        self._invalidate_cache()
+
+    @property
+    def width(self):
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        if value <= 0:
+            raise ValueError("Width must be positive")
+        self._width = value
+        self._invalidate_cache()
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        if value <= 0:
+            raise ValueError("Height must be positive")
+        self._height = value
+        self._invalidate_cache()
+
+    @property
+    def surface_area(self):
+        if self._cached_surface_area is None:
+            self._cached_surface_area = self._calculate_surface_area()
+        return self._cached_surface_area
+
+    def _calculate_surface_area(self):
+        return 2 * (
+            self._length * self._width +
+            self._width * self._height +
+            self._height * self._length
+        )
+
+    def _invalidate_cache(self):
+        self._cached_surface_area = None
 
 if __name__ == '__main__':
-    test_strings = ["Hello", "World", "", 123, None, "!"]
-    extractor = FirstLetterExtractor()
-    result = extractor.extract_all(test_strings)
-    print(result)
+    prism = RectangularPrism(3, 4, 5)
+    print(prism.surface_area)
+
+    prism2 = RectangularPrism(10, 10, 10)
+    print(prism2.surface_area)
+
+    prism3 = RectangularPrism(1, 2, 3)
+    print(prism3.surface_area)
+    prism3.length = 5
+    print(prism3.surface_area)

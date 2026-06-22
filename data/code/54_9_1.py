@@ -1,11 +1,13 @@
-import math
-def calculate_areas(radii):
-    area_dict = {}
-    for r in radii:
-        area = math.pi * (r ** 2)
-        area_dict[r] = area
-    return area_dict
+def hollow_square(rows, cols):
+    for r in range(rows):
+        if r == 0 or r == rows - 1:
+            yield '#' * cols
+        else:
+            if cols > 1:
+                yield '#' + ' ' * (cols - 2) + '#'
+            else:
+                yield '#'
+
 if __name__ == '__main__':
-    sample_radii = [1.0, 2.5, 5.0, 10.0]
-    results = calculate_areas(sample_radii)
-    print(results)
+    for row in hollow_square(5, 7):
+        print(row)

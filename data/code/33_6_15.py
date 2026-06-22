@@ -1,36 +1,21 @@
-import sys
+DIMENSION_UNITS = {
+    "base": "length",
+    "height": "length",
+    "area": "square_units"
+}
 
-def main():
-    """
-    Generates a concatenated string from hardcoded sample values.
-    
-    This script demonstrates reading input line by line (simulated via hard-coded data)
-    and joining words without spaces between them, as requested in the functional description,
-    while strictly adhering to constraints prohibiting interactive prompts or external inputs.
-    """
+def _validate_positive(value: float, name: str) -> float:
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+    return value
 
-    # Simulating user input with a list of strings representing lines
-    sample_data = [
-        "Python",
-        "is",
-        "awesome"
-    ]
-
-    result_lines = []
-
-    for line in sample_data:
-        if not line.strip():  # Skip empty lines to avoid adding extra newlines/characters blindly
-            continue
-        
-        words = line.split()
-        
-        # Join each word with no spaces, then add the concatenated result of that line's words
-        combined_line_wordless = ''.join(words)
-        result_lines.append(combined_line_wordless)
-
-    final_output = "".join(result_lines)
-
-    print(final_output)
+def calculate_triangle_area(base: float, height: float) -> float:
+    validated_base = _validate_positive(base, "Base")
+    validated_height = _validate_positive(height, "Height")
+    return 0.5 * validated_base * validated_height
 
 if __name__ == '__main__':
-    main()
+    test_base = 8.0
+    test_height = 4.0
+    result = calculate_triangle_area(test_base, test_height)
+    print(result)

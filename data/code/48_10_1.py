@@ -1,15 +1,13 @@
-def can_form_triangle(sides):
-    if len(sides) != 3:
-        return False
-    a, b, c = sides
-    if a <= 0 or b <= 0 or c <= 0:
-        return False
-    return a + b > c and a + c > b and b + c > a
+def find_max(data):
+    if not data:
+        return None
+    max_val = data[0]
+    for val in data:
+        if val > max_val:
+            max_val = val
+    return max_val
 
 if __name__ == '__main__':
-    print(can_form_triangle([3, 4, 5]))
-    print(can_form_triangle([1, 2, 3]))
-    print(can_form_triangle([0, 4, 5]))
-    print(can_form_triangle([-1, 2, 3]))
-    print(can_form_triangle([5, 5, 5]))
-    print(can_form_triangle([1, 10, 12]))
+    values = [12, 4, 67, 23, 8, 90, 34, 5, 42]
+    result = find_max(values)
+    print(result)

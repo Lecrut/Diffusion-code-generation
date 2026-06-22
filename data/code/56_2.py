@@ -1,32 +1,7 @@
-import math
-class Shape:
-    def area(self):
-        raise NotImplementedError
-    def perimeter(self):
-        raise NotImplementedError
-class Circle(Shape):
-    def __init__(self, radius):
-        self.radius = radius
-    def area(self):
-        return math.pi * self.radius**2
-    def perimeter(self):
-        return 2 * math.pi * self.radius
-class Triangle(Shape):
-    def __init__(self, side1, side2, side3):
-        self.side1 = side1
-        self.side2 = side2
-        self.side3 = side3
-    def area(self):
-        s = (self.side1 + self.side2 + self.side3) / 2
-        return math.sqrt(s * (s - self.side1) * (s - self.side2) * (s - self.side3))
-    def perimeter(self):
-        return self.side1 + self.side2 + self.side3
+def multiplication_table_generator(n):
+    for i in range(1, 11):
+        yield f"{n} x {i} = {n * i}"
+
 if __name__ == '__main__':
-    circle = Circle(5)
-    triangle = Triangle(3, 4, 5)
-    print("Circle:")
-    print("Area:", circle.area())
-    print("Perimeter:", circle.perimeter())
-    print("\nTriangle:")
-    print("Area:", triangle.area())
-    print("Perimeter:", triangle.perimeter())
+    for row in multiplication_table_generator(5):
+        print(row)

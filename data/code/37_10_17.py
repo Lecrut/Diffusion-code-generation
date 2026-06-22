@@ -1,12 +1,21 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """Combines two input strings into a single string separated by a space."""
-    return f"{str1} {str2}"
+from typing import Union
 
-if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or external dependencies.
-    sample_input_1 = "Hello"
-    sample_input_2 = "World"
+Number = Union[int, float]
 
-    result = combine_strings(sample_input_1, sample_input_2)
-    
-    print(result)
+class Parallelogram:
+    def __init__(self, base: Number, height: Number) -> None:
+        if base < 0:
+            raise ValueError("Base cannot be negative")
+        if height < 0:
+            raise ValueError("Height cannot be negative")
+        self.base = base
+        self.height = height
+
+    def area(self) -> float:
+        return self.base * self.height
+
+if __name__ == "__main__":
+    base_value = 10.5
+    height_value = 7.2
+    shape = Parallelogram(base_value, height_value)
+    print(shape.area())

@@ -1,35 +1,24 @@
-class Square:
-    """A class representing a square with methods to calculate its area."""
+import math
 
-    def __init__(self, side_length):
-        """Initialize the Square object with a valid non-negative side length.
+class SquarePyramid:
+    def __init__(self, base_side, slant_height):
+        if base_side <= 0 or slant_height <= 0:
+            raise ValueError("Base side and slant height must be positive")
+        self.base_side = base_side
+        self.slant_height = slant_height
 
-        Args:
-            side_length (float or int): The length of one side of the square. Must be >= 0.
-        
-        Raises:
-            ValueError: If the provided side_length is negative.
-        """
-        if side_length < 0:
-            raise ValueError("Side length cannot be negative.")
-        self.side = float(side_length)
+    def surface_area(self):
+        base_area = self.base_side ** 2
+        lateral_area = 4 * (0.5 * self.base_side * self.slant_height)
+        return base_area + lateral_area
 
-    def area(self):
-        """Calculate and return the area of the square.
-
-        Returns:
-            float: The calculated area (side * side).
-        """
-        return self.side ** 2
+    def volume(self):
+        half_base = self.base_side / 2
+        height = math.sqrt(self.slant_height ** 2 - half_base ** 2)
+        return (self.base_side ** 2 * height) / 3
 
 if __name__ == '__main__':
-    # Sample values to demonstrate functionality without user input or external dependencies
-    sample_sides = [5, -3, 0.0]
-
-    for s in sample_sides:
-        try:
-            square = Square(s)
-            calculated_area = square.area()
-            print(f"Square with side {s} has an area of {calculated_area}")
-        except ValueError as e:
-            print(f"Error creating square with side {s}: {e}")
+    base_side = 6
+    slant_height = 5
+    pyramid = SquarePyramid(base_side, slant_height)
+    print(pyramid.surface_area())

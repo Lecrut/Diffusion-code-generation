@@ -1,11 +1,12 @@
-def calculate_square_area(side_length):
-    """Calculate the area of a square efficiently."""
-    return side_length ** 2
+import math
+
+class GeometryUtils:
+    @staticmethod
+    def calculate_square_pyramid_surface_area(base_edge, slant_height):
+        base_area = base_edge ** 2
+        lateral_area = 2 * base_edge * slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test functionality without user input
-    samples = [5, 10.5, 1]
-    
-    for length in samples:
-        area = calculate_square_area(length)
-        print(f"Area of square with side {length}: {area}")
+    result = GeometryUtils.calculate_square_pyramid_surface_area(4, 5)
+    print(result)

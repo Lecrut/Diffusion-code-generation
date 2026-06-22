@@ -1,17 +1,12 @@
-def build_string_from_parts(parts):
-    """
-    Joins a list of string parts with spaces, ensuring O(n) time complexity.
-    
-    Args:
-        parts (list[str]): List of strings to be joined.
-        
-    Returns:
-        str: The joined string separated by spaces.
-    """
-    # In Python, the built-in join method is implemented in C and runs in linear time relative to total characters n.
-    return ' '.join(parts)
+import math
+
+def compute_ellipse_area(major_axis, minor_axis):
+    if major_axis <= 0 or minor_axis <= 0:
+        raise ValueError("Axis dimensions must be positive.")
+    return math.pi * (major_axis / 2) * (minor_axis / 2)
 
 if __name__ == '__main__':
-    sample_parts = ["Hello", "World", "This", "Is", "An"]
-    result = build_string_from_parts(sample_parts)
+    sample_major = 10.5
+    sample_minor = 7.3
+    result = compute_ellipse_area(sample_major, sample_minor)
     print(result)

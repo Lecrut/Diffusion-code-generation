@@ -1,8 +1,7 @@
-def process_string(s: str) -> tuple[str, str, str]:
-    """Returns a tuple with (original string, lowercase version, reversed case version)."""
-    return s, s.lower(), ''.join(c.swapcase() if i % 2 == 0 else c for i in range(len(s)))
-
+def calculate_rhombus_area(diagonal1, diagonal2):
+    return 0.5 * diagonal1 * diagonal2
 if __name__ == '__main__':
-    sample = "Hello World"
-    result = process_string(sample)
-    print(f"{result[0]!r}, {result[1]}, {result[2]}")
+    d1 = 8
+    d2 = 6
+    area = calculate_rhombus_area(d1, d2)
+    print(area)

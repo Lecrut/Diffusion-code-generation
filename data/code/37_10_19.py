@@ -1,17 +1,16 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """Combines two input strings into a single string separated by a space."""
-    if not isinstance(str1, str):
-        raise TypeError(f"Expected 'str' for first argument, got {type(str1).__name__}")
-    if not isinstance(str2, str):
-        raise TypeError(f"Expected 'str' for second argument, got {type(str2).__name__}")
-    
-    return f"{str1} {str2}"
+def compute_parallelogram_area(base: float, height: float) -> float:
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("Height must be a number")
+    if base <= 0:
+        raise ValueError("Base must be positive")
+    if height <= 0:
+        raise ValueError("Height must be positive")
+    return float(base * height)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or arguments.
-    str_a = "Python"
-    str_b = "is_awesome"
-
-    result = combine_strings(str_a, str_b)
-    
-    print(result)
+    base_value: float = 10.0
+    height_value: float = 5.0
+    area: float = compute_parallelogram_area(base_value, height_value)
+    print(area)

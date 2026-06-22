@@ -1,28 +1,28 @@
-def calculate_square_area(side):
-    """
-    Calculate the area of a square given its side length.
+import math
+
+def compute_pyramid_areas(base_edge, perpendicular_height):
+    if base_edge <= 0 or perpendicular_height <= 0:
+        raise ValueError("Base edge and height must be positive")
     
-    Args:
-        side (float or int): The length of one side of the square. Must be non-negative.
-        
-    Returns:
-        float: The area of the square, calculated as side^2.
-        
-    Raises:
-        ValueError: If 'side' is negative.
-    """
-    if side < 0:
-        raise ValueError("Side length cannot be negative.")
+    half_base = base_edge / 2.0
     
-    return side * side
+    slant_height = math.sqrt(half_base ** 2 + perpendicular_height ** 2)
+    
+    lateral_area = base_edge * math.sqrt((base_edge / 2.0) ** 2 + perpendicular_height ** 2)
+    
+    base_area = base_edge ** 2
+    
+    total_area = lateral_area + base_area
+    
+    return {
+        "lateral_area": lateral_area,
+        "total_area": total_area
+    }
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_sides = [5, -3.5, 0]
+    base_edge = 10.0
+    perpendicular_height = 12.0
     
-    for s in test_sides:
-        try:
-            area = calculate_square_area(s)
-            print(f"Side {s}: Area is {area}")
-        except ValueError as e:
-            print(f"Error for side {s}: {e}")
+    result = compute_pyramid_areas(base_edge, perpendicular_height)
+    
+    print(result)

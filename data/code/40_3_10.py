@@ -1,6 +1,10 @@
-def extract_first_letters(s: str) -> str:
-    return ' '.join(word[0] if word else '' for word in s.split())
+import math
+
+def calculate_surface_area(dimensions: tuple) -> float:
+    a, b, c = dimensions
+    return 2.0 * (a * b + b * c + c * a)
 
 if __name__ == '__main__':
-    sample = "hello world this is a test string"
-    print(extract_first_letters(sample))
+    dims = (1.0, 2.0, 3.0)
+    area = calculate_surface_area(dims)
+    print(area)

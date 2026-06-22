@@ -1,7 +1,8 @@
-def combine_strings(str1, str2):
-    return str1 + str2
+def calculate_area(base, height):
+    return float(base * height)
+
 if __name__ == '__main__':
-    string_a = "Hello"
-    string_b = "World"
-    result = combine_strings(string_a, string_b)
+    base = 12.5
+    height = 8.0
+    result = calculate_area(base, height)
     print(result)

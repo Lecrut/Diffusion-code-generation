@@ -1,26 +1,22 @@
-def filter_non_whitespace(s: str):
-    """
-    Generator function that yields characters from an input string 
-    excluding whitespace (spaces, tabs, newlines).
-    
-    Args:
-        s (str): The input string to process.
-        
-    Yields:
-        str: Individual non-whitespace characters from the input.
-    """
-    for char in s:
-        if not char.isspace():
-            yield char
+from decimal import Decimal, getcontext
+getcontext().prec = 10
+
+class Triangle:
+    def __init__(self, base_val, height_val):
+        if base_val <= 0 or height_val <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.base = Decimal(str(base_val))
+        self.height = Decimal(str(height_val))
+
+    def get_area(self):
+        return self.base * self.height * Decimal("0.5")
+
+    def get_perimeter_base_height(self):
+        return self.base + self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements
-    test_string = "Hello World! This is a Python generator."
-    
-    print("Original string:")
-    print(test_string)
-    print("\nFiltered characters (no whitespace):")
-    
-    result_list = list(filter_non_whitespace(test_string))
-    filtered_str = "".join(result_list)
-    print(filtered_str)
+    b = 12.345
+    h = 6.789
+    tri = Triangle(b, h)
+    print(tri.get_area())
+    print(tri.get_perimeter_base_height())

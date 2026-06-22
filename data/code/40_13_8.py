@@ -1,15 +1,9 @@
-def get_first_letter(input_string: str) -> str:
-    """Returns the first letter of the input string if it exists, otherwise returns an empty string."""
-    return input_string[0] if len(input_string) > 0 else ""
+class Box:
+    def __init__(self, dimensions):
+        self.dimensions = dimensions
+    def surface_area(self):
+        return 2 * sum([a * b for a, b in zip(self.dimensions, self.dimensions[1:]) + [self.dimensions[:1]] * self.dimensions[-1:]])
 
 if __name__ == '__main__':
-    test_cases = [
-        "Hello World",
-        "",
-        "a",
-        "   leading spaces"
-    ]
-
-    for case in test_cases:
-        result = get_first_letter(case)
-        print(f'Input: {repr(case)} -> Output: {repr(result)}')
+    box = Box([4, 6, 8])
+    print(box.surface_area())

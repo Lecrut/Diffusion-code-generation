@@ -1,18 +1,10 @@
-DIMENSION_MAP = {
-    "length": "horizontal_axis",
-    "width": "vertical_axis"
-}
-
-class Rectangle:
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-
-    def get_perimeter(self):
-        return 2 * (self.length + self.width)
+def compute_mean(values: list[int]) -> float:
+    total = 0
+    for value in values:
+        total += value
+    return total / len(values)
 
 if __name__ == '__main__':
-    side_lengths = DIMENSION_MAP
-    rect = Rectangle(8, 3)
-    perimeter = rect.get_perimeter()
-    print(perimeter)
+    sample_values = [10, 20, 30, 40, 50]
+    result = compute_mean(sample_values)
+    print(result)

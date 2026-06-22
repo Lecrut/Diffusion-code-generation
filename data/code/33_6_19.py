@@ -1,29 +1,15 @@
-import sys
+class TriangleCalculator:
+    AREA_FACTOR = 0.5
 
-def main():
-    # Generate sample data directly within the script to ensure it runs without user input, 
-    # command-line arguments, network access, or pre-existing files.
-    sample_data = [
-        "Hello",
-        "World",
-        "This",
-        "Is",
-        "A",
-        "Test"
-    ]
-
-    concatenated_result = ""
-    
-    for word in sample_data:
-        # Remove any existing whitespace from the beginning or end of each string before concatenating.
-        clean_word = word.strip()
-        if not clean_word:
-            continue
-        
-        # Append to result without adding spaces between words as per requirements.
-        concatenated_result += clean_word
-
-    print(concatenated_result)
+    @staticmethod
+    def compute_area(base: float, height: float) -> float:
+        if base <= 0.0 or height <= 0.0:
+            raise ValueError("Base and height must be positive.")
+        return TriangleCalculator.AREA_FACTOR * base * height
 
 if __name__ == '__main__':
-    main()
+    CALCULATOR = TriangleCalculator()
+    TEST_BASE = 12.5
+    TEST_HEIGHT = 8.0
+    RESULT = CALCULATOR.compute_area(TEST_BASE, TEST_HEIGHT)
+    print(RESULT)

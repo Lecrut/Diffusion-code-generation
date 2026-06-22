@@ -1,21 +1,16 @@
-import sys
+class Triangle:
+    def __init__(self, base, height):
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive values")
+        self.base = base
+        self.height = height
 
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all spaces from both internal and external positions in the string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with no whitespace characters remaining.
-    """
-    return ''.join(char for char in text if not (' ' == char))
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or args)
-    sample_input = "Hello World\nThis is a test.\n  Leading and trailing spaces."
-
-    output_string = remove_all_spaces(sample_input)
-    
-    print(output_string)
+    base_val = 10
+    height_val = 5
+    triangle = Triangle(base_val, height_val)
+    area = triangle.calculate_area()
+    print(area)

@@ -1,5 +1,9 @@
-def extract_substrings(text: str) -> list[str]:
-    """Extract all substrings from text that fall between specified start and end points."""
+BASE_AREA = 10.0
+HEIGHT = 5.0
+
+def calculate_prism_volume(area, height):
+    return area * height
 
 if __name__ == '__main__':
-    pass
+    volume = calculate_prism_volume(BASE_AREA, HEIGHT)
+    print(volume)

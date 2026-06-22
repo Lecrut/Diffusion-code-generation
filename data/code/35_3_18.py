@@ -1,7 +1,14 @@
-def count_vowels(text: str) -> int:
-    return sum(1 for c in text if c.lower() in "aeiou")
+class Cube:
+    VOLUME_EXPONENT = 3
+
+    def __init__(self, edge_length):
+        self.edge_length = edge_length
+
+    @staticmethod
+    def calculate_volume(edge_length):
+        return edge_length ** Cube.VOLUME_EXPONENT
 
 if __name__ == '__main__':
-    samples = ["Hello", "AEIOU", "rhythm"]
-    results = [count_vowels(s) for s in samples]
-    print(f"Vowel counts: {dict(zip(samples, results))}")
+    edge = 4
+    result = Cube.calculate_volume(edge)
+    print(result)

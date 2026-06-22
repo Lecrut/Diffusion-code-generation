@@ -1,26 +1,11 @@
-def capitalize_words(text: str) -> str:
-    """
-    A decorator that automatically capitalizes the first letter of every word in a string.
-    
-    Args:
-        text (str): The input string to be processed.
-        
-    Returns:
-        str: The capitalized version of the input string.
-    """
-    return " ".join(word.capitalize() for word in text.split())
+import math
+
+def cylinder_surface_area(radius: float, height: float) -> float:
+    lateral_area = 2 * math.pi * radius * height
+    base_area = math.pi * radius ** 2
+    total_area = lateral_area + 2 * base_area
+    return total_area
 
 if __name__ == '__main__':
-    sample_strings = [
-        "hello world",
-        "this is a test case",
-        "python programming language"
-    ]
-    
-    print("Original Strings and Capitalized Versions:")
-    print("-" * 40)
-    for original in sample_strings:
-        capitalized = capitalize_words(original)
-        print(f"Input:      '{original}'")
-        print(f"Output:     '{capitalized}'")
-        print("-" * 40)
+    result = cylinder_surface_area(5, 10)
+    print(result)

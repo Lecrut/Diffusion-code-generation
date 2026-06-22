@@ -1,15 +1,27 @@
-import math
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def calculate_area(self):
-        return math.pi * (self.radius ** 2)
-    def calculate_circumference(self):
-        return 2 * math.pi * self.radius
+def generate_hollow_square(size):
+    if size <= 0:
+        return []
+    if size == 1:
+        return ['*']
+    
+    top_bottom_row = '*' * size
+    middle_row = '*' + ' ' * (size - 2) + '*'
+    
+    result = []
+    result.append(top_bottom_row)
+    
+    for _ in range(size - 2):
+        result.append(middle_row)
+    
+    if size > 1:
+        result.append(top_bottom_row)
+    
+    return result
+
 if __name__ == '__main__':
-    circle1 = Circle(5)
-    print(f"Area of circle 1: {circle1.calculate_area()}")
-    print(f"Circumference of circle 1: {circle1.calculate_circumference()}")
-    circle2 = Circle(10.5)
-    print(f"Area of circle 2: {circle2.calculate_area()}")
-    print(f"Circumference of circle 2: {circle2.calculate_circumference()}")
+    pattern = generate_hollow_square(5)
+    print(pattern)
+    pattern_small = generate_hollow_square(1)
+    print(pattern_small)
+    pattern_medium = generate_hollow_square(4)
+    print(pattern_medium)

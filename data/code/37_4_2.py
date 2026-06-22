@@ -1,13 +1,8 @@
-import sys
-
-def combine_strings(s1: str, s2: str) -> str:
-    """Combines two strings by concatenating them."""
-    return f"{s1}{s2}"
+def get_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input(), sys.stdin, or args)
-    string_one = "Hello"
-    string_two = "World"
-    
-    result = combine_strings(string_one, string_two)
-    print(result)
+    base = 10.5
+    height = 5.2
+    area = get_parallelogram_area(base, height)
+    print(area)

@@ -1,12 +1,10 @@
-def main():
-    # Hard-coded sample values to satisfy the requirement of running without user input
-    str1 = "Hello"
-    str2 = "World"
-    
-    # Combine strings with a space separator
-    combined_string = f"{str1} {str2}"
-    
-    print(combined_string)
+def compute_parallelogram_area(base: float, height: float) -> float:
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return base * height
 
 if __name__ == '__main__':
-    main()
+    sample_base = 5.0
+    sample_height = 3.0
+    area = compute_parallelogram_area(sample_base, sample_height)
+    print(area)

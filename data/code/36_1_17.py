@@ -1,27 +1,11 @@
-def reverse_string(s: str) -> str:
-    """
-    Returns a new string that is the reverse of the input string.
-    
-    Args:
-        s (str): The original string to be reversed.
-        
-    Returns:
-        str: A new string containing characters from the original in reverse order.
-    """
-    return s[::-1]
+def compute_trapezoid_area(base1, base2, height):
+    if base1 < 0 or base2 < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    samples = [
-        "hello",
-        "Python programming is fun!",
-        "",
-        "A man, a plan, a canal: Panama"
-    ]
-
-    print("Original String | Reversed String")
-    print("-" * 40)
-    
-    for sample in samples:
-        reversed_sample = reverse_string(sample)
-        print(f"{sample!r:<35} {reversed_sample!r}")
+    sample_base1 = 10.0
+    sample_base2 = 5.0
+    sample_height = 7.0
+    area = compute_trapezoid_area(sample_base1, sample_base2, sample_height)
+    print(area)

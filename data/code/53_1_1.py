@@ -1,6 +1,12 @@
-def calculate_square_area(side):
-    return side * side
+def generate_right_aligned_reverse_triangle(rows):
+    result = []
+    for i in range(rows, 0, -1):
+        row_values = [str(j) for j in range(1, i + 1)]
+        row_text = " ".join(row_values)
+        padding = (rows - i)
+        formatted_line = " " * (padding * 2) + row_text
+        result.append(formatted_line)
+    return "\n".join(result)
+
 if __name__ == '__main__':
-    side_length = 5
-    area = calculate_square_area(side_length)
-    print(area)
+    print(generate_right_aligned_reverse_triangle(4))

@@ -1,23 +1,8 @@
-import re
-
-def extract_words(text: str) -> list[str]:
-    """
-    Extracts all alphanumeric words from a multi-line input string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        List of strings, each being an extracted word found in the text.
-    """
-    # Use regex to find sequences of alphanumeric characters and underscores
-    return re.findall(r'\w+', text)
+def calculate_prism_volume(base_area, height):
+    return base_area * height
 
 if __name__ == '__main__':
-    sample_input = "Hello world! This is a test string with numbers 12345.\nIt contains multiple lines too."
-    
-    result = extract_words(sample_input)
-    
-    print("Extracted words:")
-    for word in result:
-        print(word)
+    base_area_value = 10
+    height_value = 5
+    result = calculate_prism_volume(base_area_value, height_value)
+    print(result)

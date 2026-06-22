@@ -1,7 +1,8 @@
-import math
-def calculate_circle_area(radius):
-    return math.pi * radius**2
+def generate_fibonacci(n):
+    fibs = [0, 1]
+    for _ in range(n - 2):
+        fibs.append(fibs[-1] + fibs[-2])
+    return fibs
+
 if __name__ == '__main__':
-    radius_value = 5.0
-    area = calculate_circle_area(radius_value)
-    print(area)
+    print(generate_fibonacci(15))

@@ -1,5 +1,9 @@
-def reverse_string(s: str) -> str:
-    return "".join(reversed(s)) if __name__ == '__main__' else lambda s: "".join(reversed(s))
+def calculate_trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
 
-if __name__ == "__main__":
-    print(reverse_string("hello"))  # Output: olleh
+if __name__ == '__main__':
+    base1 = 10
+    base2 = 20
+    height = 5
+    area = calculate_trapezoid_area(base1, base2, height)
+    print(area)

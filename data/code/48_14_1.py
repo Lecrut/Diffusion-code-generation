@@ -1,23 +1,11 @@
-def is_valid_triangle(sides):
-    if len(sides) != 3:
-        return False
-    a, b, c = sides
-    if a <= 0 or b <= 0 or c <= 0:
-        return False
-    if a + b > c and a + c > b and b + c > a:
-        return True
-    else:
-        return False
+def find_max_custom():
+    data = [3.14, 1.59, 2.65, 3.58, 9.79, 3.23, 8.46]
+    max_val = data[0]
+    for val in data:
+        if val > max_val:
+            max_val = val
+    return max_val
+
 if __name__ == '__main__':
-    test_cases = [
-        ([3, 4, 5], True),
-        ([1, 2, 3], False),
-        ([1, 1, 1], True),
-        ([0, 4, 5], False),
-        ([-1, 2, 3], False),
-        ([5, 5, 10], False),
-        ([2, 3, 4], True)
-    ]
-    for sides, expected in test_cases:
-        result = is_valid_triangle(sides)
-        print(f"Sides: {sides}, Valid: {result}, Expected: {expected}, Match: {result == expected}")
+    result = find_max_custom()
+    print(result)

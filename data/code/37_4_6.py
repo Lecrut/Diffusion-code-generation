@@ -1,12 +1,8 @@
-import sys
-
-def main():
-    # Hard-coded sample values as per requirements (no input(), no args, etc.)
-    str1 = "Hello"
-    str2 = "World"
-    
-    # Output the combination of two strings to standard output
-    print(str1 + str2)
+def get_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    main()
+    base_value = 5.0
+    height_value = 3.0
+    area_result = get_parallelogram_area(base_value, height_value)
+    print(area_result)

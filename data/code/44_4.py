@@ -1,10 +1,12 @@
-def calculate_perimeter(length, width):
-    perimeter = 2 * (length + width)
-    print(f"The perimeter is: {perimeter}")
+def calculate_mean(numbers):
+    total = 0
+    count = 0
+    for number in numbers:
+        total += number
+        count += 1
+    return total / count
+
 if __name__ == '__main__':
-    length = 10
-    width = 5
-    if length > 0 and width > 0:
-        calculate_perimeter(length, width)
-    else:
-        print("Invalid input: Length and width must be positive numbers.")
+    sample_list = [10, 20, 30, 40, 50]
+    result = calculate_mean(sample_list)
+    print(result)

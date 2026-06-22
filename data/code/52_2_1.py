@@ -1,19 +1,17 @@
-class Shape:
-    def calculate_area(self):
-        raise NotImplementedError("Subclasses must implement calculate_area method")
-class Circle(Shape):
-    def __init__(self, radius):
+class DiamondPattern:
+    def __init__(self, radius=4):
         self.radius = radius
-    def calculate_area(self):
-        return 3.14159 * self.radius * self.radius
-class Rectangle(Shape):
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-    def calculate_area(self):
-        return self.length * self.width
+
+    def render(self):
+        lines = []
+        for i in range(-self.radius, self.radius + 1):
+            distance = abs(i)
+            spaces = self.radius - distance
+            stars = 2 * distance + 1
+            line = ' ' * spaces + '*' * stars
+            lines.append(line)
+        return '\n'.join(lines)
+
 if __name__ == '__main__':
-    circle = Circle(5)
-    rectangle = Rectangle(4, 6)
-    print("Area of Circle:", circle.calculate_area())
-    print("Area of Rectangle:", rectangle.calculate_area())
+    diamond = DiamondPattern(4)
+    print(diamond.render())

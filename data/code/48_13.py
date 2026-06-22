@@ -1,18 +1,12 @@
-import math
+def get_largest_valid_score(scores):
+    valid_integers = (x for x in scores if isinstance(x, int) and not isinstance(x, bool))
+    largest = None
+    for val in valid_integers:
+        if largest is None or val > largest:
+            largest = val
+    return largest
+
 if __name__ == '__main__':
-    vertices = [
-        (0, 0),
-        (3, 0),
-        (3, 4),
-        (0, 4)
-    ]
-    perimeter = 0
-    num_vertices = len(vertices)
-    for i in range(num_vertices):
-        p1 = vertices[i]
-        p2 = vertices[(i + 1) % num_vertices]
-        x1, y1 = p1
-        x2, y2 = p2
-        distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-        perimeter += distance
-    print(perimeter)
+    scores = (10, 25.5, 3, 'a', -1, 100, True, 0, -50, None)
+    result = get_largest_valid_score(scores)
+    print(result)

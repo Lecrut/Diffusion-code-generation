@@ -1,29 +1,11 @@
-class StringReverser:
-    def reverse(self, text):
-        """
-        Reverses the input string in-place (modifies the list of characters) or returns a new reversed string.
-        
-        This implementation treats `text` as an iterable sequence and reverses it by slicing,
-        which creates a new string containing the characters in reverse order.
-        Since strings are immutable in Python, this method cannot truly modify the input object
-        without converting it to a list first or returning the result for use elsewhere.
-        
-        Args:
-            text (str): The input string to be reversed.
-            
-        Returns:
-            str: A new string with characters in reverse order.
-        """
-        return ''.join(reversed(text))
+def calculate_trapezoid_area(base1, base2, height):
+    if base1 < 0 or base2 < 0 or height < 0:
+        raise ValueError("Bases and height must be non-negative")
+    return (base1 + base2) * height / 2
 
 if __name__ == '__main__':
-    # Sample test cases without user interaction or external dependencies
-    sample_1 = "hello"
-    sample_2 = ""
-    sample_3 = "Python programming is fun!"
-
-    reverser = StringReverser()
-
-    print(f'Reversed "{sample_1}": {reverser.reverse(sample_1)}')
-    print(f'Empty string reversed: "{reverser.reverse(sample_2)}"')
-    print(f'Reversed "{sample_3}": {reverser.reverse(sample_3)}')
+    b1 = 10.5
+    b2 = 7.25
+    h = 4.0
+    area = calculate_trapezoid_area(b1, b2, h)
+    print(area)

@@ -1,16 +1,9 @@
-def calculate_triangle_area(base, height):
-    try:
-        base = float(base)
-        height = float(height)
-        if base < 0 or height < 0:
-            return "Error: Base and height must be non-negative"
-        return base * height
-    except ValueError:
-        return "Error: Invalid input. Inputs must be numeric."
+import statistics
+
+def compute_mean(scores):
+    return statistics.mean(scores)
+
 if __name__ == '__main__':
-    print(calculate_triangle_area(4.0, 5.0))
-    print(calculate_triangle_area(10.5, 2.0))
-    print(calculate_triangle_area(-3.0, 4.0))
-    print(calculate_triangle_area("a", 5.0))
-    print(calculate_triangle_area(7.0, -2.0))
-    print(calculate_triangle_area(0, 100))
+    scores = [85, 90, 78, 92, 88, 75, 95, 82, 88, 91]
+    result = compute_mean(scores)
+    print(result)

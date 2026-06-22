@@ -1,16 +1,10 @@
-import string
-def count_letter_frequency(text):
-    frequency = {}
-    for char in text:
-        if 'a' <= char <= 'z':
-            lower_char = char.lower()
-            frequency[lower_char] = frequency.get(lower_char, 0) + 1
-    return frequency
+import math
+
+def cone_volume(radius, height):
+    return (math.pi * radius ** 2 * height) / 3
+
 if __name__ == '__main__':
-    sample_string = "Hello World! This is a test string."
-    frequencies = count_letter_frequency(sample_string)
-    result = {}
-    for letter, count in frequencies.items():
-        if count > 1:
-            result[letter] = count
+    r = 1
+    h = 3
+    result = cone_volume(r, h)
     print(result)

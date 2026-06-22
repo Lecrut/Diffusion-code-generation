@@ -1,29 +1,15 @@
-import unittest
-class TriangleCalculator:
-    def calculate_perimeter(self, a, b, c):
-        if a + b <= c or a + c <= b or b + c <= a or a <= 0 or b <= 0 or c <= 0:
-            return "Invalid triangle sides"
-        return a + b + c
-class TestTriangleCalculator(unittest.TestCase):
-    def setUp(self):
-        self.calculator = TriangleCalculator()
-    def test_valid_triangle(self):
-        result = self.calculator.calculate_perimeter(3, 4, 5)
-        self.assertEqual(result, 12)
-    def test_valid_triangle_different_sides(self):
-        result = self.calculator.calculate_perimeter(5, 12, 13)
-        self.assertEqual(result, 30)
-    def test_invalid_triangle_sum_too_small(self):
-        result = self.calculator.calculate_perimeter(1, 2, 4)
-        self.assertEqual(result, "Invalid triangle sides")
-    def test_invalid_triangle_sum_too_large(self):
-        result = self.calculator.calculate_perimeter(1, 2, 10)
-        self.assertEqual(result, "Invalid triangle sides")
-    def test_invalid_triangle_zero_side(self):
-        result = self.calculator.calculate_perimeter(0, 4, 5)
-        self.assertEqual(result, "Invalid triangle sides")
-    def test_invalid_triangle_negative_side(self):
-        result = self.calculator.calculate_perimeter(3, -4, 5)
-        self.assertEqual(result, "Invalid triangle sides")
+SALARY_DATA = [50000, 62000, 75000, 81000, 95000, 110000, 125000, 140000]
+
+def get_max_salary(salaries):
+    if not salaries:
+        return 0
+    max_value = salaries[0]
+    for value in salaries[1:]:
+        if value > max_value:
+            max_value = value
+    return max_value
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_salaries = [30000, 45000, 55000, 60000, 80000, 95000, 105000]
+    result = get_max_salary(sample_salaries)
+    print(result)

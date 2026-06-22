@@ -1,32 +1,15 @@
-class StringProcessor:
-    """A class to process strings with optimized operations."""
-    
-    def remove_spaces(self, input_string):
-        """
-        Removes all spaces from the input string in O(n) time complexity.
-        
-        Args:
-            input_string (str): The string to process
-            
-        Returns:
-            str: A new string with all spaces removed
-        """
-        # Using list comprehension and join is efficient for Python strings
-        return ''.join(char for char in input_string if not char.isspace())
+def _validate_positive(value, name):
+    if not isinstance(value, (int, float)):
+        raise TypeError(f"{name} must be a number")
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+
+def get_triangle_area(base, height):
+    _validate_positive(base, "base")
+    _validate_positive(height, "height")
+    return base * height * 0.5
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input
-    test_cases = [
-        "Hello World",
-        "Python 3.10 is great!",
-        "",
-        "   Multiple   Spaces   Here   ",
-        "NoSpacesHere"
-    ]
-    
-    processor = StringProcessor()
-    
-    for test_input in test_cases:
-        result = processor.remove_spaces(test_input)
-        print(f'Input:  "{test_input}"')
-        print(f'Output: "{result}"\n')
+    b = 12
+    h = 4
+    print(get_triangle_area(b, h))

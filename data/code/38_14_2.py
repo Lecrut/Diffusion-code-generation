@@ -1,12 +1,10 @@
-def count_repeated_letters(input_string):
-    letter_counts = {}
-    for char in input_string:
-        if char in letter_counts:
-            letter_counts[char] += 1
-        else:
-            letter_counts[char] = 1
-    return letter_counts
+import math
+
+def calculate_cone_volume(radius, height):
+    return (1/3) * math.pi * (radius ** 2) * height
+
 if __name__ == '__main__':
-    sample_string = "hello world"
-    result = count_repeated_letters(sample_string)
-    print(result)
+    sample_radius = 3
+    sample_height = 5
+    volume = calculate_cone_volume(sample_radius, sample_height)
+    print(volume)

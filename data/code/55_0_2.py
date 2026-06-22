@@ -1,14 +1,14 @@
-import sys
-def calculate_perimeter(a, b, c):
-    return a + b + c
+def generate_right_aligned_alphabet_triangle(n: int) -> list[str]:
+    if not isinstance(n, int) or n <= 0 or n > 26:
+        return []
+    result = []
+    for i in range(n):
+        chars = [chr(65 + j) for j in range(i + 1)]
+        line = ''.join(chars)
+        result.append(line.rjust(n))
+    return result
 if __name__ == '__main__':
-    try:
-        a = 3
-        b = 4
-        c = 5
-        perimeter = calculate_perimeter(a, b, c)
-        print(perimeter)
-    except ValueError:
-        print("Error: Invalid input. Please ensure all inputs are numeric.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    n = 5
+    triangle = generate_right_aligned_alphabet_triangle(n)
+    for line in triangle:
+        print(line)

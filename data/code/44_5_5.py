@@ -1,26 +1,30 @@
-def calculate_perimeter(dimensions):
-    if len(dimensions) != 2:
-        raise ValueError("Input list must contain exactly two dimensions (length and width).")
-    length = dimensions[0]
-    width = dimensions[1]
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Dimensions must be numeric values.")
-    perimeter = 2 * (length + width)
-    return perimeter
+def _is_valid_scores_list(data):
+    if not isinstance(data, list):
+        return False
+    for item in data:
+        if not isinstance(item, (int, float)):
+            return False
+    return True
+
+def _calculate_total(values):
+    current_sum = 0
+    for value in values:
+        current_sum += value
+    return current_sum
+
+def _get_count(values):
+    return len(values)
+
+def compute_test_score_average(scores):
+    if not _is_valid_scores_list(scores):
+        raise TypeError("Input must be a list of numbers")
+    count = _get_count(scores)
+    if count == 0:
+        return 0.0
+    total = _calculate_total(scores)
+    return total / count
+
 if __name__ == '__main__':
-    sample_dimensions_valid = [10, 5]
-    sample_dimensions_invalid_length = [10]
-    sample_dimensions_invalid_type = [10, "five"]
-    try:
-        perimeter1 = calculate_perimeter(sample_dimensions_valid)
-        print(f"Perimeter for {sample_dimensions_valid}: {perimeter1}")
-    except (ValueError, TypeError) as e:
-        print(f"Error calculating perimeter for {sample_dimensions_valid}: {e}")
-    try:
-        perimeter2 = calculate_perimeter(sample_dimensions_invalid_length)
-    except (ValueError, TypeError) as e:
-        print(f"Error calculating perimeter for {sample_dimensions_invalid_length}: {e}")
-    try:
-        perimeter3 = calculate_perimeter(sample_dimensions_invalid_type)
-    except (ValueError, TypeError) as e:
-        print(f"Error calculating perimeter for {sample_dimensions_invalid_type}: {e}")
+    sample_data = [85.5, 90.0, 78.5, 92.0, 88.0, 75.5]
+    average_value = compute_test_score_average(sample_data)
+    print(average_value)

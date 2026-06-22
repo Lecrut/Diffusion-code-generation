@@ -1,12 +1,8 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """Combines two strings separated by a single space."""
-    return f"{str1} {str2}"
+def compute_parallelogram_area(base: float, height: float) -> float:
+    return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to avoid interactive input or command-line arguments
-    string_a = "hello"
-    string_b = "world"
-
-    result_string = combine_strings(string_a, string_b)
-
-    print(result_string)
+    sample_base = 5.0
+    sample_height = 3.0
+    result = compute_parallelogram_area(sample_base, sample_height)
+    print(result)

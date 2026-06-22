@@ -1,9 +1,12 @@
 import math
 
-def calculate_square_area(side_length):
-    return side_length ** 2
+def surface_area_of_square_pyramid(base_edge, slant_height):
+    base_area = base_edge ** 2
+    lateral_area = 2 * base_edge * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    sample_side = 5.0
-    area_result = calculate_square_area(sample_side)
-    print(f"Area of a square with side length {sample_side}: {area_result}")
+    base_edge = 5.0
+    slant_height = 7.0
+    result = surface_area_of_square_pyramid(base_edge, slant_height)
+    print(result)

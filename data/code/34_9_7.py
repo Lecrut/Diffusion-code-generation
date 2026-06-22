@@ -1,30 +1,11 @@
-def capitalize_words(text: str) -> str:
-    """
-    Capitalizes the first letter of each word in a string.
-    
-    This function uses Python's built-in split() to tokenize the input 
-    by whitespace and list comprehension with capitalization logic,
-    avoiding manual indexing loops for efficiency and readability.
-    
-    Args:
-        text (str): The input string containing words.
-        
-    Returns:
-        str: A new string with each word capitalized.
-    """
-    return " ".join(word.capitalize() if word else "" for word in text.split())
+import math
 
+def cylinder_surface_area(radius, height):
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    return 2 * base_area + lateral_area
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    samples = [
-        "hello world",
-        "python is awesome and fun!",
-        "  multiple   spaces between words ",
-        "",
-        "single"
-    ]
-
-    for original in samples:
-        result = capitalize_words(original)
-        print(f'Input: "{original}"')
-        print(f'Output: "{result}"\n')
+    radius = 5
+    height = 10
+    surface_area = cylinder_surface_area(radius, height)
+    print(surface_area)

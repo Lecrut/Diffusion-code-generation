@@ -1,8 +1,8 @@
-import math
-def calculate_absolute_difference(area1, area2):
-    return abs(area1 - area2)
+def print_star_triangle(height):
+    if height < 1:
+        return
+    for i in range(1, height + 1):
+        print('*' * i)
+
 if __name__ == '__main__':
-    area_a = 150
-    area_b = 275
-    difference = calculate_absolute_difference(area_a, area_b)
-    print(difference)
+    print_star_triangle(5)

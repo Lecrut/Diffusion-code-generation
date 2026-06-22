@@ -1,24 +1,19 @@
-import unittest
-def remove_spaces(text):
-    return text.replace(' ', '')
-class TestRemoveSpaces(unittest.TestCase):
-    def test_no_spaces(self):
-        self.assertEqual(remove_spaces("HelloWorld"), "HelloWorld")
-    def test_multiple_spaces(self):
-        self.assertEqual(remove_spaces("Hello World"), "HelloWorld")
-    def test_leading_and_trailing_spaces(self):
-        self.assertEqual(remove_spaces("  Hello World  "), "HelloWorld")
-    def test_string_with_only_spaces(self):
-        self.assertEqual(remove_spaces("   "), "")
-    def test_string_with_all_spaces(self):
-        self.assertEqual(remove_spaces("     "), "")
-    def test_empty_string(self):
-        self.assertEqual(remove_spaces(""), "")
-    def test_string_with_mixed_characters(self):
-        self.assertEqual(remove_spaces("a b c d e"), "abcde")
-    def test_string_with_special_characters(self):
-        self.assertEqual(remove_spaces("a-b c!d"), "a-bc!d")
-    def test_string_with_only_special_characters_and_spaces(self):
-        self.assertEqual(remove_spaces("  !@# $ %^ "), "!@#$%^")
+def compute_triangle_area(base, height):
+    if not isinstance(base, (int, float)):
+        try:
+            base = float(base)
+        except (ValueError, TypeError):
+            raise ValueError("Base must be a number or convertible to a number")
+    if not isinstance(height, (int, float)):
+        try:
+            height = float(height)
+        except (ValueError, TypeError):
+            raise ValueError("Height must be a number or convertible to a number")
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print(compute_triangle_area(10, 5))
+    print(compute_triangle_area("7.5", 4))
+    print(compute_triangle_area(3.14, 2))

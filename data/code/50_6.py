@@ -1,11 +1,11 @@
-def area_difference_generator(*areas):
-    if not areas:
-        return
-    previous_area = areas[0]
-    yield abs(previous_area - areas[0])
-    for i in range(1, len(areas)):
-        yield abs(areas[i] - areas[i-1])
+def generate_star_triangle(height):
+    lines = []
+    for i in range(1, height + 1):
+        stars = '*' * (2 * i - 1)
+        lines.append(stars)
+    for i in range(height - 1, 0, -1):
+        stars = '*' * (2 * i - 1)
+        lines.append(stars)
+    return '\n'.join(lines)
 if __name__ == '__main__':
-    input_areas = (10, 5, 8, 2, 15)
-    for diff in area_difference_generator(*input_areas):
-        print(diff)
+    print(generate_star_triangle(6))

@@ -1,21 +1,12 @@
-def calculate_square_area(side_length):
-    """Calculate exact area of a square using direct multiplication."""
-    return side_length * side_length
+class PyramidUtility:
+    @staticmethod
+    def calculate_surface_area(base_side, slant_height):
+        base_area = base_side * base_side
+        lateral_area = 2 * base_side * slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values (no user input, network, or file access)
-    samples = [5.0, 2.3] 
-    for s in samples:
-        print(f"Side length {s} => Area {calculate_square_area(s)}")
-
-# Corrected version focusing on pure efficiency and correctness without extra logic
-import sys
-
-def calculate_square_area(side_length):
-    """Compute square area directly."""
-    return side_length * side_length
-
-if __name__ == '__main__':
-    sample_values = [3, 7.5] 
-    for val in sample_values:
-        print(val * val)
+    test_side = 4
+    test_slant = 6
+    result = PyramidUtility.calculate_surface_area(test_side, test_slant)
+    print(result)

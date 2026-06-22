@@ -1,6 +1,12 @@
-def get_first_element(data):
-    return data[0]
+def count_even_numbers(a, b):
+    if a > b:
+        a, b = b, a
+    count = 0
+    start = a if a % 2 == 0 else a + 1
+    for num in range(start, b + 1, 2):
+        count += 1
+    return count
+
 if __name__ == '__main__':
-    my_list = [1, 2, 3, 4, 5]
-    first = get_first_element(my_list)
-    print(first)
+    result = count_even_numbers(3, 9)
+    print(result)

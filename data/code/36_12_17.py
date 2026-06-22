@@ -1,21 +1,11 @@
-class StringReverser:
-    def reverse(self, text):
-        """Returns a new string with the characters of 'text' in reverse order."""
-        return text[::-1]
+def trapezoid_area(base1, base2, height):
+    if base1 < 0 or base2 < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_cases = [
-        "hello world",
-        "",
-        "A man, a plan, a canal: Panama!",
-        "Python3"
-    ]
-
-    reverser = StringReverser()
-
-    for original in test_cases:
-        reversed_text = reverser.reverse(original)
-        print(f'Original:  "{original}"')
-        print(f'Reversed:  "{reversed_text}"')
-        print("-" * 30)
+    b1 = 5.0
+    b2 = 7.0
+    h = 4.0
+    area = trapezoid_area(b1, b2, h)
+    print(area)

@@ -1,17 +1,23 @@
-import math
-def calculate_triangle_sides(a, b, c):
-    hypotenuse = max(a, b, c)
-    legs = [x for x in [a, b, c] if x != hypotenuse]
-    if hypotenuse * hypotenuse == a * a + b * b or hypotenuse * hypotenuse == a * a + c * c or hypotenuse * hypotenuse == b * b + c * c:
-        return a, b, c
-    else:
+def flatten_nested_list(nested_list):
+    flat_list = []
+    stack = [nested_list]
+    while stack:
+        current = stack.pop()
+        if isinstance(current, list):
+            stack.extend(reversed(current))
+        else:
+            flat_list.append(current)
+    return flat_list
+
+def get_largest_value(nested_list):
+    if not nested_list:
         return None
+    flat_list = flatten_nested_list(nested_list)
+    if not flat_list:
+        return None
+    return max(flat_list)
+
 if __name__ == '__main__':
-    leg1 = 3
-    leg2 = 4
-    hypotenuse = 5
-    result = calculate_triangle_sides(leg1, leg2, hypotenuse)
-    if result:
-        print(f"Legs: {result[0]}, {result[1]}, Hypotenuse: {result[2]}")
-    else:
-        print("Invalid triangle sides provided.")
+    sample_data = [1, [2, 3, [4, 5]], 6, [7, [8, [9, 10]]], 11]
+    result = get_largest_value(sample_data)
+    print(result)

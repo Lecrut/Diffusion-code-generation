@@ -1,6 +1,9 @@
-def capitalize_words(s):
-    return ' '.join(word.capitalize() for word in s.split())
+import math
+
+def compute_cylinder_surface_area(radius, height):
+    return 2 * math.pi * radius * (radius + height)
+
 if __name__ == '__main__':
-    test_string = "this is a sample string for testing"
-    result = capitalize_words(test_string)
-    print(result)
+    radius = 5
+    height = 10
+    print(compute_cylinder_surface_area(radius, height))

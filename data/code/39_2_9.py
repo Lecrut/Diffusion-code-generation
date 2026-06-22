@@ -1,56 +1,16 @@
-class SubstringExtractor:
-    def __init__(self):
-        pass
-    
-    def get_unique_substrings(self, target_string: str, k: int) -> list[str]:
-        """
-        Efficiently find and return all unique substrings of length k from the given string.
-        
-        Args:
-            target_string (str): The input string to extract substrings from.
-            k (int): The desired length of each substring.
-            
-        Returns:
-            list[str]: A sorted list containing all unique substrings of length k.
-            
-        Raises:
-            ValueError: If k is less than 1 or greater than the length of target_string.
-        """
-        if not isinstance(target_string, str):
-            raise TypeError("target_string must be a string.")
-        
-        if not isinstance(k, int) or k < 1:
-            raise ValueError("k must be a positive integer.")
-            
-        n = len(target_string)
-        if k > n:
-            return []
+UNIT_CONVERSIONS = {
+    "cubic_cm": 1.0,
+    "cubic_m": 1000000.0,
+    "liters": 1000.0
+}
 
-        unique_substrings = set()
-        
-        # Efficiently extract substrings using slicing and add to a set for uniqueness
-        for i in range(n - k + 1):
-            substring = target_string[i : i + k]
-            unique_substrings.add(substring)
-            
-        return sorted(list(unique_substrings))
+def calculate_prism_volume(base_area, height, unit="cubic_cm"):
+    raw_volume = base_area * height
+    conversion_factor = UNIT_CONVERSIONS.get(unit, 1.0)
+    return raw_volume / conversion_factor
 
 if __name__ == '__main__':
-    extractor = SubstringExtractor()
-    
-    # Hard-coded sample values as per requirements (no user input, args, or files)
-    test_string_1 = "banana"
-    k_value_1 = 2
-    
-    test_string_2 = "programming"
-    k_value_2 = 3
-    
-    result_1 = extractor.get_unique_substrings(test_string_1, k_value_1)
-    print(f"Unique substrings of length {k_value_1} in '{test_string_1}':")
-    for sub in result_1:
-        print(sub)
-
-    result_2 = extractor.get_unique_substrings(test_string_2, k_value_2)
-    print(f"\nUnique substrings of length {k_value_2} in '{test_string_2}':")
-    for sub in result_2:
-        print(sub)
+    sample_base = 24.0
+    sample_height = 12.5
+    computed_volume = calculate_prism_volume(sample_base, sample_height, "cubic_m")
+    print(computed_volume)

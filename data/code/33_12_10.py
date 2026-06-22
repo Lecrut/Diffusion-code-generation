@@ -1,30 +1,17 @@
-import sys
+from typing import Union
+from dataclasses import dataclass
+from math import isclose
 
-def remove_spaces(text: str) -> str:
-    """
-    Removes all internal and surrounding spaces from a string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with no whitespace characters remaining.
-    """
-    return "".join(text.split())
+def compute_triangle_area(base: float, height: float) -> float:
+    if base <= 0 or height <= 0:
+        raise ValueError("Dimensions must be positive")
+    half = 0.5
+    raw_area = base * height
+    final_area = half * raw_area
+    return final_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    # This block runs without user input, command-line arguments, 
-    # network access, or pre-existing files.
-    
-    samples = [
-        "Hello World",
-        "   Leading and trailing spaces  ",
-        "Multiple   internal      spaces here.",
-        "NoSpacesAtAll",
-        "\t\tTabsand\nNewlines"
-    ]
-    
-    for sample in samples:
-        result = remove_spaces(sample)
-        print(result, end="")
+    sample_base = 12.5
+    sample_height = 8.0
+    area_result = compute_triangle_area(sample_base, sample_height)
+    print(area_result)

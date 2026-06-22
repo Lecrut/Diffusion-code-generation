@@ -1,14 +1,11 @@
-def count_vowels(s):
-    vowels = "aeiouAEIOU"
-    count = 0
-    for char in s:
-        if char in vowels:
-            count += 1
-    return count
+def calculate_cube_volume(edge_length):
+    if not isinstance(edge_length, (int, float)):
+        raise TypeError("Edge length must be a number")
+    if edge_length <= 0:
+        raise ValueError("Edge length must be positive")
+    return edge_length * edge_length * edge_length
+
 if __name__ == '__main__':
-    test_string1 = "Hello World"
-    test_string2 = "Programming is Fun"
-    test_string3 = "AEIOUaeiou"
-    print(f"'{test_string1}': {count_vowels(test_string1)}")
-    print(f"'{test_string2}': {count_vowels(test_string2)}")
-    print(f"'{test_string3}': {count_vowels(test_string3)}")
+    edge_value = 3.5
+    result = calculate_cube_volume(edge_value)
+    print(result)

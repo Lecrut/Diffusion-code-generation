@@ -1,6 +1,5 @@
-def calculate_square_area(side):
-    return side * side
+def reverse_number_triangle(n):
+    return '\n'.join(' '.join(str(i) for i in range(1, n - row + 1)) for row in range(n, 0, -1))
+
 if __name__ == '__main__':
-    side_value = 5
-    area = calculate_square_area(side_value)
-    print(area)
+    print(reverse_number_triangle(5))

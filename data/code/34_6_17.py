@@ -1,45 +1,18 @@
-"""
-Performance-focused solution for 'capitalize first letter' task.
+import math
 
-This module provides a function that capitalizes the very first alphabetic character 
-of any given string while leaving all other characters unchanged (including punctuation).
-It is optimized to handle edge cases efficiently: empty strings, None inputs, and strings 
-without leading alphabetic characters without raising errors or attempting unnecessary processing.
-"""
-
-def capitalize_first_letter(s):
-    """
-    Capitalizes the first letter of a string if it exists as an alphabetic character.
-    
-    All other characters remain unchanged (lowercase, uppercase, punctuation, digits, spaces).
-    Handles empty strings and None gracefully by returning them unmodified.
-
-    Parameters:
-        s (str): The input string to process.
-
-    Returns:
-        str: A new string with the first alphabetic character capitalized.
-             If no leading alphabetic character exists or if input is invalid, returns original.
-    """
-    # Handle None and empty cases immediately for O(1) performance
-    if not isinstance(s, str):
-        return s  # Non-string inputs are returned as-is to avoid type errors
-    
-    if len(s) == 0:
-        return s
-
-    first_char = s[0]
-    
-    # Only proceed capitalization if the character is alphabetic and lowercase
-    import string
-        
-    if 'a' <= first_char <= 'z':
-        # Efficiently construct result by slicing
-        return first_char.upper() + s[1:]
-    
-    # If not a leading lower-case letter, leave as-is (handles uppercase start, symbols, digits)
-    else:
-        return s
+def calculate_cylinder_surface_areas(radii, heights):
+    validated_radii = [max(r, 0.0) for r in radii]
+    validated_heights = [max(h, 0.0) for h in heights]
+    results = []
+    for r, h in zip(validated_radii, validated_heights):
+        lateral_area = 2 * math.pi * r * h
+        base_area = 2 * math.pi * (r ** 2)
+        surface_area = lateral_area + base_area
+        results.append(surface_area)
+    return results
 
 if __name__ == '__main__':
-    pass
+    sample_radii = [3.0, 5.5, 1.0, 0.0]
+    sample_heights = [10.0, 2.0, 4.0, 0.0]
+    areas = calculate_cylinder_surface_areas(sample_radii, sample_heights)
+    print(areas)

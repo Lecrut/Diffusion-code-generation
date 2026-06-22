@@ -1,12 +1,12 @@
-def build_spaced_string(items, separator):
-    result = ""
-    for i, item in enumerate(items):
-        result += str(item)
-        if i < len(items) - 1:
-            result += separator
-    return result
+import math
+
+def calculate_ellipse_area(major_axis: float, minor_axis: float) -> float:
+    if major_axis <= 0 or minor_axis <= 0:
+        raise ValueError("Major and minor axes must be positive numbers")
+    return math.pi * major_axis * minor_axis
+
 if __name__ == '__main__':
-    input_list = [1, 2, 3, 4, 5]
-    separator = " "
-    output_string = build_spaced_string(input_list, separator)
-    print(output_string)
+    major = 5.0
+    minor = 3.0
+    area = calculate_ellipse_area(major, minor)
+    print(area)

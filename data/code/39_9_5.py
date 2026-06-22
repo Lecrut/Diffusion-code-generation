@@ -1,12 +1,8 @@
-import collections
-def find_nested_substrings(phrase):
-    n = len(phrase)
-    substrings = set()
-    for i in range(n):
-        for j in range(i + 1, n + 1):
-            substrings.add(phrase[i:j])
-    return sorted(list(substrings))
+def calculate_prism_volume(base_area: float, height: float) -> float:
+    return base_area * height
+
 if __name__ == '__main__':
-    sample_phrase = "banana"
-    result = find_nested_substrings(sample_phrase)
-    print(result)
+    base_area_value = 10.5
+    height_value = 5.0
+    volume = calculate_prism_volume(base_area_value, height_value)
+    print(volume)

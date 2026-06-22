@@ -1,8 +1,5 @@
-def get_first_letter(s: str) -> str:
-    """Returns the first letter of a string, or an empty string if input is empty."""
-    return s[0] if len(s) > 0 else ""
+def surface_area(length, width, height):
+    return 2 * (length * width + length * height + width * height)
 
 if __name__ == '__main__':
-    samples = ["hello", "", " world ", "\t\n"]
-    for sample in samples:
-        print(f"Input: {repr(sample)} -> Output: {get_first_letter(sample)!r}")
+    print(surface_area(4, 6, 8))

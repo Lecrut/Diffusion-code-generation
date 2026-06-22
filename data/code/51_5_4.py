@@ -1,13 +1,18 @@
-def calculate_perimeters(segments):
-    for segment in segments:
-        perimeter = 2 * (segment['length'] + segment['width'])
-        yield perimeter
+def build_hollow_pyramid(rows):
+    if rows <= 0:
+        return ""
+    result = []
+    for i in range(1, rows + 1):
+        spaces = " " * (rows - i)
+        if i == 1:
+            line = spaces + "*" + spaces
+        elif i == rows:
+            line = spaces + "*" + (" *" * (i - 1))
+        else:
+            line = spaces + "*" + (" " * (2 * i - 3)) + "*"
+        result.append(line)
+    return "\n".join(result)
+
 if __name__ == '__main__':
-    sample_segments = [
-        {'length': 10, 'width': 5},
-        {'length': 20, 'width': 3},
-        {'length': 7, 'width': 12}
-    ]
-    results = list(calculate_perimeters(sample_segments))
-    for result in results:
-        print(result)
+    sample_rows = 5
+    print(build_hollow_pyramid(sample_rows))

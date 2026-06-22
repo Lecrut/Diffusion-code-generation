@@ -1,24 +1,10 @@
-class StringExtractor:
-    def extract_substrings(self, text: str, delimiters: list[int]) -> list[str]:
-        if not text:
-            return []
-        sorted_delimiters = sorted(list(set(delimiters)))
-        substrings = []
-        current_start = 0
-        for delimiter_pos in sorted_delimiters:
-            if current_start < delimiter_pos:
-                substring = text[current_start:delimiter_pos]
-                if substring:
-                    substrings.append(substring)
-            current_start = delimiter_pos
-        if current_start < len(text):
-            substring = text[current_start:]
-            if substring:
-                substrings.append(substring)
-        return substrings
+def calculate_prism_volume(base_area, height):
+    if base_area <= 0 or height <= 0:
+        return 0
+    return base_area * height
+
 if __name__ == '__main__':
-    extractor = StringExtractor()
-    sample_text = "abc_def123ghi_jkl"
-    sample_delimiters = [3, 7, 11]
-    result = extractor.extract_substrings(sample_text, sample_delimiters)
-    print(result)
+    base_area_val = 10
+    height_val = 5
+    volume = calculate_prism_volume(base_area_val, height_val)
+    print(volume)

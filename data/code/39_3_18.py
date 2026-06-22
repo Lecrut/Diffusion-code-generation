@@ -1,15 +1,8 @@
-import re
-
-def extract_words(text: str) -> list[str]:
-    """Extracts all words (sequences of alphanumeric characters) from input text."""
-    # Use regex to find sequences of alphanumeric characters and underscores
-    return re.findall(r'\w+', text.lower())
+def calculate_prism_volume(base_area, height):
+    return base_area * height
 
 if __name__ == '__main__':
-    sample_input = "Hello, World! This is a test string with numbers 12345."
-    
-    words = extract_words(sample_input)
-    
-    print("Extracted words:")
-    for word in words:
-        print(word)
+    base_area = 10
+    height = 5
+    volume = calculate_prism_volume(base_area, height)
+    print(volume)

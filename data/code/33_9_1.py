@@ -1,24 +1,29 @@
-import unittest
-def remove_spaces(text):
-    return text.replace(' ', '')
-class TestRemoveSpaces(unittest.TestCase):
-    def test_basic_string(self):
-        self.assertEqual(remove_spaces("hello world"), "helloworld")
-    def test_string_with_multiple_spaces(self):
-        self.assertEqual(remove_spaces("hello   world"), "helloworld")
-    def test_empty_string(self):
-        self.assertEqual(remove_spaces(""), "")
-    def test_string_with_only_spaces(self):
-        self.assertEqual(remove_spaces("   "), "")
-    def test_string_with_leading_and_trailing_spaces(self):
-        self.assertEqual(remove_spaces("  leading and trailing  "), "leadingandtrailing")
-    def test_string_with_all_spaces(self):
-        self.assertEqual(remove_spaces("     "), "")
-    def test_string_with_mixed_characters(self):
-        self.assertEqual(remove_spaces("a b c d e"), "abcde")
-    def test_string_with_special_characters(self):
-        self.assertEqual(remove_spaces("test! 123 @#"), "test!123@#")
-    def test_string_with_no_spaces(self):
-        self.assertEqual(remove_spaces("nocspaces"), "nocspaces")
+import math
+
+def calculate_triangle_area(base, height):
+    try:
+        base_value = float(base)
+        height_value = float(height)
+        if base_value <= 0 or height_value <= 0:
+            raise ValueError("Base and height must be positive numbers.")
+        return 0.5 * base_value * height_value
+    except (TypeError, ValueError) as e:
+        raise ValueError(f"Invalid input: {e}")
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_base = 10
+    sample_height = 5
+    result = calculate_triangle_area(sample_base, sample_height)
+    print(result)
+    sample_base_str = 20
+    sample_height_str = "7.5"
+    result_str = calculate_triangle_area(sample_base_str, sample_height_str)
+    print(result_str)
+    try:
+        calculate_triangle_area(-5, 10)
+    except ValueError as error:
+        print(error)
+    try:
+        calculate_triangle_area("abc", 10)
+    except ValueError as error:
+        print(error)

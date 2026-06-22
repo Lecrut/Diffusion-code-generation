@@ -1,14 +1,16 @@
-from typing import Union
+import pandas as pd
 
-class Triangle:
-    def __init__(self, side_a: float, side_b: float, side_c: float) -> None:
-        self.side_a = side_a
-        self.side_b = side_b
-        self.side_c = side_c
-
-    def perimeter(self) -> float:
-        return self.side_a + self.side_b + self.side_c
+def compute_max_salary(records):
+    df = pd.DataFrame(records, columns=['name', 'salary'])
+    return df['salary'].max()
 
 if __name__ == '__main__':
-    triangle = Triangle(3.0, 4.0, 5.0)
-    print(triangle.perimeter())
+    sample_records = [
+        ('Alice', 75000),
+        ('Bob', 82000),
+        ('Charlie', 69000),
+        ('Diana', 91000),
+        ('Eve', 78000)
+    ]
+    max_salary = compute_max_salary(sample_records)
+    print(max_salary)

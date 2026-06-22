@@ -1,13 +1,16 @@
-class Rectangle:
-    def __init__(self, length, width):
-        if length <= 0 or width <= 0:
-            raise ValueError("Length and width must be positive numbers")
-        self.length = length
-        self.width = width
-
-    def perimeter(self):
-        return 2 * (self.length + self.width)
+def compute_mean(scores):
+    if not scores:
+        return 0.0
+    total = 0.0
+    count = 0
+    for score in scores:
+        total += score
+        count += 1
+    if count == 0:
+        return 0.0
+    return total / count
 
 if __name__ == '__main__':
-    rect = Rectangle(5, 10)
-    print(rect.perimeter())
+    test_scores = [85, 90, 78, 92, 88]
+    result = compute_mean(test_scores)
+    print(result)

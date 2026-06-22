@@ -1,44 +1,12 @@
-import unicodedata
-
-def to_lowercase(text: str) -> str:
-    """Converts a string to lowercase using Unicode normalization."""
-    if not text:
-        return ""
-    
-    # Normalize unicode characters first (e.g., combining diacritics)
-    normalized = unicodedata.normalize("NFKD", text).lower()
-    return "".join(c for c in normalized if not unicodedata.combining(c))
-
-def to_uppercase(text: str) -> str:
-    """Converts a string to uppercase using Unicode normalization."""
-    if not text:
-        return ""
-    
-    # Normalize unicode characters first (e.g., combining diacritics)
-    normalized = unicodedata.normalize("NFKD", text).upper()
-    return "".join(c for c in normalized if not unicodedata.combining(c))
-
-def to_title_case(text: str) -> str:
-    """Converts a string to title case (first letter of each word capitalized)."""
-    if not text or all(not c.isalpha() for c in text):
-        return ""
-
-    # Normalize unicode characters first
-    normalized = unicodedata.normalize("NFKD", text)
-    
-    words = []
-    current_word = []
-    
-    i = 0
-    while i < len(normalized):
-        char = normalized[i]
-        
-        if char.isalpha():
-            # Check if this is the start of a new word (previous was non-alpha or empty)
-            should_capitalize = not current_word
-            
-            if should_capitalize:
-                words.append(char.upper())
+def compute_area(d1, d2):
+    if d1 < 0 or d2 < 0:
+        return 0.0
+    product = d1 * d2
+    half = product * 0.5
+    return half
 
 if __name__ == '__main__':
-    pass
+    d1_val = 12.0
+    d2_val = 7.0
+    area_result = compute_area(d1_val, d2_val)
+    print(area_result)

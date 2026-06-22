@@ -1,5 +1,15 @@
-def extract_first_letters(s: str) -> str: return ' '.join(word[0] if word else '' for word in s.split()) if s.strip() else ""
+from decimal import Decimal, getcontext
+
+def calculate_surface_area(dimensions):
+    length, width, height = dimensions
+    getcontext().prec = 50
+    l = Decimal(str(length))
+    w = Decimal(str(width))
+    h = Decimal(str(height))
+    surface_area = 2 * (l * w + w * h + h * l)
+    return float(surface_area)
 
 if __name__ == '__main__':
-    print(extract_first_letters("Hello World Python Programming"))
-    print(extract_first_letters(""))
+    sample_dimensions = (1.5, 2.5, 3.5)
+    result = calculate_surface_area(sample_dimensions)
+    print(result)

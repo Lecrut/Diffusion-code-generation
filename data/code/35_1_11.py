@@ -1,35 +1,15 @@
-def count_vowels(text: str) -> int:
-    """
-    Counts the total number of vowels in a given string using a single loop.
-    
-    Args:
-        text (str): The input string to analyze.
-        
-    Returns:
-        int: The count of vowels found in the string.
-    """
-    if not isinstance(text, str):
-        return 0
-    
-    vowel_set = set("aeiouAEIOU")
-    count = 0
-    
-    for char in text:
-        if char in vowel_set:
-            count += 1
-            
-    return count
+def _validate_edge_length(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Edge length must be a number")
+    if value <= 0:
+        raise ValueError("Edge length must be positive")
+    return True
+
+def calculate_cube_volume(edge_length):
+    _validate_edge_length(edge_length)
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or external dependencies.
-    samples = [
-        "Hello, World!",
-        "AEIOU",
-        "",
-        "Python Programming",
-        "aeiou" * 10
-    ]
-
-    for test_string in samples:
-        result = count_vowels(test_string)
-        print(f"'{test_string}' -> {result} vowels")
+    SAMPLE_EDGE = 4.2
+    volume = calculate_cube_volume(SAMPLE_EDGE)
+    print(volume)

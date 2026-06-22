@@ -1,12 +1,16 @@
-class StringAnalyzer:
-    def get_length(self, text):
-        """Returns the length of the input string."""
-        return len(text)
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def get_area(self):
+        width_value = self.width
+        height_value = self.height
+        return width_value * height_value
 
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-    
-    sample_text = "Hello, World!"
-    result = analyzer.get_length(sample_text)
-    
-    print(f"The length of '{sample_text}' is: {result}")
+    rect_width = 7.5
+    rect_height = 12.0
+    rectangle = Rectangle(rect_width, rect_height)
+    area_value = rectangle.get_area()
+    print(area_value)

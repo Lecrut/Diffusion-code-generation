@@ -1,11 +1,13 @@
-import math
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def area(self):
-        return math.pi * self.radius ** 2
+def find_minimum(numbers):
+    if not numbers:
+        raise ValueError("List must not be empty")
+    current_min = numbers[0]
+    for num in numbers:
+        if num < current_min:
+            current_min = num
+    return current_min
+
 if __name__ == '__main__':
-    r = 5.0
-    c = Circle(r)
-    area_result = c.area()
-    print(area_result)
+    sample_list = [3.14, 1.59, 2.65, 3.58, 9.79]
+    result = find_minimum(sample_list)
+    print(result)

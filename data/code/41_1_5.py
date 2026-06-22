@@ -1,44 +1,19 @@
-def manipulate_case(input_string):
-    """
-    Returns a dictionary containing lowercase, uppercase, and title-cased versions of the input string.
-    
-    Args:
-        input_string (str): The string to be processed.
-        
-    Returns:
-        dict: A dictionary with keys 'lowercase', 'uppercase', and 'title'.
-              Values are strings representing the transformed input.
-              
-    Example:
-        >>> manipulate_case("Hello World")
-        {'lowercase': 'hello world', 'uppercase': 'HELLO WORLD', 'title': 'Hello World'}
-    """
-    if not isinstance(input_string, str):
-        raise TypeError("Input must be a string.")
+from dataclasses import dataclass
 
-    # Using built-in methods which are implemented in C for maximum efficiency.
-    lowercase = input_string.lower()
-    uppercase = input_string.upper()
-    title = input_string.title()
-    
-    return {
-        'lowercase': lowercase,
-        'uppercase': uppercase,
-        'title': title
-    }
+@dataclass(frozen=True)
+class Rhombus:
+    diagonal1: float
+    diagonal2: float
+
+    def area(self) -> float:
+        return self.diagonal1 * self.diagonal2 / 2.0
+
+def calculate_rhombus_area(diagonal1: float, diagonal2: float) -> float:
+    rhombus = Rhombus(diagonal1, diagonal2)
+    return rhombus.area()
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or external dependencies.
-    samples = [
-        "Hello World",
-        "python programming is fun!",
-        "",
-        "   Leading and Trailing Spaces  ",
-        "MixedCASE123"
-    ]
-
-    for test_input in samples:
-        result = manipulate_case(test_input)
-        print(f"Input: '{test_input}'")
-        print(result)
-        print("-" * 40)
+    diag1: float = 10.0
+    diag2: float = 8.0
+    result: float = calculate_rhombus_area(diag1, diag2)
+    print(result)

@@ -1,29 +1,16 @@
-class StringAnalyzer:
-    """A class designed to analyze string properties."""
+def _validate_dimensions(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Dimensions must be numeric")
+    if width < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return True
 
-    def get_length(self, text):
-        """Calculates and returns the length of the input string.
-
-        Args:
-            text (str): The string whose length is to be calculated.
-
-        Returns:
-            int: The number of characters in the provided string.
-        """
-        return len(text)
+def compute_rectangle_area(width, height):
+    _validate_dimensions(width, height)
+    return width * height
 
 if __name__ == '__main__':
-    # Sample values for testing without user input or external dependencies
-    sample_texts = [
-        "Hello, World!",
-        "",
-        "Python is great.",
-        "A" * 1000
-    ]
-
-    analyzer = StringAnalyzer()
-
-    print("String Analysis Results:")
-    for text in sample_texts:
-        length = analyzer.get_length(text)
-        print(f"'{text}' has a length of {length}.")
+    sample_width = 4
+    sample_height = 6
+    area_result = compute_rectangle_area(sample_width, sample_height)
+    print(area_result)

@@ -1,13 +1,8 @@
-def extract_substrings(S, L):
-    n = len(S)
-    if L <= 0 or L > n:
-        return []
-    substrings = []
-    for i in range(n - L + 1):
-        substrings.append(S[i:i+L])
-    return substrings
+def prism_volume(base_area, height):
+    return base_area * height
+
 if __name__ == '__main__':
-    S_sample = "abcdefghijk"
-    L_sample = 3
-    result = extract_substrings(S_sample, L_sample)
+    sample_base_area = 10.5
+    sample_height = 5.0
+    result = prism_volume(sample_base_area, sample_height)
     print(result)

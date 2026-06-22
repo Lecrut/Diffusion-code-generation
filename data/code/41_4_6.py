@@ -1,16 +1,8 @@
-import sys
-
-def capitalize_words(s):
-    """Returns a string with the first letter of every word capitalized."""
-    return " ".join(word.capitalize() if len(word) > 0 else "" for word in s.split())
+def calculate_rhombus_area(diagonal1, diagonal2):
+    return 0.5 * diagonal1 * diagonal2
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input, command-line arguments, network access, or pre-existing files are needed.
-    original_string = "hello world"
-    
-    capitalized_original = original_string.upper()
-    title_cased_words = capitalize_words(original_string)
-
-    print(original_string)
-    print(capitalized_original)
-    print(title_cased_words)
+    diag1 = 10
+    diag2 = 8
+    area = calculate_rhombus_area(diag1, diag2)
+    print(area)

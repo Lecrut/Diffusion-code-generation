@@ -1,13 +1,10 @@
-class StringManipulator:
-    def __init__(self):
-        self.str1 = "Hello"
-        self.str2 = "World"
-
-    def combine_strings(self, index_str=""):
-        """Combines two internal string variables into a single string."""
-        return f"{self.str1}{index_str}{self.str2}"
+class GeometryCalculator:
+    @staticmethod
+    def calculate_parallelogram_area(base, height):
+        return base * height
 
 if __name__ == '__main__':
-    manipulator = StringManipulator()
-    result = manipulator.combine_strings("_")
-    print(result)  # Output: Hello_World
+    calculator = GeometryCalculator()
+    base = 10
+    height = 5
+    print(calculator.calculate_parallelogram_area(base, height))

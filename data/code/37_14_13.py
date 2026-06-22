@@ -1,19 +1,20 @@
-import sys
+def validate_dimensions(base: float, height: float) -> tuple[float, float]:
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a numeric type.")
+    if not isinstance(height, (int, float)):
+        raise TypeError("Height must be a numeric type.")
+    if base <= 0:
+        raise ValueError("Base must be positive.")
+    if height <= 0:
+        raise ValueError("Height must be positive.")
+    return base, height
 
-def concatenate_strings(str1: str, str2: str) -> str:
-    """Concatenate two strings."""
-    return f"{str1}{str2}"
+def compute_parallelogram_area(base: float, height: float) -> float:
+    valid_base, valid_height = validate_dimensions(base, height)
+    return valid_base * valid_height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to satisfy the requirement of running without user input.
-    sample_str_1 = "Hello"
-    sample_str_2 = "World!"
-
-    result = concatenate_strings(sample_str_1, sample_str_2)
-    
-    # Print only if no exceptions occurred during processing (though this logic is simple).
-    try:
-        print(result)
-    except Exception as e:
-        # Gracefully handle any unexpected errors by printing them to stderr.
-        sys.stderr.write(f"An error occurred while concatenating strings: {e}\n")
+    base_value = 12
+    height_value = 8
+    result = compute_parallelogram_area(base_value, height_value)
+    print(result)

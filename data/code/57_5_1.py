@@ -1,18 +1,19 @@
-def area_calculator(shape_type, dimensions):
-    if shape_type == "square":
-        side = dimensions
-        return side * side
-    elif shape_type == "rectangle":
-        length = dimensions
-        width = dimensions
-        return length * width
-    elif shape_type == "circle":
-        radius = dimensions
-        import math
-        return math.pi * (radius ** 2)
-    else:
-        return None
+import math
+
+def fibonacci_binet(n):
+    if n < 0:
+        raise ValueError("n must be a non-negative integer")
+    if n == 0:
+        return 0
+    sqrt5 = math.sqrt(5)
+    phi = (1 + sqrt5) / 2
+    psi = (1 - sqrt5) / 2
+    fib_n = (phi**n - psi**n) / sqrt5
+    return int(round(fib_n))
+
+def first_n_fibonacci(n):
+    return [fibonacci_binet(i) for i in range(n)]
+
 if __name__ == '__main__':
-    print(area_calculator("square", 5))
-    print(area_calculator("rectangle", 4))
-    print(area_calculator("circle", 3))
+    result = first_n_fibonacci(80)
+    print(result)

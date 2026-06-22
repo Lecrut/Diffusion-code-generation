@@ -1,20 +1,19 @@
-def compare_lengths(len1, len2):
-    if len1 > len2:
-        return {"length1": str(len1), "length2": str(len2), "greater": True}
-    elif len2 > len1:
-        return {"length1": str(len1), "length2": str(len2), "greater": False}
-    else:
-        return {"length1": str(len1), "length2": str(len2), "greater": False}
+def print_star_square(size):
+    if size <= 0:
+        return ""
+    if size == 1:
+        return "*"
+    lines = []
+    top_bottom = "*" * size
+    middle = "*" + " " * (size - 2) + "*"
+    lines.append(top_bottom)
+    for _ in range(size - 2):
+        lines.append(middle)
+    lines.append(top_bottom)
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    l1 = 10
-    l2 = 25
-    result1 = compare_lengths(l1, l2)
-    print(result1)
-    l3 = 50
-    l4 = 50
-    result2 = compare_lengths(l3, l4)
-    print(result2)
-    l5 = 100
-    l6 = 10
-    result3 = compare_lengths(l5, l6)
-    print(result3)
+    print(print_star_square(5))
+    print(print_star_square(4))
+    print(print_star_square(1))
+    print(print_star_square(3))

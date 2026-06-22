@@ -1,31 +1,14 @@
-class Square:
-    """A class representing a square with methods to calculate its area."""
+import math
 
-    def __init__(self, side_length):
-        """Initialize the Square object with a given side length.
-
-        Args:
-            side_length (float or int): The length of one side of the square.
-        """
-        self.side = side_length
-
-    def get_area(self) -> float:
-        """Calculate and return the area of the square.
-
-        Returns:
-            float: The calculated area of the square.
-        """
-        return self.side * self.side
-
+def square_pyramid_surface_area(base_length, lateral_edge):
+    base_area = base_length ** 2
+    half_base_diagonal = base_length * math.sqrt(2) / 2
+    slant_height = math.sqrt(lateral_edge ** 2 - half_base_diagonal ** 2)
+    lateral_surface_area = 4 * (0.5 * base_length * slant_height)
+    total_surface_area = base_area + lateral_surface_area
+    return total_surface_area
 if __name__ == '__main__':
-    # Sample values to demonstrate functionality without user input
-    sample_side = 5
-    
-    # Create a Square object with the hard-coded side length
-    my_square = Square(sample_side)
-
-    # Calculate and print the area
-    calculated_area = my_square.get_area()
-    
-    print(f"Side length: {sample_side}")
-    print(f"Area of square: {calculated_area}")
+    base_length = 4.0
+    lateral_edge = 5.0
+    area = square_pyramid_surface_area(base_length, lateral_edge)
+    print(area)

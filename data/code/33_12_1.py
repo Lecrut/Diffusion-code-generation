@@ -1,22 +1,12 @@
-import sys
-
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all spaces from both internal and surrounding positions in a string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with no whitespace characters removed.
-    """
-    return "".join(text.split())
+def calculate_triangle_area(base, height):
+    if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Base and height must be numbers.")
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive.")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    # This ensures the script runs without user input or network access.
-    SAMPLE_INPUT = "Hello, World!   \n  Python   is   great."
-
-    result_str: str = remove_all_spaces(SAMPLE_INPUT)
-    
-    print(result_str)
+    base_value = 10
+    height_value = 5
+    area = calculate_triangle_area(base_value, height_value)
+    print(area)

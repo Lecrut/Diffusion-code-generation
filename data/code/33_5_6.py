@@ -1,24 +1,22 @@
-class TextCleaner:
-    def clean_text(self, text):
-        return "".join(text.split())
+HALF = 0.5
+_lookup = {}
+
+def triangle_area(base, height):
+    key = (base, height)
+    if key in _lookup:
+        return _lookup[key]
+    value = HALF * base * height
+    _lookup[key] = value
+    return value
+
 if __name__ == '__main__':
-    cleaner = TextCleaner()
-    sample1 = "  Hello World! \n This is a test. "
-    sample2 = "NoWhitespace"
-    sample3 = "   \t\n\r "
-    sample4 = "a b c d"
-    result1 = cleaner.clean_text(sample1)
-    result2 = cleaner.clean_text(sample2)
-    result3 = cleaner.clean_text(sample3)
-    result4 = cleaner.clean_text(sample4)
-    print(f"Original 1: '{sample1}'")
-    print(f"Cleaned 1: '{result1}'")
-    print("-" * 20)
-    print(f"Original 2: '{sample2}'")
-    print(f"Cleaned 2: '{result2}'")
-    print("-" * 20)
-    print(f"Original 3: '{sample3}'")
-    print(f"Cleaned 3: '{result3}'")
-    print("-" * 20)
-    print(f"Original 4: '{sample4}'")
-    print(f"Cleaned 4: '{result4}'")
+    b1 = 12.0
+    h1 = 8.0
+    a1 = triangle_area(b1, h1)
+    print(a1)
+    a2 = triangle_area(b1, h1)
+    print(a2)
+    b2 = 5.5
+    h2 = 10.2
+    a3 = triangle_area(b2, h2)
+    print(a3)

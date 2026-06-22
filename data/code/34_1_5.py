@@ -1,28 +1,23 @@
-def capitalize_first_letter_only(text):
-    result = []
-    capitalize_next = True
-    for char in text:
-        if char.isalpha():
-            if capitalize_next:
-                result.append(char.upper())
-                capitalize_next = False
-            else:
-                result.append(char.lower())
-        else:
-            result.append(char)
-            if char.isspace():
-                capitalize_next = True
-            else:
-                capitalize_next = False
-    return "".join(result)
+import math
+
+class Cylinder:
+    def __init__(self, radius, height):
+        self.radius = radius
+        self.height = height
+
+    def get_radius(self):
+        return self.radius
+
+    def get_height(self):
+        return self.height
+
+    def surface_area(self):
+        side = 2 * math.pi * self.radius * self.height
+        top_bottom = 2 * math.pi * self.radius * self.radius
+        return side + top_bottom
+
 if __name__ == '__main__':
-    sample1 = "hello world this is a test"
-    sample2 = "this is another example"
-    sample3 = "a short sentence"
-    sample4 = "wOrd wOrD tHis"
-    sample5 = "  leading and trailing spaces "
-    print(f"'{sample1}' -> '{capitalize_first_letter_only(sample1)}'")
-    print(f"'{sample2}' -> '{capitalize_first_letter_only(sample2)}'")
-    print(f"'{sample3}' -> '{capitalize_first_letter_only(sample3)}'")
-    print(f"'{sample4}' -> '{capitalize_first_letter_only(sample4)}'")
-    print(f"'{sample5}' -> '{capitalize_first_letter_only(sample5)}'")
+    shape = Cylinder(7, 14)
+    print(shape.get_radius())
+    print(shape.get_height())
+    print(shape.surface_area())

@@ -1,26 +1,17 @@
-def interleave_strings(str1: str, str2: str) -> str:
-    """
-    Returns a new string formed by concatenating str1 followed by str2.
-    
-    Args:
-        str1 (str): The first input string.
-        str2 (str): The second input string.
-        
-    Returns:
-        str: A combined string where the characters of str1 appear 
-             in order, immediately followed by the characters of str2 
-             in order. This is equivalent to standard concatenation.
-    
-    Example:
-        'hello', 'world' -> 'helloworld'
-    """
-    return f"{str1}{str2}"
+class ParallelogramAreaCalculator:
+    def __init__(self, base: float, height: float) -> None:
+        self.base = base
+        self.height = height
+
+    def get_area(self) -> float:
+        return self.base * self.height
+
+    def get_dimensions(self) -> tuple:
+        return self.base, self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements
-    s1 = "hello"
-    s2 = "world"
-    
-    result = interleave_strings(s1, s2)
-    
-    print(result)
+    SAMPLE_BASE = 12.5
+    SAMPLE_HEIGHT = 7.5
+    calculator = ParallelogramAreaCalculator(SAMPLE_BASE, SAMPLE_HEIGHT)
+    print(calculator.get_area())
+    print(calculator.get_dimensions())

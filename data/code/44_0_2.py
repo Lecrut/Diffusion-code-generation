@@ -1,9 +1,14 @@
-def calculate_rectangle_perimeter(length, width):
-    if not isinstance(length, int) or not isinstance(width, int):
-        raise TypeError("Inputs must be integers")
-    if length <= 0 or width <= 0:
-        raise ValueError("Inputs must be positive integers")
-    return 2 * (length + width)
+def calculate_average(numbers):
+    if not numbers:
+        return 0
+    total = 0
+    count = 0
+    for num in numbers:
+        total += num
+        count += 1
+    return total / count
 
 if __name__ == '__main__':
-    print(calculate_rectangle_perimeter(5, 10))
+    sample_list = [10, 20, 30, 40, 50]
+    result = calculate_average(sample_list)
+    print(result)

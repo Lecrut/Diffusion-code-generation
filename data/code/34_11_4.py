@@ -1,16 +1,14 @@
-import re
-def capitalize_first_letter_only(text):
-    return " ".join(word.capitalize() for word in text.split())
+import math
+
+def compute_cylinder_areas(radius, height):
+    lateral_area = 2 * math.pi * radius * height
+    base_area = math.pi * radius ** 2
+    total_area = lateral_area + 2 * base_area
+    return lateral_area, total_area
+
 if __name__ == '__main__':
-    sample1 = "hello world this is a test"
-    sample2 = "this is another example"
-    sample3 = "a short sentence"
-    sample4 = "already Capitalized"
-    sample5 = ""
-    sample6 = "  leading and trailing spaces  "
-    print(f"'{sample1}' -> '{capitalize_first_letter_only(sample1)}'")
-    print(f"'{sample2}' -> '{capitalize_first_letter_only(sample2)}'")
-    print(f"'{sample3}' -> '{capitalize_first_letter_only(sample3)}'")
-    print(f"'{sample4}' -> '{capitalize_first_letter_only(sample4)}'")
-    print(f"'{sample5}' -> '{capitalize_first_letter_only(sample5)}'")
-    print(f"'{sample6}' -> '{capitalize_first_letter_only(sample6)}'")
+    radius = 5.0
+    height = 10.0
+    lateral_area, total_area = compute_cylinder_areas(radius, height)
+    print(lateral_area)
+    print(total_area)

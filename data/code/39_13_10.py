@@ -1,8 +1,19 @@
-def extract_substrings(text: str) -> list[str]:
-    """Extract all substrings from text that fall between specified start and end points."""
-    return [text[i:j] for i, j in [(0, 1), (2, 4)] if i < len(text) <= j <= len(text)]
+class PrismVolumeCalculator:
+    def __init__(self, base_area, height):
+        self.base_area = base_area
+        self.height = height
+
+    def compute(self):
+        if self.base_area <= 0 or self.height <= 0:
+            raise ValueError("Dimensions must be positive")
+        return self.base_area * self.height
+
+    @staticmethod
+    def get_constants():
+        return 42.5, 8.0
 
 if __name__ == '__main__':
-    target_string = "hello world"
-    result = extract_substrings(target_string)
+    constant_area, constant_height = PrismVolumeCalculator.get_constants()
+    calculator = PrismVolumeCalculator(constant_area, constant_height)
+    result = calculator.compute()
     print(result)

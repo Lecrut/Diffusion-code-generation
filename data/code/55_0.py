@@ -1,14 +1,15 @@
-import sys
-def calculate_perimeter(a, b, c):
-    return a + b + c
+def generate_right_aligned_triangle(max_rows):
+    if max_rows <= 0:
+        return ""
+    lines = []
+    for i in range(1, max_rows + 1):
+        chars = [chr(ord('A') + j) for j in range(i)]
+        line = "".join(chars)
+        padding = " " * (max_rows - i)
+        lines.append(padding + line)
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    try:
-        a = 3
-        b = 4
-        c = 5
-        perimeter = calculate_perimeter(a, b, c)
-        print(perimeter)
-    except ValueError:
-        print("Error: Invalid input. Please ensure all inputs are numbers.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    max_rows = 5
+    result = generate_right_aligned_triangle(max_rows)
+    print(result)

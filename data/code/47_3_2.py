@@ -1,8 +1,15 @@
-def heron_area(a, b, c):
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("Invalid triangle sides")
-    s = (a + b + c) / 2
-    return (s * (s - a) * (s - b) * (s - c)) ** 0.5
+def average_integers(values):
+    total = 0
+    count = 0
+    for val in values:
+        total += val
+        count += 1
+    return total / count if count else 0
+
+def compute_average(values):
+    return sum(g for g in values) / len(list(g for g in values)) if values else 0
 
 if __name__ == '__main__':
-    print(heron_area(3, 4, 5))
+    sample_data = [10, 20, 30, 40, 50]
+    result = compute_average(sample_data)
+    print(result)

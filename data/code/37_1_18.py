@@ -1,20 +1,19 @@
-class StringManipulator:
-    def __init__(self):
-        self.string1 = ""
-        self.string2 = ""
+class GeometryCalculator:
+    BASE_SCALE_FACTOR = 1
+    HEIGHT_SCALE_FACTOR = 1
 
-    def combine_strings(self):
-        """Combines two internal string variables into a single concatenated string."""
-        result = f"{self.string1}{self.string2}"
-        return result
+    @staticmethod
+    def _compute_product(a, b):
+        return a * b
+
+    @staticmethod
+    def area_of_parallelogram(base, height):
+        scaled_base = base * GeometryCalculator.BASE_SCALE_FACTOR
+        scaled_height = height * GeometryCalculator.HEIGHT_SCALE_FACTOR
+        return GeometryCalculator._compute_product(scaled_base, scaled_height)
 
 if __name__ == '__main__':
-    manipulator = StringManipulator()
-    
-    # Hard-coded sample values as per requirements (no user input, args, or files)
-    manipulator.string1 = "Hello"
-    manipulator.string2 = " World"
-    
-    combined_result = manipulator.combine_strings()
-    
-    print(combined_result)
+    sample_base = 15
+    sample_height = 8
+    calculated_area = GeometryCalculator.area_of_parallelogram(sample_base, sample_height)
+    print(calculated_area)

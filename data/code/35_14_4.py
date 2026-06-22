@@ -1,16 +1,9 @@
-import argparse
-
-def count_vowels(text: str) -> int:
-    """Counts the total number of vowels in a given string."""
-    text = text.lower()
-    return sum(1 for char in text if char in "aeiou")
+def cube_volume(edge_length):
+    if edge_length < 0:
+        raise ValueError("Edge length must be non-negative")
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Count vowels in a sentence.")
-    # Using an optional argument to avoid requiring user input via stdin
-    args = parser.parse_args(["--sample", "Hello, world!"])
-
-    sample_word_or_sentence: str = args.sample if hasattr(args, 'sample') else ""
-    
-    result_count = count_vowels(sample_word_or_sentence)
-    print(f"Total vowel count for '{sample_word_or_sentence}': {result_count}")
+    sample_edges = [0, 1, 2.5, 10]
+    for edge in sample_edges:
+        print(cube_volume(edge))

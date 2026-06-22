@@ -1,0 +1,10 @@
+def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    total = sum(numbers)
+    return total / len(numbers)
+
+if __name__ == '__main__':
+    sample_values = [10, 20, 30, 40, 50]
+    print(calculate_mean(sample_values))
+    print(calculate_mean([]))

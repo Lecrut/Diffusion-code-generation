@@ -1,30 +1,17 @@
-def contains_repeated_letters(text: str) -> bool:
-    """
-    Determines if a given string contains any repeated letters (case-insensitive).
-    
-    Args:
-        text (str): The input string to check.
-        
-    Returns:
-        bool: True if there are repeated letters, False otherwise.
-    """
-    seen = set()
-    for char in text.lower():
-        if 'a' <= char <= 'z':  # Only consider alphabetic characters a-z
-            if char in seen:
-                return True
-            seen.add(char)
-    return False
+import math
+
+def _validate_dimensions(radius, height):
+    if radius <= 0 or height <= 0:
+        raise ValueError("Dimensions must be positive numbers")
+    return True
+
+def cone_volume(radius, height):
+    _validate_dimensions(radius, height)
+    base_area = math.pi * radius ** 2
+    return (1 / 3) * base_area * height
 
 if __name__ == '__main__':
-    test_cases = [
-        ("hello", True),
-        ("world", False),
-        ("Python", False),
-        ("aabbcc", True),
-        ("The quick brown fox jumps over the lazy dog", True)
-    ]
-
-    for text, expected in test_cases:
-        result = contains_repeated_letters(text)
-        print(f"Input: '{text}' -> Expected: {expected}, Got: {result}")
+    sample_radius = 4
+    sample_height = 12
+    computed_volume = cone_volume(sample_radius, sample_height)
+    print(computed_volume)

@@ -1,9 +1,16 @@
-def append_strings(first: str, second: str) -> str:
-    """Returns a new string formed by appending 'second' to 'first'."""
-    return f"{first}{second}"
+def _validate_positive_number(value, name):
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be a number")
+    if not isinstance(value, (int, float)):
+        raise TypeError(f"{name} must be numeric")
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+
+def parallelogram_area(base, height):
+    _validate_positive_number(base, "base")
+    _validate_positive_number(height, "height")
+    return base * height
 
 if __name__ == '__main__':
-    sample_first = "Hello"
-    sample_second = ", World!"
-    result = append_strings(sample_first, sample_second)
+    result = parallelogram_area(7.5, 4)
     print(result)

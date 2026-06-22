@@ -1,16 +1,9 @@
-import sys
-
-def get_first_letter_of_words(text: str) -> list[str]:
-    """Extracts the first letter of each word from the input text."""
-    words = text.split()
-    return [word[0] if word else "" for word in words]
+def surface_area_rectangular_prism(length, width, height):
+    return 2 * (length * width + width * height + height * length)
 
 if __name__ == '__main__':
-    sample_text = (
-        "Hello World\n"
-        "This is a multi-line example.\n"
-        "Python handles input efficiently."
-    )
-
-    result = get_first_letter_of_words(sample_text)
-    print("".join(result))
+    sample_length = 2.5
+    sample_width = 3.0
+    sample_height = 4.5
+    result = surface_area_rectangular_prism(sample_length, sample_width, sample_height)
+    print(result)

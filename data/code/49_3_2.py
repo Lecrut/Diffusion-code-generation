@@ -1,9 +1,15 @@
+def generate_star_square(size):
+    lines = []
+    for i in range(size):
+        row = ""
+        for j in range(size):
+            if i == 0 or i == size - 1 or j == 0 or j == size - 1:
+                row += "*"
+            else:
+                row += " "
+        lines.append(row)
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    length1 = 15.7
-    length2 = 22.3
-    if length1 > length2:
-        print("Length 1 is longer than Length 2")
-    elif length2 > length1:
-        print("Length 2 is longer than Length 1")
-    else:
-        print("Length 1 and Length 2 are equal")
+    size = 6
+    print(generate_star_square(size))

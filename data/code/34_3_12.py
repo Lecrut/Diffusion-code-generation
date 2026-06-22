@@ -1,10 +1,10 @@
-def capitalize_words(text: str) -> str:
-    """Converts a sentence so that only the first letter of each word is capitalized."""
-    if not text:
-        return ""
-    
-    # Split into words, capitalize title case for non-empty parts, then rejoin with space.
-    # Using list comprehension to ensure immutability and clarity over generator expressions here.
+import math
+
+def calculate_cylinder_surface_area(radius, height):
+    return 2 * math.pi * radius * (radius + height)
 
 if __name__ == '__main__':
-    pass
+    radius = 5.0
+    height = 10.0
+    surface_area = calculate_cylinder_surface_area(radius, height)
+    print(surface_area)

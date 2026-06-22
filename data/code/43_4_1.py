@@ -1,13 +1,13 @@
-def calculate_square_area(side):
-    if not isinstance(side, (int, float)):
-        raise ValueError("Input must be a numeric value.")
-    return side * side
+import math
+
+def calculate_total_surface_area(base_side, slant_height):
+    base_area = base_side * base_side
+    perimeter = 4 * base_side
+    lateral_area = 0.5 * perimeter * slant_height
+    return base_area + lateral_area
+
 if __name__ == '__main__':
-    try:
-        area1 = calculate_square_area(5)
-        print(f"Area of a square with side 5: {area1}")
-        area2 = calculate_square_area(10.5)
-        print(f"Area of a square with side 10.5: {area2}")
-        calculate_square_area("invalid")
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    side = 10
+    slant = 15
+    result = calculate_total_surface_area(side, slant)
+    print(result)

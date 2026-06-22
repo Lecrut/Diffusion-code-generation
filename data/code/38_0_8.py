@@ -1,17 +1,12 @@
-def find_repeated_letters(s):
-    """
-    Takes a string as input and returns a set of letters that appear more than once in the string.
-    
-    Args:
-        s (str): The input string to analyze.
-        
-    Returns:
-        set: A set containing characters found multiple times, converted to lowercase for consistency.
-              Non-alphabetic characters are ignored during counting but don't break processing.
-    """
-    letter_counts = {}
-    
-    # Iterate through each character in the string
+import math
+
+def compute_cone_volume(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative")
+    return (1/3) * math.pi * radius ** 2 * height
 
 if __name__ == '__main__':
-    pass
+    sample_radius = 5.0
+    sample_height = 10.0
+    volume = compute_cone_volume(sample_radius, sample_height)
+    print(volume)

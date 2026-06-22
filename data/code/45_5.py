@@ -1,20 +1,15 @@
-def circle_area_validator(func):
-    def wrapper(*args, **kwargs):
-        radius = args[0]
-        if not isinstance(radius, (int, float)) or radius <= 0:
-            raise ValueError("Radius must be a positive number.")
-        return func(*args, **kwargs)
-    return wrapper
-@circle_area_validator
-def calculate_circle_area(radius):
-    return 3.14159 * radius * radius
+def find_minimum(numbers):
+    if not isinstance(numbers, list):
+        raise TypeError("Input must be a list")
+    if len(numbers) == 0:
+        raise ValueError("List must not be empty")
+    min_val = numbers[0]
+    for num in numbers:
+        if num < min_val:
+            min_val = num
+    return min_val
+
 if __name__ == '__main__':
-    print(calculate_circle_area(5))
-    try:
-        calculate_circle_area(-2)
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        calculate_circle_area("a")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_numbers = [5, 1, 9, 3, 7]
+    result = find_minimum(sample_numbers)
+    print(result)

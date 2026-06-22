@@ -1,13 +1,14 @@
-def extract_first_letters(text: str) -> str: return ' '.join(word[0] if word else '' for word in text.split()) if any(c.isalpha() or c == '-' for c in text.lower().replace(' ', '').lower()) and len([w for w in text.split()]) > 1 else ''
+from decimal import Decimal, getcontext
+
+def calculate_surface_area(dimensions):
+    getcontext().prec = 50
+    length = Decimal(str(dimensions[0]))
+    width = Decimal(str(dimensions[1]))
+    height = Decimal(str(dimensions[2]))
+    area = 2 * (length * width + width * height + height * length)
+    return area
 
 if __name__ == '__main__':
-    samples = [
-        "Hello World",
-        "Python Programming Language",
-        "One Two Three Four Five",
-        "",
-        "   Multiple Spaces Here ",
-        "SingleWord"
-    ]
-    for sample in samples:
-        print(f"Input: {sample!r} -> Output: {extract_first_letters(sample)}")
+    sample_dimensions = (1.5, 2.7, 3.9)
+    result = calculate_surface_area(sample_dimensions)
+    print(result)

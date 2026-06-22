@@ -1,13 +1,16 @@
-def get_first_element(data):
-    if not data:
-        return None
-    return data[0]
+def count_even_integers(start, end):
+    if start > end:
+        return 0
+    first_even = start if start % 2 == 0 else start + 1
+    if first_even > end:
+        return 0
+    return (end - first_even) // 2 + 1
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30]
-    list2 = ['a', 'b', 'c']
-    empty_list = []
-    single_item = [99]
-    print(f"First element of {list1}: {get_first_element(list1)}")
-    print(f"First element of {list2}: {get_first_element(list2)}")
-    print(f"First element of {empty_list}: {get_first_element(empty_list)}")
-    print(f"First element of {single_item}: {get_first_element(single_item)}")
+    print(count_even_integers(1, 10))
+    print(count_even_integers(-5, 5))
+    print(count_even_integers(2, 2))
+    print(count_even_integers(3, 3))
+    print(count_even_integers(-10, -1))
+    print(count_even_integers(0, 0))
+    print(count_even_integers(5, 2))

@@ -1,9 +1,9 @@
-def remove_spaces(list_of_strings):
-    new_list = []
-    for s in list_of_strings:
-        new_list.append(s.replace(' ', ''))
-    return new_list
+from math import isclose
+
+def triangle_area(base, height):
+    return lambda b, h: 0.5 * b * h
+
 if __name__ == '__main__':
-    sample_list = ["hello world", "  python programming ", "a b c d"]
-    result = remove_spaces(sample_list)
-    print(result)
+    result = triangle_area(10, 5)
+    print(result(10, 5))
+    assert isclose(result(10, 5), 25.0) is True

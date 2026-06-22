@@ -1,9 +1,17 @@
-import sys
+def find_minimum(numbers):
+    if not isinstance(numbers, list):
+        raise TypeError('Input must be a list')
+    if len(numbers) == 0:
+        raise ValueError('List cannot be empty')
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError('All elements must be numeric')
+    min_value = numbers[0]
+    for number in numbers[1:]:
+        if number < min_value:
+            min_value = number
+    return min_value
 if __name__ == '__main__':
-    try:
-        radius_str = "5.0"
-        radius = float(radius_str)
-        area = 3.141592653589793 * (radius ** 2)
-        print(area)
-    except ValueError:
-        print("Error: Invalid input provided.", file=sys.stderr)
+    sample_numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    result = find_minimum(sample_numbers)
+    print(result)

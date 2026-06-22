@@ -1,22 +1,8 @@
-def process_string(s: str) -> tuple[str, str, str]:
-    """Returns a tuple with the original string, its lowercase version, 
-    and its reversed case version."""
-    lowercased = s.lower()
-    
-    # Reverse each character's case if it is alphabetic (a->A, A->a), otherwise keep as is.
-    def reverse_case(char: str) -> str:
-        return char.swapcase() if char.isalpha() else char
-    
-    reversed_cased_str = "".join(reverse_case(c) for c in s[::-1])
-    
-    return (s, lowercased, reversed_cased_str)
+def calculate_rhombus_area(diagonal1, diagonal2):
+    return 0.5 * diagonal1 * diagonal2
 
 if __name__ == '__main__':
-    sample_input = "Hello World!"
-    result = process_string(sample_input)
-    original, lowercase, reversed_version = result
-    
-    # Print results to verify functionality without user interaction
-    print("Original:", original)
-    print("Lowercase:", lowercase)
-    print("Reversed Case:", reversed_version)
+    d1 = 10
+    d2 = 8
+    area = calculate_rhombus_area(d1, d2)
+    print(area)

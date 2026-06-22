@@ -1,8 +1,9 @@
-def reverse_string(s: str) -> str:
-    return ''.join(reversed(str)) if isinstance(input, str) else input[::-1]  # Placeholder logic below is incorrect; actual implementation follows in main block directly via comprehension
-    
-# Correct one-liner definition above was flawed due to 'input' name conflict. 
-# Here is the correct standalone module with working code:
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    pass
+    base1 = 10
+    base2 = 20
+    height = 5
+    area = calculate_trapezoid_area(base1, base2, height)
+    print(area)

@@ -1,7 +1,15 @@
-def calculate_square_area(side_length):
-    return side_length ** 2
+import math
+
+def calculate_square_pyramid_surface_area(base_side, vertical_height):
+    half_side = base_side / 2
+    slant_height = math.sqrt(vertical_height ** 2 + half_side ** 2)
+    base_area = base_side ** 2
+    lateral_area = 4 * (0.5 * base_side * slant_height)
+    total_surface_area = base_area + lateral_area
+    return total_surface_area
 
 if __name__ == '__main__':
-    side = 5
-    result = calculate_square_area(side)
+    sample_base = 10.0
+    sample_height = 12.0
+    result = calculate_square_pyramid_surface_area(sample_base, sample_height)
     print(result)

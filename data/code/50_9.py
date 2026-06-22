@@ -1,5 +1,10 @@
+def display_inverted_triangle():
+    height = 5
+    for row in range(height, 0, -1):
+        stars = '*' * row
+        print(stars)
+    return f"Inverted triangle of height {height} displayed."
+
 if __name__ == '__main__':
-    area1 = 15.789
-    area2 = 10.234
-    difference = area1 - area2
-    print(f"{difference:.2f}")
+    result = display_inverted_triangle()
+    print(result)

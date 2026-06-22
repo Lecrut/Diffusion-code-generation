@@ -1,4 +1,8 @@
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    s = "  Hello World!  "
-    result = "".join(s.split())
-    print(result)
+    base = 10.5
+    height = 4.2
+    area = calculate_triangle_area(base, height)
+    print(area)

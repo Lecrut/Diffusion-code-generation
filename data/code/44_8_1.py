@@ -1,11 +1,16 @@
-class Rectangle:
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-
-    def get_perimeter(self):
-        return 2 * (self.length + self.width)
+def compute_mean(numbers):
+    if not numbers:
+        raise ValueError("List cannot be empty")
+    total = 0
+    count = 0
+    for number in numbers:
+        if not isinstance(number, int):
+            raise TypeError("All elements must be integers")
+        total += number
+        count += 1
+    return total / count
 
 if __name__ == '__main__':
-    rect = Rectangle(5, 10)
-    print(rect.get_perimeter())
+    sample_data = [10, 20, 30, 40, 50]
+    result = compute_mean(sample_data)
+    print(result)

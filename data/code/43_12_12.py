@@ -1,26 +1,15 @@
-class Square:
-    def __init__(self, side_length):
-        """Initialize a Square with a given side length."""
-        if side_length < 0:
-            raise ValueError("Side length cannot be negative.")
-        self.side_length = side_length
+import math
 
-    def area(self) -> float:
-        """Calculate and return the square's area."""
-        return self.side_length ** 2
+def square_pyramid_surface_area(base_length, lateral_edge_length):
+    base_area = base_length ** 2
+    half_base = base_length / 2.0
+    slant_height = math.sqrt(lateral_edge_length ** 2 - half_base ** 2)
+    triangular_area = 0.5 * base_length * slant_height
+    lateral_area = 4 * triangular_area
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    sample_sides = [5, -3, 0]
-
-    for side in sample_sides:
-        try:
-            square = Square(side)
-            calculated_area = square.area()
-            print(f"Square with side {side}: Area is {calculated_area}")
-        except ValueError as e:
-            print(f"Illegal input 'square': Error -> " + str(e))
-
-    # Example usage of a valid instance created outside the loop.
-    large_square = Square(10)
-    print("Large square (side 10): Area is", large_square.area())
+    base_len = 4.0
+    lat_edge = 5.0
+    area = square_pyramid_surface_area(base_len, lat_edge)
+    print(area)

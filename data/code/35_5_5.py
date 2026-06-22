@@ -1,12 +1,7 @@
-import string
-def count_vowels(s):
-    vowel_count = 0
-    vowels = "aeiouAEIOU"
-    for char in s:
-        if char in vowels:
-            vowel_count += 1
-    return vowel_count
+def calculate_cube_volume(edge_length):
+    return edge_length ** 3
+
 if __name__ == '__main__':
-    test_string = "Programming is an efficient algorithm"
-    result = count_vowels(test_string)
+    sample_edge = 5
+    result = calculate_cube_volume(sample_edge)
     print(result)

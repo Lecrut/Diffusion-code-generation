@@ -1,9 +1,12 @@
-class Square:
-    def __init__(self, side_length):
-        self.side_length = side_length
-    def area(self):
-        return self.side_length * self.side_length
+def reverse_number_triangle(height=6):
+    rows = []
+    for i in range(height, 0, -1):
+        row_strs = []
+        for j in range(1, i + 1):
+            row_strs.append(str(j))
+        rows.append(" ".join(row_strs))
+    return rows
+
 if __name__ == '__main__':
-    my_square = Square(5)
-    area_result = my_square.area()
-    print(area_result)
+    result = reverse_number_triangle(6)
+    print(result)

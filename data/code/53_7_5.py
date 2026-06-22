@@ -1,11 +1,13 @@
-import unittest
-class TestSquareArea(unittest.TestCase):
-    def test_calculate_area(self):
-        self.assertEqual(calculate_square_area(5), 25)
-        self.assertEqual(calculate_square_area(10), 100)
-        self.assertEqual(calculate_square_area(0), 0)
-        self.assertEqual(calculate_square_area(3.5), 12.25)
-def calculate_square_area(side):
-    return side * side
+def generate_reverse_number_triangle(rows):
+    result = []
+    for i in range(rows, 0, -1):
+        row_numbers = []
+        for j in range(1, i + 1):
+            row_numbers.append(str(j))
+        result.append(" ".join(row_numbers))
+    return result
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    output = generate_reverse_number_triangle(6)
+    for line in output:
+        print(line)

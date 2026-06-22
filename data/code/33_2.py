@@ -1,7 +1,12 @@
-import sys
+class TriangleAreaCalculator:
+    def __init__(self, base: float, height: float) -> None:
+        self.base = base
+        self.height = height
+
+    def calculate(self) -> float:
+        return 0.5 * self.base * self.height
+
 if __name__ == '__main__':
-    input_data = "  This is a sample string with   various spaces. \nIt has   multiple lines. "
-    input_stream = sys.stdin
-    data = input_stream.read()
-    processed_string = "".join(data.split())
-    print(processed_string)
+    calculator = TriangleAreaCalculator(base=10.0, height=5.0)
+    result = calculator.calculate()
+    print(result)

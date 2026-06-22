@@ -1,10 +1,12 @@
-def calculate_square_area(side):
-    """Calculates the area of a square using direct multiplication."""
-    return side * side
+import math
+
+class GeometryUtils:
+    @staticmethod
+    def square_pyramid_surface_area(base_side: float, slant_height: float) -> float:
+        base_area = base_side * base_side
+        lateral_area = 2 * base_side * slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or network access is required
-    samples = [5, 0.75, -3] 
-    for s in samples:
-        area = calculate_square_area(s)
-        print(f"Area of square with side {s}: {area}")
+    result = GeometryUtils.square_pyramid_surface_area(10, 12)
+    print(result)

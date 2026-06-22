@@ -1,5 +1,6 @@
-area1 = 10
-area2 = 4
-difference = area1 - area2
+def print_star_triangle(rows):
+    for i in range(1, rows + 1):
+        print('*' * i)
+
 if __name__ == '__main__':
-    print(difference)
+    print_star_triangle(15)

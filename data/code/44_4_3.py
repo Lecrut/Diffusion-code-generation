@@ -1,11 +1,10 @@
-import sys
-def calculate_perimeter(length, width):
-    perimeter = 2 * (length + width)
-    print(f"The perimeter is: {perimeter}")
+def calculate_mean(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total / len(numbers)
+
 if __name__ == '__main__':
-    length = 10
-    width = 5
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        print("Error: Invalid input types.")
-    else:
-        calculate_perimeter(length, width)
+    sample_values = [1, 2, 3, 4, 5]
+    result = calculate_mean(sample_values)
+    print(result)

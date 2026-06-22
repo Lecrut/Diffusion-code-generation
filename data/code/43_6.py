@@ -1,17 +1,11 @@
-import unittest
-class SquareCalculator:
-    def calculate_area(self, side):
-        return side * side
-class TestSquareCalculator(unittest.TestCase):
-    def setUp(self):
-        self.calculator = SquareCalculator()
-    def test_area_positive_integer(self):
-        self.assertEqual(self.calculator.calculate_area(5), 25)
-    def test_area_zero(self):
-        self.assertEqual(self.calculator.calculate_area(0), 0)
-    def test_area_float(self):
-        self.assertAlmostEqual(self.calculator.calculate_area(2.5), 6.25)
-    def test_area_large_number(self):
-        self.assertEqual(self.calculator.calculate_area(100), 10000)
+import math
+
+def surface_area_square_pyramid(base_side, slant_height):
+    base_area = base_side ** 2
+    lateral_area = 4 * (0.5 * base_side * slant_height)
+    return base_area + lateral_area
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    base = 4.0
+    slant = 3.0
+    print(surface_area_square_pyramid(base, slant))

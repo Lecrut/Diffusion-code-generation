@@ -1,10 +1,9 @@
-def concatenate_segments(input_list, separator):
-    for segment in input_list:
-        yield segment
-        yield separator
+import math
+
+def ellipse_area(a, b):
+    return math.pi * a * b
+
 if __name__ == '__main__':
-    data = ["apple", "banana", "cherry", "date"]
-    separator = ", "
-    generator = concatenate_segments(data, separator)
-    result = "".join(generator)
-    print(result)
+    a = 5.0
+    b = 3.0
+    print(ellipse_area(a, b))

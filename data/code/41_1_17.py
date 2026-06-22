@@ -1,25 +1,13 @@
-def manipulate_case(input_string: str) -> dict:
-    """
-    Returns a dictionary containing lowercase, uppercase, and title-cased versions of the input string.
-    
-    Args:
-        input_string (str): The string to be processed.
-        
-    Returns:
-        dict: A dictionary with keys 'lowercase', 'uppercase', and 'title_case'.
-    """
-    return {
-        "lowercase": input_string.lower(),
-        "uppercase": input_string.upper(),
-        "title_case": input_string.title()
-    }
+class RhombusGeometry:
+    def __init__(self, diagonal_primary: float, diagonal_secondary: float) -> None:
+        self._diag1: float = diagonal_primary
+        self._diag2: float = diagonal_secondary
+
+    def calculate_area(self) -> float:
+        half_product: float = self._diag1 * self._diag2
+        return half_product / 2.0
 
 if __name__ == '__main__':
-    sample_input = "hElLo WoRLd"
-    
-    result = manipulate_case(sample_input)
-    
-    print("Original:", sample_input)
-    print("Lowercase:", result["lowercase"])
-    print("Uppercase:", result["uppercase"])
-    print("Title Case:", result["title_case"])
+    r: RhombusGeometry = RhombusGeometry(diagonal_primary=12.5, diagonal_secondary=7.0)
+    result: float = r.calculate_area()
+    print(result)

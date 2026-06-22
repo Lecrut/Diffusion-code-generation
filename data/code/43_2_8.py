@@ -1,26 +1,18 @@
-class Square:
-    def __init__(self, side_length):
-        """Initialize a Square with a given positive side length."""
-        if side_length <= 0:
-            raise ValueError("Side length must be greater than zero.")
-        self._side = side_length
-    
-    @property
-    def area(self) -> float:
-        """Calculate and return the area of the square."""
-        return self._side ** 2
+import math
+
+class SquarePyramid:
+    def __init__(self, base_side, slant_height):
+        self.base_side = base_side
+        self.slant_height = slant_height
+
+    def calculate_surface_area(self):
+        base_area = self.base_side ** 2
+        lateral_area = 2 * self.base_side * self.slant_height
+        total_surface_area = base_area + lateral_area
+        return total_surface_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test functionality without user input.
-    try:
-        sq1 = Square(5)
-        print(f"Area with side length {sq1._side}: {sq1.area}")
-        
-        # Test edge case handling implicitly by not calling it, 
-        # but we can demonstrate valid positive cases.
-        sides = [3.0, 4]
-        for s in sides:
-            sq2 = Square(s)
-            print(f"Area with side length {s}: {sq2.area}")
-    except ValueError as ve:
-        print(f"Error occurred: {ve}")
+    base = 6.0
+    slant = 5.0
+    pyramid = SquarePyramid(base, slant)
+    print(pyramid.calculate_surface_area())

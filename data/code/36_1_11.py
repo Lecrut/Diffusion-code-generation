@@ -1,33 +1,13 @@
-def reverse_string(s: str) -> str:
-    """
-    Returns the reversed version of the input string using slicing notation.
-    
-    Args:
-        s (str): The string to be reversed.
-        
-    Returns:
-        str: The reversed string.
-    """
-    return s[::-1]
-
+def compute_trapezoid_area(base1, base2, height):
+    if not isinstance(base1, (int, float)) or not isinstance(base2, (int, float)) or (not isinstance(height, (int, float))):
+        raise TypeError('All inputs must be numeric types.')
+    if base1 <= 0 or base2 <= 0 or height <= 0:
+        raise ValueError('All inputs must be positive numbers.')
+    area = 0.5 * (base1 + base2) * height
+    return area
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access
-    test_cases = [
-        ("hello", "olleh"),
-        ("Python3.9", "9.3nohtyP"),
-        "", 
-        ("A man a plan a canal Panama!", "!amanaP lanac a !anap lafam A"),
-        (12345, "54321")  # Note: This test expects input to be treated as string representation
-    ]
-
-    results = []
-    
-    for i, value in enumerate(test_cases):
-        if isinstance(value[0], str):
-            result = reverse_string(value[0])
-            expected = value[1]
-        else:
-            # If the first element is not a string (like an int), convert to string then test logic separately 
-            # However, per task requirements focusing on strings as primary input example usage below handles it specifically:
-            result_str_value = str(value)
-            reversed_val = reverse_string(result_str_value)
+    base1_value = 10.0
+    base2_value = 6.0
+    height_value = 4.0
+    result = compute_trapezoid_area(base1_value, base2_value, height_value)
+    print(result)

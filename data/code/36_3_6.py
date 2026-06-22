@@ -1,17 +1,9 @@
-def reverse_sentence(sentence: str) -> str:
-    """Reverses a given sentence character by character."""
-    return sentence[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    test_sentences = [
-        "Hello, World!",
-        "Python is awesome.",
-        "",  # Edge case: empty string
-        "A man a plan a canal Panama",
-    ]
-
-    for sentence in test_sentences:
-        reversed_sentence = reverse_sentence(sentence)
-        print(f"Original: {sentence}")
-        print(f"Reversed: {reversed_sentence}\n")
+    b1 = 5.0
+    b2 = 7.0
+    h = 4.0
+    area = calculate_trapezoid_area(b1, b2, h)
+    print(area)

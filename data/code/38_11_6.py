@@ -1,21 +1,18 @@
-from collections import Counter
-def find_repeated_letters(s: str) -> set:
-    letter_counts = Counter(s)
-    repeated_letters = set()
-    for letter, count in letter_counts.items():
-        if count > 1:
-            repeated_letters.add(letter)
-    return repeated_letters
+from math import pi
+
+class ConeVolumeCalculator:
+    def __init__(self, radius, height):
+        self.radius = radius
+        self.height = height
+
+    def calculate_volume(self):
+        return (1.0 / 3.0) * pi * (self.radius ** 2) * self.height
+
+def get_predefined_dimensions():
+    return 5.0, 10.0
+
 if __name__ == '__main__':
-    test_string_1 = "hello world"
-    result_1 = find_repeated_letters(test_string_1)
-    print(f"Input: '{test_string_1}', Repeated Letters: {result_1}")
-    test_string_2 = "programming"
-    result_2 = find_repeated_letters(test_string_2)
-    print(f"Input: '{test_string_2}', Repeated Letters: {result_2}")
-    test_string_3 = "abcde"
-    result_3 = find_repeated_letters(test_string_3)
-    print(f"Input: '{test_string_3}', Repeated Letters: {result_3}")
-    test_string_4 = "aabbccddeeff"
-    result_4 = find_repeated_letters(test_string_4)
-    print(f"Input: '{test_string_4}', Repeated Letters: {result_4}")
+    radius_value, height_value = get_predefined_dimensions()
+    calculator = ConeVolumeCalculator(radius_value, height_value)
+    volume = calculator.calculate_volume()
+    print(volume)

@@ -1,31 +1,15 @@
-import string
+class Parallelogram:
+    def __init__(self, base, height):
+        if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+            raise TypeError("Base and height must be numeric.")
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive numbers.")
+        self.base = base
+        self.height = height
 
-class StringCombiner:
-    """A class that provides utility methods for combining strings."""
+    def calculate_area(self):
+        return self.base * self.height
 
-    def combine(self, str1: str, str2: str) -> str:
-        """Efficiently joins two input strings with a space in between.
-
-        Args:
-            str1 (str): The first input string.
-            str2 (str): The second input string.
-
-        Returns:
-            str: A new string formed by joining the arguments separated by a space.
-
-        Examples:
-            >>> combiner = StringCombiner()
-            >>> result = combiner.combine("Hello", "World")
-            'Hello World'
-        """
-        return f"{str1} {str2}"
-
-if __name__ == "__main__":
-    # Hard-coded sample values to demonstrate functionality without external input.
-    string_combiner = StringCombiner()
-
-    str_a = "Python"
-    str_b = "is powerful"
-
-    combined_result = string_combiner.combine(str_a, str_b)
-    print(combined_result)  # Expected Output: Python is powerful
+if __name__ == '__main__':
+    p = Parallelogram(5, 10)
+    print(p.calculate_area())

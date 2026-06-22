@@ -1,29 +1,21 @@
-import sys
+import math
 
-def calculate_square_area(side_length):
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def surface_area_square_pyramid(base_side, perpendicular_height):
+    if base_side <= 0 or perpendicular_height < 0:
+        raise ValueError("Base side must be positive and height must be non-negative")
+    
+    base_area = base_side ** 2
+    
+    slant_height = math.sqrt((base_side / 2) ** 2 + perpendicular_height ** 2)
+    
+    lateral_area = 4 * (0.5 * base_side * slant_height)
+    
+    total_surface_area = base_area + lateral_area
+    
+    return total_surface_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements to avoid input() usage
-    try:
-        test_cases = [4, "5", 3.5]
-        
-        for val in test_cases:
-            print(f"Testing with value: {val}")
-            
-            if isinstance(val, str):
-                # Handle string conversion robustly by catching ValueError
-                side_length = float(val)
-            else:
-                side_length = val
-            
-            area = calculate_square_area(side_length)
-            result_string = f"{area:.2f}"
-            
-            print(f"Calculated Area for a square with side length {val}: {result_string}")
-
-    except ValueError as e:
-        # Handle any potential conversion errors gracefully within the sample block logic if needed externally, 
-        # but since we control input here, this catches unexpected malformed strings.
-        print("An error occurred during calculation.")
+    base_side = 4
+    perpendicular_height = 6
+    result = surface_area_square_pyramid(base_side, perpendicular_height)
+    print(result)

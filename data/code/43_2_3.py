@@ -1,21 +1,17 @@
-class Square:
-    def __init__(self, side_length):
-        if side_length < 0:
-            raise ValueError("Side length cannot be negative.")
-        self.side_length = float(side_length)
-    
-    def get_area(self) -> float:
-        return self.side_length ** 2
+import math
+
+class SquarePyramid:
+    def __init__(self, base_side, slant_height):
+        if base_side <= 0 or slant_height <= 0:
+            raise ValueError("Base side and slant height must be positive.")
+        self.base_side = base_side
+        self.slant_height = slant_height
+
+    def surface_area(self):
+        base_area = self.base_side ** 2
+        lateral_area = 2 * self.base_side * self.slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    square1 = Square(5.0)
-    print(f"Area of square with side 5: {square1.get_area()}")
-    
-    try:
-        invalid_square = Square(-3.0)
-    except ValueError as e:
-        print(f"Error handling test passed: {e}")
-    
-    # Additional sample calculation without user input
-    result = (Square(7).get_area() * 2 + Square(4).get_area())
-    print(f"Combined area of two squares calculated correctly.")
+    pyramid = SquarePyramid(base_side=4, slant_height=5)
+    print(pyramid.surface_area())

@@ -1,7 +1,14 @@
-TRIANGLE_AREA_CONSTANT = 0.5
-calculate_area = lambda b, h: TRIANGLE_AREA_CONSTANT * b * h
+def calculate_mean(scores):
+    total = 0
+    count = 0
+    for score in scores:
+        total += float(score)
+        count += 1
+    if count == 0:
+        return 0.0
+    return total / count
+
 if __name__ == '__main__':
-    base_value = 25
-    height_value = 12
-    result = calculate_area(base_value, height_value)
+    test_scores = [85, 90, 78, 92, 88]
+    result = calculate_mean(test_scores)
     print(result)

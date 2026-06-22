@@ -1,7 +1,14 @@
-def remove_spaces(s: str) -> str:
-    return "".join(c for c in s if c != " ")
+def _validate_positive(value, name):
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+
+def compute_triangle_area(base, height):
+    _validate_positive(base, "base")
+    _validate_positive(height, "height")
+    return base * height * 0.5
 
 if __name__ == '__main__':
-    test_cases = ["Hello World", "No spaces here", "", "Multiple   spaces"]
-    for case in test_cases:
-        print(f"Input: {case!r} -> Output: {remove_spaces(case)!r}")
+    base_value = 12
+    height_value = 8
+    result = compute_triangle_area(base_value, height_value)
+    print(result)

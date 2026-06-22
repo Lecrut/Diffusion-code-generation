@@ -1,22 +1,11 @@
-def count_vowels(strings):
-    """
-    Accepts a list of strings and returns a dictionary where keys 
-    are the input strings and values are their respective vowel counts.
-    
-    Args:
-        strings (list[str]): List of input string items
-        
-    Returns:
-        dict: Dictionary mapping each string to its vowel count
-    """
-    vowels = set('aeiouAEIOU')
-    result = {}
-    for s in strings:
-        count = sum(1 for char in s if char in vowels)
-        result[s] = count
-    return result
+def calculate_cube_volume(edge_length):
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    sample_strings = ["hello", "world", "aeiou", "Python"]
-    vowel_counts = count_vowels(sample_strings)
-    print(vowel_counts)
+    sample_edge = 5.0
+    volume = calculate_cube_volume(sample_edge)
+    print(volume)
+
+    another_edge = 3.2
+    another_volume = calculate_cube_volume(another_edge)
+    print(another_volume)

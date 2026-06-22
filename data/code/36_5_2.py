@@ -1,12 +1,9 @@
-def reverse_string_generator(input_string):
-    for char in reversed(input_string):
-        yield char
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
+
 if __name__ == '__main__':
-    sample_string = "hello world"
-    reversed_chars = reverse_string_generator(sample_string)
-    result_list = list(reversed_chars)
-    print(result_list)
-    large_string = "abcdefghijklmnopqrstuvwxyz" * 1000000
-    reversed_large_string = reverse_string_generator(large_string)
-    print("--- Large String Test (First 10 chars) ---")
-    print(list(reversed_large_string)[:10])
+    base_a = 10
+    base_b = 20
+    height_val = 7
+    area_result = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(area_result)

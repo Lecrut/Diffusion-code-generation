@@ -1,31 +1,23 @@
-class StringProcessor:
-    """A class to process strings with optimized operations."""
+def get_unit_info(unit_name):
+    units = {
+        'cm': {'scale': 1, 'name': 'centimeters'},
+        'm': {'scale': 100, 'name': 'meters'},
+        'km': {'scale': 100000, 'name': 'kilometers'},
+        'in': {'scale': 2.54, 'name': 'inches'}
+    }
+    return units.get(unit_name, units['cm'])
 
-    def remove_spaces(self, input_string):
-        """
-        Removes all spaces from the input string in O(n) time complexity.
-        
-        Args:
-            input_string (str): The string to process.
-            
-        Returns:
-            str: A new string with all spaces removed.
-        """
-        # Using list comprehension for efficiency and readability, 
-        # which operates linearly relative to the length of the string.
-        return ''.join(char for char in input_string if not ' '.__contains__(char) or char != ' ')
+def compute_triangle_area(base, height, unit='cm'):
+    info = get_unit_info(unit)
+    base_scaled = base * info['scale']
+    height_scaled = height * info['scale']
+    area_scaled = 0.5 * base_scaled * height_scaled
+    area = area_scaled / (info['scale'] * info['scale'])
+    return area
 
 if __name__ == '__main__':
-    processor = StringProcessor()
-
-    test_cases = [
-        "Hello World",
-        "  Multiple   Spaces  ",
-        "NoSpacesHere",
-        "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-    ]
-
-    for test_input in test_cases:
-        result = processor.remove_spaces(test_input)
-        print(f"Input: '{test_input}'")
-        print(f"Output: '{result}'\n")
+    base_val = 12.5
+    height_val = 7.2
+    unit_val = 'cm'
+    result = compute_triangle_area(base_val, height_val, unit_val)
+    print(result)

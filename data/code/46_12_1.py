@@ -1,9 +1,7 @@
-def calculate_triangle_perimeter(side_a: float, side_b: float, side_c: float) -> float:
-    return side_a + side_b + side_c
+def max_salary_generator():
+    salaries = [50000, 60000, 75000, 80000, 95000, 120000, 110000]
+    yield max(salaries)
 
 if __name__ == '__main__':
-    a = 3.0
-    b = 4.0
-    c = 5.0
-    perimeter = calculate_triangle_perimeter(a, b, c)
-    print(perimeter)
+    result = list(max_salary_generator())
+    print(result[0])

@@ -1,26 +1,11 @@
-def reverse_string(text: str) -> str:
-    """
-    Returns a new string with characters in reversed order using slicing notation.
-    
-    Args:
-        text (str): The input string to be reversed.
-        
-    Returns:
-        str: A new string containing the characters of 'text' in reverse order.
-    """
-    return text[::-1]
+def compute_trapezoid_area(base_a, base_b, height):
+    if base_a < 0 or base_b < 0 or height < 0:
+        raise ValueError("Bases and height must be non-negative.")
+    return 0.5 * (base_a + base_b) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or external dependencies
-    samples = [
-        "Hello, World!",
-        "",
-        "a",
-        "Python is awesome.",
-        12345 if False else None  # This line ensures no type errors; logic handled by function below
-    ]
-
-    for sample in ["Hello, World!", "python", ""]:
-        result = reverse_string(sample)
-        print(f"Original: '{sample}'")
-        print(f"Reversed: '{result}'\n")
+    base1 = 10
+    base2 = 14
+    h = 5
+    area = compute_trapezoid_area(base1, base2, h)
+    print(area)

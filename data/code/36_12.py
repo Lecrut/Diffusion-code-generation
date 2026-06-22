@@ -1,17 +1,15 @@
-class StringReverser:
-    def reverse(self, text):
-        return text[::-1]
+import math
+
+def trapezoid_area(base_a, base_b, height):
+    if not isinstance(base_a, (int, float)) or not isinstance(base_b, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Arguments must be numeric.")
+    if base_a <= 0 or base_b <= 0 or height <= 0:
+        raise ValueError("Bases and height must be positive.")
+    if math.isinf(base_a) or math.isinf(base_b) or math.isinf(height):
+        raise ValueError("Arguments must be finite.")
+    mid = (base_a + base_b) / 2.0
+    return mid * height
+
 if __name__ == '__main__':
-    reverser = StringReverser()
-    sample_string1 = "hello"
-    reversed_string1 = reverser.reverse(sample_string1)
-    print(f"Original: {sample_string1}, Reversed: {reversed_string1}")
-    sample_string2 = "world"
-    reversed_string2 = reverser.reverse(sample_string2)
-    print(f"Original: {sample_string2}, Reversed: {reversed_string2}")
-    sample_string3 = "Python"
-    reversed_string3 = reverser.reverse(sample_string3)
-    print(f"Original: {sample_string3}, Reversed: {reversed_string3}")
-    sample_string4 = "racecar"
-    reversed_string4 = reverser.reverse(sample_string4)
-    print(f"Original: {sample_string4}, Reversed: {reversed_string4}")
+    result = trapezoid_area(5, 10, 4)
+    print(result)

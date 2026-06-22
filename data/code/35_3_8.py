@@ -1,7 +1,7 @@
-def count_vowels(text: str) -> int:
-    return sum(1 for char in text.lower() if char in 'aeiou')
+def cube_volume(edge_length):
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    sample_strings = ["Hello World", "AEIOU", "Python3.9"]
-    for s in sample_strings:
-        print(f"Vowels in '{s}': {count_vowels(s)}")
+    print(cube_volume(3))
+    print(cube_volume(5))
+    print(cube_volume(10))

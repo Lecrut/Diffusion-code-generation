@@ -1,9 +1,8 @@
-def filter_non_whitespace(input_string):
-    for char in input_string:
-        if not char.isspace():
-            yield char
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    test_string = "Hello World! \nThis is a test."
-    result_generator = filter_non_whitespace(test_string)
-    result_list = list(result_generator)
-    print(result_list)
+    base = 10.0
+    height = 5.0
+    area = calculate_triangle_area(base, height)
+    print(area)

@@ -1,9 +1,8 @@
-class StringAppender:
-    def append(self, first_string: str, second_string: str) -> str:
-        """Returns a new string formed by appending the second string to the first."""
-        return f"{first_string}{second_string}"
+def parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    appender = StringAppender()
-    result = appender.append("Hello", "World!")
+    base_value = 10
+    height_value = 5
+    result = parallelogram_area(base_value, height_value)
     print(result)

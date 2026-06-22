@@ -1,14 +1,14 @@
-import re
-def capitalize_words(text):
-    words = text.split()
-    capitalized_words = []
-    for word in words:
-        if word:
-            capitalized_words.append(word[0].upper() + word[1:].lower())
-        else:
-            capitalized_words.append(word)
-    return " ".join(capitalized_words)
+import math
+
+def calculate_cylinder_surface_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative")
+    base_area = math.pi * radius * radius
+    lateral_area = 2 * math.pi * radius * height
+    return 2 * base_area + lateral_area
+
 if __name__ == '__main__':
-    sample_string = "this is a sample string to test capitalization"
-    result = capitalize_words(sample_string)
+    sample_radius = 3.0
+    sample_height = 5.0
+    result = calculate_cylinder_surface_area(sample_radius, sample_height)
     print(result)

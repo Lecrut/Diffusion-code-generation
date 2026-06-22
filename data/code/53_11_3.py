@@ -1,14 +1,11 @@
-import sys
+def print_reverse_triangle(height):
+    if height < 1:
+        return
+    for row in range(1, height + 1):
+        spaces = ' ' * (height - row)
+        stars = '*' * (2 * row - 1)
+        print(spaces + stars)
+
 if __name__ == '__main__':
-    try:
-        input_data = sys.stdin.read().strip()
-        if not input_data:
-            side_length = 5
-        else:
-            side_length = float(input_data)
-        area = side_length * side_length
-        print(area)
-    except ValueError:
-        print("Error: Invalid input provided.", file=sys.stderr)
-    except Exception:
-        print("An error occurred.", file=sys.stderr)
+    sample_height = 5
+    print_reverse_triangle(sample_height)

@@ -1,16 +1,24 @@
-def main():
-    # Hard-coded sample string to avoid interactive input requirements
-    original_string = "hello world"
+class RhombusGeometry:
+    DIAGONAL_MULTIPLIER = 0.5
 
-    fully_capitalized = original_string.upper()
+    def __init__(self, diagonal_1: float, diagonal_2: float):
+        self.d1 = diagonal_1
+        self.d2 = diagonal_2
 
-    title_cased_original = "HELLO WORLD".title().upper() if False else "".join(
-        word.capitalize() for word in original_string.split(" ")
-    )
-
-    print(original_string)
-    print(fully_capitalized)
-    print(title_cased_original)
+    def compute_area(self) -> float:
+        return self.d1 * self.d2 * self.DIAGONAL_MULTIPLIER
 
 if __name__ == '__main__':
-    main()
+    shape_config = {
+        'name': 'RhombusA',
+        'd1': 12,
+        'd2': 15
+    }
+    
+    rhombus = RhombusGeometry(
+        diagonal_1=shape_config['d1'],
+        diagonal_2=shape_config['d2']
+    )
+    
+    area_value = rhombus.compute_area()
+    print(area_value)

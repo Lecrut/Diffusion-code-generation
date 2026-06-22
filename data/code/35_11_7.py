@@ -1,26 +1,25 @@
-def count_vowels(text: str) -> int:
-    """
-    Counts the total number of vowels (a, e, i, o, u) in a string, 
-    case-insensitive and ignoring non-alphabetic characters.
-    
-    Args:
-        text (str): The input string to analyze.
-        
-    Returns:
-        int: The count of vowel characters found.
-    """
-    vowels = set("aeiouAEIOU")
-    return sum(1 for char in text if char in vowels)
+def calculate_cube_volume(edge_length: float) -> float:
+    if not isinstance(edge_length, (int, float)):
+        raise TypeError("Edge length must be a number")
+    if edge_length < 0:
+        raise ValueError("Edge length cannot be negative")
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    sample_strings = [
-        "Hello, World!",
-        "Python Programming",
-        "",
-        "AeIoU",
-        "bcdfg"
-    ]
+    sample_edge = 5.0
+    volume = calculate_cube_volume(sample_edge)
+    print(volume)
 
-    for test_input in sample_strings:
-        result = count_vowels(test_input)
-        print(f"'{test_input}' -> {result}")
+    another_edge = 3
+    another_volume = calculate_cube_volume(another_edge)
+    print(another_volume)
+
+    try:
+        calculate_cube_volume(-2)
+    except ValueError as e:
+        print(e)
+
+    try:
+        calculate_cube_volume("string")
+    except TypeError as e:
+        print(e)

@@ -1,14 +1,17 @@
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def calculate_area(self):
-        return 3.14159 * self.radius ** 2
-    def calculate_circumference(self):
-        return 2 * 3.14159 * self.radius
+def generate_hollow_square(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return ['*']
+    top_bottom = '*' * n
+    middle = '*' + ' ' * (n - 2) + '*'
+    rows = [top_bottom]
+    for _ in range(n - 2):
+        rows.append(middle)
+    rows.append(top_bottom)
+    return rows
+
 if __name__ == '__main__':
-    circle1 = Circle(5)
-    print(f"Area of circle 1: {circle1.calculate_area()}")
-    print(f"Circumference of circle 1: {circle1.calculate_circumference()}")
-    circle2 = Circle(10)
-    print(f"Area of circle 2: {circle2.calculate_area()}")
-    print(f"Circumference of circle 2: {circle2.calculate_circumference()}")
+    result = generate_hollow_square(5)
+    for row in result:
+        print(row)

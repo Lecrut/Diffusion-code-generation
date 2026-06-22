@@ -1,9 +1,10 @@
-# Capitalize only the first letter of each word in a given string.
-def capitalize_first_letters(text: str) -> str:
-    """Return text with every non-alphabetic character between words replaced, then capitalized."""
-    return " ".join(word.capitalize() for word in text.split())
+import math
+
+def compute_cylinder_surface_area():
+    radius = 5.0
+    height = 10.0
+    return 2 * math.pi * radius * (radius + height)
 
 if __name__ == '__main__':
-    sample_text = "hello world! this is a test."
-    result = capitalize_first_letters(sample_text)
+    result = compute_cylinder_surface_area()
     print(result)

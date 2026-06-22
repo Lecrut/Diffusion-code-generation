@@ -1,36 +1,37 @@
-class StringAssembler:
-    def join_parts(self, parts: list[str], separator: str = ' ', fill_value: str = '') -> str:
-        """
-        Efficiently builds a string from a list of parts using the built-in str.join().
-        
-        Args:
-            parts (list[str]): A list of strings to be joined.
-            separator (str): The string to use as a delimiter between elements. Defaults to ' '.
-            fill_value (str): If an element in `parts` is empty, it will be replaced with this value before joining. 
-                             This ensures that consecutive separators do not create unintended gaps if the original list had blanks.
+import math
+from typing import List, Tuple, Union
 
-        Returns:
-            str: The joined string.
-        """
-        # Replace any existing empty strings in parts with fill_value to handle potential blank elements gracefully
-        processed_parts = [fill_value if part == '' else part for part in parts]
-        
-        # Use built-in join method which is implemented in C and highly optimized
-        return separator.join(processed_parts)
+Number = Union[int, float]
+
+class EllipseCalculator:
+    def __init__(self, tolerance: Number = 1e-9) -> None:
+        if not isinstance(tolerance, (int, float)) or tolerance < 0:
+            raise TypeError("Tolerance must be a non-negative number")
+        self.tolerance = tolerance
+
+    def validate_axes(self, major: Number, minor: Number) -> None:
+        if not isinstance(major, (int, float)) or not isinstance(minor, (int, float)):
+            raise TypeError("Both major and minor axes must be numbers")
+        if major <= 0 or minor <= 0:
+            raise ValueError("Both axes must be strictly positive")
+
+    def calculate_area(self, major: Number, minor: Number) -> float:
+        self.validate_axes(major, minor)
+        return math.pi * major * minor
+
+    def calculate_areas_batch(self, pairs: List[Tuple[Number, Number]]) -> List[float]:
+        if not isinstance(pairs, list):
+            raise TypeError("Input must be a list of tuples")
+        areas = []
+        for item in pairs:
+            if not isinstance(item, (tuple, list)) or len(item) != 2:
+                raise TypeError("Each item in the list must be a pair of numbers")
+            areas.append(self.calculate_area(item[0], item[1]))
+        return areas
 
 if __name__ == '__main__':
-    assembler = StringAssembler()
-
-    sample_list_1 = ["Hello", "", "World"]
-    result_1 = assembler.join_parts(sample_list_1, fill_value='!')
-    
-    sample_list_2 = ["Python", "is", "great"]
-    result_2 = assembler.join_parts(sample_list_2)
-    
-    print(f"Result 1 (with empty string handling): '{result_1}'")
-    print(f"Result 2 (standard join): '{result_2}'")
-
-    # Additional test with custom separator
-    sample_list_3 = ["A", "B", "C"]
-    result_3 = assembler.join_parts(sample_list_3, separator='-')
-    print(f"Result 3 (custom separator '-'): '{result_3}'")
+    calculator = EllipseCalculator()
+    sample_pairs = [(10, 5), (7.5, 3.2), (20, 20), (1.5, 4.5)]
+    results = calculator.calculate_areas_batch(sample_pairs)
+    for area in results:
+        print(area)

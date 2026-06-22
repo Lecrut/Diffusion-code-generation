@@ -1,12 +1,7 @@
-import math
+def generate_multiplication_table(n):
+    return [[n * i for i in range(1, 11)] for _ in range(10)]
+
 if __name__ == '__main__':
-    radius = 5.0
-    side = 4.0
-    circle_area = math.pi * radius**2
-    circle_perimeter = 2 * math.pi * radius
-    square_area = side**2
-    square_perimeter = 4 * side
-    print(f"Circle Area: {circle_area}")
-    print(f"Circle Perimeter (Circumference): {circle_perimeter}")
-    print(f"Square Area: {square_area}")
-    print(f"Square Perimeter: {square_perimeter}")
+    result = generate_multiplication_table(5)
+    for row in result:
+        print(row)

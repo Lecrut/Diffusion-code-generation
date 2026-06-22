@@ -1,23 +1,19 @@
-def is_valid_triangle(sides):
-    if len(sides) != 3:
-        return False
-    a, b, c = sides
-    if a <= 0 or b <= 0 or c <= 0:
-        return False
-    if a + b > c and a + c > b and b + c > a:
-        return True
-    else:
-        return False
+import math
+
+def find_max_element():
+    numbers = [3.14, 2.71, 1.618, 0.577, 9.806, 1.414, 2.236]
+    
+    if not numbers:
+        return None
+        
+    max_val = numbers[0]
+    
+    for num in numbers[1:]:
+        if num > max_val:
+            max_val = num
+            
+    return max_val
+
 if __name__ == '__main__':
-    test_cases = [
-        ([3, 4, 5], True),
-        ([1, 2, 3], False),
-        ([1, 1, 1], True),
-        ([0, 4, 5], False),
-        ([-1, 2, 3], False),
-        ([5, 5, 10], False),
-        ([2, 3, 4], True)
-    ]
-    for sides, expected in test_cases:
-        result = is_valid_triangle(sides)
-        print(f"Sides: {sides}, Result: {result}, Expected: {expected}, Match: {result == expected}")
+    result = find_max_element()
+    print(result)

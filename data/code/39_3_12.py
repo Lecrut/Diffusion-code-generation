@@ -1,24 +1,17 @@
-import re
+class PrismVolumeCalculator:
+    def __init__(self, base_area: float, height: float) -> None:
+        self.base_area = base_area
+        self.height = height
 
-def extract_words_from_text(text: str) -> list[str]:
-    """
-    Extracts all words (sequences of alphanumeric characters) from a multi-line input string.
-    
-    Args:
-        text (str): The input string to process. Can contain newlines and various punctuation.
-        
-    Returns:
-        list[str]: A list containing the extracted words in their original order.
-    """
-    # Using regular expression to find all sequences of alphanumeric characters [a-zA-Z0-9]
-    matches = re.findall(r'[a-zA-Z0-9]+', text)
-    return matches
+    def get_volume(self) -> float:
+        if self.base_area < 0:
+            raise ValueError("Base area cannot be negative")
+        if self.height < 0:
+            raise ValueError("Height cannot be negative")
+        return self.base_area * self.height
 
 if __name__ == '__main__':
-    sample_input_text = "Hello World! This is a multi-line example. 12345 Words, numbers and symbols here."
-
-    result_words = extract_words_from_text(sample_input_text)
-
-    print("Extracted words:")
-    for word in result_words:
-        print(f"{word}")
+    test_area = 24.5
+    test_height = 7.2
+    calculator = PrismVolumeCalculator(test_area, test_height)
+    print(calculator.get_volume())

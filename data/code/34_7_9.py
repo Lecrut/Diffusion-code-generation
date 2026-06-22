@@ -1,31 +1,16 @@
-def capitalize_first_word(text):
-    """
-    Decorator-like function that capitalizes the first letter of every word in a string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with the first letter of each word capitalized.
-    """
-    # Split the string into words, capitalize the first character of each, then join them back
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
-    
-    return ' '.join(word.capitalize() for word in text.split())
+import math
+
+SHAPES = {
+    "cylinder": {"formula": "2 * pi * r * (r + h)", "needs": ["radius", "height"]}
+}
+
+def cylinder_surface_area(radius: float, height: float) -> float:
+    base_area = math.pi * radius * radius
+    side_area = 2 * math.pi * radius * height
+    return 2 * base_area + side_area
 
 if __name__ == '__main__':
-    # Sample usage demonstrating functionality without any user input or external dependencies
-    
-    sample_strings = [
-        "hello world",
-        "python programming is fun",
-        "this   has   multiple      spaces",
-        "singleword",
-        ""  # Edge case: empty string
-    ]
-
-    for original in sample_strings:
-        capitalized_result = capitalize_first_word(original)
-        print(f"Input: '{original}'")
-        print(f"Output: '{capitalized_result}'\n")
+    radius_val = 3.0
+    height_val = 7.0
+    calculated_area = cylinder_surface_area(radius_val, height_val)
+    print(calculated_area)

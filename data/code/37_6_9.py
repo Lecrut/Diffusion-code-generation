@@ -1,9 +1,7 @@
-def append_strings(first: str, second: str) -> str:
-    """Appends the second string to the first using an f-string."""
-    return f"{first}{second}"
+def parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    sample_first = "Hello"
-    sample_second = " World"
-    result = append_strings(sample_first, sample_second)
-    print(result)
+    base = 5
+    height = 10
+    print(parallelogram_area(base, height))

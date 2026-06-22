@@ -1,23 +1,13 @@
-def build_string_from_parts(parts):
-    """
-    Joins a list of string parts into a single string with spaces as separators.
-    
-    This function uses Python's built-in join method which is implemented in C,
-    ensuring O(n) time complexity where n is the total number of characters 
-    across all strings plus the separator count (which is linear).
+import math
 
-    Args:
-        parts (list[str]): A list of string elements to be joined.
-        
-    Returns:
-        str: The concatenated string with spaces between original items.
-    """
-    return ' '.join(parts)
+def compute_ellipse_area(major_axis, minor_axis):
+    radius_a = major_axis / 2.0
+    radius_b = minor_axis / 2.0
+    area = math.pi * radius_a * radius_b
+    return area
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements
-    sample_parts = ["Hello", "World", "This", "is", "an"]
-    
-    result = build_string_from_parts(sample_parts)
-    
+    major = 10.0
+    minor = 6.0
+    result = compute_ellipse_area(major, minor)
     print(result)

@@ -1,17 +1,9 @@
-import unittest
-class SquareCalculator:
-    def calculate_area(self, side):
-        return side * side
-class TestSquareCalculator(unittest.TestCase):
-    def setUp(self):
-        self.calculator = SquareCalculator()
-    def test_area_positive_integer(self):
-        self.assertEqual(self.calculator.calculate_area(5), 25)
-    def test_area_zero(self):
-        self.assertEqual(self.calculator.calculate_area(0), 0)
-    def test_area_float(self):
-        self.assertAlmostEqual(self.calculator.calculate_area(2.5), 6.25)
-    def test_area_large_number(self):
-        self.assertEqual(self.calculator.calculate_area(100), 10000)
+def print_reverse_number_triangle(rows):
+    for i in range(rows, 0, -1):
+        line = []
+        for num in range(i, 0, -1):
+            line.append(str(num))
+        print(" ".join(line))
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print_reverse_number_triangle(6)

@@ -1,4 +1,16 @@
-area_triangle = lambda base, height: 0.5 * base * height
+def calculate_arithmetic_mean(scores):
+    if not scores:
+        raise ValueError("The list of scores is empty.")
+    total = 0.0
+    count = 0
+    for score in scores:
+        if not isinstance(score, (int, float)):
+            raise TypeError("All scores must be numeric.")
+        total += float(score)
+        count += 1
+    return total / count
+
 if __name__ == '__main__':
-    print(area_triangle(10, 5))
-    print(area_triangle(3.5, 4))
+    test_scores = [85, 90, 78, 92, 88]
+    result = calculate_arithmetic_mean(test_scores)
+    print(result)

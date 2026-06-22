@@ -1,17 +1,15 @@
-class StringManipulator:
-    def to_lower(self, text: str) -> str:
-        return text.lower()
-    def to_upper(self, text: str) -> str:
-        return text.upper()
-    def to_title(self, text: str) -> str:
-        return text.title()
-    def swap_case(self, text: str) -> str:
-        return text.swapcase()
+class Rhombus:
+    def __init__(self, d1, d2):
+        if not isinstance(d1, (int, float)) or not isinstance(d2, (int, float)):
+            raise TypeError("Diagonals must be numbers.")
+        if d1 <= 0 or d2 <= 0:
+            raise ValueError("Diagonals must be positive numbers.")
+        self.d1 = d1
+        self.d2 = d2
+
+    def compute_area(self):
+        return (self.d1 * self.d2) / 2
+
 if __name__ == '__main__':
-    manipulator = StringManipulator()
-    sample_string = "HeLlO wOrLd"
-    print(f"Original: {sample_string}")
-    print(f"Lowercase: {manipulator.to_lower(sample_string)}")
-    print(f"Uppercase: {manipulator.to_upper(sample_string)}")
-    print(f"Title Case: {manipulator.to_title(sample_string)}")
-    print(f"Swap Case: {manipulator.swap_case(sample_string)}")
+    r = Rhombus(10, 8)
+    print(r.compute_area())

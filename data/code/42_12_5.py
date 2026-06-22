@@ -1,33 +1,16 @@
-import sys
-def process_input():
-    input_data = sys.stdin.read().splitlines()
-    if not input_data:
-        print("")
-        return
-    delimiter = ","
-    parts = []
-    for line in input_data:
-        if not line.strip():
-            continue
-        parts.append(line.strip())
-    if not parts:
-        print("")
-        return
-    result = delimiter.join(parts)
-    print(result)
+import math
+
+def calculate_ellipse_area(semi_major, semi_minor):
+    if not isinstance(semi_major, (int, float)) or not isinstance(semi_minor, (int, float)):
+        raise TypeError("Inputs must be numbers")
+    if semi_major <= 0 or semi_minor <= 0:
+        raise ValueError("Inputs must be positive numbers")
+    return math.pi * semi_major * semi_minor
+
 if __name__ == '__main__':
-    sample_input = [
-        "apple",
-        "banana",
-        "cherry",
-        "date"
-    ]
-    delimiter = ","
-    parts = []
-    for item in sample_input:
-        if not isinstance(item, str):
-            sys.stderr.write("Error: Invalid input type encountered.\n")
-            sys.exit(1)
-        parts.append(item)
-    result = delimiter.join(parts)
-    print(result)
+    result1 = calculate_ellipse_area(5, 3)
+    print(result1)
+    result2 = calculate_ellipse_area(10, 10)
+    print(result2)
+    result3 = calculate_ellipse_area(7.5, 2.5)
+    print(result3)

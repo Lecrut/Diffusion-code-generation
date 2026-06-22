@@ -1,21 +1,8 @@
-def build_string_from_parts(parts: list) -> str:
-    """
-    Joins a list of string parts with spaces as separators in O(n) time complexity.
-    
-    Args:
-        parts (list): A list of strings to be joined.
-        
-    Returns:
-        str: The concatenated string with parts separated by single spaces.
-    """
-    if not parts:
-        return ""
-    
-    # Using join is inherently O(n) where n is the total length of all substrings,
-    # as it performs a single pass to build the result list and then one final copy operation.
-    return " ".join(parts)
+def compute_ellipse_area(a: float, b: float) -> float:
+    return 3.14159265358979323846 * a * b
 
 if __name__ == '__main__':
-    sample_parts = ["Hello", "World", "This", "Is", "A"]
-    result = build_string_from_parts(sample_parts)
+    a = 5.0
+    b = 3.0
+    result = compute_ellipse_area(a, b)
     print(result)

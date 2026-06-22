@@ -1,16 +1,12 @@
-def find_matching_substrings(text, patterns):
-    results = {}
-    for pattern in patterns:
-        matches = []
-        for i in range(len(text) - len(pattern) + 1):
-            substring = text[i:i + len(pattern)]
-            if substring == pattern:
-                matches.append(substring)
-        if matches:
-            results[pattern] = matches
-    return results
+def calculate_prism_volume(base_area, height):
+    if base_area <= 0:
+        raise ValueError("Base area must be positive")
+    if height <= 0:
+        raise ValueError("Height must be positive")
+    return base_area * height
+
 if __name__ == '__main__':
-    sample_text = "abababa"
-    sample_patterns = ["aba", "ab", "ba", "a", "b"]
-    output = find_matching_substrings(sample_text, sample_patterns)
-    print(output)
+    sample_base_area = 50.0
+    sample_height = 12.5
+    result = calculate_prism_volume(sample_base_area, sample_height)
+    print(result)

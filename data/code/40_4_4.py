@@ -1,22 +1,9 @@
-def find_first_letters_optimized(input_string):
-    words = input_string.split()
-    for word in words:
-        if word:
-            yield word[0]
+def calculate_surface_area(length, width, height):
+    return 2 * (length * width + width * height + height * length)
+
 if __name__ == '__main__':
-    test_string_1 = "This is a sample string"
-    print("Test 1:")
-    for letter in find_first_letters_optimized(test_string_1):
-        print(letter)
-    test_string_2 = "  leading spaces and multiple    spaces "
-    print("\nTest 2:")
-    for letter in find_first_letters_optimized(test_string_2):
-        print(letter)
-    test_string_3 = "singleword"
-    print("\nTest 3:")
-    for letter in find_first_letters_optimized(test_string_3):
-        print(letter)
-    test_string_4 = ""
-    print("\nTest 4:")
-    for letter in find_first_letters_optimized(test_string_4):
-        print(letter)
+    sample_length = 5.0
+    sample_width = 3.0
+    sample_height = 2.0
+    result = calculate_surface_area(sample_length, sample_width, sample_height)
+    print(result)

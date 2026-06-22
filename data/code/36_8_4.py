@@ -1,40 +1,11 @@
-def reverse_string_recursive(s):
-    """
-    Recursively reverses a string without using slicing.
-    
-    Args:
-        s (str): The input string to be reversed.
-        
-    Returns:
-        str: The reversed string.
-    """
-    if len(s) <= 1:
-        return s
-    
-    # Recursive step: reverse the substring excluding the first character, then append the first character at the end
-    rest = reverse_string_recursive(s[1:])
-    
-    return rest + s[0]
-
-def main():
-    # Hard-coded sample values to ensure no user input or external dependencies are needed
-    test_strings = [
-        "hello",
-        "Python is fun!",
-        "",
-        "a"
-    ]
-
-    print("Testing Recursive String Reversal")
-    for original in test_strings:
-        reversed_str = reverse_string_recursive(original)
-        # Verify correctness by comparing with slicing method (used only for validation, not as the primary solution logic here)
-        expected = original[::-1]
-        
-        if reversed_str == expected:
-            print(f"Input: '{original}' -> Output: '{reversed_str}' [Correct]")
-        else:
-            print(f"Input: '{original}' -> Output: '{reversed_str}' [ERROR - Expected: '{expected}']")
+def calculate_trapezoid_area(base_a, base_b, height):
+    if base_a < 0 or base_b < 0 or height < 0:
+        raise ValueError("Bases and height must be non-negative.")
+    return 0.5 * (base_a + base_b) * height
 
 if __name__ == '__main__':
-    main()
+    base_1 = 5
+    base_2 = 7
+    height_1 = 4
+    area = calculate_trapezoid_area(base_1, base_2, height_1)
+    print(area)

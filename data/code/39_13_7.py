@@ -1,23 +1,16 @@
-def extract_substrings(text: str) -> list[str]:
-    """Extract all substrings from text that fall between specified start and end points."""
-    if not isinstance(text, str):
-        return []
-    
-    result = []
-    i = 0
-    
-    while i < len(text):
-        # Find next occurrence of the target substring 'start' at current position or later
-        j = text.find(start_str, i)
-        
-        # If start not found after index i, break loop
-        if j == -1:
-            break
-            
-        result.append((j + start_len, end_pos))  # Start and End indices of substring
-        
-        # Move to character after the next 'start' occurrence or current position if no more starts
-        k = text.find(start_str, j)
+BASE_AREA = 25.0
+HEIGHT = 7.5
+
+def _validate_positive(value, name):
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+    return True
+
+def calculate_prism_volume(base_area, height):
+    _validate_positive(base_area, "base_area")
+    _validate_positive(height, "height")
+    return base_area * height
 
 if __name__ == '__main__':
-    pass
+    result = calculate_prism_volume(BASE_AREA, HEIGHT)
+    print(result)

@@ -1,19 +1,16 @@
-import sys
+import math
 
-def join_string_parts(parts: list[str], delimiter: str = ",") -> str:
-    """Join a sequence of string parts with the specified delimiter."""
-    if not all(isinstance(part, (str, bytes)) and isinstance(delimiter, (str, bytes)) for part in [parts] + [delimiter]):
-        raise TypeError("All inputs must be strings or byte sequences.")
-    
-    return delimiter.join(parts)
+def calculate_ellipse_area(a, b):
+    if a <= 0 or b <= 0:
+        raise ValueError("Semi-major and semi-minor axes must be positive numbers.")
+    return math.pi * a * b
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    # Simulating reading from standard input by providing a list of string parts directly.
-    sample_parts = ["apple", "banana", "cherry"]
-    
-    try:
-        result_string = join_string_parts(sample_parts)
-        print(result_string, end="")  # Print to stdout without newline if preferred, but default is fine too.
-    except (TypeError, AttributeError) as e:
-        sys.stderr.write(f"Error processing input: {e}\n")
+    area1 = calculate_ellipse_area(5, 3)
+    print(area1)
+
+    area2 = calculate_ellipse_area(10, 10)
+    print(area2)
+
+    area3 = calculate_ellipse_area(7.5, 2.5)
+    print(area3)

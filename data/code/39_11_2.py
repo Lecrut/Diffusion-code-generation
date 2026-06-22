@@ -1,24 +1,17 @@
-class StringExtractor:
-    def extract_substrings(self, text, delimiters):
-        if not delimiters:
-            return [text]
-        sorted_delimiters = sorted(delimiters)
-        substrings = []
-        current_start = 0
-        for delimiter_pos in sorted_delimiters:
-            if current_start < delimiter_pos:
-                substring = text[current_start:delimiter_pos]
-                if substring:
-                    substrings.append(substring)
-            current_start = delimiter_pos
-        if current_start < len(text):
-            substring = text[current_start:]
-            if substring:
-                substrings.append(substring)
-        return substrings
+def calculate_prism_volume(base_area, height):
+    if base_area < 0 or height < 0:
+        raise ValueError("Base area and height must be non-negative.")
+    return base_area * height
+
 if __name__ == '__main__':
-    extractor = StringExtractor()
-    sample_text = "apple,banana,cherry,date"
-    sample_delimiters = [5, 7, 11, 16]
-    result = extractor.extract_substrings(sample_text, sample_delimiters)
-    print(result)
+    test_cases = [
+        (10, 5),
+        (15.5, 4),
+        (0, 100),
+        (25, 0),
+        (100, 2.5)
+    ]
+
+    for area, height in test_cases:
+        volume = calculate_prism_volume(area, height)
+        print(f"Base Area: {area}, Height: {height}, Volume: {volume}")

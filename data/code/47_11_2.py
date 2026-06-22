@@ -1,8 +1,9 @@
-def calculate_triangle_area(base, height):
-    return 0.5 * base * height
+import statistics
+
+def compute_mean(test_results):
+    return statistics.mean(test_results)
 
 if __name__ == '__main__':
-    sample_base = 10.0
-    sample_height = 5.0
-    result = calculate_triangle_area(sample_base, sample_height)
+    sample_data = [85.5, 90.0, 78.25, 92.5, 88.75]
+    result = compute_mean(sample_data)
     print(result)

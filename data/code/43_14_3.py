@@ -1,20 +1,10 @@
-def calculate_square_area(side):
-    if side <= 0:
-        raise ValueError("Side length must be positive")
-    return side * side
+def calculate_square_pyramid_surface_area(base_side, slant_height):
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    return base_area + lateral_area
+
 if __name__ == '__main__':
-    try:
-        result1 = calculate_square_area(5)
-        print(f"Area of a square with side 5: {result1}")
-        result2 = calculate_square_area(10.5)
-        print(f"Area of a square with side 10.5: {result2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        calculate_square_area(0)
-    except ValueError as e:
-        print(f"Error caught for zero input: {e}")
-    try:
-        calculate_square_area(-3)
-    except ValueError as e:
-        print(f"Error caught for negative input: {e}")
+    side = 4.0
+    slant = 5.0
+    result = calculate_square_pyramid_surface_area(side, slant)
+    print(result)

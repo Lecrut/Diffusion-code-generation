@@ -1,31 +1,15 @@
-import sys
+def _validate_positive(value, name):
+    if value <= 0:
+        raise ValueError(f"{name} must be a positive number, got {value}")
+    return float(value)
 
-def filter_whitespace(s: str):
-    """
-    Generator function that yields characters from input string s,
-    skipping any whitespace characters (spaces, tabs, newlines).
-    
-    Args:
-        s (str): The input string to process.
-        
-    Yields:
-        str: Individual non-whitespace characters from the input string.
-    """
-    for char in s:
-        if not char.isspace():
-            yield char
+def compute_triangle_area(base, height):
+    valid_base = _validate_positive(base, "base")
+    valid_height = _validate_positive(height, "height")
+    return 0.5 * valid_base * valid_height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or args)
-    test_string = "Hello, World!  This is a test."
-    
-    print("Original string:")
-    print(test_string)
-    print("\nFiltered characters:")
-    
-    for char in filter_whitespace(test_string):
-        sys.stdout.write(char)
-        
-    # Ensure the output ends with a newline for clean printing
-    if not test_string[-1].isspace():
-        sys.stdout.write('\n')
+    base_val = 12.5
+    height_val = 8.0
+    result = compute_triangle_area(base_val, height_val)
+    print(result)

@@ -1,22 +1,10 @@
-def heron_formula(a, b, c):
-    if (a + b <= c) or (a + c <= b) or (b + c <= a):
-        raise ValueError("The given side lengths do not form a valid triangle.")
-    s = (a + b + c) / 2
-    area = s * (s - a) * (s - b) * (s - c)
-    return area
+def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    total = sum(numbers)
+    count = len(numbers)
+    return total / count
 if __name__ == '__main__':
-    try:
-        result1 = heron_formula(3, 4, 5)
-        print(f"Area for (3, 4, 5): {result1}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        result2 = heron_formula(1, 2, 10)
-        print(f"Area for (1, 2, 10): {result2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        result3 = heron_formula(5, 5, 1)
-        print(f"Area for (5, 5, 1): {result3}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_numbers = [10, 20, 30, 40, 50]
+    mean_value = calculate_mean(sample_numbers)
+    print(mean_value)

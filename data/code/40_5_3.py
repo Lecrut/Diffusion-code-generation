@@ -1,16 +1,18 @@
-import string
-def get_first_letters(text):
-    result = {}
-    words = text.split()
-    for word in words:
-        cleaned_word = ''.join(char for char in word if char.isalpha())
-        if cleaned_word:
-            result[word] = cleaned_word[0]
-    return result
+BOX_LENGTH = 10
+BOX_WIDTH = 8
+BOX_HEIGHT = 6
+
+def validate_dimension(value, name):
+    if not isinstance(value, (int, float)):
+        raise TypeError(f"{name} must be a number")
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+
+def calculate_surface_area(length, width, height):
+    validate_dimension(length, "length")
+    validate_dimension(width, "width")
+    validate_dimension(height, "height")
+    return 2 * (length * width + length * height + width * height)
+
 if __name__ == '__main__':
-    sample_string1 = "Hello world! This is a test."
-    sample_string2 = "Python is fun, isn't it?"
-    sample_string3 = "  What's up?  End."
-    print(get_first_letters(sample_string1))
-    print(get_first_letters(sample_string2))
-    print(get_first_letters(sample_string3))
+    print(calculate_surface_area(BOX_LENGTH, BOX_WIDTH, BOX_HEIGHT))

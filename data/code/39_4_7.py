@@ -1,25 +1,8 @@
-import re
-
-def split_by_delimiters(phrase: str, delimiters: set) -> list[str]:
-    """
-    Splits a phrase into all contiguous segments separated by any character 
-    present in the provided delimiter set.
-
-    Args:
-        phrase (str): The input string to be split.
-        delimiters (set of str): A set containing single-character strings representing delimiters.
-
-    Returns:
-        list[str]: A list of non-empty contiguous segments separated by any character from `delimiters`.
-    
-    Note: 
-    - Empty or whitespace-only segments are excluded unless explicitly requested via custom empty string handling, 
-      but based on standard behavior for splitting, consecutive delimiters result in no segment between them.
-    """
-    if not phrase and not delimiters:
-        return []
-
-    # Escape special regex characters to safely use re.split
+def calculate_prism_volume(base_area, height):
+    return base_area * height
 
 if __name__ == '__main__':
-    pass
+    sample_base_area = 50.0
+    sample_height = 15.0
+    result = calculate_prism_volume(sample_base_area, sample_height)
+    print(result)

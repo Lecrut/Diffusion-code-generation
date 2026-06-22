@@ -1,4 +1,7 @@
+import math
+
+def ellipse_area(major_axis=6.0, minor_axis=4.0):
+    return math.pi * major_axis * minor_axis / 4.0
+
 if __name__ == '__main__':
-    parts = ["Hello", " ", "world", "!", "This", " is", "a", "test."]
-    result_join = "".join(parts)
-    print(result_join)
+    print(ellipse_area())

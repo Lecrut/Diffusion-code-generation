@@ -1,12 +1,8 @@
-def to_lower(s: str) -> str:
-    return s.lower()
-def to_upper(s: str) -> str:
-    return s.upper()
-def to_title(s: str) -> str:
-    return s.title()
+def compute_area(diagonal1, diagonal2):
+    return 0.5 * diagonal1 * diagonal2
+
 if __name__ == '__main__':
-    sample_string = "HeLlO wOrLd"
-    print(f"Original: {sample_string}")
-    print(f"Lowercase: {to_lower(sample_string)}")
-    print(f"Uppercase: {to_upper(sample_string)}")
-    print(f"Title Case: {to_title(sample_string)}")
+    d1 = 4.0
+    d2 = 6.0
+    area = compute_area(d1, d2)
+    print(area)

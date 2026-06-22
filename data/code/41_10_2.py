@@ -1,22 +1,8 @@
-def manipulate_case(text, case=None):
-    if case is None:
-        return text
-    text = str(text)
-    case = case.lower()
-    if case == 'lower':
-        return text.lower()
-    elif case == 'upper':
-        return text.upper()
-    elif case == 'title':
-        return text.title()
-    elif case == 'swap':
-        return text.swapcase()
-    else:
-        return text
+def calculate_rhombus_area(diagonal_1: float, diagonal_2: float) -> float:
+    return (diagonal_1 * diagonal_2) / 2
+
 if __name__ == '__main__':
-    print(manipulate_case("Hello World", "lower"))
-    print(manipulate_case("Hello World", "upper"))
-    print(manipulate_case("Hello World", "title"))
-    print(manipulate_case("Hello World", "swap"))
-    print(manipulate_case("Hello World", "invalid"))
-    print(manipulate_case("Mixed Case", None))
+    d1 = 10.5
+    d2 = 4.2
+    result = calculate_rhombus_area(d1, d2)
+    print(result)

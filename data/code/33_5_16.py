@@ -1,41 +1,24 @@
-import re
+import math
 
-class TextProcessor:
-    """A utility class for processing text data."""
+def calculate_triangle_area(base, height):
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
 
-    def clean_text(self, text):
-        """
-        Removes all whitespace characters from the input string.
-
-        This method handles spaces, tabs, newlines, carriage returns, and other 
-        Unicode whitespace characters by replacing them with an empty string.
-
-        Args:
-            text (str): The input text to process.
-
-        Returns:
-            str: A new string with all whitespace removed.
-        """
-        if not isinstance(text, str):
-            raise TypeError("Input must be a string.")
-        
-        return re.sub(r'\s+', '', text)
+def compute_multiple_areas(bases, heights):
+    results = []
+    for b, h in zip(bases, heights):
+        results.append(calculate_triangle_area(b, h))
+    return results
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or network access
+    sample_base = 10.0
+    sample_height = 5.0
+    result = calculate_triangle_area(sample_base, sample_height)
+    print(result)
     
-    test_cases = [
-        "Hello World",
-        "\tNewline\nHere",
-        "   Multiple      Spaces  ",
-        "",
-        "No spaces here!"
-    ]
-
-    processor = TextProcessor()
-
-    print("Testing clean_text method:")
-    for i, original in enumerate(test_cases):
-        cleaned = processor.clean_text(original)
-        status = "PASS" if cleaned == "" or not any(c.isspace() for c in cleaned) else f"MISMATCH (Original: {repr(original)}) -> Cleaned: {repr(cleaned)}"
-        print(f"Test Case {i+1}: {status}")
+    multi_bases = [3.0, 7.0, 12.0]
+    multi_heights = [4.0, 2.0, 8.0]
+    multi_results = compute_multiple_areas(multi_bases, multi_heights)
+    for val in multi_results:
+        print(val)

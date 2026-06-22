@@ -1,8 +1,11 @@
-def calculate_square_area(side_length: float) -> float:
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def calculate_square_pyramid_surface_area(base_side, slant_height):
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    total_area = base_area + lateral_area
+    return round(total_area, 2)
 
 if __name__ == '__main__':
-    sample_side = 5.0
-    calculated_area = calculate_square_area(sample_side)
-    print(f"The area of a square with side {sample_side} is {calculated_area}")
+    base_side_length = 5
+    slant_height_value = 7
+    result = calculate_square_pyramid_surface_area(base_side_length, slant_height_value)
+    print(result)

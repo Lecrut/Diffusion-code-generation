@@ -1,9 +1,8 @@
-def append_strings(first: str, second: str) -> str:
-    """Returns a new string formed by appending 'second' to 'first'."""
-    return f"{first}{second}"
+def calculate_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    sample_first = "Hello"
-    sample_second = " World"
-    result = append_strings(sample_first, sample_second)
-    print(result)
+    base = 10
+    height = 5
+    area = calculate_parallelogram_area(base, height)
+    print(area)

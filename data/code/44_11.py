@@ -1,7 +1,11 @@
-def calculate_rectangle_perimeter(length: float, width: float) -> float:
-    return 2 * (length + width)
+import statistics
+
+def compute_mean(scores):
+    if not scores:
+        raise ValueError("Scores list cannot be empty")
+    return statistics.mean(scores)
+
 if __name__ == '__main__':
-    length_val = 10.5
-    width_val = 5.0
-    perimeter = calculate_rectangle_perimeter(length_val, width_val)
-    print(perimeter)
+    test_scores = [85, 92, 78, 90, 88]
+    result = compute_mean(test_scores)
+    print(result)

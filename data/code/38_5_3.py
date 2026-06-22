@@ -1,22 +1,13 @@
-def find_duplicates(s):
-    char_counts = {}
-    duplicates = set()
-    for char in s:
-        if char in char_counts:
-            if char_counts[char] == 1:
-                duplicates.add(char)
-        char_counts[char] = char_counts.get(char, 0) + 1
-    return list(duplicates)
+import math
+from decimal import Decimal, getcontext
+
+def compute_cone_volume(radius: float, height: float) -> float:
+    getcontext().prec = 50
+    r = Decimal(str(radius))
+    h = Decimal(str(height))
+    volume = Decimal('1') / Decimal('3') * Decimal(str(math.pi)) * r ** 2 * h
+    return float(volume)
+
 if __name__ == '__main__':
-    test_string1 = "programming"
-    result1 = find_duplicates(test_string1)
-    print(f"String: {test_string1}, Duplicates: {result1}")
-    test_string2 = "aabbccddeeff"
-    result2 = find_duplicates(test_string2)
-    print(f"String: {test_string2}, Duplicates: {result2}")
-    test_string3 = "abcde"
-    result3 = find_duplicates(test_string3)
-    print(f"String: {test_string3}, Duplicates: {result3}")
-    test_string4 = "hello world"
-    result4 = find_duplicates(test_string4)
-    print(f"String: {test_string4}, Duplicates: {result4}")
+    result = compute_cone_volume(2.5, 4.0)
+    print(result)

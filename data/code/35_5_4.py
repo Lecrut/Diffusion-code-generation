@@ -1,12 +1,18 @@
-import string
-def count_vowels_single_pass(text):
-    vowel_count = 0
-    vowels = "aeiouAEIOU"
-    for char in text:
-        if char in vowels:
-            vowel_count += 1
-    return vowel_count
+class CubeVolumeCalculator:
+    DEFAULT_EDGE = 6.0
+
+    @staticmethod
+    def _validate_edge(edge):
+        if edge <= 0:
+            raise ValueError("Edge length must be positive")
+        return edge
+
+    @staticmethod
+    def calculate(edge_length):
+        valid_edge = CubeVolumeCalculator._validate_edge(edge_length)
+        return valid_edge * valid_edge * valid_edge
+
 if __name__ == '__main__':
-    sample_string = "This is a long string with many vowels"
-    result = count_vowels_single_pass(sample_string)
+    edge = CubeVolumeCalculator.DEFAULT_EDGE
+    result = CubeVolumeCalculator.calculate(edge)
     print(result)

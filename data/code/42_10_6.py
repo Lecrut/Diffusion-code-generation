@@ -1,18 +1,13 @@
-def build_string_from_parts(parts, separator=None):
-    if not parts:
-        return ""
-    if separator is None:
-        return "".join(parts)
-    else:
-        return separator.join(parts)
+import math
+
+def calculate_ellipse_area(major_axis, minor_axis):
+    a = major_axis / 2
+    b = minor_axis / 2
+    area = math.pi * a * b
+    return area
+
 if __name__ == '__main__':
-    list1 = ["hello", "world", "python"]
-    print(f"Test 1 (no separator): {build_string_from_parts(list1)}")
-    print(f"Test 2 (with space separator): {build_string_from_parts(list1, ' ')}")
-    print(f"Test 3 (with comma separator): {build_string_from_parts(list1, ', ')}")
-    list2 = []
-    print(f"Test 4 (empty list, no separator): {build_string_from_parts(list2)}")
-    print(f"Test 5 (empty list, with separator): {build_string_from_parts(list2, ', ')}")
-    list3 = ["a", "b", "c"]
-    print(f"Test 6 (single element): {build_string_from_parts(list3, '-')}")
-    print(f"Test 7 (single element, no separator): {build_string_from_parts(list3)}")
+    major = 10.0
+    minor = 6.0
+    result = calculate_ellipse_area(major, minor)
+    print(result)

@@ -1,6 +1,8 @@
-def get_first_letters(list_of_strings):
-    return [s[0] for s in list_of_strings]
+def compute_cuboid_surface_area(length, width, height):
+    return 2 * (length * width + width * height + height * length)
+
 if __name__ == '__main__':
-    sample_list = ["apple", "banana", "cherry", "date"]
-    result = get_first_letters(sample_list)
-    print(result)
+    length = 5
+    width = 4
+    height = 3
+    print(compute_cuboid_surface_area(length, width, height))

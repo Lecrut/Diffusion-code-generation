@@ -1,9 +1,6 @@
-class StringAppender:
-    @staticmethod
-    def append_strings(first_string: str, second_string: str) -> str:
-        """Returns a new string formed by appending the second argument to the first."""
-        return f"{first_string}{second_string}"
+def parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    result = StringAppender.append_strings("Hello", "World")
-    print(result)
+    print(parallelogram_area(5, 10))
+    print(parallelogram_area(7.5, 3.2))

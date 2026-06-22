@@ -1,9 +1,10 @@
-class StringAppender:
-    def append_strings(self, first_string: str, second_string: str) -> str:
-        """Returns a new string formed by appending the second string to the first."""
-        return f"{first_string}{second_string}"
+def area_of_parallelogram(base, height):
+    if not (isinstance(base, (int, float)) and isinstance(height, (int, float))):
+        raise TypeError("Inputs must be numeric")
+    if base <= 0 or height <= 0:
+        raise ValueError("Inputs must be positive")
+    return base * height
 
 if __name__ == '__main__':
-    appender = StringAppender()
-    result = appender.append_strings("Hello", "World")
+    result = area_of_parallelogram(10, 5)
     print(result)

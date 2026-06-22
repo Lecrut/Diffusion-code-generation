@@ -1,8 +1,14 @@
-def calculate_rectangle_area(length, width):
-    area = length * width
-    return area
+def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+    sequence = [0, 1]
+    for i in range(2, n):
+        next_val = sequence[-1] + sequence[-2]
+        sequence.append(next_val)
+    return sequence
+
 if __name__ == '__main__':
-    length_sample = 10
-    width_sample = 5
-    result = calculate_rectangle_area(length_sample, width_sample)
+    result = generate_fibonacci(100)
     print(result)

@@ -1,28 +1,28 @@
-def capitalize_first_letter_only(text):
-    result = []
-    capitalize_next = True
-    for char in text:
-        if char.isalpha():
-            if capitalize_next:
-                result.append(char.upper())
-                capitalize_next = False
-            else:
-                result.append(char.lower())
-        else:
-            result.append(char)
-            if char.isspace():
-                capitalize_next = True
-            else:
-                capitalize_next = False
-    return "".join(result)
+import math
+
+UNIT_MULTIPLIERS = {
+    'mm': 0.001,
+    'cm': 0.01,
+    'm': 1.0,
+    'km': 1000.0,
+    'in': 0.0254,
+    'ft': 0.3048,
+    'yd': 0.9144
+}
+
+class Cylinder:
+    def __init__(self, radius, height, unit='m'):
+        self.radius = radius
+        self.height = height
+        multiplier = UNIT_MULTIPLIERS.get(unit, 1.0)
+        self._radius_m = radius * multiplier
+        self._height_m = height * multiplier
+
+    def surface_area(self):
+        base_part = 2 * math.pi * self._radius_m ** 2
+        side_part = 2 * math.pi * self._radius_m * self._height_m
+        return base_part + side_part
+
 if __name__ == '__main__':
-    sample1 = "hello world this is a test"
-    sample2 = "this is another example"
-    sample3 = "a short sentence"
-    sample4 = "tHis Is a MiXeD CaSe"
-    sample5 = "  leading and trailing spaces "
-    print(f"'{sample1}' -> '{capitalize_first_letter_only(sample1)}'")
-    print(f"'{sample2}' -> '{capitalize_first_letter_only(sample2)}'")
-    print(f"'{sample3}' -> '{capitalize_first_letter_only(sample3)}'")
-    print(f"'{sample4}' -> '{capitalize_first_letter_only(sample4)}'")
-    print(f"'{sample5}' -> '{capitalize_first_letter_only(sample5)}'")
+    test_cylinder = Cylinder(radius=15, height=25, unit='cm')
+    print(test_cylinder.surface_area())

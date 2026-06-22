@@ -1,28 +1,13 @@
-def capitalize_first_letter_only(text):
-    result = []
-    capitalize_next = True
-    for char in text:
-        if char.isalpha():
-            if capitalize_next:
-                result.append(char.upper())
-                capitalize_next = False
-            else:
-                result.append(char.lower())
-        else:
-            result.append(char)
-            if char.isspace():
-                capitalize_next = True
-            else:
-                capitalize_next = False
-    return "".join(result)
-if __name__ == '__main__':
-    sample1 = "hello world this is a test"
-    sample2 = "this is another example"
-    sample3 = "a short sentence"
-    sample4 = "already capitalized"
-    sample5 = "word1 word2-with-hyphen"
-    print(f"'{sample1}' -> '{capitalize_first_letter_only(sample1)}'")
-    print(f"'{sample2}' -> '{capitalize_first_letter_only(sample2)}'")
-    print(f"'{sample3}' -> '{capitalize_first_letter_only(sample3)}'")
-    print(f"'{sample4}' -> '{capitalize_first_letter_only(sample4)}'")
-    print(f"'{sample5}' -> '{capitalize_first_letter_only(sample5)}'")
+import math
+
+def compute_cylinder_surface_area(radius, height):
+    lateral_area = 2 * math.pi * radius * height
+    total_area = lateral_area + 2 * math.pi * radius ** 2
+    return lateral_area, total_area
+
+if __name__ == "__main__":
+    radius = 5.0
+    height = 10.0
+    lateral, total = compute_cylinder_surface_area(radius, height)
+    print(f"{lateral=}")
+    print(f"{total=}")

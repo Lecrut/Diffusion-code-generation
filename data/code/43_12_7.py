@@ -1,40 +1,26 @@
-class Square:
-    """A class representing a square."""
+import math
 
-    def __init__(self, side_length: float) -> None:
-        """Initialize the square with a specific side length.
-
-        Args:
-            side_length (float): The length of one side of the square. Must be non-negative.
-
-        Raises:
-            ValueError: If the side length is negative.
-        """
-        if side_length < 0:
-            raise ValueError("Side length must be non-negative.")
-        self.side = side_length
-
-    def area(self) -> float:
-        """Calculate and return the area of the square.
-
-        Returns:
-            float: The calculated area based on the formula side * side.
-        """
-        return self.side ** 2
+def surface_area_of_square_pyramid(base_length: float, lateral_edge: float) -> float:
+    if base_length <= 0 or lateral_edge <= 0:
+        raise ValueError("Dimensions must be positive")
+    
+    half_base = base_length / 2
+    
+    slant_height_squared = lateral_edge ** 2 - half_base ** 2
+    
+    if slant_height_squared < 0:
+        raise ValueError("Lateral edge is too short for the given base")
+    
+    slant_height = math.sqrt(slant_height_squared)
+    
+    base_area = base_length ** 2
+    
+    triangular_face_area = (base_length * slant_height) / 2
+    
+    total_surface_area = base_area + 4 * triangular_face_area
+    
+    return total_surface_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the Square class
-    try:
-        sq1 = Square(5)
-        print(f"Square with side {sq1.side}: Area is {sq1.area()}")
-
-        sq2 = Square(-3)  # This will trigger a ValueError
-    except ValueError as e:
-        print(f"Error creating square with negative side: {e}")
-    
-    try:
-        sq3 = Square(0.5)
-        print(f"Square with side {sq3.side}: Area is {sq3.area()}")
-    except Exception:
-        # Handle potential unexpected errors during the sample execution block, though none are expected here.
-        pass
+    result = surface_area_of_square_pyramid(4, 5)
+    print(result)

@@ -1,14 +1,8 @@
-def generate_substrings(s):
-    n = len(s)
-    for i in range(n):
-        for j in range(i + 1, n + 1):
-            yield s[i:j]
+def calculate_prism_volume(base_area, height):
+    return base_area * height
+
 if __name__ == '__main__':
-    test_string = "abc"
-    substrings_gen = generate_substrings(test_string)
-    result = list(substrings_gen)
+    base_area_value = 10
+    height_value = 5
+    result = calculate_prism_volume(base_area_value, height_value)
     print(result)
-    test_string_long = "abcdefg"
-    substrings_gen_long = generate_substrings(test_string_long)
-    result_long = list(substrings_gen_long)
-    print(result_long)

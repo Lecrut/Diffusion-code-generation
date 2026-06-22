@@ -1,27 +1,16 @@
-reversed_string = "Hello World"
+class Trapezoid:
+    def __init__(self, base1, base2, height):
+        if not isinstance(base1, (int, float)) or not isinstance(base2, (int, float)) or not isinstance(height, (int, float)):
+            raise TypeError("All dimensions must be numeric")
+        if base1 <= 0 or base2 <= 0 or height <= 0:
+            raise ValueError("All dimensions must be positive")
+        self.base1 = base1
+        self.base2 = base2
+        self.height = height
 
-def reverse_text(text: str) -> str:
-    """
-    Reverses a given string using Python's slicing feature, 
-    which is considered the most idiomatic and efficient method.
-
-    Args:
-        text (str): The input string to be reversed.
-
-    Returns:
-        str: A new string containing characters in reverse order.
-    
-    Example:
-        >>> reverse_text("Hello")
-        'olleH'
-    """
-    return text[::-1]
+    def area(self):
+        return 0.5 * (self.base1 + self.base2) * self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or external dependencies
-    samples = ["Python", "12345", "!@#$%", "", "a"]
-
-    for item in samples:
-        reversed_item = reverse_text(item)
-        print(f"Original: '{item}'")
-        print(f"Reversed: '{reversed_item}'")
+    t = Trapezoid(5, 7, 4)
+    print(t.area())

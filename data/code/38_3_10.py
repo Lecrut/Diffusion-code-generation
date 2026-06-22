@@ -1,33 +1,18 @@
-def has_repeated_letters(text: str) -> bool:
-    """
-    Determines if a given string contains any repeated letters (case-insensitive).
-    
-    Args:
-        text (str): The input string to check.
-        
-    Returns:
-        bool: True if there are repeated letters, False otherwise.
-    """
-    seen = set()
-    for char in text.lower():
-        # Only consider alphabetic characters and ignore others like digits or spaces
-        if 'a' <= char <= 'z':
-            if char in seen:
-                return True
-            seen.add(char)
-    return False
+import math
+
+class Cone:
+    def __init__(self, radius, height):
+        self.radius = radius
+        self.height = height
+
+    def volume(self):
+        return (1 / 3) * math.pi * self.radius ** 2 * self.height
+
+    def surface_area(self):
+        slant = math.sqrt(self.radius ** 2 + self.height ** 2)
+        return math.pi * self.radius * (self.radius + slant)
 
 if __name__ == '__main__':
-    test_cases = [
-        ("hello", True),       # h, e, l, o -> l repeats
-        ("abcdef", False),     # all unique
-        ("Hello World!", True),# H and h count as repeat if we consider case-insensitive (but here only 'l' is repeated)
-        ("a1b2c3", False),    # no letters repeat
-        ("aaa", True),         # a repeats multiple times
-        ("The quick brown fox jumps over the lazy dog", True),       # t, h, e appear multiple times (case-insensitive logic applies to 't' in The and the)
-    ]
-
-    for test_input, expected_result in test_cases:
-        result = has_repeated_letters(test_input)
-        status = "PASS" if result == expected_result else "FAIL"
-        print(f"[{status}] Input: '{test_input}' -> Expected: {expected_result}, Got: {result}")
+    cone = Cone(4, 12)
+    print(cone.volume())
+    print(cone.surface_area())

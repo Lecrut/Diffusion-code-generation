@@ -1,31 +1,18 @@
-import unittest
+import math
 
-def calculate_square_area(side_length):
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def surface_area_of_square_pyramid(base_length, slant_height):
+    base_area = base_length ** 2
+    lateral_area = 2 * base_length * slant_height
+    total_area = base_area + lateral_area
+    return total_area
 
-class TestSquareArea(unittest.TestCase):
-    
-    def test_positive_integer_side(self):
-        self.assertEqual(calculate_square_area(5), 25)
-
-    def test_zero_side(self):
-        self.assertEqual(calculate_square_area(0), 0)
-
-    def test_negative_side_raises_error(self):
-        with self.assertRaises(ValueError):
-            calculate_square_area(-3)
-
-    def test_float_side(self):
-        side = 4.5
-        expected = side ** 2
-        self.assertAlmostEqual(calculate_square_area(side), expected, places=10)
+def total_surface_area_of_square_pyramid(base_length, height):
+    half_base = base_length / 2
+    slant_height = math.sqrt(half_base ** 2 + height ** 2)
+    return surface_area_of_square_pyramid(base_length, slant_height)
 
 if __name__ == '__main__':
-    # Run tests with hard-coded sample values to verify functionality without user input or files
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestSquareArea)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-
-    if not result.wasSuccessful():
-        exit(result.failIfNoTests and "No tests were run" or None, 1)
+    base = 10
+    height = 12
+    result = total_surface_area_of_square_pyramid(base, height)
+    print(result)

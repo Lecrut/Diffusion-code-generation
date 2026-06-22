@@ -1,15 +1,17 @@
-def filter_alphanumeric(input_string):
-    result = ""
-    for char in input_string:
-        if char.isalnum():
-            result += char
-    return result
+def calculate_triangle_area(base, height):
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    test_string1 = "Hello World! 123"
-    test_string2 = "This is a test string with symbols @#$."
-    test_string3 = "OnlyLettersAndNumbers456"
-    test_string4 = "$$%^&*() "
-    print(filter_alphanumeric(test_string1))
-    print(filter_alphanumeric(test_string2))
-    print(filter_alphanumeric(test_string3))
-    print(filter_alphanumeric(test_string4))
+    print(calculate_triangle_area(10, 5))
+    print(calculate_triangle_area(0, 5))
+    print(calculate_triangle_area(10, 0))
+    try:
+        calculate_triangle_area(-5, 10)
+    except ValueError as e:
+        print(str(e))
+    try:
+        calculate_triangle_area(5, -10)
+    except ValueError as e:
+        print(str(e))

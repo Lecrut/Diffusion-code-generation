@@ -1,26 +1,28 @@
-import argparse
+from typing import NamedTuple
 
-def get_first_char_of_lines(file_path):
-    """Reads a file line by line and prints the first character of each non-empty line."""
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                stripped_line = line.strip()
-                if stripped_line:
-                    print(stripped_line[0])
-    except FileNotFoundError:
-        pass
+class Dimensions(NamedTuple):
+    length: float
+    width: float
+    height: float
 
-def main():
-    """Sets up argument parser to accept a file path and processes the first character of non-empty lines."""
-    # Using optional arguments with defaults ensures no user input is required for execution.
-    parser = argparse.ArgumentParser(description='Prints the first character of every non-empty line in a specified file.')
+def _validate_positive(value: float, name: str) -> float:
+    if value <= 0:
+        raise ValueError(f"{name} must be positive, got {value}")
+    return value
+
+def compute_rectangular_surface_area(dim: Dimensions) -> float:
+    l: float = _validate_positive(dim.length, "length")
+    w: float = _validate_positive(dim.width, "width")
+    h: float = _validate_positive(dim.height, "height")
     
-    # 'path' accepts an argument but has a default value ('sample.txt'), satisfying "no interactive prompt" and "hard-coded sample values".
-    parser.add_argument('path', nargs='?', default='nonexistent_sample_file')
-
-    args = parser.parse_args()
-    get_first_char_of_lines(args.path)
+    face_area_top_bottom: float = l * w
+    face_area_front_back: float = w * h
+    face_area_left_right: float = h * l
+    
+    total_surface_area: float = 2 * (face_area_top_bottom + face_area_front_back + face_area_left_right)
+    return total_surface_area
 
 if __name__ == '__main__':
-    main()
+    input_dimensions: Dimensions = Dimensions(length=2.5, width=3.0, height=4.0)
+    calculated_area: float = compute_rectangular_surface_area(input_dimensions)
+    print(calculated_area)

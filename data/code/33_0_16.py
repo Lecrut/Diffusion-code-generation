@@ -1,28 +1,16 @@
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all whitespace characters from the input string efficiently.
-    
-    Args:
-        text (str): The input string containing potential whitespace.
-        
-    Returns:
-        str: A new string with all leading, trailing, and middle 
-             spaces removed using built-in strip() method which handles 
-             various unicode whitespace correctly in modern Python 3.x.
-    """
-    return ''.join(text.split())
+def calculate_triangle_area(base, height):
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a numeric value")
+    if not isinstance(height, (int, float)):
+        raise TypeError("Height must be a numeric value")
+    if base < 0:
+        raise ValueError("Base must be non-negative")
+    if height < 0:
+        raise ValueError("Height must be non-negative")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    sample_strings = [
-        "Hello World",
-        "\t\n   \n\tFinal Text\n ",
-        "NoSpacesHere!!!",
-        "  Leading and Trailing Spaces  ",
-        "Mixed\tTabs,\nNewlines, and spaces"
-    ]
-    
-    for original in sample_strings:
-        result = remove_all_spaces(original)
-        print(f"Input:     {repr(original)}")
-        print(f"Output:    {repr(result)}")
-        print("-" * 40)
+    base = 10
+    height = 5
+    area = calculate_triangle_area(base, height)
+    print(area)

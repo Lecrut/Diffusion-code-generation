@@ -1,12 +1,7 @@
-# Script to combine two strings based on sample values without user interaction
-
-def main():
-    # Hard-coded sample values as per requirements
-    str1 = "Hello"
-    str2 = "World"
-    
-    # Print the combined result
-    print(str1 + str2)
+calculate_parallelogram_area = lambda base, height: base * height
 
 if __name__ == '__main__':
-    main()
+    base = 10
+    height = 5
+    result = calculate_parallelogram_area(base, height)
+    print(result)

@@ -1,5 +1,8 @@
-remove_spaces = lambda s: s.replace(' ', '')
+def compute_triangle_area(base, height):
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    test_string = "hello world"
-    result = remove_spaces(test_string)
-    print(result)
+    base = 10
+    height = 5
+    area = compute_triangle_area(base, height)
+    print(area)

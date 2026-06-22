@@ -1,13 +1,8 @@
-"""
-Module to detect and list all repeated characters in an input string using set operations.
-
-This module provides a function that analyzes a given string, identifies duplicate 
-characters (case-sensitive), sorts them by their original appearance order among duplicates,
-and returns both the count of occurrences and the unique list of such characters.
-
-Author: AI Assistant
-Date: 2024
-"""
+def cone_volume(radius, height):
+    return (1/3) * 3.141592653589793 * radius * radius * height
 
 if __name__ == '__main__':
-    pass
+    r = 8
+    h = 11
+    result = cone_volume(r, h)
+    print(f"{result:.2f}")

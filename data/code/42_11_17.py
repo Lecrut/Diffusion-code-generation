@@ -1,37 +1,37 @@
-class StringAssembler:
-    def join_parts(self, parts: list[str], separator: str = ' ', fill_value: str = '') -> str:
-        """
-        Efficiently builds a string from a list of parts using the built-in str.join().
+import math
+from typing import List, Tuple
+
+PI_CONSTANT = math.pi
+
+def validate_axis_value(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Axis values must be numeric")
+    if value < 0:
+        raise ValueError("Axis values must be non-negative")
+    return float(value)
+
+def compute_single_area(major, minor):
+    validated_major = validate_axis_value(major)
+    validated_minor = validate_axis_value(minor)
+    return PI_CONSTANT * validated_major * validated_minor
+
+def compute_ellipse_areas(pairs: List[Tuple[float, float]]) -> List[float]:
+    if not isinstance(pairs, list):
+        raise TypeError("Input must be a list of pairs")
+    
+    areas = []
+    for pair in pairs:
+        if not isinstance(pair, (list, tuple)) or len(pair) != 2:
+            raise ValueError("Each pair must contain exactly two elements")
         
-        Args:
-            parts (list[str]): A list of strings to be joined.
-            separator (str): The string that separates each part in the final result. Defaults to space ' '.
-            fill_value (str): Value used if an empty string is encountered as a placeholder 
-                             or when handling None values explicitly by converting them first.
-        
-        Returns:
-            str: The joined string with parts separated by the specified separator.
-        """
-        # Convert any non-string elements to strings using fill_value, then join efficiently.
-        processed_parts = [fill_value if p is None else (p if isinstance(p, str) else str(p)) for p in parts]
-        
-        return "".join(processed_parts).replace("", separator)
+        major_axis, minor_axis = pair
+        area = compute_single_area(major_axis, minor_axis)
+        areas.append(area)
+    
+    return areas
 
 if __name__ == '__main__':
-    # Sample usage without any user input or external dependencies.
-    assembler = StringAssembler()
-    
-    sample_list_1 = ["Hello", "World"]
-    result_1 = assembler.join_parts(sample_list_1, separator=',')
-    
-    sample_list_2 = ["Python", "", "is", None]
-    # In this specific implementation logic for demonstration: 
-    # We treat empty strings as valid parts but the fill_value is primarily for non-string conversion.
-    result_2 = assembler.join_parts(sample_list_2, separator=' - ')
-    
-    sample_list_3 = ["First Part"] * 10 + [None]
-    result_3 = assembler.join_parts(sample_list_3)
-
-    print(f"Result 1: {result_1}")
-    print(f"Result 2: {result_2}")
-    print(f"Result 3: {result_3}")
+    sample_pairs = [(5.0, 3.0), (10, 4), (7.5, 2.5)]
+    results = compute_ellipse_areas(sample_pairs)
+    for area in results:
+        print(area)

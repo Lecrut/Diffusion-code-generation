@@ -1,8 +1,6 @@
-import re
-def get_first_letters(text):
-    words = text.split()
-    return [word[0] for word in words if word]
+def compute_surface_area(length, width, height):
+    return 2 * (length * width + width * height + height * length)
+
 if __name__ == '__main__':
-    sample_string = "This is a sample sentence for testing"
-    result = get_first_letters(sample_string)
+    result = compute_surface_area(5.0, 3.0, 2.0)
     print(result)

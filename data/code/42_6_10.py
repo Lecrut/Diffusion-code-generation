@@ -1,30 +1,8 @@
-"""
-Module to efficiently join a list of strings into a single string.
-This implementation uses Python's built-in `str.join()` method, which is 
-highly optimized in CPython compared to manual loop concatenation.
-"""
+import math
 
-def efficient_join(strings: list[str]) -> str:
-    """
-    Joins a list of strings into a single string using the most efficient
-    available built-in method (str.join).
-
-    Args:
-        strings (list[str]): A list containing the strings to be joined.
-
-    Returns:
-        str: The resulting concatenated string.
-    
-    Example:
-        >>> efficient_join(["Hello", " ", "World"])
-        'Hello World'
-    """
-    return "".join(strings)
+def area_of_ellipse(semi_major, semi_minor):
+    return math.pi * semi_major * semi_minor
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    sample_list = ["Python", "-", "is", "-", "awesome"]
-    
-    result = efficient_join(sample_list)
-    
-    print(f"Joined string: {result}")
+    result = area_of_ellipse(5.0, 3.0)
+    print(result)

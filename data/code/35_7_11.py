@@ -1,17 +1,11 @@
-import string
-
-def count_vowels(text: str) -> int:
-    """Returns the total number of vowels in the given text, case-insensitive."""
-    if not isinstance(text, str):
-        return 0
-    vowel_count = sum(1 for char in text.lower() if char in 'aeiou')
-    return vowel_count
+def cube_volume(edge_length):
+    if not isinstance(edge_length, (int, float)):
+        raise TypeError("Edge length must be a number")
+    if edge_length < 0:
+        raise ValueError("Edge length must be non-negative")
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    sample_words = ["hello", "sky", "rainbow"]
-    
-    # Simulate a prompt scenario without using interactive input functions as per constraints.
-    # We iterate through hard-coded sample values to demonstrate the functionality.
-    for word in sample_words:
-        vowel_total = count_vowels(word)
-        print(f"Word '{word}' contains {vowel_total} vowels.")
+    sample_values = [0, 1, 2.5, 10, 3.7]
+    for val in sample_values:
+        print(cube_volume(val))

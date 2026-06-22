@@ -1,13 +1,16 @@
-import math
+def validate_positive(value, name):
+    if not isinstance(value, (int, float)):
+        raise TypeError(f"{name} must be a number")
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
 
-def calculate_square_area(side_length: float) -> float:
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def calculate_surface_area(base_side, slant_height):
+    validate_positive(base_side, "base_side")
+    validate_positive(slant_height, "slant_height")
+    base_area = base_side ** 2
+    slant_area = 2 * base_side * slant_height
+    return base_area + slant_area
 
 if __name__ == '__main__':
-    sample_side = 5.0
-    
-    # Calculate and print the result for the sample value
-    calculated_area = calculate_square_area(sample_side)
-    print(f"Side length: {sample_side}")
-    print(f"Area of square: {calculated_area:.2f} square units")
+    result = calculate_surface_area(5, 7)
+    print(result)

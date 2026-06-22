@@ -1,20 +1,11 @@
-def main():
-    """
-    Reverses a given sentence without using interactive input prompts.
-    This function demonstrates the logic by processing hard-coded sample values.
-    It does not call input(), sys.stdin, or require command-line arguments.
-    """
-    
-    # Hard-coded sample sentences to avoid user interaction requirements
-    samples = [
-        "Hello World",
-        "Python Programming is Fun"
-    ]
-
-    for sentence in samples:
-        reversed_sentence = sentence[::-1]
-        print(f"Original: {sentence}")
-        print(f"Reversed: {reversed_sentence}\n")
+def compute_trapezoid_area(bottom_base, top_base, altitude):
+    total_base_length = bottom_base + top_base
+    average_width = total_base_length / 2
+    return average_width * altitude
 
 if __name__ == '__main__':
-    main()
+    val_bottom = 12.5
+    val_top = 8.5
+    val_height = 6.0
+    result = compute_trapezoid_area(val_bottom, val_top, val_height)
+    print(result)

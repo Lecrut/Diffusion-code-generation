@@ -1,27 +1,15 @@
-def reverse_string(s: str) -> str:
-    """
-    Returns the reversed version of the input string in a time-efficient manner.
-    
-    Args:
-        s (str): The string to be reversed.
-        
-    Returns:
-        str: The reversed string.
-    """
-    return s[::-1]
+from __future__ import annotations
+
+import math
+
+BASE_FACTOR: float = 0.5
+
+def calculate_trapezoid_area(base1: float, base2: float, height: float) -> float:
+    return BASE_FACTOR * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_cases = [
-        "Hello, World!",
-        "",
-        "Python",
-        "A" * 10000  # Large string to ensure efficiency
-    ]
-
-    results = []
-    for text in test_cases:
-        reversed_text = reverse_string(text)
-        results.append(f'Original: "{text}" -> Reversed: "{reversed_text}"')
-    
-    print('\n'.join(results))
+    first_base: float = 12.0
+    second_base: float = 8.0
+    altitude: float = 5.0
+    result: float = calculate_trapezoid_area(first_base, second_base, altitude)
+    print(result)

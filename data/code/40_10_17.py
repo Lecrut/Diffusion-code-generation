@@ -1,34 +1,22 @@
-def get_first_letters(strings):
-    """
-    Returns a list containing the first letter of each input string.
-    
-    Args:
-        strings (list[str]): A list of non-empty strings.
-        
-    Returns:
-        list[str]: A list where each element is the first character 
-                   corresponding to the respective input string.
-                   
-    Raises:
-        ValueError: If any string in the list is empty or None.
-    """
-    result = []
-    
-    for s in strings:
-        if not isinstance(s, str) or len(s) == 0:
-            raise ValueError(f"Empty or invalid input found: {s}")
-        
-        # Efficiently access and append the first character
-        result.append(s[0])
-        
-    return result
+def validate_dimensions(length, width, height):
+    if not isinstance(length, (int, float)) or length <= 0:
+        raise ValueError("Length must be a positive number")
+    if not isinstance(width, (int, float)) or width <= 0:
+        raise ValueError("Width must be a positive number")
+    if not isinstance(height, (int, float)) or height <= 0:
+        raise ValueError("Height must be a positive number")
+
+def calculate_surface_area(length, width, height):
+    validate_dimensions(length, width, height)
+    face_area_lw = length * width
+    face_area_wh = width * height
+    face_area_hl = height * length
+    total = 2 * (face_area_lw + face_area_wh + face_area_hl)
+    return total
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user interaction)
-    sample_strings = ["Hello", "World", "Python", "Scripting"]
-    
-    try:
-        first_letters = get_first_letters(sample_strings)
-        print(first_letters)
-    except ValueError as e:
-        print(f"Error processing input: {e}")
+    dim_length = 10
+    dim_width = 5
+    dim_height = 3
+    computed_area = calculate_surface_area(dim_length, dim_width, dim_height)
+    print(computed_area)

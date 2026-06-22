@@ -1,28 +1,8 @@
-def remove_whitespace_generator(text: str):
-    """
-    A generator function that yields characters from an input string,
-    skipping any whitespace (spaces, tabs, newlines).
-    
-    Args:
-        text (str): The input string to process.
-        
-    Yields:
-        str: Individual non-whitespace characters one at a time.
-    """
-    for char in text:
-        if not char.isspace():
-            yield char
+def calculate_triangle_area(base, height):
+    return (base * height) / 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or args)
-    sample_strings = [
-        "Hello World",
-        "\tPython\tis\namazing\r",
-        "   Leading spaces  ",
-        ""
-    ]
-
-    for test_input in sample_strings:
-        print(f"Input: {repr(test_input)}")
-        result = ''.join(remove_whitespace_generator(test_input))
-        print(f"Output: '{result}'\n")
+    base = 10.5
+    height = 7.2
+    area = calculate_triangle_area(base, height)
+    print(area)

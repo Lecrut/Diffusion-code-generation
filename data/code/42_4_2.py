@@ -1,11 +1,8 @@
-def concatenate_with_separator(string_iterable, separator):
-    result = ""
-    for s in string_iterable:
-        result += s + separator
-    yield result.rstrip(separator)
+def compute_ellipse_area(a, b):
+    import math
+    return math.pi * a * b
+
 if __name__ == '__main__':
-    input_strings = ["apple", "banana", "cherry"]
-    separator_string = ", "
-    generator = concatenate_with_separator(input_strings, separator_string)
-    output_list = list(generator)
-    print(output_list)
+    semi_major = 5.0
+    semi_minor = 3.0
+    print(compute_ellipse_area(semi_major, semi_minor))

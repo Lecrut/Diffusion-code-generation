@@ -1,12 +1,7 @@
-def compare_lengths(len1, len2):
-    if len1 == len2:
-        return 'equal'
-    elif len1 > len2:
-        return 'len1 is greater'
-    else:
-        return 'len2 is smaller'
+def generate_square(rows, cols):
+    return [('*' * cols) for _ in range(rows)]
 
 if __name__ == '__main__':
-    print(compare_lengths(5, 3))
-    print(compare_lengths(2, 8))
-    print(compare_lengths(4, 4))
+    result = generate_square(8, 8)
+    for row in result:
+        print(row)

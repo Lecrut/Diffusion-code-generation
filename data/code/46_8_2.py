@@ -1,12 +1,27 @@
-class Triangle:
-    def __init__(self, side_a, side_b, side_c):
-        self.side_a = side_a
-        self.side_b = side_b
-        self.side_c = side_c
-
-    def calculate_perimeter(self):
-        return self.side_a + self.side_b + self.side_c
+def get_max_salary(salary_entries):
+    if salary_entries is None:
+        return 0
+    
+    valid_salaries = []
+    for entry in salary_entries:
+        if entry is not None and isinstance(entry, (int, float)):
+            valid_salaries.append(entry)
+    
+    if not valid_salaries:
+        return 0
+    
+    return max(valid_salaries)
 
 if __name__ == '__main__':
-    triangle = Triangle(3, 4, 5)
-    print(triangle.calculate_perimeter())
+    sample_data = [50000, None, 75000.50, None, 60000, '', [], None]
+    result = get_max_salary(sample_data)
+    print(result)
+    
+    empty_data = []
+    print(get_max_salary(empty_data))
+    
+    none_data = None
+    print(get_max_salary(none_data))
+    
+    all_none_data = [None, None, None]
+    print(get_max_salary(all_none_data))

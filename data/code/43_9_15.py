@@ -1,20 +1,21 @@
 import math
 
-def calculate_square_area(side_length):
-    """Calculate area of a square using side length."""
-    return side_length ** 2
+class GeometryUtils:
+    @staticmethod
+    def calculate_square_pyramid_surface_area(base_edge, slant_height):
+        base_area = base_edge * base_edge
+        triangle_area = 0.5 * base_edge * slant_height
+        lateral_area = 4 * triangle_area
+        total_surface_area = base_area + lateral_area
+        return total_surface_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values running without user input or external dependencies
-    samples = [3, 5.7, -4] 
-    for s in samples:
-        try:
-            area = calculate_square_area(abs(s)) if s < 0 else calculate_square_area(s)
-            print(f"Side length {s}: Area is {area}")
-        except Exception as e:
-            # Handle cases where side_length must be non-negative geometrically, though mathematically square can handle any real input in code logic. 
-            # This check ensures robust output for negative inputs if we consider only physical squares.
-            print(f"Invalid dimension or no area found for {s}: Negative dimensions are not physically valid.")
+    edge_length = 10
+    slant_height = 12
+    area = GeometryUtils.calculate_square_pyramid_surface_area(edge_length, slant_height)
+    print(area)
 
-    final_result = calculate_square_area(10)
-    assert isinstance(final_result, int), "Result must be an integer when input is 10."
+    edge_length_2 = 6
+    slant_height_2 = 8
+    area_2 = GeometryUtils.calculate_square_pyramid_surface_area(edge_length_2, slant_height_2)
+    print(area_2)

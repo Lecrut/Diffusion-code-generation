@@ -1,12 +1,11 @@
-import sys
-def calculate_perimeter(side_a, side_b, side_c):
-    return side_a + side_b + side_c
+def alphabet_triangle(height):
+    lines = []
+    for i in range(1, height + 1):
+        letters = [chr(ord('A') + j) for j in range(i)]
+        line = ''.join(letters)
+        lines.append(line)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    side_a = 5
-    side_b = 12
-    side_c = 13
-    perimeter = calculate_perimeter(side_a, side_b, side_c)
-    print(f"Side A: {side_a}")
-    print(f"Side B: {side_b}")
-    print(f"Side C: {side_c}")
-    print(f"Perimeter: {perimeter}")
+    result = alphabet_triangle(5)
+    print(result)

@@ -1,13 +1,8 @@
-import string
-def get_first_letters(text):
-    word_dict = {}
-    words = text.split()
-    for word in words:
-        cleaned_word = ''.join(char for char in word if char.isalpha())
-        if cleaned_word:
-            word_dict[cleaned_word] = cleaned_word[0]
-    return word_dict
+def compute_surface_area(length, width, height):
+    return 2 * (length * width + length * height + width * height)
+
 if __name__ == '__main__':
-    sample_string = "Hello, world! This is a test sentence with punctuation."
-    result = get_first_letters(sample_string)
-    print(result)
+    l = 10
+    w = 8
+    h = 6
+    print(compute_surface_area(l, w, h))

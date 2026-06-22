@@ -1,12 +1,18 @@
-class Square:
-    def __init__(self, side_length):
-        self.side_length = side_length
-    def calculate_area(self):
-        return self.side_length * self.side_length
+import math
+
+def surface_area_square_pyramid(base_length, lateral_edge_length):
+    if base_length <= 0 or lateral_edge_length <= 0:
+        raise ValueError("Lengths must be positive")
+    if base_length / 2 >= lateral_edge_length:
+        raise ValueError("Lateral edge must be greater than half the base length to form a pyramid")
+    half_base = base_length / 2
+    slant_height = math.sqrt(lateral_edge_length**2 - half_base**2)
+    base_area = base_length * base_length
+    lateral_area = 4 * (0.5 * base_length * slant_height)
+    return base_area + lateral_area
+
 if __name__ == '__main__':
-    square1 = Square(5)
-    area1 = square1.calculate_area()
-    print(f"The area of the first square is: {area1}")
-    square2 = Square(10.5)
-    area2 = square2.calculate_area()
-    print(f"The area of the second square is: {area2}")
+    base = 6.0
+    edge = 5.0
+    result = surface_area_square_pyramid(base, edge)
+    print(result)

@@ -1,11 +1,12 @@
 import math
 
-def calculate_square_area(side: float) -> float:
-    """Calculate the area of a square given its side length."""
-    return side * side
+def calculate_pyramid_surface_area(base_side, slant_height):
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Sample inputs and expected outputs without user interaction
-    samples = [5, 0.1, -3] 
-    for val in samples:
-        print(f"Side length: {val}, Area: {calculate_square_area(val):.2f}")
+    base_length = 5
+    slant = 8
+    result = calculate_pyramid_surface_area(base_length, slant)
+    print(result)

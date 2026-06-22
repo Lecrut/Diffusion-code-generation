@@ -1,8 +1,10 @@
-def calculate_perimeter(a, b, c):
-    return a + b + c
+def inverted_alphabet_triangle(rows=5):
+    lines = []
+    for i in range(rows, 0, -1):
+        chars = [chr(ord('A') + j) for j in range(i)]
+        line = ' '.join(chars)
+        lines.append(line)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    side1 = 3
-    side2 = 4
-    side3 = 5
-    perimeter = calculate_perimeter(side1, side2, side3)
-    print(perimeter)
+    print(inverted_alphabet_triangle())

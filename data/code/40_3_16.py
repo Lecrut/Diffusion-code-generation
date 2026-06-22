@@ -1,6 +1,8 @@
-def first_letters(s: str) -> str: return ' '.join(word[0] if word else '' for word in s.split())
+def calculate_surface_area(dimensions):
+    l, w, h = dimensions
+    return 2.0 * (l * w + w * h + h * l)
 
 if __name__ == '__main__':
-    test_cases = ["hello world", "one two three four five six seven eight nine ten"]
-    for tc in test_cases:
-        print(f"Input: '{tc}' => Output: '{first_letters(tc)}'")
+    dims = (3.0, 4.0, 5.0)
+    area = calculate_surface_area(dims)
+    print(area)

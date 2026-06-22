@@ -1,5 +1,9 @@
-def area(width, height):
-    return width * height
+def mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
 
 if __name__ == '__main__':
-    print(area(5, 10))
+    sample_values = [10, 20, 30, 40, 50]
+    result = mean(sample_values)
+    print(result)

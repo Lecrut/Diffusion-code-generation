@@ -1,29 +1,22 @@
-class TextCleaner:
-    def clean_text(self, text):
-        return "".join(text.split())
+import math
+
+def compute_triangle_area(base, height):
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    cleaner = TextCleaner()
-    sample1 = "  Hello world! \n this is a test. "
-    sample2 = "NoWhitespaceHere"
-    sample3 = "   multiple    spaces   in    between "
-    sample4 = ""
-    sample5 = "   \t\n"
-    result1 = cleaner.clean_text(sample1)
-    result2 = cleaner.clean_text(sample2)
-    result3 = cleaner.clean_text(sample3)
-    result4 = cleaner.clean_text(sample4)
-    result5 = cleaner.clean_text(sample5)
-    print(f"Original 1: '{sample1}'")
-    print(f"Cleaned 1: '{result1}'")
-    print("-" * 20)
-    print(f"Original 2: '{sample2}'")
-    print(f"Cleaned 2: '{result2}'")
-    print("-" * 20)
-    print(f"Original 3: '{sample3}'")
-    print(f"Cleaned 3: '{result3}'")
-    print("-" * 20)
-    print(f"Original 4: '{sample4}'")
-    print(f"Cleaned 4: '{result4}'")
-    print("-" * 20)
-    print(f"Original 5: '{sample5}'")
-    print(f"Cleaned 5: '{result5}'")
+    b1 = 10.0
+    h1 = 5.0
+    area1 = compute_triangle_area(b1, h1)
+    print(area1)
+
+    b2 = 7.5
+    h2 = 3.2
+    area2 = compute_triangle_area(b2, h2)
+    print(area2)
+
+    b3 = 0
+    h3 = 100
+    area3 = compute_triangle_area(b3, h3)
+    print(area3)

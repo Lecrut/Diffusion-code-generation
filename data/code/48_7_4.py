@@ -1,16 +1,15 @@
-import math
-def calculate_triangle_sides(a, b, c):
-    hypotenuse = max(a, b, c)
-    legs = [x for x in [a, b, c] if x != hypotenuse]
-    if hypotenuse == math.sqrt(legs[0]**2 + legs[1]**2):
-        return a, b, c
-    else:
-        return a, b, c
+def find_largest(nested_list):
+    max_value = None
+    for item in nested_list:
+        if isinstance(item, list):
+            current_max = find_largest(item)
+        else:
+            current_max = item
+        if max_value is None or current_max > max_value:
+            max_value = current_max
+    return max_value
+
 if __name__ == '__main__':
-    leg1 = 3
-    leg2 = 4
-    hypotenuse = 5
-    result = calculate_triangle_sides(leg1, leg2, hypotenuse)
-    print(f"Leg 1: {result[0]}")
-    print(f"Leg 2: {result[1]}")
-    print(f"Hypotenuse: {result[2]}")
+    sample_data = [1, [2, 3, [4, 5]], 6, [7, [8, 9, [10, 11]]]]
+    result = find_largest(sample_data)
+    print(result)

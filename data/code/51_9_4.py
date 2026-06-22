@@ -1,25 +1,36 @@
-import unittest
-def calculate_perimeter(length, width):
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative")
-    return 2 * (length + width)
-class TestPerimeterCalculation(unittest.TestCase):
-    def test_positive_integers(self):
-        self.assertEqual(calculate_perimeter(5, 10), 30)
-        self.assertEqual(calculate_perimeter(3, 3), 12)
-        self.assertEqual(calculate_perimeter(1, 1), 4)
-    def test_zero_input(self):
-        self.assertEqual(calculate_perimeter(0, 5), 10)
-        self.assertEqual(calculate_perimeter(0, 0), 0)
-    def test_mixed_positive_and_zero(self):
-        self.assertEqual(calculate_perimeter(0, 100), 200)
-        self.assertEqual(calculate_perimeter(50, 0), 100)
-    def test_negative_input_raises_error(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, 10)
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(5, -10)
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, -10)
+def build_symmetric_pyramid(rows: int) -> list:
+    pattern_cache = {}
+    
+    def get_spacing_pattern(row_index: int, total_rows: int) -> str:
+        if row_index in pattern_cache:
+            return pattern_cache[row_index]
+        
+        max_width = total_rows - 1
+        current_spacing = max_width - row_index
+        
+        left_spaces = ' ' * current_spacing
+        middle_numbers = list(range(1, row_index + 1))
+        right_numbers = list(range(row_index, 0, -1))
+        
+        combined_numbers = middle_numbers + right_numbers
+        
+        if row_index == 0:
+            line = left_spaces + '1'
+        else:
+            line = left_spaces + ' '.join(str(n) for n in combined_numbers)
+            
+        pattern_cache[row_index] = line
+        return line
+
+    pyramid_lines = []
+    for r in range(rows):
+        line = get_spacing_pattern(r, rows)
+        pyramid_lines.append(line)
+        
+    return pyramid_lines
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_rows = 6
+    result = build_symmetric_pyramid(sample_rows)
+    for line in result:
+        print(line)

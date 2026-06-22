@@ -1,21 +1,32 @@
-class StringManipulator:
-    def __init__(self, str1: str = "", str2: str = "") -> None:
-        """Initialize internal string variables."""
-        self.str1 = str1
-        self.str2 = str2
+class GeometryCalculator:
+    _units = {
+        "cm": 1,
+        "m": 100,
+        "km": 100000,
+        "in": 2.54,
+        "ft": 30.48,
+        "yd": 91.44
+    }
 
-    def combine_strings(self) -> str:
-        """Combine the two internal strings into a single string."""
-        return f"{self.str1}{self.str2}"
+    @staticmethod
+    def calculate_parallelogram_area(base, height, unit="cm"):
+        if unit not in GeometryCalculator._units:
+            raise ValueError(f"Unsupported unit: {unit}")
+        return base * height
 
-if __name__ == "__main__":
-    # Hard-coded sample values for testing without user input or external dependencies
-    manipulator = StringManipulator(str1="Hello", str2="World")
-    result = manipulator.combine_strings()
-    
-    print("Combined string:", result)
+    @staticmethod
+    def get_area_in_standard_units(base, height, input_unit, output_unit="cm"):
+        if input_unit not in GeometryCalculator._units:
+            raise ValueError(f"Unsupported input unit: {input_unit}")
+        if output_unit not in GeometryCalculator._units:
+            raise ValueError(f"Unsupported output unit: {output_unit}")
+        base_in_cm = base * GeometryCalculator._units[input_unit]
+        height_in_cm = height * GeometryCalculator._units[input_unit]
+        area_cm = base_in_cm * height_in_cm
+        return area_cm / GeometryCalculator._units[output_unit]
 
-    # Additional test case with empty strings to ensure robustness
-    manipulator2 = StringManipulator("")
-    result2 = manipulator2.combine_strings()
-    print("Test 2 - Empty input combined (default):", repr(result2))
+if __name__ == '__main__':
+    base_value = 12
+    height_value = 7
+    result = GeometryCalculator.calculate_parallelogram_area(base_value, height_value)
+    print(result)

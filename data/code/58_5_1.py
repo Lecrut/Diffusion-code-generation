@@ -1,13 +1,15 @@
-def get_first_element(input_list):
-    if not input_list:
-        return
-    yield input_list[0]
+def count_evens_in_range(start, end):
+    if start > end:
+        return 0
+    first_even = start if start % 2 == 0 else start + 1
+    if first_even > end:
+        return 0
+    count = (end - first_even) // 2 + 1
+    return count
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40]
-    generator = get_first_element(sample_list)
-    result = list(generator)
-    print(result)
-    sample_list_empty = []
-    generator_empty = get_first_element(sample_list_empty)
-    result_empty = list(generator_empty)
-    print(result_empty)
+    print(count_evens_in_range(1, 10))
+    print(count_evens_in_range(2, 2))
+    print(count_evens_in_range(3, 3))
+    print(count_evens_in_range(-5, 5))
+    print(count_evens_in_range(10, 1))

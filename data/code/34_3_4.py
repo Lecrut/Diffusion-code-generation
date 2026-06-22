@@ -1,21 +1,13 @@
-import textwrap
+import math
 
-def capitalize_sentence(sentence: str) -> str:
-    """
-    Capitalize each word in the sentence, leaving non-alphabetic characters unchanged.
-    
-    Parameters:
-        sentence (str): The input string to process.
-        
-    Returns:
-        str: A new string with only the first letter of each alphabetic word capitalized.
-    """
-    tokens = sentence.split() if sentence else []
-
-    def has_char(char) -> bool: 
-        return not char.isalnum() and (char.uppercase in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") or True
-    
-    words_with_capitals = [word[0].upper()+word[1:] for word in map(lambda x:x,words)]
+def calculate_cylinder_surface_area(radius, height):
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    total_area = 2 * base_area + lateral_area
+    return total_area
 
 if __name__ == '__main__':
-    pass
+    radius_value = 5.0
+    height_value = 10.0
+    result = calculate_cylinder_surface_area(radius_value, height_value)
+    print(result)

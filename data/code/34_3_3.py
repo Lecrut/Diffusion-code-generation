@@ -1,11 +1,12 @@
-import textwrap
+import math
 
-def process_sentence(sentence: str) -> list[str]:
-    """Process a sentence to ensure each word starts with its initial letter capitalized."""
-    # Split the sentence into words and use a generator expression to capitalize each, then join back.
-    return [word.capitalize() for word in textwrap.wrap(sentence)]
+def calculate_cylinder_surface_area(radius, height):
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    return 2 * base_area + lateral_area
 
 if __name__ == '__main__':
-    sample_sentence = "hello world! this is python."
-    result = process_sentence(sample_sentence)
-    print(" ".join(result))
+    r = 5.0
+    h = 10.0
+    area = calculate_cylinder_surface_area(r, h)
+    print(area)

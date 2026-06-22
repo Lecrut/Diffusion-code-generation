@@ -1,38 +1,20 @@
-def find_repeated_letters(sentence: str) -> set:
-    """
-    Identifies all letters that appear more than once in the given sentence.
-    Uses a dictionary to count letter occurrences efficiently, ignoring case and non-letter characters.
+import math
 
-    Args:
-        sentence (str): The input string to analyze.
+class Cone:
+    def __init__(self, radius, height):
+        self.radius = radius
+        self.height = height
 
-    Returns:
-        set: A set of lowercase letters found multiple times in the sentence.
-    """
-    char_count = {}
-    
-    # Iterate through each character in the sentence
-    for char in sentence:
-        if char.isalpha():  # Ensure only alphabetic characters are counted
-            lower_char = char.lower()
-            
-            # Increment count if letter already exists, else initialize to 0 then increment
-            char_count[lower_char] = char_count.get(lower_char, 0) + 1
-            
-    # Extract letters with a frequency greater than 1
-    repeated_letters = {letter for letter, count in char_count.items() if count > 1}
+    def get_volume(self):
+        return (1/3) * math.pi * self.radius**2 * self.height
 
-    return repeated_letters
+    def get_surface_area(self):
+        slant_height = math.sqrt(self.radius**2 + self.height**2)
+        return math.pi * self.radius * (self.radius + slant_height)
 
 if __name__ == '__main__':
-    # Hard-coded sample sentence to ensure the script runs without user input or external dependencies.
-    sample_sentence = "Hello, World! Hello Python Programming."
-    
-    result_set = find_repeated_letters(sample_sentence)
-    
-    if not result_set:
-        print("No repeated letters found.")
-    else:
-        # Sort and display results for neatness (e.g., alphabetical order).
-        sorted_result = sorted(result_set, key=ord) 
-        print(f"Repeated letters in '{sample_sentence}': {', '.join(sorted_result)}")
+    radius_value = 6
+    height_value = 9
+    cone_instance = Cone(radius_value, height_value)
+    print(cone_instance.get_volume())
+    print(cone_instance.get_surface_area())

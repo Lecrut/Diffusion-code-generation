@@ -1,11 +1,9 @@
-def absolute_difference_generator(*args):
-    if not args:
-        return
-    previous_value = args[0]
-    yield abs(previous_value - args[1])
-    for i in range(1, len(args) - 1):
-        yield abs(args[i] - args[i+1])
+def generate_star_triangle(height):
+    lines = []
+    for i in range(1, height + 1):
+        line = '*' * (2 * i - 1)
+        lines.append(line.center(height + height - 1))
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    numbers = [10, 5, 8, 2, 15]
-    for diff in absolute_difference_generator(*numbers):
-        print(diff)
+    print(generate_star_triangle(6))

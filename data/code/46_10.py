@@ -1,12 +1,15 @@
-import sys
-def calculate_perimeter(a, b, c):
-    return a + b + c
+def get_max_salary(employees):
+    if not employees:
+        return None
+    max_salary = max(emp.get('salary', 0) for emp in employees if isinstance(emp, dict))
+    return max_salary
+
 if __name__ == '__main__':
-    a = 5
-    b = 4
-    c = 3
-    if a > 0 and b > 0 and c > 0:
-        perimeter = calculate_perimeter(a, b, c)
-        print(perimeter)
-    else:
-        print("Error: Side lengths must be positive numbers.")
+    sample_data = [
+        {'name': 'Alice', 'salary': 75000},
+        {'name': 'Bob', 'salary': 82000},
+        {'name': 'Charlie', 'salary': 95000},
+        {'name': 'David', 'salary': 67000}
+    ]
+    result = get_max_salary(sample_data)
+    print(result)

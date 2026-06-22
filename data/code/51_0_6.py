@@ -1,13 +1,11 @@
-import sys
-def calculate_perimeter(sides):
-    if not sides:
-        return 0
-    return sum(sides)
+def generate_pyramid(rows):
+    result = []
+    for i in range(1, rows + 1):
+        line = ' '.join(str(i) for _ in range(i))
+        result.append(line)
+    max_len = max(len(line) for line in result)
+    aligned = [line.rjust(max_len) for line in result]
+    return '\n'.join(aligned)
+
 if __name__ == '__main__':
-    sample_sides = [5, 7, 8, 10]
-    if len(sample_sides) < 3:
-        print("Error: A polygon must have at least three sides.")
-    else:
-        perimeter = calculate_perimeter(sample_sides)
-        print(f"The side lengths provided are: {sample_sides}")
-        print(f"The total perimeter is: {perimeter}")
+    print(generate_pyramid(5))

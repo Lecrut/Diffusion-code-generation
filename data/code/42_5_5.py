@@ -1,19 +1,27 @@
-class StringManipulator:
-    def merge_fragments(self, fragments: list[str]) -> str:
-        if not fragments:
-            return ""
-        return "".join(fragments)
+import math
+
+class Ellipse:
+    def __init__(self, major_axis, minor_axis):
+        if major_axis <= 0 or minor_axis <= 0:
+            raise ValueError("Axes must be positive")
+        self.major_axis = major_axis
+        self.minor_axis = minor_axis
+
+    def semi_major(self):
+        return self.major_axis / 2
+
+    def semi_minor(self):
+        return self.minor_axis / 2
+
+    def area(self):
+        return math.pi * self.semi_major() * self.semi_minor()
+
+    def perimeter_approx(self):
+        a = self.semi_major()
+        b = self.semi_minor()
+        return math.pi * math.sqrt(2 * (a**2 + b**2))
+
 if __name__ == '__main__':
-    manipulator = StringManipulator()
-    test_case_1 = ["hello", " ", "world"]
-    result_1 = manipulator.merge_fragments(test_case_1)
-    print(f"Test Case 1: {result_1}")
-    test_case_2 = ["abc", "def", "ghi"]
-    result_2 = manipulator.merge_fragments(test_case_2)
-    print(f"Test Case 2: {result_2}")
-    test_case_3 = []
-    result_3 = manipulator.merge_fragments(test_case_3)
-    print(f"Test Case 3 (Empty List): '{result_3}'")
-    test_case_4 = ["single"]
-    result_4 = manipulator.merge_fragments(test_case_4)
-    print(f"Test Case 4 (Single Fragment): {result_4}")
+    ellipse = Ellipse(12, 8)
+    print(ellipse.area())
+    print(ellipse.perimeter_approx())

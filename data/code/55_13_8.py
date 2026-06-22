@@ -1,17 +1,14 @@
-def calculate_triangle_perimeter(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Side lengths must be positive.")
-    return a + b + c
+def print_triangle(n):
+    start = ord('A')
+    current = start
+    for i in range(1, n + 1):
+        row = []
+        for _ in range(i):
+            row.append(chr(current))
+            current += 1
+            if current > ord('Z'):
+                current = start
+        print(' '.join(row))
+
 if __name__ == '__main__':
-    side1 = 3
-    side2 = 4
-    side3 = 5
-    try:
-        perimeter = calculate_triangle_perimeter(side1, side2, side3)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        calculate_triangle_perimeter(3, 4, -5)
-    except ValueError as e:
-        print(f"Error: {e}")
+    print_triangle(5)

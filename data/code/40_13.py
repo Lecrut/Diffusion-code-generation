@@ -1,9 +1,5 @@
-def get_first_letter(s):
-    if not s:
-        return ""
-    return s[0]
+def surface_area():
+    return 2 * (4 * 6 + 6 * 8 + 8 * 4)
+
 if __name__ == '__main__':
-    print(get_first_letter("Hello"))
-    print(get_first_letter(""))
-    print(get_first_letter("a"))
-    print(get_first_letter("Python"))
+    print(surface_area())

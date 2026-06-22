@@ -1,19 +1,14 @@
-import re
+VOLUME_UNIT = 1.0
 
-def extract_words(text: str) -> list[str]:
-    """
-    Extracts all sequences of alphanumeric characters from a given string.
-    
-    Args:
-        text (str): The input multi-line string to process.
-        
-    Returns:
-        List[str]: A list containing each extracted word in the order found.
-    """
-    return re.findall(r'\w+', text)
+class GeometricPrism:
+    def __init__(self, base_area, height):
+        self.base_area = base_area
+        self.height = height
+
+    def get_volume(self):
+        return self.base_area * self.height * VOLUME_UNIT
 
 if __name__ == '__main__':
-    sample_input = "Hello, World! This is a test.\nIt contains numbers 123 and symbols @#$."
-    
-    result = extract_words(sample_input)
-    print(result)
+    my_prism = GeometricPrism(20.0, 8.0)
+    computed_volume = my_prism.get_volume()
+    print(computed_volume)

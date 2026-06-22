@@ -1,54 +1,26 @@
-class StringAnalyzer:
-    def check_for_duplicates(self, input_string):
-        """
-        Identifies all repeated characters in the given string.
-        
-        Args:
-            input_string (str): The string to analyze.
-            
-        Returns:
-            list[str]: A sorted list of unique characters that appear more than once.
-        """
-        char_count = {}
-        duplicates = []
+import math
 
-        # Count frequency of each character
-        for char in input_string:
-            if char in char_count:
-                char_count[char] += 1
-            else:
-                char_count[char] = 1
-        
-        # Collect characters that appear more than once, avoiding duplicates in the result list
-        seen_duplicates = set()
-        for char, count in char_count.items():
-            if count > 1 and char not in seen_duplicates:
-                duplicates.append(char)
-                seen_duplicates.add(char)
+class ConeGeometry:
+    def __init__(self, radius, height):
+        self.radius = radius
+        self.height = height
+        self.pi = math.pi
 
-        return sorted(duplicates)
+    def calculate_base_area(self):
+        return self.pi * self.radius * self.radius
+
+    def calculate_volume(self):
+        base_area = self.calculate_base_area()
+        return base_area * self.height / 3
+
+    def get_dimensions(self):
+        return self.radius, self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or external dependencies
-    test_cases = [
-        "hello world",
-        "aabbccdd",
-        "programming is fun",
-        "abcdefg"  # No duplicates expected here except if case-sensitive logic differs, but standard comparison applies.
-                 # Note: 'p' appears once in this specific string segment provided as example below without repetition context unless specified otherwise. 
-                 # Let's assume strict character matching including spaces and punctuation for accuracy.
-    ]
-
-    analyzer = StringAnalyzer()
-
-    print("Duplicate Character Analysis Results:\n")
-    
-    for test_input in test_cases:
-        result = analyzer.check_for_duplicates(test_input)
-        if not result:
-            print(f"'{test_input}' -> No duplicates found.")
-        else:
-            # Join characters to display as a string or list, here displayed clearly
-            duplicate_str = "".join(result).upper() 
-            print(f"Input: '{test_input}'")
-            print(f"Duplicates ({len(duplicate_str)} chars): {duplicate_str}\n")
+    cone = ConeGeometry(radius=3, height=7)
+    vol = cone.calculate_volume()
+    base_area = cone.calculate_base_area()
+    dims = cone.get_dimensions()
+    print(vol)
+    print(base_area)
+    print(dims)

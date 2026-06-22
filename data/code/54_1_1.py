@@ -1,7 +1,15 @@
-import math
-def calculate_circle_area(radius):
-    return math.pi * radius * radius
+def generate_hollow_square(side_length, char):
+    lines = []
+    for i in range(side_length):
+        if i == 0 or i == side_length - 1:
+            line = char * side_length
+        else:
+            line = char + ' ' * (side_length - 2) + char
+        lines.append(line)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    sample_radius = 5.0
-    area = calculate_circle_area(sample_radius)
-    print(area)
+    side = 5
+    symbol = 'X'
+    result = generate_hollow_square(side, symbol)
+    print(result)

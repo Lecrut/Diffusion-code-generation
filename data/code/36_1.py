@@ -1,12 +1,11 @@
-def reverse_string(s):
-    return s[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    if base1 < 0 or base2 < 0 or height < 0:
+        raise ValueError("Bases and height must be non-negative")
+    return 0.5 * (base1 + base2) * height
+
 if __name__ == '__main__':
-    test_string1 = "hello"
-    reversed_string1 = reverse_string(test_string1)
-    print(f"Original: {test_string1}, Reversed: {reversed_string1}")
-    test_string2 = "world"
-    reversed_string2 = reverse_string(test_string2)
-    print(f"Original: {test_string2}, Reversed: {reversed_string2}")
-    test_string3 = "Python"
-    reversed_string3 = reverse_string(test_string3)
-    print(f"Original: {test_string3}, Reversed: {reversed_string3}")
+    base_a = 10
+    base_b = 15
+    h = 6
+    area = calculate_trapezoid_area(base_a, base_b, h)
+    print(area)

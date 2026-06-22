@@ -1,8 +1,8 @@
-import math
-
-def triangle_perimeter(a: float, b: float, c: float) -> float:
-    return a + b + c
+def generate_max_salary():
+    salaries = [45000, 52000, 78000, 63000, 91000, 55000, 82000]
+    max_salary = max(salaries)
+    yield max_salary
 
 if __name__ == '__main__':
-    result = triangle_perimeter(3.0, 4.0, 5.0)
-    print(result)
+    for value in generate_max_salary():
+        print(value)

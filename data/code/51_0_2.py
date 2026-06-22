@@ -1,13 +1,18 @@
-import sys
-def calculate_perimeter(sides):
-    if not sides:
-        return 0
-    return sum(sides)
+def generate_right_aligned_pyzramid(rows):
+    result = []
+    for i in range(1, rows + 1):
+        numbers = list(range(1, i + 1))
+        line = ' '.join(map(str, numbers))
+        result.append(line)
+    max_width = len(' '.join(map(str, range(1, rows + 1))))
+    pyramided_lines = []
+    for line in result:
+        padding = (max_width - len(line)) // 2
+        pyramided_lines.append(' ' * padding + line)
+    return pyramided_lines
+
 if __name__ == '__main__':
-    sample_sides = [5, 7, 8, 10]
-    if len(sample_sides) < 3:
-        print("Error: A polygon must have at least three sides.")
-    else:
-        perimeter = calculate_perimeter(sample_sides)
-        print(f"The side lengths provided are: {sample_sides}")
-        print(f"The total perimeter of the polygon is: {perimeter}")
+    rows = 5
+    output = generate_right_aligned_pyzramid(rows)
+    for line in output:
+        print(line)

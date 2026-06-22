@@ -1,23 +1,12 @@
-import sys
-def calculate_area(shape, length, width, radius, base, height):
-    if shape == "rectangle":
-        return length * width
-    elif shape == "circle":
-        return 3.14159 * radius * radius
-    elif shape == "triangle":
-        return 0.5 * base * height
-    else:
-        return "Invalid shape selected"
+def generate_diamond_pattern(center_width):
+    if center_width % 2 == 0 or center_width < 1:
+        raise ValueError("Center width must be an odd positive integer.")
+    half_height = center_width // 2
+    upper_half = [" " * (half_height - i) + "*" * (2 * i + 1) for i in range(half_height + 1)]
+    lower_half = [" " * (half_height - i) + "*" * (2 * i + 1) for i in range(half_height - 1, -1, -1)]
+    return upper_half + lower_half
+
 if __name__ == '__main__':
-    shape = "rectangle"
-    length = 10
-    width = 5
-    radius = 7
-    base = 4
-    height = 6
-    area = calculate_area(shape, length, width, radius, base, height)
-    print(f"Shape: {shape}")
-    print(f"Length/Width: {length}, {width}")
-    print(f"Radius: {radius}")
-    print(f"Base/Height: {base}, {height}")
-    print(f"Area: {area}")
+    result = generate_diamond_pattern(9)
+    for line in result:
+        print(line)

@@ -1,9 +1,19 @@
-import math
-def calculate_triangle_area(base, height):
-    area = 0.5 * base * height
-    return area
+from typing import List
+
+def generate_fibonacci(n: int) -> List[int]:
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+    
+    fib_sequence: List[int] = [0, 1]
+    index: int = 2
+    while index < n:
+        next_val: int = fib_sequence[-1] + fib_sequence[-2]
+        fib_sequence.append(next_val)
+        index += 1
+    return fib_sequence
+
 if __name__ == '__main__':
-    base_val = 10.5
-    height_val = 8.2
-    area_val = calculate_triangle_area(base_val, height_val)
-    print(area_val)
+    result: List[int] = generate_fibonacci(500)
+    print(result[-1])

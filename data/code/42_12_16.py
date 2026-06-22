@@ -1,19 +1,16 @@
-import sys
+import math
 
-def join_parts(parts: list[str], delimiter: str = ",") -> str:
-    """Join a sequence of string parts with the specified delimiter."""
-    if not all(isinstance(part, str) and part is not None for part in parts):
-        raise TypeError("All input elements must be non-None strings.")
-    
-    return delimiter.join(parts)
+def calculate_ellipse_area(semi_major, semi_minor):
+    if not isinstance(semi_major, (int, float)) or not isinstance(semi_minor, (int, float)):
+        raise TypeError("Inputs must be numbers")
+    if semi_major <= 0 or semi_minor <= 0:
+        raise ValueError("Inputs must be positive numbers")
+    return math.pi * semi_major * semi_minor
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    # Simulating a sequence of string parts from standard input.
-    sample_parts = ["apple", "banana", "cherry"]
-
-    try:
-        result_string = join_parts(sample_parts)
-        print(result_string)
-    except TypeError as e:
-        print(f"Error: {e}", file=sys.stderr)
+    result1 = calculate_ellipse_area(5, 3)
+    print(result1)
+    result2 = calculate_ellipse_area(10, 10)
+    print(result2)
+    result3 = calculate_ellipse_area(1, 2)
+    print(result3)

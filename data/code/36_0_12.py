@@ -1,14 +1,9 @@
-import sys
-
-def reverse_string(s: str) -> str:
-    """Reverses the order of characters in a given string."""
-    return s[::-1]
+def trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
 
 if __name__ == '__main__':
-    # Sample input hard-coded to ensure no user interaction or external dependencies
-    sample = "Hello, World!"
-    
-    reversed_result = reverse_string(sample)
-    
-    print(f"Original: {sample}")
-    print(f"Reversed:{reversed_result}")
+    base1 = 5
+    base2 = 7
+    height = 4
+    result = trapezoid_area(base1, base2, height)
+    print(result)

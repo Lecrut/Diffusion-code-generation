@@ -1,12 +1,14 @@
-import sys
-def calculate_perimeter(a, b, c):
-    return a + b + c
+def find_max_salary(employees):
+    if not employees:
+        return None
+    return max(employee['salary'] for employee in employees)
+
 if __name__ == '__main__':
-    a = 5
-    b = 4
-    c = 3
-    if a + b <= c or a + c <= b or b + c <= a or a <= 0 or b <= 0 or c <= 0:
-        print("Invalid side lengths. Cannot form a valid triangle.")
-    else:
-        perimeter = calculate_perimeter(a, b, c)
-        print(perimeter)
+    employees = [
+        {'name': 'Alice', 'salary': 75000},
+        {'name': 'Bob', 'salary': 82000},
+        {'name': 'Charlie', 'salary': 68000},
+        {'name': 'Diana', 'salary': 91000}
+    ]
+    max_salary = find_max_salary(employees)
+    print(max_salary)

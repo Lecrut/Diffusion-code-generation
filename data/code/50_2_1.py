@@ -1,9 +1,8 @@
-class AreaCalculator:
-    def calculate_difference(self, area1, area2):
-        return area1 - area2
+def print_centered_triangle(levels):
+    triangle_lines = [' ' * (levels - i - 1) + '*' * (2 * i + 1) for i in range(levels)]
+    return '\n'.join(triangle_lines)
+
 if __name__ == '__main__':
-    calculator = AreaCalculator()
-    area_a = 50
-    area_b = 25
-    difference = calculator.calculate_difference(area_a, area_b)
-    print(difference)
+    levels = 12
+    result = print_centered_triangle(levels)
+    print(result)

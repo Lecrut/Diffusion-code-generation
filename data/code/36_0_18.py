@@ -1,8 +1,9 @@
-def reverse_string(s: str) -> str:
-    """Returns a new string with characters in reversed order."""
-    return s[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    sample_input = "Hello, World!"
-    result = reverse_string(sample_input)
-    print(result)
+    base1 = 10
+    base2 = 20
+    height = 5
+    area = calculate_trapezoid_area(base1, base2, height)
+    print(area)

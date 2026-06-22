@@ -1,22 +1,12 @@
-import string
-def remove_all_spaces(input_string):
-    return "".join(char for char in input_string if not char.isspace())
+def calculate_triangle_area(base, height):
+    if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Base and height must be numeric values")
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive numbers")
+    return (base * height) / 2.0
+
 if __name__ == '__main__':
-    test_string_1 = "Hello World\nThis has\ttabs and spaces."
-    expected_output_1 = "HelloWorldThishasspaces."
-    result_1 = remove_all_spaces(test_string_1)
-    print(f"Input: '{test_string_1}'")
-    print(f"Output: '{result_1}'")
-    print(f"Match: {result_1 == expected_output_1}")
-    test_string_2 = "   \t\n"
-    expected_output_2 = ""
-    result_2 = remove_all_spaces(test_string_2)
-    print(f"Input: '{test_string_2}'")
-    print(f"Output: '{result_2}'")
-    print(f"Match: {result_2 == expected_output_2}")
-    test_string_3 = "NoSpacesHere"
-    expected_output_3 = "NoSpacesHere"
-    result_3 = remove_all_spaces(test_string_3)
-    print(f"Input: '{test_string_3}'")
-    print(f"Output: '{result_3}'")
-    print(f"Match: {result_3 == expected_output_3}")
+    sample_base = 10.0
+    sample_height = 5.0
+    result = calculate_triangle_area(sample_base, sample_height)
+    print(result)

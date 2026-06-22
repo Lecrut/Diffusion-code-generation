@@ -1,18 +1,22 @@
-class VowelCounter:
-    def __init__(self):
-        self.vowels = set('aeiouAEIOU')
+class CubeVolumeCalculator:
+    def __init__(self, edge_length):
+        self.edge_length = edge_length
+        self._volume = None
 
-    def count(self, text: str) -> int:
-        return sum(1 for char in text if char in self.vowels)
+    def compute_volume(self):
+        self._volume = self.edge_length ** 3
+        return self._volume
+
+    def get_edge_length(self):
+        return self.edge_length
+
+    def get_computed_volume(self):
+        if self._volume is None:
+            self.compute_volume()
+        return self._volume
 
 if __name__ == '__main__':
-    counter = VowelCounter()
-    samples = [
-        "hello world",
-        "AEIOUaeiou",
-        "",
-        "Python 3.9"
-    ]
-
-    for sample in samples:
-        print(f'Text: "{sample}" -> Count: {counter.count(sample)}')
+    calculator = CubeVolumeCalculator(6)
+    print(calculator.compute_volume())
+    print(calculator.get_edge_length())
+    print(calculator.get_computed_volume())

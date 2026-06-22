@@ -1,11 +1,10 @@
-def build_spaced_string(input_list):
-    result = ""
-    for i, element in enumerate(input_list):
-        result += str(element)
-        if i < len(input_list) - 1:
-            result += " "
-    return result
+import math
+
+def calculate_ellipse_area(major_axis, minor_axis):
+    return math.pi * major_axis * minor_axis
+
 if __name__ == '__main__':
-    sample_list = ["apple", "banana", "cherry", "date"]
-    output = build_spaced_string(sample_list)
-    print(output)
+    major = 10.0
+    minor = 5.0
+    result = calculate_ellipse_area(major, minor)
+    print(result)

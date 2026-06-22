@@ -1,9 +1,6 @@
-def join_strings(a: str, b: str) -> str:
-    """Joins two strings using an f-string."""
-    return f"{a} {b}"
+def parallelogram_area(base: float, height: float) -> float:
+    return base * height
 
 if __name__ == '__main__':
-    sample_1 = "Hello"
-    sample_2 = "World"
-    result = join_strings(sample_1, sample_2)
+    result = parallelogram_area(5.0, 3.0)
     print(result)

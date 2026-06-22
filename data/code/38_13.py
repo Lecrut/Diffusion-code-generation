@@ -1,16 +1,6 @@
-def contains_repeated_letters(s):
-    seen = set()
-    for char in s:
-        if char in seen:
-            return True
-        seen.add(char)
-    return False
+def calculate_cone_volume(radius, height):
+    return (1/3) * 3.141592653589793 * radius**2 * height
+
 if __name__ == '__main__':
-    string1 = "hello"
-    string2 = "world"
-    string3 = "abcde"
-    string4 = "programming"
-    print(f"'{string1}' has repeated letters: {contains_repeated_letters(string1)}")
-    print(f"'{string2}' has repeated letters: {contains_repeated_letters(string2)}")
-    print(f"'{string3}' has repeated letters: {contains_repeated_letters(string3)}")
-    print(f"'{string4}' has repeated letters: {contains_repeated_letters(string4)}")
+    result = calculate_cone_volume(5, 10)
+    print(result)

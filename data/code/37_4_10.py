@@ -1,11 +1,11 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """Combines two input strings by concatenating them."""
-    return f"{str1}{str2}"
+def get_parallelogram_area(base, height):
+    if base <= 0:
+        return 0.0
+    if height <= 0:
+        return 0.0
+    return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or files.
-    string_a = "Hello"
-    string_b = "World"
-
-    result = combine_strings(string_a, string_b)
-    print(result)
+    SAMPLE_BASE = 12.5
+    SAMPLE_HEIGHT = 8.0
+    print(get_parallelogram_area(SAMPLE_BASE, SAMPLE_HEIGHT))

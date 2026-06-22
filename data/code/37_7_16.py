@@ -1,21 +1,12 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Combines two strings efficiently using direct concatenation.
-    
-    Args:
-        str1 (str): The first string to be combined.
-        str2 (str): The second string to be combined.
-        
-    Returns:
-        str: The concatenated result of the two input strings.
-    """
-    return str1 + str2
+import operator
+import math
+
+CONST_BASE = 7
+CONST_HEIGHT = 4
+
+def calculate_area(base, height):
+    return operator.mul(base, height)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or external dependencies
-    sample_str_1 = "Hello, World!"
-    sample_str_2 = "Welcome to Python."
-    
-    result = combine_strings(sample_str_1, sample_str_2)
-    
-    print(result)
+    area_result = calculate_area(CONST_BASE, CONST_HEIGHT)
+    print(area_result)

@@ -1,25 +1,28 @@
-def extract_substrings(text: str, indices) -> list[str]:
-    """
-    Extracts substrings from a given text based on provided start and end index pairs.
-    
-    Args:
-        text (str): The input string to process.
-        indices (list[tuple[int, int]] or list[list[int]]): A flat list of [start, end] 
-            tuples/lists representing the boundaries for substring extraction.
-            
-    Returns:
-        list[str]: A list containing the extracted substrings in order.
-        
-    Note:
-        - Indices are inclusive-exclusive (similar to Python slicing).
-        - If start >= end or indices contain invalid ranges, empty strings will be returned 
-          rather than raising errors for robustness unless specific validation is needed.
-        - Time complexity per substring extraction is O(n) where n is the length of text + m*m 
-          where m is number of substrings (due to string creation), but slicing in Python is 
-          optimized at C level, making this highly efficient for typical use cases.
-    """
-    # Normalize input: ensure all elements are lists/tuples with exactly two integers
-    normalized_indices = []
+UNIT_CONVERSION = {"cubic": 1, "milli_cubic": 1000, "micro_cubic": 1000000}
+
+class Prism:
+    def __init__(self, base_area, height, unit_type="cubic"):
+        self.base_area = base_area
+        self.height = height
+        self.unit_type = unit_type
+
+    def calculate_volume(self):
+        raw_volume = self.base_area * self.height
+        conversion_factor = UNIT_CONVERSION.get(self.unit_type, 1)
+        return raw_volume * conversion_factor
+
+    def get_dimensions_summary(self):
+        return {
+            "area": self.base_area,
+            "height": self.height,
+            "unit": self.unit_type
+        }
 
 if __name__ == '__main__':
-    pass
+    sample_base = 15.5
+    sample_height = 20
+    sample_unit = "milli_cubic"
+    
+    prism_instance = Prism(sample_base, sample_height, sample_unit)
+    computed_volume = prism_instance.calculate_volume()
+    print(computed_volume)

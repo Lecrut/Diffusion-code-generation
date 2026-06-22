@@ -1,23 +1,14 @@
-import math
-def calculate_area(shape, dimensions):
-    if shape == "rectangle":
-        length, width = dimensions
-        return length * width
-    elif shape == "circle":
-        radius = dimensions
-        return math.pi * (radius ** 2)
-    elif shape == "triangle":
-        base, height = dimensions
-        return 0.5 * base * height
-    else:
-        return None
+def fibonacci_first_n(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+    fibs = [0, 1]
+    a, b = 0, 1
+    for _ in range(2, n):
+        a, b = b, a + b
+        fibs.append(b)
+    return fibs
+
 if __name__ == '__main__':
-    shape_type = "rectangle"
-    dimensions = (10, 5)
-    area = calculate_area(shape_type, dimensions)
-    if area is not None:
-        print(f"Shape: {shape_type}")
-        print(f"Dimensions: {dimensions}")
-        print(f"Area: {area}")
-    else:
-        print("Invalid shape type specified.")
+    print(fibonacci_first_n(200))

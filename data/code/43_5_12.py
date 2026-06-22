@@ -1,4 +1,12 @@
-import math; side = 5.0; area = lambda s: s * s if isinstance(s, (int, float)) else None; print(f"Area of square with side {side}: {area(side)}")
+import math
+
+def surface_area_of_square_pyramid(base_side: float, slant_height: float) -> float:
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    pass
+    base_side = 10
+    slant_height = 12
+    result = surface_area_of_square_pyramid(base_side, slant_height)
+    print(result)

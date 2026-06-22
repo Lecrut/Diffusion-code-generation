@@ -1,26 +1,19 @@
-def reverse_string(input_str: str) -> str:
-    """
-    Reverses a given string using Python's built-in slicing, 
-    which is efficient (O(n)) and idiomatic.
-    
-    Args:
-        input_str (str): The string to be reversed.
-        
-    Returns:
-        str: The reversed version of the input string.
-    """
-    return input_str[::-1]
+class Trapezoid:
+    def __init__(self, base1, base2, height):
+        self.base1 = self._validate_dimension(base1, 'base1')
+        self.base2 = self._validate_dimension(base2, 'base2')
+        self.height = self._validate_dimension(height, 'height')
+
+    def _validate_dimension(self, value, name):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"{name} must be a number")
+        if value <= 0:
+            raise ValueError(f"{name} must be positive")
+        return value
+
+    def area(self):
+        return (self.base1 + self.base2) * self.height * 0.5
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements; no user interaction or external dependencies needed.
-    samples = [
-        "hello world",
-        "",
-        "Python scripting is fun!",
-        "A man, a plan, a canal: Panama!"
-    ]
-
-    for sample in samples:
-        reversed_str = reverse_string(sample)
-        print(f"Original:   '{sample}'")
-        print(f"Reversed:   '{reversed_str}'\n")
+    t = Trapezoid(5.0, 3.0, 4.0)
+    print(t.area())

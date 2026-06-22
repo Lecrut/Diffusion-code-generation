@@ -1,12 +1,12 @@
-class Square:
-    def __init__(self, side_length):
-        self.side_length = side_length
-    def calculate_area(self):
-        return self.side_length * self.side_length
+def generate_reverse_number_triangle(rows: int) -> list:
+    result = []
+    for i in range(rows, 0, -1):
+        line = ''.join(str(j) for j in range(1, i + 1))
+        result.append(line)
+    return result
+
 if __name__ == '__main__':
-    square1 = Square(5)
-    area1 = square1.calculate_area()
-    print(f"The area of the first square is: {area1}")
-    square2 = Square(10.5)
-    area2 = square2.calculate_area()
-    print(f"The area of the second square is: {area2}")
+    sample_rows = 5
+    pattern = generate_reverse_number_triangle(sample_rows)
+    for line in pattern:
+        print(line)

@@ -1,11 +1,13 @@
-def is_triangle(sidea, sideb, sidec):
-    if sidea + sideb > sidec and sidea + sidec > sideb and sideb + sidec > sidea:
-        return True
-    else:
-        return False
+def find_largest_element(data):
+    return max(data.values())
+
 if __name__ == '__main__':
-    print(is_triangle(3, 4, 5))
-    print(is_triangle(1, 2, 3))
-    print(is_triangle(1, 1, 1))
-    print(is_triangle(1, 2, 4))
-    print(is_triangle(5, 5, 5))
+    sample_data = {
+        "a": 10,
+        "b": 42,
+        "c": 7,
+        "d": 99,
+        "e": 23
+    }
+    result = find_largest_element(sample_data)
+    print(result)

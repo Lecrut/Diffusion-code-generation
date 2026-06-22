@@ -1,28 +1,21 @@
-class Shape:
-    def __init__(self, shape_type, side1, side2):
-        self.shape_type = shape_type
-        self.side1 = side1
-        self.side2 = side2
-    def calculate_perimeter(self):
-        if self.shape_type == "rectangle":
-            return 2 * (self.side1 + self.side2)
-        elif self.shape_type == "square":
-            return 4 * self.side1
-        else:
-            return 0
-    def calculate_area(self):
-        if self.shape_type == "rectangle":
-            return self.side1 * self.side2
-        elif self.shape_type == "square":
-            return self.side1 * self.side1
-        else:
-            return 0
+class TransactionProcessor:
+    def __init__(self, transactions):
+        self.transactions = transactions
+
+    def find_highest_transaction(self):
+        max_value = None
+        for sublist in self.transactions:
+            for value in sublist:
+                if max_value is None or value > max_value:
+                    max_value = value
+        return max_value
+
 if __name__ == '__main__':
-    rectangle = Shape("rectangle", 10, 5)
-    square = Shape("square", 7, 7)
-    print("Rectangle:")
-    print("Perimeter:", rectangle.calculate_perimeter())
-    print("Area:", rectangle.calculate_area())
-    print("\nSquare:")
-    print("Perimeter:", square.calculate_perimeter())
-    print("Area:", square.calculate_area())
+    hardcoded_transactions = [
+        [100.50, 250.00, 15.75],
+        [500.00, 320.25, 45.00],
+        [1000.00, 750.50, 200.00]
+    ]
+    processor = TransactionProcessor(hardcoded_transactions)
+    highest = processor.find_highest_transaction()
+    print(highest)

@@ -1,10 +1,15 @@
-class ListProcessor:
-    def __init__(self, data):
-        self.data = data
-    def get_first_element(self):
-        return self.data[0]
+def count_even_numbers(low: int, high: int) -> int:
+    if low > high:
+        low, high = high, low
+    
+    start = low if low % 2 == 0 else low + 1
+    end = high if high % 2 == 0 else high - 1
+    
+    if start > end:
+        return 0
+    
+    return (end - start) // 2 + 1
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40]
-    processor = ListProcessor(sample_list)
-    first_element = processor.get_first_element()
-    print(first_element)
+    result = count_even_numbers(1, 10)
+    print(result)

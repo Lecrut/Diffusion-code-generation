@@ -1,26 +1,23 @@
-def build_string_from_parts(parts: list) -> str:
-    """
-    Joins a list of string parts with a space separator in O(n) time complexity.
-    
-    Args:
-        parts (list): A list of strings to be joined.
-        
-    Returns:
-        str: The concatenated string with spaces between elements.
-    """
-    if not parts:
-        return ""
-    
-    result = []
-    for part in parts:
-        result.append(part)
-    
-    # Joining is O(n + m) where n is number of strings and m is total length, 
-    # which simplifies to linear time relative to input size.
-    return " ".join(result)
+import math
+from decimal import Decimal, getcontext
+
+getcontext().prec = 50
+
+def calculate_ellipse_area_high_precision(major_axis: float, minor_axis: float) -> float:
+    getcontext().prec = 50
+    major = Decimal(str(major_axis))
+    minor = Decimal(str(minor_axis))
+    pi = Decimal(str(math.pi))
+    area_decimal = pi * major * minor
+    return float(area_decimal)
+
+def calculate_ellipse_area_standard(major_axis: float, minor_axis: float) -> float:
+    return math.pi * major_axis * minor_axis
 
 if __name__ == '__main__':
-    sample_parts = ["Hello", "World", "This", "Is", "A", "Test"]
-    
-    output_string = build_string_from_parts(sample_parts)
-    print(output_string)
+    test_major = 12.5
+    test_minor = 8.3
+    result_standard = calculate_ellipse_area_standard(test_major, test_minor)
+    result_high_precision = calculate_ellipse_area_high_precision(test_major, test_minor)
+    print(f"Standard Area: {result_standard}")
+    print(f"High Precision Area: {result_high_precision}")

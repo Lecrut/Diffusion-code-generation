@@ -1,26 +1,14 @@
-class StringManipulator:
-    def __init__(self, string1: str = "", string2: str = "") -> None:
-        """Initialize with optional default strings."""
-        self.string_a = string1
-        self.string_b = string2
-    
-    def combine_strings(self) -> str:
-        """Combine two internal variables into a single string.
-        
-        Returns:
-            The concatenated result of the two strings.
-        """
-        combined_string = f"{self.string_a}{self.string_b}"
-        return combined_string
+class GeometryCalculator:
+    @staticmethod
+    def parallelogram_area(base, height):
+        if base <= 0:
+            raise ValueError("Base must be positive")
+        if height <= 0:
+            raise ValueError("Height must be positive")
+        return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or files
-    
-    manipulator_1 = StringManipulator("Hello ", "World!")
-    result_1 = manipulator_1.combine_strings()
-    
-    manipulator_2 = StringManipulator("", "")  # Test with empty defaults
-    result_2 = manipulator_2.combine_strings()
-    
-    print(result_1)   # Expected output: Hello World!
-    print(repr(result_2))  # Expected output: ''
+    base = 12
+    height = 4
+    area = GeometryCalculator.parallelogram_area(base, height)
+    print(area)

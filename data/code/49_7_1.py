@@ -1,7 +1,7 @@
+def generate_star_square():
+    size = 3
+    return ("\n".join(("*".join("*" for _ in range(size)) for _ in range(size))),)
+
 if __name__ == '__main__':
-    length1 = 150
-    length2 = 200
-    larger = length1 if length1 > length2 else length2
-    print(f"Length 1: {length1}")
-    print(f"Length 2: {length2}")
-    print(f"The larger length is: {larger}")
+    result = generate_star_square()
+    print(result[0])

@@ -1,17 +1,15 @@
-def safe_get_first(data_list):
-    if not data_list:
-        raise IndexError("Cannot get first item from an empty list")
-    return data_list[0]
+def count_even_numbers_bitwise(start, end):
+    if start > end:
+        start, end = end, start
+    count = 0
+    if start % 2 != 0:
+        count += 1
+        start += 1
+    while start <= end:
+        count += 1
+        start += 2
+    return count
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30]
-    list2 = []
-    try:
-        result1 = safe_get_first(list1)
-        print(f"Result from list1: {result1}")
-    except IndexError as e:
-        print(f"Error processing list1: {e}")
-    try:
-        result2 = safe_get_first(list2)
-        print(f"Result from list2: {result2}")
-    except IndexError as e:
-        print(f"Error processing list2: {e}")
+    result = count_even_numbers_bitwise(1, 10)
+    print(result)

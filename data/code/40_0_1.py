@@ -1,26 +1,10 @@
-import sys
-def get_first_letters(text):
-    words = text.split()
-    first_letters = [word[0] for word in words if word]
-    return "".join(first_letters)
+def calculate_surface_area(length, width, height):
+    if length <= 0 or width <= 0 or height <= 0:
+        raise ValueError('Dimensions must be positive numbers.')
+    return 2 * (length * width + width * height + height * length)
 if __name__ == '__main__':
-    sample_string_1 = "  Hello world  this is a test "
-    sample_string_2 = "singleword"
-    sample_string_3 = "  multiple   spaces   here"
-    sample_string_4 = ""
-    sample_string_5 = "word1  word2\tword3"
-    print(f"Input: '{sample_string_1}'")
-    print(get_first_letters(sample_string_1))
-    print("-" * 20)
-    print(f"Input: '{sample_string_2}'")
-    print(get_first_letters(sample_string_2))
-    print("-" * 20)
-    print(f"Input: '{sample_string_3}'")
-    print(get_first_letters(sample_string_3))
-    print("-" * 20)
-    print(f"Input: '{sample_string_4}'")
-    print(get_first_letters(sample_string_4))
-    print("-" * 20)
-    print(f"Input: '{sample_string_5}'")
-    print(get_first_letters(sample_string_5))
-    print("-" * 20)
+    length_val = 5.0
+    width_val = 3.0
+    height_val = 2.0
+    area = calculate_surface_area(length_val, width_val, height_val)
+    print(area)

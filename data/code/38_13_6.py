@@ -1,19 +1,8 @@
-def contains_repeated_letters(s: str) -> bool:
-    """Check if a string contains any repeated letters (case-insensitive)."""
-    seen = set()
-    for char in s.lower():
-        if 'a' <= char <= 'z':  # Only consider alphabetic characters
-            if char in seen:
-                return True
-            seen.add(char)
-    return False
+def calculate_cone_volume(radius, height):
+    return (1 / 3) * 3.141592653589793 * (radius ** 2) * height
 
 if __name__ == '__main__':
-    test_cases = [
-        "hello",      # Expected: True (h, e, llo -> 'l' repeats)
-        "abcdef"     # Expected: False (all unique)
-    ]
-
-    for text in test_cases:
-        result = contains_repeated_letters(text)
-        print(f"'{text}': {result}")
+    r = 5
+    h = 10
+    volume = calculate_cone_volume(r, h)
+    print(volume)

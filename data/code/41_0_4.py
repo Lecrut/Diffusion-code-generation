@@ -1,17 +1,9 @@
-def convert_string(text: str) -> dict[str, str]:
-    """Converts a given string to lowercase, uppercase, and title case."""
-    return {
-        "lowercase": text.lower(),
-        "uppercase": text.upper(),
-        "title_case": text.title()
-    }
-
+def calculate_rhombus_area(diagonal1: float, diagonal2: float) -> float:
+    if diagonal1 < 0 or diagonal2 < 0:
+        raise ValueError('Diagonal lengths must be non-negative.')
+    return diagonal1 * diagonal2 / 2
 if __name__ == '__main__':
-    sample_text = "Hello World! This is a TEST string."
-    
-    results = convert_string(sample_text)
-    
-    print(f"Original: {sample_text}")
-    print(f"\nLowercase: {results['lowercase']}")
-    print(f"\nUppercase: {results['uppercase']}")
-    print(f"\nTitle Case: {results['title_case']}")
+    d1 = 10.0
+    d2 = 8.0
+    area = calculate_rhombus_area(d1, d2)
+    print(area)

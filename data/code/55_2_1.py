@@ -1,24 +1,13 @@
-class Triangle:
-    def __init__(self, a, b, c):
-        self.a = a
-        self.b = b
-        self.c = c
-        self._is_valid = self._is_valid_triangle(a, b, c)
-    def _is_valid_triangle(self, a, b, c):
-        if a + b > c and a + c > b and b + c > a:
-            return True
-        return False
-    def get_perimeter(self):
-        if not self._is_valid:
-            raise ValueError("The given side lengths do not form a valid triangle.")
-        return self.a + self.b + self.c
+def generate_triangle():
+    lines = []
+    for row in range(1, 10):
+        chars = []
+        current_val = 65
+        for _ in range(row):
+            chars.append(chr(current_val))
+            current_val += 1
+        lines.append("".join(chars))
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    try:
-        t1 = Triangle(3, 4, 5)
-        print(f"Perimeter of triangle (3, 4, 5): {t1.get_perimeter()}")
-        t2 = Triangle(1, 2, 10)
-        print(f"Perimeter of triangle (1, 2, 10): {t2.get_perimeter()}")
-        t3 = Triangle(5, 5, 5)
-        print(f"Perimeter of triangle (5, 5, 5): {t3.get_perimeter()}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    print(generate_triangle())

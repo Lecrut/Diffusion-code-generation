@@ -1,21 +1,20 @@
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all spaces from both internal positions and surrounding edges of the string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with no whitespace characters present.
-    """
-    # Using replace() is efficient for this specific task as it handles all space types 
-    # in a single pass and avoids the overhead of manual iteration or regex compilation.
-    return text.replace(" ", "")
+from typing import Dict, Tuple
+
+UNIT_FACTORS: Dict[str, float] = {
+    "px": 1.0,
+    "cm": 1.0,
+    "m": 1.0,
+    "mm": 0.1,
+}
+
+def calculate_triangle_area(base: float, height: float, unit: str = "px") -> float:
+    factor = UNIT_FACTORS.get(unit, 1.0)
+    if base < 0 or height < 0:
+        raise ValueError("Dimensions cannot be negative")
+    return 0.5 * (base * factor) * (height * factor)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without external input.
-    SAMPLE_INPUT = "Hello world, this is   a test.\n  Spaces everywhere!  \tTab here."
-    
-    processed_output = remove_all_spaces(SAMPLE_INPUT)
-    
-    print(processed_output)
+    test_base = 8.0
+    test_height = 4.5
+    result = calculate_triangle_area(test_base, test_height)
+    print(result)

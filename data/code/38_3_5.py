@@ -1,31 +1,20 @@
-def has_repeated_letters(s: str) -> bool:
-    """
-    Determines if a given string contains any repeated letters (case-insensitive).
-    
-    Args:
-        s (str): The input string to check.
-        
-    Returns:
-        bool: True if there are duplicate letters, False otherwise.
-    """
-    seen = set()
-    for char in s.lower():
-        if 'a' <= char <= 'z':  # Only consider alphabetic characters a-z
-            if char in seen:
-                return True
-            seen.add(char)
-    return False
+import math
+
+class ConeVolumeCalculator:
+    PI = math.pi
+    FACTOR = 1 / 3
+
+    @staticmethod
+    def _base_area(radius):
+        return ConeVolumeCalculator.PI * radius ** 2
+
+    @classmethod
+    def compute(cls, radius, height):
+        return cls.FACTOR * cls._base_area(radius) * height
+
+def calculate_cone_volume(radius, height):
+    return ConeVolumeCalculator.compute(radius, height)
 
 if __name__ == '__main__':
-    test_cases = [
-        ("hello", True),
-        ("abcdef", False),
-        ("AaBbCc", True),
-        ("123!@#", False),
-        ("python", False),
-        ("programming", True)
-    ]
-
-    for text, expected in test_cases:
-        result = has_repeated_letters(text)
-        print(f"Input: '{text}' -> Expected: {expected}, Got: {result}")
+    volume = calculate_cone_volume(4, 12)
+    print(volume)

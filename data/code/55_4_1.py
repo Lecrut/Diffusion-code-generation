@@ -1,20 +1,26 @@
-def calculate_perimeter(a, b, c):
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("The given side lengths do not form a valid triangle.")
-    return a + b + c
+def generate_pyramid(size):
+    return [
+        [(chr(65 + abs(i - j)) for i in range(size - row - 1)) +
+         [(chr(65 + row))] +
+         [(chr(65 + abs(i - j)) for i in range(size - row - 1))]
+         for j in range(2 * row + 1)]
+        for row in range(size)
+    ]
+
+def format_pyramid(grid):
+    lines = []
+    for row in grid:
+        line_parts = []
+        for col in row:
+            if isinstance(col, str):
+                line_parts.append(col)
+            else:
+                line_parts.extend(list(col))
+        lines.append(" ".join(line_parts))
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    try:
-        result1 = calculate_perimeter(3, 4, 5)
-        print(f"Perimeter of (3, 4, 5): {result1}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        result2 = calculate_perimeter(1, 2, 10)
-        print(f"Perimeter of (1, 2, 10): {result2}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        result3 = calculate_perimeter(5, 5, 5)
-        print(f"Perimeter of (5, 5, 5): {result3}")
-    except ValueError as e:
-        print(f"Error: {e}")
+    size = 5
+    pyramid = generate_pyramid(size)
+    result = format_pyramid(pyramid)
+    print(result)

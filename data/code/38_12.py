@@ -1,19 +1,10 @@
-class StringAnalyzer:
-    def check_for_duplicates(self, text):
-        seen = set()
-        duplicates = set()
-        for char in text:
-            if char in seen:
-                duplicates.add(char)
-            seen.add(char)
-        return sorted(list(duplicates))
+import math
+
+def cone_volume(radius: float, height: float) -> float:
+    return (1 / 3) * math.pi * radius ** 2 * height
+
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-    sample_string1 = "hello world"
-    sample_string2 = "programming"
-    sample_string3 = "abcdefg"
-    sample_string4 = "aabbccddeeff"
-    print(f"'{sample_string1}': {analyzer.check_for_duplicates(sample_string1)}")
-    print(f"'{sample_string2}': {analyzer.check_for_duplicates(sample_string2)}")
-    print(f"'{sample_string3}': {analyzer.check_for_duplicates(sample_string3)}")
-    print(f"'{sample_string4}': {analyzer.check_for_duplicates(sample_string4)}")
+    sample_radius = 5.0
+    sample_height = 10.0
+    volume = cone_volume(sample_radius, sample_height)
+    print(volume)

@@ -1,17 +1,14 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Concatenates two input strings into a single string.
-    
-    Args:
-        str1 (str): The first string argument.
-        str2 (str): The second string argument.
-        
-    Returns:
-        str: The concatenation of str1 and str2.
-    """
-    return str1 + str2
+def _validate_dimensions(base, height):
+    if base <= 0 or height <= 0:
+        return 0.0
+    return 1.0
+
+def calculate_parallelogram_area(base, height):
+    factor = _validate_dimensions(base, height)
+    return base * height * factor
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the function without user input
-    result = combine_strings("Hello, ", "World!")
-    print(result)
+    b = 7.5
+    h = 4.2
+    area = calculate_parallelogram_area(b, h)
+    print(area)

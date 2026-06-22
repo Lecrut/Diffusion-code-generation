@@ -1,12 +1,16 @@
-class Square:
-    def __init__(self, side_length):
-        self.side_length = side_length
-    def calculate_area(self):
-        return self.side_length * self.side_length
+import math
+
+class SquarePyramid:
+    def __init__(self, base_side: float, slant_height: float):
+        self.base_side = base_side
+        self.slant_height = slant_height
+
+    def surface_area(self) -> float:
+        base_area = self.base_side ** 2
+        lateral_area = 2 * self.base_side * self.slant_height
+        return base_area + lateral_area
+
 if __name__ == '__main__':
-    square1 = Square(5)
-    area1 = square1.calculate_area()
-    print(area1)
-    square2 = Square(10.5)
-    area2 = square2.calculate_area()
-    print(area2)
+    pyramid = SquarePyramid(10.0, 12.0)
+    area = pyramid.surface_area()
+    print(area)

@@ -1,19 +1,13 @@
-class SquareCalculator:
-    def __init__(self, side_length):
-        self.side_length = float(side_length) if isinstance(self.side_length, str) else self.side_length
-    
-    def calculate_area(self):
-        return self.side_length ** 2
+import math
+
+def calculate_square_pyramid_surface_area(base_side, slant_height):
+    base_area = base_side ** 2
+    perimeter = 4 * base_side
+    lateral_area = 0.5 * perimeter * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input or network access
-    side_lengths = [5.0, '10', 3]
-
-    for length in side_lengths:
-        try:
-            calculator = SquareCalculator(length)
-            area = calculator.calculate_area()
-            print(f"Square with side {length} has an area of {area}")
-        except ValueError as e:
-            # Gracefully handle potential input conversion errors if a string is passed incorrectly
-            print(f"Error processing value '{length}': {e}")
+    base = 5.0
+    slant = 8.0
+    result = calculate_square_pyramid_surface_area(base, slant)
+    print(result)

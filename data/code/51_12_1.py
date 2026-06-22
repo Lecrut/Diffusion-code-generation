@@ -1,15 +1,10 @@
-class Polygon:
-    def __init__(self, side_lengths):
-        self.side_lengths = side_lengths
-    def calculate_perimeter(self):
-        perimeter = sum(self.side_lengths)
-        return perimeter
+def generate_number_pyramid():
+    return [
+        " " * (6 - i) + " ".join(str(x) for x in range(1, i + 1)) + " " * (6 - i)
+        for i in range(1, 7)
+    ]
+
 if __name__ == '__main__':
-    sides1 = [3, 4, 5]
-    poly1 = Polygon(sides1)
-    perimeter1 = poly1.calculate_perimeter()
-    print(perimeter1)
-    sides2 = [10, 10, 10, 10]
-    poly2 = Polygon(sides2)
-    perimeter2 = poly2.calculate_perimeter()
-    print(perimeter2)
+    result = generate_number_pyramid()
+    for line in result:
+        print(line)

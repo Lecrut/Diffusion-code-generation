@@ -1,13 +1,12 @@
-import sys
+class TriangleAreaCalculator:
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
 
-def remove_all_spaces(text: str) -> str:
-    """Remove all spaces from the input string."""
-    return text.replace(" ", "")
+    def calculate(self):
+        return 0.5 * self.base * self.height
 
 if __name__ == '__main__':
-    sample_input = "Hello World\nThis is a test.\n  Multiple   Lines."
-    
-    # Write to stdout directly using sys.stdout.write for efficiency and control,
-    # avoiding interactive prompts or argument parsing.
-    result = remove_all_spaces(sample_input)
-    print(result)
+    calculator = TriangleAreaCalculator(10, 5)
+    area = calculator.calculate()
+    print(area)

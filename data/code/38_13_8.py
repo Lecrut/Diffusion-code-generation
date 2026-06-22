@@ -1,41 +1,15 @@
-def contains_repeated_letters(text: str) -> bool:
-    """
-    Determines if a given string contains any repeated letters (case-insensitive).
-    
-    Args:
-        text (str): The input string to check.
-        
-    Returns:
-        bool: True if there are duplicate letters, False otherwise.
-    """
-    seen = set()
-    for char in text.lower():
-        # Only consider alphabetic characters; ignore digits and symbols based on typical interpretation of "letters"
-        if 'a' <= char <= 'z':
-            if char in seen:
-                return True
-            seen.add(char)
-    return False
+import math
+
+CONE_CONSTANT = 1 / 3
+
+def calculate_cone_volume(radius: float, height: float) -> float:
+    squared_radius = radius * radius
+    base_area = math.pi * squared_radius
+    total_volume = base_area * height * CONE_CONSTANT
+    return total_volume
 
 if __name__ == '__main__':
-    test_cases = [
-        ("hello", True),
-        ("abcdefg", False),
-        ("A man, a plan, a canal: Panama", True),  # 'a' and 'n' repeat case-insensitively if considered letters only; here we check strictly alphabetic chars. Note: ':' is ignored per logic above but spaces too. Actually in this specific string 'P','a','m','e','r':' (colon) etc - let's trace manually for sample correctness below).
-        # Correction on manual trace for "A man, a plan, a canal: Panama": 
-        # Lowercase without non-letters: 'amanaplanacanalanpanama' -> many repeats like 'a', 'n'. Should be True.
-    ]
-
-    print("Testing contains_repeated_letters function:")
-    all_passed = True
-    for i, (input_str, expected) in enumerate(test_cases):
-        result = contains_repeated_letters(input_str)
-        status = "PASS" if result == expected else "FAIL"
-        if result != expected:
-            all_passed = False
-        print(f"Test {i+1}: '{input_str}' -> Expected {expected}, Got {result} [{status}]")
-
-    if all_passed:
-        print("\nAll tests passed.")
-    else:
-        print("\nSome tests failed.")
+    test_radius = 8.0
+    test_height = 15.0
+    computed_result = calculate_cone_volume(test_radius, test_height)
+    print(computed_result)

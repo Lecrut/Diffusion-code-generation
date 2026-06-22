@@ -1,7 +1,25 @@
-def join_with_delimiter(list_of_strings, delimiter):
-    return delimiter.join(list_of_strings)
+import math
+import functools
+
+@functools.lru_cache(maxsize=None)
+def _get_pi():
+    return math.pi
+
+def calculate_ellipse_area(semi_major, semi_minor):
+    a = float(semi_major)
+    b = float(semi_minor)
+    if a < 0:
+        raise ValueError("Semi-major axis must be non-negative")
+    if b < 0:
+        raise ValueError("Semi-minor axis must be non-negative")
+    if not math.isfinite(a):
+        raise OverflowError("Semi-major axis must be finite")
+    if not math.isfinite(b):
+        raise OverflowError("Semi-minor axis must be finite")
+    return _get_pi() * a * b
+
 if __name__ == '__main__':
-    input_list = ["apple", "banana", "cherry", "date"]
-    custom_delimiter = " | "
-    result = join_with_delimiter(input_list, custom_delimiter)
-    print(result)
+    semi_major_axis = 5.0
+    semi_minor_axis = 3.0
+    area = calculate_ellipse_area(semi_major_axis, semi_minor_axis)
+    print(area)

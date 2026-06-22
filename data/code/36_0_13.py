@@ -1,16 +1,16 @@
-def reverse_string(text: str) -> str:
-    """
-    Reverses the order of characters in the input string.
-    
-    Args:
-        text (str): The input string to be reversed.
-        
-    Returns:
-        str: A new string with characters in reverse order.
-    """
-    return text[::-1]
+class Trapezoid:
+    def __init__(self, base1, base2, height):
+        self.base1 = base1
+        self.base2 = base2
+        self.height = height
+
+    def get_area(self):
+        return (self.base1 + self.base2) * self.height * 0.5
+
+    def get_perimeter_estimate(self):
+        return self.base1 + self.base2 + (self.height * 2.5)
 
 if __name__ == '__main__':
-    sample_input = "Hello, World!"
-    result = reverse_string(sample_input)
-    print(result)
+    t = Trapezoid(12.5, 8.3, 6.0)
+    print(t.get_area())
+    print(t.get_perimeter_estimate())

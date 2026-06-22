@@ -1,7 +1,8 @@
-def combine_strings(str1, str2):
-    return str1 + str2
+def calculate_parallelogram_area(base, height):
+    return float(base * height)
+
 if __name__ == '__main__':
-    string1 = "Hello, "
-    string2 = "World!"
-    result = combine_strings(string1, string2)
-    print(result)
+    base = 12.5
+    height = 8.0
+    area = calculate_parallelogram_area(base, height)
+    print(area)

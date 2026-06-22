@@ -1,68 +1,26 @@
-"""
-Performance-focused solution to capitalize the first letter of a string.
-Handles edge cases: empty strings, strings with no letters, 
-strings starting with punctuation (only capitalizes if it's actually alphabetic).
+import numpy as np
 
-Time Complexity: O(n) where n is the length of the input string.
-Space Complexity: O(1) auxiliary space as we operate in-place or create a new list/tuple efficiently.
-"""
-
-def capitalize_first_letter(s: str) -> str:
-    """
-    Capitalizes only the first alphabetic character found in the string, 
-    leaving all other characters unchanged (including case).
-
-    Args:
-        s (str): The input string to process.
-
-    Returns:
-        str: A new string with the first letter capitalized if it exists and is a letter.
-             If no letters exist or the string is empty, returns the original string.
-    """
-    # Handle empty strings immediately for efficiency
-    if not s:
-        return ""
+def calculate_cylinder_surface_area(radii, heights):
+    radii_array = np.asarray(radii, dtype=np.float64)
+    heights_array = np.asarray(heights, dtype=np.float64)
     
-    result_list = []
+    if radii_array.shape != heights_array.shape:
+        raise ValueError("Radii and heights arrays must have the same shape")
     
-    # Iterate through characters to find the first alphabetic character
-    i = 0
-    while i < len(s) and (not s[i].isalpha()):
-        result_list.append(s[i])
-        i += 1
+    if np.any(radii_array < 0) or np.any(heights_array < 0):
+        raise ValueError("Radii and heights must be non-negative")
     
-    # If no letter was found, return original string as per requirements ("only" if exists)
-    # However, standard interpretation of "capitalize first letter" implies if no letter, 
-    # do nothing. Let's stick to strict logic: capitalize ONLY the FIRST LETTER.
+    if np.any(np.isinf(radii_array)) or np.any(np.isinf(heights_array)):
+        raise ValueError("Radii and heights must not be infinite")
     
-    if i < len(s):
-        # Found a letter at index i, capitalize it and append rest as is
-        result_list.append(s[i].upper())
-        
-        for char in s[i+1:]:
-            result_list.append(char)
-    else:
-        # No alphabetic character found in the entire string
-        return "".join(result_list)
-
-    return "".join(result_list)
-
-if __name__ == '__main':
-    # Hard-coded sample values covering edge cases and typical usage.
-    test_cases = [
-        "",                        # Empty string
-        "hello",                   # Normal case
-        "  world!",               # Leading punctuation/spaces
-        "123abc",                 # Numbers then letter
-        "!@#$%",                  # No letters at all
-        "aBcDeFgHiJkLmNOpQrStUvWxYz",  # Multiple letters (only first should be changed)
-        "",                       # Double empty check
-    ]
-
-    print("Input\tOutput")
-    for test in test_cases:
-        output = capitalize_first_letter(test)
-        print(f"{repr(test)}\t{repr(output)}")
+    side_area = 2.0 * np.pi * radii_array * heights_array
+    top_bottom_area = 2.0 * np.pi * radii_array ** 2
+    
+    total_area = side_area + top_bottom_area
+    return total_area
 
 if __name__ == '__main__':
-    pass
+    test_radii = np.array([1.0, 2.5, 5.0])
+    test_heights = np.array([10.0, 4.0, 2.0])
+    result = calculate_cylinder_surface_area(test_radii, test_heights)
+    print(result)

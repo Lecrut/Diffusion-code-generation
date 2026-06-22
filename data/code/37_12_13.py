@@ -1,26 +1,15 @@
-class StringCombiner:
-    """A class that provides methods to join strings efficiently."""
+class Parallelogram:
+    def __init__(self, base, height):
+        if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+            raise TypeError("Base and height must be numeric values.")
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive values.")
+        self.base = base
+        self.height = height
 
-    def combine(self, str1: str, str2: str) -> str:
-        """
-        Efficiently joins two input strings into a single string.
-
-        Args:
-            str1 (str): The first input string.
-            str2 (str): The second input string.
-
-        Returns:
-            str: The concatenated result of the two strings.
-        """
-        return f"{str1}{str2}"
+    def calculate_area(self):
+        return self.base * self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction
-    combiner = StringCombiner()
-    
-    test_string_1 = "Hello"
-    test_string_2 = "World!"
-
-    result = combiner.combine(test_string_1, test_string_2)
-
-    print(result)  # Output: HelloWorld!
+    parallelogram = Parallelogram(10.0, 5.0)
+    print(parallelogram.calculate_area())

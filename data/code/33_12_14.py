@@ -1,14 +1,16 @@
-import sys
-
-def strip_all_spaces(text: str) -> str:
-    """Remove all spaces from the input string."""
-    return "".join(char for char in text if not (char == " "))
+def calculate_triangle_area(base, height):
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("Height must be a number")
+    if base < 0:
+        raise ValueError("Base cannot be negative")
+    if height < 0:
+        raise ValueError("Height cannot be negative")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements.
-    # No user interaction, command-line arguments, or network access is used.
-    multi_line_string = """Hello World from Python. 
-This line has multiple spaces between words and at the end."""
-
-    result = strip_all_spaces(multi_line_string)
-    print(result)
+    base_value = 10
+    height_value = 5
+    area = calculate_triangle_area(base_value, height_value)
+    print(area)

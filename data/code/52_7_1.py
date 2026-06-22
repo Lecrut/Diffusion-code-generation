@@ -1,21 +1,12 @@
-from abc import ABC, abstractmethod
-import math
-class Shape(ABC):
-    @abstractmethod
-    def area(self):
-        pass
-class Square(Shape):
-    def __init__(self, side):
-        self.side = side
-    def area(self):
-        return self.side * self.side
-class Circle(Shape):
-    def __init__(self, radius):
-        self.radius = radius
-    def area(self):
-        return math.pi * self.radius * self.radius
+def create_diamond_pattern(n):
+    pattern = []
+    for i in range(n):
+        pattern.append(' ' * (n - i - 1) + '*' * (2 * i + 1))
+    for i in range(n - 2, -1, -1):
+        pattern.append(' ' * (n - i - 1) + '*' * (2 * i + 1))
+    return '\n'.join(pattern)
+
 if __name__ == '__main__':
-    square = Square(5)
-    circle = Circle(3)
-    print(f"Square Area: {square.area()}")
-    print(f"Circle Area: {circle.area()}")
+    sample_value = 5
+    result = create_diamond_pattern(sample_value)
+    print(result)

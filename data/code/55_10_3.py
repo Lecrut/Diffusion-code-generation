@@ -1,15 +1,15 @@
-import sys
-def calculate_perimeter(side_a, side_b, side_c):
-    return side_a + side_b + side_c
+def print_alphabet_triangle(height):
+    result = []
+    for i in range(1, height + 1):
+        chars = []
+        for j in range(i):
+            chars.append(chr(ord('A') + j))
+        row = ' '.join(chars)
+        result.append(row)
+    for line in result:
+        print(line)
+    return result
+
 if __name__ == '__main__':
-    side_a = 5.0
-    side_b = 12.0
-    side_c = 13.0
-    try:
-        perimeter = calculate_perimeter(side_a, side_b, side_c)
-        print(f"The lengths of the sides are: {side_a}, {side_b}, and {side_c}")
-        print(f"The perimeter of the triangle is: {perimeter}")
-    except TypeError:
-        print("Error: One or more inputs were not valid numbers.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    height = 5
+    print_alphabet_triangle(height)

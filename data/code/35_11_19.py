@@ -1,30 +1,14 @@
-import string
+class Cube:
+    def __init__(self, edge_length: float) -> None:
+        if not isinstance(edge_length, (int, float)):
+            raise TypeError("Edge length must be a number")
+        if edge_length < 0:
+            raise ValueError("Edge length must be non-negative")
+        self._edge = float(edge_length)
 
-def count_vowels(text: str) -> int:
-    """
-    Counts the total number of vowels in a given string, 
-    including both uppercase and lowercase letters. Non-alphabetic characters are ignored.
-    
-    Args:
-        text (str): The input string to analyze.
-        
-    Returns:
-        int: The count of vowel characters ('a', 'e', 'i', 'o', 'u' in any case).
-    """
-    vowels = set("aeiouAEIOU")
-    return sum(1 for char in text if char in vowels)
+    def get_volume(self) -> float:
+        return self._edge ** 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or external dependencies
-    samples = [
-        "Hello, World!",
-        "Python programming is awesome.",
-        "",
-        "aeiouAEIOU",
-        "12345!@#$%",
-        "The quick brown fox jumps over the lazy dog."
-    ]
-
-    for sample in samples:
-        count = count_vowels(sample)
-        print(f"Input: '{sample}' -> Vowel Count: {count}")
+    cube = Cube(5)
+    print(cube.get_volume())

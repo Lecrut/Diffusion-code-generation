@@ -1,9 +1,7 @@
-class GeometryUtils:
-    @staticmethod
-    def calculate_rectangle_perimeter(length, width):
-        return 2 * (length + width)
+def calculate_average(scores):
+    return sum(scores) / len(scores)
+
 if __name__ == '__main__':
-    length_val = 10
-    width_val = 5
-    perimeter = GeometryUtils.calculate_rectangle_perimeter(length_val, width_val)
-    print(perimeter)
+    sample_scores = [85, 90, 78, 92, 88]
+    avg = calculate_average(sample_scores)
+    print(avg)

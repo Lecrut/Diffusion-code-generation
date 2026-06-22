@@ -1,19 +1,10 @@
-import textwrap
+import math
 
-def capitalize_words(text: str) -> str:
-    """
-    Decorator-like function that capitalizes the first letter of every word in a string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with each word's first letter capitalized.
-    """
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
-
-    # Split into words, capitalize the first character of each, then join back
+def calculate_cylinder_surface_area(radius: float, height: float) -> float:
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative")
+    return 2 * math.pi * radius * (radius + height)
 
 if __name__ == '__main__':
-    pass
+    result = calculate_cylinder_surface_area(5.0, 10.0)
+    print(result)

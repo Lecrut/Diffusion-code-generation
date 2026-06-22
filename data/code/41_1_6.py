@@ -1,28 +1,10 @@
-def manipulate_case(input_string):
-    """
-    Returns a dictionary containing lowercase, uppercase, and title-cased versions of input_string.
-    
-    Args:
-        input_string (str): The string to be processed.
-        
-    Returns:
-        dict: A dictionary with keys 'lower', 'upper', and 'title' mapping to the respective transformed strings.
-    """
-    return {
-        "lower": input_string.lower(),
-        "upper": input_string.upper(),
-        "title": input_string.title()
-    }
+from typing import Union
+
+def compute_rhombus_area(diagonal_1: Union[int, float], diagonal_2: Union[int, float]) -> float:
+    return 0.5 * diagonal_1 * diagonal_2
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or network access)
-    samples = [
-        "hello world",
-        "PYTHON IS COOL",
-        "Mixed CASE 123"
-    ]
-    
-    for s in samples:
-        result = manipulate_case(s)
-        print(f"Input: {s}")
-        print(result)
+    d1 = 10
+    d2 = 15
+    area = compute_rhombus_area(d1, d2)
+    print(area)

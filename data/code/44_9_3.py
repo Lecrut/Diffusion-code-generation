@@ -1,17 +1,11 @@
-import sys
-def calculate_perimeter(length, width):
-    if length <= 0 or width <= 0:
-        raise ValueError("Dimensions must be positive numbers.")
-    return 2 * (length + width)
+def calculate_average(numbers):
+    if not numbers:
+        return 0.0
+    total = sum(numbers)
+    count = len(numbers)
+    return total / count
+
 if __name__ == '__main__':
-    try:
-        length = 10
-        width = 5
-        perimeter = calculate_perimeter(length, width)
-        print(f"Length: {length}")
-        print(f"Width: {width}")
-        print(f"Perimeter: {perimeter}")
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+    predefined_numbers = [10, 20, 30, 40, 50]
+    average = calculate_average(predefined_numbers)
+    print(average)

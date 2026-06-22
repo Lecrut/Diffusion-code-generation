@@ -1,21 +1,14 @@
-def reverse_string(text: str) -> str:
-    """
-    Returns a new string with characters in 'text' reversed.
-    
-    Args:
-        text (str): The input string to be reversed.
-        
-    Returns:
-        str: A new string containing the characters of 'text' in reverse order.
+class Trapezoid:
+    def __init__(self, base1, base2, height):
+        if base1 <= 0 or base2 <= 0 or height <= 0:
+            raise ValueError("Bases and height must be positive numbers.")
+        self.base1 = base1
+        self.base2 = base2
+        self.height = height
 
-    Example:
-        >>> reverse_string("hello")
-        "olleh"
-    """
-    return text[::-1]
+    def area(self):
+        return 0.5 * (self.base1 + self.base2) * self.height
 
 if __name__ == '__main__':
-    sample_input = "Hello, World!"
-    
-    result = reverse_string(sample_input)
-    print(result)
+    trapezoid = Trapezoid(5, 7, 4)
+    print(trapezoid.area())

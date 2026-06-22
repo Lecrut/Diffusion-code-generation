@@ -1,35 +1,12 @@
-import re
-
-def extract_pattern(pattern: str, text: str) -> list[str]:
-    """
-    Extract all non-overlapping occurrences of a pattern from input text using regex.
-    
-    Args:
-        pattern (str): The regular expression pattern to search for.
-        text (str): The string in which to search for the pattern.
-        
-    Returns:
-        list[str]: A list of strings, each representing an occurrence found.
-                   If no matches are found or if there's a regex error, returns empty list.
-    """
-    try:
-        compiled_pattern = re.compile(pattern)
-        return compiled_pattern.findall(text)
-    except re.error as e:
-        # In case of invalid pattern syntax, we handle it gracefully by returning an empty list
-        # or could raise the exception depending on strictness requirements. 
-        # Given "optimized method" context without explicit error handling request, 
-        # returning empty list avoids crashing while providing a safe default.
-        return []
+def compute_prism_volume(base_area, height):
+    if not isinstance(base_area, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Base area and height must be numeric types.")
+    if base_area < 0 or height < 0:
+        raise ValueError("Base area and height must be non-negative.")
+    return base_area * height
 
 if __name__ == '__main__':
-    sample_text = "The rain in Spain falls mainly in the plain."
-    search_pattern = r"\b\w{3}\s+\w\b"  # Matches words with exactly three letters followed by one space and another word
-    
-    result = extract_pattern(search_pattern, sample_text)
-    
-    print("Input text:", sample_text)
-    print(f"Pattern: {search_pattern}")
-    print("Matches found:")
-    for match in result:
-        print(match)
+    base_area_value = 10.5
+    height_value = 5.0
+    volume_result = compute_prism_volume(base_area_value, height_value)
+    print(volume_result)

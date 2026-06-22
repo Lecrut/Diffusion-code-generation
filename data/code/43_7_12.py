@@ -1,8 +1,12 @@
-def calculate_square_area(side_length: float) -> float:
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def pyramid_surface_area(base_side, slant_height):
+    if base_side <= 0 or slant_height <= 0:
+        raise ValueError("Dimensions must be positive")
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    return round(base_area + lateral_area, 2)
 
 if __name__ == '__main__':
-    sample_side = 5.0
-    result = calculate_square_area(sample_side)
-    print(f"The area of a square with side {sample_side} is {result}")
+    sample_base = 4.5
+    sample_slant = 7.2
+    area = pyramid_surface_area(sample_base, sample_slant)
+    print(area)

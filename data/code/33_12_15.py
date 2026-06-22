@@ -1,15 +1,10 @@
-import sys
-
-def strip_all_spaces(text: str) -> str:
-    """Remove all spaces from the input string."""
-    return "".join(char for char in text if not (char == ' ') or ord(char) > 32 and char != '\t' and char != '\n')
+def calculate_triangle_area(base: float, height: float) -> float:
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    sample_input = "Hello world\nThis is a test.\n   Multiple   spaces here."
-
-    # Simulate reading from standard input using the hard-coded value directly.
-    raw_data = sample_input
-    
-    result = strip_all_spaces(raw_data)
-    
-    print(result)
+    base = 10.0
+    height = 5.0
+    area = calculate_triangle_area(base, height)
+    print(area)

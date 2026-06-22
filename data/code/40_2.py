@@ -1,13 +1,6 @@
-class FirstLetterExtractor:
-    def extract(self, text):
-        words = text.split()
-        first_letters = []
-        for word in words:
-            if word:
-                first_letters.append(word[0])
-        return first_letters
+def calculate_surface_area(length: float, width: float, height: float) -> float:
+    return 2 * (length * width + width * height + height * length)
+
 if __name__ == '__main__':
-    extractor = FirstLetterExtractor()
-    sample_text = "This is a sample sentence for testing purposes"
-    result = extractor.extract(sample_text)
+    result = calculate_surface_area(3.0, 4.0, 5.0)
     print(result)

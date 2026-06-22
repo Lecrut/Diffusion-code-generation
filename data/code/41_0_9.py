@@ -1,18 +1,11 @@
-def convert_text(text: str) -> tuple[str, str, str]:
-    """Converts a string to lowercase, uppercase, and title case."""
-    lower_result = text.lower()
-    upper_result = text.upper()
-    title_result = text.title()
-    return lower_result, upper_result, title_result
+import math
+
+def calculate_rhombus_area(diagonal1: float, diagonal2: float) -> float:
+    area = (diagonal1 * diagonal2) / 2
+    return area
 
 if __name__ == '__main__':
-    sample_text = "Hello World! This is a SAMPLE STRING."
-    
-    # Convert the sample string using the function
-    low, upp, titl = convert_text(sample_text)
-
-    # Print all three results with labels for clarity
-    print(f"Original: {sample_text}")
-    print("Lowercase:", low)
-    print("Uppercase:", upp)
-    print("Title Case:", titl)
+    diagonal_1 = 10
+    diagonal_2 = 8
+    result = calculate_rhombus_area(diagonal_1, diagonal_2)
+    print(result)

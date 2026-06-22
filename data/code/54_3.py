@@ -1,13 +1,22 @@
-import math
-def get_area(radius):
-    return math.pi * (radius ** 2)
+def generate_hollow_square(n, border_char='#'):
+    if n <= 0:
+        return []
+    if n == 1:
+        return [border_char]
+    lines = []
+    top_bottom = border_char * n
+    middle = border_char + ' ' * (n - 2) + border_char
+    lines.append(top_bottom)
+    for _ in range(n - 2):
+        lines.append(middle)
+    lines.append(top_bottom)
+    return lines
+
 if __name__ == '__main__':
-    radius1 = 5.0
-    area1 = get_area(radius1)
-    print(f"The area for radius {radius1} is {area1}")
-    radius2 = 0.5
-    area2 = get_area(radius2)
-    print(f"The area for radius {radius2} is {area2}")
-    radius3 = 10.5
-    area3 = get_area(radius3)
-    print(f"The area for radius {radius3} is {area3}")
+    result = generate_hollow_square(5)
+    for line in result:
+        print(line)
+    print()
+    result_custom = generate_hollow_square(6, border_char='*')
+    for line in result_custom:
+        print(line)

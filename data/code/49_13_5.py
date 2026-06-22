@@ -1,24 +1,7 @@
-def calculate_lengths_info(length1, length2):
-    if length1 == 0 or length2 == 0:
-        raise ValueError("Lengths cannot be zero")
-    original_lengths = {
-        "length1": length1,
-        "length2": length2
-    }
-    if length1 > length2:
-        difference = length1 - length2
-        ratio = length1 / length2
-    else:
-        difference = length2 - length1
-        ratio = length2 / length1
-    result = {
-        "original_lengths": original_lengths,
-        "difference": difference,
-        "ratio": ratio
-    }
-    return result
+def generate_square_pattern(size: int) -> str:
+    row = '*' * size + '\n'
+    return row * size
+
 if __name__ == '__main__':
-    l1 = 20
-    l2 = 5
-    info = calculate_lengths_info(l1, l2)
-    print(info)
+    size = 6
+    print(generate_square_pattern(size), end='')

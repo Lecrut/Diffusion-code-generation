@@ -1,34 +1,21 @@
-import argparse
+from dataclasses import dataclass
+from typing import final
 
-def main():
-    """
-    Reads a file line by line and prints the first character of every non-empty line.
-    
-    This function accepts an optional command-line argument 'file_path'. 
-    If not provided, it defaults to reading from '/dev/null' as per the constraint 
-    that no pre-existing files should exist or be accessed in this sample run context.
-    """
-    parser = argparse.ArgumentParser(
-        description="Prints the first character of every non-empty line in a file."
-    )
-    
-    # Define 'file_path' with default value '/dev/null' to avoid requiring user input 
-    # and ensure it runs without pre-existing files or network access.
-    parser.add_argument("file_path", help="Path to the file (default: /dev/null)")
-    
-    args = parser.parse_args()
-    
-    try:
-        with open(args.file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                # Strip newline characters and whitespace from both ends
-                stripped_line = line.strip()
-                
-                # Only process non-empty lines
-                if len(stripped_line) > 0:
-                    print(stripped_line[0])
-    except FileNotFoundError:
-        print(f"Error: The file '{args.file_path}' was not found.")
+FACTOR_TWO: final = 2
+
+@dataclass
+class RectangularBox:
+    length: float
+    width: float
+    height: float
+
+    def compute_surface_area(self) -> float:
+        area_lw: float = self.length * self.width
+        area_wh: float = self.width * self.height
+        area_hl: float = self.height * self.length
+        return FACTOR_TWO * (area_lw + area_wh + area_hl)
 
 if __name__ == '__main__':
-    main()
+    box_instance: RectangularBox = RectangularBox(length=2.5, width=3.0, height=4.0)
+    total_area: float = box_instance.compute_surface_area()
+    print(total_area)

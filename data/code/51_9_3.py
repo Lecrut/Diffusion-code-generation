@@ -1,27 +1,11 @@
-import unittest
-def calculate_perimeter(length, width):
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative")
-    return 2 * (length + width)
-class TestPerimeterCalculation(unittest.TestCase):
-    def test_positive_integers(self):
-        self.assertEqual(calculate_perimeter(5, 10), 30)
-        self.assertEqual(calculate_perimeter(3, 3), 12)
-        self.assertEqual(calculate_perimeter(1, 1), 4)
-    def test_zero_input(self):
-        self.assertEqual(calculate_perimeter(0, 5), 10)
-        self.assertEqual(calculate_perimeter(0, 0), 0)
-    def test_mixed_positive_and_zero(self):
-        self.assertEqual(calculate_perimeter(0, 100), 200)
-        self.assertEqual(calculate_perimeter(50, 0), 100)
-    def test_negative_length(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, 10)
-    def test_negative_width(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(5, -10)
-    def test_both_negative(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, -10)
+def build_symmetric_pyramid(rows):
+    spacing_patterns = []
+    for i in range(rows):
+        spaces = ' ' * (rows - i - 1)
+        numbers = ' '.join(str(digit + 1) for digit in range(i + 1))
+        spacing_patterns.append(spaces + numbers + spaces)
+    return '\n'.join(spacing_patterns)
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    result = build_symmetric_pyramid(6)
+    print(result)

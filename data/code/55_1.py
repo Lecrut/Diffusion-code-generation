@@ -1,5 +1,12 @@
-def calculate_triangle_perimeter(a, b, c):
-    return a + b + c
+def print_centered_alphabet_triangle(height):
+    if height <= 0:
+        return
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for i in range(height):
+        char = alphabet[i % len(alphabet)]
+        spaces = " " * (height - i - 1)
+        line = spaces + char + spaces
+        print(line)
+
 if __name__ == '__main__':
-    result = calculate_triangle_perimeter(3.0, 4.0, 5.0)
-    print(result)
+    print_centered_alphabet_triangle(5)

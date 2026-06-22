@@ -1,21 +1,10 @@
-import re
-
-def extract_words(text: str) -> list[str]:
-    """
-    Extracts all words (sequences of alphanumeric characters) from a multi-line input string.
-
-    Args:
-        text (str): The input string to process, which may contain multiple lines and various separators.
-
-    Returns:
-        list[str]: A list containing the extracted words in order.
-    """
-    # Use regular expression to find all sequences of alphanumeric characters
-    found_words = re.findall(r'\b\w+\b', text)
-    return found_words
+def calculate_prism_volume(base_area, height):
+    if base_area <= 0 or height <= 0:
+        return 0
+    return base_area * height
 
 if __name__ == '__main__':
-    sample_input = "Hello, World! This is a test.\n\nAnother line with numbers: 123 and symbols @#$."
-
-    words = extract_words(sample_input)
-    print(words)
+    base_area_value = 10.0
+    height_value = 5.0
+    result = calculate_prism_volume(base_area_value, height_value)
+    print(result)

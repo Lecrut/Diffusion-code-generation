@@ -1,37 +1,18 @@
-"""
-Module to combine two strings in any order.
+GEOMETRY_CONSTANTS = {"area_formula_multiplier": 1}
 
-This module provides a function that takes two string arguments and returns 
-a new string formed by concatenating them in either 'string1 + string2' or 
-'string2 + string1'. The user can choose the desired order via boolean flag 
-or simply rely on default behavior which is s1 then s2.
-"""
+def _validate_positive(value, name):
+    if value <= 0:
+        raise ValueError(f"{name} must be positive")
+    return value
 
-def combine_strings(s1: str, s2: str) -> tuple[str, str]:
-    """
-    Combines two provided strings in any order and returns both possible results.
-
-    Args:
-        s1 (str): The first input string.
-        s2 (str): The second input string.
-
-    Returns:
-        tuple[str, str]: A tuple containing the concatenation of s1+s2 followed by s2+s1.
-    
-    Example:
-        >>> combine_strings("Hello", "World")
-        ('HelloWorld', 'WorldHello')
-    """
-    result_order_1 = f"{s1}{s2}"
-    result_order_2 = f"{s2}{s1}"
-    return result_order_1, result_order_2
+def calculate_parallelogram_area(base, height):
+    valid_base = _validate_positive(base, "base")
+    valid_height = _validate_positive(height, "height")
+    multiplier = GEOMETRY_CONSTANTS.get("area_formula_multiplier", 1)
+    return valid_base * valid_height * multiplier
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input.
-    str_a = "Python"
-    str_b = "is awesome"
-
-    combined_first, combined_second = combine_strings(str_a, str_b)
-
-    print(f"Order 1 ({str_a} + {str_b}): '{combined_first}'")
-    print(f"Order 2 ({str_b} + {str_a}): '{combined_second}'")
+    base = 7
+    height = 4
+    area = calculate_parallelogram_area(base, height)
+    print(area)

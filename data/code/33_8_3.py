@@ -1,9 +1,7 @@
-def remove_spaces(list_of_strings):
-    new_list = []
-    for s in list_of_strings:
-        new_list.append(s.replace(' ', ''))
-    return new_list
+calculate_triangle_area = lambda base, height: 0.5 * base * height
+
 if __name__ == '__main__':
-    sample_list = ["hello world", "  python programming  ", "a b c d"]
-    result = remove_spaces(sample_list)
+    base_val = 10
+    height_val = 5
+    result = calculate_triangle_area(base_val, height_val)
     print(result)

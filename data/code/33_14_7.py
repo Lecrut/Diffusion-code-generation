@@ -1,22 +1,21 @@
-def minify_text(input_string):
-    return input_string.replace(' ', '').replace('\t', '').replace('\n', '').replace('\r', '')
+import math
+import numbers
+
+def calculate_triangle_area(base, height):
+    if not isinstance(base, numbers.Number) or not isinstance(height, numbers.Number):
+        raise TypeError("Base and height must be numeric types.")
+    if math.isnan(base) or math.isnan(height):
+        raise ValueError("Base and height cannot be NaN.")
+    if math.isinf(base) or math.isinf(height):
+        raise ValueError("Base and height cannot be infinite.")
+    if base < 0:
+        raise ValueError("Base cannot be negative.")
+    if height < 0:
+        raise ValueError("Height cannot be negative.")
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    sample1 = "  This is a test string with various spaces \n and tabs. \r "
-    sample2 = "NoWhitespaceHere"
-    sample3 = "Multiple\tspaces\nand\rnewlines"
-    sample4 = ""
-    result1 = minify_text(sample1)
-    result2 = minify_text(sample2)
-    result3 = minify_text(sample3)
-    result4 = minify_text(sample4)
-    print(f"Original 1: '{sample1}'")
-    print(f"Minified 1: '{result1}'")
-    print("-" * 20)
-    print(f"Original 2: '{sample2}'")
-    print(f"Minified 2: '{result2}'")
-    print("-" * 20)
-    print(f"Original 3: '{sample3}'")
-    print(f"Minified 3: '{result3}'")
-    print("-" * 20)
-    print(f"Original 4: '{sample4}'")
-    print(f"Minified 4: '{result4}'")
+    base_value = 10.0
+    height_value = 5.0
+    area = calculate_triangle_area(base_value, height_value)
+    print(area)

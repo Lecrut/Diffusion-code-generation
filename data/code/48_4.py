@@ -1,13 +1,16 @@
-import math
-def distance(p1, p2):
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+def yield_largest_from_sequence():
+    data = [10, 45, 23, 89, 12, 67, 5, 91, 34, 78]
+    current_max = None
+    for val in data:
+        if current_max is None or val > current_max:
+            current_max = val
+        yield val
+    yield current_max
+
 if __name__ == '__main__':
-    point1 = (0, 0)
-    point2 = (3, 0)
-    point3 = (0, 4)
-    side1 = distance(point1, point2)
-    side2 = distance(point2, point3)
-    side3 = distance(point3, point1)
-    print(f"Side 1 length: {side1}")
-    print(f"Side 2 length: {side2}")
-    print(f"Side 3 length: {side3}")
+    result = yield_largest_from_sequence()
+    values = []
+    for item in result:
+        values.append(item)
+    largest = values[-1]
+    print(largest)

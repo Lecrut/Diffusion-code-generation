@@ -1,19 +1,24 @@
-import sys
+import math
 
-def calculate_square_area(side_length):
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def square_pyramid_surface_area(base_side, perpendicular_height):
+    if base_side <= 0 or perpendicular_height < 0:
+        raise ValueError("Base side must be positive and height must be non-negative.")
+    
+    if perpendicular_height == 0:
+        return base_side * base_side
+    
+    half_base = base_side / 2.0
+    slant_height = math.sqrt(perpendicular_height ** 2 + half_base ** 2)
+    
+    base_area = base_side ** 2
+    triangular_face_area = 0.5 * base_side * slant_height
+    lateral_area = 4 * triangular_face_area
+    
+    total_surface_area = base_area + lateral_area
+    return total_surface_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input, command-line arguments, or network access is required.
-    test_cases = [5.0, "10", "-3"]
-
-    for value in test_cases:
-        try:
-            side_length = float(value)
-            area = calculate_square_area(side_length)
-            print(f"Side length: {value}, Area: {area}")
-        except ValueError as e:
-            # Handle cases where conversion to float fails (e.g., non-numeric input or negative numbers if strictly positive is required, though mathematically square side can be any real number).
-            # The task asks for robust handling; printing the error message demonstrates this.
-            print(f"Error converting '{value}' to a valid numeric value: {e}")
+    base_side_value = 6
+    height_value = 4
+    area = square_pyramid_surface_area(base_side_value, height_value)
+    print(area)

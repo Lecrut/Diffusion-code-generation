@@ -1,28 +1,31 @@
-def join_with_delimiter(strings: list[str], delimiter: str) -> str:
-    """
-    Takes a list of strings and a custom delimiter, returning a single string 
-    where the delimiter is placed between every element.
-    
-    Args:
-        strings (list[str]): List of input strings to be joined.
-        delimiter (str): The string used as a separator between elements.
-        
-    Returns:
-        str: A new string with elements separated by the custom delimiter.
-    """
-    if not strings:
-        return ""
-    
-    result = [strings[0]]
-    for i in range(1, len(strings)):
-        result.append(delimiter + strings[i])
-    
-    return "".join(result)
+import math
+from typing import Union
+
+Number = Union[int, float]
+
+class Ellipse:
+    def __init__(self, semi_major: Number, semi_minor: Number) -> None:
+        if not isinstance(semi_major, (int, float)) or not isinstance(semi_minor, (int, float)):
+            raise TypeError("Semi-major and semi-minor axes must be numeric types.")
+        if semi_major <= 0 or semi_minor <= 0:
+            raise ValueError("Semi-major and semi-minor axes must be positive numbers.")
+        self.semi_major = float(semi_major)
+        self.semi_minor = float(semi_minor)
+
+    def area(self) -> float:
+        return self.semi_major * self.semi_minor * math.pi
+
+def calculate_ellipse_area(semi_major: Number, semi_minor: Number) -> float:
+    if not isinstance(semi_major, (int, float)) or not isinstance(semi_minor, (int, float)):
+        raise TypeError("Semi-major and semi-minor axes must be numeric types.")
+    if semi_major <= 0 or semi_minor <= 0:
+        raise ValueError("Semi-major and semi-minor axes must be positive numbers.")
+    return float(semi_major) * float(semi_minor) * math.pi
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or files.
-    test_list = ["apple", "banana", "cherry"]
-    custom_sep = ", : "
-    
-    output_string = join_with_delimiter(test_list, custom_sep)
-    print(output_string)  # Expected Output: apple, : banana, : cherry
+    sample_semi_major = 5.0
+    sample_semi_minor = 3.0
+    direct_area = calculate_ellipse_area(sample_semi_major, sample_semi_minor)
+    print(direct_area)
+    ellipse_instance = Ellipse(sample_semi_major, sample_semi_minor)
+    print(ellipse_instance.area())

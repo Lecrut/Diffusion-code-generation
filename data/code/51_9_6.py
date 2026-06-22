@@ -1,27 +1,31 @@
-import unittest
-def calculate_perimeter(length, width):
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative")
-    return 2 * (length + width)
-class TestPerimeterCalculation(unittest.TestCase):
-    def test_positive_integers(self):
-        self.assertEqual(calculate_perimeter(5, 10), 30)
-        self.assertEqual(calculate_perimeter(3, 3), 12)
-        self.assertEqual(calculate_perimeter(1, 1), 4)
-    def test_zero_input(self):
-        self.assertEqual(calculate_perimeter(0, 5), 10)
-        self.assertEqual(calculate_perimeter(0, 0), 0)
-    def test_mixed_positive_and_zero(self):
-        self.assertEqual(calculate_perimeter(0, 10), 20)
-        self.assertEqual(calculate_perimeter(5, 0), 10)
-    def test_negative_length(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, 10)
-    def test_negative_width(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(5, -10)
-    def test_both_negative(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, -10)
+def build_symmetric_pyramid(rows: int) -> list[str]:
+    if rows <= 0:
+        return []
+    
+    padding_map = {}
+    for r in range(1, rows + 1):
+        padding_map[r] = rows - r
+    
+    pattern_cache = {}
+    for r in range(1, rows + 1):
+        center = r
+        left_part = list(range(1, center + 1))
+        right_part = list(range(center - 1, 0, -1)) if center > 1 else []
+        full_row = left_part + right_part
+        pattern_cache[r] = full_row
+    
+    result = []
+    for r in range(1, rows + 1):
+        padding = padding_map[r]
+        row_numbers = pattern_cache[r]
+        row_str = " ".join(str(num) for num in row_numbers)
+        line = " " * padding + row_str + " " * padding
+        result.append(line)
+    
+    return result
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_rows = 6
+    pyramid_lines = build_symmetric_pyramid(sample_rows)
+    for line in pyramid_lines:
+        print(line)

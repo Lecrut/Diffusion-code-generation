@@ -1,19 +1,7 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Concatenates two strings efficiently using Python's optimized + operator or f-string logic.
-    
-    Args:
-        str1 (str): The first string argument.
-        str2 (str): The second string argument.
-        
-    Returns:
-        str: A new string formed by concatenating str1 and str2.
-    """
-    return str1 + str2
+def parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    sample_str1 = "Hello"
-    sample_str2 = "World!"
-    
-    result = combine_strings(sample_str1, sample_str2)
-    print(result)
+    base = 10.0
+    height = 5.0
+    print(parallelogram_area(base, height))

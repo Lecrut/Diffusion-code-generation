@@ -1,17 +1,13 @@
-import re
+class Triangle:
+    def __init__(self, base, height):
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive numbers")
+        self.base = base
+        self.height = height
 
-def remove_all_spaces(text: str) -> str:
-    """Remove all spaces from the input string."""
-    return re.sub(r"\s+", "", text)
+    def area(self):
+        return 0.5 * self.base * self.height
 
-if __name__ == '__main__':
-    # Hard-coded sample multi-line strings to test without user interaction.
-    samples = [
-        "Hello world, this is a test.",
-        "  Multiple   spaces     here? ",
-        "No extra spacing needed.",
-    ]
-
-    for text in samples:
-        result = remove_all_spaces(text)
-        print(result)
+if __name__ == "__main__":
+    sample_triangle = Triangle(10, 5)
+    print(sample_triangle.area())

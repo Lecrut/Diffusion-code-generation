@@ -1,17 +1,10 @@
-class StringAssembler:
-    def build(self, parts, separator):
-        return separator.join(parts)
+import math
+
+def calculate_ellipse_area(semi_major, semi_minor):
+    return math.pi * semi_major * semi_minor
+
 if __name__ == '__main__':
-    assembler = StringAssembler()
-    parts1 = ["hello", "world", "python"]
-    separator1 = " "
-    result1 = assembler.build(parts1, separator1)
-    print(f"Result 1: {result1}")
-    parts2 = ["one", "two", "three", "four"]
-    separator2 = "-"
-    result2 = assembler.build(parts2, separator2)
-    print(f"Result 2: {result2}")
-    parts3 = ["a", "b", "c"]
-    separator3 = ""
-    result3 = assembler.build(parts3, separator3)
-    print(f"Result 3: {result3}")
+    semi_major_axis = 5.0
+    semi_minor_axis = 3.0
+    area = calculate_ellipse_area(semi_major_axis, semi_minor_axis)
+    print(area)

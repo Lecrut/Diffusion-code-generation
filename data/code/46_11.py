@@ -1,8 +1,14 @@
-def calculate_triangle_perimeter(a, b, c):
-    return a + b + c
+import pandas as pd
+
+def compute_max_salary(records):
+    df = pd.DataFrame(records, columns=['id', 'name', 'salary'])
+    return df['salary'].max()
+
 if __name__ == '__main__':
-    a_val = 3.0
-    b_val = 4.0
-    c_val = 5.0
-    perimeter = calculate_triangle_perimeter(a_val, b_val, c_val)
-    print(perimeter)
+    sample_data = [
+        (1, 'Alice', 50000),
+        (2, 'Bob', 75000),
+        (3, 'Charlie', 65000)
+    ]
+    result = compute_max_salary(sample_data)
+    print(result)

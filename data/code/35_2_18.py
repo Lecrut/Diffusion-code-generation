@@ -1,21 +1,9 @@
-class VowelCounter:
-    def __init__(self, text: str):
-        """Initialize with a string."""
-        self.text = text.lower() if isinstance(text, str) else ""
-    
-    def count_vowels(self) -> int:
-        """Calculate and return the total vowel count in the input string."""
-        vowels = set('aeiou')
-        return sum(1 for char in self.text if char in vowels)
+from typing import Union
+
+def compute_cube_volume(edge_length: Union[int, float]) -> Union[int, float]:
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    sample_strings = [
-        "Hello, World!",
-        "AEIOU",
-        "Python Programming",
-        ""
-    ]
-
-    for test_str in sample_strings:
-        counter = VowelCounter(test_str)
-        print(f"Input: '{test_str}' -> Total vowels: {counter.count_vowels()}")
+    sample_edge = 4
+    result = compute_cube_volume(sample_edge)
+    print(result)

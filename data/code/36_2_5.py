@@ -1,32 +1,11 @@
-class StringReverser:
-    """A class that provides methods to manipulate string operations."""
-    
-    def reverse(self, text):
-        """Returns a new reversed version of the input string without modifying it in-place.
-        
-        Args:
-            text (str): The string to be reversed.
-            
-        Returns:
-            str: A newly created string with characters in reverse order.
-        """
-        return text[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    if base1 < 0 or base2 < 0 or height < 0:
+        raise ValueError("All dimensions must be non-negative")
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for demonstration purposes.
-    # No user input, command-line arguments, network access, or file operations are used.
-    
-    reverser = StringReverser()
-    
-    test_cases = [
-        "Hello",
-        "Python Programming",
-        "",
-        "A"
-    ]
-    
-    print("String Reversal Results:")
-    for original in test_cases:
-        reversed_text = reverser.reverse(original)
-        print(f'Original: "{original}"')
-        print(f'Reversed: "{reversed_text}"\n')
+    base_a = 10
+    base_b = 14
+    height_val = 5
+    area_result = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(area_result)

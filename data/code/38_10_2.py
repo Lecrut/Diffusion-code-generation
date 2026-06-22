@@ -1,15 +1,10 @@
-import string
-def find_repeated_letters(input_string):
-    seen_letters = set()
-    repeated_letters = set()
-    for char in input_string:
-        if 'a' <= char.lower() <= 'z':
-            if char.lower() in seen_letters:
-                repeated_letters.add(char)
-            else:
-                seen_letters.add(char.lower())
-    return sorted(list(repeated_letters))
+import math
+
+def compute_cone_volume(radius: float, height: float) -> float:
+    return (1 / 3) * math.pi * (radius ** 2) * height
+
 if __name__ == '__main__':
-    sample_string = "programming is fun"
-    repeated = find_repeated_letters(sample_string)
-    print("Repeated letters found:", repeated)
+    RADIUS = 5
+    HEIGHT = 10
+    result = compute_cone_volume(RADIUS, HEIGHT)
+    print(result)

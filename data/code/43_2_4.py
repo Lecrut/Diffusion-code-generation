@@ -1,15 +1,15 @@
-class Square:
-    def __init__(self, side_length):
-        """Initialize a Square with the given side length."""
-        if side_length <= 0:
-            raise ValueError("Side length must be positive.")
-        self.side = float(side_length)
+class SquarePyramid:
+    def __init__(self, base_side, slant_height):
+        self.base_side = base_side
+        self.slant_height = slant_height
 
-    def calculate_area(self):
-        """Calculate and return the area of the square."""
-        return self.side ** 2
+    def calculate_surface_area(self):
+        base_area = self.base_side * self.base_side
+        lateral_area = 2 * self.base_side * self.slant_height
+        total_area = base_area + lateral_area
+        return total_area
 
 if __name__ == '__main__':
-    side_value = 5.0
-    my_square = Square(side_value)
-    print(f"Area: {my_square.calculate_area()}")
+    pyramid = SquarePyramid(10, 15)
+    result = pyramid.calculate_surface_area()
+    print(result)

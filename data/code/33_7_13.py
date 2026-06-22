@@ -1,24 +1,19 @@
-def filter_non_whitespace(s: str):
-    """
-    Generator function that yields characters from an input string 
-    excluding whitespace (spaces, tabs, newlines).
+from decimal import Decimal, InvalidOperation
+
+def calculate_triangle_area(base_value, height_value):
+    try:
+        base = Decimal(str(base_value))
+        height = Decimal(str(height_value))
+    except (InvalidOperation, ValueError):
+        raise ValueError("Input values must be valid numbers")
     
-    Args:
-        s (str): The input string to process.
-        
-    Yields:
-        str: Individual non-whitespace characters from the input.
-    """
-    for char in s:
-        if not char.isspace():
-            yield char
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive values")
+    
+    return (base * height) / Decimal('2')
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or network)
-    test_string = "Hello World! This is a test."
-    
-    print("Original string:", repr(test_string))
-    result_list = list(filter_non_whitespace(test_string))
-    cleaned_string = "".join(result_list)
-    print("Filtered characters:", result_list)
-    print("Resulting string without spaces:", repr(cleaned_string))
+    sample_base = 15.75
+    sample_height = 8.3
+    result = calculate_triangle_area(sample_base, sample_height)
+    print(result)

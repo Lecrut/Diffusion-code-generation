@@ -1,8 +1,7 @@
-def compare_lengths(a, b):
-    if a < b:
-        return (a, b)
-    return (b, a)
+def print_star_square():
+    size = 12
+    line = '* ' * size
+    print('\n'.join([line] * size))
 
 if __name__ == '__main__':
-    result = compare_lengths(10, 5)
-    print(result)
+    print_star_square()

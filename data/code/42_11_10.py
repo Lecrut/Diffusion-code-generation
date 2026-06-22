@@ -1,31 +1,20 @@
-import string
+import math
+from typing import List, Tuple
 
-class StringAssembler:
-    def join_parts(self, parts: list[str], separator: str = ' ', fill_value: str = '') -> str:
-        """
-        Efficiently build a string from a list of parts using the built-in str.join() method.
-
-        Parameters:
-            parts (list[str]): List of strings to be joined.
-            separator (str): String to insert between parts (default is ' ').
-            fill_value (str): Value used if any part in the list is empty or None-like, 
-                             ensuring non-empty output segments before joining (optional optimization).
-
-        Returns:
-            str: The resulting concatenated string with separators.
-
-        Note:
-            This method optimizes performance by leveraging Python's highly optimized C-implementation of str.join(),
-            which avoids creating multiple intermediate strings during concatenation.
-            
-            If fill_value is provided and a part in the list is effectively empty or None (after stripping),
-            that segment will be replaced with fill_value before joining to ensure consistent behavior.
-        """
-        
-        # Pre-process parts: replace empty/None segments if fill_value is specified
-        processed_parts = []
-        for p in parts:
-            stripped_p = str(p).strip() if isinstance(p, (str, bytes)) else ''
-
+def compute_ellipse_areas(axes_pairs: List[Tuple[float, float]]) -> List[float]:
+    areas = []
+    for major_axis, minor_axis in axes_pairs:
+        if not isinstance(major_axis, (int, float)) or not isinstance(minor_axis, (int, float)):
+            raise TypeError('Axis values must be numeric.')
+        if major_axis <= 0 or minor_axis <= 0:
+            raise ValueError('Axis values must be positive.')
+        semi_major = major_axis / 2.0
+        semi_minor = minor_axis / 2.0
+        area = math.pi * semi_major * semi_minor
+        areas.append(area)
+    return areas
 if __name__ == '__main__':
-    pass
+    sample_axes_pairs = [(10.0, 5.0), (6.0, 4.0), (8.0, 3.0)]
+    computed_areas = compute_ellipse_areas(sample_axes_pairs)
+    for i, area in enumerate(computed_areas):
+        print(area)

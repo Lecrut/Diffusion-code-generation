@@ -1,7 +1,8 @@
-def remove_spaces(s: str) -> str:
-    return s.replace(" ", "")
+def triangle_area(base, height):
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    samples = ["hello world", "one two three four five six seven eight nine ten"]
-    for sample in samples:
-        print(remove_spaces(sample))
+    base_value = 10
+    height_value = 5
+    result = triangle_area(base_value, height_value)
+    print(result)

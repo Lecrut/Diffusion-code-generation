@@ -1,13 +1,16 @@
-import sys
+class ParallelogramCalculator:
+    _formula_factor = 1.0
 
-def combine_strings(str1: str, str2: str) -> str:
-    """Combines two strings by concatenating them."""
-    return f"{str1}{str2}"
+    @staticmethod
+    def get_parallelogram_area(base: float, height: float) -> float:
+        if base <= 0:
+            raise ValueError("Base must be positive")
+        if height <= 0:
+            raise ValueError("Height must be positive")
+        return base * height * ParallelogramCalculator._formula_factor
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or args)
-    string_a = "Hello"
-    string_b = "World"
-    
-    result = combine_strings(string_a, string_b)
+    sample_base = 8.5
+    sample_height = 4.2
+    result = ParallelogramCalculator.get_parallelogram_area(sample_base, sample_height)
     print(result)

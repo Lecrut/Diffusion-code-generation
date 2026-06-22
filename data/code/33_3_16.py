@@ -1,14 +1,11 @@
-def remove_spaces(s: str) -> str:
-    """Remove all spaces from a string."""
-    return s.replace(" ", "")
+def compute_triangle_area(base, height):
+    half = 0.5
+    product = base * height
+    area = half * product
+    return area
 
 if __name__ == '__main__':
-    test_cases = [
-        "Hello World",
-        "  Multiple   Spaces  ",
-        "",
-        "NoSpacesHere"
-    ]
-    
-    for case in test_cases:
-        print(f'Input: {case!r} -> Output: {remove_spaces(case)!r}')
+    b = 7.5
+    h = 3.0
+    result = compute_triangle_area(b, h)
+    print(result)

@@ -1,5 +1,11 @@
-def calculate_perimeter(length, width):
-    return 2 * (length + width)
+import statistics
+
+def compute_mean(scores):
+    if not scores:
+        raise ValueError("The list of scores cannot be empty.")
+    return statistics.mean(scores)
 
 if __name__ == '__main__':
-    print(calculate_perimeter(5, 3))
+    test_scores = [85, 90, 78, 92, 88]
+    result = compute_mean(test_scores)
+    print(result)

@@ -1,13 +1,7 @@
-class StringProcessor:
-    def count_vowels(self, text):
-        count = 0
-        vowels = "aeiouAEIOU"
-        for char in text:
-            if char in vowels:
-                count += 1
-        return count
+def compute_cube_volume(edge_length):
+    return edge_length ** 3
+
 if __name__ == '__main__':
-    processor = StringProcessor()
-    sample_string = "Hello World"
-    result = processor.count_vowels(sample_string)
-    print(result)
+    sample_edges = [1, 2.5, 10, 0, -3]
+    for edge in sample_edges:
+        print(compute_cube_volume(edge))

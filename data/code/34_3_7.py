@@ -1,25 +1,12 @@
-def capitalize_words(sentence: str) -> str:
-    """
-    Capitalizes the first letter of each word in a sentence.
-    
-    Args:
-        sentence (str): The input string to process.
-        
-    Returns:
-        str: A new string with only the initial letters capitalized.
-    """
-    if not sentence:
-        return ""
-    
-    # Split into words, capitalize first letter of each, then join back
-    processed_words = [word.capitalize() for word in sentence.split()]
-    return " ".join(processed_words)
+import math
+
+def cylinder_surface_area(radius, height):
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    return 2 * base_area + lateral_area
 
 if __name__ == '__main__':
-    sample_sentence = "hello world this is a test case"
-    
-    # Process the sample input using list comprehension within function call logic implicitly handled by capitalize_words
-    result = capitalize_words(sample_sentence)
-    
-    print(f"Original: {sample_sentence}")
-    print(f"Result:   {result}")
+    r = 5.0
+    h = 10.0
+    area = cylinder_surface_area(r, h)
+    print(area)

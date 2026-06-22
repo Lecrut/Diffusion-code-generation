@@ -1,26 +1,23 @@
 import math
 
-def calculate_square_area(side_length):
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+class SquarePyramid:
+    def __init__(self, base_side, perpendicular_height):
+        if base_side <= 0 or perpendicular_height <= 0:
+            raise ValueError("Base side and perpendicular height must be positive numbers.")
+        self.base_side = base_side
+        self.perpendicular_height = perpendicular_height
+
+    def get_slant_height(self):
+        return math.sqrt((self.base_side / 2) ** 2 + self.perpendicular_height ** 2)
+
+    def get_surface_area(self):
+        slant_height = self.get_slant_height()
+        base_area = self.base_side ** 2
+        lateral_area = 2 * self.base_side * slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Sample values to run without user input
-    sample_sides = [5.0, "3", -1] 
-
-    for s in sample_sides:
-        try:
-            if isinstance(s, str):
-                side_float = float(s)
-            else:
-                side_float = s
-            
-            area = calculate_square_area(side_float)
-            
-            # Only display results for valid positive numbers to demonstrate robustness conceptually without erroring out on invalid math contexts in a silent run
-            if isinstance(area, (int, float)) and not (isinstance(side_float, int) or side_float < 0):
-                print(f"Side length: {side_float}")
-                print(f"Area: {area}\n")
-        except ValueError as e:
-            # Handles cases where input conversion fails gracefully during the sample run logic if needed externally
-            pass
+    pyramid = SquarePyramid(4.0, 3.0)
+    print(pyramid.get_surface_area())
+    pyramid_small = SquarePyramid(10, 12)
+    print(pyramid_small.get_surface_area())

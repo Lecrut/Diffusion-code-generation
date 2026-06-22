@@ -1,15 +1,6 @@
-def count_vowels(text):
-    """Count vowel occurrences in a string (case-insensitive)."""
-    vowels = {'a', 'e', 'i', 'o', 'u'}
-    return sum(1 for char in text.lower() if char in vowels)
+def calculate_cube_volume(side_length):
+    return side_length ** 3
 
 if __name__ == '__main__':
-    samples = [
-        "hello world",
-        "AEIOU",
-        "Rhythm is IT",
-        ""
-    ]
-
-    for sample in samples:
-        print(f"'{sample}' -> {count_vowels(sample)} vowels")
+    side = 5
+    print(calculate_cube_volume(side))

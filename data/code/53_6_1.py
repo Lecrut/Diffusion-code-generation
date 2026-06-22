@@ -1,14 +1,9 @@
-def find_side_length(area):
-    if area < 0:
-        raise ValueError("Area cannot be negative")
-    return area**0.5
+def reverse_number_triangle(height=4):
+    lines = []
+    for i in range(height, 0, -1):
+        line = ' '.join(str(j) for j in range(1, i + 1))
+        lines.append(line)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    sample_area_1 = 25.0
-    side_1 = find_side_length(sample_area_1)
-    print(f"Area: {sample_area_1}, Side Length: {side_1}")
-    sample_area_2 = 10.0
-    side_2 = find_side_length(sample_area_2)
-    print(f"Area: {sample_area_2}, Side Length: {side_2}")
-    sample_area_3 = 0.25
-    side_3 = find_side_length(sample_area_3)
-    print(f"Area: {sample_area_3}, Side Length: {side_3}")
+    print(reverse_number_triangle(4))

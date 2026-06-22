@@ -1,28 +1,9 @@
-def reverse_string(s: str) -> str:
-    """
-    Returns a new string with the characters of the input reversed in place order logic-wise (time O(n)).
-    
-    Args:
-        s (str): The input string to be reversed.
-        
-    Returns:
-        str: A new string that is the reverse of the input.
-    """
-    return s[::-1]
+def compute_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without any user interaction or file access
-    test_cases = [
-        "hello",
-        "Python Programming",
-        "",
-        "a" * 100,  # Testing with a longer string for performance efficiency
-        "<script>alert('xss')</script>"
-    ]
-
-    print("Input\tReverse")
-    print("-" * 35)
-    
-    for original in test_cases:
-        reversed_str = reverse_string(original)
-        print(f'{original!r}\t{reversed_str!r}')
+    b1 = 5.0
+    b2 = 7.0
+    h = 4.0
+    area = compute_trapezoid_area(b1, b2, h)
+    print(area)

@@ -1,26 +1,14 @@
-def main():
-    """
-    Prompts the user to enter a sentence (simulated with hardcoded value)
-    and prints the reversed sentence to the console.
+def calculate_trapezoid_area(base1, base2, height):
+    if base1 <= 0 or base2 <= 0 or height <= 0:
+        raise ValueError("Base lengths and height must be positive numbers")
+    return 0.5 * (base1 + base2) * height
+
+if __name__ == '__main__':
+    area1 = calculate_trapezoid_area(5, 7, 4)
+    print(area1)
     
-    This function includes both an interactive prompt scenario and 
-    hard-coded sample values for demonstration purposes as per requirements.
-    However, to strictly adhere to "Never call input()", sys.stdin, or any interactive prompt,
-    this module will only utilize the hard-coded sample value logic in its execution block.
-    """
-
-    # Hardcoded sample sentence to demonstrate functionality without user interaction
-    SAMPLE_SENTENCE = "Hello World"
-
-    def reverse_sentence(sentence: str) -> str:
-        """Reverses the given string."""
-        return sentence[::-1]
-
-    if __name__ == '__main__':
-        # Process only the hardcoded sample value to ensure no input() or interactive prompts are called
-        original = SAMPLE_SENTENCE
-        reversed_text = reverse_sentence(original)
-        
-        print(f"Original: {original}")
-        print("Reversed:")
-        print(reversed_text)
+    area2 = calculate_trapezoid_area(3.5, 6.5, 2)
+    print(area2)
+    
+    area3 = calculate_trapezoid_area(10, 10, 5)
+    print(area3)

@@ -1,14 +1,8 @@
-#!/usr/bin/env python3
-# Robust script to combine two strings without user interaction via input() or prompts.
+compute_area = lambda b, h: b * h
 
-def main():
-    # Hard-coded sample values to ensure execution runs without any external inputs, arguments, files, or network access.
-    string_one = "Hello"
-    string_two = "World!"
-
-    combined_result = f"{string_one} {string_two}"
-
-    print(combined_result)
+BASE_LENGTH = 15
+PERPENDICULAR_HEIGHT = 7
 
 if __name__ == '__main__':
-    main()
+    area_result = compute_area(BASE_LENGTH, PERPENDICULAR_HEIGHT)
+    print(area_result)

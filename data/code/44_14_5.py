@@ -1,13 +1,12 @@
-class Rectangle:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
-    def get_perimeter(self):
-        return (self.width + self.height) * 2
+def compute_average(scores):
+    if not scores:
+        return 0.0
+    total = 0
+    for score in scores:
+        total += score
+    return total / len(scores)
 
 if __name__ == '__main__':
-    width = 5
-    height = 3
-    rect = Rectangle(width, height)
-    print(rect.get_perimeter())
+    test_scores = [85, 90, 78, 92, 88]
+    result = compute_average(test_scores)
+    print(result)

@@ -1,19 +1,9 @@
-def reverse_string(s: str) -> str:
-    """Reverses the order of characters in the input string."""
-    return s[::-1]
+def trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or external dependencies are needed.
-    test_cases = [
-        "Hello, World!",
-        "",
-        "Python",
-        "!@#$%",
-        "A man a plan a canal Panama"
-    ]
-
-    for original in test_cases:
-        reversed_str = reverse_string(original)
-        print(f"Original:  '{original}'")
-        print(f"Reversed:  '{reversed_str}'")
-        print("-" * 30)
+    b1 = 10
+    b2 = 6
+    h = 4
+    result = trapezoid_area(b1, b2, h)
+    print(result)

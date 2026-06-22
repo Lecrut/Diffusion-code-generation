@@ -1,15 +1,12 @@
-def extract_all_substrings(text, substrings):
-    found_occurrences = []
-    for sub in substrings:
-        start_index = -1
-        while True:
-            start_index = text.find(sub, start_index + 1)
-            if start_index == -1:
-                break
-            found_occurrences.append(start_index)
-    return found_occurrences
+def calculate_prism_volume(base_area, height):
+    if base_area <= 0:
+        raise ValueError("Base area must be positive")
+    if height <= 0:
+        raise ValueError("Height must be positive")
+    return base_area * height
+
 if __name__ == '__main__':
-    sample_text = "abababa"
-    sample_substrings = ["aba", "ab", "ba"]
-    result = extract_all_substrings(sample_text, sample_substrings)
+    base_area = 25.0
+    height = 10.0
+    result = calculate_prism_volume(base_area, height)
     print(result)

@@ -1,11 +1,14 @@
-def calculate_square_area(side):
-    """Calculate the area of a square given its side length."""
-    return side * side
+import math
+
+def compute_pyramid_areas(base_edge, height):
+    base_area = base_edge ** 2
+    slant_height = math.sqrt((base_edge / 2) ** 2 + height ** 2)
+    lateral_area = 2 * base_edge * slant_height
+    total_area = base_area + lateral_area
+    return {"lateral_area": lateral_area, "total_area": total_area}
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test without user input or external dependencies
-    samples = [1, 5.0, 10]
-
-    for s in samples:
-        area = calculate_square_area(s)
-        print(f"Side length {s} has an area of {area}")
+    base_edge = 10
+    height = 12
+    result = compute_pyramid_areas(base_edge, height)
+    print(result)

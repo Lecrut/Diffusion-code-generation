@@ -1,20 +1,12 @@
-def join_strings_with_delimiter(string_list: list[str], delimiter: str) -> str:
-    """
-    Returns a single string with elements from the input list joined by the custom delimiter.
-    
-    Args:
-        string_list (list): A list of strings to be joined.
-        delimiter (str): The string used as separator between each element.
-        
-    Returns:
-        str: A new string where delimiters are placed between every original element.
-    """
-    return delimiter.join(string_list)
+import math
+
+def calculate_ellipse_area(semi_major: float, semi_minor: float) -> float:
+    if semi_major <= 0 or semi_minor <= 0:
+        raise ValueError("Semi-major and semi-minor axes must be positive.")
+    return math.pi * semi_major * semi_minor
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without any user input or files.
-    test_data = ["apple", "banana", "cherry"]
-    custom_separator = ", "
-    
-    result = join_strings_with_delimiter(test_data, custom_separator)
+    a = 5.0
+    b = 3.0
+    result = calculate_ellipse_area(a, b)
     print(result)

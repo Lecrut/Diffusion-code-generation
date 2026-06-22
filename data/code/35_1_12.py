@@ -1,32 +1,21 @@
-def count_vowels(text: str) -> int:
-    """
-    Counts the total number of vowels in a given string using a single loop.
-    
-    Vowels considered include 'a', 'e', 'i', 'o', 'u' and their uppercase equivalents.
-    
-    Args:
-        text (str): The input string to analyze.
-        
-    Returns:
-        int: The count of vowels in the string.
-    """
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
+from dataclasses import dataclass
 
-    vowels = set('aeiouAEIOU')
-    return sum(1 for char in text if char in vowels)
+DIMENSION = "3D"
+
+@dataclass
+class CubeGeometry:
+    edge_length: float
+
+    def get_volume(self) -> float:
+        return self.edge_length ** 3
+
+    def get_dimension_name(self) -> str:
+        return DIMENSION
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or external dependencies.
-    
-    test_cases = [
-        "Hello, World!",
-        "AEIOU",
-        "",
-        "rhythm",
-        "aeiouaEiOu"
-    ]
-
-    for case in test_cases:
-        result = count_vowels(case)
-        print(f"'{case}' -> {result}")
+    edge_value = 4
+    shape = CubeGeometry(edge_value)
+    computed_volume = shape.get_volume()
+    dimension = shape.get_dimension_name()
+    print(computed_volume)
+    print(dimension)

@@ -1,18 +1,13 @@
-import sys
+import math
 
-def join_string_parts(parts: list[str], delimiter: str = ",") -> str:
-    """Join a sequence of strings with the specified delimiter."""
-    if not all(isinstance(part, (str, bytes)) and isinstance(delimiter, (str, bytes)) for part in parts):
-        raise TypeError("All input parts must be string-like objects.")
+def calculate_ellipse_area(a, b):
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise TypeError("Both axes must be numbers")
+    if a <= 0 or b <= 0:
+        raise ValueError("Both axes must be positive numbers")
+    return math.pi * a * b
 
-    result_parts = [part.decode() if isinstance(part, bytes) else part for part in parts]
-    return delimiter.join(result_parts)
-
-if __name__ == "__main__":
-    sample_values = ["apple", "banana", "cherry"]
-    
-    try:
-        combined_string = join_string_parts(sample_values)
-        print(combined_string, end="")
-    except (TypeError, ValueError):
-        sys.stderr.write("Error: Invalid input types detected.\n")
+if __name__ == '__main__':
+    print(calculate_ellipse_area(5, 3))
+    print(calculate_ellipse_area(10, 10))
+    print(calculate_ellipse_area(1, 2))

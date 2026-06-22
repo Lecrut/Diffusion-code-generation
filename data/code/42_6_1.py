@@ -1,7 +1,10 @@
-import itertools
-def join_strings_efficiently(list_of_strings):
-    return "".join(list_of_strings)
+import math
+
+def ellipse_area(semi_major, semi_minor):
+    return math.pi * semi_major * semi_minor
+
 if __name__ == '__main__':
-    data = ["hello", "world", "python", "efficient"]
-    result = join_strings_efficiently(data)
-    print(result)
+    a = 5.0
+    b = 3.0
+    area = ellipse_area(a, b)
+    print(area)

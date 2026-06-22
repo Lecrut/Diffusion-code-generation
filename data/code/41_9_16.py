@@ -1,26 +1,8 @@
-import unicodedata
-
-def case_swap(text: str) -> dict:
-    """
-    Returns a dictionary mapping 'lower', 'upper', and 'title' to their respective
-    case transformations of the input string. Prioritizes readability and performance.
-
-    Args:
-        text (str): The input string to transform.
-
-    Returns:
-        dict: A dictionary with keys 'lower', 'upper', and 'title'.
-    """
-    lower_text = text.lower()
-    upper_text = text.upper()
-    
-    # Construct title case by iterating only once, which is more performant for long strings
-    if not lower_text:
-        title_text = ""
-    else:
-        words = lower_text.split(' ')
-        title_words = []
-        capitalize_next = True
+def calculate_rhombus_area(diagonal_1, diagonal_2):
+    return (diagonal_1 * diagonal_2) / 2
 
 if __name__ == '__main__':
-    pass
+    d1 = 10
+    d2 = 12
+    area = calculate_rhombus_area(d1, d2)
+    print(area)

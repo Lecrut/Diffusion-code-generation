@@ -1,7 +1,16 @@
-def calculate_square_area(side):
-    area = side * side
-    return area
+import math
+
+def calculate_square_pyramid_surface_area(base_side, slant_height):
+    if base_side <= 0 or slant_height <= 0:
+        raise ValueError("Base side and slant height must be positive numbers.")
+    
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    total_surface_area = base_area + lateral_area
+    return total_surface_area
+
 if __name__ == '__main__':
-    side_length = 5
-    area_result = calculate_square_area(side_length)
-    print(area_result)
+    base_side_length = 10
+    slant_height_value = 12
+    result = calculate_square_pyramid_surface_area(base_side_length, slant_height_value)
+    print(result)

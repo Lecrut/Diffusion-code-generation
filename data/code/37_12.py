@@ -1,9 +1,19 @@
-class StringCombiner:
-    def combine(self, str1, str2):
-        return str1 + str2
+class Parallelogram:
+    def __init__(self, base, height):
+        if not isinstance(base, (int, float)):
+            raise TypeError("Base must be a number.")
+        if not isinstance(height, (int, float)):
+            raise TypeError("Height must be a number.")
+        if base <= 0:
+            raise ValueError("Base must be greater than zero.")
+        if height <= 0:
+            raise ValueError("Height must be greater than zero.")
+        self.base = base
+        self.height = height
+
+    def area(self):
+        return self.base * self.height
+
 if __name__ == '__main__':
-    combiner = StringCombiner()
-    string1 = "Hello, "
-    string2 = "World!"
-    result = combiner.combine(string1, string2)
-    print(result)
+    p = Parallelogram(10, 5)
+    print(p.area())

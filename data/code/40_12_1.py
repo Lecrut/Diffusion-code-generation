@@ -1,12 +1,31 @@
-class FirstLetterExtractor:
-    def extract_all(self, string_list):
-        first_letters = []
-        for s in string_list:
-            if s:
-                first_letters.append(s[0])
-        return first_letters
+import math
+
+class CachedProperty:
+    def __init__(self, func):
+        self.func = func
+        self.attr_name = func.__name__
+
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self
+        value = self.func(obj)
+        setattr(obj, self.attr_name, value)
+        return value
+
+class RectangularPrism:
+    def __init__(self, length, width, height):
+        self.length = length
+        self.width = width
+        self.height = height
+
+    @CachedProperty
+    def surface_area(self):
+        l = self.length
+        w = self.width
+        h = self.height
+        return 2 * (l * w + w * h + h * l)
+
 if __name__ == '__main__':
-    extractor = FirstLetterExtractor()
-    sample_strings = ["Apple", "Banana", "Cherry", "Date", "", "Elderberry"]
-    result = extractor.extract_all(sample_strings)
+    prism = RectangularPrism(2.0, 3.0, 4.0)
+    result = prism.surface_area
     print(result)

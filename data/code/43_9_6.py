@@ -1,7 +1,15 @@
-def calculate_square_area(side_length):
-    return side_length ** 2
+import math
+
+class GeometryUtils:
+    @staticmethod
+    def calculate_square_pyramid_surface_area(base_side, slant_height):
+        base_area = base_side ** 2
+        lateral_area = 2 * base_side * slant_height
+        total_surface_area = base_area + lateral_area
+        return total_surface_area
 
 if __name__ == '__main__':
-    side = 5
-    area = calculate_square_area(side)
-    print(f"Area of square with side {side}: {area}")
+    side_length = 4
+    slant = 5
+    result = GeometryUtils.calculate_square_pyramid_surface_area(side_length, slant)
+    print(result)

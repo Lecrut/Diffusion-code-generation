@@ -1,21 +1,21 @@
-def capitalize_first_letter_only(text):
-    if not text:
-        return ""
-    return text[0].upper() + text[1:]
+import math
+
+def _compute_base_area(radius):
+    if radius < 0:
+        raise ValueError("Radius must be non-negative")
+    return math.pi * radius ** 2
+
+def _compute_lateral_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative")
+    return 2 * math.pi * radius * height
+
+def cylinder_surface_area(radius, height):
+    base_area = _compute_base_area(radius)
+    lateral_area = _compute_lateral_area(radius, height)
+    return 2 * base_area + lateral_area
+
 if __name__ == '__main__':
-    sample_text_1 = "hello world"
-    result_1 = capitalize_first_letter_only(sample_text_1)
-    print(f"Input: '{sample_text_1}'")
-    print(f"Output: '{result_1}'")
-    sample_text_2 = "this is a test sentence"
-    result_2 = capitalize_first_letter_only(sample_text_2)
-    print(f"Input: '{sample_text_2}'")
-    print(f"Output: '{result_2}'")
-    sample_text_3 = "a"
-    result_3 = capitalize_first_letter_only(sample_text_3)
-    print(f"Input: '{sample_text_3}'")
-    print(f"Output: '{result_3}'")
-    sample_text_4 = ""
-    result_4 = capitalize_first_letter_only(sample_text_4)
-    print(f"Input: '{sample_text_4}'")
-    print(f"Output: '{result_4}'")
+    r = 3.5
+    h = 7.0
+    print(cylinder_surface_area(r, h))

@@ -1,13 +1,15 @@
-def calculate_perimeter(side_lengths):
-    if not side_lengths:
-        return 0
-    return sum(side_lengths)
+def generate_binary_tree_pyramid():
+    lines = []
+    levels = 4
+    max_width = 2 ** levels - 1
+    for i in range(1, levels + 1):
+        row_num = 2 ** i - 1
+        row_str = str(row_num)
+        padding = (max_width - len(row_str)) // 2
+        line = ' ' * padding + row_str
+        lines.append(line)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    sample1 = [3, 4, 5]
-    sample2 = []
-    sample3 = [10, 20, 30, 40]
-    sample4 = [7]
-    print(f"Perimeter of {sample1}: {calculate_perimeter(sample1)}")
-    print(f"Perimeter of {sample2}: {calculate_perimeter(sample2)}")
-    print(f"Perimeter of {sample3}: {calculate_perimeter(sample3)}")
-    print(f"Perimeter of {sample4}: {calculate_perimeter(sample4)}")
+    result = generate_binary_tree_pyramid()
+    print(result)

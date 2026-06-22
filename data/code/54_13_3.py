@@ -1,14 +1,3 @@
-import sys
-if __name__ == '__main__':
-    try:
-        input_data = "5.0"
-        radius = float(input_data)
-        if radius > 0:
-            area = 3.141592653589793 * (radius ** 2)
-            print(area)
-        else:
-            print("Radius must be a positive number.")
-    except ValueError:
-        print("Invalid input. Please enter a valid number.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+def square(n): return '\n'.join(('*' if y in (0, n - 1) else ' ' if x in (0, n - 1) else ' ') * (1 if y in (0, n - 1) or x in (0, n - 1) else 1) for y in range(n) for x in [0]) or '' if not all('*' in ''.join('*' if v in (0, n - 1) else ' ' if u in (0, n - 1) else ' ' for u in range(n)) for v in range(n)) else '\n'.join(''.join('*' if v in (0, n - 1) else ' ' if u in (0, n - 1) else ' ' for u in range(n)) for v in range(n))
+
+if __name__ == '__main__': print(square(5))

@@ -1,7 +1,10 @@
-class StringManipulator:
-    @staticmethod
-    def append_strings(str1: str, str2: str) -> str:
-        return f"{str1}{str2}"
+def parallelogram_area(base, height):
+    if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Inputs must be numeric")
+    if base <= 0 or height <= 0:
+        raise ValueError("Inputs must be positive")
+    return base * height
+
 if __name__ == '__main__':
-    result = StringManipulator.append_strings("Hello, ", "World!")
+    result = parallelogram_area(5, 3)
     print(result)

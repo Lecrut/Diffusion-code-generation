@@ -1,14 +1,8 @@
-class StringReverser:
-    def reverse(self, text):
-        return text[::-1]
+def trapezoid_area(base_a: float, base_b: float, height: float) -> float:
+    if base_a < 0 or base_b < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative.")
+    return (base_a + base_b) * height / 2.0
+
 if __name__ == '__main__':
-    reverser = StringReverser()
-    sample_string_1 = "hello"
-    reversed_string_1 = reverser.reverse(sample_string_1)
-    print(f"Original: {sample_string_1}, Reversed: {reversed_string_1}")
-    sample_string_2 = "world"
-    reversed_string_2 = reverser.reverse(sample_string_2)
-    print(f"Original: {sample_string_2}, Reversed: {reversed_string_2}")
-    sample_string_3 = "Python"
-    reversed_string_3 = reverser.reverse(sample_string_3)
-    print(f"Original: {sample_string_3}, Reversed: {reversed_string_3}")
+    result = trapezoid_area(5.0, 7.0, 4.0)
+    print(result)

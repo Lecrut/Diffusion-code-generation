@@ -1,28 +1,17 @@
-class StringAnalyzer:
-    def get_length(self, text):
-        """Calculates and returns the length of the input string."""
-        return len(text)
+class RectangularSurface:
+    def __init__(self, dimension_a, dimension_b):
+        self.d_a = dimension_a
+        self.d_b = dimension_b
+
+    def compute_surface_area(self):
+        return self.d_a * self.d_b
+
+    def get_dimensions(self):
+        return self.d_a, self.d_b
 
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-    
-    # Sample test cases with hard-coded values
-    test_strings = [
-        "Hello, World!",
-        "",
-        "Python is awesome",
-        1234567890 * ""  # Empty string from multiplication (edge case for type hinting)
-    ]
-
-    print("String Length Analysis Results:")
-    for test_str in test_strings:
-        length = analyzer.get_length(test_str)
-        if isinstance(test_str, str):
-            print(f"Input '{test_str}' -> Length: {length}")
-        else:
-            # Handle edge case where text might not be a string (though type hint implies otherwise)
-            try:
-                result_len = len(str(test_str))
-                print(f"Non-string input converted to str, Input repr '{repr(test_str)}' -> String Length: {result_len}")
-            except Exception as e:
-                print(f"Error processing non-string input '{test_str}': {e}")
+    surface = RectangularSurface(8.5, 4.0)
+    area_result = surface.compute_surface_area()
+    print(area_result)
+    dims_result = surface.get_dimensions()
+    print(dims_result)

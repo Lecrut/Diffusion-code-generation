@@ -1,19 +1,39 @@
-class FirstLetterExtractor:
-    """A class designed to extract first letters from a list of strings."""
+class RectangularPrism:
+    def __init__(self, length, width, height):
+        self._length = length
+        self._width = width
+        self._height = height
+        self._surface_area = None
 
-    def __init__(self):
-        self._extracted_letters = []
+    @property
+    def length(self):
+        return self._length
 
-    def _get_first_letter(self, string):
-        """Helper method to get the first letter from a given string.
-        
-        Args:
-            string (str): The input string.
-            
-        Returns:
-            str or None: The first character if present, otherwise None.
-        """
-        return string[0] if len(string) > 0 else ''
+    @property
+    def width(self):
+        return self._width
+
+    @property
+    def height(self):
+        return self._height
+
+    @property
+    def surface_area(self):
+        if self._surface_area is None:
+            self._surface_area = 2 * (
+                self._length * self._width +
+                self._width * self._height +
+                self._height * self._length
+            )
+        return self._surface_area
+
+    def invalidate_cache(self):
+        self._surface_area = None
 
 if __name__ == '__main__':
-    pass
+    prism = RectangularPrism(5, 6, 7)
+    print(prism.surface_area)
+    print(prism.surface_area)
+    prism._length = 10
+    prism.invalidate_cache()
+    print(prism.surface_area)

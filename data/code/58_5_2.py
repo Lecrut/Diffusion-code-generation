@@ -1,12 +1,15 @@
-def get_first_element(input_list):
-    if input_list:
-        yield input_list[0]
+def count_even_numbers(start, end):
+    if start > end:
+        return 0
+    first_even = start if start % 2 == 0 else start + 1
+    last_even = end if end % 2 == 0 else end - 1
+    if first_even > last_even:
+        return 0
+    return (last_even - first_even) // 2 + 1
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40]
-    generator = get_first_element(sample_list)
-    result = list(generator)
-    print(result)
-    sample_list_empty = []
-    generator_empty = get_first_element(sample_list_empty)
-    result_empty = list(generator_empty)
-    print(result_empty)
+    print(count_even_numbers(1, 10))
+    print(count_even_numbers(2, 2))
+    print(count_even_numbers(3, 3))
+    print(count_even_numbers(1, 1))
+    print(count_even_numbers(0, 100))

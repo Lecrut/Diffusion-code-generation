@@ -1,4 +1,8 @@
-def extract_first_letters(s: str) -> str: return ' '.join(word[0] if word else '' for word in s.split()) if any(c.isalpha() or c == '-' for c in s) else ''
+def calculate_surface_area(dimensions):
+    l, w, h = dimensions
+    return 2 * (l * w + w * h + h * l)
 
 if __name__ == '__main__':
-    print(extract_first_letters("Hello, World! This is a test."))
+    sample_dimensions = (10.5, 20.2, 30.8)
+    result = calculate_surface_area(sample_dimensions)
+    print(result)

@@ -1,9 +1,8 @@
-PI = 3.141592653589793
-RADIUS = 5
+numbers = [34, 12, 89, 5, 67, 23, 91, 4]
 
-def calculate_circle_area(radius):
-    return PI * (radius ** 2)
+def find_minimum(values):
+    return min(values)
 
 if __name__ == '__main__':
-    area = calculate_circle_area(RADIUS)
-    print(area)
+    result = find_minimum(numbers)
+    print(result)

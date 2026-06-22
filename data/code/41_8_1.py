@@ -1,9 +1,8 @@
-def format_string(text):
-    original = text
-    all_caps = text.upper()
-    sentence_case = text.capitalize()
-    return f"{original}, {all_caps}, {sentence_case}"
+def compute_rhombus_area(diagonal1: float, diagonal2: float) -> float:
+    return (diagonal1 * diagonal2) / 2
+
 if __name__ == '__main__':
-    sample_string = "this is a sample sentence"
-    result = format_string(sample_string)
+    diagonal1 = 10
+    diagonal2 = 5
+    result = compute_rhombus_area(diagonal1, diagonal2)
     print(result)

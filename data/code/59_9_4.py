@@ -1,26 +1,13 @@
-def find_middle(numbers):
-    if not numbers:
-        return None
-    n = len(numbers)
-    middle_index = n // 2
-    if n % 2 == 1:
-        return numbers[middle_index]
-    else:
-        return numbers[middle_index - 1] or numbers[middle_index]
+def sum_digits(value: int) -> int:
+    negative = value < 0
+    string_value = str(value) if not negative else str(value)[1:]
+    total = 0
+    for char in string_value:
+        digit = int(char)
+        total = total + digit
+    return total
+
 if __name__ == '__main__':
-    sample_input_str = "10, 20, 30, 40, 50"
-    try:
-        input_list = [int(x.strip()) for x in sample_input_str.split(',')]
-        if not input_list:
-            print("Input list is empty.")
-        else:
-            print(f"Input sequence: {input_list}")
-            middle_value = find_middle(input_list)
-            if middle_value is not None:
-                print(f"The middle integer is: {middle_value}")
-            else:
-                print("Could not determine the middle integer.")
-    except ValueError:
-        print("Error: Input contains non-integer values.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    number: int = 123456789012345678901234567890
+    result: int = sum_digits(number)
+    print(result)

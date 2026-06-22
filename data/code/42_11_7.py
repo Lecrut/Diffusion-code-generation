@@ -1,20 +1,23 @@
-class StringAssembler:
-    def join_parts(self, parts: list[str], separator: str = ' ', fill_value: str = '') -> str:
-        return separator.join(parts)
+import math
+
+def calculate_ellipse_areas(axes: list[tuple[float, float]]) -> list[float]:
+    if not isinstance(axes, list):
+        raise TypeError("axes must be a list")
+    areas = []
+    for axis in axes:
+        if not isinstance(axis, (list, tuple)) or len(axis) != 2:
+            raise TypeError("Each axis pair must be a tuple or list of length 2")
+        major, minor = axis
+        if not isinstance(major, (int, float)) or not isinstance(minor, (int, float)):
+            raise TypeError("Axis values must be numeric")
+        if major < 0 or minor < 0:
+            raise ValueError("Axis values must be non-negative")
+        area = math.pi * major * minor
+        areas.append(area)
+    return areas
+
 if __name__ == '__main__':
-    assembler = StringAssembler()
-    parts1 = ["hello", "world", "python"]
-    result1 = assembler.join_parts(parts1, separator="---", fill_value=" ")
-    print(f"Result 1: {result1}")
-    parts2 = ["a", "b", "c", "d"]
-    result2 = assembler.join_parts(parts2, separator=" ", fill_value=" ")
-    print(f"Result 2: {result2}")
-    parts3 = ["one", "two", "three"]
-    result3 = assembler.join_parts(parts3, separator=" | ", fill_value=" ")
-    print(f"Result 3: {result3}")
-    parts4 = ["test"]
-    result4 = assembler.join_parts(parts4, separator=" ", fill_value=" ")
-    print(f"Result 4: {result4}")
-    parts5 = ["a", "b", "c"]
-    result5 = assembler.join_parts(parts5, separator="***", fill_value=" ")
-    print(f"Result 5: {result5}")
+    sample_axes = [(5.0, 3.0), (10.0, 2.0), (1.0, 1.0)]
+    result = calculate_ellipse_areas(sample_axes)
+    for area in result:
+        print(area)

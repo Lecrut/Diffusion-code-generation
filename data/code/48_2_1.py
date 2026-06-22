@@ -1,10 +1,12 @@
-def can_form_triangle(sides):
-    if not isinstance(sides, list) or len(sides) != 3:
-        return False
-    a, b, c = sorted(sides)
-    return a + b > c
+def extract_max_float(data: tuple) -> float:
+    if not data:
+        raise ValueError("Cannot extract maximum from an empty sequence")
+    max_val = max(data)
+    if not isinstance(max_val, float):
+        raise TypeError("Sequence must contain only float values")
+    return max_val
 
 if __name__ == '__main__':
-    test_cases = [[3, 4, 5], [1, 2, 3], [5, 5, 5], [10, 1, 1]]
-    for sides in test_cases:
-        print(can_form_triangle(sides))
+    sample_data = (1.5, 3.7, 2.2, 4.1)
+    result = extract_max_float(sample_data)
+    print(result)

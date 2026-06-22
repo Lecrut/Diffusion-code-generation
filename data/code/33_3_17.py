@@ -1,8 +1,8 @@
-def remove_spaces(s: str) -> str:
-    return s.replace(" ", "")
+def calculate_triangle_area(base: float, height: float) -> float:
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    test_cases = ["Hello World", "Code 2024 Competition Spaces Are Bad", "", "SingleWord"]
-    for case in test_cases:
-        result = remove_spaces(case)
-        print(f"Input: {case!r}\nOutput: {result!r}")
+    sample_base = 10.0
+    sample_height = 5.0
+    area = calculate_triangle_area(sample_base, sample_height)
+    print(area)

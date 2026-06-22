@@ -1,28 +1,15 @@
-import sys
-
-def count_vowels(word: str) -> int:
-    """Count total vowels in a given word."""
-    if not isinstance(word, str):
-        return 0
-    
-    # Define set of vowels (both lowercase and uppercase for optimization checks)
-    vowels = {'a', 'e', 'i', 'o', 'u'} | {'A', 'E', 'I', 'O', 'U'}
-    
-    count = 0
-    word_lower = word.lower()
-    return sum(1 if char in vowels else 0 for char in word_lower)
+def calculate_cube_volume(edge_length):
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input, 
-    # command-line arguments, network access, or pre-existing files.
+    sample_length = 4.5
+    result = calculate_cube_volume(sample_length)
+    print(result)
     
-    test_cases = [
-        "hello",
-        "beautiful day",
-        "",
-        "AEIOUaeiou"
-    ]
-
-    for word in test_cases:
-        vowel_count = count_vowels(word)
-        print(f"The total vowel count is {vowel_count}")
+    sample_length_zero = 0.0
+    result_zero = calculate_cube_volume(sample_length_zero)
+    print(result_zero)
+    
+    sample_length_negative = -2.0
+    result_negative = calculate_cube_volume(sample_length_negative)
+    print(result_negative)

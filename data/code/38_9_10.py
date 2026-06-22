@@ -1,41 +1,16 @@
-def analyze_string_characters(text: str) -> tuple[set[str], list[str]]:
-    """
-    Analyzes a string to return unique characters and repeated characters.
+import math
 
-    Args:
-        text (str): The input string to analyze.
-
-    Returns:
-        tuple[set[str], list[str]]: A tuple containing:
-            - set[str]: Unique characters found in the string.
-            - list[str]: Characters that appear more than once, preserving order of first appearance.
-    """
-    unique_chars = set()
-    repeated_chars = []
-
-    for char in text:
-        if char not in unique_chars:
-            unique_chars.add(char)
-            # Check if this character has been seen before (already added to list but maybe missed logic?)
-            # Actually, we need a separate count or check against the 'seen' set vs just adding once.
-            pass
-        
-        # Correct approach for repeated detection based on frequency > 1:
-        # We can do two passes or one pass with counting. Let's use a simple counter dict for clarity and efficiency.
-
-    from collections import Counter
-    
-    char_counts = Counter(text)
-    
-    unique_set = set(char_counts.keys())
-    repeated_list = [char for char, count in char_counts.items() if count > 1]
-    
-    return (unique_set, repeated_list)
+def calculate_cone_volume(radius, height):
+    if radius <= 0:
+        raise ValueError("Radius must be positive.")
+    if height <= 0:
+        raise ValueError("Height must be positive.")
+    base_area = math.pi * (radius ** 2)
+    volume = base_area * height / 3.0
+    return volume
 
 if __name__ == '__main__':
-    sample_text = "hello world"
-    result_tuple = analyze_string_characters(sample_text)
-    unique_chars, repeated_chars = result_tuple
-    
-    print(f"Unique characters: {sorted(unique_chars)}")
-    print(f"Repeated characters (in order of appearance): {repeated_chars}")
+    sample_radius = 10
+    sample_height = 20
+    computed_volume = calculate_cone_volume(sample_radius, sample_height)
+    print(computed_volume)

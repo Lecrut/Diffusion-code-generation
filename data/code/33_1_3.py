@@ -1,17 +1,8 @@
-class StringProcessor:
-    def remove_spaces(self, input_string):
-        result = ""
-        for char in input_string:
-            if char != ' ':
-                result += char
-        return result
+def compute_triangle_area(base, height):
+    return 0.5 * base * height
+
 if __name__ == '__main__':
-    processor = StringProcessor()
-    test_string1 = "hello world"
-    test_string2 = "  this has spaces  "
-    test_string3 = "nospaces"
-    test_string4 = "   "
-    print(processor.remove_spaces(test_string1))
-    print(processor.remove_spaces(test_string2))
-    print(processor.remove_spaces(test_string3))
-    print(processor.remove_spaces(test_string4))
+    sample_base = 10.0
+    sample_height = 5.0
+    area = compute_triangle_area(sample_base, sample_height)
+    print(area)

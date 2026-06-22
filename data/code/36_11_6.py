@@ -1,14 +1,9 @@
-import time
-def reverse_string(s):
-    return s[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
+
 if __name__ == '__main__':
-    sample_string_short = "hello"
-    reversed_short = reverse_string(sample_string_short)
-    print(f"Original: {sample_string_short}, Reversed: {reversed_short}")
-    sample_string_long = "this is a test string for performance testing" * 10000
-    start_time = time.perf_counter()
-    reversed_long = reverse_string(sample_string_long)
-    end_time = time.perf_counter()
-    print(f"Original length: {len(sample_string_long)}")
-    print(f"Reversed (first 50 chars): {reversed_long[:50]}...")
-    print(f"Time taken: {(end_time - start_time) * 1000:.4f} ms")
+    base_a = 10
+    base_b = 15
+    height_val = 6
+    area = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(area)

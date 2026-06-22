@@ -1,9 +1,10 @@
-def append_strings(first: str, second: str) -> str:
-    """Append the second string to the first using an f-string."""
-    return f"{first}{second}"
+def calculate_parallelogram_area(base, height):
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive numbers")
+    return base * height
 
 if __name__ == '__main__':
-    sample_first = "Hello"
-    sample_second = ", World!"
-    result = append_strings(sample_first, sample_second)
+    sample_base = 10
+    sample_height = 5
+    result = calculate_parallelogram_area(sample_base, sample_height)
     print(result)

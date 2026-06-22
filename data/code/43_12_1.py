@@ -1,12 +1,14 @@
-class Square:
-    def __init__(self, side_length):
-        self.side_length = side_length
-    def calculate_area(self):
-        return self.side_length * self.side_length
+import math
+
+def square_pyramid_surface_area(base_length: float, lateral_edge_length: float) -> float:
+    base_area = base_length ** 2
+    apothem = math.sqrt(lateral_edge_length ** 2 - (base_length / 2) ** 2)
+    lateral_area = 2 * base_length * apothem
+    total_surface_area = base_area + lateral_area
+    return total_surface_area
+
 if __name__ == '__main__':
-    square1 = Square(5)
-    area1 = square1.calculate_area()
-    print(area1)
-    square2 = Square(10.5)
-    area2 = square2.calculate_area()
-    print(area2)
+    base_length = 6.0
+    lateral_edge_length = 5.0
+    result = square_pyramid_surface_area(base_length, lateral_edge_length)
+    print(result)

@@ -1,7 +1,8 @@
-def interleave_strings(str1, str2):
-    return str1 + str2
+def calculate_parallelogram_area(base: float, height: float) -> float:
+    return base * height
+
 if __name__ == '__main__':
-    string1 = 'hello'
-    string2 = 'world'
-    result = interleave_strings(string1, string2)
-    print(result)
+    base_value = 10.0
+    height_value = 5.0
+    area = calculate_parallelogram_area(base_value, height_value)
+    print(area)

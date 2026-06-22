@@ -1,10 +1,7 @@
-class Triangle:
-    def __init__(self, base, height):
-        self.base = base
-        self.height = height
-    def calculate_area(self):
-        return 0.5 * self.base * self.height
+def calculate_average(scores):
+    return sum([score for score in scores]) / len(scores)
+
 if __name__ == '__main__':
-    t = Triangle(10, 5)
-    area = t.calculate_area()
-    print(area)
+    examination_scores = (85, 90, 78, 92, 88)
+    result = calculate_average(examination_scores)
+    print(result)

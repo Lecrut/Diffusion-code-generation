@@ -1,17 +1,16 @@
-class ListAccessor:
-    def __init__(self, data):
-        self._internal_list = data
-    def get_first_element(self):
-        if not self._internal_list:
-            raise IndexError("Cannot get the first element from an empty list.")
-        return self._internal_list[0]
+def count_even_numbers(start: int, end: int) -> int:
+    if start > end:
+        return 0
+    if start == end:
+        return 1 if start % 2 == 0 else 0
+    first_even = start if start % 2 == 0 else start + 1
+    last_even = end if end % 2 == 0 else end - 1
+    if first_even > last_even:
+        return 0
+    return (last_even - first_even) // 2 + 1
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40]
-    accessor = ListAccessor(sample_data)
-    first_element = accessor.get_first_element()
-    print(first_element)
-    empty_accessor = ListAccessor([])
-    try:
-        empty_accessor.get_first_element()
-    except IndexError as e:
-        print(f"Error caught: {e}")
+    start = 10
+    end = 20
+    result = count_even_numbers(start, end)
+    print(result)

@@ -1,11 +1,13 @@
-import time
-def construct_string(parts):
-    final_string = "".join(parts)
-    return final_string
+import math
+
+def ellipse_area():
+    major_axis = 10
+    minor_axis = 5
+    radius_a = major_axis / 2
+    radius_b = minor_axis / 2
+    area = math.pi * radius_a * radius_b
+    return area
+
 if __name__ == '__main__':
-    list_of_strings = ["Hello", " ", "world", "!", " This", " is", " fun."]
-    start_time = time.time()
-    result = construct_string(list_of_strings)
-    end_time = time.time()
+    result = ellipse_area()
     print(result)
-    print(f"Time taken: {end_time - start_time} seconds")

@@ -1,21 +1,9 @@
-import unittest
-class StringReverser:
-    def reverse_string(self, s):
-        return s[::-1]
-class TestStringReverser(unittest.TestCase):
-    def setUp(self):
-        self.reverser = StringReverser()
-    def test_reverse_empty_string(self):
-        self.assertEqual(self.reverser.reverse_string(""), "")
-    def test_reverse_simple_string(self):
-        self.assertEqual(self.reverser.reverse_string("abc"), "cba")
-    def test_reverse_palindrome(self):
-        self.assertEqual(self.reverser.reverse_string("racecar"), "racecar")
-    def test_reverse_with_spaces(self):
-        self.assertEqual(self.reverser.reverse_string("hello world"), "dlrow olleh")
-    def test_reverse_with_numbers_and_symbols(self):
-        self.assertEqual(self.reverser.reverse_string("123!@#"), "#@!321")
-    def test_reverse_long_string(self):
-        self.assertEqual(self.reverser.reverse_string("abcdefghij"), "jihgfedcba")
+def calculate_trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    b1 = 10
+    b2 = 20
+    h = 5
+    area = calculate_trapezoid_area(b1, b2, h)
+    print(area)

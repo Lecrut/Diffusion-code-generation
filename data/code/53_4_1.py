@@ -1,7 +1,12 @@
-def get_side_length_and_area(side_length):
-    area = side_length * side_length
-    return (side_length, area)
+import itertools
+
+def generate_reverse_triangle(height):
+    for i in range(height, 0, -1):
+        row_numbers = list(itertools.chain(range(i, 0, -1)))
+        row_string = ' '.join(str(num) for num in row_numbers)
+        yield row_string
+
 if __name__ == '__main__':
-    test_side = 5
-    result = get_side_length_and_area(test_side)
-    print(result)
+    height = 3
+    for row in generate_reverse_triangle(height):
+        print(row)

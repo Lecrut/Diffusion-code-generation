@@ -1,11 +1,25 @@
-#!/usr/bin/env python3
-"""
-Module to detect and list all repeated characters in an input string using bit manipulation.
+import math
 
-This module provides a function that iterates through a given string, uses bitwise operations
-to track character occurrence counts, and identifies which characters appear more than once.
-It also includes a main block with hard-coded sample values for testing without user interaction.
-"""
+class ConeGeometry:
+    __slots__ = ("radius", "height")
+    _volume_multiplier = math.pi / 3
 
-if __name__ == '__main__':
-    pass
+    def __init__(self, radius: float, height: float):
+        if radius <= 0:
+            raise ValueError("radius must be positive")
+        if height <= 0:
+            raise ValueError("height must be positive")
+        self.radius = float(radius)
+        self.height = float(height)
+
+    def compute_volume(self) -> float:
+        return self._volume_multiplier * (self.radius ** 2) * self.height
+
+def format_cone_volume(radius: float, height: float) -> str:
+    cone = ConeGeometry(radius, height)
+    vol = cone.compute_volume()
+    return f"{vol:.2f}"
+
+if __name__ == "__main__":
+    result = format_cone_volume(8, 11)
+    print(result)

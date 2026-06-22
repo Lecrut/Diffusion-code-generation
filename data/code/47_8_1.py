@@ -1,13 +1,22 @@
-import math
-def triangle_area_shoelace(x1, y1, x2, y2, x3, y3):
-    area = 0.5 * abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
-    return area
+def mean_scores(scores):
+    if not isinstance(scores, list):
+        raise TypeError("Input must be a list")
+    
+    total = 0
+    count = 0
+    
+    for score in scores:
+        if not isinstance(score, (int, float)):
+            raise TypeError("All elements in the list must be numeric")
+        total += score
+        count += 1
+    
+    if count == 0:
+        raise ValueError("List must not be empty")
+    
+    return total / count
+
 if __name__ == '__main__':
-    x1_val = 4
-    y1_val = 2
-    x2_val = 7
-    y2_val = 10
-    x3_val = 1
-    y3_val = 5
-    area = triangle_area_shoelace(x1_val, y1_val, x2_val, y2_val, x3_val, y3_val)
-    print(area)
+    sample_scores = [85, 92, 78, 95, 88]
+    result = mean_scores(sample_scores)
+    print(result)

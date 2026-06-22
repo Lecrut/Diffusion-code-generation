@@ -1,33 +1,10 @@
-"""Utility module containing a static method to calculate string length."""
-
-class LengthCalculator:
-    """A utility class providing methods for calculating text lengths."""
-
-    @staticmethod
-    def get_length(text: str) -> int:
-        """Calculate the number of characters in the given string.
-
-        Args:
-            text (str): The input string to measure.
-
-        Returns:
-            int: The length of the string as a non-negative integer.
-        """
-        return len(text)
+def rectangle_area(width, height):
+    if not isinstance(width, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Width and height must be numeric types.")
+    if width < 0 or height < 0:
+        raise ValueError("Width and height must be non-negative.")
+    return width * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction.
-    samples = [
-        "Hello, World!",
-        "",
-        "Python is awesome.",
-        "a" * 1000,
-    ]
-
-    calculator = LengthCalculator()
-
-    print("String Length Calculation Results:")
-    for i, sample in enumerate(samples):
-        length = calculator.get_length(sample)
-        display_text = repr(sample[:20]) + ("..." if len(sample) > 20 else "")
-        print(f"Sample {i+1}: '{display_text}' -> Length: {length}")
+    result = rectangle_area(5, 10)
+    print(result)

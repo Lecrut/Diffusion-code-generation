@@ -1,13 +1,8 @@
-def manipulate_case(input_string):
-    lowercase_str = input_string.lower()
-    uppercase_str = input_string.upper()
-    title_cased_str = str(input_string).title()
-    return {
-        "lowercase": lowercase_str,
-        "uppercase": uppercase_str,
-        "title_cased": title_cased_str
-    }
+def area_of_rhombus(diagonal1: float, diagonal2: float) -> float:
+    return diagonal1 * diagonal2 / 2.0
+
 if __name__ == '__main__':
-    sample = "Hello World Example"
-    result = manipulate_case(sample)
-    print(result)
+    d1: float = 10.0
+    d2: float = 8.0
+    area: float = area_of_rhombus(d1, d2)
+    print(area)

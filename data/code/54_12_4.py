@@ -1,12 +1,22 @@
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def area(self):
-        return 3.141592653589793 * self.radius ** 2
-if __name__ == '__main__':
-    circle1 = Circle(5)
-    area1 = circle1.area()
-    print(area1)
-    circle2 = Circle(10.5)
-    area2 = circle2.area()
-    print(area2)
+class HollowSquareBuilder:
+    def __init__(self, size, delimiter="#"):
+        self.size = size
+        self.delimiter = delimiter
+
+    def build(self):
+        if self.size <= 0:
+            return []
+        if self.size == 1:
+            return [self.delimiter]
+        top_bottom = self.delimiter * self.size
+        middle_rows = (
+            self.delimiter + " " * (self.size - 2) + self.delimiter
+            for _ in range(self.size - 2)
+        )
+        return [top_bottom] + list(middle_rows) + [top_bottom]
+
+if __name__ == "__main__":
+    builder = HollowSquareBuilder(5, "#")
+    lines = builder.build()
+    for line in lines:
+        print(line)

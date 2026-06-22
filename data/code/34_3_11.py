@@ -1,8 +1,12 @@
-def capitalize_words(sentence: str) -> list[str]:
-    """Return a list of words with each initial letter capitalized."""
-    return [word.capitalize() if word else "" for word in sentence.split()]
+import math
+
+def calculate_cylinder_surface_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative")
+    return 2 * math.pi * radius * (radius + height)
 
 if __name__ == '__main__':
-    sample_sentence = "hello world, this is a test."
-    result = capitalize_words(sample_sentence)
-    print(" ".join(result))
+    r = 3.0
+    h = 5.0
+    result = calculate_cylinder_surface_area(r, h)
+    print(result)

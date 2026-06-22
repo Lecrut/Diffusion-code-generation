@@ -1,10 +1,21 @@
-class CustomListWrapper:
-    def __init__(self, data):
-        self._data = data
-    def get_first_element(self):
-        return self._data[0]
+def count_even_numbers(start: int, stop: int) -> int:
+    if start > stop:
+        start, stop = stop, start
+    
+    first_even = start if start % 2 == 0 else start + 1
+    if first_even > stop:
+        return 0
+    
+    return (stop - first_even) // 2 + 1
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40]
-    wrapper = CustomListWrapper(sample_list)
-    first = wrapper.get_first_element()
-    print(first)
+    result = count_even_numbers(1, 10)
+    print(result)
+    result = count_even_numbers(10, 20)
+    print(result)
+    result = count_even_numbers(-5, 5)
+    print(result)
+    result = count_even_numbers(2, 2)
+    print(result)
+    result = count_even_numbers(3, 3)
+    print(result)

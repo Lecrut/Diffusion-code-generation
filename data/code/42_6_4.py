@@ -1,7 +1,10 @@
-import itertools
-def join_strings_efficient(list_of_strings):
-    return "".join(list_of_strings)
+import math
+
+def compute_ellipse_area(semi_major_axis, semi_minor_axis):
+    return math.pi * semi_major_axis * semi_minor_axis
+
 if __name__ == '__main__':
-    data = ["hello", "world", "python", "efficient"]
-    result = join_strings_efficient(data)
-    print(result)
+    semi_major = 5
+    semi_minor = 3
+    area = compute_ellipse_area(semi_major, semi_minor)
+    print(area)

@@ -1,20 +1,8 @@
-class StringAnalyzer:
-    def get_length(self, text):
-        """Returns the length of the input string."""
-        return len(text)
+def compute_rectangle_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-    
-    # Sample test cases with hard-coded values
-    samples = [
-        "Hello, World!",
-        "",
-        "Python",
-        1234567890 * "a"  # A long string of repeated characters for stress testing
-    ]
-
-    print("String Analysis Results:")
-    for sample in samples:
-        length = analyzer.get_length(sample)
-        print(f"'{sample[:10]}{'...' if len(sample) > 10 else ''}' -> Length: {length}")
+    w = 5.0
+    h = 10.0
+    result = compute_rectangle_area(w, h)
+    print(result)

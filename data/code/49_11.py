@@ -1,7 +1,8 @@
-def compare_lengths(len1, len2):
-    return (min(len1, len2), max(len1, len2))
+def generate_square_pattern(size: int, char: str) -> list:
+    return [[char for _ in range(size)] for _ in range(size)]
+
 if __name__ == '__main__':
-    a = 15
-    b = 22
-    result = compare_lengths(a, b)
-    print(result)
+    size = 10
+    pattern = generate_square_pattern(size, '*')
+    for row in pattern:
+        print(''.join(row))

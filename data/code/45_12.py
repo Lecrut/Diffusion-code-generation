@@ -1,13 +1,13 @@
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def calculate_area(self):
-        import math
-        return math.pi * self.radius**2
+def find_lowest_value(numbers):
+    if not numbers:
+        raise ValueError("List must not be empty")
+    lowest = numbers[0]
+    for number in numbers[1:]:
+        if number < lowest:
+            lowest = number
+    return lowest
+
 if __name__ == '__main__':
-    circle1 = Circle(5)
-    area1 = circle1.calculate_area()
-    print(f"Area of circle 1: {area1}")
-    circle2 = Circle(10.5)
-    area2 = circle2.calculate_area()
-    print(f"Area of circle 2: {area2}")
+    sample_values = [3.5, 1.2, 4.8, 0.7, 2.3, 5.1, 0.1]
+    result = find_lowest_value(sample_values)
+    print(result)

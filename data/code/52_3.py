@@ -1,8 +1,14 @@
-import math
-def calculate_circle_area(radius):
-    area = math.pi * (radius ** 2)
-    return area
+def generate_diamond(n):
+    lines = []
+    for i in range(1, n + 1):
+        spaces = ' ' * (n - i)
+        stars = '*' * (2 * i - 1)
+        lines.append(spaces + stars)
+    for i in range(n - 1, 0, -1):
+        spaces = ' ' * (n - i)
+        stars = '*' * (2 * i - 1)
+        lines.append(spaces + stars)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    sample_radius = 5.0
-    area_result = calculate_circle_area(sample_radius)
-    print(area_result)
+    print(generate_diamond(6))

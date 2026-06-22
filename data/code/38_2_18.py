@@ -1,49 +1,19 @@
-class StringAnalyzer:
-    def check_for_duplicates(self, input_string):
-        """
-        Identifies all repeated characters in a given string.
-        
-        Args:
-            input_string (str): The string to analyze.
-            
-        Returns:
-            list[str]: A sorted list of unique characters that appear more than once.
-        """
-        char_count = {}
-        duplicates = []
+import math
 
-        # Count frequency of each character
-        for char in input_string:
-            if char in char_count:
-                char_count[char] += 1
-            else:
-                char_count[char] = 1
-        
-        # Collect characters that appear more than once, avoiding duplicates in the result list
-        seen_duplicates = set()
-        for char, count in char_count.items():
-            if count > 1 and char not in seen_duplicates:
-                duplicates.append(char)
-                seen_duplicates.add(char)
+def _validate_cone_parameters(radius, height):
+    if radius <= 0 or height <= 0:
+        raise ValueError("Radius and height must be positive numbers")
+    if not isinstance(radius, (int, float)) or not isinstance(height, (int, float)):
+        raise TypeError("Radius and height must be numeric types")
 
-        return sorted(duplicates)
+def calculate_cone_volume(radius, height):
+    _validate_cone_parameters(radius, height)
+    area_base = math.pi * radius * radius
+    volume = (area_base * height) / 3.0
+    return volume
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or external dependencies
-    test_cases = [
-        "hello world",
-        "aabbccdd",
-        "programming is fun",
-        "abcdefg"  # No duplicates expected here (case-sensitive)
-    ]
-
-    analyzer = StringAnalyzer()
-
-    for test_input in test_cases:
-        result = analyzer.check_for_duplicates(test_input)
-        print(f"Input: '{test_input}'")
-        if result:
-            print("Repeated characters:", ", ".join(result))
-        else:
-            print("No repeated characters found.")
-        print("-" * 30)
+    target_radius = 3
+    target_height = 7
+    result = calculate_cone_volume(target_radius, target_height)
+    print(result)

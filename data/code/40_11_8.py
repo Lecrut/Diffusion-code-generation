@@ -1,19 +1,9 @@
-def get_first_letters(strings):
-    """
-    Returns a list containing the first character of each string in the input list.
-    
-    Args:
-        strings (list[str]): A list of non-empty strings.
-        
-    Returns:
-        list[chr]: A new list with the first letter from each original string.
-    """
-    return [s[0] for s in strings if len(s) > 0]
+def surface_area_cuboid(length, width, height):
+    return 2 * (length * width + width * height + height * length)
 
 if __name__ == '__main__':
-    sample_data = ["hello", "world", "!python", "" , "test"]
-    result = get_first_letters(sample_data)
-    
-    # Note: The empty string is filtered out to prevent IndexError, 
-    # ensuring robustness while maintaining the core logic of extracting first letters.
+    l = 3
+    w = 4
+    h = 5
+    result = surface_area_cuboid(l, w, h)
     print(result)

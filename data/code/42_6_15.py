@@ -1,20 +1,10 @@
-def join_strings(strings):
-    """
-    Joins a list of strings into a single string using Python's built-in 
-    efficient method (str.join), which is optimized in CPython.
-    
-    Args:
-        strings (list[str]): A list containing the strings to be joined.
-        
-    Returns:
-        str: The concatenated result as a single string separated by spaces.
-    """
-    return ' '.join(strings)
+import math
+
+def compute_ellipse_area(semi_major, semi_minor):
+    return math.pi * semi_major * semi_minor
 
 if __name__ == '__main__':
-    # Hard-coded sample values ensuring no user input, network access, or files are needed
-    sample_list = ['Hello', 'World', 'This', 'Is', 'A', 'Test']
-    
-    result = join_strings(sample_list)
-    
+    a = 5.0
+    b = 3.0
+    result = compute_ellipse_area(a, b)
     print(result)

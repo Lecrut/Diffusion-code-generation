@@ -1,7 +1,12 @@
-def calculate_area_difference(area1, area2):
-    return abs(area1 - area2)
+def generate_isosceles_triangle(height):
+    lines = []
+    for i in range(1, height + 1):
+        spaces = ' ' * (height - i)
+        stars = '*' * (2 * i - 1)
+        lines.append(spaces + stars)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    a = 100
-    b = 45
-    result = calculate_area_difference(a, b)
+    height = 7
+    result = generate_isosceles_triangle(height)
     print(result)

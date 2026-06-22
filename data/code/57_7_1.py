@@ -1,11 +1,14 @@
-import unittest
-def calculate_circle_area(radius):
-    return 3.141592653589793 * radius * radius
-class TestCircleArea(unittest.TestCase):
-    def test_positive_radii(self):
-        self.assertAlmostEqual(calculate_circle_area(1), 3.141592653589793)
-        self.assertAlmostEqual(calculate_circle_area(2), 12.566370614359172)
-        self.assertAlmostEqual(calculate_circle_area(0.5), 0.7853981633974483)
-        self.assertAlmostEqual(calculate_circle_area(10), 314.1592653589793)
+def fibonacci_bitwise(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+    fibs = [0, 1]
+    a, b = (0, 1)
+    for _ in range(2, n):
+        a, b = (b, a + b)
+        fibs.append(b)
+    return fibs
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    result = fibonacci_bitwise(100)
+    print(result)

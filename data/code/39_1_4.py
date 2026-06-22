@@ -1,28 +1,18 @@
-import re
+class PrismVolumeCalculator:
+    def __init__(self, base_area: float, height: float) -> None:
+        if not isinstance(base_area, (int, float)) or not isinstance(height, (int, float)):
+            raise TypeError("base_area and height must be numeric types")
+        if base_area <= 0 or height <= 0:
+            raise ValueError("base_area and height must be positive numbers")
+        self.base_area = base_area
+        self.height = height
 
-def extract_pattern_occurrences(text: str, pattern: str) -> list[str]:
-    """
-    Extract all non-overlapping occurrences of a specific pattern from input text using regex.
-    
-    Args:
-        text (str): The string to search within.
-        pattern (str): The regular expression pattern to match.
-        
-    Returns:
-        List[str]: A list containing the matched substrings in order of appearance.
-    """
-    matches = re.findall(pattern, text)
-    return matches
+    def calculate_volume(self) -> float:
+        return self.base_area * self.height
 
-if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input or external dependencies
-    test_text = "The rain in Spain falls mainly in the plain."
-    search_pattern = r"\b\w+ain\b"  # Matches words ending with 'ain' (rain, main, plain)
-
-    result = extract_pattern_occurrences(test_text, search_pattern)
-
-    print("Input text:", test_text)
-    print(f"Pattern: {search_pattern}")
-    print("Matches found:")
-    for match in result:
-        print(match)
+if __name__ == "__main__":
+    base_area_value = 25.5
+    height_value = 10.0
+    calculator = PrismVolumeCalculator(base_area_value, height_value)
+    result = calculator.calculate_volume()
+    print(result)

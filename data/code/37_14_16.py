@@ -1,15 +1,20 @@
-import sys
+class Parallelogram:
+    BASE: float = 12
+    HEIGHT: float = 6
 
-def concatenate_strings(str1: str, str2: str) -> str:
-    """Concatenates two strings without any side effects."""
-    return f"{str1}{str2}"
+    def __init__(self, base: float = BASE, height: float = HEIGHT) -> None:
+        self.base = base
+        self.height = height
+
+    def compute_area(self) -> float:
+        return self.base * self.height
+
+    def compute_perimeter(self, side_length: float) -> float:
+        return 2 * (self.base + side_length)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input.
-    SAMPLE_STR_1 = "Hello"
-    SAMPLE_STR_2 = "World"
-
-    result: str = concatenate_strings(SAMPLE_STR_1, SAMPLE_STR_2)
-    
-    # Print the concatenated string directly using f-string formatting for clarity and performance.
-    print(result)
+    instance = Parallelogram()
+    area_result = instance.compute_area()
+    perimeter_result = instance.compute_perimeter(8)
+    print(area_result)
+    print(perimeter_result)

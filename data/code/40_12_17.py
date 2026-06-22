@@ -1,46 +1,39 @@
-class FirstLetterExtractor:
-    """A class that extracts the first letter from a list of strings."""
+import math
 
-    def extract_all(self, string_list):
-        """
-        Extracts the first letter from each non-empty string in the input list.
+class RectangularPrism:
+    def __init__(self, length, width, height):
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.length = length
+        self.width = width
+        self.height = height
+        self._surface_area_cache = None
+        self._volume_cache = None
 
-        Args:
-            string_list (list[str]): A list of strings to process.
+    @property
+    def surface_area(self):
+        if self._surface_area_cache is not None:
+            return self._surface_area_cache
+        l, w, h = self.length, self.width, self.height
+        area = 2 * (l * w + w * h + h * l)
+        self._surface_area_cache = area
+        return area
 
-        Returns:
-            list[str]: A list containing only the first character of valid strings.
-                      If a string is empty, it returns an empty string for that position,
-                      though typically one might prefer skipping or raising if strictness is needed.
-                      Here we return '' for empty strings to maintain length correspondence unless specified otherwise.
+    @property
+    def volume(self):
+        if self._surface_area_cache is not None and self._volume_cache is not None:
+            return self._volume_cache
+        l, w, h = self.length, self.width, self.height
+        vol = l * w * h
+        self._volume_cache = vol
+        return vol
 
-        Note: This implementation adheres to object-oriented best practices by encapsulating 
-        related functionality within the class and using a clear method signature without global state.
-        """
-        result = []
-        for s in string_list:
-            if len(s) > 0:
-                result.append(s[0])
-            else:
-                # Returning empty string to keep list length same as input; 
-                # alternative could be raising an exception or omitting the element.
-                result.append('')
-        return result
+    def __repr__(self):
+        return f"RectangularPrism(length={self.length}, width={self.width}, height={self.height})"
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user input, command-line arguments, etc.
-    samples = ["Hello", "World", "!@#", "", "Python"]
-    
-    extractor = FirstLetterExtractor()
-    output = extractor.extract_all(samples)
-
-    print(output)  # Expected: ['H', 'W', '', ''] (Note: '!@#' first char is '!', empty returns '') 
-                  # Correction on logic above based on prompt interpretation: 
-                  # Actually, for "!@#", len > 0 so it should return '!'. Let's re-verify the code mentally.
-                  # Code says if len(s) > 0: s[0] else ''. So "!@#" -> '!', "" -> ''
-    print(f"Input count: {len(samples)}") 
-    print(f"Output count: {len(output)}")
-
-    # Debugging specific values for clarity in this run context (optional, but good practice)
-    with open('/dev/null', 'w') as f:  # Suppress any potential stdout noise if redirected externally during testing environments
-        pass
+    prism = RectangularPrism(5, 10, 15)
+    sa = prism.surface_area
+    vol = prism.volume
+    print(sa)
+    print(vol)

@@ -1,15 +1,5 @@
-def remove_spaces(s: str) -> str:
-    """Remove all spaces from a string."""
-    return s.replace(" ", "")
+def triangle_area(base: float, height: float) -> float:
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    sample_strings = [
-        "Hello World",
-        "  Leading and Trailing Spaces  ",
-        "NoSpacesHere",
-        "Multiple   Spaces   Between"
-    ]
-    
-    for test_input in sample_strings:
-        result = remove_spaces(test_input)
-        print(f'Input: "{test_input}" -> Output: "{result}"')
+    print(triangle_area(3.0, 4.0))

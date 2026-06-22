@@ -1,0 +1,9 @@
+import statistics
+
+def compute_mean_score(scores):
+    return statistics.mean(scores)
+
+if __name__ == '__main__':
+    test_scores = [85, 92, 78, 90, 88, 76, 95, 89, 84, 91]
+    result = compute_mean_score(test_scores)
+    print(result)

@@ -1,43 +1,24 @@
-def capitalize_first_letter(text: str) -> str:
-    """
-    Capitalizes the first letter of a string, leaving all other letters unchanged.
+import numpy as np
+
+def calculate_cylinder_surface_area(radii, heights):
+    radii = np.asarray(radii, dtype=np.float64)
+    heights = np.asarray(heights, dtype=np.float64)
     
-    Handles edge cases such as empty strings and those starting with punctuation 
-    by returning exactly one character changed to uppercase if it is alphabetic,
-    otherwise returns an empty or original prefix without modification for non-letters.
+    if radii.shape != heights.shape:
+        raise ValueError("radii and heights must have the same shape")
     
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with the first letter capitalized if applicable.
-    """
-    if not text:
-        return ""
+    if np.any(radii < 0) or np.any(heights < 0):
+        raise ValueError("radii and heights must be non-negative")
     
-    # Extract just the first character to check and transform only that one
-    first_char = text[0]
+    two_pi_r = 2 * np.pi * radii
+    lateral_area = two_pi_r * heights
+    base_area = np.pi * np.square(radii)
+    total_area = lateral_area + 2 * base_area
     
-    # Only capitalize if it's an alphabetic character; otherwise leave as is
-    if 'a' <= first_char.lower() <= 'z':
-        new_first_char = first_char.upper()
-        
-        return f"{new_first_char}{text[1:]}"
-    
-    else:
-        # If the first char isn't a letter, don't touch it (preserves original behavior)
-        return text
+    return total_area
 
 if __name__ == '__main__':
-    sample_strings = [
-        "",                          # Empty string
-        "hello",                     # Normal case
-        "!Hello!",                   # Starts with punctuation
-        "#123abc",                  # Non-letter start followed by letters later
-        "aBcDeFgHiJkLmNoPqRsT",    # Single letter input (already handled but explicit)
-        "   world",                 # Leading whitespace, first char is space
-    ]
-
-    for s in sample_strings:
-        result = capitalize_first_letter(s)
-        print(f"Input: {s!r} -> Output: {result!r}")
+    sample_radii = np.array([1.0, 2.5, 3.0])
+    sample_heights = np.array([4.0, 5.0, 6.0])
+    result = calculate_cylinder_surface_area(sample_radii, sample_heights)
+    print(result)

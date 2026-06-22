@@ -1,37 +1,10 @@
-class StringManipulator:
-    """A utility class for string manipulation operations."""
+import math
 
-    def merge_fragments(self, fragments):
-        """
-        Merges a list of string fragments into one cohesive string.
-        
-        Handles edge cases where the input list is empty by returning an empty string.
-        
-        Args:
-            fragments (list[str]): A list of strings to be merged.
-            
-        Returns:
-            str: The concatenated result of all fragments in order.
-        """
-        if not isinstance(fragments, list):
-            raise TypeError("Input must be a list.")
-            
-        return "".join(fragments)
+def calculate_ellipse_area(major_axis, minor_axis):
+    return math.pi * (major_axis / 2) * (minor_axis / 2)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    
-    # Test case 1: Normal operation with multiple fragments
-    test_list_1 = ["Hello", " ", "World"]
-    
-    # Test case 2: Empty list edge case
-    test_list_2 = []
-    
-    # Instantiate the class and run tests
-    manipulator = StringManipulator()
-    
-    result_normal = manipulator.merge_fragments(test_list_1)
-    print(f"Test Case 1 (Normal): '{result_normal}'")
-    
-    result_empty = manipulator.merge_fragments(test_list_2)
-    print(f"Test Case 2 (Empty List): '{result_empty}'")
+    major = 10
+    minor = 6
+    result = calculate_ellipse_area(major, minor)
+    print(result)

@@ -1,30 +1,10 @@
-class StringReverser:
-    """A class designed to reverse strings efficiently."""
-
-    def reverse(self, text):
-        """
-        Reverses the input string in-place (mutates) but also returns it 
-        as a new string for flexibility. If no argument is given or None, 
-        defaults to empty result based on requirements context though usually
-        we expect non-None. This follows OOP best practices with encapsulation.
-
-        Args:
-            text (str): The input string to reverse.
-
-        Returns:
-            str: A new reversed version of the original string. If None provided, 
-                 it will not trigger an error as expected per safe defaults or we handle gracefully.
-        
-        Raises:
-            TypeError: If argument is NOT a string and None.
-        """
-        # Ensure input is valid before processing - OOP best practice for robustness
-        if text is None or not isinstance(text, str):
-            raise ValueError("Input must be a non-null string")
-
-        return "".join(reversed(list(str)))
+def trapezoid_area(base1: float, base2: float, height: float) -> float:
+    if height <= 0:
+        raise ValueError("Height must be positive.")
+    if base1 < 0 or base2 < 0:
+        raise ValueError("Bases must be non-negative.")
+    return (base1 + base2) * height / 2.0
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    
-    print(f"Hello World -> {StringReverser().reverse('hello world').upper()}")
+    result = trapezoid_area(5.0, 7.0, 4.0)
+    print(result)

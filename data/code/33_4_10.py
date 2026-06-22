@@ -1,24 +1,13 @@
-def filter_alphanumeric(text: str) -> str:
-    """
-    Returns a new string containing only alphanumeric characters from the input.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A string with all non-alphanumeric and whitespace characters removed.
-    """
-    return ''.join(char for char in text if char.isalnum())
+def calculate_triangle_area(base, height):
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative values.")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    # Sample inputs as hard-coded values; no user input or external dependencies required
-    sample_strings = [
-        "Hello, World! 123",
-        "Test@# $%^ &* ()_+" ,
-        "   Leading and trailing spaces with tabs\tand newlines\nhere"
-    ]
-
-    for original in sample_strings:
-        filtered_result = filter_alphanumeric(original)
-        print(f"Input: '{original}'")
-        print(f"Output: '{filtered_result}'\n")
+    base_value = 10
+    height_value = 5
+    try:
+        area = calculate_triangle_area(base_value, height_value)
+        print(area)
+    except ValueError as e:
+        print(str(e))

@@ -1,23 +1,9 @@
-import math
-def calculate_circle_area(radius):
-    if radius < 0:
-        raise ValueError("Radius cannot be negative")
-    return math.pi * (radius ** 2)
-def test_circle_area():
-    test_cases = [
-        (1, math.pi),
-        (2, 4 * math.pi),
-        (0, 0),
-        (5, 25 * math.pi)
-    ]
-    for radius, expected in test_cases:
-        result = calculate_circle_area(radius)
-        assert math.isclose(result, expected), f"Input radius: {radius}, Expected: {expected}, Got: {result}"
-        print(f"Test passed for radius: {radius}")
-    try:
-        calculate_circle_area(-1)
-        assert False, "Should have raised ValueError for negative radius"
-    except ValueError:
-        print("Test passed for negative radius (ValueError raised)")
+from functools import reduce
+
+def find_minimum(lst):
+    return reduce(lambda a, b: a if a < b else b, lst)
+
 if __name__ == '__main__':
-    test_circle_area()
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    result = find_minimum(sample_list)
+    print(result)

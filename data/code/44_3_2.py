@@ -1,16 +1,10 @@
-def calculate_perimeter(dimensions):
-    if not isinstance(dimensions, (list, tuple)):
-        raise TypeError("Dimensions must be a list or tuple.")
-    if len(dimensions) != 2:
-        raise ValueError("Dimensions list must contain exactly two elements.")
-    length, width = dimensions
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Length and width must be numeric values.")
-    if length <= 0 or width <= 0:
-        raise ValueError("Length and width must be positive numbers.")
-    return 2 * (length + width)
-
+def calculate_average(numbers):
+    if not numbers:
+        return 0.0
+    total = sum(numbers)
+    count = len(numbers)
+    return total / count
 if __name__ == '__main__':
-    sample_dimensions = [5, 10]
-    result = calculate_perimeter(sample_dimensions)
-    print(result)
+    sample_numbers = [10, 20, 30, 40, 50]
+    average = calculate_average(sample_numbers)
+    print(average)

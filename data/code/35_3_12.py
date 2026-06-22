@@ -1,4 +1,7 @@
-def count_vowels(s: str) -> int: return sum(1 for c in s.lower() if c in "aeiou")
+def cube_volume(edge_length):
+    return edge_length ** 3
 
-if __name__ == '__main__': 
-    print(count_vowels("Hello, World!"))  # Expected output: 2
+if __name__ == '__main__':
+    print(cube_volume(5))
+    print(cube_volume(2))
+    print(cube_volume(10))

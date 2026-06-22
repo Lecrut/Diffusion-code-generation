@@ -1,14 +1,9 @@
-import sys
-
-def get_first_letters(text: str) -> list[str]:
-    """Extracts the first letter of every word from the input text."""
-    words = text.split()
-    return [word[0] if word else '' for word in words]
+def calculate_surface_area(length, width, height):
+    return 2 * (length * width + width * height + height * length)
 
 if __name__ == '__main__':
-    sample_text = "Hello world\nThis is a test.\nPython scripting is fun."
-
-    # Process the hard-coded sample values as per requirements (no user input)
-    result_letters = get_first_letters(sample_text)
-
-    print("".join(result_letters))
+    sample_length = 3.5
+    sample_width = 2.0
+    sample_height = 4.2
+    result = calculate_surface_area(sample_length, sample_width, sample_height)
+    print(result)

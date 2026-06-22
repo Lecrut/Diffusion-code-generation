@@ -1,21 +1,21 @@
-import sys
+class TriangleAreaCalculator:
+    _FORMULA_COEFFICIENT = 0.5
 
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all spaces (both internal and external) from the input string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with no whitespace characters remaining.
-    """
-    return ''.join(char for char in text if not ' ' in char)
+    def __init__(self, base: float, height: float) -> None:
+        self._base = base
+        self._height = height
+
+    @staticmethod
+    def _validate_dimensions(base: float, height: float) -> None:
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive numbers")
+
+    def get_area(self) -> float:
+        self._validate_dimensions(self._base, self._height)
+        return self._FORMULA_COEFFICIENT * self._base * self._height
 
 if __name__ == '__main__':
-    # Hard-coded sample multi-line string containing various spaces (internal, external, leading/trailing).
-    SAMPLE_INPUT = "  Hello World! This is a test.   \n\nAnother line here."
-
-    # Simulate reading from standard input using file I/O best practices by treating the 
-    # hard-coded value as if it were read via sys.stdin.read(). In a real scenario, this would be:
-    # content = sys.stdin.read()
+    sample_base = 8.5
+    sample_height = 12.0
+    instance = TriangleAreaCalculator(sample_base, sample_height)
+    print(instance.get_area())

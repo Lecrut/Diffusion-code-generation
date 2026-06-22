@@ -1,12 +1,9 @@
-def concatenate_segments(string_iterable, separator):
-    for segment in string_iterable:
-        yield segment
-        yield separator
+import math
+
+def compute_ellipse_area(semi_major, semi_minor):
+    return math.pi * semi_major * semi_minor
+
 if __name__ == '__main__':
-    input_strings = ["apple", "banana", "cherry"]
-    separator_string = ", "
-    result_generator = concatenate_segments(input_strings, separator_string)
-    concatenated_string = ""
-    for item in result_generator:
-        concatenated_string += item
-    print(concatenated_string)
+    a = 5.0
+    b = 3.0
+    print(compute_ellipse_area(a, b))

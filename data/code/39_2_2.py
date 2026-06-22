@@ -1,15 +1,8 @@
-class SubstringExtractor:
-    def extract_unique_substrings(self, text: str, k: int) -> set:
-        if k <= 0 or k > len(text):
-            return set()
-        substrings = set()
-        n = len(text)
-        for i in range(n - k + 1):
-            substrings.add(text[i:i+k])
-        return substrings
+def calculate_prism_volume(base_area: float, height: float) -> float:
+    return base_area * height
+
 if __name__ == '__main__':
-    extractor = SubstringExtractor()
-    target_string = "ababa"
-    substring_length = 3
-    result = extractor.extract_unique_substrings(target_string, substring_length)
-    print(result)
+    sample_base_area = 10.0
+    sample_height = 5.0
+    volume = calculate_prism_volume(sample_base_area, sample_height)
+    print(volume)

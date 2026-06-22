@@ -1,17 +1,7 @@
-def validate_radius(func):
-    def wrapper(radius):
-        if not isinstance(radius, (int, float)):
-            raise TypeError("Radius must be a number")
-        if radius <= 0:
-            raise ValueError("Radius must be positive")
-        return func(radius)
-    return wrapper
-
-@validate_radius
-def calculate_area(radius):
-    return 3.14159 * radius * radius
+def find_min(lst):
+    return min(lst) if lst else None
 
 if __name__ == '__main__':
-    print(calculate_area(5))
-    print(calculate_area(2.5))
-    print(calculate_area(0.1))
+    sample = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_min(sample)
+    print(result)

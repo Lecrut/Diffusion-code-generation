@@ -1,28 +1,17 @@
-class StringUtils:
-    @staticmethod
-    def capitalize_words(input_string: str) -> str:
-        if not input_string:
-            return ""
-        words = input_string.split()
-        capitalized_words = [word.capitalize() for word in words]
-        return " ".join(capitalized_words)
+def calculate_cylinder_surface_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative.")
+    lateral_area = 2 * 3.14159265359 * radius * height
+    base_area = 3.14159265359 * radius * radius
+    total_area = lateral_area + 2 * base_area
+    return total_area
+
 if __name__ == '__main__':
-    sample1 = "hello world this is a test"
-    sample2 = "another example string"
-    sample3 = "a short sentence"
-    sample4 = ""
-    sample5 = "tHIS iS a MiXeD cAsE"
-    print(f"Original: '{sample1}'")
-    print(f"Capitalized: '{StringUtils.capitalize_words(sample1)}'")
-    print("-" * 20)
-    print(f"Original: '{sample2}'")
-    print(f"Capitalized: '{StringUtils.capitalize_words(sample2)}'")
-    print("-" * 20)
-    print(f"Original: '{sample3}'")
-    print(f"Capitalized: '{StringUtils.capitalize_words(sample3)}'")
-    print("-" * 20)
-    print(f"Original: '{sample4}'")
-    print(f"Capitalized: '{StringUtils.capitalize_words(sample4)}'")
-    print("-" * 20)
-    print(f"Original: '{sample5}'")
-    print(f"Capitalized: '{StringUtils.capitalize_words(sample5)}'")
+    sample_radius = 5
+    sample_height = 10
+    result = calculate_cylinder_surface_area(sample_radius, sample_height)
+    print(result)
+    try:
+        calculate_cylinder_surface_area(-1, 10)
+    except ValueError as e:
+        print(e)

@@ -1,24 +1,21 @@
-def remove_all_spaces(text: str) -> str:
-    """
-    Removes all whitespace characters (spaces, tabs, newlines, etc.) from the input string efficiently.
+class TriangleCalculator:
+    def __init__(self, base, height):
+        self.base_value = float(base)
+        self.height_value = float(height)
 
-    Args:
-        text (str): The input string to process.
+    def get_area(self):
+        return (self.base_value * self.height_value) / 2.0
 
-    Returns:
-        str: A new string with all whitespace removed.
-    """
-    # Using translate for optimal performance on large strings compared to list comprehension or regex
-    return ''.join(text.translate(str.maketrans('', '', ' \t\n\r\f\v')))
+    def get_base(self):
+        return self.base_value
+
+    def get_height(self):
+        return self.height_value
 
 if __name__ == '__main__':
-    sample_1 = "Hello   World\tThis is a\ntest string."
-    sample_2 = "\n  \t  \r  \n"
-
-    result_1 = remove_all_spaces(sample_1)
-    print(f"Input: {repr(sample_1)}")
-    print(f"Output: {result_1}")
-
-    result_2 = remove_all_spaces(sample_2)
-    print(f"\nInput: {repr(sample_2)}")
-    print(f"Output: '{result_2}' (Length: {len(result_2)})")
+    sample_base = 15
+    sample_height = 8
+    calculator = TriangleCalculator(sample_base, sample_height)
+    print(calculator.get_area())
+    print(calculator.get_base())
+    print(calculator.get_height())

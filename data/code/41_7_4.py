@@ -1,9 +1,10 @@
-def convert_to_title_case(string_list):
-    title_cased_list = []
-    for s in string_list:
-        title_cased_list.append(s.title())
-    return title_cased_list
+def calculate_rhombus_area(diagonal_1, diagonal_2):
+    if diagonal_1 <= 0 or diagonal_2 <= 0:
+        raise ValueError("Diagonal lengths must be positive numbers")
+    return 0.5 * diagonal_1 * diagonal_2
+
 if __name__ == '__main__':
-    input_list = ["hello world", "python programming", "list of strings"]
-    output_list = convert_to_title_case(input_list)
-    print(output_list)
+    d1 = 10.5
+    d2 = 6.4
+    area = calculate_rhombus_area(d1, d2)
+    print(area)

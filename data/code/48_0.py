@@ -1,11 +1,7 @@
-import sys
-def calculate_perimeter(a, b, c):
-    if a + b <= c or a + c <= b or b + c <= a:
-        return "Invalid triangle: The side lengths do not form a valid triangle."
-    return a + b + c
+def find_largest_data_point(values):
+    return max(values)
+
 if __name__ == '__main__':
-    a = 3
-    b = 4
-    c = 5
-    result = calculate_perimeter(a, b, c)
+    sample_data = [3.14, 100, -50, 75.5, 42, 0, -99.9]
+    result = find_largest_data_point(sample_data)
     print(result)

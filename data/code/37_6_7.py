@@ -1,12 +1,10 @@
-class StringAppender:
-    def append(self, first_string: str, second_string: str) -> str:
-        """Returns a new string formed by appending the second argument to the first."""
-        return f"{first_string}{second_string}"
+def parallelogram_area(base, height):
+    if not (isinstance(base, (int, float)) and isinstance(height, (int, float))):
+        raise TypeError("Base and height must be numeric")
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive")
+    return base * height
 
 if __name__ == '__main__':
-    app = StringAppender()
-    result1 = app.append("Hello", "World")
-    print(result1)
-    
-    result2 = app.append("Python is ", "great!")
-    print(result2)
+    result = parallelogram_area(5, 3)
+    print(result)

@@ -1,15 +1,16 @@
-import sys
-
-def combine_strings(str1: str, str2: str) -> str:
-    """Combines two input strings by concatenating them."""
-    return f"{str1}{str2}"
+def get_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    # No user input, command-line arguments, or network access is used here.
-    str_a = "Hello"
-    str_b = "World"
-
-    result_str = combine_strings(str_a, str_b)
+    shape_specs = {
+        'parallelogram': {
+            'base': 8.0,
+            'height': 4.5
+        }
+    }
     
-    print(result_str)
+    for shape_name, specs in shape_specs.items():
+        base_val = specs['base']
+        height_val = specs['height']
+        calculated_area = get_parallelogram_area(base_val, height_val)
+        print(calculated_area)

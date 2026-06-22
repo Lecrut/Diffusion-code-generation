@@ -1,21 +1,9 @@
-def calculate_triangle_area(base, height):
-    try:
-        if not isinstance(base, (int, float)) or not isinstance(height, (int, float)):
-            raise TypeError("Inputs must be numbers.")
-        area = base * height
-        if area < 0:
-            raise ValueError("Area cannot be negative.")
-        return area
-    except TypeError:
-        return "Error: Both inputs must be numbers."
-    except ValueError:
-        return "Error: Base and height must be non-negative."
-    except Exception:
-        return "Error: An unexpected error occurred."
+import statistics
+
+def compute_mean_score():
+    scores = [85, 90, 78, 92, 88, 76, 95, 89, 91, 87]
+    return statistics.mean(scores)
+
 if __name__ == '__main__':
-    print(calculate_triangle_area(4.0, 5.0))
-    print(calculate_triangle_area(10, 2.5))
-    print(calculate_triangle_area(-3.0, 4.0))
-    print(calculate_triangle_area("a", 5.0))
-    print(calculate_triangle_area(7.0, -2.0))
-    print(calculate_triangle_area(10, "b"))
+    result = compute_mean_score()
+    print(result)

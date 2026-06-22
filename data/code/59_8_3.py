@@ -1,11 +1,8 @@
-def middle_element_generator(sequence):
-    n = len(sequence)
-    if n == 0:
-        return
-    for i in range(n // 2):
-        yield sequence[i]
+def sum_of_digits(n):
+    return eval('+'.join(c for c in str(n) if c.isdigit()))
+
 if __name__ == '__main__':
-    large_sequence = list(range(1000000))
-    print("Middle element of large sequence:")
-    for element in middle_element_generator(large_sequence):
-        print(element)
+    print(sum_of_digits(12345))
+    print(sum_of_digits(9876))
+    print(sum_of_digits(0))
+    print(sum_of_digits(-42))

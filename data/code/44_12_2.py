@@ -1,8 +1,11 @@
-def compute_rectangle_perimeter(length, width):
-    return 2 * (length + width)
+def average_scores(scores):
+    if not scores:
+        return 0.0
+    total = sum(scores)
+    count = len(scores)
+    return total / count
 
 if __name__ == '__main__':
-    length = 5
-    width = 3
-    perimeter = compute_rectangle_perimeter(length, width)
-    print(perimeter)
+    test_scores = [85, 92, 78, 90, 88, 76, 95, 84, 91, 87]
+    result = average_scores(test_scores)
+    print(result)

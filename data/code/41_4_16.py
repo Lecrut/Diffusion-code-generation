@@ -1,26 +1,33 @@
-import sys
+DIAGONAL_UNITS = {
+    "cm": "square cm",
+    "m": "square m",
+    "in": "square inches",
+    "ft": "square feet"
+}
 
-def process_string(s: str) -> None:
-    """Reads a string, processes it into three forms, and prints each on a new line."""
-    # Original string (strip potential leading/trailing whitespace from input logic if any, 
-    # but here we assume the whole argument is kept as is per standard processing expectations).
-    print(s)
-    
-    fully_capitalized = s.upper()
-    print(fully_capitalized)
-    
-    # Capitalize first letter of every word. str.capitalize() only capitalizes the first char 
-    # and lowercases the rest, so we need a manual approach or title().title() does exactly this:
-    # It converts to lowercase then makes each word's first character uppercase.
-    capitalized_words = s.title()
-    print(capitalized_words)
+def compute_rhombus_area(diagonal_a, diagonal_b, unit_label):
+    if unit_label not in DIAGONAL_UNITS:
+        raise ValueError("Unsupported unit")
+    area = 0.5 * diagonal_a * diagonal_b
+    return area
+
+class RhombusCalculator:
+    def __init__(self, d_one, d_two, unit):
+        self.diagonal_one = d_one
+        self.diagonal_two = d_two
+        self.unit = unit
+
+    def get_area(self):
+        return compute_rhombus_area(self.diagonal_one, self.diagonal_two, self.unit)
+
+    def get_unit_label(self):
+        return DIAGONAL_UNITS.get(self.unit, "units")
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input or stdin usage).
-    samples = [
-        "hello world",
-        "python programming is fun"
-    ]
-    
-    for sample in samples:
-        process_string(sample)
+    d1_val = 12.5
+    d2_val = 18.0
+    u_label = "cm"
+    calc = RhombusCalculator(d1_val, d2_val, u_label)
+    result = calc.get_area()
+    unit_out = calc.get_unit_label()
+    print(f"{result} {unit_out}")

@@ -1,65 +1,13 @@
-def build_string_from_list(elements):
-    """
-    Iteratively builds a string by appending each element from an input list,
-    managing necessary spacing between elements correctly (single space if more than one element).
-    
-    Args:
-        elements (list): A list of strings to be joined.
-        
-    Returns:
-        str: The resulting concatenated string with appropriate spacing.
-    """
-    result = ""
-    
-    # Handle empty or single-element lists by returning the first element without extra spaces
-    if not elements:
-        return ""
-    
-    current_element = elements[0]
-    remaining_elements = len(elements) - 1
-    
-    for _ in range(remaining_elements):
-        next_element = elements[len(elements) - 2 + (_)] # This logic is flawed, let's fix the iteration approach below
-        
-        # Corrected iterative approach:
-        pass
+import math
 
-# Re-implementing with correct logic inside the function definition above was messy. 
-# Let's provide a clean implementation directly in the module structure.
-
-def build_string_from_list(elements):
-    """
-    Iteratively builds a string by appending each element from an input list,
-    managing necessary spacing between elements correctly (single space if more than one element).
-    
-    Args:
-        elements (list): A list of strings to be joined.
-        
-    Returns:
-        str: The resulting concatenated string with appropriate spacing.
-    """
-    result = ""
-    
-    # If the list is empty, return an empty string
-    if not elements:
-        return ""
-    
-    # Start with the first element
-    current_element = elements[0]
-    remaining_elements_count = len(elements) - 1
-    
-    for i in range(remaining_elements_count):
-        next_index = i + 1
-        result += " " + elements[next_index]
-        
-    return result
-
+def calculate_ellipse_area(major_axis, minor_axis):
+    if major_axis <= 0 or minor_axis <= 0:
+        raise ValueError('Major and minor axes must be positive numbers')
+    semi_major = major_axis / 2
+    semi_minor = minor_axis / 2
+    return math.pi * semi_major * semi_minor
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, args, or network)
-    sample_list = ["Hello", "World", "This", "Is", "A", "Test"]
-    
-    output_string = build_string_from_list(sample_list)
-    
-    print(output_string)
-
-# Final clean version ensuring no logic errors and meeting all constraints.
+    major = 10
+    minor = 5
+    area = calculate_ellipse_area(major, minor)
+    print(area)

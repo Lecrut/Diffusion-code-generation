@@ -1,31 +1,23 @@
-class StringProcessor:
-    def remove_spaces(self, text: str) -> str:
-        """
-        Removes all spaces from the input string in O(n) time complexity.
-        
-        Args:
-            text (str): The input string potentially containing spaces.
-            
-        Returns:
-            str: A new string with all spaces removed.
-        """
-        return ''.join(char for char in text if not (' ' == char))
+import math
+
+PI = 3.141592653589793
+
+def validate_positive_number(value, name):
+    try:
+        converted = float(value)
+        if converted <= 0:
+            raise ValueError(f"{name} must be positive")
+        return converted
+    except TypeError:
+        raise TypeError(f"{name} must be numeric")
+
+def get_triangle_area(base, height):
+    validated_base = validate_positive_number(base, "base")
+    validated_height = validate_positive_number(height, "height")
+    return validated_base * validated_height / 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or files
-    test_cases = [
-        "Hello World",
-        "Python 3.10 is great ",
-        "",
-        "   Multiple   Spaces   Here   ",
-        "NoSpacesAtAll"
-    ]
-
-    processor = StringProcessor()
-
-    for i, original in enumerate(test_cases):
-        result = processor.remove_spaces(original)
-        print(f"Test Case {i + 1}:")
-        print(f"Input:    '{original}'")
-        print(f"Output:   '{result}'")
-        print("-" * 30)
+    demo_base = 8
+    demo_height = 4
+    computed_area = get_triangle_area(demo_base, demo_height)
+    print(computed_area)

@@ -1,34 +1,26 @@
-import unittest
+def sanitize_input(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        raise TypeError("Input must be a numeric type")
 
-def remove_spaces(text: str) -> str:
-    """Remove all spaces from a given string."""
-    return text.replace(" ", "")
-
-class TestRemoveSpaces(unittest.TestCase):
-    def test_empty_string(self):
-        self.assertEqual(remove_spaces(""), "")
-
-    def test_only_spaces(self):
-        input_str = "   \t\n  "
-        expected_result = ""
-        self.assertEqual(remove_spaces(input_str), expected_result)
-
-    def test_mixed_characters_with_spaces(self):
-        input_str = "Hello World! This is a Test."
-        expected_result = "HelloWorld!ThisisaTest."
-        self.assertEqual(remove_spaces(input_str), expected_result)
-
-    def test_no_spaces(self):
-        input_str = "NoSpacesHere"
-        expected_result = "NoSpacesHere"
-        self.assertEqual(remove_spaces(input_str), expected_result)
-
-    def test_single_space_characters_only(self):
-        input_str = "   \t  "
-        expected_result = ""
-        self.assertEqual(remove_spaces(input_str), expected_result)
+def compute_triangle_area(base, height):
+    sanitized_base = sanitize_input(base)
+    sanitized_height = sanitize_input(height)
+    if sanitized_base < 0 or sanitized_height < 0:
+        raise ValueError("Base and height must be non-negative")
+    return 0.5 * sanitized_base * sanitized_height
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestRemoveSpaces)
-    runner = unittest.TextTestRunner(verbosity=2)
-    runner.run(suite)
+    result = compute_triangle_area(10, 5)
+    print(result)
+    result_float = compute_triangle_area(7.5, 4.2)
+    print(result_float)
+    try:
+        compute_triangle_area("ten", 5)
+    except TypeError:
+        print("Caught TypeError for non-numeric base")
+    try:
+        compute_triangle_area(10, -2)
+    except ValueError:
+        print("Caught ValueError for negative height")

@@ -1,27 +1,10 @@
-#!/usr/bin/env python3
-"""
-Script to capitalize the first letter of each word in a string while preserving other casing.
-Uses efficient built-in methods without external libraries or interactive input.
-"""
+import math
 
-def title_case_string(text: str) -> str:
-    """
-    Capitalizes only the first character of every alphabetic sequence (word).
-
-    Args:
-        text: Input string to process.
-
-    Returns:
-        New string with each word's first letter capitalized and rest unchanged.
-    
-    Example:
-        "hello world  Hello WORLD" -> "Hello World  Hello World"
-    """
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
-
-    result_parts = []
-    current_word_start = False
+def calculate_cylinder_surface_area(radius, height):
+    return 2 * math.pi * radius * (radius + height)
 
 if __name__ == '__main__':
-    pass
+    sample_radius = 5.0
+    sample_height = 10.0
+    total_surface_area = calculate_cylinder_surface_area(sample_radius, sample_height)
+    print(total_surface_area)

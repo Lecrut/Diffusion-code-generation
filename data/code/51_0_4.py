@@ -1,14 +1,14 @@
-import sys
-def calculate_perimeter(sides):
-    if not sides:
-        return 0
-    perimeter = sum(sides)
-    return perimeter
+def generate_right_aligned_pyramid(num_rows):
+    rows = []
+    for i in range(1, num_rows + 1):
+        line = str(i)
+        for j in range(2, i + 1):
+            line += f" {j}"
+        line = line.rjust((num_rows * 3) - 2)
+        rows.append(line)
+    return "\n".join(rows)
+
 if __name__ == '__main__':
-    sample_sides = [3, 4, 5, 6]
-    if len(sample_sides) < 3:
-        print("Error: A polygon must have at least three sides.")
-    else:
-        perimeter = calculate_perimeter(sample_sides)
-        print(f"The side lengths are: {sample_sides}")
-        print(f"The total perimeter is: {perimeter}")
+    ROWS = 5
+    result = generate_right_aligned_pyramid(ROWS)
+    print(result)

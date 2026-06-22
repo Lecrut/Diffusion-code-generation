@@ -1,30 +1,9 @@
-import math
-
-def calculate_square_area(side):
-    """Calculates the area of a square given its side length.
-    
-    Args:
-        side (int | float): The length of one side of the square.
-        
-    Returns:
-        int or float: The calculated area of the square.
-        
-    Raises:
-        ValueError: If 'side' is not a numeric type.
-    """
-    if not isinstance(side, (int, float)):
-        raise ValueError(f"Input must be a number, got {type(side).__name__}")
-    
-    return side * side
-
+def total_surface_area(base_side: float, slant_height: float) -> float:
+    base_area = base_side * base_side
+    lateral_area = 4 * (0.5 * base_side * slant_height)
+    return base_area + lateral_area
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    try:
-        area_1 = calculate_square_area(5)
-        print(f"Area of square with side 5: {area_1}")
-        
-        area_2 = calculate_square_area(3.5)
-        print(f"Area of square with side 3.5: {area_2}")
-        
-    except ValueError as e:
-        print(f"Error occurred: {e}")
+    base_side_val = 4.0
+    slant_height_val = 5.0
+    result = total_surface_area(base_side_val, slant_height_val)
+    print(result)

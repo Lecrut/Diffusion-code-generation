@@ -1,14 +1,8 @@
-def main():
-    """Reads a multi-line string from standard input (hard-coded sample) 
-    and prints it with all internal and surrounding spaces removed."""
-    
-    # Hard-coded sample value as per requirements: no user interaction or arguments needed
-    sample_data = "  Hello World! This is a test of stripping. \n\n  Extra lines here   "
-
-    input_string = sample_data.strip()
-    result_string = "".join(input_string.split())
-
-    print(result_string)
+def calculate_triangle_area(base: float, height: float) -> float:
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive numbers.")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    main()
+    result = calculate_triangle_area(10, 5)
+    print(result)

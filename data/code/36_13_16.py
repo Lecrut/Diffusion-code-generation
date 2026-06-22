@@ -1,11 +1,5 @@
-def reverse_sentence(sentence: str) -> str:
-    """Reverse a given sentence efficiently by slicing."""
-    return sentence[::-1]
+def trapezoid_area(base1: float, base2: float, height: float) -> float:
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Sample input as per constraints (no user interaction, no command-line args)
-    sample_input = "Hello World!"
-
-    reversed_result = reverse_sentence(sample_input)
-    
-    print(reversed_result)
+    print(trapezoid_area(5.0, 7.0, 4.0))

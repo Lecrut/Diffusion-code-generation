@@ -1,25 +1,9 @@
-class StringProcessor:
-    def find_first_word_initial(self, text: str) -> str:
-        if not text:
-            return ""
-        first_char = None
-        for char in text:
-            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
-                first_char = char
-                break
-        if first_char is not None:
-            return first_char
-        else:
-            return ""
+def calculate_surface_area(length, width, height):
+    return 2 * (length * width + length * height + width * height)
+
 if __name__ == '__main__':
-    processor = StringProcessor()
-    sample1 = "Hello world, this is a test."
-    sample2 = "   \t\n  Another line starts here."
-    sample3 = "123numbers"
-    sample4 = ""
-    sample5 = "Word"
-    print(f"'{sample1}' -> {processor.find_first_word_initial(sample1)}")
-    print(f"'{sample2}' -> {processor.find_first_word_initial(sample2)}")
-    print(f"'{sample3}' -> {processor.find_first_word_initial(sample3)}")
-    print(f"'{sample4}' -> {processor.find_first_word_initial(sample4)}")
-    print(f"'{sample5}' -> {processor.find_first_word_initial(sample5)}")
+    l = 5
+    w = 3
+    h = 4
+    area = calculate_surface_area(l, w, h)
+    print(area)

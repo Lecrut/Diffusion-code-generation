@@ -1,31 +1,14 @@
-def get_first_letters(text: str) -> dict[str, str]:
-    """
-    Takes a string and returns a dictionary where keys are words 
-    and values are their respective first letters (lowercase).
-    
-    Punctuation is ignored when determining the first letter.
-    Words are defined as sequences of alphabetic characters separated by non-alphabetic characters or spaces.
+class RectangularBox:
+    def __init__(self, length, width, height):
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.length = length
+        self.width = width
+        self.height = height
 
-    Args:
-        text (str): The input string to process.
-
-    Returns:
-        dict[str, str]: A dictionary mapping words to their first letters in lowercase.
-    """
-    result = {}
-    
-    # Split the text into tokens based on whitespace and punctuation is handled by filtering chars during processing
-    # We will iterate through characters to build valid words
-    
-    current_word_chars = []
-    
-    for char in text:
-        if 'a' <= char.lower() <= 'z':  # Check if character is alphabetic
-            current_word_chars.append(char)
-        else:
-            # If we have a non-empty word, process it and reset
-            if len(current_word_chars) > 0:
-                first_letter = ''.join([c for c in current_word_chars]).lower()[:1]
+    def get_surface_area(self):
+        return 2 * (self.length * self.width + self.length * self.height + self.width * self.height)
 
 if __name__ == '__main__':
-    pass
+    box = RectangularBox(10, 8, 6)
+    print(box.get_surface_area())

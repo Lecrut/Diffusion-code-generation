@@ -1,26 +1,23 @@
-def join_strings_with_delimiter(items: list[str], delimiter: str) -> str:
-    """
-    Joins a list of strings with a custom delimiter placed between elements.
-    
-    Args:
-        items (list[str]): List of string elements to join.
-        delimiter (str): The string to use as the separator between items.
-        
-    Returns:
-        str: A single string where delimiters are inserted between original elements.
-             If the list is empty, returns an empty string.
-    """
-    if not items:
-        return ""
-    
-    # Construct the result by appending each item followed by the delimiter,
-    # then removing the trailing delimiter from the last element.
-    joined = delimiter.join([item + delimiter for item in items])[:-len(delimiter)]
-    return joined
+import math
+from typing import Union
+
+def calculate_ellipse_area(semi_major: Union[int, float], semi_minor: Union[int, float]) -> float:
+    a = float(semi_major)
+    b = float(semi_minor)
+
+    if a < 0 or b < 0:
+        raise ValueError("Semi-axes must be non-negative")
+
+    if not math.isfinite(a) or not math.isfinite(b):
+        raise ValueError("Semi-axes must be finite numbers")
+
+    if a == 0 or b == 0:
+        return 0.0
+
+    return math.pi * a * b
 
 if __name__ == '__main__':
-    sample_list = ["apple", "banana", "cherry"]
-    custom_delim = ", "
-    
-    result = join_strings_with_delimiter(sample_list, custom_delim)
-    print(result)
+    major = 5.0
+    minor = 3.0
+    area = calculate_ellipse_area(major, minor)
+    print(area)

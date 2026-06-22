@@ -1,15 +1,9 @@
-def calculate_area_difference(area1, area2):
-    return abs(area1 - area2)
+def print_pyramid():
+    width = 21
+    for i in range(1, width + 1, 2):
+        spaces = (width - i) // 2
+        stars = '*' * i
+        print(' ' * spaces + stars)
+
 if __name__ == '__main__':
-    area_a = 25.5
-    area_b = 15.0
-    difference = calculate_area_difference(area_a, area_b)
-    print(f"The difference between {area_a} and {area_b} is: {difference}")
-    area_c = 100
-    area_d = 100
-    difference2 = calculate_area_difference(area_c, area_d)
-    print(f"The difference between {area_c} and {area_d} is: {difference2}")
-    area_e = 3.14
-    area_f = 2.85
-    difference3 = calculate_area_difference(area_e, area_f)
-    print(f"The difference between {area_e} and {area_f} is: {difference3}")
+    print_pyramid()

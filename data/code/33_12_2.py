@@ -1,11 +1,17 @@
-def remove_all_spaces(text: str) -> str:
-    """Remove all spaces from the input string."""
-    return ''.join(char for char in text if not (char == ' '))
+import math
+from typing import Union
+
+Number = Union[int, float]
+
+def calculate_triangle_area(base: Number, height: Number) -> Number:
+    if base < 0:
+        raise ValueError("Base cannot be negative")
+    if height < 0:
+        raise ValueError("Height cannot be negative")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    sample_input = "Hello World\nThis is a test.\n  Extra   Spaces  \n"
-    
-    # Simulate reading multi-line string from standard input using the hard-coded value
-    result_string = remove_all_spaces(sample_input)
-    
-    print(result_string)
+    base_val = 10
+    height_val = 5
+    result = calculate_triangle_area(base_val, height_val)
+    print(result)

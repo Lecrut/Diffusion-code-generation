@@ -1,11 +1,9 @@
-def main():
-    # Simulate prompt by using a hardcoded sample sentence instead of input()
-    sample_sentence = "Hello, World! This is Python."
-    
-    # Reverse the sample sentence
-    reversed_sentence = sample_sentence[::-1]
-    
-    print(reversed_sentence)
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    main()
+    base1 = 5
+    base2 = 7
+    height = 4
+    area = calculate_trapezoid_area(base1, base2, height)
+    print(area)

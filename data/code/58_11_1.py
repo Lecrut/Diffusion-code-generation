@@ -1,20 +1,14 @@
-def get_first_element(data):
-    if not data:
-        raise IndexError("list is empty")
-    return data[0]
+def count_even_integers(start, end):
+    if start > end:
+        return 0
+    first_even = start if start % 2 == 0 else start + 1
+    last_even = end if end % 2 == 0 else end - 1
+    if first_even > last_even:
+        return 0
+    return (last_even - first_even) // 2 + 1
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30]
-    list2 = []
-    list3 = ['a']
-    try:
-        result1 = get_first_element(list1)
-        print(f"First element of {list1}: {result1}")
-        result2 = get_first_element(list2)
-        print(f"First element of {list2}: {result2}")
-    except IndexError as e:
-        print(f"Error for list2: {e}")
-    try:
-        result3 = get_first_element(list3)
-        print(f"First element of {list3}: {result3}")
-    except IndexError as e:
-        print(f"Error for list3: {e}")
+    print(count_even_integers(1, 10))
+    print(count_even_integers(2, 10))
+    print(count_even_integers(3, 3))
+    print(count_even_integers(10, 5))

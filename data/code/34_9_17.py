@@ -1,34 +1,14 @@
-#!/usr/bin/env python3
-"""
-Module to capitalize the first letter of each word in a string efficiently 
-without manual indexing loops, adhering to Pythonic best practices.
-"""
+import math
 
-def title_case_robust(text: str) -> str:
-    """
-    Capitalize only the first letter of each word in the input string.
+def cylinder_surface_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    base_area = math.pi * radius ** 2
+    side_area = 2 * math.pi * radius * height
+    return 2 * base_area + side_area
 
-    This function handles multiple spaces correctly by treating consecutive whitespace as a single separator,
-    ensuring that words are identified and capitalized accurately without manual indexing loops over characters.
-
-    Args:
-        text (str): The input string to process.
-
-    Returns:
-        str: A new string with the first letter of each word capitalized.
-    """
-    return " ".join(word.capitalize() for word in text.split())
-
-if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, files, or network)
-    samples = [
-        "hello world",
-        "  multiple   spaces  here ",
-        "python is awesome!",
-        "",
-        "single word"
-    ]
-
-    for test_input in samples:
-        result = title_case_robust(test_input)
-        print(f'Input: "{test_input}" -> Output: "{result}"')
+if __name__ == "__main__":
+    sample_radius = 3.0
+    sample_height = 7.0
+    area = cylinder_surface_area(sample_radius, sample_height)
+    print(area)

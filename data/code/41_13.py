@@ -1,20 +1,13 @@
-def capitalize_string(text: str, rule: str) -> str:
-    if rule == 'title':
-        return text.capitalize()
-    elif rule == 'upper':
-        return text.upper()
-    elif rule == 'lower':
-        return text.lower()
-    else:
-        return text
+def calculate_rhombus_area(d1, d2):
+    if d1 < 0 or d2 < 0:
+        raise ValueError("Diagonal lengths must be non-negative")
+    return 0.5 * d1 * d2
+
 if __name__ == '__main__':
-    sample_string = "hello world"
-    result_title = capitalize_string(sample_string, 'title')
-    result_upper = capitalize_string(sample_string, 'upper')
-    result_lower = capitalize_string(sample_string, 'lower')
-    result_default = capitalize_string(sample_string, 'unknown')
-    print(f"Original: {sample_string}")
-    print(f"Title: {result_title}")
-    print(f"Upper: {result_upper}")
-    print(f"Lower: {result_lower}")
-    print(f"Default: {result_default}")
+    print(calculate_rhombus_area(4, 6))
+    print(calculate_rhombus_area(5, 5))
+    print(calculate_rhombus_area(0, 10))
+    try:
+        calculate_rhombus_area(-3, 5)
+    except ValueError as e:
+        print(str(e))

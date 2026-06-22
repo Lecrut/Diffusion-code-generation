@@ -1,29 +1,25 @@
-class Square:
-    """A class representing a square with methods to calculate its area."""
-    
-    def __init__(self, side_length):
-        if not isinstance(side_length, (int, float)) or side_length < 0:
-            raise ValueError("Side length must be a non-negative number.")
-        self.side = side_length
-    
-    def get_area(self) -> float:
-        """Calculate and return the area of the square."""
-        return self.side * self.side
+import math
+
+class SquarePyramid:
+    def __init__(self, base_side, slant_height):
+        if base_side <= 0 or slant_height <= 0:
+            raise ValueError("Base side and slant height must be positive")
+        self.base_side = base_side
+        self.slant_height = slant_height
+
+    def surface_area(self):
+        base_area = self.base_side ** 2
+        lateral_area = 2 * self.base_side * self.slant_height
+        return base_area + lateral_area
+
+    def volume(self):
+        height = math.sqrt(
+            self.slant_height ** 2 - (self.base_side / 2) ** 2
+        )
+        base_area = self.base_side ** 2
+        return (1 / 3) * base_area * height
 
 if __name__ == '__main__':
-    # Sample values for testing
-    sample_sides = [5, 0.5, -3]
-
-    print("Testing Square class:\n")
-
-    try:
-        sq1 = Square(5)
-        area1 = sq1.get_area()
-        print(f"Square with side {sq1.side} has an area of: {area1}")
-
-        sq2 = Square(0.5)
-        area2 = sq2.get_area()
-        print(f"Square with side {sq2.side} has an area of: {area2}")
-
-    except ValueError as e:
-        print(f"Error creating square: {e}")
+    pyramid = SquarePyramid(base_side=4, slant_height=5)
+    print(pyramid.surface_area())
+    print(pyramid.volume())

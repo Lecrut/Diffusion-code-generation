@@ -1,11 +1,7 @@
-import math
-
-def calculate_circle_area(radius):
-    if radius < 0:
-        raise ValueError("Radius cannot be negative")
-    return math.pi * (radius ** 2)
+def find_minimum(numbers):
+    return min(numbers)
 
 if __name__ == '__main__':
-    sample_radius = 5.0
-    area = calculate_circle_area(sample_radius)
-    print(area)
+    sample_list = [34, 15, 88, 2, 67, 43]
+    result = find_minimum(sample_list)
+    print(result)

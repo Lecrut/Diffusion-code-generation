@@ -1,15 +1,12 @@
-def find_middle(numbers):
-    if not numbers:
-        return None
-    n = len(numbers)
-    if n % 2 == 1:
-        middle_index = n // 2
-        return numbers[middle_index]
-    else:
-        middle_right_index = n // 2
-        middle_left_index = middle_right_index - 1
-        return (numbers[middle_left_index] + numbers[middle_right_index]) / 2
+def sum_of_digits(n):
+    if n < 0:
+        n = -n
+    if n < 10:
+        return n
+    return n % 10 + sum_of_digits(n // 10)
+
 if __name__ == '__main__':
-    sample_numbers = [10, 20, 30, 40, 50]
-    result = find_middle(sample_numbers)
-    print(result)
+    test_values = [123, 0, 999, -456, 1]
+    for val in test_values:
+        result = sum_of_digits(val)
+        print(f"Sum of digits of {val}: {result}")

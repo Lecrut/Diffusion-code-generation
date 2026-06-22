@@ -1,7 +1,8 @@
-def calculate_area_difference(area1, area2):
-    return abs(area1 - area2)
+def print_isosceles_triangle(height):
+    for row in range(1, height + 1):
+        spaces = height - row
+        stars = 2 * row - 1
+        print(' ' * spaces + '*' * stars)
+
 if __name__ == '__main__':
-    a = 15.5
-    b = 8.2
-    result = calculate_area_difference(a, b)
-    print(result)
+    print_isosceles_triangle(7)

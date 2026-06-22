@@ -1,0 +1,15 @@
+def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+    
+    fib_list = [0, 1]
+    for _ in range(2, n):
+        fib_list.append(fib_list[-1] + fib_list[-2])
+    
+    return fib_list
+
+if __name__ == '__main__':
+    result = generate_fibonacci(20)
+    print(result)

@@ -1,11 +1,11 @@
-def count_vowels(word: str) -> int:
-    """Counts the total number of vowels in a given word (case-insensitive)."""
-    return sum(1 for char in word.lower() if char in 'aeiou')
-
+def cube_volume(edge_length):
+    if not isinstance(edge_length, (int, float)):
+        raise TypeError('Edge length must be a number.')
+    if edge_length < 0:
+        raise ValueError('Edge length must be non-negative.')
+    return edge_length ** 3
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure execution without user input.
-    samples = ["hello", "AEIOU", "rhythm", "beautiful"]
-
-    for test_word in samples:
-        vowel_count = count_vowels(test_word)
-        print(f"Word: {test_word}, Total vowels: {vowel_count}")
+    sample_edge_lengths = [3, 5.5, 0, 10]
+    for edge in sample_edge_lengths:
+        volume = cube_volume(edge)
+        print(volume)

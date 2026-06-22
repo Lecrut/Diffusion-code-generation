@@ -1,18 +1,18 @@
-def first_letters(text):
-    words = text.split()
-    result = []
-    for word in words:
-        if word and any(char.isalpha() for char in word):
-            result.append(word[0])
-    return result
+class BoxSurfaceCalculator:
+    def __init__(self, length, width, height):
+        self.length = length
+        self.width = width
+        self.height = height
+
+    def get_surface_area(self):
+        if not isinstance(self.length, (int, float)) or self.length <= 0:
+            raise ValueError("Length must be a positive number")
+        if not isinstance(self.width, (int, float)) or self.width <= 0:
+            raise ValueError("Width must be a positive number")
+        if not isinstance(self.height, (int, float)) or self.height <= 0:
+            raise ValueError("Height must be a positive number")
+        return 2 * (self.length * self.width + self.width * self.height + self.height * self.length)
+
 if __name__ == '__main__':
-    sample1 = "Hello world, this is a test."
-    sample2 = "Word1, Word2. Word3---"
-    sample3 = "  !@#$  .  "
-    sample4 = "Only. Punctuation!  "
-    sample5 = "Word1, Word2"
-    print(f"'{sample1}': {first_letters(sample1)}")
-    print(f"'{sample2}': {first_letters(sample2)}")
-    print(f"'{sample3}': {first_letters(sample3)}")
-    print(f"'{sample4}': {first_letters(sample4)}")
-    print(f"'{sample5}': {first_letters(sample5)}")
+    box = BoxSurfaceCalculator(7, 5, 3)
+    print(box.get_surface_area())

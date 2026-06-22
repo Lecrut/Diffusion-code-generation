@@ -1,16 +1,15 @@
-import sys
+def _compute_pair_product(a, b):
+    return a * b
 
-def get_first_letters(text: str) -> list[str]:
-    """Extracts the first letter of every word from the input text."""
-    words = text.split()
-    return [word[0] if word else "" for word in words]
+def rectangular_prism_surface_area(length, width, height):
+    area_xy = _compute_pair_product(length, width)
+    area_yz = _compute_pair_product(width, height)
+    area_zx = _compute_pair_product(height, length)
+    return 2 * (area_xy + area_yz + area_zx)
 
 if __name__ == '__main__':
-    sample_text = "Hello world\nThis is a test.\nPython scripting is fun."
-    
-    # Simulate reading from standard input using the provided sample values
-    text_input = sample_text
-    
-    result_letters = get_first_letters(text_input)
-    
-    print("".join(result_letters))
+    sample_length = 10.75
+    sample_width = 4.25
+    sample_height = 8.5
+    computed_area = rectangular_prism_surface_area(sample_length, sample_width, sample_height)
+    print(computed_area)

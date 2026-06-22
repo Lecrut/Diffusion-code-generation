@@ -1,21 +1,22 @@
-import unittest
-def calculate_perimeter(a, b, c):
-    if a + b <= c or a + c <= b or b + c <= a or a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Invalid triangle side lengths")
-    return a + b + c
-class TestPerimeterCalculation(unittest.TestCase):
-    def test_valid_triangle(self):
-        self.assertEqual(calculate_perimeter(3, 4, 5), 12)
-        self.assertEqual(calculate_perimeter(5, 5, 5), 15)
-        self.assertEqual(calculate_perimeter(10, 20, 30), 60)
-    def test_invalid_triangle_side_lengths(self):
-        with self.assertRaisesRegex(ValueError, "Invalid triangle side lengths"):
-            calculate_perimeter(1, 2, 4)
-        with self.assertRaisesRegex(ValueError, "Invalid triangle side lengths"):
-            calculate_perimeter(1, 1, 10)
-        with self.assertRaisesRegex(ValueError, "Invalid triangle side lengths"):
-            calculate_perimeter(-1, 2, 3)
-        with self.assertRaisesRegex(ValueError, "Invalid triangle side lengths"):
-            calculate_perimeter(0, 5, 5)
+def generate_zigzag_triangle(rows):
+    result = []
+    for i in range(rows):
+        line = ""
+        indent = rows - 1 - i
+        line += " " * indent
+        if i % 2 == 0:
+            for j in range(i + 1):
+                line += chr(ord('A') + j)
+        else:
+            chars = []
+            for j in range(i + 1):
+                chars.append(chr(ord('A') + j))
+            line += "".join(reversed(chars))
+        result.append(line)
+    return result
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    sample_rows = 7
+    output = generate_zigzag_triangle(sample_rows)
+    for line in output:
+        print(line)

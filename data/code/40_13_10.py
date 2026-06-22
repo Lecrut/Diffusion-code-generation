@@ -1,15 +1,7 @@
-def get_first_letter(s: str) -> str:
-    """Returns the first letter of the string if it exists, otherwise returns an empty string."""
-    return s[0] if len(s) > 0 else ""
+def surface_area(l=4, w=6, h=8):
+    if l <= 0 or w <= 0 or h <= 0:
+        raise ValueError("Dimensions must be positive")
+    return 2 * (l * w + w * h + h * l)
 
 if __name__ == '__main__':
-    test_cases = [
-        "Hello World",
-        "",
-        "a",
-        "123abc"
-    ]
-
-    for case in test_cases:
-        result = get_first_letter(case)
-        print(f'Input: {repr(case)} -> Output: {repr(result)}')
+    print(surface_area())

@@ -1,15 +1,10 @@
-def count_vowels(text: str) -> int:
-    """Count vowels (both uppercase and lowercase) in a given string."""
-    return sum(1 for char in text if char.lower() in 'aeiou')
+def cube_volume(side_length):
+    if not isinstance(side_length, (int, float)):
+        raise TypeError("Side length must be a number")
+    if side_length < 0:
+        raise ValueError("Side length must be non-negative")
+    return side_length * side_length * side_length
 
 if __name__ == '__main__':
-    test_strings = [
-        "Hello World",
-        "AEIOU",
-        "Python Programming 2024!",
-        "",
-        "Rhythm"
-    ]
-
-    for s in test_strings:
-        print(f'String "{s}" -> Vowel count: {count_vowels(s)}')
+    print(cube_volume(3))
+    print(cube_volume(5.5))

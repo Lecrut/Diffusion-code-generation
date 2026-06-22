@@ -1,14 +1,13 @@
-import sys
+def find_minimum(numbers):
+    if not numbers:
+        raise ValueError("List must not be empty")
+    min_value = numbers[0]
+    for number in numbers[1:]:
+        if number < min_value:
+            min_value = number
+    return min_value
+
 if __name__ == '__main__':
-    try:
-        input_data = sys.stdin.read().strip()
-        if not input_data:
-            radius = 5.0
-        else:
-            radius = float(input_data)
-        area = 3.141592653589793 * (radius ** 2)
-        print(area)
-    except ValueError:
-        print("Error: Invalid input. Please provide a valid number.", file=sys.stderr)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+    sample_values = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    result = find_minimum(sample_values)
+    print(result)

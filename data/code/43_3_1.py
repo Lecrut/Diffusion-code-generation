@@ -1,21 +1,17 @@
-import sys
+def calculate_slant_height(base_side, height):
+    if base_side <= 0 or height <= 0:
+        raise ValueError("Base side and height must be positive values")
+    half_base = base_side / 2
+    return (half_base ** 2 + height ** 2) ** 0.5
 
-def calculate_square_area(side_length):
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def calculate_surface_area(base_side, height):
+    slant_height = calculate_slant_height(base_side, height)
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input, command-line arguments, or network access is required.
-    test_cases = [5.0, "10", True]
-
-    for value in test_cases:
-        try:
-            if isinstance(value, bool):
-                side_length = float(int(float(str(value) * 2)) / 2) # Convert boolean to int then float safely
-            else:
-                side_length = float(value)
-            
-            area = calculate_square_area(side_length)
-            print(f"Side length: {side_length}, Area: {area}")
-        except ValueError as e:
-            print(f"Error converting input '{value}': {e}", file=sys.stderr)
+    base = 6.0
+    perp_height = 4.0
+    result = calculate_surface_area(base, perp_height)
+    print(result)

@@ -1,8 +1,5 @@
-def get_first_letter(s: str) -> str:
-    """Returns the first letter of the input string if it is non-empty, otherwise returns an empty string."""
-    return s[0] if len(s) > 0 else ""
-
+L = [4, 6, 8]
+def get_box_surface():
+    return sum(2 * a * b for a, b in [(L[i], L[i+1]) for i in range(3)])
 if __name__ == '__main__':
-    test_cases = ["hello", "", "   ", "a"]
-    for case in test_cases:
-        print(f"Input: {repr(case)} -> Output: {get_first_letter(case)!r}")
+    print(get_box_surface())

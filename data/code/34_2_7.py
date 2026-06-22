@@ -1,58 +1,19 @@
-class StringCapitalizer:
-    """A class to capitalize specific parts of a string."""
+import math
 
-    def capitalize_words(self, input_string):
-        """
-        Capitalizes only the first letter of each word in the given string.
-
-        Args:
-            input_string (str): The string to process.
-
-        Returns:
-            str: A new string with the first letter of each word capitalized.
-        
-        Example:
-            >>> capitalizer = StringCapitalizer()
-            >>> result = capitalizer.capitalize_words("hello world")
-            >>> print(result)
-            'Hello World'
-        """
-        if not isinstance(input_string, str):
-            raise TypeError(f"Expected string input, got {type(input_string).__name__}")
-
-        # Split the string into words based on whitespace
-        words = input_string.split()
-        
-        # Capitalize the first letter of each word and join them back with spaces
-        capitalized_words = [word.capitalize() for word in words]
-        
-        return ' '.join(capitalized_words)
+def calculate_cylinder_surface_area():
+    radius = 5.0
+    height = 10.0
+    
+    lateral_area = 2 * math.pi * radius * height
+    base_area = math.pi * radius ** 2
+    total_area = lateral_area + 2 * base_area
+    
+    return {
+        "lateral_surface_area": lateral_area,
+        "total_surface_area": total_area
+    }
 
 if __name__ == '__main__':
-    # Hard-coded sample values to test functionality without user input
-    
-    # Test case 1: Normal sentence
-    test_input_1 = "hello world this is a test"
-    
-    # Test case 2: Sentence with mixed casing and punctuation attached (basic handling)
-    test_input_2 = "python programming language is fun!"
-    
-    # Test case 3: Single word
-    test_input_3 = "code"
-    
-    capitalizer = StringCapitalizer()
-    
-    print("Test Case 1:")
-    result_1 = capitalizer.capitalize_words(test_input_1)
-    print(f"Input: '{test_input_1}'")
-    print(f"Output: '{result_1}'\n")
-    
-    print("Test Case 2:")
-    result_2 = capitalizer.capitalize_words(test_input_2)
-    print(f"Input: '{test_input_2}'")
-    print(f"Output: '{result_2}'\n")
-    
-    print("Test Case 3:")
-    result_3 = capitalizer.capitalize_words(test_input_3)
-    print(f"Input: '{test_input_3}'")
-    print(f"Output: '{result_3}'")
+    result = calculate_cylinder_surface_area()
+    print(result["lateral_surface_area"])
+    print(result["total_surface_area"])

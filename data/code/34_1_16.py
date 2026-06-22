@@ -1,27 +1,24 @@
-def capitalize_first_letter_only(text: str) -> str:
-    """
-    Capitalizes the first letter of every word in the input string.
-    
-    A "word" is defined as a sequence of alphanumeric characters separated 
-    by non-alphanumeric boundaries (spaces, punctuation, etc.). Only the first 
-    character of each detected word is capitalized; all other letters within 
-    that word remain unchanged. This implementation uses regex for efficiency 
-    and clarity in boundary detection without manual state management loops.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with the first letter of each word capitalized, 
-             preserving original casing for all other characters.
-             
-    Example:
-        >>> capitalize_first_letter_only("hello world! THIS IS TEST.")
-        'Hello World! This Is Test.'
-    """
-    import re
-    
-    # Split into words based on non-alphanumeric sequences to handle edge cases like punctuation
+import math
+
+class Cylinder:
+    PI = math.pi
+
+    def __init__(self, radius, height):
+        if radius <= 0 or height <= 0:
+            raise ValueError("Radius and height must be positive")
+        self.radius = radius
+        self.height = height
+
+    def _compute_lateral_area(self):
+        return 2 * self.PI * self.radius * self.height
+
+    def _compute_base_area(self):
+        return self.PI * self.radius ** 2
+
+    def surface_area(self):
+        return 2 * self._compute_base_area() + self._compute_lateral_area()
 
 if __name__ == '__main__':
-    pass
+    test_cylinder = Cylinder(7.5, 12.0)
+    area = test_cylinder.surface_area()
+    print(area)

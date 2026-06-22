@@ -1,21 +1,13 @@
-import string
-def find_repeated_letters(input_string):
-    seen_letters = set()
-    repeated_letters = set()
-    for char in input_string:
-        if 'a' <= char.lower() <= 'z':
-            if char in seen_letters:
-                repeated_letters.add(char)
-            else:
-                seen_letters.add(char)
-    return sorted(list(repeated_letters))
+from typing import Union
+
+VolumeType = Union[int, float]
+
+def compute_cone_volume(radius: float, height: float) -> VolumeType:
+    pi = 3.141592653589793
+    return (1 / 3) * pi * (radius ** 2) * height
+
 if __name__ == '__main__':
-    sample_string = "programming"
-    repeated = find_repeated_letters(sample_string)
-    print("Repeated letters in", sample_string, ":", repeated)
-    sample_string_2 = "hello world"
-    repeated_2 = find_repeated_letters(sample_string_2)
-    print("Repeated letters in", sample_string_2, ":", repeated_2)
-    sample_string_3 = "abcdefg"
-    repeated_3 = find_repeated_letters(sample_string_3)
-    print("Repeated letters in", sample_string_3, ":", repeated_3)
+    fixed_radius = 5
+    fixed_height = 10
+    result = compute_cone_volume(fixed_radius, fixed_height)
+    print(result)

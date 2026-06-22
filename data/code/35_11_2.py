@@ -1,16 +1,19 @@
-def count_vowels(s):
-    vowels = "aeiouAEIOU"
-    count = 0
-    for char in s:
-        if char in vowels:
-            count += 1
-    return count
+from typing import Union
+from math import isclose
+
+class CubeVolumeCalculator:
+    def calculate_volume(self, edge_length: Union[int, float]) -> float:
+        if not isinstance(edge_length, (int, float)):
+            raise TypeError("Edge length must be a number")
+        if edge_length < 0:
+            raise ValueError("Edge length cannot be negative")
+        if isclose(edge_length, 0):
+            return 0.0
+        return edge_length * edge_length * edge_length
+
 if __name__ == '__main__':
-    test_string_1 = "Hello World"
-    test_string_2 = "Python Programming"
-    test_string_3 = "Rhythm"
-    test_string_4 = "AEIOUaeiou123!"
-    print(f"'{test_string_1}': {count_vowels(test_string_1)}")
-    print(f"'{test_string_2}': {count_vowels(test_string_2)}")
-    print(f"'{test_string_3}': {count_vowels(test_string_3)}")
-    print(f"'{test_string_4}': {count_vowels(test_string_4)}")
+    calculator = CubeVolumeCalculator()
+    sample_edges = [2, 3.5, 0, 5]
+    for edge in sample_edges:
+        result = calculator.calculate_volume(edge)
+        print(f"Edge: {edge}, Volume: {result}")

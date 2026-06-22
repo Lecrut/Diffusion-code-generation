@@ -1,8 +1,8 @@
-def process_string(input_str):
-    lower_str = input_str.lower()
-    reversed_case_str = input_str.swapcase()
-    return (input_str, lower_str, reversed_case_str)
+def calculate_rhombus_area(d1, d2):
+    return (d1 * d2) / 2
+
 if __name__ == '__main__':
-    sample = "Hello World"
-    result = process_string(sample)
-    print(result)
+    diagonal_1 = 10
+    diagonal_2 = 8
+    area = calculate_rhombus_area(diagonal_1, diagonal_2)
+    print(area)

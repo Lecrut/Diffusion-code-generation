@@ -1,21 +1,13 @@
-def is_valid_triangle(sides):
-    if len(sides) != 3:
-        return False
-    a = sides[0]
-    b = sides[1]
-    c = sides[2]
-    if a <= 0 or b <= 0 or c <= 0:
-        return False
-    if a + b > c and a + c > b and b + c > a:
-        return True
-    else:
-        return False
+def find_max_custom(data):
+    if not data:
+        return None
+    max_val = data[0]
+    for num in data[1:]:
+        if num > max_val:
+            max_val = num
+    return max_val
+
 if __name__ == '__main__':
-    print(is_valid_triangle([3, 4, 5]))
-    print(is_valid_triangle([1, 2, 3]))
-    print(is_valid_triangle([1, 1, 1]))
-    print(is_valid_triangle([1, 2, 4]))
-    print(is_valid_triangle([0, 4, 5]))
-    print(is_valid_triangle([-1, 2, 3]))
-    print(is_valid_triangle([5, 5, 5]))
-    print(is_valid_triangle([2, 2, 0]))
+    sample_data = [3.5, 7.2, 1.8, 9.4, 6.1, 9.4]
+    result = find_max_custom(sample_data)
+    print(result)

@@ -1,32 +1,19 @@
-def substring_generator(s: str):
-    """
-    Generator that yields all possible substrings of a given string.
-    
-    Args:
-        s (str): Input string
-        
-    Yields:
-        str: Substrings starting from index i to j (inclusive) where 0 <= i < len(s) and 0 <= j < len(s)
-             Iteration order is by start index, then increasing end indices.
-    
-    Example output for "abc": 
-        'a', 'ab', 'abc'
-        'b', 'bc'
-        'c'
-    """
-    length = len(s)
-    
-    # Iterate through all possible starting positions
-    for i in range(length):
-        # For each start position, iterate through all ending positions (inclusive of current char)
-        for j in range(i + 1):
-            yield s[i:j+1]
+def calculate_prism_volume(base_area, height):
+    if base_area < 0 or height < 0:
+        raise ValueError("Base area and height must be non-negative.")
+    volume = float(base_area)
+    volume *= float(height)
+    return volume
 
 if __name__ == '__main__':
-    sample_string = "abc"
+    SAMPLE_DATA = {
+        "pentagonal_prism": {"base_area": 42.5, "height": 15},
+        "hexagonal_prism": {"base_area": 65.0, "height": 8.5}
+    }
     
-    print(f"\nGenerating substrings from '{sample_string}':")
-    print("-" * 40)
-    
-    for substring in substring_generator(sample_string):
-        print(substring)
+    for key in SAMPLE_DATA:
+        data = SAMPLE_DATA[key]
+        area = data["base_area"]
+        h = data["height"]
+        result = calculate_prism_volume(area, h)
+        print(result)

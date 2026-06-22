@@ -1,22 +1,12 @@
-def capitalize_first_letter(text: str) -> str:
-    """Capitalizes only the first letter of each word in a string."""
-    return text.lower().title()
+import math
+
+def calculate_cylinder_surface_area(radius, height):
+    lateral_area = 2 * math.pi * radius * height
+    base_area = 2 * math.pi * radius**2
+    return lateral_area + base_area
 
 if __name__ == '__main__':
-    sample_strings = [
-        "hello world",
-        "PYTHON IS FUN",
-        "multi-word sentence here!",
-        "single"
-    ]
-
-    results = []
-    for s in sample_strings:
-        capitalized = capitalize_first_letter(s)
-        results.append((s, capitalized))
-
-    # Output the results without using input() or external files
-    print("Input -> Output")
-    print("-" * 40)
-    for original, transformed in results:
-        print(f"{original!r} => {transformed!r}")
+    RADIUS = 5
+    HEIGHT = 10
+    surface_area = calculate_cylinder_surface_area(RADIUS, HEIGHT)
+    print(surface_area)

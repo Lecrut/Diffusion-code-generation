@@ -1,15 +1,7 @@
-import sys
-
-def extract_substrings(phrase: str, indices: list[int]) -> None:
-    """
-    Extracts substrings from a phrase based on provided character indices.
-    
-    Args:
-        phrase (str): The input string to process.
-        indices (list[int]): A list of integer indices corresponding to characters in the phrase.
-
-    Prints each extracted substring separated by newlines, or an error message if indices are invalid.
-    """
+def compute_prism_volume(base_area, height):
+    return base_area * height
 
 if __name__ == '__main__':
-    pass
+    base_area = 15.0
+    height = 10.0
+    print(compute_prism_volume(base_area, height))

@@ -1,77 +1,27 @@
-class StringAssembler:
-    def join_parts(self, parts: list[str], separator: str = ' ', fill_value: str = '') -> str:
-        """
-        Efficiently builds a string from a list of parts using the built-in str.join().
-        
-        Args:
-            parts (list[str]): List of strings to be joined.
-            separator (str): String used as delimiter between elements in 'parts'. Defaults to space.
-            fill_value (str): Value used if an element in 'parts' is empty or None, 
-                              though str.join() handles non-empty strings directly; this parameter
-                              can be utilized for post-processing or validation logic if needed,
-                              but the core joining relies on separator and parts content.
+import math
+import typing
 
-        Returns:
-            str: The joined string with elements separated by 'separator'.
-        
-        Note:
-            This implementation leverages Python's highly optimized C-level 
-            implementation of list.join() which is significantly faster than manual loops.
-        """
-        # Filter out None values if necessary, or handle empty strings based on fill_value logic here if required.
-        # However, the prompt specifically asks to utilize str.join(). The most direct and efficient way
-        # is to pass parts directly. If 'fill_value' implies replacing specific elements (like empty ones),
-        # we can preprocess, but standard join handles non-empty strings best. 
-        # Assuming fill_value might be intended for handling None or empty string replacement before joining:
-        
-        processed_parts = []
-        for part in parts:
-            if isinstance(part, str) and len(part.strip()) == 0:
-                # Replace stripped empty strings with fill_value if provided, otherwise keep as is (empty string joins to nothing)
-                if fill_value != '' or not fill_value: 
-                    processed_parts.append(fill_value)
-                else:
-                    processed_parts.append('')
-            elif part is None and fill_value != '':
-                 # If a specific element was intended to be replaced by fill_value when it's None/empty logic applies differently, handle here.
-                 # For simplicity in this optimized join context without complex filtering rules defined beyond the prompt:
-                 processed_parts.append(fill_value) if part is not None else '' 
-            elif isinstance(part, str):
-                processed_parts.append(part)
-        
-        return separator.join(processed_parts)
-
+def compute_ellipse_areas(axes_pairs: typing.List[typing.Tuple[float, float]]) -> typing.List[float]:
+    if not isinstance(axes_pairs, list):
+        raise TypeError('Input must be a list of tuples.')
+    results = []
+    for pair in axes_pairs:
+        if not isinstance(pair, (tuple, list)) or len(pair) != 2:
+            raise TypeError('Each element must be a tuple or list with two values.')
+        major_axis, minor_axis = pair
+        if not isinstance(major_axis, (int, float)):
+            raise TypeError(f'Major axis must be a number, got {type(major_axis)}')
+        if not isinstance(minor_axis, (int, float)):
+            raise TypeError(f'Minor axis must be a number, got {type(minor_axis)}')
+        if isinstance(major_axis, bool) or isinstance(minor_axis, bool):
+            raise TypeError('Axis values must not be booleans.')
+        if major_axis <= 0 or minor_axis <= 0:
+            raise ValueError('Axis lengths must be positive.')
+        area = math.pi * (major_axis / 2.0) * (minor_axis / 2.0)
+        results.append(area)
+    return results
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input or external dependencies.
-    assembler = StringAssembler()
-
-    test_cases = [
-        {
-            "parts": ["Hello", "", "World"],
-            "separator": "-",
-            "fill_value": ""
-        },
-        {
-            "parts": ["Python", "is", "fast"],
-            "separator": ", ",
-            "fill_value": "[MISSING]"
-        },
-        {
-            "parts": [],
-            "separator": "|",
-            "fill_value": "-"
-        }
-    ]
-
-    for i, case in enumerate(test_cases):
-        result = assembler.join_parts(
-            parts=case["parts"], 
-            separator=case["separator"], 
-            fill_value=case["fill_value"]
-        )
-        print(f"Test Case {i + 1}:")
-        print(f"Input Parts: {case['parts']}")
-        print(f"Separator: '{case['separator']}'")
-        print(f"Fill Value: '{case['fill_value']}'")
-        print(f"Result: \"{result}\"")
-        print("-" * 30)
+    sample_axes_pairs = [(10.0, 5.0), (20.0, 15.0), (7.5, 3.2), (100.0, 100.0), (1.0, 1.0)]
+    areas = compute_ellipse_areas(sample_axes_pairs)
+    for i, area in enumerate(areas):
+        print(areas[i])

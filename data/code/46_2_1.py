@@ -1,11 +1,17 @@
-def calculate_perimeter(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Side lengths must be positive.")
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("The side lengths do not form a valid triangle.")
-    return a + b + c
+class SalaryAnalyzer:
+    def __init__(self, salaries):
+        self.salaries = salaries
+
+    def get_max_salary(self):
+        if not self.salaries:
+            return None
+        max_salary = 0
+        for employee_id, salary in self.salaries:
+            if salary > max_salary:
+                max_salary = salary
+        return max_salary
 
 if __name__ == '__main__':
-    sides = [3.0, 4.0, 5.0]
-    result = calculate_perimeter(sides[0], sides[1], sides[2])
-    print(result)
+    sample_data = [(101, 50000), (102, 75000), (103, 62000), (104, 95000)]
+    analyzer = SalaryAnalyzer(sample_data)
+    print(analyzer.get_max_salary())

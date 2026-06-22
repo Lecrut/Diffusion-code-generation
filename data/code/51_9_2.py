@@ -1,25 +1,11 @@
-import unittest
-def calculate_perimeter(length, width):
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative")
-    return 2 * (length + width)
-class TestPerimeterCalculation(unittest.TestCase):
-    def test_positive_integers(self):
-        self.assertEqual(calculate_perimeter(5, 10), 30)
-        self.assertEqual(calculate_perimeter(3, 3), 12)
-        self.assertEqual(calculate_perimeter(1, 1), 4)
-    def test_zero_input(self):
-        self.assertEqual(calculate_perimeter(0, 5), 10)
-        self.assertEqual(calculate_perimeter(0, 0), 0)
-    def test_mixed_positive_and_zero(self):
-        self.assertEqual(calculate_perimeter(0, 10), 20)
-        self.assertEqual(calculate_perimeter(5, 0), 10)
-    def test_negative_input_raises_error(self):
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, 10)
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(5, -10)
-        with self.assertRaisesRegex(ValueError, "Length and width must be non-negative"):
-            calculate_perimeter(-5, -10)
+def build_pyramid(rows=6):
+    result = []
+    for i in range(1, rows + 1):
+        numbers = list(range(1, i)) + [i] + list(range(i - 1, 0, -1))
+        line_str = ' '.join(map(str, numbers))
+        padding = (rows - i) * 2
+        result.append(' ' * padding + line_str)
+    return '\n'.join(result)
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print(build_pyramid(6))

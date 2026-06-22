@@ -1,11 +1,11 @@
-import math
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def area(self):
-        return math.pi * self.radius**2
+def hollow_square(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return ['*']
+    return ['*' * n if i == 0 or i == n - 1 else '*' + ' ' * (n - 2) + '*' for i in range(n)]
+
 if __name__ == '__main__':
-    r = 5.0
-    c = Circle(r)
-    area_result = c.area()
-    print(area_result)
+    print(hollow_square(5))
+    print(hollow_square(1))
+    print(hollow_square(3))

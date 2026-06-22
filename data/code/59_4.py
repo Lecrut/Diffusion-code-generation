@@ -1,4 +1,12 @@
+def sum_digits(n):
+    num = abs(n)
+    total = 0
+    while num > 0:
+        total += num % 10
+        num //= 10
+    return total
+
 if __name__ == '__main__':
-    data = [1, 2, 3, 4, 5]
-    middle = data[len(data) // 2]
-    print(middle)
+    print(sum_digits(12345))
+    print(sum_digits(-9876))
+    print(sum_digits(0))

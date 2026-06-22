@@ -1,45 +1,15 @@
-class StringCleaner:
-    """A class to clean strings by removing spaces efficiently."""
+class Triangle:
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
 
-    def clean(self, text):
-        """
-        Removes all spaces from the input string using a list comprehension 
-        which is generally faster than repeated str.replace() calls in Python.
-        
-        Args:
-            text (str): The input string potentially containing spaces.
-            
-        Returns:
-            str: A new string with all whitespace characters removed.
-        """
-        if not isinstance(text, str):
-            raise TypeError("Input must be a string.")
+    def get_area(self):
+        return 0.5 * self.base * self.height
 
-        # Using join on list comprehension is highly optimized for Python CPython implementation
-        return ''.join(char for char in text if char != ' ')
+    def get_perimeter_approx(self):
+        return self.base + self.height * 2
 
 if __name__ == '__main__':
-    test_cases = [
-        "Hello World!",
-        "",
-        "   Multiple   Spaces   Here   ",
-        "NoSpacesAtAll",
-        "TrailingSpace ",
-        " Leading Space",
-        "\t\tTabsAndNewlines\n"  # While task asks for spaces, good practice to handle common whitespace
-    ]
-
-    cleaner = StringCleaner()
-
-    print("Testing StringCleaner.clean():")
-    results = []
-    for i, text in enumerate(test_cases):
-        result_text = cleaner.clean(text)
-        status = "PASSED" if ' ' not in result_text else "FAILED (spaces found)"
-        results.append(result_text)
-        print(f"Test {i+1}: Input='{text}' -> Output='{result_text}' [{status}]")
-
-    # Verification that no side effects or errors occurred on edge cases like empty string
-    assert cleaner.clean("") == "", f"Empty string test failed: expected '' but got '{cleaner.clean('') }'"
-    
-    print("\nAll basic functionality checks completed.")
+    tri = Triangle(8, 6)
+    print(tri.get_area())
+    print(tri.get_perimeter_approx())

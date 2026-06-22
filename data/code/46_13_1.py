@@ -1,23 +1,16 @@
-def calculate_perimeter(sides):
-    if any(side <= 0 for side in sides):
-        raise ValueError("All sides of the triangle must be positive.")
-    return sum(sides)
+class SalaryManager:
+    def __init__(self):
+        self.salaries = [50000, 62000, 75000, 58000, 91000]
+
+    def get_highest_salary(self):
+        if not self.salaries:
+            return None
+        highest = self.salaries[0]
+        for salary in self.salaries[1:]:
+            if salary > highest:
+                highest = salary
+        return highest
+
 if __name__ == '__main__':
-    valid_sides = [3, 4, 5]
-    try:
-        perimeter = calculate_perimeter(valid_sides)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
-    invalid_sides_zero = [3, 4, 0]
-    try:
-        perimeter = calculate_perimeter(invalid_sides_zero)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
-    invalid_sides_negative = [3, -4, 5]
-    try:
-        perimeter = calculate_perimeter(invalid_sides_negative)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
+    manager = SalaryManager()
+    print(manager.get_highest_salary())

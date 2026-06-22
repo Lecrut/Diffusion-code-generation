@@ -1,29 +1,13 @@
-def build_string_from_list(elements):
-    """
-    Iteratively builds a string by appending each element from an input list,
-    managing necessary spacing between elements correctly (space if not at start).
+import math
 
-    Args:
-        elements (list): A list of strings to be joined.
-
-    Returns:
-        str: The resulting concatenated string with appropriate spacing.
-    """
-    result = ""
-    
-    for element in elements:
-        # If the result is empty, just append the current element without a leading space.
-        if len(result) == 0:
-            result += element
-        else:
-            # Append a single space before adding the next element to ensure separation.
-            result += " " + element
-            
-    return result
-
+def ellipse_area(major_axis: float, minor_axis: float) -> float:
+    if major_axis < 0 or minor_axis < 0:
+        raise ValueError('Axis lengths must be non-negative.')
+    semi_major = major_axis / 2.0
+    semi_minor = minor_axis / 2.0
+    return math.pi * semi_major * semi_minor
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no user input, no files).
-    sample_data = ["Hello", "World", "from", "Python"]
-    
-    final_output = build_string_from_list(sample_data)
-    print(final_output)
+    major = 10.0
+    minor = 6.0
+    area = ellipse_area(major, minor)
+    print(area)

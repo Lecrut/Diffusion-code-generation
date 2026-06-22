@@ -1,22 +1,4 @@
-import sys
-def apply_case_manipulation(text, rule):
-    if rule == 'swap':
-        return text[::-1]
-    elif rule == 'reverse':
-        return text[::-1]
-    elif rule == 'uppercase':
-        return text.upper()
-    elif rule == 'lowercase':
-        return text.lower()
-    else:
-        raise ValueError(f"Unknown case manipulation rule: {rule}")
+rhombus_area = lambda d1, d2: 0.5 * d1 * d2
 if __name__ == '__main__':
-    input_string = "Hello World"
-    manipulation_rule = "swap"
-    try:
-        result = apply_case_manipulation(input_string, manipulation_rule)
-        print(result)
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+    d1, d2 = 6.0, 8.0
+    print(rhombus_area(d1, d2))

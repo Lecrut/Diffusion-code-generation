@@ -1,6 +1,10 @@
-def get_string_length(s: str) -> int:
-    return len(s)
+def calculate_area(width, height):
+    if width <= 0 or height <= 0:
+        return 0
+    return width * height
 
 if __name__ == '__main__':
-    test_strings = ["", "hello", "!@#"]
-    print([get_string_length(s) for s in test_strings])
+    w = 7
+    h = 3
+    area = calculate_area(w, h)
+    print(area)

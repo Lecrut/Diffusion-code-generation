@@ -1,33 +1,9 @@
-import timeit
-
-def reverse_iterative(s: str) -> str:
-    """Reverse a string using an iterative loop."""
-    result = []
-    for char in reversed(s):
-        result.append(char)
-    return ''.join(result)
-
-def benchmark_and_return():
-    # Hard-coded sample values to avoid any input requirements or file access.
-    long_string = "x" * 10_000_000
-
-    times_iterative = timeit.timeit(
-        stmt=f'reverse_iterative("{long_string}")',
-        setup='',
-        number=5,
-    ) / 5
-
-    times_slicing = timeit.timeit(
-        stmt='f"{long_string[::-1]}"',
-        setup='',
-        number=5,
-    ) / 5
-
-    if times_iterative < times_slicing:
-        return "Iterative method is faster."
-    else:
-        return "Slicing method is faster or equal."
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    result = benchmark_and_return()
-    print(result)
+    base_a = 5
+    base_b = 7
+    height_val = 4
+    area_result = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(area_result)

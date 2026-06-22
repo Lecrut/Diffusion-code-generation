@@ -1,15 +1,8 @@
-def remove_all_spaces(s: str) -> str:
-    return s.replace(" ", "")
+def calculate_triangle_area(base: float, height: float) -> float:
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    sample_strings = [
-        "Hello World",
-        "  Leading and Trailing spaces  ",
-        "NoSpacesHereAtAll",
-        "\t\tTabsAreNotSpaces\t\t" if False else None, # Disabled tab test to keep it simple and safe per task constraints on non-spaces
-    ]
-    
-    for text in sample_strings:
-        print(f"Input: {repr(text)}")
-        result = remove_all_spaces(text)
-        print(f"Output without spaces: {result}")
+    sample_base = 10.0
+    sample_height = 5.5
+    result = calculate_triangle_area(sample_base, sample_height)
+    print(result)

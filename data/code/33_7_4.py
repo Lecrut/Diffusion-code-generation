@@ -1,22 +1,20 @@
-def skip_whitespace(s):
-    """
-    Generator function that yields characters from input string 
-    while skipping whitespace characters (spaces, tabs, newlines).
-    
-    Args:
-        s (str): Input string containing potentially multiple whitespaces
-        
-    Yields:
-        str: Single character if not whitespace
-    """
-    for char in s:
-        if not char.isspace():
-            yield char
+import math
+
+class TriangleGeometry:
+    def __init__(self, base, height):
+        self.base = float(base)
+        self.height = float(height)
+
+    def get_area(self):
+        return 0.5 * self.base * self.height
+
+    def get_perimeter_equilateral_approx(self):
+        if self.base <= 0 or self.height <= 0:
+            return 0
+        side = math.sqrt((self.base / 2) ** 2 + self.height ** 2)
+        return 3 * side
 
 if __name__ == '__main__':
-    sample_text = "Hello  World! This is a test...      "
-    
-    result_list = list(skip_whitespace(sample_text))
-    
-    output_string = "".join(result_list)
-    print(output_string)
+    my_triangle = TriangleGeometry(base=12.5, height=8.0)
+    print(my_triangle.get_area())
+    print(my_triangle.get_perimeter_equilateral_approx())

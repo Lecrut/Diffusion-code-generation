@@ -1,22 +1,35 @@
-import re
+class TriangleAreaCalculator:
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
 
-def process_string(text: str) -> str:
-    """
-    Removes all internal and external spaces from a given string using regex.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with no whitespace characters remaining.
-    """
-    # Replace all types of whitespace with an empty string
-    return re.sub(r'\s+', '', text)
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
+
+    @property
+    def base(self):
+        return self._base
+
+    @base.setter
+    def base(self, value):
+        if value < 0:
+            raise ValueError("Base must be non-negative")
+        self._base = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        if value < 0:
+            raise ValueError("Height must be non-negative")
+        self._height = value
 
 if __name__ == '__main__':
-    sample_input = "This is   a multi\nline  string.\nHere we go!"
+    calculator = TriangleAreaCalculator(10, 5)
+    print(calculator.calculate_area())
 
-    result = process_string(sample_input)
-    
-    # Write the cleaned output to standard output as if via file I/O best practices
-    print(result, end='')
+    calculator.base = 8
+    calculator.height = 3
+    print(calculator.calculate_area())

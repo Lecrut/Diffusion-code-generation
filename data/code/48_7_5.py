@@ -1,17 +1,21 @@
-import math
-def calculate_triangle_sides(a, b, c):
-    hypotenuse = max(a, b, c)
-    legs = [x for x in [a, b, c] if x != hypotenuse]
-    if hypotenuse * hypotenuse == a * a + b * b:
-        return a, b, c
-    else:
-        calculated_hypotenuse = math.sqrt(a**2 + b**2)
-        return a, b, calculated_hypotenuse
+def get_max_nested(nested_list):
+    flattened = []
+    stack = [iter(nested_list)]
+    while stack:
+        parent = stack[-1]
+        try:
+            item = next(parent)
+            if isinstance(item, list):
+                stack.append(iter(item))
+            else:
+                flattened.append(item)
+        except StopIteration:
+            stack.pop()
+    if not flattened:
+        raise ValueError("The nested list contains no numbers")
+    return max(flattened)
+
 if __name__ == '__main__':
-    leg1 = 3
-    leg2 = 4
-    hypotenuse_input = 5.0
-    result = calculate_triangle_sides(leg1, leg2, hypotenuse_input)
-    print(f"Leg 1: {result[0]}")
-    print(f"Leg 2: {result[1]}")
-    print(f"Hypotenuse: {result[2]}")
+    sample_data = [1, [2, 3, [4, 5]], 6, [[7], 8], 9]
+    result = get_max_nested(sample_data)
+    print(result)

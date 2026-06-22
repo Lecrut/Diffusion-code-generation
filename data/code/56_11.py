@@ -1,25 +1,5 @@
-import math
-class Shapes:
-    def calculate_circle_area(self, radius):
-        return math.pi * (radius ** 2)
-    def calculate_circle_perimeter(self, radius):
-        return 2 * math.pi * radius
-    def calculate_square_area(self, side):
-        return side ** 2
-    def calculate_square_perimeter(self, side):
-        return 4 * side
+def generate_multiplication_table():
+    return '\n'.join(f'7 x {i} = {7 * i}' for i in range(1, 11))
+
 if __name__ == '__main__':
-    shape_calculator = Shapes()
-    circle_radius = 5.0
-    circle_area = shape_calculator.calculate_circle_area(circle_radius)
-    circle_perimeter = shape_calculator.calculate_circle_perimeter(circle_radius)
-    print(f"Circle Radius: {circle_radius}")
-    print(f"Circle Area: {circle_area}")
-    print(f"Circle Perimeter: {circle_perimeter}")
-    print("-" * 20)
-    square_side = 4.0
-    square_area = shape_calculator.calculate_square_area(square_side)
-    square_perimeter = shape_calculator.calculate_square_perimeter(square_side)
-    print(f"Square Side: {square_side}")
-    print(f"Square Area: {square_area}")
-    print(f"Square Perimeter: {square_perimeter}")
+    print(generate_multiplication_table())

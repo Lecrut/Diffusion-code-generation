@@ -1,4 +1,8 @@
+def calculate_area(width, height):
+    return width * height
+
 if __name__ == '__main__':
-    my_string = "hello"
-    length = len(my_string)
-    print(length)
+    sample_width = 10
+    sample_height = 5
+    result = calculate_area(sample_width, sample_height)
+    print(result)

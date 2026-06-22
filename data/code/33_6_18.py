@@ -1,33 +1,12 @@
-"""
-Script to concatenate words from a list with no spaces between them.
-This module demonstrates reading input line by line (simulated via hard-coded values)
-and outputting the result without separators.
-"""
+from typing import Union
 
-def main():
-    # Hard-coded sample data simulating user input lines
-    # This block runs without any external inputs, network access, or files.
-    sample_input_lines = [
-        "Hello",
-        "World",
-        "Python"
-    ]
+Number = Union[int, float]
 
-    concatenated_result = ""
-
-    # Process each line to build the final string with no spaces
-    for line in sample_input_lines:
-        if not isinstance(line, str):
-            continue  # Skip non-string entries safely
-        
-        stripped_line = line.strip()
-        
-        # Only add to result if the line is not empty after stripping
-        if stripped_line:
-            concatenated_result += stripped_line
-
-    # Output the final concatenated string with no spaces between words
-    print(concatenated_result)
+def calculate_triangle_area(base: Number, height: Number) -> Number:
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    main()
+    sample_base: Number = 10
+    sample_height: Number = 5
+    area_result = calculate_triangle_area(sample_base, sample_height)
+    print(area_result)

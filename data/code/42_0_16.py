@@ -1,33 +1,18 @@
-def concatenate_strings(string_list: list[str], delimiter: str = ", ") -> str:
-    """
-    Concatenates a list of strings into a single string separated by a specified delimiter.
+import math
 
-    Args:
-        string_list (list): A list containing the strings to be concatenated.
-        delimiter (str): The separator string used between each element in the list. Defaults to ", ".
+def get_semi_axis(full_axis):
+    return full_axis / 2.0
 
-    Returns:
-        str: A new string with all elements from the input list joined by the delimiter.
-    
-    Raises:
-        TypeError: If string_list is not a list or contains non-string elements.
-    """
-    if not isinstance(string_list, list):
-        raise TypeError("Input must be a list.")
-
-    for item in string_list:
-        if not isinstance(item, str):
-            raise TypeError(f"All elements in the list must be strings, got {type(item).__name__}.")
-
-    return delimiter.join(string_list)
+def calculate_ellipse_area(major_axis, minor_axis):
+    if major_axis < 0 or minor_axis < 0:
+        raise ValueError("Axis lengths cannot be negative")
+    semi_major = get_semi_axis(major_axis)
+    semi_minor = get_semi_axis(minor_axis)
+    area_value = math.pi * semi_major * semi_minor
+    return area_value
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per task requirements.
-    # No user input, command-line arguments, or network access is used here.
-    
-    sample_strings = ["Hello", "World", "This", "Is", "Python"]
-    custom_delimiter = "-"
-
-    result_string = concatenate_strings(sample_strings, custom_delimiter)
-
-    print(f"Concatenated Result: '{result_string}'")
+    input_major = 20.0
+    input_minor = 8.0
+    final_area = calculate_ellipse_area(input_major, input_minor)
+    print(final_area)

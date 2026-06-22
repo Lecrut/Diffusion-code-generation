@@ -1,25 +1,17 @@
-import sys
-def calculate_area(shape, length, width, radius, base, height):
-    if shape == "rectangle":
-        return length * width
-    elif shape == "circle":
-        return 3.14159 * radius * radius
-    elif shape == "triangle":
-        return 0.5 * base * height
-    else:
-        return "Invalid shape selected"
+def generate_diamond_pattern(center_width=9):
+    if center_width % 2 == 0:
+        raise ValueError("Center width must be odd for a symmetric diamond")
+    half = (center_width - 1) // 2
+    lines = []
+    for i in range(half + 1):
+        stars = 2 * i + 1
+        spaces = half - i
+        lines.append(' ' * spaces + '*' * stars)
+    for i in range(half - 1, -1, -1):
+        stars = 2 * i + 1
+        spaces = half - i
+        lines.append(' ' * spaces + '*' * stars)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    shape = "rectangle"
-    length = 10
-    width = 5
-    radius = 7
-    base = 4
-    height = 6
-    area = calculate_area(shape, length, width, radius, base, height)
-    print(f"Shape: {shape}")
-    print(f"Length: {length}")
-    print(f"Width: {width}")
-    print(f"Radius: {radius}")
-    print(f"Base: {base}")
-    print(f"Height: {height}")
-    print(f"Area: {area}")
+    print(generate_diamond_pattern(9))

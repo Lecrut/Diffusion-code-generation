@@ -1,22 +1,11 @@
-"""Module to calculate the area of a square."""
-
-def get_square_area(side: float) -> float:
-    """Calculate the area of a square given its side length.
-
-    Args:
-        side (float): The length of one side of the square, must be non-negative.
-
-    Returns:
-        float: The calculated area of the square.
-
-    Raises:
-        ValueError: If the side length is negative.
-    """
-    if side < 0:
-        raise ValueError("Side length cannot be negative.")
-    return side * side
+def calculate_square_pyramid_surface_area(base_side, slant_height):
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    total_surface_area = base_area + lateral_area
+    return round(total_surface_area, 2)
 
 if __name__ == '__main__':
-    sample_side = 5.0
-    calculated_area = get_square_area(sample_side)
-    print(f"The area of a square with side {sample_side} is {calculated_area}.")
+    base_side_length = 10
+    slant_height_length = 15
+    result = calculate_square_pyramid_surface_area(base_side_length, slant_height_length)
+    print(result)

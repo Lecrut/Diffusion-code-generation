@@ -1,16 +1,8 @@
-class StringCaseManipulator:
-    def transform(self, text):
-        return text
-    def to_lower(self, text):
-        return text.lower()
-    def to_upper(self, text):
-        return text.upper()
-    def to_title(self, text):
-        return text.title()
+def calculate_rhombus_area(diagonal_a, diagonal_b):
+    return (diagonal_a * diagonal_b) / 2
+
 if __name__ == '__main__':
-    manipulator = StringCaseManipulator()
-    sample_string = "Hello World This Is A Test"
-    print("Original:", sample_string)
-    print("Lowercase:", manipulator.to_lower(sample_string))
-    print("Uppercase:", manipulator.to_upper(sample_string))
-    print("Title Case:", manipulator.to_title(sample_string))
+    d1 = 10
+    d2 = 15
+    result = calculate_rhombus_area(d1, d2)
+    print(result)

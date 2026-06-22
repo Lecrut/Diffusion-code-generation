@@ -1,19 +1,15 @@
-def process_string(s: str) -> tuple[str, str, str]:
-    """
-    Returns a tuple with (original string, lowercase version, reversed case version).
-    
-    Args:
-        s (str): The input string to process.
-        
-    Returns:
-        tuple[str, str, str]: A tuple containing the original string, 
-                              its lowercased form, and its characters in reverse order.
-    """
-    return s, s.lower(), ''.join(reversed(s))
+RhombusAreaCalculator = 0.5
+
+class Rhombus:
+    def __init__(self, diagonal_a, diagonal_b):
+        self.diagonal_a = diagonal_a
+        self.diagonal_b = diagonal_b
+
+    def get_area(self):
+        return self.diagonal_a * self.diagonal_b * RhombusAreaCalculator
 
 if __name__ == '__main__':
-    sample_input = "Hello World!"
-    result = process_string(sample_input)
-    print(f"Original: {result[0]}")
-    print(f"Lowercase: {result[1]}")
-    print(f"Reversed Case: {result[2]}")
+    sample_d1 = 12.5
+    sample_d2 = 7.0
+    instance = Rhombus(sample_d1, sample_d2)
+    print(instance.get_area())

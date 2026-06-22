@@ -1,39 +1,14 @@
-class StringCleaner:
-    """A class to clean strings by removing all spaces."""
+def validate_dimensions(base, height):
+    if base < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return base, height
 
-    def clean(self, text: str) -> str:
-        """
-        Removes all space characters from the input string efficiently.
-
-        Args:
-            text (str): The input string containing potential whitespace.
-
-        Returns:
-            str: A new string with all spaces removed.
-        
-        Raises:
-            TypeError: If the input is not a string.
-        """
-        if not isinstance(text, str):
-            raise TypeError("Input must be a string.")
-        
-        # Using replace() which is implemented in C and highly optimized for this operation
-        return text.replace(' ', '')
+def compute_triangle_area(base, height):
+    validated_base, validated_height = validate_dimensions(base, height)
+    return validated_base * validated_height / 2
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    
-    test_cases = [
-        "Hello World",
-        "",
-        "No spaces here!",
-        "Multiple   Spaces  And\tTabs",
-        "Special chars: a b c d e f g h i j k l m n o p q r s t u v w x y z"
-    ]
-
-    cleaner = StringCleaner()
-
-    for test_input in test_cases:
-        result = cleaner.clean(test_input)
-        print(f'Input:  "{test_input}"')
-        print(f'Output: "{result}"\n')
+    hardcoded_base = 12.0
+    hardcoded_height = 8.0
+    result = compute_triangle_area(hardcoded_base, hardcoded_height)
+    print(result)

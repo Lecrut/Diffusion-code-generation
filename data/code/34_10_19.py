@@ -1,30 +1,14 @@
-def capitalize_words(text: str) -> str:
-    """
-    Capitalizes the first letter of each word in the input string,
-    preserving the casing of all other letters.
+import math
 
-    Args:
-        text (str): The input string to process.
+def calculate_cylinder_surface_area(radius, height):
+    if radius <= 0 or height <= 0:
+        raise ValueError("Radius and height must be positive numbers")
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    return 2 * base_area + lateral_area
 
-    Returns:
-        str: A new string with only the first letter of each word capitalized.
-    """
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
-    
-    return " ".join(word.capitalize() for word in text.split())
-
-if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or external dependencies.
-    samples = [
-        "hello world",
-        "python is awesome!",
-        "this   has   multiple  spaces",
-        "no change here",
-        ""
-    ]
-
-    for test_input in samples:
-        result = capitalize_words(test_input)
-        print(f"Input: '{test_input}'")
-        print(f"Output: '{result}'\n")
+if __name__ == "__main__":
+    sample_radius = 5
+    sample_height = 10
+    result = calculate_cylinder_surface_area(sample_radius, sample_height)
+    print(result)

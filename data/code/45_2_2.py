@@ -1,17 +1,17 @@
-import math
-
-def calculate_circle_area(diameter):
-    if diameter <= 0:
-        raise ValueError("Diameter must be positive")
-    radius = diameter / 2
-    return math.pi * radius * radius
+def find_minimum(numbers):
+    if not numbers:
+        raise ValueError("The list cannot be empty.")
+    minimum = numbers[0]
+    for number in numbers[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
 
 if __name__ == '__main__':
-    sample_diameter = 10
-    area = calculate_circle_area(sample_diameter)
-    print(area)
-    sample_diameter_2 = -5
+    sample_list = [3.5, 1.2, 9.8, 0.5, 4.1]
+    print(find_minimum(sample_list))
+    empty_list = []
     try:
-        calculate_circle_area(sample_diameter_2)
+        find_minimum(empty_list)
     except ValueError as e:
         print(e)

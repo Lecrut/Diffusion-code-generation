@@ -1,7 +1,10 @@
-def join_strings_with_fstring(str1: str, str2: str) -> str:
-    """Joins two strings using an f-string."""
-    return f"{str1} {str2}"
+def parallelogram_area(base: float, height: float) -> float:
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive numbers.")
+    return base * height
 
 if __name__ == '__main__':
-    result = join_strings_with_fstring("Hello", "World")
-    print(result)
+    base_val = 10.0
+    height_val = 5.0
+    area = parallelogram_area(base_val, height_val)
+    print(area)

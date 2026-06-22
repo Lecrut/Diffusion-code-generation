@@ -1,10 +1,10 @@
-def apply_rule(text, rule_char):
-        if not isinstance(rule_char, str) or len(rule_char) != 1:
-            raise ValueError("Rule must be a single character string.")
-        
-        r = rule_char.lower()
-        if r == 't': # Title case first letter only as per example logic
-            return text[0].upper() + text[1:] if text and len(text) > 1 else text.upper()
+def calculate_rhombus_area(d1: float, d2: float) -> float:
+    if d1 <= 0:
+        raise ValueError("First diagonal length must be positive")
+    if d2 <= 0:
+        raise ValueError("Second diagonal length must be positive")
+    return (d1 * d2) / 2
 
 if __name__ == '__main__':
-    pass
+    result = calculate_rhombus_area(10, 6)
+    print(result)

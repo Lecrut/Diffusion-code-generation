@@ -1,12 +1,11 @@
-import sys
-def calculate_perimeter(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0:
-        return None
-    return a + b + c
+def get_max_salary(employees):
+    return max((emp['salary'] for emp in employees), default=0)
+
 if __name__ == '__main__':
-    a = 5
-    b = 12
-    c = 13
-    perimeter = calculate_perimeter(a, b, c)
-    if perimeter is not None:
-        print(perimeter)
+    employees = [
+        {'name': 'Alice', 'salary': 95000},
+        {'name': 'Bob', 'salary': 120000},
+        {'name': 'Charlie', 'salary': 85000},
+        {'name': 'Diana', 'salary': 110000}
+    ]
+    print(get_max_salary(employees))

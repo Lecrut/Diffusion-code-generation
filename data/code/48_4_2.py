@@ -1,25 +1,13 @@
-import math
-
-def calculate_area(sides):
-    if not isinstance(sides, list):
-        raise TypeError("Input must be a list of side lengths.")
-    if len(sides) != 3:
-        raise ValueError("Exactly three side lengths are required to form a triangle.")
-    for side in sides:
-        if not isinstance(side, (int, float)):
-            raise TypeError("All side lengths must be numeric.")
-        if side <= 0:
-            raise ValueError("Side lengths must be positive.")
-    a, b, c = sides
-    if (a + b <= c) or (a + c <= b) or (b + c <= a):
-        raise ValueError("The given side lengths do not form a valid triangle.")
-    s = (a + b + c) / 2
-    area_squared = s * (s - a) * (s - b) * (s - c)
-    if area_squared < 0:
-        raise ValueError("The given side lengths do not form a valid triangle.")
-    return math.sqrt(area_squared)
+def yield_largest_from_sequence(data):
+    if not data:
+        return
+    current_max = data[0]
+    for item in data:
+        if item > current_max:
+            current_max = item
+    yield current_max
 
 if __name__ == '__main__':
-    sides = [3, 4, 5]
-    area = calculate_area(sides)
-    print(area)
+    sample_data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    largest = list(yield_largest_from_sequence(sample_data))[0]
+    print(largest)

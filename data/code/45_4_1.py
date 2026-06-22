@@ -1,20 +1,13 @@
-def calculate_circle_area(diameter):
-    if diameter <= 0:
-        raise ValueError("Diameter must be a positive number")
-    radius = diameter / 2
-    area = 3.141592653589793 * (radius ** 2)
-    return area
+def find_minimum(values):
+    if not values:
+        return None
+    min_val = values[0]
+    for x in values:
+        if x < min_val:
+            min_val = x
+    return min_val
+
 if __name__ == '__main__':
-    try:
-        diameter1 = 10
-        area1 = calculate_circle_area(diameter1)
-        print(f"The area of a circle with diameter {diameter1} is: {area1}")
-        diameter2 = 0
-        area2 = calculate_circle_area(diameter2)
-    except ValueError as e:
-        print(f"Error: {e}")
-    try:
-        diameter3 = -5
-        area3 = calculate_circle_area(diameter3)
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_data = [34, -12, 56, 0, 99, -5, 1024, 42, 88, -100]
+    result = find_minimum(sample_data)
+    print(result)

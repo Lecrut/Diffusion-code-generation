@@ -1,13 +1,19 @@
-def triangle_area(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Side lengths must be positive")
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("The side lengths do not form a valid triangle")
-    s = (a + b + c) / 2
-    area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
-    return area
+import numpy as np
+
+def compute_mean(dataset):
+    if not isinstance(dataset, (list, tuple, np.ndarray)):
+        raise TypeError("Input must be a list, tuple, or numpy array")
+    if len(dataset) == 0:
+        raise ValueError("Input dataset cannot be empty")
+    try:
+        data_array = np.asarray(dataset, dtype=float)
+    except (ValueError, TypeError) as e:
+        raise ValueError("All elements in the dataset must be numeric") from e
+    if np.any(np.isnan(data_array)) or np.any(np.isinf(data_array)):
+        raise ValueError("Dataset contains invalid numeric values (NaN or Inf)")
+    return float(np.mean(data_array))
 
 if __name__ == '__main__':
-    print(triangle_area(3, 4, 5))
-    print(triangle_area(5, 12, 13))
-    print(triangle_area(7, 8, 9))
+    sample_data = [10.5, 20.3, 30.7, 40.1, 50.0]
+    result = compute_mean(sample_data)
+    print(result)

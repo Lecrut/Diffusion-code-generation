@@ -1,17 +1,19 @@
-def capitalize_first_letter(text: str) -> str:
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
-    if not text:
-        return ""
-    return text[0].upper() + text[1:]
+import math
+
+from decimal import Decimal, getcontext
+
+def calculate_cylinder_surface_area(radius, height):
+    getcontext().prec = 50
+    r = Decimal(str(radius))
+    h = Decimal(str(height))
+    pi = Decimal(str(math.pi))
+    lateral_area = 2 * pi * r * h
+    base_area = pi * r ** 2
+    total_surface_area = lateral_area + 2 * base_area
+    return float(total_surface_area)
+
 if __name__ == '__main__':
-    sample1 = "hello world"
-    sample2 = "python programming"
-    sample3 = "a"
-    sample4 = ""
-    sample5 = "already capitalized"
-    print(f"Original: '{sample1}' -> Capitalized: '{capitalize_first_letter(sample1)}'")
-    print(f"Original: '{sample2}' -> Capitalized: '{capitalize_first_letter(sample2)}'")
-    print(f"Original: '{sample3}' -> Capitalized: '{capitalize_first_letter(sample3)}'")
-    print(f"Original: '{sample4}' -> Capitalized: '{capitalize_first_letter(sample4)}'")
-    print(f"Original: '{sample5}' -> Capitalized: '{capitalize_first_letter(sample5)}'")
+    sample_radius = 5.0
+    sample_height = 10.0
+    result = calculate_cylinder_surface_area(sample_radius, sample_height)
+    print(result)

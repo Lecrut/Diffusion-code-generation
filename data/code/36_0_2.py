@@ -1,7 +1,9 @@
-import sys
-def reverse_string(input_string):
-    return input_string[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
+
 if __name__ == '__main__':
-    sample_string = "hello world"
-    reversed_result = reverse_string(sample_string)
-    print(reversed_result)
+    b1 = 10
+    b2 = 15
+    h = 7
+    area = calculate_trapezoid_area(b1, b2, h)
+    print(area)

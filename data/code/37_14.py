@@ -1,6 +1,8 @@
-import sys
+def compute_parallelogram_area(base: float, height: float) -> float:
+    return base * height
+
 if __name__ == '__main__':
-    string1 = "Hello"
-    string2 = "World"
-    result = string1 + string2
-    print(result)
+    base_value = 10
+    height_value = 5
+    area = compute_parallelogram_area(base_value, height_value)
+    print(area)

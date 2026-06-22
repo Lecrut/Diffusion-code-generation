@@ -1,20 +1,13 @@
-import sys
-def calculate_circle_area(radius_str):
-    try:
-        radius = float(radius_str)
-        if radius <= 0:
-            raise ValueError("Radius must be a positive number.")
-        area = 3.141592653589793 * (radius ** 2)
-        return area
-    except ValueError as e:
-        sys.stderr.write(f"Error: {e}\n")
-        sys.exit(1)
-    except Exception as e:
-        sys.stderr.write(f"An unexpected error occurred: {e}\n")
-        sys.exit(1)
+def create_hollow_square(size: int) -> list[str]:
+    if size <= 0:
+        return []
+    if size == 1:
+        return ["*"]
+    edge = "*" * size
+    middle = "*" + " " * (size - 2) + "*"
+    return [edge] + [middle] * (size - 2) + [edge]
+
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        input_radius = sys.argv[1]
-    else:
-        input_radius = "5.0"
-    calculate_circle_area(input_radius)
+    square = create_hollow_square(10)
+    for line in square:
+        print(line)

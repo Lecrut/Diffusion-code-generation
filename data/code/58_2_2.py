@@ -1,17 +1,18 @@
-def safe_get_first(data_list):
-    if not data_list:
-        raise IndexError("Cannot get the first item from an empty list")
-    return data_list[0]
+def count_even_numbers(start, end):
+    if start > end:
+        return 0
+    total_numbers = end - start + 1
+    if total_numbers == 0:
+        return 0
+    count = total_numbers // 2
+    if total_numbers % 2 == 1:
+        if start & 1 == 0:
+            count += 1
+        elif end & 1 == 0:
+            count += 1
+    return count
 if __name__ == '__main__':
-    list1 = [10, 20, 30]
-    list2 = []
-    try:
-        result1 = safe_get_first(list1)
-        print(f"Result from list1: {result1}")
-    except IndexError as e:
-        print(f"Error for list1: {e}")
-    try:
-        result2 = safe_get_first(list2)
-        print(f"Result from list2: {result2}")
-    except IndexError as e:
-        print(f"Error for list2: {e}")
+    sample_start = 1
+    sample_end = 10
+    result = count_even_numbers(sample_start, sample_end)
+    print(result)

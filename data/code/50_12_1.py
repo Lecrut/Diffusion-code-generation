@@ -1,8 +1,19 @@
-import sys
+def hollow_equilateral_triangle(n):
+    if n <= 0:
+        return ""
+    if n == 1:
+        return "*"
+    lines = []
+    for i in range(n):
+        spaces = " " * (n - 1 - i)
+        if i == 0:
+            stars = "*"
+        elif i == n - 1:
+            stars = "* " * (n - 1) + "*"
+        else:
+            stars = "*" + " " * (2 * i - 1) + "*"
+        lines.append(spaces + stars)
+    return "\n".join(lines)
+
 if __name__ == '__main__':
-    area1 = 150
-    area2 = 75
-    difference = area1 - area2
-    print(f"Area 1: {area1}")
-    print(f"Area 2: {area2}")
-    print(f"Difference: {difference}")
+    print(hollow_equilateral_triangle(5))

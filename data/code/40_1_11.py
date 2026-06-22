@@ -1,14 +1,15 @@
-def get_first_letters(text: str) -> list[str]:
-    """
-    Returns a list containing the first letter of every word in the input string.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        List[str]: A list where each element is the first character of a word found in the text.
-                   Words are defined as sequences of alphanumeric characters separated by non-alphanumeric boundaries.
-    """
+class RectangularPrism:
+    def __init__(self, length: float, width: float, height: float) -> None:
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.length = length
+        self.width = width
+        self.height = height
+
+    def calculate_surface_area(self) -> float:
+        return 2.0 * (self.length * self.width + self.width * self.height + self.height * self.length)
 
 if __name__ == '__main__':
-    pass
+    dimensions = (5.0, 3.0, 2.0)
+    prism = RectangularPrism(*dimensions)
+    print(prism.calculate_surface_area())

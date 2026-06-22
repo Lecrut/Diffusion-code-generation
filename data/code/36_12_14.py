@@ -1,30 +1,13 @@
-class StringReverser:
-    """A class that provides functionality to reverse strings."""
-
-    def reverse(self, text):
-        """
-        Reverses the input string.
-
-        Args:
-            text (str): The string to be reversed.
-
-        Returns:
-            str: A new string which is the reverse of the input.
-        """
-        return text[::-1]
+def trapezoid_area(base1, base2, height):
+    if height < 0:
+        raise ValueError("Height must be non-negative")
+    if base1 < 0 or base2 < 0:
+        raise ValueError("Bases must be non-negative")
+    if height == 0:
+        return 0.0
+    average_base = (base1 + base2) * 0.5
+    return average_base * height
 
 if __name__ == '__main__':
-    # Sample values - no user input or command-line arguments required
-    sample_strings = [
-        "Hello, World!",
-        "Python Programming",
-        "",
-        "A man a plan a canal Panama"
-    ]
-
-    reverser = StringReverser()
-
-    for original in sample_strings:
-        reversed_text = reverser.reverse(original)
-        print(f"Original:  '{original}'")
-        print("Reversed:  '" + reversed_text + "'\n")
+    result = trapezoid_area(5, 7, 4)
+    print(result)

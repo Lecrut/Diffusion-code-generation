@@ -1,34 +1,8 @@
-def segment_phrase(phrase, delimiters):
-    segments = []
-    current_segment = ""
-    for char in phrase:
-        if char in delimiters:
-            if current_segment:
-                segments.append(current_segment)
-            current_segment = ""
-        else:
-            current_segment += char
-    if current_segment:
-        segments.append(current_segment)
-    return segments
+def calculate_prism_volume(base_area, height):
+    return base_area * height
+
 if __name__ == '__main__':
-    phrase1 = "apple,banana,orange;grape"
-    delimiters1 = [',', ';']
-    result1 = segment_phrase(phrase1, delimiters1)
-    print(f"Phrase: {phrase1}, Delimiters: {delimiters1}")
-    print(f"Result: {result1}")
-    phrase2 = "one|two|three"
-    delimiters2 = ['|']
-    result2 = segment_phrase(phrase2, delimiters2)
-    print(f"Phrase: {phrase2}, Delimiters: {delimiters2}")
-    print(f"Result: {result2}")
-    phrase3 = "start-middle-end"
-    delimiters3 = ['-']
-    result3 = segment_phrase(phrase3, delimiters3)
-    print(f"Phrase: {phrase3}, Delimiters: {delimiters3}")
-    print(f"Result: {result3}")
-    phrase4 = "no_delimiters"
-    delimiters4 = ['|', '^']
-    result4 = segment_phrase(phrase4, delimiters4)
-    print(f"Phrase: {phrase4}, Delimiters: {delimiters4}")
-    print(f"Result: {result4}")
+    sample_base_area = 10.5
+    sample_height = 5.0
+    volume = calculate_prism_volume(sample_base_area, sample_height)
+    print(volume)

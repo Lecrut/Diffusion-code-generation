@@ -1,14 +1,11 @@
-import string
-
-def count_vowels(word: str) -> int:
-    """Count total vowels in a given word."""
-    if not isinstance(word, str):
-        raise TypeError("Input must be a string.")
-    
-    word = word.lower()
-    return sum(1 for char in word if char in "aeiou")
+def calculate_cube_volume(edge_length):
+    if not isinstance(edge_length, (int, float)):
+        raise TypeError("Edge length must be a number")
+    if edge_length < 0:
+        raise ValueError("Edge length must be non-negative")
+    return edge_length ** 3
 
 if __name__ == '__main__':
-    sample_word = "Hello World"
-    vowel_count = count_vowels(sample_word)
-    print(f"The total vowel count in '{sample_word}' is {vowel_count}.")
+    print(calculate_cube_volume(3.0))
+    print(calculate_cube_volume(5.5))
+    print(calculate_cube_volume(0.0))

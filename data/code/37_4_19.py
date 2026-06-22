@@ -1,10 +1,7 @@
-def main():
-    # Hard-coded sample values to run without user input
-    str1 = "Hello"
-    str2 = "World"
-    
-    # Output the combination of the two strings
-    print(str1 + str2)
+def get_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    main()
+    base_value = 10
+    height_value = 5
+    print(get_parallelogram_area(base_value, height_value))

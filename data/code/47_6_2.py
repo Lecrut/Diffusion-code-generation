@@ -1,9 +1,7 @@
-import math
-
-def triangle_area(x1, y1, x2, y2, x3, y3):
-    area = abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0
-    return area
+def compute_mean(values: list[float]) -> float:
+    return sum(values) / len(values)
 
 if __name__ == '__main__':
-    result = triangle_area(0, 0, 4, 0, 0, 3)
+    sample_values = [1.5, 2.7, 3.2, 4.8, 5.1]
+    result = compute_mean(sample_values)
     print(result)

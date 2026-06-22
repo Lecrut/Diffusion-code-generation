@@ -1,28 +1,13 @@
-import re
-
-def filter_alphanumeric(text: str) -> str:
-    """
-    Returns a new string containing only alphanumeric characters from the input.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A string with all non-alphanumeric and whitespace characters removed.
-    """
-    return re.sub(r'[^a-zA-Z0-9]', '', text)
+def calculate_triangle_area(base, height):
+    if base <= 0 or height <= 0:
+        raise ValueError("Base and height must be positive numbers.")
+    return 0.5 * base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to demonstrate functionality without user input
-    test_cases = [
-        "Hello, World! 123",
-        "Python@Code#2024 & More!!!",
-        "   Leading spaces and tabs\tto remove   ",
-        ""
-    ]
-
-    for test_input in test_cases:
-        result = filter_alphanumeric(test_input)
-        print(f"Input: {repr(test_input)}")
-        print(f"Output: {result}")
-        print("-" * 20)
+    try:
+        base_value = 10.0
+        height_value = 5.0
+        area = calculate_triangle_area(base_value, height_value)
+        print(area)
+    except ValueError as e:
+        print(f"Error: {e}")

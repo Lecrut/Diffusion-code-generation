@@ -1,3 +1,8 @@
-def first_letters(s: str) -> str: return ' '.join(word[0].upper() if word else '' for word in s.split())
-if __name__ == '__main__': print(first_letters("hello world python")) # Output: "H W P"
-print(first_letters("   ")) # Output: ""
+def surface_area(dimensions):
+    x, y, z = dimensions
+    return 2.0 * (x * y + x * z + y * z)
+
+if __name__ == '__main__':
+    dims = (3.0, 4.0, 5.0)
+    result = surface_area(dims)
+    print(result)

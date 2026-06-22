@@ -1,8 +1,12 @@
-def capitalize_words(sentence):
-    words = sentence.split()
-    capitalized_words = [word.capitalize() for word in words]
-    return " ".join(capitalized_words)
+import math
+
+def calculate_cylinder_surface_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError("Radius and height must be non-negative")
+    return 2 * math.pi * radius * (radius + height)
+
 if __name__ == '__main__':
-    sample_sentence = "this is a sample sentence for testing"
-    result = capitalize_words(sample_sentence)
+    r = 5
+    h = 10
+    result = calculate_cylinder_surface_area(r, h)
     print(result)

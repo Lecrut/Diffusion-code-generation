@@ -1,14 +1,12 @@
-def get_first_element(data):
-    if not data:
-        raise IndexError("list is empty")
-    return data[0]
+def count_even_inclusive(low: int, high: int) -> int:
+    if low > high:
+        return 0
+    start = low if low % 2 == 0 else low + 1
+    end = high if high % 2 == 0 else high - 1
+    if start > end:
+        return 0
+    return (end - start) // 2 + 1
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4]
-    list2 = ['a', 'b', 'c']
-    empty_list = []
-    print(f"First element of {list1}: {get_first_element(list1)}")
-    print(f"First element of {list2}: {get_first_element(list2)}")
-    try:
-        get_first_element(empty_list)
-    except IndexError as e:
-        print(f"Error for empty list: {e}")
+    result = count_even_inclusive(2, 10)
+    print(result)

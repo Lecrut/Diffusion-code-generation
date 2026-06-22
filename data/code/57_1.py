@@ -1,7 +1,12 @@
-import math
-def calculate_area_circle(radius):
-    return math.pi * radius * radius
+def fibonacci_generator(count=1000):
+    a, b = 0, 1
+    for _ in range(count):
+        yield a
+        a, b = b, a + b
+
 if __name__ == '__main__':
-    radius_sample = 5.0
-    area = calculate_area_circle(radius_sample)
-    print(area)
+    results = list(fibonacci_generator(1000))
+    print(results[0])
+    print(results[1])
+    print(results[999])
+    print(len(results))

@@ -1,17 +1,18 @@
-import sys
+class GeometryTriangle:
+    _AREA_FACTOR = 0.5
 
-def remove_all_spaces(text: str) -> str:
-    """Removes all spaces from the input string, both internal and external."""
-    return "".join(text.split())
+    def __init__(self, base: float, height: float) -> None:
+        self._base = base
+        self._height = height
+
+    def get_area(self) -> float:
+        return self._AREA_FACTOR * self._base * self._height
+
+    def get_dimensions(self) -> tuple:
+        return self._base, self._height
 
 if __name__ == '__main__':
-    sample_input = """Hello World! This is a test.   Spaces everywhere.  No quotes needed. Just clean text output."""
-
-    # Using standard I/O best practices via sys.stdin for potential multi-line scenarios,
-    # but since the requirement specifies no interactive input and hard-coded samples,
-    # we capture the sample string directly to ensure it runs without user interaction or external files.
-    raw_input = """Hello World! This is a test.   Spaces everywhere.  No quotes needed. Just clean text output."""
-
-    processed_output = remove_all_spaces(raw_input)
-
-    print(processed_output)
+    SAMPLE_BASE = 12.5
+    SAMPLE_HEIGHT = 8.0
+    shape = GeometryTriangle(SAMPLE_BASE, SAMPLE_HEIGHT)
+    print(shape.get_area())

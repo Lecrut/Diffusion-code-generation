@@ -1,11 +1,16 @@
-def calculate_square_area(side_length):
-    """Calculate the area of a square using direct multiplication."""
-    return side_length * side_length
+class SurfaceAreaCalculator:
+    @staticmethod
+    def calculate_square_pyramid_surface_area(base_side, slant_height):
+        base_area = base_side ** 2
+        lateral_area = 2 * base_side * slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or external dependencies are needed.
-    test_cases = [5, 0.75, -3]
-
-    for length in test_cases:
-        area = calculate_square_area(length)
-        print(f"Area of a square with side {length}: {area}")
+    base_side_1 = 10
+    slant_height_1 = 12
+    result_1 = SurfaceAreaCalculator.calculate_square_pyramid_surface_area(base_side_1, slant_height_1)
+    print(result_1)
+    base_side_2 = 5.5
+    slant_height_2 = 8.0
+    result_2 = SurfaceAreaCalculator.calculate_square_pyramid_surface_area(base_side_2, slant_height_2)
+    print(result_2)

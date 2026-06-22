@@ -1,11 +1,9 @@
-def triangle_area(v1, v2, v3):
-    x1, y1 = v1
-    x2, y2 = v2
-    x3, y3 = v3
-    area = abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0
-    return area
+import numpy as np
+
+def calculate_mean(data):
+    return np.mean(data)
 
 if __name__ == '__main__':
-    vertices = ((0, 0), (4, 0), (0, 3))
-    result = triangle_area(*vertices)
+    test_data = np.array([10, 20, 30, 40, 50])
+    result = calculate_mean(test_data)
     print(result)

@@ -1,33 +1,15 @@
-class Square:
-    """A class representing a square with side length."""
+class SquarePyramid:
+    def __init__(self, base_side, slant_height):
+        if base_side <= 0 or slant_height <= 0:
+            raise ValueError("Dimensions must be positive")
+        self.base_side = base_side
+        self.slant_height = slant_height
 
-    def __init__(self, side_length: float) -> None:
-        if side_length < 0:
-            raise ValueError("Side length must be non-negative.")
-        
-        self._side = side_length
-    
-    @property
-    def area(self) -> float:
-        """Returns the area of the square."""
-        return self._side ** 2
+    def calculate_surface_area(self):
+        base_area = self.base_side ** 2
+        lateral_area = 2 * self.base_side * self.slant_height
+        return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Sample value for testing
-    sample_side = 5.0
-    
-    try:
-        sq = Square(sample_side)
-        print(f"Square side length: {sq._side}")
-        area_value = sq.area
-        print(f"Calculated area: {area_value}")
-        
-        # Test with another value to ensure robustness
-        sample_side_2 = 3.0
-        sq_2 = Square(sample_side_2)
-        expected_area = sample_side_2 ** 2
-        assert abs(sq_2.area - expected_area) < float("inf"), "Area calculation failed."
-        print(f"Verification passed for side {sample_side_2}")
-
-    except ValueError as ve:
-        print(f"Error occurred during initialization or validation: {ve}")
+    pyramid = SquarePyramid(10, 15)
+    print(pyramid.calculate_surface_area())

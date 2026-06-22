@@ -1,20 +1,18 @@
-import sys
-def calculate_area(shape, length, width, radius, base, height):
-    if shape == "rectangle":
-        return length * width
-    elif shape == "circle":
-        return 3.14159 * radius * radius
-    elif shape == "triangle":
-        return 0.5 * base * height
-    else:
-        return 0
+def generate_diamond_pattern(center_width):
+    result = []
+    max_spaces = (center_width - 1) // 2
+    for i in range(center_width):
+        if i <= max_spaces:
+            spaces = max_spaces - i
+            stars = 2 * i + 1
+            result.append(" " * spaces + "*" * stars)
+        else:
+            spaces = i - max_spaces
+            stars = center_width - 2 * spaces
+            result.append(" " * spaces + "*" * stars)
+    return result
+
 if __name__ == '__main__':
-    shape_choice = "rectangle"
-    length = 10
-    width = 5
-    radius = 7
-    base = 4
-    height = 8
-    area = calculate_area(shape_choice, length, width, radius, base, height)
-    print(f"Shape selected: {shape_choice}")
-    print(f"Calculated Area: {area}")
+    pattern = generate_diamond_pattern(9)
+    for line in pattern:
+        print(line)

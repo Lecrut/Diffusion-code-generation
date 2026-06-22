@@ -1,22 +1,14 @@
-def capitalize_words(text: str) -> str:
-    """
-    Capitalizes the first letter of each word in the input string,
-    preserving the case of all other characters.
-    
-    Args:
-        text (str): The input string to process.
-        
-    Returns:
-        str: A new string with the first character of each word capitalized.
-    """
-    if not isinstance(text, str):
-        raise TypeError("Input must be a string.")
-    
-    return "".join(word.capitalize() for word in text.split())
+import math
 
+def calculate_cylinder_surface_area(radius, height):
+    if radius < 0 or height < 0:
+        raise ValueError('Radius and height must be non-negative')
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    total_area = 2 * base_area + lateral_area
+    return total_area
 if __name__ == '__main__':
-    sample_text = "hello world this is an example of capitalization."
-    result = capitalize_words(sample_text)
+    sample_radius = 5.0
+    sample_height = 10.0
+    result = calculate_cylinder_surface_area(sample_radius, sample_height)
     print(result)
-
-# Expected output: Hello World This Is An Example Of Capitalization.

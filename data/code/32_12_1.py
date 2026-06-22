@@ -1,14 +1,8 @@
-class StringAnalyzer:
-    def get_length(self, text):
-        return len(text)
+def compute_rectangle_area(width, height):
+    return width * height
+
 if __name__ == '__main__':
-    analyzer = StringAnalyzer()
-    sample_string_1 = "hello world"
-    sample_string_2 = ""
-    sample_string_3 = "Python"
-    length_1 = analyzer.get_length(sample_string_1)
-    length_2 = analyzer.get_length(sample_string_2)
-    length_3 = analyzer.get_length(sample_string_3)
-    print(f"Length of '{sample_string_1}': {length_1}")
-    print(f"Length of '{sample_string_2}': {length_2}")
-    print(f"Length of '{sample_string_3}': {length_3}")
+    sample_width = 5
+    sample_height = 10
+    area = compute_rectangle_area(sample_width, sample_height)
+    print(area)

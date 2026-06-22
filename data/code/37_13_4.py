@@ -1,7 +1,8 @@
-def join_strings(a: str, b: str) -> str:
-    """Joins two strings using an f-string."""
-    return f"{a}{b}"
+def calculate_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    result = join_strings("Hello", "World")
-    print(result)
+    base = 10.0
+    height = 5.0
+    area = calculate_parallelogram_area(base, height)
+    print(area)

@@ -1,8 +1,13 @@
-import math
-def calculate_area(base, height):
-    return base * height
+def print_diamond(height=7):
+    if height % 2 == 0:
+        height += 1
+    mid = height // 2
+    lines = []
+    for i in range(height):
+        spaces = abs(mid - i)
+        stars = 2 * (mid - spaces) + 1
+        lines.append(' ' * spaces + '*' * stars)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    base_val = 10.5
-    height_val = 5.2
-    area_val = calculate_area(base_val, height_val)
-    print(area_val)
+    print(print_diamond(7))

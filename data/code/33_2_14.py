@@ -1,14 +1,13 @@
-import sys
+class TriangleAreaCalculator:
+    def __init__(self, base, height):
+        if base <= 0 or height <= 0:
+            raise ValueError("Base and height must be positive numbers")
+        self.base = base
+        self.height = height
 
-def remove_all_spaces(text: str) -> str:
-    """Return a string with all spaces (internal and external) removed."""
-    return ''.join(char for char in text if not (' ' == char))
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to satisfy the requirement of no user input or files.
-    sample_input = "Hello world, this is a test string.\nWith multiple   spaces  here."
-
-    result_string: str = remove_all_spaces(sample_input)
-    
-    # Print only if output was generated (always true for non-empty strings in this context).
-    print(result_string)
+    calculator = TriangleAreaCalculator(10, 5)
+    print(calculator.calculate_area())

@@ -1,15 +1,12 @@
-def find_middle(numbers):
-    n = len(numbers)
-    if n == 0:
-        return None
-    elif n % 2 == 1:
-        return numbers[n // 2]
-    else:
-        return (numbers[n // 2 - 1] + numbers[n // 2]) // 2
+def sum_of_digits(n):
+    if n < 10:
+        return n
+    last_digit = n % 10
+    remaining = n // 10
+    return last_digit + sum_of_digits(remaining)
+
 if __name__ == '__main__':
-    sample_input = [1, 5, 9, 13, 17]
-    if not isinstance(sample_input, list) or not all(isinstance(x, int) for x in sample_input):
-        print("Error: Sample input is not a list of integers.")
-    else:
-        middle_item = find_middle(sample_input)
-        print(middle_item)
+    print(sum_of_digits(12345))
+    print(sum_of_digits(9876543210))
+    print(sum_of_digits(0))
+    print(sum_of_digits(7))

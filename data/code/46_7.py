@@ -1,9 +1,11 @@
-class GeometryUtils:
-    @staticmethod
-    def calculate_perimeter(length: float, width: float) -> float:
-        return 2 * (length + width)
+import heapq
+
+def find_largest_salary(salaries):
+    if not salaries:
+        return None
+    return heapq.nlargest(1, salaries)[0]
+
 if __name__ == '__main__':
-    sample_length = 10.0
-    sample_width = 5.0
-    perimeter = GeometryUtils.calculate_perimeter(sample_length, sample_width)
-    print(perimeter)
+    salaries = [5000, 12000, 8000, 15000, 9000, 20000]
+    result = find_largest_salary(salaries)
+    print(result)

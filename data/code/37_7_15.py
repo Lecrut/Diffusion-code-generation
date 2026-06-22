@@ -1,25 +1,17 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Combines two strings into a single string efficiently.
-    
-    For simple concatenation of two strings, direct addition is preferred 
-    due to its C-level optimization in Python compared to .join() which is 
-    designed for many items.
+import operator
 
-    Args:
-        str1 (str): The first input string.
-        str2 (str): The second input string.
+class Parallelogram:
+    def __init__(self, base, height):
+        if base <= 0:
+            raise ValueError("Base must be positive")
+        if height <= 0:
+            raise ValueError("Height must be positive")
+        self.base = base
+        self.height = height
 
-    Returns:
-        str: The concatenated result of str1 and str2.
-    """
-    return str1 + str2
+    def calculate_area(self):
+        return operator.mul(self.base, self.height)
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the module runs without user input or network access
-    sample_str1 = "Hello"
-    sample_str2 = "World"
-
-    result = combine_strings(sample_str1, sample_str2)
-    
-    print(f"{sample_str1} + {sample_str2} = '{result}'")
+    shape = Parallelogram(7.5, 12)
+    print(shape.calculate_area())

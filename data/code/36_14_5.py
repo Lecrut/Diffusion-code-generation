@@ -1,5 +1,9 @@
-def reverse_string(s):
-    return ''.join(reversed(str(s))) if s is None else str(s)[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
 
 if __name__ == '__main__':
-    print(reverse_string("Hello, World!"))
+    base1 = 5
+    base2 = 7
+    height = 4
+    result = calculate_trapezoid_area(base1, base2, height)
+    print(result)

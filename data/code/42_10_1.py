@@ -1,18 +1,10 @@
-def build_string_from_parts(parts, separator=None):
-    if not parts:
-        return ""
-    if separator is None:
-        return "".join(parts)
-    else:
-        return separator.join(parts)
+import math
+
+def calculate_ellipse_area(major_axis, minor_axis):
+    return math.pi * major_axis * minor_axis
+
 if __name__ == '__main__':
-    list1 = ["apple", "banana", "cherry"]
-    print(f"Test 1 (no separator): {build_string_from_parts(list1)}")
-    print(f"Test 2 (with space separator): {build_string_from_parts(list1, ' ')}")
-    print(f"Test 3 (with comma separator): {build_string_from_parts(list1, ', ')}")
-    list2 = []
-    print(f"Test 4 (empty list, no separator): {build_string_from_parts(list2)}")
-    print(f"Test 5 (empty list, with separator): {build_string_from_parts(list2, ', ')}")
-    list3 = ["one", "two", "three"]
-    print(f"Test 6 (single item): {build_string_from_parts(list3, '-')}")
-    print(f"Test 7 (single item, no separator): {build_string_from_parts(list3)}")
+    sample_major = 5.0
+    sample_minor = 3.0
+    area = calculate_ellipse_area(sample_major, sample_minor)
+    print(area)

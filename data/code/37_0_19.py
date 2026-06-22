@@ -1,7 +1,14 @@
-def combine_strings(s1: str, s2: str) -> str:
-    """Returns the concatenation of two strings."""
-    return f"{s1}{s2}"
+def calculate_parallelogram_area(base, height):
+    return base * height
+
+def get_sample_base():
+    return 8.5
+
+def get_sample_height():
+    return 4.0
 
 if __name__ == '__main__':
-    result = combine_strings("Hello", "World")
-    print(result)
+    base_val = get_sample_base()
+    height_val = get_sample_height()
+    area = calculate_parallelogram_area(base_val, height_val)
+    print(area)

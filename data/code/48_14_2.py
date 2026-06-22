@@ -1,23 +1,12 @@
-def is_valid_triangle(side_lengths):
-    if len(side_lengths) != 3:
-        return False
-    a, b, c = side_lengths
-    if a <= 0 or b <= 0 or c <= 0:
-        return False
-    if a + b > c and a + c > b and b + c > a:
-        return True
-    else:
-        return False
+def find_max_custom(numbers):
+    if not numbers:
+        raise ValueError("Array cannot be empty")
+    max_val = numbers[0]
+    for num in numbers:
+        if num > max_val:
+            max_val = num
+    return max_val
+
 if __name__ == '__main__':
-    test_cases = [
-        ([3, 4, 5], True),
-        ([1, 2, 3], False),
-        ([1, 1, 1], True),
-        ([0, 4, 5], False),
-        ([-1, 2, 2], False),
-        ([5, 5, 10], False),
-        ([2, 3, 4], True)
-    ]
-    for sides, expected in test_cases:
-        result = is_valid_triangle(sides)
-        print(f"Sides: {sides}, Result: {result}, Expected: {expected}, Match: {result == expected}")
+    sample_array = [3.5, 7.2, 1.8, 9.4, 6.1]
+    print(find_max_custom(sample_array))

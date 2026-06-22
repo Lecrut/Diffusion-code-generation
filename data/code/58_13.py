@@ -1,12 +1,16 @@
-class ListAccessor:
-    def __init__(self, data):
-        self._internal_list = data
-    def get_first_element(self):
-        if not self._internal_list:
-            return None
-        return self._internal_list[0]
+def count_evens(start: int, stop: int) -> int:
+    lower = max(start, stop if start > stop else start)
+    upper = min(start, stop)
+    
+    first_even = lower + (lower % 2 != 0)
+    if first_even > upper:
+        return 0
+    
+    last_even = upper - (upper % 2 != 0)
+    
+    count = (last_even - first_even) // 2 + 1
+    return count
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40]
-    accessor = ListAccessor(sample_data)
-    first_element = accessor.get_first_element()
-    print(first_element)
+    result = count_evens(2, 10)
+    print(result)

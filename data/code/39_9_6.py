@@ -1,16 +1,12 @@
-def find_nested_substrings(phrase):
-    n = len(phrase)
-    nested_substrings = set()
-    for i in range(n):
-        for j in range(i + 1, n):
-            substring = phrase[i:j+1]
-            for k in range(len(substring)):
-                for l in range(k + 1, len(substring)):
-                    nested = substring[k:l+1]
-                    nested_substrings.add(nested)
-    result = sorted(list(nested_substrings))
-    return result
+from typing import Union
+
+Number = Union[int, float]
+
+def calculate_prism_volume(base_area: Number, height: Number) -> float:
+    return float(base_area * height)
+
 if __name__ == '__main__':
-    sample_phrase = "banana"
-    nested_list = find_nested_substrings(sample_phrase)
-    print(nested_list)
+    sample_base_area: float = 25.5
+    sample_height: float = 10
+    volume: float = calculate_prism_volume(sample_base_area, sample_height)
+    print(volume)

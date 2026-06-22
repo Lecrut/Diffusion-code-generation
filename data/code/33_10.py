@@ -1,15 +1,8 @@
-def remove_all_spaces(input_string):
-    return "".join(char for char in input_string if not char.isspace())
+def calculate_triangle_area(base, height):
+    return (base * height) / 2
+
 if __name__ == '__main__':
-    test_string_1 = "Hello World\tThis has\nmultiple spaces"
-    result_1 = remove_all_spaces(test_string_1)
-    print(f"Original: '{test_string_1}'")
-    print(f"Result: '{result_1}'")
-    test_string_2 = "NoSpacesHere"
-    result_2 = remove_all_spaces(test_string_2)
-    print(f"Original: '{test_string_2}'")
-    print(f"Result: '{result_2}'")
-    test_string_3 = " \t\n"
-    result_3 = remove_all_spaces(test_string_3)
-    print(f"Original: '{test_string_3}'")
-    print(f"Result: '{result_3}'")
+    base_value = 10
+    height_value = 5
+    result = calculate_triangle_area(base_value, height_value)
+    print(result)

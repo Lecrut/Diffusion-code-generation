@@ -1,16 +1,10 @@
-import re
-
-def extract_words(text: str) -> list[str]:
-    """Extracts all sequences of alphanumeric characters from the input text."""
-    # Find all matches using regex pattern that captures alphanumeric strings separated by any non-alphanumeric character or whitespace
-    words = re.findall(r'\b\w+\b', text)
-    return words
+def calculate_prism_volume(base_area: float, height: float) -> float:
+    if base_area < 0 or height < 0:
+        raise ValueError("Base area and height must be non-negative")
+    return base_area * height
 
 if __name__ == '__main__':
-    sample_input = """Hello, world! This is a test script.
-Python is great for extracting data from complex strings."""
-
-    result_words = extract_words(sample_input)
-
-    # Print the extracted list of words to verify functionality
-    print(result_words)
+    sample_base_area = 50.0
+    sample_height = 12.0
+    volume = calculate_prism_volume(sample_base_area, sample_height)
+    print(volume)

@@ -1,14 +1,10 @@
-def count_vowels(string_list):
-    result_dict = {}
-    vowels = "aeiouAEIOU"
-    for s in string_list:
-        count = 0
-        for char in s:
-            if char in vowels:
-                count += 1
-        result_dict[s] = count
-    return result_dict
+def calculate_cube_volume(edge_length):
+    return edge_length ** 3
+
 if __name__ == '__main__':
-    sample_list = ["hello", "world", "python", "programming"]
-    vowel_counts = count_vowels(sample_list)
-    print(vowel_counts)
+    sample_edge = 3.0
+    volume = calculate_cube_volume(sample_edge)
+    print(volume)
+    sample_edge = 5.5
+    volume = calculate_cube_volume(sample_edge)
+    print(volume)

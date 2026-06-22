@@ -1,7 +1,7 @@
-def get_length(text):
-    return len(text) if text else 0
+def calculate_area(width: int, height: int) -> int:
+    return width * height
 
 if __name__ == '__main__':
-    samples = ["Python", "123456789"]
-    for s in samples:
-        print(f"String length of {s!r}: {get_length(s)}")
+    w = 10
+    h = 5
+    print(calculate_area(w, h))

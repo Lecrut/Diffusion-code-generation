@@ -1,12 +1,14 @@
-import sys
-def calculate_perimeter(a, b, c):
-    return a + b + c
+def generate_right_aligned_alphabet_triangle(rows):
+    result_lines = []
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for i in range(1, rows + 1):
+        letters = alphabet[:i]
+        line = letters.rjust(rows)
+        result_lines.append(line)
+    return result_lines
+
 if __name__ == '__main__':
-    side1 = 3
-    side2 = 4
-    side3 = 5
-    try:
-        perimeter = calculate_perimeter(side1, side2, side3)
-        print(perimeter)
-    except ValueError:
-        print("Error: Invalid input. Please ensure all side lengths are numbers.")
+    sample_rows = 6
+    pattern = generate_right_aligned_alphabet_triangle(sample_rows)
+    for line in pattern:
+        print(line)

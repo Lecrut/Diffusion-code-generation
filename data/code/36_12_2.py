@@ -1,14 +1,13 @@
-class StringReverser:
-    def reverse(self, text):
-        return text[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    if base1 < 0 or base2 < 0 or height < 0:
+        raise ValueError("Bases and height must be non-negative")
+    if not (base1 + base2):
+        return 0.0
+    return 0.5 * (base1 + base2) * height
+
 if __name__ == '__main__':
-    reverser = StringReverser()
-    sample_string1 = "hello"
-    reversed_string1 = reverser.reverse(sample_string1)
-    print(f"Original: {sample_string1}, Reversed: {reversed_string1}")
-    sample_string2 = "world"
-    reversed_string2 = reverser.reverse(sample_string2)
-    print(f"Original: {sample_string2}, Reversed: {reversed_string2}")
-    sample_string3 = "Python"
-    reversed_string3 = reverser.reverse(sample_string3)
-    print(f"Original: {sample_string3}, Reversed: {reversed_string3}")
+    base_a = 10.0
+    base_b = 6.0
+    height_val = 4.0
+    result = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(result)

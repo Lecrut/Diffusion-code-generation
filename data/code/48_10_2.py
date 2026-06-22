@@ -1,16 +1,12 @@
-def is_valid_triangle(sides):
-    if len(sides) != 3:
-        return False
-    a, b, c = sides
-    if a <= 0 or b <= 0 or c <= 0:
-        return False
-    if a + b > c and a + c > b and b + c > a:
-        return True
-    return False
+def find_largest(values):
+    if not values:
+        return None
+    largest = values[0]
+    for value in values[1:]:
+        if value > largest:
+            largest = value
+    return largest
 
 if __name__ == '__main__':
-    print(is_valid_triangle([3, 4, 5]))
-    print(is_valid_triangle([1, 2, 3]))
-    print(is_valid_triangle([-1, 2, 3]))
-    print(is_valid_triangle([0, 5, 5]))
-    print(is_valid_triangle([10, 2, 3]))
+    data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    print(find_largest(data))

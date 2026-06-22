@@ -1,11 +1,9 @@
-class Rectangle:
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-
-    def perimeter(self):
-        return 2 * (self.length + self.width)
+def compute_mean(scores):
+    if not scores:
+        return 0
+    return sum(scores) / len(scores)
 
 if __name__ == '__main__':
-    rect = Rectangle(5, 3)
-    print(rect.perimeter())
+    test_scores = [85, 90, 78, 92, 88]
+    result = compute_mean(test_scores)
+    print(result)

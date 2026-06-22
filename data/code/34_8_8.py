@@ -1,13 +1,15 @@
-"""
-Module providing a function to capitalize the first letter of a string.
+import math
+from decimal import Decimal, getcontext
 
-This module defines a utility function that takes an input string, capitalizes 
-its first alphabetic character if present, and returns it unchanged otherwise.
-It preserves all other characters exactly as they were in the original string.
+getcontext().prec = 50
 
-Functions:
-    --capitalize_first_letter(s): Capitalize only the first letter of the given string.
-"""
+def cylinder_surface_area(radius: float, height: float) -> float:
+    r = Decimal(str(radius))
+    h = Decimal(str(height))
+    pi = Decimal(str(math.pi))
+    area = 2 * pi * r * (r + h)
+    return float(area)
 
 if __name__ == '__main__':
-    pass
+    result = cylinder_surface_area(3.5, 10.2)
+    print(result)

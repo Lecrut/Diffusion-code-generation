@@ -1,10 +1,7 @@
-def analyze_lengths(len1, len2):
-    minimum = min(len1, len2)
-    maximum = max(len1, len2)
-    difference = abs(len1 - len2)
-    return (minimum, maximum, difference)
+def generate_star_square(size=4):
+    row = '*' * size
+    return [row for _ in range(size)]
 if __name__ == '__main__':
-    a = 10
-    b = 25
-    result = analyze_lengths(a, b)
-    print(result)
+    star_square = generate_star_square()
+    for row in star_square:
+        print(row)

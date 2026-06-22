@@ -1,8 +1,13 @@
-import math
-def calculate_circle_perimeter(radius):
-    perimeter = 2 * math.pi * radius
-    return perimeter
+def generate_number_pyramid(rows):
+    lines = []
+    max_width = rows + rows - 1
+    for i in range(1, rows + 1):
+        num_str = ' '.join(str(j) for j in range(1, i + 1))
+        padding = (max_width - len(num_str.replace(' ', ''))) // 2
+        padded_line = ' ' * padding + num_str
+        lines.append(padded_line)
+    return '\n'.join(lines)
+
 if __name__ == '__main__':
-    radius_value = 5.0
-    perimeter_result = calculate_circle_perimeter(radius_value)
-    print(perimeter_result)
+    result = generate_number_pyramid(3)
+    print(result)

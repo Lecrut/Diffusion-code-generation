@@ -1,6 +1,8 @@
-import sys
+def calculate_rhombus_area(diagonal_1, diagonal_2):
+    return 0.5 * diagonal_1 * diagonal_2
+
 if __name__ == '__main__':
-    input_string = "this is a sample string for testing"
-    print(input_string)
-    print(input_string.upper())
-    print(" ".join(word.capitalize() for word in input_string.split()))
+    d1 = 10
+    d2 = 8
+    result = calculate_rhombus_area(d1, d2)
+    print(result)

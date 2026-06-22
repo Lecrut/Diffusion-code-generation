@@ -1,5 +1,8 @@
-def compute_rectangle_area(width, height):
+def compute_area(width, height):
     return width * height
 
 if __name__ == '__main__':
-    print(compute_rectangle_area(5, 10))
+    width = 5
+    height = 10
+    area = compute_area(width, height)
+    print(area)

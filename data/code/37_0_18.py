@@ -1,7 +1,8 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """Concatenates two strings into a single string."""
-    return str1 + str2
+def calculate_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    result = combine_strings("Hello", "World")
-    print(result)
+    base = 5.5
+    height = 3.2
+    area = calculate_parallelogram_area(base, height)
+    print(area)

@@ -1,31 +1,15 @@
-def access_first_element(data):
-    return data[0]
+def count_even_numbers(min_val, max_val):
+    if min_val > max_val:
+        return 0
+    first_even = min_val if min_val % 2 == 0 else min_val + 1
+    if first_even > max_val:
+        return 0
+    last_even = max_val if max_val % 2 == 0 else max_val - 1
+    count = (last_even - first_even) // 2 + 1
+    return count
+
 if __name__ == '__main__':
-    int_list = [10, 20, 30]
-    string_list = ["apple", "banana", "cherry"]
-    result_int = access_first_element(int_list)
-    assert result_int == 10
-    print(f"First element of int_list: {result_int}")
-    result_string = access_first_element(string_list)
-    assert result_string == "apple"
-    print(f"First element of string_list: {result_string}")
-    try:
-        float_list = [3.14, 2.71, 1.61]
-        result_float = access_first_element(float_list)
-        assert result_float == 3.14
-        print(f"First element of float_list: {result_float}")
-    except TypeError:
-        print("Float list test failed (unexpected error)")
-    try:
-        bool_list = [True, False, True]
-        result_bool = access_first_element(bool_list)
-        assert result_bool == True
-        print(f"First element of bool_list: {result_bool}")
-    except TypeError:
-        print("Bool list test failed (unexpected error)")
-    try:
-        empty_list = []
-        access_first_element(empty_list)
-        assert False
-    except IndexError:
-        print("Empty list test passed (IndexError caught)")
+    min_sample = 3
+    max_sample = 10
+    result = count_even_numbers(min_sample, max_sample)
+    print(result)

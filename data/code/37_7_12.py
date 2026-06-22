@@ -1,22 +1,21 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Combines two strings efficiently. 
-    For simple concatenation without complex formatting needs (like joining lists of characters),
-    direct string concatenation is the most efficient and readable approach in Python for this specific case.
+import operator
 
-    Args:
-        str1 (str): The first input string.
-        str2 (str): The second input string.
+class ParallelogramArea:
+    SHAPE = "parallelogram"
 
-    Returns:
-        str: A new string formed by appending str2 to str1.
-    """
-    return str1 + str2
+    @staticmethod
+    def _multiply(a, b):
+        return operator.mul(a, b)
+
+    @classmethod
+    def calculate_area(cls, base, height):
+        return cls._multiply(base, height)
+
+def calculate_area(base, height):
+    return ParallelogramArea.calculate_area(base, height)
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing the function without user interaction.
-    sample_str_1 = "Hello, World!"
-    sample_str_2 = "Python"
-
-    result = combine_strings(sample_str_1, sample_str_2)
-    print(result)
+    b = 7
+    h = 3
+    area_result = calculate_area(b, h)
+    print(area_result)

@@ -1,27 +1,15 @@
-def count_vowels(text: str) -> int:
-    """
-    Counts the total number of vowels in a given string using a single loop.
-    
-    Vowels considered include 'a', 'e', 'i', 'o', 'u' and their uppercase counterparts.
-    
-    Args:
-        text (str): The input string to analyze.
-        
-    Returns:
-        int: The count of vowels in the string.
-    """
-    vowel_set = set("aeiouAEIOU")
-    return sum(1 for char in text if char in vowel_set)
+class Cube:
+    def __init__(self, edge_length):
+        self.edge_length = edge_length
+
+    def volume(self):
+        return self.edge_length ** 3
+
+    def surface_area(self):
+        return 6 * (self.edge_length ** 2)
 
 if __name__ == '__main__':
-    # Sample test cases with hard-coded values
-    samples = [
-        "hello world",      # Expected: 2 (e, o)
-        "AEIOU",            # Expected: 5
-        "rhythm",           # Expected: 0
-        "aeiou AEIOU aeiou",# Expected: 13
-    ]
-
-    for sample in samples:
-        result = count_vowels(sample)
-        print(f"'{sample}' -> {result}")
+    test_edge = 4.5
+    cube_instance = Cube(test_edge)
+    print(cube_instance.volume())
+    print(cube_instance.surface_area())

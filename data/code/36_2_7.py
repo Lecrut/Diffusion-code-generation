@@ -1,28 +1,9 @@
-class StringReverser:
-    def reverse(self, text):
-        """
-        Reverses a given string in place using object-oriented design principles.
-        
-        Args:
-            text (str): The input string to be reversed.
-            
-        Returns:
-            str: A new string which is the reverse of the input text.
-        """
-        return text[::-1]
+def calculate_trapezoid_area(base1, base2, height):
+    return 0.5 * (base1 + base2) * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values for testing without user interaction or external dependencies
-    test_cases = [
-        "Hello, World!",
-        "Python Programming",
-        "",
-        "a"
-    ]
-
-    reverser = StringReverser()
-
-    print("String Reversal Results:")
-    for original in test_cases:
-        reversed_str = reverser.reverse(original)
-        print(f"Original: '{original}' -> Reversed: '{reversed_str}'")
+    b1 = 10.0
+    b2 = 6.0
+    h = 5.0
+    area = calculate_trapezoid_area(b1, b2, h)
+    print(area)

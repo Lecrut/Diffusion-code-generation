@@ -1,11 +1,10 @@
-import math
-
-def herons_formula(a, b, c):
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("Invalid triangle: sum of any two sides must be greater than the third side.")
-    s = (a + b + c) / 2
-    area = math.sqrt(s * (s - a) * (s - b) * (s - c))
-    return area
+def compute_average(numbers):
+    if not numbers:
+        return 0
+    total = sum(x for x in numbers)
+    return total / len(numbers)
 
 if __name__ == '__main__':
-    print(herons_formula(3, 4, 5))
+    sample_data = [10, 20, 30, 40, 50]
+    result = compute_average(sample_data)
+    print(result)

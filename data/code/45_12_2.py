@@ -1,12 +1,12 @@
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    def calculate_area(self):
-        return 3.14159 * self.radius ** 2
+def find_lowest(numbers):
+    if not numbers:
+        return None
+    lowest = numbers[0]
+    for num in numbers[1:]:
+        if num < lowest:
+            lowest = num
+    return lowest
+
 if __name__ == '__main__':
-    circle1 = Circle(5)
-    area1 = circle1.calculate_area()
-    print(f"Area of circle 1: {area1}")
-    circle2 = Circle(10.5)
-    area2 = circle2.calculate_area()
-    print(f"Area of circle 2: {area2}")
+    sample_values = [3.5, 1.2, 4.8, 2.1, 5.9, 0.3]
+    print(find_lowest(sample_values))

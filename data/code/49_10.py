@@ -1,11 +1,9 @@
-def calculate_lengths():
-    length_a = 15.5
-    length_b = 8.2
-    difference = length_a - length_b
-    sum_of_lengths = length_a + length_b
-    print(f"Length A: {length_a}")
-    print(f"Length B: {length_b}")
-    print(f"Difference: {difference}")
-    print(f"Sum: {sum_of_lengths}")
+def print_star_square():
+    side_length = 5
+    pattern = "*\n" * side_length
+    line = "* " * (side_length - 1) + "*"
+    rows = [line] * side_length
+    print("\n".join(rows))
+
 if __name__ == '__main__':
-    calculate_lengths()
+    print_star_square()

@@ -1,5 +1,8 @@
+def generate_reverse_triangle(rows):
+    result = []
+    for i in range(rows, 0, -1):
+        result.append(' '.join(str(j) for j in range(1, i + 1)))
+    return '\n'.join(result)
+
 if __name__ == '__main__':
-    side_length = 5.0
-    if side_length > 0:
-        area = side_length * side_length
-        print(area)
+    print(generate_reverse_triangle(5))

@@ -1,15 +1,17 @@
-def find_middle_item(data):
-    n = len(data)
-    middle_index = (n - 1) // 2
-    return data[middle_index]
+def sum_of_digits(n):
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer")
+    if n == 0:
+        return 0
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4, 5]
-    list2 = [10, 20, 30, 40]
-    list3 = [50]
-    list4 = [100, 200]
-    list5 = [1, 2, 3, 4]
-    print(find_middle_item(list1))
-    print(find_middle_item(list2))
-    print(find_middle_item(list3))
-    print(find_middle_item(list4))
-    print(find_middle_item(list5))
+    print(sum_of_digits(0))
+    print(sum_of_digits(5))
+    print(sum_of_digits(123))
+    print(sum_of_digits(9999))
+    print(sum_of_digits(123456789))

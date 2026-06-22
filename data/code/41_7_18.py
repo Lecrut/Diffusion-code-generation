@@ -1,16 +1,8 @@
-def to_title_case(strings):
-    """
-    Converts every string in the input list to title case.
-    
-    Args:
-        strings (list[str]): A list of strings.
-        
-    Returns:
-        list[str]: A new list with all strings converted to title case.
-    """
-    return [s.title() for s in strings]
+def calculate_rhombus_area(d1: float, d2: float) -> float:
+    return 0.5 * d1 * d2
 
 if __name__ == '__main__':
-    sample_input = ["hello world", "python programming", "data science"]
-    result = to_title_case(sample_input)
+    diagonal1 = 10.0
+    diagonal2 = 8.0
+    result = calculate_rhombus_area(diagonal1, diagonal2)
     print(result)

@@ -1,11 +1,17 @@
-import unittest
-def calculate_circle_area(radius):
-    return 3.141592653589793 * radius ** 2
-class TestCircleArea(unittest.TestCase):
-    def test_positive_radii(self):
-        self.assertAlmostEqual(calculate_circle_area(1), 3.141592653589793)
-        self.assertAlmostEqual(calculate_circle_area(2), 12.566370614359172)
-        self.assertAlmostEqual(calculate_circle_area(0.5), 0.7853981633974483)
-        self.assertAlmostEqual(calculate_circle_area(10), 314.1592653589793)
+def compute_fibonacci_terms(n):
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+    sequence = [0, 1]
+    for _ in range(2, n):
+        last = sequence[-1]
+        second_last = sequence[-2]
+        new_val = last + second_last
+        sequence.append(new_val)
+    return sequence
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    result = compute_fibonacci_terms(100)
+    for term in result:
+        print(term)

@@ -1,11 +1,9 @@
-def reverse_sentence(sentence: str) -> str:
-    """Reverses a given sentence character by character."""
-    return sentence[::-1]
+def trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
 
 if __name__ == '__main__':
-    # Sample input data to avoid interactive prompts, sys.stdin, or network access.
-    sample_input = "Hello World!"
-
-    # Reverse the sample input and print the result.
-    reversed_result = reverse_sentence(sample_input)
-    print(reversed_result)
+    b1 = 5
+    b2 = 7
+    h = 4
+    area = trapezoid_area(b1, b2, h)
+    print(area)

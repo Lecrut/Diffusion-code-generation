@@ -1,8 +1,8 @@
-import re
-def extract_all_non_overlapping(text, pattern):
-    return re.findall(pattern, text)
+def compute_prism_volume(base_area: float, height: float) -> float:
+    return base_area * height
+
 if __name__ == '__main__':
-    input_string = "apple banana apple orange apple"
-    pattern = r"\bapple\b"
-    result = extract_all_non_overlapping(input_string, pattern)
+    base_area_value: float = 10.0
+    height_value: float = 5.0
+    result: float = compute_prism_volume(base_area_value, height_value)
     print(result)

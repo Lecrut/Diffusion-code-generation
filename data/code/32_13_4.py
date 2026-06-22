@@ -1,10 +1,13 @@
-from typing import Optional
+def area_of_rectangle(width, height):
+    if width < 0 or height < 0:
+        raise ValueError("Dimensions must be non-negative")
+    return width * height
 
-def get_string_length(s: str) -> int:
-    """Return the length of the given string."""
-    return len(str(s)) if isinstance(s, (str, bytes)) else 0
+def main():
+    w_val = 15
+    h_val = 7
+    res = area_of_rectangle(w_val, h_val)
+    print(res)
 
 if __name__ == '__main__':
-    test_cases = [None, "hello", "", 123]
-    for case in test_cases:
-        print(f"Input {repr(case)} -> Length: {get_string_length(case)}")
+    main()

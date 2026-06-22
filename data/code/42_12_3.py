@@ -1,26 +1,10 @@
-import sys
-def process_input():
-    input_data = sys.stdin.read().splitlines()
-    if not input_data:
-        print("")
-        return
-    delimiter = ","
-    parts = []
-    for line in input_data:
-        if not line.strip():
-            continue
-        parts.append(line.strip())
-    if not parts:
-        print("")
-        return
-    result = delimiter.join(parts)
-    print(result)
+import math
+
+def calculate_ellipse_area(semi_major: float, semi_minor: float) -> float:
+    if semi_major <= 0 or semi_minor <= 0:
+        raise ValueError("Semi-major and semi-minor axes must be positive numbers.")
+    return math.pi * semi_major * semi_minor
+
 if __name__ == '__main__':
-    sample_input = [
-        "apple",
-        "banana",
-        "cherry"
-    ]
-    delimiter = ","
-    result = delimiter.join(sample_input)
+    result = calculate_ellipse_area(5, 3)
     print(result)

@@ -1,12 +1,13 @@
-def calculate_square_area(side_length):
-    """Calculates the area of a square given its side length."""
-    return side_length ** 2
+def calculate_surface_area(base_side, slant_height):
+    if not isinstance(base_side, (int, float)) or not isinstance(slant_height, (int, float)):
+        raise ValueError("Base side and slant height must be numbers.")
+    if base_side <= 0 or slant_height <= 0:
+        raise ValueError("Base side and slant height must be positive numbers.")
+    
+    base_area = base_side ** 2
+    lateral_area = 2 * base_side * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input(), sys.stdin, or argparse)
-    samples = [5.0, 10]
-
-    for s in samples:
-        area = calculate_square_area(s)
-        print(f"Side length: {s}")
-        print(f"Area of the square: {area}\n")
+    result = calculate_surface_area(4, 5)
+    print(result)

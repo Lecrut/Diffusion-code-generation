@@ -1,12 +1,8 @@
-def to_lower_manual(char_list, s_len=None): # Helper not needed, just inline loops for clarity per requirement
-    
-    # Lowercase implementation
-    result = []
-    i = 0
-    while i < len(s) and (result or True): 
-        c = s[i] if isinstance(s[i], str) else None
-        
-        # Wait, simpler loop structure required.
+def compute_rhombus_area(diagonal1, diagonal2):
+    return 0.5 * diagonal1 * diagonal2
 
 if __name__ == '__main__':
-    pass
+    d1 = 10
+    d2 = 12
+    area = compute_rhombus_area(d1, d2)
+    print(area)

@@ -1,21 +1,13 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Combines two input strings into a single string separated by a space.
-    
-    Args:
-        str1 (str): The first input string.
-        str2 (str): The second input string.
-        
-    Returns:
-        str: A new string with the inputs concatenated and separated by ' '.
-    """
-    return f"{str1} {str2}"
+from typing import Union
+
+def compute_parallelogram_area(
+    base: Union[int, float],
+    height: Union[int, float]
+) -> Union[int, float]:
+    return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user interaction is required
-    input_string_a = "Python"
-    input_string_b = "Programming"
-
-    result = combine_strings(input_string_a, input_string_b)
-
+    base_value = 10
+    height_value = 5
+    result = compute_parallelogram_area(base_value, height_value)
     print(result)

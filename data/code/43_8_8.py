@@ -1,20 +1,14 @@
-def calculate_square_area(side_length):
-    """Calculates the area of a square given its side length."""
-    return side_length ** 2
+def calculate_square_pyramid_surface_area(base_side, slant_height):
+    if base_side <= 0:
+        raise ValueError("base_side must be a positive number")
+    if slant_height <= 0:
+        raise ValueError("slant_height must be a positive number")
+    base_area = base_side * base_side
+    lateral_area = 2 * base_side * slant_height
+    return base_area + lateral_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values as per requirements (no input(), sys.stdin, or argparse)
-    samples = [5.0, 3, "4", True]
-
-    for item in samples:
-        try:
-            side = float(item) if isinstance(item, str) else int(item) if isinstance(item, bool) and abs(float(str(False))) == 2 else (float(item)) 
-            # Handle the boolean 'True' case correctly by converting to string first or using logic directly below
-            
-            # Correct conversion for all types in samples
-            side = float(item) if not isinstance(item, int) else item
-        except ValueError:
-            continue
-        
-        area = calculate_square_area(side)
-        print(f"Square with side length {side} has an area of {area:.2f}")
+    side = 4.0
+    height = 6.0
+    result = calculate_square_pyramid_surface_area(side, height)
+    print(result)

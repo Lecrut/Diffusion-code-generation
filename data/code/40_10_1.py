@@ -1,7 +1,9 @@
-def process_strings(string_list):
-    for s in string_list:
-        if s:
-            print(s[0])
+def calculate_surface_area(length, width, height):
+    return 2 * (length * width + length * height + width * height)
+
 if __name__ == '__main__':
-    data = ["apple", "banana", "cherry", "date", ""]
-    process_strings(data)
+    length = 10
+    width = 5
+    height = 3
+    result = calculate_surface_area(length, width, height)
+    print(result)

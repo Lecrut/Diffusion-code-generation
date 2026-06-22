@@ -1,22 +1,20 @@
-import sys
+import math
 
-def calculate_square_area(side_length):
-    """Calculate the area of a square given its side length."""
-    return side_length ** 2
+def surface_area_square_pyramid(base_side, height):
+    if base_side <= 0:
+        raise ValueError("Base side must be positive")
+    if height <= 0:
+        raise ValueError("Height must be positive")
+    
+    half_base = base_side / 2.0
+    slant_height = math.sqrt(half_base ** 2 + height ** 2)
+    
+    base_area = base_side ** 2
+    lateral_area = 4 * (0.5 * base_side * slant_height)
+    
+    total_area = base_area + lateral_area
+    return total_area
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure no user input or external dependencies are needed.
-    test_cases = [5, "10", -3]
-
-    for value in test_cases:
-        try:
-            if isinstance(value, str):
-                side_length = float(value)
-            else:
-                side_length = float(value)
-            
-            area = calculate_square_area(side_length)
-            print(f"Side length: {side_length}, Area: {area}")
-        except ValueError as e:
-            # Handle robust conversion by catching invalid inputs gracefully.
-            print(f"Error converting input '{value}' to a number: {e}", file=sys.stderr)
+    result = surface_area_square_pyramid(10, 12)
+    print(result)

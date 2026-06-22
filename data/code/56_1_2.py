@@ -1,18 +1,15 @@
-import math
-def compare_areas(rect_length, rect_width, tri_base, tri_height):
-    area_rect = rect_length * rect_width
-    area_tri = 0.5 * tri_base * tri_height
-    if area_rect > area_tri:
-        return area_rect, "rectangle"
-    elif area_tri > area_rect:
-        return area_tri, "triangle"
-    else:
-        return area_rect, "rectangle"
-if __name__ == '__main__':
-    rect_l = 10
-    rect_w = 5
-    tri_b = 10
-    tri_h = 4
-    larger_area, shape = compare_areas(rect_l, rect_w, tri_b, tri_h)
-    print(f"Larger area: {larger_area}")
-    print(f"Corresponding shape: {shape}")
+def generate_multiplication_table():
+    max_value = 12
+    table_rows = []
+    for row in range(1, max_value + 1):
+        row_values = []
+        for col in range(1, max_value + 1):
+            product = row * col
+            formatted_value = f"{product:3d}"
+            row_values.append(formatted_value)
+        table_rows.append(" ".join(row_values))
+    return "\n".join(table_rows)
+
+if __name__ == "__main__":
+    result = generate_multiplication_table()
+    print(result)

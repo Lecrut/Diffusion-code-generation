@@ -1,11 +1,11 @@
-class GeometryUtils:
-    @staticmethod
-    def calculate_perimeter(side_a, side_b, side_c, side_d):
-        return side_a + side_b + side_c + side_d
+def print_number_pyramid(rows):
+    result = []
+    for i in range(1, rows + 1):
+        line = ''
+        for j in range(i):
+            line += str(i)
+        result.append(line)
+    return '\n'.join(result)
+
 if __name__ == '__main__':
-    a = 10
-    b = 5
-    c = 8
-    d = 3
-    perimeter = GeometryUtils.calculate_perimeter(a, b, c, d)
-    print(perimeter)
+    print(print_number_pyramid(5))

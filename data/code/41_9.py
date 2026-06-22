@@ -1,13 +1,8 @@
-def case_swap(text):
-    lower = text.lower()
-    upper = text.upper()
-    title = text.title()
-    return {
-        'lower': lower,
-        'upper': upper,
-        'title': title
-    }
+def calculate_rhombus_area(diagonal1, diagonal2):
+    return (diagonal1 * diagonal2) / 2
+
 if __name__ == '__main__':
-    sample_text = "Hello World Example"
-    result = case_swap(sample_text)
+    d1 = 10
+    d2 = 15
+    result = calculate_rhombus_area(d1, d2)
     print(result)

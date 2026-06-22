@@ -1,21 +1,23 @@
-def calculate_triangle_perimeter(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("All sides must be positive numbers")
-    return a + b + c
+def generate_alphabet_triangle(rows: int) -> list:
+    if rows <= 0:
+        return []
+    
+    pattern = []
+    current_char_code = 65
+    
+    for row_num in range(1, rows + 1):
+        row_chars = []
+        for _ in range(row_num):
+            if current_char_code > 90:
+                current_char_code = 65
+            row_chars.append(chr(current_char_code))
+            current_char_code += 1
+        pattern.append("".join(row_chars))
+    
+    return pattern
+
 if __name__ == '__main__':
-    side_a = 3
-    side_b = 4
-    side_c = 5
-    try:
-        perimeter = calculate_triangle_perimeter(side_a, side_b, side_c)
-        print(perimeter)
-    except ValueError as e:
-        print(f"Error: {e}")
-    side_a_invalid = -1
-    side_b_invalid = 4
-    side_c_invalid = 5
-    try:
-        perimeter_invalid = calculate_triangle_perimeter(side_a_invalid, side_b_invalid, side_c_invalid)
-        print(perimeter_invalid)
-    except ValueError as e:
-        print(f"Error: {e}")
+    sample_rows = 7
+    result = generate_alphabet_triangle(sample_rows)
+    for line in result:
+        print(line)

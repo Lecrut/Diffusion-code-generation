@@ -1,24 +1,7 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Concatenates two strings efficiently using Python's native string concatenation operator (+).
-    
-    In CPython (the standard implementation), the + operator for strings is highly optimized.
-    It typically uses a technique called "copy-and-paste" or involves internal buffer management,
-    making it faster than explicit loops over characters and often as fast as any other method
-    available in pure Python without external libraries like numpy.
-
-    Args:
-        str1 (str): The first string to concatenate.
-        str2 (str): The second string to concatenate.
-
-    Returns:
-        str: A new string formed by concatenating str1 and str2.
-    """
-    return str1 + str2
+def calculate_parallelogram_area(base, height):
+    return base * height
 
 if __name__ == '__main__':
-    sample_str_1 = "Hello"
-    sample_str_2 = "World!"
-    
-    result = combine_strings(sample_str_1, sample_str_2)
-    print(result)  # Output: HelloWorld!
+    base = 10
+    height = 5
+    print(calculate_parallelogram_area(base, height))

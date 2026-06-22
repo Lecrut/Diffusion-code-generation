@@ -1,21 +1,12 @@
-def capitalize_first_letter_only(text: str) -> str:
-    if not text:
-        return ""
-    return text[0].upper() + text[1:]
+import math
+
+def compute_cylinder_surface_area(radius, height):
+    base_area = math.pi * radius ** 2
+    lateral_area = 2 * math.pi * radius * height
+    return 2 * base_area + lateral_area
+
 if __name__ == '__main__':
-    sample_text_1 = "hello world this is a test"
-    result_1 = capitalize_first_letter_only(sample_text_1)
-    print(f"Input: {sample_text_1}")
-    print(f"Output: {result_1}")
-    sample_text_2 = "a short sentence"
-    result_2 = capitalize_first_letter_only(sample_text_2)
-    print(f"Input: {sample_text_2}")
-    print(f"Output: {result_2}")
-    sample_text_3 = "already capitalized"
-    result_3 = capitalize_first_letter_only(sample_text_3)
-    print(f"Input: {sample_text_3}")
-    print(f"Output: {result_3}")
-    sample_text_4 = ""
-    result_4 = capitalize_first_letter_only(sample_text_4)
-    print(f"Input: '{sample_text_4}'")
-    print(f"Output: '{result_4}'")
+    sample_radius = 5.0
+    sample_height = 10.0
+    result = compute_cylinder_surface_area(sample_radius, sample_height)
+    print(result)

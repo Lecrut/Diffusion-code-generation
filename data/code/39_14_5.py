@@ -1,42 +1,13 @@
-import sys
-
-def generate_substrings(s: str) -> iter[str]:
-    """
-    Generator that yields all possible substrings of a given string 's'.
-    
-    This function uses an efficient approach by iterating through every character as the starting point,
-    and then extending the substring from that start until the end of the string.
-    
-    Args:
-        s (str): The input string to generate substrings from.
-        
-    Yields:
-        str: Substrings starting at each index up to length 's'.
-    """
-    n = len(s)
-    # Outer loop iterates through every possible start index
-    for i in range(n):
-        # Inner logic starts a new substring with s[i] and builds it character by character.
-        # This avoids creating the full set of all substrings first, keeping memory usage low (O(1) auxiliary per yield).
-        current_substring = ""
-        for j in range(i, n):
-            if len(s) > 0:
-                char_to_add = s[j]
-                current_substring += char_to_add
-                # Yield the newly formed substring at each step to avoid storing them all in memory.
-                yield current_substring
+def calculate_prism_volume(base_area, height):
+    return base_area * height
 
 if __name__ == '__main__':
-    sample_string = "HELLO"
+    test_parameters = {
+        'rectangular_prism_1': {'base_area': 25.0, 'height': 10.0},
+        'triangular_prism_1': {'base_area': 15.5, 'height': 8.0},
+        'hexagonal_prism_1': {'base_area': 42.0, 'height': 12.5}
+    }
     
-    print(f"All substrings of '{sample_string}':")
-    
-    for sub in generate_substrings(sample_string):
-        # Sorting the output makes it easier to verify correctness, though not required.
-        sorted_chars = ''.join(sorted(sub)) 
-        if len(set(sub)) != 1:
-            print(sub)
-        
-print(f"Example count verification (lengths of substrings generated for '{sample_string}'):")
-    
-    # Count how many times each unique substring length appears to demonstrate functionality without printing all
+    for name, params in test_parameters.items():
+        volume = calculate_prism_volume(params['base_area'], params['height'])
+        print(f'{name}: {volume}')

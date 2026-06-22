@@ -1,7 +1,9 @@
-def calculate_perimeter(L, W):
-    return 2 * (L + W)
+def calculate_average(results):
+    if not results:
+        return 0.0
+    return sum(results) / len(results)
+
 if __name__ == '__main__':
-    L_sample = 10
-    W_sample = 5
-    perimeter = calculate_perimeter(L_sample, W_sample)
-    print(perimeter)
+    sample_results = [85, 92, 78, 90, 88]
+    average = calculate_average(sample_results)
+    print(average)

@@ -1,4 +1,8 @@
-import string; print(len(__name__ if '__main__' in __name__ else "hello"))
+def calculate_area(width, height):
+    return width * height
 
 if __name__ == '__main__':
-    pass
+    sample_width = 10
+    sample_height = 20
+    result = calculate_area(sample_width, sample_height)
+    print(result)

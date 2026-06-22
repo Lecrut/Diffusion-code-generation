@@ -1,8 +1,7 @@
-def calculate_perimeter(width, height):
-    return 2 * (width + height)
+def average_test_scores():
+    scores = [85, 92, 78, 90, 88, 76, 95, 89, 84, 91]
+    return sum(x for x in scores) / len(scores)
 
 if __name__ == '__main__':
-    width = 5
-    height = 10
-    result = calculate_perimeter(width, height)
+    result = average_test_scores()
     print(result)

@@ -1,8 +1,11 @@
-def calculate_area(base, height):
-    return base * height
+class DataAnalyzer:
+    def __init__(self):
+        self.data_points = [3.14, 2.71, 1.41, 1.73, 0.577]
+
+    def compute_largest(self):
+        return max(self.data_points)
 
 if __name__ == '__main__':
-    base_value = 5.5
-    height_value = 3.2
-    area = calculate_area(base_value, height_value)
-    print(area)
+    analyzer = DataAnalyzer()
+    result = analyzer.compute_largest()
+    print(result)

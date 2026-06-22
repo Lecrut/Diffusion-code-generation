@@ -1,20 +1,20 @@
-def combine_strings(str1: str, str2: str) -> str:
-    """
-    Combines two input strings into a single string separated by a space.
-    
-    Args:
-        str1 (str): The first input string.
-        str2 (str): The second input string.
-        
-    Returns:
-        str: A new string containing both inputs separated by a space.
-    """
-    return f"{str1} {str2}"
+from typing import Union
+
+Number = Union[int, float]
+
+def calculate_parallelogram_area(base: Number, height: Number) -> Number:
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a number")
+    if not isinstance(height, (int, float)):
+        raise TypeError("Height must be a number")
+    if base <= 0:
+        raise ValueError("Base must be greater than zero")
+    if height <= 0:
+        raise ValueError("Height must be greater than zero")
+    return base * height
 
 if __name__ == '__main__':
-    # Hard-coded sample values to ensure the script runs without user input or external dependencies
-    sample_str_1 = "Hello"
-    sample_str_2 = "World"
-    
-    result = combine_strings(sample_str_1, sample_str_2)
+    sample_base = 10
+    sample_height = 5
+    result = calculate_parallelogram_area(sample_base, sample_height)
     print(result)

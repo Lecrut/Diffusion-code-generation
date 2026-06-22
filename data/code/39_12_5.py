@@ -1,21 +1,8 @@
-def extract_substrings(phrase, indices):
-    extracted_substrings = []
-    for index in indices:
-        if 0 <= index < len(phrase):
-            start = index
-            end = index + 1
-            if end <= len(phrase):
-                substring = phrase[start:end]
-                extracted_substrings.append(substring)
-        else:
-            print(f"Error: Invalid index {index}. Index must be within the bounds [0, {len(phrase)-1}].")
-    return extracted_substrings
+def compute_prism_volume(base_area, height):
+    return base_area * height
+
 if __name__ == '__main__':
-    sample_phrase = "HelloWorld"
-    sample_indices = [0, 5, 10, -1, 3, 11]
-    print(f"Phrase: {sample_phrase}")
-    print(f"Indices to check: {sample_indices}")
-    results = extract_substrings(sample_phrase, sample_indices)
-    print("\nExtracted Substrings:")
-    for sub in results:
-        print(sub)
+    base_area = 10
+    height = 5
+    result = compute_prism_volume(base_area, height)
+    print(result)

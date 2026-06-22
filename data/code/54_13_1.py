@@ -1,17 +1,5 @@
-import sys
+def hollow_square(n):
+    return '\n'.join(['#' * n] + ['#' + ' ' * (n - 2) + '#' for _ in range(n - 2)] + ['#' * n] if n > 1 else ['#'] if n == 1 else '')
+
 if __name__ == '__main__':
-    try:
-        input_data = sys.stdin.read().strip()
-        if not input_data:
-            radius = 5.0
-        else:
-            radius = float(input_data)
-        if radius > 0:
-            area = 3.141592653589793 * (radius ** 2)
-            print(area)
-        else:
-            print("Radius must be a positive number.")
-    except ValueError:
-        print("Invalid input. Please enter a valid number.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    print(hollow_square(5))

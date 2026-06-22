@@ -1,14 +1,20 @@
-def generate_substrings(s):
-    n = len(s)
-    for i in range(n):
-        for j in range(i + 1, n + 1):
-            yield s[i:j]
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class PrismGeometry:
+    base_area: float
+    height: float
+
+    @property
+    def volume(self) -> float:
+        if self.base_area <= 0 or self.height <= 0:
+            return 0.0
+        return self.base_area * self.height
+
+def compute_volume(geom: PrismGeometry) -> float:
+    return geom.volume
+
 if __name__ == '__main__':
-    test_string = "abc"
-    substrings_gen = generate_substrings(test_string)
-    result_list = list(substrings_gen)
-    print(result_list)
-    test_string_long = "abcdefg"
-    substrings_gen_long = generate_substrings(test_string_long)
-    result_list_long = list(substrings_gen_long)
-    print(result_list_long)
+    geometry = PrismGeometry(base_area=20.0, height=12.5)
+    computed_value = compute_volume(geometry)
+    print(computed_value)
