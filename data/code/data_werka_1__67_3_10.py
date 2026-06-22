@@ -1,0 +1,6 @@
+def sum_generator(a, b):
+    yield a + b
+
+if __name__ == '__main__':
+    result = next(sum_generator(3, 5))
+    print(result)

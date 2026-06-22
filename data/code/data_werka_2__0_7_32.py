@@ -1,0 +1,13 @@
+class LengthConverter:
+
+    def convert(self, value, from_unit, to_unit):
+        if from_unit == 'm' and to_unit == 'ft':
+            return value * 3.28084
+        elif from_unit == 'ft' and to_unit == 'm':
+            return value / 3.28084
+        else:
+            raise ValueError('Unsupported unit conversion')
+if __name__ == '__main__':
+    converter = LengthConverter()
+    print(converter.convert(1, 'm', 'ft'))
+    print(converter.convert(10, 'ft', 'm'))

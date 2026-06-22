@@ -1,0 +1,13 @@
+class ListAccessor:
+    def __init__(self, elements):
+        self.elements = elements
+
+    def get_second(self):
+        if len(self.elements) < 2:
+            raise IndexError("List does not have a second element")
+        return self.elements[1]
+
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    accessor = ListAccessor(sample_list)
+    print(accessor.get_second())

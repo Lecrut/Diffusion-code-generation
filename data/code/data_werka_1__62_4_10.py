@@ -1,0 +1,30 @@
+def second_element_generator(iterable):
+    iterator = iter(iterable)
+    try:
+        first = next(iterator)
+        yield next(iterator)
+    except StopIteration:
+        raise ValueError("Input iterable must contain at least two elements")
+
+if __name__ == '__main__':
+    data1 = [10, 20, 30, 40]
+    gen1 = second_element_generator(data1)
+    print(list(gen1))
+    
+    data2 = [5, 15]
+    gen2 = second_element_generator(data2)
+    print(list(gen2))
+    
+    try:
+        data3 = [1]
+        gen3 = second_element_generator(data3)
+        print(list(gen3))
+    except ValueError as e:
+        print(e)
+    
+    try:
+        data4 = []
+        gen4 = second_element_generator(data4)
+        print(list(gen4))
+    except ValueError as e:
+        print(e)

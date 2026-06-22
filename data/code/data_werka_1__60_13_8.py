@@ -1,0 +1,6 @@
+def get_last_item(lst):
+    return lst[-1] if lst else None
+
+if __name__ == '__main__':
+    example_list = [1, 2, 3, 4, 5]
+    print(get_last_item(example_list))

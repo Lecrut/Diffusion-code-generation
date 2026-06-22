@@ -1,0 +1,25 @@
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def calculate_perimeter(self):
+        return 2 * (self.length + self.width)
+
+def validate_length_width(length, width):
+    if not (isinstance(length, (int, float)) and isinstance(width, (int, float))):
+        raise ValueError("Length and width must be numbers.")
+    if length <= 0 or width <= 0:
+        raise ValueError("Length and width must be positive.")
+
+if __name__ == '__main__':
+    try:
+        rect1 = Rectangle(6, 2)
+        perimeter1 = rect1.calculate_perimeter()
+        print(f"Perimeter of Rectangle 1: {perimeter1}")
+        
+        rect2 = Rectangle(9, 3)
+        perimeter2 = rect2.calculate_perimeter()
+        print(f"Perimeter of Rectangle 2: {perimeter2}")
+    except ValueError as e:
+        print(e)

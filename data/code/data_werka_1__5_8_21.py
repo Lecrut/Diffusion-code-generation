@@ -1,0 +1,15 @@
+def compare_lengths(length1, length2):
+    abs_difference = abs(length1 - length2)
+    if length1 > length2:
+        description = "First length is greater"
+    elif length2 > length1:
+        description = "Second length is greater"
+    else:
+        description = "Both lengths are equal"
+    return (abs_difference, description)
+
+if __name__ == '__main__':
+    length1 = 5.7
+    length2 = 3.2
+    result = compare_lengths(length1, length2)
+    print(result)

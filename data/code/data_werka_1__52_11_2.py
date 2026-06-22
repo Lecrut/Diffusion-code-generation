@@ -1,0 +1,7 @@
+def calculate_triangle_area(x1, y1):
+    return abs(0.5 * (x1 * 0 + y1 * 0 - 0 * y1 - 0 * x1))
+
+if __name__ == '__main__':
+    coordinates = {'x': 3, 'y': 4}
+    area = calculate_triangle_area(coordinates['x'], coordinates['y'])
+    print(area)

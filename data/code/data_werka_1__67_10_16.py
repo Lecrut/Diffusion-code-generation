@@ -1,0 +1,14 @@
+def find_pair_sum(nums, target):
+    num_map = {}
+    for index, num in enumerate(nums):
+        complement = target - num
+        if complement in num_map:
+            return [num_map[complement], index]
+        num_map[num] = index
+    return []
+
+if __name__ == '__main__':
+    sample_nums = [2, 7, 11, 15]
+    target_sum = 9
+    result = find_pair_sum(sample_nums, target_sum)
+    print(result)

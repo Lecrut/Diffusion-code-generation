@@ -1,0 +1,12 @@
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+
+if __name__ == '__main__':
+    dimensions = {'length': 10, 'width': 5}
+    rect = Rectangle(dimensions['length'], dimensions['width'])
+    print(rect.perimeter())

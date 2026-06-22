@@ -1,0 +1,38 @@
+class ListDictInterface:
+
+    def __init__(self, elements):
+        self.elements = elements
+
+    def __getitem__(self, key):
+        if isinstance(key, int) and 0 <= key < len(self.elements):
+            return self.elements[key]
+        elif isinstance(key, str):
+            try:
+                index = int(key)
+                if 0 <= index < len(self.elements):
+                    return self.elements[index]
+            except ValueError:
+                raise KeyError(f'Key {key} not found')
+        raise KeyError(f'Key {key} not found')
+
+    def __setitem__(self, key, value):
+        if isinstance(key, int) and 0 <= key < len(self.elements):
+            self.elements[key] = value
+        elif isinstance(key, str):
+            try:
+                index = int(key)
+                if 0 <= index < len(self.elements):
+                    self.elements[index] = value
+            except ValueError:
+                raise KeyError(f'Key {key} not found')
+        else:
+            raise KeyError(f'Key {key} not found')
+if __name__ == '__main__':
+    mixed_list = [10, 'hello', 3.14, True, [1, 2], None]
+    list_dict_interface = ListDictInterface(mixed_list)
+    print(list_dict_interface[0])
+    print(list_dict_interface['1'])
+    list_dict_interface[2] = 3.14159
+    print(list_dict_interface[2])
+    list_dict_interface['3'] = False
+    print(list_dict_interface[3])

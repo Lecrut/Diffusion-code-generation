@@ -1,0 +1,9 @@
+import math
+
+def get_area(radius):
+    return math.pi * radius ** 2
+
+if __name__ == '__main__':
+    sample_radius = 5.0
+    area = get_area(sample_radius)
+    print(area)

@@ -1,0 +1,12 @@
+class ListAccessor:
+    def __init__(self):
+        self._internal_list = [10, 20, 30, 40, 50]
+
+    @classmethod
+    def get_second_element(cls, instance):
+        return instance._internal_list[1]
+
+if __name__ == '__main__':
+    accessor_instance = ListAccessor()
+    second_element = ListAccessor.get_second_element(accessor_instance)
+    print(second_element)

@@ -1,0 +1,16 @@
+def get_central_item(sequence):
+    if not sequence:
+        return None
+    length = len(sequence)
+    central_index = length // 2
+    if length % 2 == 0:
+        return (sequence[central_index - 1] + sequence[central_index]) / 2
+    else:
+        return sequence[central_index]
+if __name__ == '__main__':
+    sample_sequence_odd = [1, 3, 5, 7, 9]
+    sample_sequence_even = [2, 4, 6, 8, 10, 12]
+    sample_sequence_empty = []
+    print(get_central_item(sample_sequence_odd))
+    print(get_central_item(sample_sequence_even))
+    print(get_central_item(sample_sequence_empty))

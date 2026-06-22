@@ -1,0 +1,25 @@
+import math
+
+class ShapeCalculator:
+    def __init__(self, radius, side):
+        self.radius = radius
+        self.side = side
+
+    def calculate_circle_area(self):
+        return math.pi * self.radius ** 2
+
+    def calculate_circle_perimeter(self):
+        return 2 * math.pi * self.radius
+
+    def calculate_square_area(self):
+        return self.side ** 2
+
+    def calculate_square_perimeter(self):
+        return 4 * self.side
+
+if __name__ == '__main__':
+    calculator = ShapeCalculator(radius=5.0, side=4.0)
+    print(f"Circle Area: {calculator.calculate_circle_area()}")
+    print(f"Circle Perimeter (Circumference): {calculator.calculate_circle_perimeter()}")
+    print(f"Square Area: {calculator.calculate_square_area()}")
+    print(f"Square Perimeter: {calculator.calculate_square_perimeter()}")
