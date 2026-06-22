@@ -1,0 +1,13 @@
+class VolumeConverter:
+    MILLILITERS_TO_FLUID_OUNCES = 0.033814
+
+    @staticmethod
+    def scale_volume(milliliters):
+        if milliliters < 0:
+            raise ValueError("Volume cannot be negative")
+        return milliliters * VolumeConverter.MILLILITERS_TO_FLUID_OUNCES
+
+if __name__ == '__main__':
+    sample_value = 1500
+    result = VolumeConverter.scale_volume(sample_value)
+    print(result)

@@ -1,0 +1,32 @@
+import math
+
+class Shape:
+    def calculate_area(self):
+        raise ValueError("This method should be overridden by subclasses")
+
+class Circle(Shape):
+    PI = math.pi
+
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calculate_area(self):
+        return self.PI * (self.radius ** 2)
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def calculate_area(self):
+        return self.width * self.height
+
+def main():
+    circle = Circle(radius=7.0)
+    rectangle = Rectangle(width=3.0, height=9.0)
+
+    print("Circle Area:", circle.calculate_area())
+    print("Rectangle Area:", rectangle.calculate_area())
+
+if __name__ == '__main__':
+    main()

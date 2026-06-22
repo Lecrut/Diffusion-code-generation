@@ -1,0 +1,25 @@
+class StringManipulator:
+    def __init__(self, input_string):
+        self.input_string = input_string
+
+    def to_lowercase(self):
+        return self.input_string.lower()
+
+    def to_uppercase(self):
+        return self.input_string.upper()
+
+    def to_title_case(self):
+        return self.input_string.title()
+
+    def swap_case(self):
+        return self.input_string.swapcase()
+
+if __name__ == '__main__':
+    sample_text = "Python Programming"
+    manipulator = StringManipulator(sample_text)
+    
+    print("Original:", sample_text)
+    print("Lowercase:", manipulator.to_lowercase())
+    print("Uppercase:", manipulator.to_uppercase())
+    print("Title Case:", manipulator.to_title_case())
+    print("Swapped Case:", manipulator.swap_case())

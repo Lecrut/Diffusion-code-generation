@@ -1,0 +1,10 @@
+STRING_LENGTH_THRESHOLD = 100
+
+def string_length(s):
+    if not isinstance(s, str):
+        raise ValueError("Input must be a string")
+    return len(s)
+
+if __name__ == '__main__':
+    sample_string = "Alibaba Cloud is innovative"
+    print(string_length(sample_string))

@@ -1,0 +1,7 @@
+def sort_integers(int_list):
+    return sorted(int_list)
+
+if __name__ == '__main__':
+    sample_values = [10, 30, 20, 50, 40]
+    sorted_values = sort_integers(sample_values)
+    print(sorted_values)

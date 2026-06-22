@@ -1,0 +1,20 @@
+import re
+
+def parse_time_difference(time_str):
+    pattern = '(\\d+)\\s+hours\\s+(\\d+)\\s+minutes'
+    match = re.match(pattern, time_str)
+    if not match:
+        raise ValueError(f'Unsupported time format: {time_str}')
+    hours = int(match.group(1))
+    minutes = int(match.group(2))
+    return hours * 60 + minutes
+
+def calculate_total_time(time_differences):
+    total_minutes = 0
+    for time_diff in time_differences:
+        total_minutes += parse_time_difference(time_diff)
+    return total_minutes
+if __name__ == '__main__':
+    sample_times = ['2 hours 30 minutes', '1 hour 45 minutes', '3 hours 15 minutes']
+    total_time = calculate_total_time(sample_times)
+    print(total_time)

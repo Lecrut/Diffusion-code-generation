@@ -1,0 +1,11 @@
+def determine_larger(value1, value2):
+    if not isinstance(value1, (int, float)) or not isinstance(value2, (int, float)):
+        raise ValueError("Both values must be integers or floats")
+    
+    return max(value1, value2)
+
+if __name__ == '__main__':
+    sample_value1 = 27
+    sample_value2 = 35.6
+    larger_value = determine_larger(sample_value1, sample_value2)
+    print(larger_value)

@@ -1,0 +1,28 @@
+class Shape:
+
+    def __init__(self, shape_type):
+        self.shape_type = shape_type.lower()
+        if self.shape_type not in ['rectangle', 'triangle']:
+            raise ValueError('Unsupported shape type')
+
+    def area(self, *args):
+        if self.shape_type == 'rectangle':
+            return self._calculate_rectangle_area(*args)
+        elif self.shape_type == 'triangle':
+            return self._calculate_triangle_area(*args)
+
+    def _calculate_rectangle_area(self, width, height):
+        if len(args) != 2:
+            raise ValueError('Rectangle requires two arguments: width and height')
+        return width * height
+
+    def _calculate_triangle_area(self, base, height):
+        if len(args) != 2:
+            raise ValueError('Triangle requires two arguments: base and height')
+        TRIANGLE_AREA_FACTOR = 0.5
+        return TRIANGLE_AREA_FACTOR * base * height
+if __name__ == '__main__':
+    rectangle = Shape('rectangle')
+    print(rectangle.area(4, 5))
+    triangle = Shape('triangle')
+    print(triangle.area(3, 6))

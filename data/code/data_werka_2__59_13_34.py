@@ -1,0 +1,10 @@
+def find_middle_value(nums):
+    if not nums:
+        raise ValueError("The list cannot be empty")
+    nums.sort()
+    mid_index = len(nums) // 2
+    return nums[mid_index]
+
+if __name__ == '__main__':
+    sample_values = [3, 1, 4, 1, 5, 9, 2]
+    print(find_middle_value(sample_values))

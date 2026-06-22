@@ -1,0 +1,33 @@
+import math
+
+def validate_dimensions(width, height):
+    if width <= 0:
+        raise ValueError("Width must be a positive number.")
+    if height <= 0:
+        raise ValueError("Height must be a positive number.")
+
+def calculate_perimeter(width, height):
+    return 2 * (width + height)
+
+def calculate_area(width, height):
+    return width * height
+
+class Rectangle:
+    def __init__(self, width, height):
+        validate_dimensions(width, height)
+        self.width = width
+        self.height = height
+
+    def perimeter(self):
+        return calculate_perimeter(self.width, self.height)
+
+    def area(self):
+        return calculate_area(self.width, self.height)
+
+if __name__ == '__main__':
+    try:
+        rect = Rectangle(5.0, 3.0)
+        print(f"Perimeter: {rect.perimeter()}")
+        print(f"Area: {rect.area()}")
+    except ValueError as e:
+        print(e)

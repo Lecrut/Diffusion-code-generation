@@ -1,0 +1,20 @@
+def adjust_distance(distance, unit):
+    conversion_factors = {'miles': 1.60934, 'km': 1 / 1.60934}
+    if unit not in conversion_factors:
+        raise ValueError('Unsupported unit type')
+    adjusted_distance = distance * conversion_factors[unit]
+    new_unit = 'km' if unit == 'miles' else 'miles'
+    return (adjusted_distance, new_unit)
+if __name__ == '__main__':
+    try:
+        sample_distance_miles = 6
+        adjusted_distance_km, new_unit_km = adjust_distance(sample_distance_miles, 'miles')
+        print(f'{sample_distance_miles} miles is {adjusted_distance_km:.2f} {new_unit_km}')
+        sample_distance_km = 15
+        adjusted_distance_miles, new_unit_miles = adjust_distance(sample_distance_km, 'km')
+        print(f'{sample_distance_km} km is {adjusted_distance_miles:.2f} {new_unit_miles}')
+        invalid_distance = 10
+        invalid_unit = 'meters'
+        adjusted_distance_invalid, new_unit_invalid = adjust_distance(invalid_distance, invalid_unit)
+    except ValueError as e:
+        print(e)

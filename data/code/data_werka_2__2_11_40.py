@@ -1,0 +1,9 @@
+def liters_to_gallons(liters):
+    gallons = liters * 0.264172
+    return gallons
+
+if __name__ == '__main__':
+    sample_values = [1, 5, 10, 20]
+    for value in sample_values:
+        result = liters_to_gallons(value)
+        print(f"{value} liters is {result} gallons")

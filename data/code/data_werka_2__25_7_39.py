@@ -1,0 +1,11 @@
+def is_zero_string(s):
+    try:
+        number = float(s)
+        return number == 0
+    except ValueError:
+        return False
+
+if __name__ == '__main__':
+    test_values = ["0", "0.0", "-0", "1", "abc", "0.0000000000000001"]
+    results = {value: is_zero_string(value) for value in test_values}
+    print(results)

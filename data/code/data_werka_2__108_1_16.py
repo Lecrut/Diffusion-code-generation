@@ -1,0 +1,43 @@
+def get_day_of_month(timestamp):
+    if not isinstance(timestamp, (int, float)):
+        raise ValueError('Timestamp must be a number')
+    if timestamp < 0:
+        raise ValueError('Timestamp must be non-negative')
+    seconds_per_day = 86400
+    days_since_epoch = int(timestamp // seconds_per_day)
+    year = 1970
+    month = 1
+    day = 1
+
+    def is_leap_year(y):
+        return y % 4 == 0 and y % 100 != 0 or y % 400 == 0
+
+    def days_in_month(y, m):
+        if m in (1, 3, 5, 7, 8, 10, 12):
+            return 31
+        elif m in (4, 6, 9, 11):
+            return 30
+        elif m == 2:
+            return 29 if is_leap_year(y) else 28
+    remaining_days = days_since_epoch
+    while True:
+        days_in_current_year = 366 if is_leap_year(year) else 365
+        if remaining_days < days_in_current_year:
+            break
+        remaining_days -= days_in_current_year
+        year += 1
+    while True:
+        dim = days_in_month(year, month)
+        if remaining_days < dim:
+            break
+        remaining_days -= dim
+        month += 1
+    day_of_month = remaining_days + 1
+    return day_of_month
+if __name__ == '__main__':
+    timestamp1 = 0
+    result1 = get_day_of_month(timestamp1)
+    print(result1)
+    timestamp2 = 86400
+    result2 = get_day_of_month(timestamp2)
+    print(result2)

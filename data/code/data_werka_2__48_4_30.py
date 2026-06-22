@@ -1,0 +1,24 @@
+import math
+
+class Polygon:
+    def __init__(self, vertices):
+        self.vertices = vertices
+
+    def distance(self, p1, p2):
+        return math.sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
+
+    def perimeter(self):
+        if len(self.vertices) < 3:
+            raise ValueError('A polygon must have at least 3 vertices')
+        
+        total_distance = sum(self.distance(self.vertices[i], self.vertices[(i + 1) % len(self.vertices)]) for i in range(len(self.vertices)))
+        return total_distance
+
+if __name__ == '__main__':
+    triangle_vertices = [(0, 0), (4, 0), (2, 3)]
+    triangle = Polygon(triangle_vertices)
+    print('Perimeter of the triangle:', triangle.perimeter())
+
+    quadrilateral_vertices = [(1, 1), (6, 1), (6, 5), (1, 5)]
+    quadrilateral = Polygon(quadrilateral_vertices)
+    print('Perimeter of the quadrilateral:', quadrilateral.perimeter())
