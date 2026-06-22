@@ -1,0 +1,8 @@
+def check_same_characters(phrase1: str, phrase2: str) -> bool:
+    return set(phrase1.replace(' ', '').lower()) == set(phrase2.replace(' ', '').lower())
+if __name__ == '__main__':
+    print(check_same_characters('listen', 'silent'))
+    print(check_same_characters('hello', 'world'))
+    print(check_same_characters('binary', 'brainy'))
+    print(check_same_characters('apple', 'papel'))
+    print(check_same_characters('rat', 'car'))

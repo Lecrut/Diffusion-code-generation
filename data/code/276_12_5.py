@@ -1,0 +1,25 @@
+def execute_instructions(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            instructions = file.readlines()
+        
+        for instruction in instructions:
+            parts = instruction.strip().split()
+            if not parts:
+                continue
+            command = parts[0]
+            args = parts[1:]
+            
+            if command == 'print':
+                print(*args)
+            elif command == 'add':
+                result = sum(map(int, args))
+                print(result)
+            else:
+                raise ValueError(f"Unknown command: {command}")
+    except FileNotFoundError:
+        print("File not found. Please provide a valid file path.")
+
+if __name__ == '__main__':
+    sample_file_path = "sample_instructions.txt"
+    execute_instructions(sample_file_path)

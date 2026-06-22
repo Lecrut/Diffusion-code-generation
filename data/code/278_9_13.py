@@ -1,0 +1,12 @@
+def print_complex_numbers(numbers):
+    if not all(isinstance(num, complex) for num in numbers):
+        raise ValueError("All elements must be complex numbers")
+    for number in numbers:
+        print(f"{number.real} + {number.imag}j")
+
+if __name__ == '__main__':
+    sample_numbers = [3+4j, 1-2j, 0+5j]
+    try:
+        print_complex_numbers(sample_numbers)
+    except ValueError as e:
+        print(e)

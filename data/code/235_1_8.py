@@ -1,0 +1,12 @@
+def print_square_box(size):
+    if not isinstance(size, int) or size <= 0:
+        raise ValueError("Size must be a positive integer.")
+    pattern = '#' * size
+    for _ in range(size):
+        print(pattern)
+
+if __name__ == '__main__':
+    try:
+        print_square_box(4)
+    except ValueError as e:
+        print(e)

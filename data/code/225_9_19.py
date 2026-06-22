@@ -1,0 +1,16 @@
+def find_min_max_values(data_dict):
+    if not data_dict:
+        return None, None
+    min_val = max_val = next(iter(data_dict.values()))
+    for value in data_dict.values():
+        if value < min_val:
+            min_val = value
+        elif value > max_val:
+            max_val = value
+    return min_val, max_val
+
+if __name__ == '__main__':
+    sample_data = {'a': 10, 'b': 5, 'c': 20, 'd': -3, 'e': 15, 'f': 8, 'g': 25, 'h': -10}
+    min_result, max_result = find_min_max_values(sample_data)
+    print(f"Minimum value: {min_result}")
+    print(f"Maximum value: {max_result}")

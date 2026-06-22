@@ -1,0 +1,15 @@
+import math
+
+def validate_radius(radius):
+    if not isinstance(radius, (int, float)) or radius <= 0:
+        raise ValueError("Radius must be a positive number")
+
+def calculate_circle_perimeter(radius):
+    validate_radius(radius)
+    return 2 * math.pi * radius
+
+if __name__ == '__main__':
+    try:
+        print(calculate_circle_perimeter(100))
+    except ValueError as e:
+        print(e)

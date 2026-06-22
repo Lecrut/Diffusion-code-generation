@@ -1,0 +1,15 @@
+SEEN = set()
+
+def find_first_duplicate(lst):
+    global SEEN
+    seen = SEEN.copy()
+    for item in lst:
+        if item in seen:
+            return item
+        seen.add(item)
+    SEEN.update(seen)
+    return None
+
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2]
+    print(find_first_duplicate(sample_list))

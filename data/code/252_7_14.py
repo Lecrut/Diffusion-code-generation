@@ -1,0 +1,19 @@
+class CompareTwoSimpleQuantitiesNowManager:
+    def __init__(self):
+        self.entries = []
+
+    def add_entry(self, entry):
+        self.entries.append(entry)
+
+    def update_entry(self, index, entry):
+        if 0 <= index < len(self.entries):
+            self.entries[index] = entry
+
+    def list_entries(self):
+        return self.entries
+
+if __name__ == '__main__':
+    manager = CompareTwoSimpleQuantitiesNowManager()
+    manager.add_entry({'quantity1': 5, 'quantity2': 3})
+    manager.update_entry(0, {'quantity1': 7, 'quantity2': 4})
+    print(manager.list_entries())

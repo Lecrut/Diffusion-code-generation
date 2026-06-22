@@ -1,0 +1,7 @@
+def find_equal_indices(list1, list2):
+    return [i for i, (a, b) in enumerate(zip(list1, list2)) if abs(a - b) < 1e-09]
+
+if __name__ == '__main__':
+    sample_list1 = [1.0, 2.5, 3.0, 4.5]
+    sample_list2 = [1.0, 2.6, 3.0, 4.5]
+    print(find_equal_indices(sample_list1, sample_list2))

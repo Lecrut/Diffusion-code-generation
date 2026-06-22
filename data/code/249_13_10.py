@@ -1,0 +1,13 @@
+def find_largest_element(data):
+    if not data:
+        raise ValueError("List is empty")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+
+if __name__ == '__main__':
+    sample_list = [34, 89, 23, 56, 78, 12]
+    result = find_largest_element(sample_list)
+    print(result)

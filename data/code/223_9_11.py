@@ -1,0 +1,8 @@
+import numpy as np
+
+def find_max_value(numbers):
+    return np.max(numbers)
+
+if __name__ == '__main__':
+    sample_values = [3, 5, 1, 2, 4]
+    print(find_max_value(sample_values))

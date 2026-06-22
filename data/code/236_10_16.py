@@ -1,0 +1,8 @@
+def repeat_shape(shape, count):
+    return [shape for _ in range(count)]
+
+if __name__ == '__main__':
+    sample_shape = 'circle'
+    sample_count = 5
+    repeated_shapes = repeat_shape(sample_shape, sample_count)
+    print(repeated_shapes)

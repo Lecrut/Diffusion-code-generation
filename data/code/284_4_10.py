@@ -1,0 +1,17 @@
+def reverse_dict_keys(d):
+    if not isinstance(d, dict):
+        raise ValueError("Input must be a dictionary")
+    
+    return {k: d[k] for k in reversed(d)}
+
+if __name__ == '__main__':
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    print("Original dictionary:", sample_dict)
+    reversed_dict = reverse_dict_keys(sample_dict)
+    print("Reversed dictionary keys:", reversed_dict)
+
+    invalid_input = [1, 2, 3]
+    try:
+        result = reverse_dict_keys(invalid_input)
+    except ValueError as e:
+        print(e)

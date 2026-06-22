@@ -1,0 +1,15 @@
+class TupleAverageCalculator:
+    @staticmethod
+    def calculate(tuples):
+        if not all(isinstance(t, tuple) and len(t) > 0 for t in tuples):
+            raise ValueError("All elements must be non-empty tuples.")
+        
+        total_sum = sum(sum(t) for t in tuples)
+        element_count = sum(len(t) for t in tuples)
+        
+        return total_sum / element_count if element_count > 0 else 0
+
+if __name__ == '__main__':
+    sample_data = ((1, 2), (3, 4), (5,))
+    calculator = TupleAverageCalculator()
+    print(calculator.calculate(sample_data))

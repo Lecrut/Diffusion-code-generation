@@ -1,0 +1,21 @@
+def find_min_max(data):
+    if not data:
+        raise ValueError("Data must not be empty")
+    
+    min_val = float('inf')
+    max_val = float('-inf')
+    for value in data:
+        if value < min_val:
+            min_val = value
+        elif value > max_val:
+            max_val = value
+    
+    return min_val, max_val
+
+def calculate_range(data):
+    min_val, max_val = find_min_max(data)
+    return max_val - min_val
+
+if __name__ == '__main__':
+    sample_data = [10, 25, 35, 45, 60]
+    print(calculate_range(sample_data))

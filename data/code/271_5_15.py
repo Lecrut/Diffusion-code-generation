@@ -1,0 +1,6 @@
+def contains_only_digits_and_spaces(input_string):
+    return input_string.isdigit() or all((char.isspace() for char in input_string))
+if __name__ == '__main__':
+    test_string = '12345 67890'
+    result = contains_only_digits_and_spaces(test_string)
+    print(result)

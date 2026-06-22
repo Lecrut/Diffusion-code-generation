@@ -1,0 +1,16 @@
+def find_minimum(numbers):
+    if not numbers:
+        raise ValueError("The list is empty")
+    min_value = numbers[0]
+    for number in numbers[1:]:
+        if number < min_value:
+            min_value = number
+    return min_value
+
+if __name__ == '__main__':
+    data1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_minimum(data1))
+    data2 = [-10, 0, 5, -20, 3]
+    print(find_minimum(data2))
+    data3 = [42]
+    print(find_minimum(data3))

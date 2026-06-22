@@ -1,0 +1,17 @@
+import itertools
+
+def find_global_min_max(*lists):
+    combined = list(itertools.chain.from_iterable(lists))
+    global_min = min(combined)
+    global_max = max(combined)
+    
+    min_list_name = next((name for name, lst in zip(('list1', 'list2'), lists) if global_min in lst), None)
+    max_list_name = next((name for name, lst in zip(('list1', 'list2'), lists) if global_max in lst), None)
+    
+    return (global_min, min_list_name), (global_max, max_list_name)
+
+if __name__ == '__main__':
+    list1 = [3, 5, 1, 8]
+    list2 = [4, 6, 0, 7]
+    result = find_global_min_max(list1, list2)
+    print(result)

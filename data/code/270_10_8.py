@@ -1,0 +1,9 @@
+class StringProcessor:
+    @staticmethod
+    def remove_spaces(strings):
+        return [s.replace(' ', '') for s in strings]
+
+if __name__ == '__main__':
+    sample_strings = ["Hello World", "Python Programming", "Remove Spaces"]
+    processed_strings = StringProcessor.remove_spaces(sample_strings)
+    print(processed_strings)

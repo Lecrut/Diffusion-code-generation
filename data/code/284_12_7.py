@@ -1,0 +1,11 @@
+class StringReverser:
+    @staticmethod
+    def reverse_words(input_string):
+        words = input_string.split()
+        reversed_words = words[::-1]
+        return ' '.join(reversed_words)
+
+if __name__ == '__main__':
+    sample_input = "Hello world from Python"
+    result = StringReverser.reverse_words(sample_input)
+    print(result)

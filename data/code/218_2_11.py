@@ -1,0 +1,12 @@
+def find_min_value(lst):
+    if not lst:
+        raise ValueError("List is empty")
+    min_val = lst[0]
+    for num in lst[1:]:
+        if num < min_val:
+            min_val = num
+    return min_val
+
+if __name__ == '__main__':
+    sample_list = [3.5, 2.1, 4.8, 1.9, 5.6]
+    print(find_min_value(sample_list))

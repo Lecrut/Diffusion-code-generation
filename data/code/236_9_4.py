@@ -1,0 +1,8 @@
+def replicate_line_segment(coordinates, times):
+    return [coord for coord in coordinates for _ in range(times)]
+
+if __name__ == '__main__':
+    sample_coordinates = [(0, 0), (1, 2)]
+    times_to_replicate = 3
+    result = replicate_line_segment(sample_coordinates, times_to_replicate)
+    print(result)

@@ -1,0 +1,22 @@
+import math
+
+def calculate_circle_area(radius):
+    return math.pi * radius ** 2
+
+def calculate_rectangle_area(length, width):
+    return length * width
+
+if __name__ == '__main__':
+    circle_radius = 5
+    rectangle_length = 10
+    rectangle_width = 7
+    
+    circle_area = calculate_circle_area(circle_radius)
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    
+    if circle_area > rectangle_area:
+        print("Circle has the larger area.")
+    elif circle_area < rectangle_area:
+        print("Rectangle has the larger area.")
+    else:
+        print("Both shapes have the same area.")

@@ -1,0 +1,6 @@
+def compare_two_simple_quantities_now_batch_process(values):
+    return [max(a, b) for a, b in values]
+
+if __name__ == '__main__':
+    sample_values = [(3, 5), (10, 2), (4, 4)]
+    print(compare_two_simple_quantities_now_batch_process(sample_values))

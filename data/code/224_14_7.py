@@ -1,0 +1,15 @@
+class ScoreCalculator:
+    @staticmethod
+    def calculate_mean(scores):
+        total = sum(scores)
+        count = len(scores)
+        if count == 0:
+            return float('nan')
+        mean = total / count
+        return mean
+
+if __name__ == '__main__':
+    calculator = ScoreCalculator()
+    sample_scores = [85, 90, 78, 92, 88]
+    result = calculator.calculate_mean(sample_scores)
+    print(result)

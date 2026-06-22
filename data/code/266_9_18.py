@@ -1,0 +1,17 @@
+def count_word_lengths(file_path):
+    word_length_count = {}
+    with open(file_path, 'r') as file:
+        for line in file:
+            words = line.split()
+            for word in words:
+                length = len(word.strip())
+                if length in word_length_count:
+                    word_length_count[length] += 1
+                else:
+                    word_length_count[length] = 1
+    return word_length_count
+
+if __name__ == '__main__':
+    sample_file_path = 'sample.txt'
+    result = count_word_lengths(sample_file_path)
+    print(result)

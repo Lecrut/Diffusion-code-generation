@@ -1,0 +1,10 @@
+def validate_dimensions(width: float, height: float) -> None:
+    if width <= 0 or height <= 0:
+        raise ValueError("Width and height must be positive numbers")
+
+def calculate_area(width: float, height: float) -> float:
+    validate_dimensions(width, height)
+    return width * height
+
+if __name__ == '__main__':
+    print(calculate_area(5.0, 3.0))

@@ -1,0 +1,17 @@
+def find_largest_item(items, key):
+    if not items:
+        return None
+    largest = items[0]
+    for item in items[1:]:
+        if item[key] > largest[key]:
+            largest = item
+    return largest
+
+if __name__ == '__main__':
+    sample_items = [
+        {'product': 'laptop', 'price': 999},
+        {'product': 'smartphone', 'price': 699},
+        {'product': 'tablet', 'price': 299}
+    ]
+    largest_item = find_largest_item(sample_items, 'price')
+    print(largest_item)

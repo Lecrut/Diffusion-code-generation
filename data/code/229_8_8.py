@@ -1,0 +1,26 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def validate_matrix(matrix):
+    if not matrix:
+        raise ValueError("Matrix cannot be empty")
+    n = len(matrix)
+    for row in matrix:
+        if len(row) != n:
+            raise ValueError("All rows must have the same length")
+
+def plot_heatmap(matrix):
+    validate_matrix(matrix)
+    sns.heatmap(matrix, annot=True, cmap='YlGnBu')
+    plt.show()
+
+if __name__ == '__main__':
+    sample_matrix = [
+        [0.1, 0.2, 0.3, 0.4, 0.5, 0.6],
+        [0.7, 0.8, 0.9, 1.0, 1.1, 1.2],
+        [1.3, 1.4, 1.5, 1.6, 1.7, 1.8],
+        [1.9, 2.0, 2.1, 2.2, 2.3, 2.4],
+        [2.5, 2.6, 2.7, 2.8, 2.9, 3.0],
+        [3.1, 3.2, 3.3, 3.4, 3.5, 3.6]
+    ]
+    plot_heatmap(sample_matrix)

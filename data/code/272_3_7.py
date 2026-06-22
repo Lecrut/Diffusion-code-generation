@@ -1,0 +1,12 @@
+class WordSorter:
+    @staticmethod
+    def sort_words(input_string):
+        words = input_string.split()
+        sorted_words = sorted(words)
+        return ' '.join(sorted_words)
+
+if __name__ == '__main__':
+    sample_input = "zebra apple mango banana cherry"
+    sorter = WordSorter()
+    sorted_string = sorter.sort_words(sample_input)
+    print(sorted_string)

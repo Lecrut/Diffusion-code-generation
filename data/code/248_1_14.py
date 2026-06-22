@@ -1,0 +1,10 @@
+class Calculator:
+    def add(self, a, b):
+        return a + b
+
+if __name__ == '__main__':
+    calc = Calculator()
+    result1 = calc.add(5, 10)
+    result2 = calc.add(3, 7)
+    print(result1)
+    print(result2)

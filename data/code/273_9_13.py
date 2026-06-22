@@ -1,0 +1,16 @@
+MAX_REPETITIONS = 5
+
+def repeat_n_times(n=MAX_REPETITIONS):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@repeat_n_times(5)
+def greet(name):
+    print(f"Hello, {name}")
+
+if __name__ == '__main__':
+    greet("Alice")

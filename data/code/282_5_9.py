@@ -1,0 +1,9 @@
+MAX_ITER = 10**6
+
+def sum_sequence(numbers):
+    return sum(x for x in numbers if isinstance(x, int))
+
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5]
+    result = sum_sequence(sample_numbers)
+    print(result)

@@ -1,0 +1,8 @@
+def yards_to_meters(yards):
+    if yards < 0:
+        raise ValueError("Yards cannot be negative")
+    return yards * 0.9144
+
+if __name__ == '__main__':
+    print(yards_to_meters(10))
+    print(yards_to_meters(25))

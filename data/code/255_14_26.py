@@ -1,0 +1,20 @@
+import random
+import time
+
+MAX_VALUE = 10**9
+
+def find_max_value(lst):
+    max_val = lst[0]
+    for num in lst:
+        if num > max_val:
+            max_val = num
+    return max_val
+
+if __name__ == '__main__':
+    sample_sizes = [10**3, 10**4, 10**5, 10**6]
+    for size in sample_sizes:
+        lst = [random.randint(0, MAX_VALUE) for _ in range(size)]
+        start_time = time.time()
+        max_value = find_max_value(lst)
+        end_time = time.time()
+        print(f"List size: {size}, Max value: {max_value}, Time taken: {end_time - start_time:.6f} seconds")

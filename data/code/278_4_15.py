@@ -1,0 +1,9 @@
+class DictionaryPrinter:
+    @staticmethod
+    def print_pairs(dictionary):
+        for key, value in dictionary.items():
+            print(f'{key}: {value}')
+
+if __name__ == '__main__':
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    DictionaryPrinter.print_pairs(sample_dict)

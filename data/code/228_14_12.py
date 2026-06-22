@@ -1,0 +1,23 @@
+from PIL import Image, ImageDraw
+
+def create_red_triangle():
+    width, height = 200, 200
+    background_color = 'white'
+    triangle_points = [(50, 150), (150, 50), (250, 150)]
+    
+    if not all(isinstance(p, tuple) and len(p) == 2 for p in triangle_points):
+        raise ValueError("Triangle points must be a list of tuples with two integers each.")
+    
+    image = Image.new('RGB', (width, height), background_color)
+    draw = ImageDraw.Draw(image)
+    draw.polygon(triangle_points, fill='red')
+    
+    return image
+
+if __name__ == '__main__':
+    try:
+        red_triangle_image = create_red_triangle()
+        red_triangle_image.save('red_triangle.png')
+        print("Image saved successfully.")
+    except ValueError as e:
+        print(e)

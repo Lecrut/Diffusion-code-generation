@@ -1,0 +1,13 @@
+def count_word_frequency(text):
+    words = text.split()
+    frequency = {}
+    for word in words:
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
+    return frequency
+
+if __name__ == '__main__':
+    sample_text = "hello world hello Python python"
+    print(count_word_frequency(sample_text))

@@ -1,0 +1,15 @@
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError("The list is empty")
+    
+    if n % 2 == 1:
+        return data[n // 2]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        return (data[middle_left_index] + data[middle_right_index]) / 2.0
+
+if __name__ == '__main__':
+    test_list = [1, 3, 8, 9, 15]
+    print(f"Median of {test_list}: {find_median(test_list)}")

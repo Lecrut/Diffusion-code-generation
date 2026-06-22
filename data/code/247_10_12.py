@@ -1,0 +1,6 @@
+def sum_two_integers(a, b):
+    return a + b
+
+if __name__ == '__main__':
+    result = sum_two_integers(5, 3)
+    print(result)

@@ -1,0 +1,15 @@
+def reverse_integers_in_file(file_path):
+    with open(file_path, 'r') as file:
+        integers = [int(line.strip()) for line in file]
+    with open(file_path, 'w') as file:
+        for number in reversed(integers):
+            file.write(f"{number}\n")
+
+if __name__ == '__main__':
+    sample_file_path = 'sample.txt'
+    with open(sample_file_path, 'w') as file:
+        file.write("10\n20\n30\n40\n50\n")
+    reverse_integers_in_file(sample_file_path)
+    with open(sample_file_path, 'r') as file:
+        reversed_content = file.read()
+    print(reversed_content)

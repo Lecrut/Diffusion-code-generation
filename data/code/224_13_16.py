@@ -1,0 +1,15 @@
+class ArrayProcessor:
+    DEFAULT_ARRAY = [4, 8, 12, 16]
+    
+    @staticmethod
+    def calculate_mean(arr):
+        total = sum(arr)
+        count = len(arr)
+        average = total / count
+        return average
+
+if __name__ == '__main__':
+    processor = ArrayProcessor()
+    sample_array = ArrayProcessor.DEFAULT_ARRAY
+    mean_value = processor.calculate_mean(sample_array)
+    print(mean_value)

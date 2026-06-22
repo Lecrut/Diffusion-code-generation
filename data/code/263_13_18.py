@@ -1,0 +1,13 @@
+class NumberComparator:
+    def __init__(self, num1, num2):
+        self.num1 = num1
+        self.num2 = num2
+
+    def is_greater(self):
+        return self.num1 > self.num2
+
+if __name__ == '__main__':
+    comparator = NumberComparator(5, 3)
+    print(comparator.is_greater())
+    comparator = NumberComparator(2, 4)
+    print(comparator.is_greater())

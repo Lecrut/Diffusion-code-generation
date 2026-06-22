@@ -1,0 +1,13 @@
+def validate_inputs(a, b):
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise ValueError("Inputs must be numbers")
+
+def calculate_sum(a, b):
+    return a + b
+
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    validate_inputs(num1, num2)
+    total_sum = calculate_sum(num1, num2)
+    print(total_sum)

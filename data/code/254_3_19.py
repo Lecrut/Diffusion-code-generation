@@ -1,0 +1,21 @@
+MIN_VALUE = float('inf')
+
+def find_minimum(data):
+    if not data:
+        return None
+    minimum = MIN_VALUE
+    for element in data:
+        if element < minimum:
+            minimum = element
+    return minimum
+
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 5, -3]
+    list3 = [42]
+    empty_list = []
+    
+    print(f"Minimum of {list1}: {find_minimum(list1)}")
+    print(f"Minimum of {list2}: {find_minimum(list2)}")
+    print(f"Minimum of {list3}: {find_minimum(list3)}")
+    print(f"Minimum of an empty list: {find_minimum(empty_list)}")

@@ -1,0 +1,14 @@
+import math
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+if __name__ == '__main__':
+    r = 5.0
+    c = Circle(r)
+    print(f"Radius: {r}")
+    print(f"Circumference: {c.perimeter()}")

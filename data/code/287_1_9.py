@@ -1,0 +1,9 @@
+CONVERSION_MAP = {28.3495: 1}
+
+def grams_to_ounces(grams):
+    return [g / CONVERSION_MAP[28.3495] for g in grams]
+
+if __name__ == '__main__':
+    sample_weights_grams = [100, 200, 300]
+    weights_in_ounces = grams_to_ounces(sample_weights_grams)
+    print(weights_in_ounces)

@@ -1,0 +1,11 @@
+import numpy as np
+
+def compute_mean(sequence):
+    if np.array(sequence).dtype == float:
+        return np.mean(sequence)
+    else:
+        return sum(sequence) / len(sequence)
+
+if __name__ == '__main__':
+    sample_sequence = [1.5, 2.5, 3.5, 4.5]
+    print(compute_mean(sample_sequence))

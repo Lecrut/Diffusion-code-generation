@@ -1,0 +1,7 @@
+def growing_numbers(N):
+    for i in range(1, N + 1):
+        yield i
+
+if __name__ == '__main__':
+    for num in growing_numbers(5):
+        print(num)

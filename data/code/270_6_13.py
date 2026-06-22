@@ -1,0 +1,6 @@
+def remove_spaces(s):
+    return s.replace(" ", "")
+
+if __name__ == '__main__':
+    sample_string = "Hello World! This is a test."
+    print(remove_spaces(sample_string))

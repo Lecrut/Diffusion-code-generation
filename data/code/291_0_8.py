@@ -1,0 +1,8 @@
+def compare_lengths(length1, length2):
+    if length1 > length2:
+        return length1
+    else:
+        return length2
+
+if __name__ == '__main__':
+    print(compare_lengths(5.7, 3.2))

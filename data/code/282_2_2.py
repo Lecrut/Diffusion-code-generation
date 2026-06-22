@@ -1,0 +1,6 @@
+def sum_numbers(data):
+    return sum(data)
+
+if __name__ == '__main__':
+    sample_values = [1, 2, 3, 4, 5]
+    print(sum_numbers(sample_values))

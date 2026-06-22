@@ -1,0 +1,8 @@
+TRIANGULAR_COUNT = 12
+
+def generate_triangular_numbers(count):
+    return [n * (n + 1) // 2 for n in range(1, count + 1)]
+
+if __name__ == '__main__':
+    sample_result = generate_triangular_numbers(TRIANGULAR_COUNT)
+    print(sample_result)

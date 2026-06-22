@@ -1,0 +1,16 @@
+class WeightCalculator:
+    CONVERSION_FACTORS = {'kg': 1, 'lbs': 0.453592}
+
+    @staticmethod
+    def convert_to_kg(weight, unit):
+        return weight * WeightCalculator.CONVERSION_FACTORS[unit]
+
+    @staticmethod
+    def calculate_average_weight(weights):
+        total_weight = sum(WeightCalculator.convert_to_kg(weight, unit) for weight, unit in weights)
+        average_weight = total_weight / len(weights)
+        return round(average_weight, 2)
+
+if __name__ == '__main__':
+    sample_weights = [(70, 'kg'), (154, 'lbs'), (60, 'kg')]
+    print(WeightCalculator.calculate_average_weight(sample_weights))

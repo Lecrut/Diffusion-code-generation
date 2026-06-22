@@ -1,0 +1,25 @@
+class MinFinder:
+    @staticmethod
+    def find_minimum(numbers):
+        if not numbers:
+            raise ValueError("Input list cannot be empty")
+        minimum = numbers[0]
+        for number in numbers[1:]:
+            if number < minimum:
+                minimum = number
+        return minimum
+
+if __name__ == '__main__':
+    sample_list1 = [3, 1, 4, 1, 5, 9, 2, 6]
+    sample_list2 = [-10, 5, 0, -20, 100]
+    sample_list3 = [7]
+    sample_list4 = []
+    
+    finder = MinFinder()
+    print(f"Minimum of {sample_list1}: {finder.find_minimum(sample_list1)}")
+    print(f"Minimum of {sample_list2}: {finder.find_minimum(sample_list2)}")
+    print(f"Minimum of {sample_list3}: {finder.find_minimum(sample_list3)}")
+    try:
+        finder.find_minimum(sample_list4)
+    except ValueError as e:
+        print(e)

@@ -1,0 +1,9 @@
+def filter_and_print_evens(start, end):
+    evens = [num for num in range(start, end + 1) if num % 2 == 0]
+    return evens
+
+if __name__ == '__main__':
+    start_val = 105
+    end_val = 195
+    even_numbers = filter_and_print_evens(start_val, end_val)
+    print(even_numbers)

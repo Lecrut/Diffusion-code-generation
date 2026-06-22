@@ -1,0 +1,4 @@
+sample_list = ['apple', 'banana', 'cherry']
+
+if __name__ == '__main__':
+    [print(item) for item in sample_list]

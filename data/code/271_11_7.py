@@ -1,0 +1,11 @@
+def count_character_frequencies(text):
+    freqs = {}
+    for char in text:
+        if char != ' ':
+            freqs[char] = freqs.get(char, 0) + 1
+    return freqs
+
+if __name__ == '__main__':
+    sample_text = "Python programming is fun!"
+    result = count_character_frequencies(sample_text)
+    print(result)

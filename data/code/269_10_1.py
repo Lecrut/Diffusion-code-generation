@@ -1,0 +1,8 @@
+import string
+
+def isolate_punctuation(text):
+    return [char for char in text if char in string.punctuation]
+
+if __name__ == '__main__':
+    sample_text = "Hello, world! How are you?"
+    print(isolate_punctuation(sample_text))
