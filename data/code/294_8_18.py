@@ -1,0 +1,14 @@
+class MixtureCalculator:
+    MOLECULAR_MASS_BACL2 = 207.2
+    ATOMIC_MASS_CL = 35.45
+
+    @staticmethod
+    def calculate_equivalent_weight(mass_bacl2):
+        equivalent_weight = mass_bacl2 / (MixtureCalculator.MOLECULAR_MASS_BACL2 - 2 * MixtureCalculator.ATOMIC_MASS_CL)
+        return equivalent_weight
+
+if __name__ == '__main__':
+    sample_mass = 207
+    calculator = MixtureCalculator()
+    result = calculator.calculate_equivalent_weight(sample_mass)
+    print(result)

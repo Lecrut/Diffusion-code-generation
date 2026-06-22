@@ -1,0 +1,7 @@
+def calculate_equivalent_weights(masses, molar_masses):
+    return [mass / molar_mass for mass, molar_mass in zip(masses, molar_masses)]
+
+if __name__ == '__main__':
+    masses = [10.0, 20.0, 30.0]
+    molar_masses = [56.0, 40.0, 18.0]
+    print(calculate_equivalent_weights(masses, molar_masses))
