@@ -1,129 +1,57 @@
-from functools import partial
+from datetime import datetime
 from pathlib import Path
 import os
-import random
-import ast as _ast
+import time
 import torch
-import torch.nn as nn
+import torch.nn.functional as F
 import gc 
-import pandas as pd
-from torch.utils.data import Dataset, DataLoader, random_split
+from torch.utils.data import DataLoader
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor, EarlyStopping, Callback
 from pytorch_lightning.loggers import CometLogger
 from dotenv import load_dotenv
-from datetime import timedelta
 
 # Importy z Twoich modułów
 from diffusion.model import LocalConvDiffCoder
 from tokenizer import CodeTokenizer 
 from diffusion.loss import CalculateLoss
+from tokenized_dataset import (
+    TokenizedMemmapDataset,
+    collate_tokenized_batch,
+    ensure_tokenized_cache,
+    load_cached_samples,
+    make_train_val_indices,
+    tokenized_cache_dir,
+)
+
+load_dotenv()
+
 
 
 def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
     return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
 
 
-# --- DATASET & COLLATE (AST BIGRAMY) ---
-
-class CodeInstructionDataset(Dataset):
-    def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024, dataset_fraction=1.0, seed=42):
-        self.df = pd.read_csv(csv_file)
-        self.df = self.df[['instruction', 'code']].dropna()
-        if not (0.0 < dataset_fraction <= 1.0):
-            raise ValueError("dataset_fraction must be in (0.0, 1.0].")
-        if dataset_fraction < 1.0:
-            keep = max(1, int(len(self.df) * dataset_fraction))
-            self.df = self.df.sample(n=keep, random_state=seed).reset_index(drop=True)
-        self.tokenizer = tokenizer
-        self.max_prompt_len = max_prompt_len
-        self.max_code_len = max_code_len
-        self.pad_id = self.tokenizer.pad_token_id
-        
-        self.node_vocab = {}
-        for code in self.df['code'].astype(str):
-            try:
-                tree = _ast.parse(code)
-                for parent in _ast.walk(tree):
-                    p_name = type(parent).__name__
-                    for child in _ast.iter_child_nodes(parent):
-                        c_name = type(child).__name__
-                        bigram = f"{p_name}->{c_name}"
-                        if bigram not in self.node_vocab:
-                            self.node_vocab[bigram] = len(self.node_vocab)
-            except Exception:
-                continue
-        self.ast_dim = len(self.node_vocab)
-
-    def __len__(self):
-        return len(self.df)
-
-    def _pad_or_truncate(self, ids, max_len):
-        return ids[:max_len] if len(ids) > max_len else ids
-
-    def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        prompt_ids = self._pad_or_truncate(self.tokenizer.encode_instruction(row['instruction']), self.max_prompt_len)
-        code_ids = self._pad_or_truncate(self.tokenizer.encode_code(row['code']), self.max_code_len)
-        
-        try:
-            tree = _ast.parse(row['code'])
-            counts = [0] * self.ast_dim
-            for parent in _ast.walk(tree):
-                p_name = type(parent).__name__
-                for child in _ast.iter_child_nodes(parent):
-                    c_name = type(child).__name__
-                    bigram = f"{p_name}->{c_name}"
-                    idx_t = self.node_vocab.get(bigram)
-                    if idx_t is not None:
-                        counts[idx_t] += 1
-            ast_vec = torch.tensor(counts, dtype=torch.float)
-        except Exception:
-            ast_vec = torch.zeros(self.ast_dim, dtype=torch.float)
-
-        return {'prompt_ids': prompt_ids, 'code_ids': code_ids, 'ast_vec': ast_vec}
-
-
-def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
-    prompt_max = min(max(len(item['prompt_ids']) for item in batch), max_prompt_len)
-    code_max = min(max(len(item['code_ids']) for item in batch), max_code_len)
-
-    prompt_tensors = []
-    code_tensors = []
-    for item in batch:
-        prompt_ids = item['prompt_ids'][:prompt_max]
-        code_ids = item['code_ids'][:code_max]
-        prompt_pad = prompt_max - len(prompt_ids)
-        code_pad = code_max - len(code_ids)
-        if prompt_pad > 0: prompt_ids = prompt_ids + [pad_id] * prompt_pad
-        if code_pad > 0: code_ids = code_ids + [pad_id] * code_pad
-        prompt_tensors.append(torch.tensor(prompt_ids, dtype=torch.long))
-        code_tensors.append(torch.tensor(code_ids, dtype=torch.long))
-
-    result = {'prompt_ids': torch.stack(prompt_tensors, dim=0), 'code_ids': torch.stack(code_tensors, dim=0)}
-    if 'ast_vec' in batch[0]:
-        result['ast_vec'] = torch.stack([item['ast_vec'] for item in batch], dim=0)
-    return result
-
-
 # --- LIGHTNING MODULE ---
 
 class DiffCoderLightning(pl.LightningModule):
-    def __init__(self, model, base_lr=5e-5, rollback_stage=None):
+    def __init__(self, model, base_lr=5e-5, rollback_stage=None, use_ast_loss=False):
         super().__init__()
         self.model = model
         self.base_lr = base_lr
         self.rollback_stage = rollback_stage
+        self.use_ast_loss = use_ast_loss
         
         self.current_stage = 1
         self.current_lower_bound = 0.10
         self.current_upper_bound = 0.25
         
+        embedding_layer = getattr(model, "token_embedding", getattr(model, "embedding", None)) if use_ast_loss else None
         self.loss_fn = CalculateLoss(
             gamma=1.0,
             ce_weight=1.0,
-            dtw_weight=1.0,
-            embedding_matrix=getattr(model, 'embedding', None).weight if hasattr(model, 'embedding') else None,
+            dtw_weight=1.0 if use_ast_loss else 0.0,
+            embedding_matrix=embedding_layer.weight if embedding_layer is not None else None,
         )
 
     def _get_ast_embeddings(self, batch):
@@ -162,27 +90,29 @@ class DiffCoderLightning(pl.LightningModule):
         x_t = x_0.clone()
         x_t[is_masked] = self.model.mask_token_id
         
-        logits = self.model(x_t, prompt_ids, t)
-        masked_logits = logits[is_masked]
         masked_targets = x_0[is_masked]
 
         if masked_targets.numel() == 0:
             return torch.tensor(0.0, device=self.device, requires_grad=True)
 
+        if not self.use_ast_loss:
+            masked_logits = self.model.forward_masked_logits(x_t, prompt_ids, t, is_masked)
+            return F.cross_entropy(masked_logits, masked_targets)
+
+        logits = self.model(x_t, prompt_ids, t)
+        masked_logits = logits[is_masked]
         ast_embeddings = self._get_ast_embeddings(batch)
-        
+
         _, ce_loss, dtw_loss = self.loss_fn(
-            full_logits=logits, 
-            masked_logits=masked_logits, 
+            full_logits=logits,
+            masked_logits=masked_logits,
             masked_targets=masked_targets,
             ast_embeddings=ast_embeddings,
         )
-        
+
         mean_t = t.mean()
         weighted_dtw = (0.1 + 0.4 * mean_t) * dtw_loss
-        loss = ce_loss + weighted_dtw
-        
-        return loss
+        return ce_loss + weighted_dtw
 
     def training_step(self, batch, batch_idx):
         loss = self._shared_step(batch)
@@ -209,7 +139,7 @@ class DiffCoderLightning(pl.LightningModule):
             "optimizer": optimizer,
             "lr_scheduler": {
                 "scheduler": scheduler,
-                "interval": "epoch",
+                "interval": "step",
                 "frequency": 1
             }
         }
@@ -340,17 +270,92 @@ class AdaptiveCurriculumCallback(Callback):
             print("\n[RESUME - CALLBACK STATE] Pomyślnie odtworzono stan curriculum z checkpointu.")
 
 
+class ThroughputLoggerCallback(Callback):
+    def __init__(self, every_n_batches=50):
+        super().__init__()
+        self.every_n_batches = every_n_batches
+        self._last_time = None
+        self._examples_since_log = 0
+
+    def on_train_start(self, trainer, pl_module):
+        self._last_time = time.perf_counter()
+        self._examples_since_log = 0
+        if torch.cuda.is_available():
+            torch.cuda.reset_peak_memory_stats()
+
+    def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
+        if not trainer.is_global_zero or self.every_n_batches <= 0:
+            return
+
+        batch_size = int(batch["code_ids"].size(0)) if isinstance(batch, dict) else 0
+        self._examples_since_log += batch_size
+
+        current_batch = batch_idx + 1
+        if current_batch % self.every_n_batches != 0:
+            return
+
+        now = time.perf_counter()
+        elapsed = max(now - (self._last_time or now), 1e-6)
+        examples_per_sec = self._examples_since_log / elapsed
+        self._last_time = now
+        self._examples_since_log = 0
+
+        loss_value = None
+        if isinstance(outputs, dict):
+            loss_value = outputs.get("loss")
+        elif torch.is_tensor(outputs):
+            loss_value = outputs
+        if torch.is_tensor(loss_value):
+            loss_value = float(loss_value.detach().cpu())
+
+        memory_msg = ""
+        if torch.cuda.is_available():
+            allocated_gb = torch.cuda.memory_allocated() / (1024 ** 3)
+            peak_gb = torch.cuda.max_memory_allocated() / (1024 ** 3)
+            memory_msg = f" | vram={allocated_gb:.2f}GB peak={peak_gb:.2f}GB"
+
+        loss_msg = "" if loss_value is None else f" | loss={loss_value:.4f}"
+        print(
+            f"[TRAIN] global_step={trainer.global_step} batch={current_batch} "
+            f"| {examples_per_sec:.1f} examples/s{loss_msg}{memory_msg}"
+        )
+
+    def on_validation_end(self, trainer, pl_module):
+        self._last_time = time.perf_counter()
+        self._examples_since_log = 0
+
+
 # --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
 
 class LogGeneratedSamplesCallback(Callback):
-    def __init__(self, sample_pairs, tokenizer):
+    def __init__(self, sample_pairs, tokenizer, every_n_steps=5000, console_chars=1200):
         super().__init__()
         self.samples = sample_pairs
         self.tokenizer = tokenizer
+        self.every_n_steps = every_n_steps
+        self.console_chars = console_chars
+        self._last_logged_step = None
+
+    def _should_log(self, trainer):
+        if not self.samples:
+            return False
+        if self.every_n_steps <= 0:
+            return True
+        if self._last_logged_step is None:
+            return trainer.global_step >= self.every_n_steps
+        return trainer.global_step - self._last_logged_step >= self.every_n_steps
+
+    def _clip_for_console(self, text):
+        if self.console_chars <= 0 or len(text) <= self.console_chars:
+            return text
+        return text[: self.console_chars] + "\n... <truncated>"
 
     def on_validation_epoch_end(self, trainer, pl_module):
         if trainer.sanity_checking:
             return
+        if not self._should_log(trainer):
+            return
+        self._last_logged_step = trainer.global_step
 
         pl_module.eval()
         epoch = pl_module.current_epoch + 1
@@ -372,7 +377,8 @@ class LogGeneratedSamplesCallback(Callback):
             prompt_ids = torch.tensor(self.tokenizer.encode_instruction(prompt), dtype=torch.long).to(device).unsqueeze(0)
 
             try:
-                code_ids_raw = self.tokenizer.encode_code(target_code)
+                max_code_len = max(pl_module.model.max_seq_len - prompt_ids.size(1), 1)
+                code_ids_raw = self.tokenizer.encode_code(target_code)[:max_code_len]
                 x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
                 
                 mask_prob = sample_epoch_mask_prob(1, device, lb, ub)
@@ -411,23 +417,31 @@ class LogGeneratedSamplesCallback(Callback):
             except Exception as e:
                 gen_text = f"<ERROR: {type(e).__name__}: {e}>"
 
+            print("-" * 80)
+            print(
+                f"[SAMPLE] global_step={trainer.global_step} epoch={epoch} sample={idx}\n"
+                f"PROMPT:\n{self._clip_for_console(prompt)}\n\n"
+                f"GROUND_TRUTH:\n{self._clip_for_console(target_code)}\n\n"
+                f"MASKED_GROUND_TRUTH:\n{self._clip_for_console(masked_text)}\n\n"
+                f"PREDICTED_THIS_ITERATION:\n{self._clip_for_console(predicted_text)}\n\n"
+                f"GENERATED:\n{self._clip_for_console(gen_text)}"
+            )
+
             if comet_logger is not None:
                 comet_logger.log_text(
-                    f"Epoch {epoch} | sample {idx}\nPROMPT:\n{prompt}\n\nGROUND_TRUTH:\n{target_code}"
+                    f"Global step {trainer.global_step} | epoch {epoch} | sample {idx}"
+                    f"\nPROMPT:\n{prompt}\n\nGROUND_TRUTH:\n{target_code}"
                     f"\n\nMASKED_GROUND_TRUTH:\n{masked_text}\n\nPREDICTED_THIS_ITERATION:\n{predicted_text}"
                     f"\n\nGENERATED:\n{gen_text}",
-                    step=epoch,
+                    step=trainer.global_step,
                 )
                 table_rows.append({
-                    "epoch": epoch, "sample": idx, "prompt": prompt, "ground_truth": target_code,
+                    "global_step": trainer.global_step, "epoch": epoch, "sample": idx, "prompt": prompt, "ground_truth": target_code,
                     "masked_ground_truth": masked_text, "predicted_this_iteration": predicted_text, "generated": gen_text
                 })
-            else:
-                print("-" * 80)
-                print(f"Epoch {epoch} | sample {idx}\nMASKED_GROUND_TRUTH:\n{masked_text}\nGENERATED:\n{gen_text}")
 
         if comet_logger is not None and table_rows:
-            comet_logger.log_table("generated_samples", table_rows, step=epoch)
+            comet_logger.log_table("generated_samples", table_rows, step=trainer.global_step)
             
         pl_module.train()
 
@@ -483,7 +497,7 @@ class CometCheckpointUploadCallback(Callback):
         if experiment is None:
             return
 
-        last_path = self.last_checkpoint_callback.best_model_path
+        last_path = getattr(self.last_checkpoint_callback, "last_model_path", "") or self.last_checkpoint_callback.best_model_path
         if self._upload_model(experiment, "LocalConvDiffCoder-last", last_path):
             print(
                 f">>> [COMET] Zapisano LAST model z epoki {trainer.current_epoch + 1} z nadpisaniem. <<<"
@@ -500,42 +514,66 @@ class DiffCoderTrainer:
         self.setup_model()
 
     def setup_data(self):
-        repo_root = Path(__file__).resolve().parents[1] if '__file__' in locals() else Path(".")
+        repo_root = Path(__file__).resolve().parent.parent
         dataset_path = repo_root / "data" / "dataset.csv"
-        
-        dataset = CodeInstructionDataset(
-            str(dataset_path), self.tokenizer,
+
+
+        cache_root = repo_root / "data" / "tokenized_cache"
+        cache_dir = tokenized_cache_dir(
+            cache_root=cache_root,
+            tokenizer_name=self.tokenizer.model_name,
             max_prompt_len=self.config.max_prompt_len,
             max_code_len=self.config.max_code_len,
-            dataset_fraction=self.config.dataset_fraction
+            pad_token_id=self.tokenizer.pad_token_id,
+            vocab_size=self.tokenizer.vocab_size,
+        )
+        cache_dir = ensure_tokenized_cache(
+            csv_path=dataset_path,
+            tokenizer=self.tokenizer,
+            cache_dir=cache_dir,
+            max_prompt_len=self.config.max_prompt_len,
+            max_code_len=self.config.max_code_len,
+            dataset_fraction=self.config.dataset_fraction,
+            chunk_size=self.config.cache_chunk_size,
+            encode_batch_size=self.config.encode_batch_size,
+            force_rebuild=self.config.rebuild_token_cache,
         )
 
-        val_size = max(1, int(len(dataset) * self.config.val_split))
-        train_size = len(dataset) - val_size
-        self.train_dataset, self.val_dataset = random_split(
-            dataset, [train_size, val_size], generator=torch.Generator().manual_seed(42)
+        full_dataset = TokenizedMemmapDataset(cache_dir)
+        train_indices, val_indices = make_train_val_indices(
+            len(full_dataset),
+            val_split=self.config.val_split,
+            max_val_samples=self.config.max_val_samples,
+            seed=42,
         )
 
-        collate_fn = partial(
-            collate_batch, pad_id=self.tokenizer.pad_token_id,
-            max_prompt_len=self.config.max_prompt_len, max_code_len=self.config.max_code_len
+        self.train_dataset = TokenizedMemmapDataset(cache_dir, train_indices)
+        self.val_dataset = TokenizedMemmapDataset(cache_dir, val_indices)
+        print(
+            f"[DATA] Train rows: {len(self.train_dataset):,} | "
+            f"validation rows: {len(self.val_dataset):,}"
         )
-        
+
+        loader_kwargs = {
+            "num_workers": self.config.num_workers,
+            "pin_memory": torch.cuda.is_available(),
+            "collate_fn": collate_tokenized_batch,
+        }
+        if self.config.num_workers > 0:
+            loader_kwargs["persistent_workers"] = True
+            loader_kwargs["prefetch_factor"] = self.config.prefetch_factor
+
         self.train_loader = DataLoader(
             self.train_dataset, batch_size=self.config.batch_size, shuffle=True,
-            num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
+            drop_last=True,
+            **loader_kwargs
         )
         self.val_loader = DataLoader(
             self.val_dataset, batch_size=self.config.batch_size, shuffle=False,
-            num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
+            **loader_kwargs
         )
 
-        self.sample_pairs = []
-        rng = random.Random(42)
-        sample_indices = rng.sample(range(len(dataset)), min(3, len(dataset)))
-        for idx in sample_indices:
-            row = dataset.df.iloc[idx]
-            self.sample_pairs.append({"instruction": str(row["instruction"]), "code": str(row["code"])})
+        self.sample_pairs = load_cached_samples(cache_dir)
 
     def setup_model(self):
         raw_model = LocalConvDiffCoder(
@@ -551,7 +589,8 @@ class DiffCoderTrainer:
         self.lightning_model = DiffCoderLightning(
             model=raw_model,
             base_lr=self.config.base_lr,
-            rollback_stage=self.config.rollback_stage # Przekazanie etapu do nadpisania
+            rollback_stage=self.config.rollback_stage, # Przekazanie etapu do nadpisania
+            use_ast_loss=self.config.use_ast_loss,
         )
 
     def train(self):
@@ -566,9 +605,10 @@ class DiffCoderTrainer:
         last_checkpoint_callback = ModelCheckpoint(
             dirpath=self.config.checkpoint_dir,
             filename='last', 
-            save_top_k=1,
-            every_n_epochs=1,
-            save_on_train_epoch_end=True,
+            save_top_k=0,
+            save_last=True,
+            every_n_train_steps=self.config.checkpoint_every_n_steps,
+            save_on_train_epoch_end=False,
             enable_version_counter=False,
         )
 
@@ -587,41 +627,58 @@ class DiffCoderTrainer:
         
         sample_logger_callback = LogGeneratedSamplesCallback(
             sample_pairs=self.sample_pairs,
-            tokenizer=self.tokenizer
+            tokenizer=self.tokenizer,
+            every_n_steps=self.config.sample_log_every_n_steps,
+            console_chars=self.config.sample_console_chars,
+        )
+        throughput_logger_callback = ThroughputLoggerCallback(
+            every_n_batches=self.config.console_log_every_n_batches
         )
 
         loggers = []
         comet_logger = None
+        datehourstr = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         if os.getenv("COMET_API_KEY"):
             comet_logger = CometLogger(
                 api_key=os.getenv("COMET_API_KEY"),
                 project_name=os.getenv("COMET_PROJECT_NAME"),
-                workspace=os.getenv("COMET_WORKSPACE")
+                workspace=os.getenv("COMET_WORKSPACE"),
+                experiment_name=f"diffcoder-light-train-{datehourstr}"
             )
             loggers.append(comet_logger)
 
-        comet_checkpoint_callback = CometCheckpointUploadCallback(
-            best_checkpoint_callback=best_checkpoint_callback,
-            last_checkpoint_callback=last_checkpoint_callback,
-        )
+        callbacks = [
+            best_checkpoint_callback,
+            last_checkpoint_callback,
+            early_stop_callback,
+            lr_monitor,
+            throughput_logger_callback,
+            sample_logger_callback,
+            curriculum_callback,
+        ]
+
+        if self.config.upload_checkpoints_to_comet:
+            callbacks.append(
+                CometCheckpointUploadCallback(
+                    best_checkpoint_callback=best_checkpoint_callback,
+                    last_checkpoint_callback=last_checkpoint_callback,
+                )
+            )
 
         trainer = pl.Trainer(
             max_epochs=self.config.epochs,
+            max_steps=self.config.max_steps,
             accelerator='gpu' if torch.cuda.is_available() else 'cpu',
             devices=1 if torch.cuda.is_available() else "auto",
             accumulate_grad_batches=self.config.accumulation_steps,
-            callbacks=[
-                best_checkpoint_callback,
-                last_checkpoint_callback,
-                early_stop_callback,
-                lr_monitor,
-                sample_logger_callback,
-                curriculum_callback,
-                comet_checkpoint_callback,
-            ],
+            callbacks=callbacks,
             logger=loggers if loggers else True,
             precision="16-mixed" if torch.cuda.is_available() else 32,
-            gradient_clip_val=1.0
+            gradient_clip_val=1.0,
+            val_check_interval=self.config.val_check_interval,
+            limit_val_batches=self.config.limit_val_batches,
+            log_every_n_steps=self.config.log_every_n_steps,
+            num_sanity_val_steps=self.config.num_sanity_val_steps,
         )
 
         trainer.fit(
@@ -630,7 +687,7 @@ class DiffCoderTrainer:
             val_dataloaders=self.val_loader,
         )
         
-        if comet_logger is not None and best_checkpoint_callback.best_model_path:
+        if self.config.upload_checkpoints_to_comet and comet_logger is not None and best_checkpoint_callback.best_model_path:
             try:
                 comet_logger.experiment.log_model(
                     "LocalConvDiffCoder-best",
@@ -640,11 +697,12 @@ class DiffCoderTrainer:
             except Exception as e:
                 print(f"[COMET WARNING] Nie udało się automatycznie zalogować BEST modelu: {e}")
 
-        if comet_logger is not None and last_checkpoint_callback.best_model_path:
+        last_model_path = getattr(last_checkpoint_callback, "last_model_path", "") or last_checkpoint_callback.best_model_path
+        if self.config.upload_checkpoints_to_comet and comet_logger is not None and last_model_path:
             try:
                 comet_logger.experiment.log_model(
                     "LocalConvDiffCoder-last",
-                    last_checkpoint_callback.best_model_path,
+                    last_model_path,
                     overwrite=True,
                 )
             except Exception as e:
@@ -652,36 +710,59 @@ class DiffCoderTrainer:
 
         return best_checkpoint_callback.best_model_path
 
+def env_bool(name, default=False):
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+
 
 def main():
-    torch.backends.cudnn.enabled = False
+    torch.backends.cudnn.enabled = True
     load_dotenv()
     
     if torch.cuda.is_available():
-        # torch.backends.cuda.matmul.allow_tf32 = True
-        # torch.backends.cudnn.allow_tf32 = True
+        torch.backends.cudnn.benchmark = True
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.backends.cudnn.allow_tf32 = True
         torch.set_float32_matmul_precision("high")
 
     class Config:
         max_prompt_len = 96
         max_code_len = 512
-        batch_size = 4
-        accumulation_steps = 8
-        num_workers = 3
+        batch_size = int(os.getenv("BATCH_SIZE", "32"))
+        accumulation_steps = int(os.getenv("ACCUMULATION_STEPS", "1"))
+        num_workers = int(os.getenv("NUM_WORKERS", "6"))
+        prefetch_factor = int(os.getenv("PREFETCH_FACTOR", "4"))
         epochs = 1500 
-        val_split = 0.05
+        max_steps = int(os.getenv("MAX_STEPS", "-1"))
+        val_split = float(os.getenv("VAL_SPLIT", "0.01"))
+        max_val_samples = int(os.getenv("MAX_VAL_SAMPLES", "8192"))
+        limit_val_batches = int(os.getenv("LIMIT_VAL_BATCHES", "128"))
+        val_check_interval = int(os.getenv("VAL_CHECK_INTERVAL", "1000"))
+        checkpoint_every_n_steps = int(os.getenv("CHECKPOINT_EVERY_N_STEPS", "1000"))
+        log_every_n_steps = int(os.getenv("LOG_EVERY_N_STEPS", "25"))
+        console_log_every_n_batches = int(os.getenv("CONSOLE_LOG_EVERY_N_BATCHES", "250"))
+        sample_log_every_n_steps = int(os.getenv("SAMPLE_LOG_EVERY_N_STEPS", "1000"))
+        sample_console_chars = int(os.getenv("SAMPLE_CONSOLE_CHARS", "1200"))
+        num_sanity_val_steps = int(os.getenv("NUM_SANITY_VAL_STEPS", "0"))
         early_stopping_patience = 120 
         hidden_dim = 512
         num_blocks = 6
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
         dataset_fraction = float(os.getenv("DATASET_FRACTION", "1.0"))
+        cache_chunk_size = int(os.getenv("CACHE_CHUNK_SIZE", "8192"))
+        encode_batch_size = int(os.getenv("ENCODE_BATCH_SIZE", "512"))
+        rebuild_token_cache = env_bool("REBUILD_TOKEN_CACHE", False)
+        use_ast_loss = env_bool("USE_AST_LOSS", False)
+        upload_checkpoints_to_comet = env_bool("COMET_UPLOAD_CHECKPOINTS", False)
         base_lr = 5e-5
         
         checkpoint_dir = 'checkpoints'
         
         # Trening startuje od zera, bez resume z checkpointu.
-        rollback_stage = 2 # Sforsowany powrót do maskowania 20-35%
-        reset_curriculum_state = False
+        rollback_stage = int(os.getenv("ROLLBACK_STAGE")) if os.getenv("ROLLBACK_STAGE") else None
+        reset_curriculum_state = env_bool("RESET_CURRICULUM_STATE", False)
 
     config = Config()
     trainer = DiffCoderTrainer(config)

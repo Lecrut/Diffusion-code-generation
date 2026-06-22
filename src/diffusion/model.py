@@ -89,7 +89,7 @@ class LocalConvDiffCoder(nn.Module):
         return torch.cat([emb.sin(), emb.cos()], dim=-1)
 
 
-    def forward(self, x, prompt_ids, t):
+    def forward_features(self, x, prompt_ids, t):
         code_len = x.size(1)
         prompt_len = prompt_ids.size(1)
         if prompt_len + code_len > self.max_seq_len:
@@ -130,8 +130,16 @@ class LocalConvDiffCoder(nn.Module):
             features.append(x_emb)
             
         x_out = torch.stack(features).mean(dim=0)
-        logits = self.lm_head(self.ln_final(x_out))
-        return logits[:, prompt_len:, :]
+        return x_out[:, prompt_len:, :]
+
+    def forward(self, x, prompt_ids, t):
+        code_features = self.forward_features(x, prompt_ids, t)
+        return self.lm_head(self.ln_final(code_features))
+
+    def forward_masked_logits(self, x, prompt_ids, t, code_mask):
+        code_features = self.forward_features(x, prompt_ids, t)
+        masked_features = code_features[code_mask]
+        return self.lm_head(self.ln_final(masked_features))
 
     @torch.no_grad()
     def generate(self, prompt_ids, steps=50, device="cuda", eos_token_id=None):

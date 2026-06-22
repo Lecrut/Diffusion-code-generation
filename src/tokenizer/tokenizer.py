@@ -1,9 +1,10 @@
 import re
-from typing import Iterable
+from typing import Iterable, Sequence
 from transformers import AutoTokenizer
 
 class CodeTokenizer:
     def __init__(self, model_name: str = "Qwen/Qwen2.5-Coder-7B") -> None:
+        self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self._ensure_special_tokens()
 
@@ -55,6 +56,39 @@ class CodeTokenizer:
             text,
             add_special_tokens=add_special_tokens,
         )
+
+    def batch_encode_instruction(
+        self,
+        texts: Sequence[str],
+        *,
+        add_special_tokens: bool = True,
+        max_length: int | None = None,
+    ) -> list[list[int]]:
+        normalized_texts = [self.normalize_instruction(text) for text in texts]
+        encoded = self.tokenizer(
+            normalized_texts,
+            add_special_tokens=add_special_tokens,
+            truncation=max_length is not None,
+            max_length=max_length,
+            padding=False,
+        )
+        return [list(ids) for ids in encoded["input_ids"]]
+
+    def batch_encode_code(
+        self,
+        texts: Sequence[str],
+        *,
+        add_special_tokens: bool = True,
+        max_length: int | None = None,
+    ) -> list[list[int]]:
+        encoded = self.tokenizer(
+            list(texts),
+            add_special_tokens=add_special_tokens,
+            truncation=max_length is not None,
+            max_length=max_length,
+            padding=False,
+        )
+        return [list(ids) for ids in encoded["input_ids"]]
 
     def encode(self, text: str, *, add_special_tokens: bool = True) -> list[int]:
         return self.encode_instruction(text, add_special_tokens=add_special_tokens)
