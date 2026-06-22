@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 import sys
+import hashlib
 from datetime import datetime
 from pathlib import Path
 
@@ -61,6 +62,27 @@ def env_float(name: str, default: float) -> float:
 def env_choices(name: str, default: str) -> list[str]:
     value = os.getenv(name, default)
     return [part.strip() for part in value.split(",") if part.strip()]
+
+
+def search_space_namespace(parts: dict[str, list[int]]) -> str:
+    configured = os.getenv("HPO_SEARCH_SPACE_NAMESPACE")
+    if configured:
+        return configured
+
+    payload = json.dumps(parts, sort_keys=True)
+    digest = hashlib.sha1(payload.encode("utf-8")).hexdigest()[:8]
+    return f"space_{digest}"
+
+
+def suggest_categorical_in_namespace(
+    trial: optuna.Trial,
+    name: str,
+    choices: list[int],
+    namespace: str,
+) -> int:
+    value = trial.suggest_categorical(f"{name}_{namespace}", choices)
+    trial.set_user_attr(name, value)
+    return int(value)
 
 
 def load_hpo_env() -> None:
@@ -199,11 +221,19 @@ def suggest_trial_env(trial: optuna.Trial) -> dict[str, str]:
     hidden_choices = [int(value) for value in env_choices("HPO_HIDDEN_DIM_CHOICES", "256,384,512")]
     block_choices = [int(value) for value in env_choices("HPO_NUM_BLOCKS_CHOICES", "4,6")]
     dilation_choices = [int(value) for value in env_choices("HPO_DILATION_FACTOR_CHOICES", "1,2")]
+    categorical_space = {
+        "batch_size": batch_choices,
+        "hidden_dim": hidden_choices,
+        "num_blocks": block_choices,
+        "dilation_factor": dilation_choices,
+    }
+    namespace = search_space_namespace(categorical_space)
+    trial.set_user_attr("search_space_namespace", namespace)
 
-    batch_size = trial.suggest_categorical("batch_size", batch_choices)
-    hidden_dim = trial.suggest_categorical("hidden_dim", hidden_choices)
-    num_blocks = trial.suggest_categorical("num_blocks", block_choices)
-    dilation_factor = trial.suggest_categorical("dilation_factor", dilation_choices)
+    batch_size = suggest_categorical_in_namespace(trial, "batch_size", batch_choices, namespace)
+    hidden_dim = suggest_categorical_in_namespace(trial, "hidden_dim", hidden_choices, namespace)
+    num_blocks = suggest_categorical_in_namespace(trial, "num_blocks", block_choices, namespace)
+    dilation_factor = suggest_categorical_in_namespace(trial, "dilation_factor", dilation_choices, namespace)
     base_lr = trial.suggest_float(
         "base_lr",
         env_float("HPO_BASE_LR_LOW", 1e-5),
