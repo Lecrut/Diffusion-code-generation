@@ -1,9 +1,18 @@
-import sys
-def find_final_index(indices):
-    if not indices:
-        return None
-    return indices[-1]
+def calculate_power(base, exponent):
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a number")
+    if not isinstance(exponent, (int, float)):
+        raise TypeError("Exponent must be a number")
+    
+    if exponent < 0:
+        return 1 / calculate_power(base, -exponent)
+    
+    result = base ** exponent
+    return result
+
 if __name__ == '__main__':
-    sample_indices = [1, 5, 2, 8, 3]
-    final_index = find_final_index(sample_indices)
-    print(final_index)
+    print(calculate_power(2, 3))
+    print(calculate_power(5, -2))
+    print(calculate_power(10, 0))
+    print(calculate_power(-3, 3))
+    print(calculate_power(2.5, 2))

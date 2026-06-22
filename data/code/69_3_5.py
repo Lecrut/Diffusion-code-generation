@@ -1,24 +1,19 @@
-def reverse_list_by_index(data):
-    n = len(data)
-    left = 0
-    right = n - 1
-    while left < right:
-        temp = data[left]
-        data[left] = data[right]
-        data[right] = temp
-        left += 1
-        right -= 1
-    return data
+class UnitConverter:
+    @staticmethod
+    def miles_to_feet(miles):
+        if not isinstance(miles, (int, float)):
+            raise TypeError("Input must be a numeric type (int or float).")
+        if miles < 0:
+            raise ValueError("Input must be a non-negative number.")
+        return miles * 5280
+
 if __name__ == '__main__':
-    sample_list = [1, 2, 3, 4, 5]
-    print(f"Original list: {sample_list}")
-    reversed_list = reverse_list_by_index(sample_list)
-    print(f"Reversed list: {reversed_list}")
-    sample_list_2 = ['a', 'b', 'c', 'd', 'e']
-    print(f"Original list: {sample_list_2}")
-    reversed_list_2 = reverse_list_by_index(sample_list_2)
-    print(f"Reversed list: {reversed_list_2}")
-    sample_list_3 = [10, 20, 30]
-    print(f"Original list: {sample_list_3}")
-    reversed_list_3 = reverse_list_by_index(sample_list_3)
-    print(f"Reversed list: {reversed_list_3}")
+    result1 = UnitConverter.miles_to_feet(2.5)
+    print(result1)
+    result2 = UnitConverter.miles_to_feet(10)
+    print(result2)
+    try:
+        result3 = UnitConverter.miles_to_feet("invalid")
+        print(result3)
+    except TypeError as e:
+        print(e)

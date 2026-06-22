@@ -1,17 +1,27 @@
-def find_second_element(data, index=0):
-    if len(data) < 2:
-        return None
-    if index == 1:
-        return data[1]
-    return find_second_element(data, index + 1)
+def get_divisors(n):
+    if n == 0:
+        return []
+    if n == 1:
+        return [1]
+    if n == -1:
+        return [-1, 1]
+    
+    divisors = set()
+    abs_n = abs(n)
+    i = 1
+    while i * i <= abs_n:
+        if abs_n % i == 0:
+            divisors.add(i)
+            divisors.add(abs_n // i)
+            if n < 0:
+                divisors.add(-i)
+                divisors.add(-(abs_n // i))
+        i += 1
+    return sorted(divisors)
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40]
-    list2 = [5, 15]
-    list3 = [7]
-    list4 = [100]
-    list5 = [99, 1]
-    print(f"Second element of {list1}: {find_second_element(list1)}")
-    print(f"Second element of {list2}: {find_second_element(list2)}")
-    print(f"Second element of {list3}: {find_second_element(list3)}")
-    print(f"Second element of {list4}: {find_second_element(list4)}")
-    print(f"Second element of {list5}: {find_second_element(list5)}")
+    print(get_divisors(0))
+    print(get_divisors(12))
+    print(get_divisors(-12))
+    print(get_divisors(1))
+    print(get_divisors(-1))

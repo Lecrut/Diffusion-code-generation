@@ -1,16 +1,21 @@
-class ListAnalyzer:
-    def __init__(self, data):
-        self.data = data
-    def find_first_value(self):
-        if self.data:
-            return self.data[0]
-        return None
+def reverse_integer(n):
+    if n == 0:
+        return 0
+    negative = n < 0
+    n = abs(n)
+    reversed_digits = []
+    while n > 0:
+        reversed_digits.append(n % 10)
+        n //= 10
+    reversed_number = int(''.join(map(str, reversed_digits)))
+    if negative:
+        reversed_number = -reversed_number
+    return reversed_number
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40]
-    analyzer = ListAnalyzer(sample_list)
-    first = analyzer.find_first_value()
-    print(first)
-    sample_list_empty = []
-    analyzer_empty = ListAnalyzer(sample_list_empty)
-    first_empty = analyzer_empty.find_first_value()
-    print(first_empty)
+    print(reverse_integer(123))
+    print(reverse_integer(-456))
+    print(reverse_integer(7890))
+    print(reverse_integer(0))
+    print(reverse_integer(5))
+    print(reverse_integer(-100))

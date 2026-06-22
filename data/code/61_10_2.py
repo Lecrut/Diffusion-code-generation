@@ -1,18 +1,26 @@
-def get_list_element(data_list, index):
-    try:
-        element = data_list[index]
-        return element
-    except IndexError:
-        return "Error: Index out of bounds"
+import math
+
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    if n == 3:
+        return True
+    if n % 3 == 0:
+        return False
+    limit = int(math.isqrt(n))
+    i = 5
+    while i <= limit:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    valid_index = 2
-    invalid_index = 5
-    another_invalid_index = -1
-    result_valid = get_list_element(sample_list, valid_index)
-    result_invalid_high = get_list_element(sample_list, invalid_index)
-    result_invalid_negative = get_list_element(sample_list, another_invalid_index)
-    print(f"List: {sample_list}")
-    print(f"Element at index {valid_index}: {result_valid}")
-    print(f"Attempted access at index {invalid_index}: {result_invalid_high}")
-    print(f"Attempted access at index {another_invalid_index}: {result_invalid_negative}")
+    test_values = [0, 1, 2, 3, 4, 17, 18, 19, 20, 25, 29, 97, 100, 101]
+    for val in test_values:
+        result = is_prime(val)
+        print(f"{val}: {result}")

@@ -1,6 +1,8 @@
+def feet_to_inches(feet: float) -> float:
+    return feet * 12.0
+
 if __name__ == '__main__':
-    input_data = [10, 20, 30, 40, 50, 60, 70, 80]
-    target_index = 4
-    for i in range(len(input_data)):
-        if i == target_index:
-            print(input_data[i])
+    print(feet_to_inches(1.0))
+    print(feet_to_inches(5.5))
+    print(feet_to_inches(0.0))
+    print(feet_to_inches(10.123456789))

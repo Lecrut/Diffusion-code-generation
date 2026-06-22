@@ -1,14 +1,20 @@
-def find_first_element(data_list):
-    if not data_list:
-        raise IndexError("List is empty")
-    return data_list[0]
+def reverse_integer(n: int) -> int:
+    negative = n < 0
+    if negative:
+        n = -n
+    reversed_num = 0
+    while n > 0:
+        digit = n % 10
+        reversed_num = reversed_num * 10 + digit
+        n //= 10
+    return -reversed_num if negative else reversed_num
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    result = find_first_element(sample_list)
-    print(result)
-    sample_list_empty = []
-    try:
-        result_empty = find_first_element(sample_list_empty)
-        print(result_empty)
-    except IndexError as e:
-        print(f"Error: {e}")
+    test_value_1 = 12345
+    test_value_2 = -5678
+    test_value_3 = 0
+    test_value_4 = 100
+    print(reverse_integer(test_value_1))
+    print(reverse_integer(test_value_2))
+    print(reverse_integer(test_value_3))
+    print(reverse_integer(test_value_4))

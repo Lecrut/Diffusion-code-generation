@@ -1,0 +1,8 @@
+def convert_feet_to_inches(feet):
+    return feet * 12
+
+if __name__ == '__main__':
+    test_feet = 12
+    result = convert_feet_to_inches(test_feet)
+    assert result == 144
+    print(result)

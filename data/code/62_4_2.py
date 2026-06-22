@@ -1,20 +1,6 @@
-def second_element_generator(iterable):
-    it = iter(iterable)
-    try:
-        first = next(it)
-        yield next(it)
-    except StopIteration:
-        return
+def get_divisors(n):
+    return [i for i in range(1, n + 1) if n % i == 0]
+
 if __name__ == '__main__':
-    data1 = [10, 20, 30, 40]
-    gen1 = second_element_generator(data1)
-    print(list(gen1))
-    data2 = [1, 2]
-    gen2 = second_element_generator(data2)
-    print(list(gen2))
-    data3 = [5]
-    gen3 = second_element_generator(data3)
-    print(list(gen3))
-    data4 = []
-    gen4 = second_element_generator(data4)
-    print(list(gen4))
+    result = get_divisors(60)
+    print(result)

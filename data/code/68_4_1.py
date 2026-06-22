@@ -1,10 +1,7 @@
-def list_difference(list1, list2):
-    result = {}
-    for i in range(min(len(list1), len(list2))):
-        result[i] = list1[i] - list2[i]
-    return result
+def dollars_to_cents(dollars):
+    return int(dollars * 100)
+
 if __name__ == '__main__':
-    list_a = [10, 20, 30, 40]
-    list_b = [2, 5, 10, 15]
-    diff_dict = list_difference(list_a, list_b)
-    print(diff_dict)
+    print(dollars_to_cents(1.23))
+    print(dollars_to_cents(0.5))
+    print(dollars_to_cents(10.0))

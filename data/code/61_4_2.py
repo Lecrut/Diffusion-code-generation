@@ -1,12 +1,18 @@
-def get_string_at_position(string_list, position):
-    if position < 0:
-        return "Error: Position cannot be negative"
-    if position >= len(string_list):
-        return "Error: Position out of bounds"
-    return string_list[position]
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
 if __name__ == '__main__':
-    sample_list = ["apple", "banana", "cherry", "date"]
-    print(get_string_at_position(sample_list, 0))
-    print(get_string_at_position(sample_list, 2))
-    print(get_string_at_position(sample_list, -1))
-    print(get_string_at_position(sample_list, 4))
+    test_values = [2, 3, 4, 5, 17, 18, 19, 20, 23, 24, 25, 97, 100, 101]
+    for num in test_values:
+        print(num, is_prime(num))

@@ -1,8 +1,11 @@
-def absolute_differences(data):
-    for i in range(len(data) - 1):
-        yield abs(data[i+1] - data[i])
+def dollars_to_cents(dollars):
+    s = str(dollars)
+    s = s.replace('.', '')
+    return int(s)
+
 if __name__ == '__main__':
-    sample_list = [1, 5, 2, 8, 3]
-    differences = absolute_differences(sample_list)
-    result = list(differences)
-    print(result)
+    print(dollars_to_cents(10.00))
+    print(dollars_to_cents(0.99))
+    print(dollars_to_cents(123.45))
+    print(dollars_to_cents(0.01))
+    print(dollars_to_cents(100.00))

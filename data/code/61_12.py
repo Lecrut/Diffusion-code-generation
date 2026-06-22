@@ -1,14 +1,18 @@
-class SafeListAccessor:
-    def __init__(self, data):
-        self._data = data
-    def get_element_safe(self, index):
-        if 0 <= index < len(self._data):
-            return self._data[index]
-        return None
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    accessor = SafeListAccessor(sample_list)
-    print(accessor.get_element_safe(2))
-    print(accessor.get_element_safe(0))
-    print(accessor.get_element_safe(5))
-    print(accessor.get_element_safe(-1))
+    test_values = [1, 2, 3, 4, 5, 16, 17, 19, 20, 23, 24, 29, 97, 100, 101]
+    for val in test_values:
+        print(is_prime(val))

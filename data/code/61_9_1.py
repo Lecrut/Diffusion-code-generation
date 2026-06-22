@@ -1,9 +1,24 @@
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    index_to_pop = 2
-    if 0 <= index_to_pop < len(my_list):
-        removed_element = my_list.pop(index_to_pop)
-        print(f"Element removed: {removed_element}")
-        print(f"List after pop: {my_list}")
-    else:
-        print("Error: Index out of bounds.")
+    print(is_prime(2))
+    print(is_prime(3))
+    print(is_prime(4))
+    print(is_prime(17))
+    print(is_prime(18))
+    print(is_prime(97))
+    print(is_prime(1))
+    print(is_prime(0))
+    print(is_prime(-5))

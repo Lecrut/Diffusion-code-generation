@@ -1,7 +1,22 @@
-def main():
-    my_list = [10, 20, 30, 40, 50]
-    second_item = my_list[1]
-    print("The original list is:", my_list)
-    print("The second item in the list is:", second_item)
+from typing import List
+import math
+
+def get_divisors(n: int) -> List[int]:
+    if n == 0:
+        return []
+    if n < 0:
+        n = -n
+    divisors = []
+    sqrt_n = int(math.isqrt(n))
+    for i in range(1, sqrt_n + 1):
+        if n % i == 0:
+            divisors.append(i)
+            if i != n // i:
+                divisors.append(n // i)
+    divisors.sort()
+    return divisors
+
 if __name__ == '__main__':
-    main()
+    target_number = 36
+    result = get_divisors(target_number)
+    print(result)

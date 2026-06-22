@@ -1,8 +1,19 @@
-def find_first_element(data):
-    if not data:
-        return None
-    return data[0]
+def reverseInteger(x):
+    sign = -1 if x < 0 else 1
+    x = abs(x)
+    reversed_x = 0
+    while x != 0:
+        reversed_x = reversed_x * 10 + x % 10
+        x //= 10
+    reversed_x *= sign
+    if reversed_x < -2**31 or reversed_x > 2**31 - 1:
+        return 0
+    return reversed_x
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    first_value = find_first_element(sample_list)
-    print(first_value)
+    print(reverseInteger(123))
+    print(reverseInteger(-123))
+    print(reverseInteger(120))
+    print(reverseInteger(0))
+    print(reverseInteger(1534236469))
+    print(reverseInteger(-2147483648))

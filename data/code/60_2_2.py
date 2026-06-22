@@ -1,17 +1,14 @@
-def get_last_item(data_list):
-    if not data_list:
-        raise IndexError("Cannot get the last item from an empty list")
-    return data_list[-1]
+class FactorialCalculator:
+    def compute(self, n):
+        if n < 0:
+            raise ValueError("Input must be a non-negative integer")
+        result = 1
+        for i in range(2, n + 1):
+            result *= i
+        return result
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40]
-    list2 = []
-    try:
-        result1 = get_last_item(list1)
-        print(f"Last item of {list1}: {result1}")
-    except IndexError as e:
-        print(f"Error for list1: {e}")
-    try:
-        result2 = get_last_item(list2)
-        print(f"Last item of {list2}: {result2}")
-    except IndexError as e:
-        print(f"Error for list2: {e}")
+    samples = [0, 1, 5, 10]
+    calculator = FactorialCalculator()
+    for n in samples:
+        print(calculator.compute(n))

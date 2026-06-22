@@ -1,14 +1,15 @@
-def safe_get_second(data):
-    if len(data) >= 2:
-        return data[1]
-    else:
-        return None
+def find_divisors(number):
+    if number <= 0:
+        raise ValueError('Number must be positive')
+    divisors = []
+    for i in range(1, int(number ** 0.5) + 1):
+        if number % i == 0:
+            divisors.append(i)
+            if i != number // i:
+                divisors.append(number // i)
+    return sorted(divisors)
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40]
-    list2 = [5]
-    list3 = []
-    list4 = [100]
-    print(f"List {list1}: {safe_get_second(list1)}")
-    print(f"List {list2}: {safe_get_second(list2)}")
-    print(f"List {list3}: {safe_get_second(list3)}")
-    print(f"List {list4}: {safe_get_second(list4)}")
+    test_numbers = [12, 25, 36, 49, 100]
+    for num in test_numbers:
+        divisors = find_divisors(num)
+        print(f'Divisors of {num}: {divisors}')

@@ -1,27 +1,21 @@
-def last_item_generator(iterable):
-    it = iter(iterable)
-    last_item = None
-    try:
-        while True:
-            last_item = next(it)
-    except StopIteration:
-        if last_item is not None:
-            yield last_item
-    else:
-        pass
+def factorial(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    if n == 0 or n == 1:
+        return 1
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    data = [1, 2, 3, 4, 5]
-    gen = last_item_generator(data)
-    result = next(gen)
-    print(result)
-    data2 = [10]
-    gen2 = last_item_generator(data2)
-    result2 = next(gen2)
-    print(result2)
-    data3 = []
-    gen3 = last_item_generator(data3)
-    try:
-        next(gen3)
-    except StopIteration:
-        pass
-    print("Empty list test finished")
+    assert factorial(0) == 1
+    assert factorial(1) == 1
+    assert factorial(5) == 120
+    assert factorial(10) == 3628800
+    assert factorial(20) == 2432902008176640000
+    print(factorial(0))
+    print(factorial(1))
+    print(factorial(5))
+    print(factorial(10))
+    print(factorial(20))

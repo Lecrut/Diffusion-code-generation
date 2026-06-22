@@ -1,15 +1,17 @@
-def get_last_item(data):
-    if not data:
-        return None
-    return data[-1]
+def factorial(n):
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer")
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer")
+    
+    result = 1
+    i = 2
+    while i <= n:
+        result *= i
+        i += 1
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4, 5]
-    list2 = ['a', 'b', 'c']
-    list3 = []
-    list4 = [42]
-    list5 = []
-    print(f"Last item of {list1}: {get_last_item(list1)}")
-    print(f"Last item of {list2}: {get_last_item(list2)}")
-    print(f"Last item of {list3}: {get_last_item(list3)}")
-    print(f"Last item of {list4}: {get_last_item(list4)}")
-    print(f"Last item of {list5}: {get_last_item(list5)}")
+    print(factorial(0))
+    print(factorial(5))
+    print(factorial(10))

@@ -1,0 +1,17 @@
+def power(base, exponent):
+    if exponent < 0:
+        return 1.0 / power(base, -exponent)
+    if exponent == 0:
+        return 1
+    if exponent % 2 == 0:
+        half = power(base, exponent // 2)
+        return half * half
+    else:
+        half = power(base, exponent // 2)
+        return base * half * half
+
+if __name__ == '__main__':
+    print(power(2, 10))
+    print(power(3, 5))
+    print(power(5, 0))
+    print(power(-2, 3))

@@ -1,19 +1,18 @@
-def get_first_element(data):
-    if not data:
-        raise ValueError("Input list cannot be empty")
-    return data[0]
+def reverse_integer(n):
+    is_negative = n < 0
+    n = abs(n)
+    reversed_str = str(n)[::-1]
+    reversed_int = int(reversed_str)
+    if is_negative:
+        return -reversed_int
+    return reversed_int
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4]
-    list2 = ['a', 'b', 'c']
-    empty_list = []
-    try:
-        result1 = get_first_element(list1)
-        print(f"First element of {list1}: {result1}")
-        result2 = get_first_element(list2)
-        print(f"First element of {list2}: {result2}")
-        try:
-            get_first_element(empty_list)
-        except ValueError as e:
-            print(f"Caught expected error for empty list: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    print(reverse_integer(123))
+    print(reverse_integer(-123))
+    print(reverse_integer(120))
+    print(reverse_integer(0))
+    print(reverse_integer(1))
+    print(reverse_integer(-1))
+    print(reverse_integer(1000))
+    print(reverse_integer(-1000))

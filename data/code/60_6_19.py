@@ -1,0 +1,17 @@
+import math
+
+def factorial_iterative(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+if __name__ == '__main__':
+    test_values = [0, 1, 5, 10, 20]
+    for val in test_values:
+        expected = math.factorial(val)
+        actual = factorial_iterative(val)
+        assert actual == expected, f"Failed for {val}: expected {expected}, got {actual}"
+        print(f"factorial({val}) = {actual}")

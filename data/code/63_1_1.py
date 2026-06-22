@@ -1,17 +1,14 @@
-def get_first_element(data):
-    if not data:
-        raise IndexError("list is empty")
-    return data[0]
+def reverse_integer(n):
+    sign = -1 if n < 0 else 1
+    abs_n = abs(n)
+    reversed_num = 0
+    while abs_n > 0:
+        digit = abs_n % 10
+        reversed_num = reversed_num * 10 + digit
+        abs_n //= 10
+    return sign * reversed_num
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4]
-    list2 = []
-    try:
-        result1 = get_first_element(list1)
-        print(f"First element of {list1}: {result1}")
-    except IndexError as e:
-        print(f"Error processing {list1}: {e}")
-    try:
-        result2 = get_first_element(list2)
-        print(f"First element of {list2}: {result2}")
-    except IndexError as e:
-        print(f"Error processing {list2}: {e}")
+    print(reverse_integer(12345))
+    print(reverse_integer(-6789))
+    print(reverse_integer(1200))

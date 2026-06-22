@@ -1,7 +1,10 @@
-def sum_two_numbers(a, b):
-    return a + b
+LITERS_TO_MILLILITERS = 1000
+
+def liters_to_milliliters(liters):
+    return liters * LITERS_TO_MILLILITERS
+
 if __name__ == '__main__':
-    num1 = 5
-    num2 = 10
-    result = sum_two_numbers(num1, num2)
-    print(result)
+    sample_liters = [1, 2.5, 0.5, 10]
+    for liters in sample_liters:
+        milliliters = liters_to_milliliters(liters)
+        print(milliliters)

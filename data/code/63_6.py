@@ -1,19 +1,15 @@
-import unittest
-def find_first_element(data):
-    if not data:
-        return None
-    return data[0]
-class TestFindFirstElement(unittest.TestCase):
-    def test_mixed_types(self):
-        list_with_strings_and_floats = ["apple", 3.14, "banana"]
-        self.assertEqual(find_first_element(list_with_strings_and_floats), "apple")
-        list_with_floats_and_strings = [1.0, "hello", 2.5]
-        self.assertEqual(find_first_element(list_with_floats_and_strings), 1.0)
-        list_with_only_strings = ["a", "b", "c"]
-        self.assertEqual(find_first_element(list_with_only_strings), "a")
-        list_with_only_floats = [1.1, 2.2, 3.3]
-        self.assertEqual(find_first_element(list_with_only_floats), 1.1)
-        empty_list = []
-        self.assertIsNone(find_first_element(empty_list))
+def reverse_integer(n):
+    sign = -1 if n < 0 else 1
+    n_abs = abs(n)
+    reversed_str = str(n_abs)[::-1]
+    reversed_int = int(reversed_str) * sign
+    if reversed_int < -2**31 or reversed_int > 2**31 - 1:
+        return 0
+    return reversed_int
+
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+    print(reverse_integer(123))
+    print(reverse_integer(-123))
+    print(reverse_integer(120))
+    print(reverse_integer(0))
+    print(reverse_integer(1534236469))

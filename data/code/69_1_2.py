@@ -1,13 +1,8 @@
-def access_elements(data, indices):
-    result = []
-    for index in indices:
-        if 0 <= index < len(data):
-            result.append(data[index])
-        else:
-            result.append(None)
-    return result
+def convert_miles_to_feet(miles_list):
+    conversion_factor = 5280
+    return [miles * conversion_factor for miles in miles_list]
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40, 50]
-    sample_indices = [0, 2, 4, 1, 5, -1]
-    accessed = access_elements(sample_data, sample_indices)
-    print(accessed)
+    sample_miles = [1, 5, 10, 26.2, 100]
+    result = convert_miles_to_feet(sample_miles)
+    print(result)

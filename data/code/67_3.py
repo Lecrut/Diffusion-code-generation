@@ -1,7 +1,10 @@
-def sum_floats(a: float, b: float) -> float:
-    return a + b
+import numpy as np
+
+def liters_to_milliliters(liters):
+    liters_array = np.asarray(liters)
+    return liters_array * 1000.0
+
 if __name__ == '__main__':
-    num1 = 3.14159
-    num2 = 2.71828
-    result = sum_floats(num1, num2)
+    sample_liters = np.array([0.5, 1.25, 3.0, 10.75, 0.001])
+    result = liters_to_milliliters(sample_liters)
     print(result)

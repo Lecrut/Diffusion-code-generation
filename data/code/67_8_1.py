@@ -1,15 +1,10 @@
-import unittest
-class TestMathFunctions(unittest.TestCase):
-    def sum_numbers(self, a, b):
-        return a + b
-    def test_sum_positive_numbers(self):
-        self.assertEqual(self.sum_numbers(5, 3), 8)
-    def test_sum_negative_numbers(self):
-        self.assertEqual(self.sum_numbers(-5, -3), -8)
-    def test_sum_positive_and_negative(self):
-        self.assertEqual(self.sum_numbers(10, -4), 6)
-    def test_sum_with_zero(self):
-        self.assertEqual(self.sum_numbers(7, 0), 7)
-        self.assertEqual(self.sum_numbers(-2, 0), -2)
-if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+def convert_liters_to_milliliters(liters):
+    return liters * 1000
+
+def format_output(value):
+    return f"{value} milliliters"
+
+if __name__ == "__main__":
+    sample_liters = 2.5
+    converted_value = convert_liters_to_milliliters(sample_liters)
+    print(format_output(converted_value))

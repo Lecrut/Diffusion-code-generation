@@ -1,12 +1,20 @@
-class ListFinder:
-    def __init__(self, data):
-        self._internal_list = data
-    def get_first_element(self):
-        if not self._internal_list:
-            return None
-        return self._internal_list[0]
+def reverse_integer(x):
+    sign = -1 if x < 0 else 1
+    x = abs(x)
+    reversed_x = 0
+    while x > 0:
+        digit = x % 10
+        reversed_x = reversed_x * 10 + digit
+        x //= 10
+    reversed_x *= sign
+    if reversed_x < -2**31 or reversed_x > 2**31 - 1:
+        return 0
+    return reversed_x
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40]
-    finder = ListFinder(sample_data)
-    first_element = finder.get_first_element()
-    print(first_element)
+    print(reverse_integer(123))
+    print(reverse_integer(-123))
+    print(reverse_integer(120))
+    print(reverse_integer(0))
+    print(reverse_integer(1534236469))
+    print(reverse_integer(-2147483648))

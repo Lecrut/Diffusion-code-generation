@@ -1,14 +1,13 @@
-def get_first_element(data):
-    if not data:
-        raise ValueError("Input list cannot be empty")
-    return data[0]
+def reverse_integer(n: int) -> int:
+    if n < 0:
+        s = str(n)
+        reversed_s = '-' + s[1:][::-1]
+        return int(reversed_s)
+    reversed_s = str(n)[::-1]
+    return int(reversed_s)
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4]
-    list2 = ['a', 'b', 'c']
-    empty_list = []
-    print(f"First element of {list1}: {get_first_element(list1)}")
-    print(f"First element of {list2}: {get_first_element(list2)}")
-    try:
-        get_first_element(empty_list)
-    except ValueError as e:
-        print(f"Caught expected error for empty list: {e}")
+    test_values = [123, -456, 0, 700, -3050]
+    for value in test_values:
+        result = reverse_integer(value)
+        print(result)

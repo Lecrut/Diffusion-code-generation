@@ -1,11 +1,12 @@
+def factorial(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    last_element_slice = my_list[-1]
-    last_element_index = len(my_list) - 1
-    last_element_index_access = my_list[last_element_index]
-    print(f"List: {my_list}")
-    print(f"Slicing access ([-1]): {last_element_slice}")
-    print(f"Indexing access ([-1]): {my_list[-1]}")
-    print(f"Indexing access (len-1): {my_list[len(my_list) - 1]}")
-    most_efficient_access = my_list[-1]
-    print(f"Most efficient Pythonic access: {most_efficient_access}")
+    test_values = [0, 1, 5, 10, 15, 20]
+    for val in test_values:
+        print(factorial(val))

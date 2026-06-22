@@ -1,13 +1,9 @@
-def find_and_retrieve(data_list, position):
-    if 0 <= position < len(data_list):
-        return data_list[position]
-    else:
-        raise IndexError("Position out of bounds")
+def feet_to_inches(feet):
+    inches_per_foot = 12
+    total_inches = feet * inches_per_foot
+    return total_inches
+
 if __name__ == '__main__':
-    dynamic_list = [10, 20, 30, 40, 50]
-    target_position = 2
-    try:
-        result = find_and_retrieve(dynamic_list, target_position)
-        print(result)
-    except IndexError as e:
-        print(f"Error: {e}")
+    sample_feet = 15
+    result = feet_to_inches(sample_feet)
+    print(result)

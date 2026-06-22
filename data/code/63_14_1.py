@@ -1,7 +1,9 @@
-def get_first_item(iterable):
-    return iterable[0]
+def reverse_integer(n):
+    sign = 1 if n >= 0 else -1
+    reversed_digits = int(''.join(reversed(str(abs(n)))))
+    return sign * reversed_digits
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30]
-    sample_tuple = ('a', 'b', 'c')
-    print(get_first_item(sample_list))
-    print(get_first_item(sample_tuple))
+    print(reverse_integer(12345))
+    print(reverse_integer(-6789))
+    print(reverse_integer(100))

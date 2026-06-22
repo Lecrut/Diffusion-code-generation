@@ -1,7 +1,9 @@
-def calculate_sum():
-    num1 = 15
-    num2 = 27
-    sum_result = num1 + num2
-    print(sum_result)
+from typing import List, Union
+
+def convert_to_milliliters(liters: List[Union[int, float]]) -> List[Union[int, float]]:
+    return [l * 1000 for l in liters]
+
 if __name__ == '__main__':
-    calculate_sum()
+    sample_liters = [1.5, 2, 0.5]
+    result = convert_to_milliliters(sample_liters)
+    print(result)

@@ -1,14 +1,18 @@
-def get_second_item(data):
-    try:
-        return data[1]
-    except IndexError:
-        return None
+import math
+
+def find_divisors(n):
+    if n <= 0:
+        return []
+    divisors = []
+    for i in range(1, int(math.isqrt(n)) + 1):
+        if n % i == 0:
+            divisors.append(i)
+            if i != n // i:
+                divisors.append(n // i)
+    return sorted(divisors)
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30]
-    list2 = [5]
-    list3 = []
-    list4 = [1]
-    print(f"List 1: {get_second_item(list1)}")
-    print(f"List 2: {get_second_item(list2)}")
-    print(f"List 3: {get_second_item(list3)}")
-    print(f"List 4: {get_second_item(list4)}")
+    sample_values = [28, 1, 100, 0, -5]
+    for n in sample_values:
+        result = find_divisors(n)
+        print(result)

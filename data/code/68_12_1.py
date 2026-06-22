@@ -1,10 +1,8 @@
-class NumberComparator:
-    def __init__(self, num1: int, num2: int) -> None:
-        self.num1: int = num1
-        self.num2: int = num2
-    def calculate_difference(self) -> int:
-        return self.num1 - self.num2
+def dollars_to_cents(dollars: float) -> int:
+    return round(dollars * 100)
+
 if __name__ == '__main__':
-    comparator = NumberComparator(100, 45)
-    difference = comparator.calculate_difference()
-    print(difference)
+    print(dollars_to_cents(10.50))
+    print(dollars_to_cents(0.99))
+    print(dollars_to_cents(100.01))
+    print(dollars_to_cents(-5.25))

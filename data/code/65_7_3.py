@@ -1,12 +1,7 @@
-class CustomList:
-    def __init__(self, data):
-        self._data = data
-    def __getitem__(self, index):
-        return self._data[index]
+def feet_to_inches(feet):
+    return feet * 12
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40, 50]
-    my_list = CustomList(sample_data)
-    print(my_list[0])
-    print(my_list[2])
-    print(my_list[4])
-    print(my_list[1])
+    sample_feet_values = [0, 1, 5, 10.5, 100]
+    for value in sample_feet_values:
+        print(feet_to_inches(value))

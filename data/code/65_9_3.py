@@ -1,10 +1,9 @@
-def find_and_retrieve(data_list, position):
-    if 0 <= position < len(data_list):
-        return data_list[position]
-    else:
-        return None
+FEET_TO_INCHES_FACTOR = 12
+
+def convert_feet_to_inches(feet: float) -> float:
+    return feet * FEET_TO_INCHES_FACTOR
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    target_position = 2
-    result = find_and_retrieve(my_list, target_position)
-    print(result)
+    sample_feet = 5
+    result_inches = convert_feet_to_inches(sample_feet)
+    print(result_inches)

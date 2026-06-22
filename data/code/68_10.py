@@ -1,7 +1,9 @@
-def find_difference(a, b):
-    return abs(a - b)
+def dollars_to_cents(dollar_amount):
+    return round(dollar_amount * 100)
+
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 4
-    result = find_difference(num1, num2)
-    print(result)
+    print(dollars_to_cents(0.01))
+    print(dollars_to_cents(10.00))
+    print(dollars_to_cents(123.45))
+    print(dollars_to_cents(0.29))
+    print(dollars_to_cents(0.10))

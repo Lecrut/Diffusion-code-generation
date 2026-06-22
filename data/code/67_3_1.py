@@ -1,7 +1,9 @@
-def sum_floats(a, b):
-    return a + b
+import numpy as np
+
+def convert_liters_to_milliliters(liters: np.ndarray) -> np.ndarray:
+    return liters * 1000
+
 if __name__ == '__main__':
-    num1 = 3.14159
-    num2 = 2.71828
-    result = sum_floats(num1, num2)
+    sample_liters = np.array([1.5, 2.0, 0.75, 3.14])
+    result = convert_liters_to_milliliters(sample_liters)
     print(result)

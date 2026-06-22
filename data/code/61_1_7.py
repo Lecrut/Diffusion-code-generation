@@ -1,41 +1,19 @@
-def get_element_at_position(data, index):
-    if not isinstance(data, list):
-        raise TypeError("Input must be a list.")
-    if not isinstance(index, int):
-        raise TypeError("Index must be an integer.")
-    if index < 0 or index >= len(data):
-        raise IndexError("Index out of bounds.")
-    return data[index]
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    limit = int(n ** 0.5) + 1
+    divisor = 3
+    while divisor <= limit:
+        if n % divisor == 0:
+            return False
+        divisor += 2
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print(f"Original list: {sample_list}")
-    try:
-        result1 = get_element_at_position(sample_list, 2)
-        print(f"Element at index 2: {result1}")
-        result2 = get_element_at_position(sample_list, 0)
-        print(f"Element at index 0: {result2}")
-        result3 = get_element_at_position(sample_list, 4)
-        print(f"Element at index 4: {result3}")
-        print("\nTesting error handling:")
-        try:
-            get_element_at_position(sample_list, 5)
-        except IndexError as e:
-            print(f"Caught expected error for index 5: {e}")
-        try:
-            get_element_at_position(sample_list, -1)
-        except IndexError as e:
-            print(f"Caught expected error for index -1: {e}")
-        try:
-            get_element_at_position([1, 2], 5)
-        except IndexError as e:
-            print(f"Caught expected error for index 5 in smaller list: {e}")
-        try:
-            get_element_at_position("not a list", 1)
-        except TypeError as e:
-            print(f"Caught expected error for wrong data type: {e}")
-        try:
-            get_element_at_position(sample_list, "a")
-        except TypeError as e:
-            print(f"Caught expected error for wrong index type: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    test_values = [2, 3, 4, 5, 16, 17, 18, 19, 97, 100]
+    for value in test_values:
+        print(f"{value}: {is_prime(value)}")

@@ -1,15 +1,28 @@
-def find_final_item_index(indices):
-    if not indices:
-        return -1
-    return max(indices)
-if __name__ == '__main__':
-    list1 = [1, 5, 3, 8, 2]
-    print(f"Input: {list1}, Result: {find_final_item_index(list1)}")
-    list2 = [10, 20, 5]
-    print(f"Input: {list2}, Result: {find_final_item_index(list2)}")
-    list3 = []
-    print(f"Input: {list3}, Result: {find_final_item_index(list3)}")
-    list4 = [42]
-    print(f"Input: {list4}, Result: {find_final_item_index(list4)}")
-    list5 = [-5, -1, -10]
-    print(f"Input: {list5}, Result: {find_final_item_index(list5)}")
+def power(base, exponent):
+    if not isinstance(exponent, int):
+        raise TypeError("Exponent must be an integer")
+    if exponent == 0:
+        return 1.0
+    if exponent < 0:
+        base = 1.0 / base
+        exponent = -exponent
+    result = 1.0
+    for _ in range(exponent):
+        try:
+            result *= base
+            if result > 1e308:
+                raise OverflowError("Result exceeds maximum floating point value")
+        except OverflowError:
+            raise
+    return result
+
+if __name__ == "__main__":
+    val1 = power(2.5, 3)
+    print(val1)
+    val2 = power(10.0, -2)
+    print(val2)
+    try:
+        val3 = power(10.0, 500)
+        print(val3)
+    except OverflowError:
+        print("Overflow caught as expected")

@@ -1,17 +1,22 @@
-def find_final_item_index(item_indices):
-    if not item_indices:
-        return -1
-    return item_indices[-1]
+def integer_power(base, exponent):
+    if exponent == 0:
+        return 1
+    if exponent < 0:
+        base = 1 / base
+        exponent = -exponent
+    result = 1
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result *= base
+        base *= base
+        exponent //= 2
+    if exponent == 0 and base != 1:
+        return result
+    return int(result) if isinstance(result, float) and result.is_integer() else result
+
 if __name__ == '__main__':
-    list1 = [1, 5, 2, 8, 3]
-    result1 = find_final_item_index(list1)
-    print(result1)
-    list2 = [100]
-    result2 = find_final_item_index(list2)
-    print(result2)
-    list3 = []
-    result3 = find_final_item_index(list3)
-    print(result3)
-    list4 = [42]
-    result4 = find_final_item_index(list4)
-    print(result4)
+    print(integer_power(2, 10))
+    print(integer_power(-2, 10))
+    print(integer_power(3, 0))
+    print(integer_power(-3, 3))
+    print(integer_power(5, -2))

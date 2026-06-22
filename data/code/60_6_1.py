@@ -1,29 +1,29 @@
-def last_item_generator(iterable):
-    try:
-        it = iter(iterable)
-        last_item = None
-        for item in it:
-            last_item = item
-        yield last_item
-    except StopIteration:
-        if iterable:
-            yield iterable[-1]
-        else:
-            pass
+def factorial_iterative(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+def run_assertions():
+    assert factorial_iterative(0) == 1
+    assert factorial_iterative(1) == 1
+    assert factorial_iterative(2) == 2
+    assert factorial_iterative(3) == 6
+    assert factorial_iterative(4) == 24
+    assert factorial_iterative(5) == 120
+    assert factorial_iterative(6) == 720
+    assert factorial_iterative(7) == 5040
+    assert factorial_iterative(8) == 40320
+    assert factorial_iterative(9) == 362880
+    assert factorial_iterative(10) == 3628800
+    assert factorial_iterative(12) == 479001600
+    assert factorial_iterative(15) == 1307674368000
+    assert factorial_iterative(20) == 2432902008176640000
+    assert factorial_iterative(25) == 15511210043330985984000000
+    assert factorial_iterative(30) == 265252859812191058636308480000000
+
 if __name__ == '__main__':
-    data1 = [1, 2, 3, 4, 5]
-    gen1 = last_item_generator(data1)
-    result1 = list(gen1)
-    print(f"Result 1: {result1}")
-    data2 = [10, 20]
-    gen2 = last_item_generator(data2)
-    result2 = list(gen2)
-    print(f"Result 2: {result2}")
-    data3 = [99]
-    gen3 = last_item_generator(data3)
-    result3 = list(gen3)
-    print(f"Result 3: {result3}")
-    data4 = []
-    gen4 = last_item_generator(data4)
-    result4 = list(gen4)
-    print(f"Result 4: {result4}")
+    run_assertions()
+    print(factorial_iterative(10))
+    print(factorial_iterative(20))
+    print(factorial_iterative(30))

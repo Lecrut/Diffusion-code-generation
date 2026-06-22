@@ -1,15 +1,7 @@
-def get_element_by_position(data, index):
-    if not (0 <= index < len(data)):
-        raise IndexError("index out of range")
-    return data[index]
+def feet_to_inches(feet_list):
+    return [ft * 12 for ft in feet_list]
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print(get_element_by_position(sample_list, 2))
-    try:
-        get_element_by_position(sample_list, 5)
-    except IndexError as e:
-        print(f"Caught expected error: {e}")
-    try:
-        get_element_by_position(sample_list, -1)
-    except IndexError as e:
-        print(f"Caught expected error: {e}")
+    sample_feet = [1, 2.5, 10, 0.5]
+    inches = feet_to_inches(sample_feet)
+    print(inches)

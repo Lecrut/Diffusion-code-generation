@@ -1,20 +1,16 @@
-def first_element_generator(iterable):
-    try:
-        yield next(iter(iterable))
-    except StopIteration:
-        pass
+def reverse_integer(n):
+    negative = n < 0
+    n = abs(n)
+    reversed_n = 0
+    while n > 0:
+        reversed_n = reversed_n * 10 + n % 10
+        n //= 10
+    if negative:
+        reversed_n = -reversed_n
+    return reversed_n
+
 if __name__ == '__main__':
-    data = [10, 20, 30, 40]
-    gen = first_element_generator(data)
-    result = next(gen)
-    print(result)
-    data2 = ["a", "b", "c"]
-    gen2 = first_element_generator(data2)
-    result2 = next(gen2)
-    print(result2)
-    data3 = []
-    gen3 = first_element_generator(data3)
-    try:
-        next(gen3)
-    except StopIteration:
-        print("Empty iterable test passed")
+    print(reverse_integer(123))
+    print(reverse_integer(-456))
+    print(reverse_integer(1200))
+    print(reverse_integer(0))

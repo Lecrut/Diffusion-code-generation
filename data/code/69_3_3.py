@@ -1,13 +1,12 @@
-def reverse_list_indices(data):
-    n = len(data)
-    for i in range(n // 2):
-        j = i
-        while j < n - 1 - i:
-            data[j], data[j + 1] = data[j + 1], data[j]
-            j += 1
-    return data
+class Converter:
+    @staticmethod
+    def mile_to_foot(miles):
+        if not isinstance(miles, (int, float)):
+            raise TypeError("Input must be a number.")
+        if miles < 0:
+            raise ValueError("Input must be non-negative.")
+        return miles * 5280
+
 if __name__ == '__main__':
-    sample_list = [1, 2, 3, 4, 5, 6, 7]
-    print("Original list:", sample_list)
-    reversed_list = reverse_list_indices(sample_list)
-    print("Reversed list:", reversed_list)
+    result = Converter.mile_to_foot(2)
+    print(result)

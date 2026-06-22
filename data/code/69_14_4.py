@@ -1,10 +1,14 @@
-def print_indexed_characters(text, indices):
-    for index in indices:
-        if 0 <= index < len(text):
-            print(text[index], end=' ')
-        else:
-            print(f"Index {index} out of bounds.")
+class DistanceConverter:
+    @staticmethod
+    def miles_to_feet(miles):
+        if not isinstance(miles, (int, float)):
+            raise TypeError("Input must be a number")
+        if miles < 0:
+            raise ValueError("Distance cannot be negative")
+        return miles * 5280
+
 if __name__ == '__main__':
-    sample_string = "HelloWorld"
-    sample_list = [0, 4, 7, 10, 2]
-    print_indexed_characters(sample_string, sample_list)
+    converter = DistanceConverter()
+    print(converter.miles_to_feet(1))
+    print(converter.miles_to_feet(0.5))
+    print(converter.miles_to_feet(10))

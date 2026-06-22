@@ -1,9 +1,13 @@
-class Calculator:
-    def add(self, a, b):
-        return a + b
+def liters_to_milliliters(liters):
+    if not isinstance(liters, (int, float)):
+        return None
+    if liters < 0:
+        return None
+    return liters * 1000
+
 if __name__ == '__main__':
-    calc = Calculator()
-    result = calc.add(5, 3)
-    print(result)
-    result2 = calc.add(10.5, 2.5)
-    print(result2)
+    print(liters_to_milliliters(1))
+    print(liters_to_milliliters(0))
+    print(liters_to_milliliters(-5))
+    print(liters_to_milliliters(2.5))
+    print(liters_to_milliliters("invalid"))

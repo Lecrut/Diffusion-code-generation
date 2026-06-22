@@ -1,13 +1,9 @@
-def index_generator(data, item):
-    for index, element in enumerate(data):
-        if element == item:
-            yield index
+def calculate_power(base, exponent):
+    return float(pow(base, exponent))
+
 if __name__ == '__main__':
-    sample_data = [1, 5, 2, 5, 8, 5, 3]
-    target_item = 5
-    indices = list(index_generator(sample_data, target_item))
-    print(f"Indices of {target_item}: {indices}")
-    final_index = -1
-    if indices:
-        final_index = indices[-1]
-    print(f"Final index of {target_item}: {final_index}")
+    print(calculate_power(2, 3))
+    print(calculate_power(4, 0.5))
+    print(calculate_power(9, -1))
+    print(calculate_power(2.5, 2))
+    print(calculate_power(10, 0.3333333333333333))

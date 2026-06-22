@@ -1,4 +1,15 @@
+def get_divisors(n):
+    divisors = []
+    i = 1
+    while i * i <= n:
+        if n % i == 0:
+            divisors.append(i)
+            if i * i != n:
+                divisors.append(n // i)
+        i += 1
+    divisors.sort()
+    return divisors
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    second_item = my_list[1]
-    print(second_item)
+    result = get_divisors(36)
+    print(result)

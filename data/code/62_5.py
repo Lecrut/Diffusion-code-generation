@@ -1,4 +1,11 @@
+def find_factors(n):
+    factors = []
+    for i in range(1, int(n**0.5) + 1):
+        if n % i == 0:
+            factors.append(i)
+            if i != n // i:
+                factors.append(n // i)
+    return sorted(factors)
+
 if __name__ == '__main__':
-    string_list = ["apple", "banana", "cherry", "date"]
-    if len(string_list) >= 2:
-        print(string_list[1])
+    print(find_factors(120))

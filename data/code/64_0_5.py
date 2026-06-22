@@ -1,13 +1,23 @@
-import sys
-def find_last_occurrence_index(data_list, item):
-    last_index = -1
-    for i in range(len(data_list) - 1, -1, -1):
-        if data_list[i] == item:
-            last_index = i
-            break
-    return last_index
+def power(base, exponent):
+    if exponent < 0:
+        return 1 / _power_positive(base, -exponent)
+    return _power_positive(base, exponent)
+
+def _power_positive(base, exponent):
+    result = 1
+    current_base = base
+    current_exp = exponent
+    while current_exp > 0:
+        if current_exp % 2 == 1:
+            result *= current_base
+        current_base *= current_base
+        current_exp //= 2
+    return result
+
 if __name__ == '__main__':
-    sample_list = [1, 5, 2, 8, 5, 3, 5, 9]
-    target_item = 5
-    result = find_last_occurrence_index(sample_list, target_item)
-    print(result)
+    print(power(2, 10))
+    print(power(3, 0))
+    print(power(5, -2))
+    print(power(10, 3))
+    print(power(0, 5))
+    print(power(7, 1))

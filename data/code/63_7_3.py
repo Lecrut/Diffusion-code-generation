@@ -1,17 +1,18 @@
-import random
-def find_first_element(data_list):
-    if not data_list:
-        raise IndexError("List is empty")
-    return data_list[0]
+def reverse_integer(n: int) -> int:
+    negative = n < 0
+    x = -n if negative else n
+    result = 0
+    while x > 0:
+        result = result * 10 + x % 10
+        x //= 10
+    if negative:
+        result = -result
+    if result < -(2**31) or result > 2**31 - 1:
+        return 0
+    return result
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40, 50]
-    list2 = [99, 1, 5, 1000]
-    list3 = [42]
-    list4 = []
-    print(f"List 1: {list1}, First element: {find_first_element(list1)}")
-    print(f"List 2: {list2}, First element: {find_first_element(list2)}")
-    print(f"List 3: {list3}, First element: {find_first_element(list3)}")
-    try:
-        find_first_element(list4)
-    except IndexError as e:
-        print(f"List 4: {list4}, Error: {e}")
+    print(reverse_integer(123))
+    print(reverse_integer(-456))
+    print(reverse_integer(120))
+    print(reverse_integer(0))

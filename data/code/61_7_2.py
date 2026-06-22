@@ -1,13 +1,21 @@
-def list_accessor(target_list, index_to_retrieve):
-    def decorator(func):
-        def wrapper(*args):
-            return target_list[index_to_retrieve]
-        return wrapper
-    return decorator
-my_data = [10, 20, 30, 40, 50]
-@list_accessor(my_data, 2)
-def get_third_element(x):
-    return x
-result = get_third_element(1)
+import math
+
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    limit = math.isqrt(n)
+    i = 3
+    while i <= limit:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+
 if __name__ == '__main__':
-    print(result)
+    sample_values = [2, 17, 18, 104729, 104730]
+    for val in sample_values:
+        print(is_prime(val))

@@ -1,14 +1,19 @@
-def get_list_element(data_list, index):
-    try:
-        return data_list[index]
-    except IndexError:
-        return "Index out of bounds"
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    valid_index = 2
-    invalid_index = 5
-    result_valid = get_list_element(sample_list, valid_index)
-    result_invalid = get_list_element(sample_list, invalid_index)
-    print(f"List: {sample_list}")
-    print(f"Attempting to access index {valid_index}: {result_valid}")
-    print(f"Attempting to access index {invalid_index}: {result_invalid}")
+    print(is_prime(29))
+    print(is_prime(10))
+    print(is_prime(2))
+    print(is_prime(1))

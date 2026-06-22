@@ -1,16 +1,5 @@
-class IndexAccessor:
-    def __init__(self, data):
-        self._data = data
-    def get_element(self, index):
-        try:
-            return self._data[index]
-        except IndexError:
-            return None
+miles_to_feet = lambda miles: miles * 5280
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    accessor = IndexAccessor(sample_list)
-    print(accessor.get_element(0))
-    print(accessor.get_element(2))
-    print(accessor.get_element(4))
-    print(accessor.get_element(10))
-    print(accessor.get_element(-1))
+    print(miles_to_feet(1))
+    print(miles_to_feet(2.5))

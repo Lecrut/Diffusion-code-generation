@@ -1,12 +1,7 @@
-def find_adjacent_greater_pairs(arr):
-    indices = []
-    n = len(arr)
-    for i in range(n - 1):
-        if arr[i+1] > arr[i]:
-            indices.append((i, i + 1))
-    return indices
+def kilometers_to_meters(kilometers):
+    return [km * 1000 for km in kilometers]
+
 if __name__ == '__main__':
-    sample_array = [1, 3, 2, 5, 4, 7]
-    result = find_adjacent_greater_pairs(sample_array)
-    for start, end in result:
-        print(f"Indices: ({start}, {end})")
+    sample_kilometers = [1.5, 3.0, 0.75, 10, 42.195]
+    result = kilometers_to_meters(sample_kilometers)
+    print(result)

@@ -1,13 +1,17 @@
-def get_last_item(data):
-    if not data:
-        return None
-    return data[-1]
+def factorial(n):
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer")
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer")
+    result = 1
+    current = 2
+    while current <= n:
+        result *= current
+        current += 1
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4, 5]
-    list2 = ['a', 'b', 'c']
-    empty_list = []
-    single_item = [99]
-    print(get_last_item(list1))
-    print(get_last_item(list2))
-    print(get_last_item(empty_list))
-    print(get_last_item(single_item))
+    print(factorial(0))
+    print(factorial(1))
+    print(factorial(5))
+    print(factorial(10))

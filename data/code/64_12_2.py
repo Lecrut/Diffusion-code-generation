@@ -1,15 +1,31 @@
-def find_final_index(indices):
-    if not indices:
-        return -1
-    return max(indices)
+def power(base, exponent):
+    if not isinstance(exponent, int):
+        raise TypeError("Exponent must be an integer")
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a number")
+
+    result = 1.0
+    negative_exp = exponent < 0
+    exp = abs(exponent)
+
+    for _ in range(exp):
+        try:
+            result *= base
+            if abs(result) > 1e308:
+                raise OverflowError("Result overflowed")
+        except OverflowError:
+            raise OverflowError("Result overflowed")
+
+    if negative_exp:
+        if result == 0:
+            raise ZeroDivisionError("Cannot compute reciprocal of zero")
+        result = 1.0 / result
+
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 5, 3, 8, 2]
-    print(f"Input: {list1}, Result: {find_final_index(list1)}")
-    list2 = [100, 50, 200, 10]
-    print(f"Input: {list2}, Result: {find_final_index(list2)}")
-    list3 = []
-    print(f"Input: {list3}, Result: {find_final_index(list3)}")
-    list4 = [42]
-    print(f"Input: {list4}, Result: {find_final_index(list4)}")
-    list5 = [-5, -1, -10]
-    print(f"Input: {list5}, Result: {find_final_index(list5)}")
+    print(power(2.0, 10))
+    print(power(3.5, 3))
+    print(power(2.0, -3))
+    print(power(0.5, 4))
+    print(power(10.0, 0))

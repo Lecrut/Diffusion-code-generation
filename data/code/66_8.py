@@ -1,13 +1,15 @@
-def find_descending_pairs(arr):
-    indices = []
-    n = len(arr)
-    if n < 2:
-        return indices
-    for i in range(n - 1):
-        if arr[i] > arr[i+1]:
-            indices.append(i)
-    return indices
+def kilometers_to_meters(km):
+    if not isinstance(km, (int, float)):
+        raise ValueError("Input must be a number")
+    if km < 0:
+        raise ValueError("Input must be non-negative")
+    return km * 1000
+
 if __name__ == '__main__':
-    sample_array = [1, 5, 4, 2, 8, 3, 7]
-    result = find_descending_pairs(sample_array)
-    print(result)
+    sample_values = [5, 0, 10.5, -3, "abc"]
+    for val in sample_values:
+        try:
+            result = kilometers_to_meters(val)
+            print(f"{val} km = {result} m")
+        except ValueError as e:
+            print(f"Input {val} caused error: {e}")

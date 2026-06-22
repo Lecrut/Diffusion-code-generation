@@ -1,23 +1,16 @@
-def last_element_generator(iterable):
-    it = iter(iterable)
-    try:
-        last_element = next(it)
-    except StopIteration:
-        return
-    while True:
-        try:
-            last_element = next(it)
-        except StopIteration:
-            yield last_element
-            return
-    if __name__ == '__main__':
-        data1 = [1, 2, 3, 4, 5]
-        print("Last element of data1:", next(last_element_generator(data1)))
-        data2 = [100]
-        print("Last element of data2:", next(last_element_generator(data2)))
-        data3 = []
-        print("Last element of data3:", "None")
-        data4 = iter([1, 2, 3])
-        print("Last element of data4:", next(last_element_generator(data4)))
-        data5 = [99]
-        print("Last element of data5:", next(last_element_generator(data5)))
+import math
+
+def factorial_iterative(n: int) -> int:
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    if n == 0 or n == 1:
+        return 1
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+if __name__ == '__main__':
+    sample_values = [0, 1, 5, 10, 20]
+    for val in sample_values:
+        print(factorial_iterative(val))

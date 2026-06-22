@@ -1,24 +1,18 @@
-class InvalidIndexError(ValueError):
-    pass
-def get_element_at_position(data, index):
-    if not isinstance(index, int):
-        raise InvalidIndexError("Index must be an integer")
-    if index < 0 or index >= len(data):
-        raise InvalidIndexError(f"Index {index} is out of bounds for list of length {len(data)}")
-    return data[index]
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print(f"List: {sample_list}")
-    try:
-        result1 = get_element_at_position(sample_list, 2)
-        print(f"Element at index 2: {result1}")
-        result2 = get_element_at_position(sample_list, 0)
-        print(f"Element at index 0: {result2}")
-        result3 = get_element_at_position(sample_list, 4)
-        print(f"Element at index 4: {result3}")
-        print("-" * 20)
-        get_element_at_position(sample_list, 5)
-    except InvalidIndexError as e:
-        print(f"Caught expected error: {e}")
-    except ValueError as e:
-        print(f"Caught unexpected ValueError: {e}")
+    samples = [2, 3, 4, 5, 17, 18, 19, 20, 97, 98, 101, 103, 107, 109, 113]
+    results = [is_prime(n) for n in samples]
+    print(results)

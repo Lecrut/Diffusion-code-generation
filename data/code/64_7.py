@@ -1,15 +1,16 @@
-def find_all_indices(data, item):
-    indices = []
-    for i, x in enumerate(data):
-        if x == item:
-            indices.append(i)
-    return indices
+def power_of_base(base: float, exponent: float) -> float:
+    if base == 0 and exponent <= 0:
+        raise ValueError("0 raised to a non-positive power is undefined.")
+    if base < 0 and exponent != int(exponent):
+        raise ValueError("Cannot raise a negative base to a fractional exponent in real domain.")
+    return float(base ** exponent)
+
 if __name__ == '__main__':
-    sample_data = [1, 5, 2, 5, 8, 5, 3]
-    target_item = 5
-    all_indices = find_all_indices(sample_data, target_item)
-    if all_indices:
-        final_index = all_indices[-1]
-        print(final_index)
-    else:
-        print(f"{target_item} not found in the list.")
+    result = power_of_base(2.0, 3.0)
+    print(result)
+    result = power_of_base(9.0, 0.5)
+    print(result)
+    result = power_of_base(-2.0, 2.0)
+    print(result)
+    result = power_of_base(2.0, 0.1)
+    print(result)

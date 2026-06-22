@@ -1,16 +1,9 @@
-def find_and_retrieve(data_list, position):
-    if 0 <= position < len(data_list):
-        return data_list[position]
-    else:
-        return None
+def convert_feet_to_inches(feet_value):
+    inches_per_foot = 12
+    total_inches = feet_value * inches_per_foot
+    return total_inches
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    target_position = 2
-    result = find_and_retrieve(my_list, target_position)
-    print(result)
-    target_position_out_of_bounds = 10
-    result_out_of_bounds = find_and_retrieve(my_list, target_position_out_of_bounds)
-    print(result_out_of_bounds)
-    target_position_first = 0
-    result_first = find_and_retrieve(my_list, target_position_first)
-    print(result_first)
+    sample_feet = 5
+    result_in_inches = convert_feet_to_inches(sample_feet)
+    print(result_in_inches)

@@ -1,23 +1,23 @@
-def test_list_access():
-    data = [10, 20, 30, 40, 50]
-    try:
-        index_to_access = 2
-        element = data[index_to_access]
-        assert element == 30
-        print("Test 1 Passed: Correct element accessed.")
-        index_out_of_bounds = 5
-        try:
-            data[index_out_of_bounds]
-            assert False, "Error: Index out of bounds was not raised."
-        except IndexError:
-            print("Test 2 Passed: IndexError correctly raised for out-of-bounds access.")
-        index_negative = -1
-        element_negative = data[index_negative]
-        assert element_negative == 50
-        print("Test 3 Passed: Negative indexing correctly accessed the last element.")
-    except AssertionError as e:
-        print(f"Assertion Failed: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+from unittest import TestCase, main as unittest_main
+
+CONVERSION_FACTOR = 12
+
+def convert_feet_to_inches(feet_value):
+    if not isinstance(feet_value, (int, float)):
+        raise TypeError("Input must be a number")
+    if feet_value < 0:
+        raise ValueError("Feet cannot be negative")
+    return feet_value * CONVERSION_FACTOR
+
+class TestConversion(TestCase):
+    def test_hardcoded_case(self):
+        input_val = 12
+        expected = 144
+        computed = convert_feet_to_inches(input_val)
+        self.assertEqual(computed, expected)
+
 if __name__ == '__main__':
-    test_list_access()
+    sample_feet = 12
+    inches = convert_feet_to_inches(sample_feet)
+    unittest_main(argv=['first-arg-is-ignored'], exit=False)
+    print(inches)

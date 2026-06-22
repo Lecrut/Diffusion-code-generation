@@ -1,15 +1,10 @@
-def max_difference(A, B):
-    min_A = min(A)
-    max_A = max(A)
-    min_B = min(B)
-    max_B = max(B)
-    diff1 = abs(max_A - min_B)
-    diff2 = abs(min_A - max_B)
-    diff3 = abs(max_A - max_B)
-    diff4 = abs(min_A - min_B)
-    return max(diff1, diff2, diff3, diff4)
+def dollars_to_cents(dollars):
+    if dollars < 0:
+        return -int(abs(dollars) * 100 + 0.5)
+    return int(dollars * 100 + 0.5)
+
 if __name__ == '__main__':
-    A = [1, 5, 10]
-    B = [3, 7, 12]
-    result = max_difference(A, B)
-    print(result)
+    print(dollars_to_cents(1.67))
+    print(dollars_to_cents(0.1 + 0.2))
+    print(dollars_to_cents(10))
+    print(dollars_to_cents(-5.345))

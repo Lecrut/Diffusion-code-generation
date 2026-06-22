@@ -1,15 +1,22 @@
-def first_element_generator(iterable):
-    try:
-        yield next(iter(iterable))
-    except StopIteration:
-        pass
+def reverse_integer(n):
+    if n == 0:
+        return 0
+    
+    negative = n < 0
+    n = abs(n)
+    reversed_n = 0
+    
+    while n > 0:
+        digit = n % 10
+        reversed_n = reversed_n * 10 + digit
+        n = n // 10
+    
+    if negative:
+        reversed_n = -reversed_n
+    
+    return reversed_n
+
 if __name__ == '__main__':
-    data1 = [1, 2, 3, 4]
-    gen1 = first_element_generator(data1)
-    print(list(gen1))
-    data2 = "hello"
-    gen2 = first_element_generator(data2)
-    print(list(gen2))
-    data3 = []
-    gen3 = first_element_generator(data3)
-    print(list(gen3))
+    print(reverse_integer(12345))
+    print(reverse_integer(-6789))
+    print(reverse_integer(1200))

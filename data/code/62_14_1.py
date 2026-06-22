@@ -1,14 +1,15 @@
-def get_second_element(data):
-    if len(data) >= 2:
-        return data[1]
-    else:
-        return None
+import math
+
+def get_divisors(number: int) -> list[int]:
+    divisors = []
+    for i in range(1, int(math.isqrt(number)) + 1):
+        if number % i == 0:
+            divisors.append(i)
+            if i != number // i:
+                divisors.append(number // i)
+    return sorted(divisors)
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40]
-    list2 = [5]
-    list3 = []
-    list4 = [1]
-    print(f"List 1: {get_second_element(list1)}")
-    print(f"List 2: {get_second_element(list2)}")
-    print(f"List 3: {get_second_element(list3)}")
-    print(f"List 4: {get_second_element(list4)}")
+    sample_number = 28
+    result = get_divisors(sample_number)
+    print(result)

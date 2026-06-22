@@ -1,7 +1,13 @@
+def factorial(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    last_element_slicing = my_list[-1]
-    last_element_indexing = my_list[-1]
-    print(f"List: {my_list}")
-    print(f"Last element (Slicing): {last_element_slicing}")
-    print(f"Last element (Indexing): {last_element_indexing}")
+    print(factorial(0))
+    print(factorial(5))
+    print(factorial(10))
+    print(factorial(20))

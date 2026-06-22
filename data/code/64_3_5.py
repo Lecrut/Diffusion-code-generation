@@ -1,9 +1,18 @@
+import math
+
+class PowerCalculator:
+    def __init__(self, base_value):
+        self.base = base_value
+
+    def raise_to_power(self, exponent):
+        return math.pow(self.base, exponent)
+
+    def raise_to_half_power(self):
+        return self.raise_to_power(0.5)
+
 if __name__ == '__main__':
-    data = [1, 2, 3, 4, 2, 5, 2]
-    target = 2
-    result = -1
-    for i in range(len(data) - 1, -1, -1):
-        if data[i] == target:
-            result = i
-            break
-    print(result)
+    calc = PowerCalculator(4.0)
+    result1 = calc.raise_to_power(3)
+    result2 = calc.raise_to_half_power()
+    print(result1)
+    print(result2)

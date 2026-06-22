@@ -1,41 +1,63 @@
-def get_element_at_position(data, index):
-    if not isinstance(data, list):
-        raise TypeError("Input must be a list.")
-    if not isinstance(index, int):
-        raise TypeError("Index must be an integer.")
-    if index < 0 or index >= len(data):
-        raise IndexError("Index out of bounds.")
-    return data[index]
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    if n == 3:
+        return True
+    if n % 3 == 0:
+        return False
+    
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def get_primes_up_to_sqrt(n):
+    if n < 2:
+        return []
+    
+    limit = int(n**0.5)
+    if limit < 2:
+        return []
+    
+    sieve = [True] * (limit + 1)
+    sieve[0] = sieve[1] = False
+    
+    p = 2
+    while p * p <= limit:
+        if sieve[p]:
+            for multiple in range(p * p, limit + 1, p):
+                sieve[multiple] = False
+        p += 1
+    
+    primes = [i for i, is_p in enumerate(sieve) if is_p]
+    return primes
+
+def check_primality_with_primes(n):
+    if n < 2:
+        return False
+    
+    primes = get_primes_up_to_sqrt(n)
+    
+    if n == 2:
+        return True
+        
+    for p in primes:
+        if p * p > n:
+            break
+        if n % p == 0:
+            return False
+            
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print(f"Sample List: {sample_list}")
-    try:
-        result1 = get_element_at_position(sample_list, 2)
-        print(f"Element at index 2: {result1}")
-        result2 = get_element_at_position(sample_list, 0)
-        print(f"Element at index 0: {result2}")
-        result3 = get_element_at_position(sample_list, 4)
-        print(f"Element at index 4: {result3}")
-        print("\nTesting error handling:")
-        try:
-            get_element_at_position(sample_list, 5)
-        except IndexError as e:
-            print(f"Caught expected error for index 5: {e}")
-        try:
-            get_element_at_position(sample_list, -1)
-        except IndexError as e:
-            print(f"Caught expected error for index -1: {e}")
-        try:
-            get_element_at_position([1, 2], 5)
-        except IndexError as e:
-            print(f"Caught expected error for index 5 in smaller list: {e}")
-        try:
-            get_element_at_position("not a list", 1)
-        except TypeError as e:
-            print(f"Caught expected error for wrong type: {e}")
-        try:
-            get_element_at_position(sample_list, "a")
-        except TypeError as e:
-            print(f"Caught expected error for wrong index type: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    test_values = [2, 3, 4, 10, 13, 29, 30, 97, 100, 101, 1000003, 1000033]
+    
+    for val in test_values:
+        result = check_primality_with_primes(val)
+        print(result)

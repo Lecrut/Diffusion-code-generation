@@ -1,17 +1,23 @@
-def get_last_element_safe(data_list):
-    if not data_list:
-        raise IndexError("Cannot get the last element from an empty list.")
-    return data_list[-1]
+def factorial(n):
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer")
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4, 5]
-    list2 = []
+    print(factorial(0))
+    print(factorial(1))
+    print(factorial(5))
+    print(factorial(10))
     try:
-        result1 = get_last_element_safe(list1)
-        print(f"Result for list1: {result1}")
-    except IndexError as e:
-        print(f"Error for list1: {e}")
+        factorial(-1)
+    except ValueError as e:
+        print(str(e))
     try:
-        result2 = get_last_element_safe(list2)
-        print(f"Result for list2: {result2}")
-    except IndexError as e:
-        print(f"Error for list2: {e}")
+        factorial(3.5)
+    except TypeError as e:
+        print(str(e))

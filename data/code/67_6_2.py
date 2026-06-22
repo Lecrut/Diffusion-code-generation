@@ -1,4 +1,6 @@
-a = 10
-b = 20
-if __name__ == '__main__':
-    print(a + b)
+def liters_to_milliliters(liters: int) -> int:
+    return liters * 1000
+
+if __name__ == "__main__":
+    sample_liters = 5
+    print(liters_to_milliliters(sample_liters))

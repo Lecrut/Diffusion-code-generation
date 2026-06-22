@@ -1,33 +1,19 @@
-class InvalidIndexError(ValueError):
-    pass
-def get_element_at_position(data, index):
-    if not isinstance(index, int):
-        raise InvalidIndexError("Index must be an integer")
-    if index < 0 or index >= len(data):
-        raise InvalidIndexError("Index out of bounds")
-    return data[index]
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2 or n == 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print(f"Sample List: {sample_list}")
-    try:
-        result1 = get_element_at_position(sample_list, 2)
-        print(f"Element at index 2: {result1}")
-        result2 = get_element_at_position(sample_list, 0)
-        print(f"Element at index 0: {result2}")
-        result3 = get_element_at_position(sample_list, 4)
-        print(f"Element at index 4: {result3}")
-        print("\nTesting invalid indices:")
-        try:
-            get_element_at_position(sample_list, 5)
-        except InvalidIndexError as e:
-            print(f"Caught expected error for index 5: {e}")
-        try:
-            get_element_at_position(sample_list, -1)
-        except InvalidIndexError as e:
-            print(f"Caught expected error for index -1: {e}")
-        try:
-            get_element_at_position(sample_list, "a")
-        except InvalidIndexError as e:
-            print(f"Caught expected error for non-integer index: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    sample_values = [2, 3, 4, 17, 18, 97, 98, 99, 100, 101, 103, 104]
+    for value in sample_values:
+        result = is_prime(value)
+        print(result)

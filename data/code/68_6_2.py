@@ -1,9 +1,14 @@
-import sys
+def dollars_to_cents(dollars):
+    return round(dollars * 100)
+
 if __name__ == '__main__':
-    input_data = "10 20 30"
-    parts = input_data.split()
-    if len(parts) >= 2:
-        first_num = int(parts[0])
-        last_num = int(parts[-1])
-        difference = last_num - first_num
-        print(difference)
+    print(dollars_to_cents(1.00))
+    print(dollars_to_cents(1.005))
+    print(dollars_to_cents(1.004))
+    print(dollars_to_cents(0.5))
+    print(dollars_to_cents(10.125))
+    print(dollars_to_cents(10.135))
+    print(dollars_to_cents(-1.005))
+    print(dollars_to_cents(0.0))
+    print(dollars_to_cents(99.999))
+    print(dollars_to_cents(123.456))

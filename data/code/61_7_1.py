@@ -1,13 +1,19 @@
-def list_accessor(target_list, index_to_retrieve):
-    def decorator(func):
-        def wrapper(*args):
-            return target_list[index_to_retrieve]
-        return wrapper
-    return decorator
-my_list = [10, 20, 30, 40, 50]
-@list_accessor(my_list, 2)
-def get_third_element(x):
-    return x
-result = get_third_element(1)
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+
 if __name__ == '__main__':
-    print(result)
+    print(is_prime(17))
+    print(is_prime(999961))
+    print(is_prime(1000000))
+    print(is_prime(7919))

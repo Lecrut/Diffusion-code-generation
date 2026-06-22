@@ -1,9 +1,20 @@
-import sys
-def locate_final_item_index(data):
-    if not data:
-        return -1
-    return len(data) - 1
+def calculate_power(base, exponent):
+    if exponent == 0:
+        return 1.0 if isinstance(base, float) or base != 0 else 1
+    if exponent < 0:
+        base = 1 / base
+        exponent = -exponent
+    result = 1.0 if isinstance(base, float) else 1
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result *= base
+        base *= base
+        exponent //= 2
+    return result
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40, 50]
-    final_index = locate_final_item_index(sample_data)
-    print(final_index)
+    print(calculate_power(2, 10))
+    print(calculate_power(5, 0))
+    print(calculate_power(2, -2))
+    print(calculate_power(1.5, 3))
+    print(calculate_power(0.5, -1))

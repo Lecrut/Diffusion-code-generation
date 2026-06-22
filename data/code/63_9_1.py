@@ -1,19 +1,19 @@
-def get_first_element(func):
-    def wrapper(*args):
-        if not args:
-            return None
-        return args[0]
-    return wrapper
-@get_first_element
-def get_first(data_list):
-    return data_list
+def reverse_integer(n: int) -> int:
+    negative = n < 0
+    if negative:
+        n = -n
+    reversed_n = 0
+    while n > 0:
+        digit = n % 10
+        reversed_n = reversed_n * 10 + digit
+        n = n // 10
+    if negative:
+        reversed_n = -reversed_n
+    return reversed_n
+
 if __name__ == '__main__':
-    sample_data = [10, 20, 30, 40]
-    result = get_first(sample_data)
-    print(result)
-    sample_data_2 = ['a', 'b', 'c']
-    result_2 = get_first(sample_data_2)
-    print(result_2)
-    empty_data = []
-    result_3 = get_first(empty_data)
-    print(result_3)
+    print(reverse_integer(123))
+    print(reverse_integer(-456))
+    print(reverse_integer(1200))
+    print(reverse_integer(0))
+    print(reverse_integer(1534236469))

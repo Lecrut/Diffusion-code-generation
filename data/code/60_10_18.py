@@ -1,0 +1,15 @@
+def factorial(n):
+    if not isinstance(n, int) or n < 0:
+        raise ValueError("Input must be a non-negative integer")
+    result = 1
+    multiplier = 2
+    while multiplier <= n:
+        result *= multiplier
+        multiplier += 1
+    return result
+
+if __name__ == '__main__':
+    print(factorial(0))
+    print(factorial(1))
+    print(factorial(5))
+    print(factorial(10))

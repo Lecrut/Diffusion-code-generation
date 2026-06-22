@@ -1,9 +1,9 @@
-import sys
-def find_final_index(indices):
-    if not indices:
-        return -1
-    return indices[-1]
+def calculate_power(base, exponent):
+    return base ** exponent
+
 if __name__ == '__main__':
-    sample_indices = [1, 5, 2, 8, 3]
-    final_index = find_final_index(sample_indices)
-    print(final_index)
+    print(calculate_power(2, 3))
+    print(calculate_power(5, -2))
+    print(calculate_power(-3, 2))
+    print(calculate_power(10, 0))
+    print(calculate_power(1.5, 2))

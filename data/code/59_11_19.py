@@ -1,0 +1,15 @@
+def digit_sum(n):
+    if n < 0:
+        n = -n
+    if n == 0:
+        return 0
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total
+
+if __name__ == '__main__':
+    print(digit_sum(123456789012345678))
+    print(digit_sum(0))
+    print(digit_sum(999999999999999999))

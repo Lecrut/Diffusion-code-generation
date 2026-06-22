@@ -1,12 +1,7 @@
-import numpy as np
-def find_zero_difference_index(A, B):
-    n = min(len(A), len(B))
-    for i in range(n - 1):
-        if A[i] - B[i+1] == 0:
-            return i
-    return -1
+def dollars_to_cents(amounts):
+    return [int(amount * 100) for amount in amounts]
+
 if __name__ == '__main__':
-    A_sample = [1, 5, 3, 8, 2]
-    B_sample = [5, 5, 3, 8, 2]
-    result = find_zero_difference_index(A_sample, B_sample)
+    sample_values = [1.23, 0.99, 100.505, 0.004, -5.67]
+    result = dollars_to_cents(sample_values)
     print(result)

@@ -1,41 +1,32 @@
-def get_element_at_position(data_list, index):
-    if not isinstance(data_list, list):
-        raise TypeError("Input must be a list.")
-    if not isinstance(index, int):
-        raise TypeError("Index must be an integer.")
-    if index < 0 or index >= len(data_list):
-        raise IndexError("Index out of bounds.")
-    return data_list[index]
+import math
+
+def generate_primes_up_to(limit):
+    if limit < 2:
+        return []
+    sieve = [True] * (limit + 1)
+    sieve[0] = False
+    sieve[1] = False
+    for i in range(2, int(math.isqrt(limit)) + 1):
+        if sieve[i]:
+            for j in range(i * i, limit + 1, i):
+                sieve[j] = False
+    return [i for i, is_prime in enumerate(sieve) if is_prime]
+
+def is_prime(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    limit = math.isqrt(n)
+    primes = generate_primes_up_to(limit)
+    for prime in primes:
+        if n % prime == 0:
+            return False
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print(f"Original list: {sample_list}")
-    try:
-        result1 = get_element_at_position(sample_list, 2)
-        print(f"Element at index 2: {result1}")
-        result2 = get_element_at_position(sample_list, 0)
-        print(f"Element at index 0: {result2}")
-        result3 = get_element_at_position(sample_list, 4)
-        print(f"Element at index 4: {result3}")
-        print("\nTesting error handling:")
-        try:
-            get_element_at_position(sample_list, 5)
-        except IndexError as e:
-            print(f"Caught expected error for index 5: {e}")
-        try:
-            get_element_at_position(sample_list, -1)
-        except IndexError as e:
-            print(f"Caught expected error for index -1: {e}")
-        try:
-            get_element_at_position([1, 2], 5)
-        except IndexError as e:
-            print(f"Caught expected error for index 5 in smaller list: {e}")
-        try:
-            get_element_at_position("not a list", 1)
-        except TypeError as e:
-            print(f"Caught expected error for wrong input type: {e}")
-        try:
-            get_element_at_position(sample_list, "a")
-        except TypeError as e:
-            print(f"Caught expected error for wrong index type: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    test_values = [1, 2, 3, 4, 5, 10, 13, 17, 20, 97, 100]
+    for val in test_values:
+        print(f"{val}: {is_prime(val)}")

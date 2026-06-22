@@ -1,8 +1,21 @@
-def find_first_element(data):
-    if not data:
-        return None
-    return data[0]
+def reverse_integer(n):
+    INT_MAX = 2**31 - 1
+    INT_MIN = -2**31
+    sign = -1 if n < 0 else 1
+    n = abs(n)
+    reversed_n = 0
+    while n != 0:
+        digit = n % 10
+        reversed_n = reversed_n * 10 + digit
+        n //= 10
+    reversed_n *= sign
+    if reversed_n < INT_MIN or reversed_n > INT_MAX:
+        return 0
+    return reversed_n
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    first_value = find_first_element(my_list)
-    print(first_value)
+    print(reverse_integer(123))
+    print(reverse_integer(-123))
+    print(reverse_integer(120))
+    print(reverse_integer(0))
+    print(reverse_integer(1534236469))

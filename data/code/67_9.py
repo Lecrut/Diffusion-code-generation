@@ -1,10 +1,7 @@
-class Adder:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-    def calculate_sum(self):
-        return self.a + self.b
+def liters_to_milliliters(liters):
+    return liters * 1000
+
 if __name__ == '__main__':
-    adder = Adder(10, 25)
-    result = adder.calculate_sum()
-    print(result)
+    test_cases = [0.5, 1.0, 2.5, 7.33, 10.0]
+    results = list(map(liters_to_milliliters, test_cases))
+    print(results)

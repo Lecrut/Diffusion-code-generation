@@ -1,35 +1,14 @@
-def last_item_generator(iterable):
-    it = iter(iterable)
-    last_item = None
-    try:
-        last_item = next(it)
-    except StopIteration:
-        return
-    for item in it:
-        last_item = item
-        yield last_item
+def factorial_iterative(n: int) -> int:
+    if n < 0:
+        raise ValueError("Negative numbers are not allowed")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    data = [1, 2, 3, 4, 5]
-    gen = last_item_generator(data)
-    result = None
-    for item in gen:
-        result = item
-    print(result)
-    data2 = [10]
-    gen2 = last_item_generator(data2)
-    result2 = None
-    for item in gen2:
-        result2 = item
-    print(result2)
-    data3 = []
-    gen3 = last_item_generator(data3)
-    result3 = None
-    for item in gen3:
-        result3 = item
-    print(result3)
-    data4 = [99]
-    gen4 = last_item_generator(data4)
-    result4 = None
-    for item in gen4:
-        result4 = item
-    print(result4)
+    print(factorial_iterative(0))
+    print(factorial_iterative(1))
+    print(factorial_iterative(5))
+    print(factorial_iterative(10))
+    print(factorial_iterative(20))

@@ -1,16 +1,14 @@
-def safe_get_second_element(data):
-    if len(data) >= 2:
-        return data[1]
-    else:
-        return None
+def find_divisors(number):
+    if number < 1:
+        return []
+    divisors = set()
+    for i in range(1, int(number ** 0.5) + 1):
+        if number % i == 0:
+            divisors.add(i)
+            divisors.add(number // i)
+    return sorted(divisors)
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40]
-    list2 = [5]
-    list3 = []
-    list4 = [100]
-    list5 = [1, 2]
-    print(f"List {list1}: {safe_get_second_element(list1)}")
-    print(f"List {list2}: {safe_get_second_element(list2)}")
-    print(f"List {list3}: {safe_get_second_element(list3)}")
-    print(f"List {list4}: {safe_get_second_element(list4)}")
-    print(f"List {list5}: {safe_get_second_element(list5)}")
+    sample_numbers = [12, 28, 100, 1]
+    for num in sample_numbers:
+        divisors = find_divisors(num)
+        print(f'Divisors of {num}: {divisors}')

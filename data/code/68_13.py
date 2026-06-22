@@ -1,7 +1,11 @@
+def dollar_to_cents(amount):
+    return amount * 100
+
 if __name__ == '__main__':
-    num1 = 25
-    num2 = 10
-    difference = num1 - num2
-    print(f"The first number is: {num1}")
-    print(f"The second number is: {num2}")
-    print(f"The difference is: {difference}")
+    positive_dollar = 12.50
+    negative_dollar = -3.75
+    zero_dollar = 0.00
+    
+    print(dollar_to_cents(positive_dollar))
+    print(dollar_to_cents(negative_dollar))
+    print(dollar_to_cents(zero_dollar))

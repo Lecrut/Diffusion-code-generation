@@ -1,9 +1,11 @@
-def get_last_item(string_list):
-    if not string_list:
-        return None
-    return string_list[-1]
+def factorial(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    my_list = ["apple", "banana", "cherry", "date"]
-    last_item = get_last_item(my_list)
-    print("The list of strings is:", my_list)
-    print("The last item in the list is:", last_item)
+    print(factorial(5))
+    print(factorial(0))
+    print(factorial(1))
+    print(factorial(10))

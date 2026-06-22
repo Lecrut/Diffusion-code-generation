@@ -1,8 +1,10 @@
+def liters_to_milliliters(liters: float) -> float:
+    return liters * 1000.0
+
 if __name__ == '__main__':
-    num1 = 15
-    num2 = 27
-    try:
-        sum_result = num1 + num2
-        print(sum_result)
-    except TypeError:
-        print("Error: One or both inputs were not valid numbers.")
+    sample_liters = 2.5
+    result = liters_to_milliliters(sample_liters)
+    print(result)
+    sample_liters_2 = 0.001
+    result_2 = liters_to_milliliters(sample_liters_2)
+    print(result_2)

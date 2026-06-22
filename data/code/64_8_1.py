@@ -1,29 +1,25 @@
-def find_last_greater_equal(data, threshold):
-    n = len(data)
-    if n == 0:
-        return -1
-    result = -1
-    for i in range(n - 1, -1, -1):
-        if data[i] >= threshold:
-            result = i
-            break
-    return result
+def compute_power(base, exponent):
+    if not isinstance(base, (int, float)):
+        raise TypeError("Base must be a number")
+    if not isinstance(exponent, (int, float)):
+        raise TypeError("Exponent must be a number")
+    if isinstance(exponent, int):
+        if base < 0 and exponent % 2 != 0:
+            raise ValueError("Negative base with odd integer exponent")
+    elif base < 0:
+        raise ValueError("Negative base with non-integer exponent")
+    return base ** exponent
+
 if __name__ == '__main__':
-    list1 = [10, 5, 20, 15, 30, 25]
-    threshold1 = 20
-    print(find_last_greater_equal(list1, threshold1))
-    list2 = [3, 1, 4, 1, 5, 9, 2, 6]
-    threshold2 = 5
-    print(find_last_greater_equal(list2, threshold2))
-    list3 = [1, 2, 3, 4, 5]
-    threshold3 = 6
-    print(find_last_greater_equal(list3, threshold3))
-    list4 = [100, 50, 25, 10]
-    threshold4 = 0
-    print(find_last_greater_equal(list4, threshold4))
-    list5 = [5, 5, 5, 5]
-    threshold5 = 5
-    print(find_last_greater_equal(list5, threshold5))
-    list6 = [1, 2, 3]
-    threshold6 = 10
-    print(find_last_greater_equal(list6, threshold6))
+    result = compute_power(2, 3)
+    print(result)
+    result2 = compute_power(-2, 3)
+    print(result2)
+    try:
+        compute_power(-2, 0.5)
+    except ValueError as e:
+        print(f"Error: {e}")
+    try:
+        compute_power("2", 3)
+    except TypeError as e:
+        print(f"Error: {e}")

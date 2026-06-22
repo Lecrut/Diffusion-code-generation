@@ -1,17 +1,17 @@
-def find_final_item_index(item_indices):
-    if not item_indices:
-        return -1
-    return item_indices[-1]
+def power_by_squaring(base, exp):
+    if exp < 0:
+        base = 1 / base
+        exp = -exp
+    result = 1
+    while exp > 0:
+        if exp % 2 == 1:
+            result *= base
+        base *= base
+        exp //= 2
+    return result
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40, 50]
-    result1 = find_final_item_index(list1)
-    print(result1)
-    list2 = [5, 1, 99]
-    result2 = find_final_item_index(list2)
-    print(result2)
-    list3 = [42]
-    result3 = find_final_item_index(list3)
-    print(result3)
-    list4 = []
-    result4 = find_final_item_index(list4)
-    print(result4)
+    print(power_by_squaring(2, 10))
+    print(power_by_squaring(-3, 3))
+    print(power_by_squaring(5, 0))
+    print(power_by_squaring(2, -2))

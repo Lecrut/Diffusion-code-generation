@@ -1,20 +1,31 @@
-def find_final_item_index(item_indices):
-    if not item_indices:
-        raise IndexError("Input list of indices cannot be empty")
-    return item_indices[-1]
+def _calculate_non_negative_power(base, exp):
+    result = 1
+    current_base = base
+    while exp > 0:
+        if exp & 1:
+            result *= current_base
+        current_base *= current_base
+        exp >>= 1
+    return result
+
+def calculate_integer_power(base, exp):
+    if not isinstance(base, int) or not isinstance(exp, int):
+        raise TypeError("Both base and exponent must be integers")
+    
+    if exp == 0:
+        return 1
+    
+    if exp < 0:
+        if base == 0:
+            raise ZeroDivisionError("0 cannot be raised to a negative power")
+        positive_result = _calculate_non_negative_power(base, -exp)
+        return 1 // positive_result
+    
+    return _calculate_non_negative_power(base, exp)
+
 if __name__ == '__main__':
-    list1 = [1, 5, 9, 12]
-    result1 = find_final_item_index(list1)
-    print(f"Result for {list1}: {result1}")
-    list2 = [100]
-    result2 = find_final_item_index(list2)
-    print(f"Result for {list2}: {result2}")
-    list3 = [42]
-    result3 = find_final_item_index(list3)
-    print(f"Result for {list3}: {result3}")
-    list4 = []
-    try:
-        result4 = find_final_item_index(list4)
-        print(f"Result for {list4}: {result4}")
-    except IndexError as e:
-        print(f"Error for {list4}: {e}")
+    print(calculate_integer_power(2, 10))
+    print(calculate_integer_power(-5, 3))
+    print(calculate_integer_power(7, -1))
+    print(calculate_integer_power(-2, 8))
+    print(calculate_integer_power(0, 5))

@@ -1,9 +1,14 @@
-def get_first_item(data_list):
-    return data_list[0]
+def reverse_integer(n: int) -> int:
+    sign = 1 if n >= 0 else -1
+    n = abs(n)
+    reversed_num = 0
+    while n > 0:
+        reversed_num = reversed_num * 10 + n % 10
+        n //= 10
+    return sign * reversed_num
+
 if __name__ == '__main__':
-    sample_list = [10, "hello", 3.14, True]
-    first_item = get_first_item(sample_list)
-    print(first_item)
-    sample_list_2 = ["apple", 100, None]
-    first_item_2 = get_first_item(sample_list_2)
-    print(first_item_2)
+    print(reverse_integer(123))
+    print(reverse_integer(-456))
+    print(reverse_integer(120))
+    print(reverse_integer(0))

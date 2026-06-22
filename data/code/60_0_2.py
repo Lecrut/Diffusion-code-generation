@@ -1,8 +1,12 @@
-def find_last_element(data_list):
-    if not data_list:
-        return None
-    return data_list[-1]
+def factorial(n):
+    if n < 0:
+        raise ValueError("Input must be a non-negative integer")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    last_element = find_last_element(sample_list)
-    print(last_element)
+    test_cases = [0, 1, 5, 10, 15]
+    for tc in test_cases:
+        print(factorial(tc))

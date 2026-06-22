@@ -1,13 +1,8 @@
-def add_numbers(a, b):
-    try:
-        num1 = float(a)
-        num2 = float(b)
-        return num1 + num2
-    except ValueError:
-        return "Error: Invalid input. Please enter numeric values."
+def liters_to_milliliters(liters: float) -> float:
+    if not isinstance(liters, (int, float)):
+        raise TypeError("Input must be a numeric type")
+    return liters * 1000
+
 if __name__ == '__main__':
-    print(add_numbers(10, 5))
-    print(add_numbers("10.5", 2.5))
-    print(add_numbers(10, "hello"))
-    print(add_numbers("a", "b"))
-    print(add_numbers(3.14, 2))
+    result = liters_to_milliliters(1.5)
+    print(result)

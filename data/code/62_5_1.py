@@ -1,6 +1,14 @@
+def find_factors(n):
+    return (i for i in range(1, int(n**0.5) + 1) if n % i == 0)
+
+def get_all_factors(n):
+    factors = set()
+    for i in find_factors(n):
+        factors.add(i)
+        factors.add(n // i)
+    return sorted(factors)
+
 if __name__ == '__main__':
-    string_list = ["apple", "banana", "cherry", "date"]
-    if len(string_list) >= 2:
-        print(string_list[1])
-    else:
-        print("List must contain at least two elements.")
+    number = 120
+    result = get_all_factors(number)
+    print(result)

@@ -1,12 +1,4 @@
-def indexed_generator(iterable, index):
-    for i, item in enumerate(iterable):
-        if i == index:
-            yield item
+feet_to_inches = lambda f: f * 12
+result = feet_to_inches(5)
 if __name__ == '__main__':
-    data = list(range(1000000))
-    target_index = 500000
-    generator = indexed_generator(data, target_index)
-    result = []
-    for item in generator:
-        result.append(item)
-    print(f"Found element at index {target_index}: {result[0]}")
+    print(result)

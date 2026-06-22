@@ -1,27 +1,28 @@
-def find_last_greater_equal(data, threshold):
-    n = len(data)
-    result = -1
-    for i in range(n - 1, -1, -1):
-        if data[i] >= threshold:
-            result = i
-            break
-    return result
+def safe_power(base, exponent):
+    if not isinstance(base, (int, float)) or not isinstance(exponent, (int, float)):
+        raise TypeError("Base and exponent must be integers or floats")
+    if base < 0 and exponent < 0:
+        raise ValueError("Negative base with negative exponent is not allowed")
+    return base ** exponent
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30, 40, 50]
-    threshold1 = 35
-    print(find_last_greater_equal(list1, threshold1))
-    list2 = [5, 15, 25, 35, 45]
-    threshold2 = 30
-    print(find_last_greater_equal(list2, threshold2))
-    list3 = [1, 2, 3, 4, 5]
-    threshold3 = 6
-    print(find_last_greater_equal(list3, threshold3))
-    list4 = [100, 50, 200, 150]
-    threshold4 = 180
-    print(find_last_greater_equal(list4, threshold4))
-    list5 = [7, 7, 7, 7]
-    threshold5 = 7
-    print(find_last_greater_equal(list5, threshold5))
-    list6 = [1, 2, 3]
-    threshold6 = 0
-    print(find_last_greater_equal(list6, threshold6))
+    try:
+        result1 = safe_power(2, 3)
+        print(result1)
+    except (TypeError, ValueError) as e:
+        print(e)
+    try:
+        result2 = safe_power(-2, -3)
+        print(result2)
+    except (TypeError, ValueError) as e:
+        print(e)
+    try:
+        result3 = safe_power(5, 0)
+        print(result3)
+    except (TypeError, ValueError) as e:
+        print(e)
+    try:
+        result4 = safe_power("a", 2)
+        print(result4)
+    except (TypeError, ValueError) as e:
+        print(e)

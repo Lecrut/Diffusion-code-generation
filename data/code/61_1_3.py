@@ -1,29 +1,33 @@
-def get_element_at_position(data_list, index):
-    if not isinstance(data_list, list):
-        raise TypeError("Input must be a list.")
-    if not isinstance(index, int):
-        raise TypeError("Index must be an integer.")
-    if index < 0 or index >= len(data_list):
-        raise IndexError("Index out of bounds.")
-    return data_list[index]
+def generate_primes_up_to(n):
+    if n < 2:
+        return []
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
+    i = 2
+    while i * i <= n:
+        if sieve[i]:
+            for j in range(i * i, n + 1, i):
+                sieve[j] = False
+        i += 1
+    return [i for i, is_prime in enumerate(sieve) if is_prime]
+
+def is_prime_by_prime_check(n):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    limit = int(n ** 0.5)
+    primes = generate_primes_up_to(limit)
+    for prime in primes:
+        if prime < 2:
+            continue
+        if n % prime == 0:
+            return False
+    return True
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    print("Testing valid indices:")
-    try:
-        print(f"Element at index 0: {get_element_at_position(sample_list, 0)}")
-        print(f"Element at index 2: {get_element_at_position(sample_list, 2)}")
-        print(f"Element at index 4: {get_element_at_position(sample_list, 4)}")
-    except Exception as e:
-        print(f"An unexpected error occurred during valid tests: {e}")
-    print("\nTesting invalid indices:")
-    invalid_indices = [-1, 5, 10]
-    for index in invalid_indices:
-        try:
-            print(f"Attempting to access index {index}: ", end="")
-            get_element_at_position(sample_list, index)
-        except IndexError as e:
-            print(f"Caught expected error: {e}")
-        except TypeError as e:
-            print(f"Caught expected error: {e}")
-        except Exception as e:
-            print(f"Caught unexpected error: {e}")
+    test_values = [2, 3, 4, 17, 20, 23, 100, 101, 997, 1000]
+    for value in test_values:
+        print(value, is_prime_by_prime_check(value))

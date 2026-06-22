@@ -1,13 +1,24 @@
-def get_last_item(data):
-    if not data:
-        raise IndexError("list is empty")
-    return data[-1]
+def compute_factorial(n):
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer.")
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers.")
+    result = 1
+    current = 1
+    while current <= n:
+        result *= current
+        current += 1
+    return result
+
 if __name__ == '__main__':
-    sample_list = [1, 2, 3, 4, 5]
-    last_element = get_last_item(sample_list)
-    print(last_element)
-    sample_list_empty = []
+    test_values = [0, 5, 10]
+    for value in test_values:
+        print(compute_factorial(value))
     try:
-        get_last_item(sample_list_empty)
-    except IndexError as e:
-        print(f"Error for empty list: {e}")
+        compute_factorial(-3)
+    except ValueError as e:
+        print(e)
+    try:
+        compute_factorial(3.5)
+    except TypeError as e:
+        print(e)

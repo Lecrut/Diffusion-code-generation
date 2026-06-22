@@ -1,15 +1,7 @@
-class CustomList:
-    def __init__(self, data):
-        self._data = data
-    def __getitem__(self, index):
-        return self._data[index]
+def feet_to_inches(feet):
+    return feet * 39.3701
+
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    my_list = CustomList(sample_list)
-    print(my_list[0])
-    print(my_list[2])
-    print(my_list[4])
-    try:
-        print(my_list[5])
-    except IndexError as e:
-        print(f"Caught expected error: {e}")
+    sample_feet = [1, 5.5, 10, 0, -3]
+    for f in sample_feet:
+        print(feet_to_inches(f))

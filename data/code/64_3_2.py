@@ -1,5 +1,10 @@
+import math
+
+def compute_power(base, exponent):
+    return math.pow(base, exponent)
+
 if __name__ == '__main__':
-    data = [1, 2, 3, 4, 4, 5, 4]
-    target = 4
-    last_index = data.index(target) if target in data else -1
-    print(last_index)
+    base_value = 2.5
+    exponent_value = 3
+    result = compute_power(base_value, exponent_value)
+    print(result)

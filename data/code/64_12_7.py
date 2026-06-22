@@ -1,18 +1,25 @@
-def find_final_index(indices):
-    if not indices:
-        return -1
-    return max(indices)
+def power(base, exponent):
+    if not isinstance(exponent, int):
+        raise TypeError("Exponent must be an integer")
+    if exponent < 0:
+        if base == 0:
+            raise ValueError("Cannot raise zero to a negative power")
+        base = 1.0 / base
+        exponent = -exponent
+    result = 1.0
+    current_base = base
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result *= current_base
+            if abs(result) > 1.8e308 and result != float('inf'):
+                raise OverflowError("Result too large")
+        current_base *= current_base
+        exponent //= 2
+    return result
+
 if __name__ == '__main__':
-    test_cases = [
-        ([], -1),
-        ([5], 5),
-        ([1, 8, 3], 8),
-        ([10, 2, 5], 10),
-        ([-1, -5, -2], -1),
-        ([0, 0, 0], 0),
-        ([100, 50, 25], 100)
-    ]
-    for input_list, expected in test_cases:
-        result = find_final_index(input_list)
-        assert result == expected, f"Input: {input_list}, Expected: {expected}, Got: {result}"
-        print(f"Input: {input_list}, Result: {result} (Passed)")
+    print(power(2.0, 10))
+    print(power(3.0, -2))
+    print(power(5.0, 0))
+    print(power(-2.5, 3))
+    print(power(1.1, 100))

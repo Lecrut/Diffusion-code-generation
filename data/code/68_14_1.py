@@ -1,12 +1,7 @@
-def absolute_difference_generator(list1, list2):
-    for x in list1:
-        for y in list2:
-            yield abs(x - y)
+def dollars_to_cents(dollars):
+    return int(dollars) * 100 + (int(dollars * 100) % 100)
+
 if __name__ == '__main__':
-    list_a = [1, 2, 3]
-    list_b = [4, 5, 6]
-    diff_gen = absolute_difference_generator(list_a, list_b)
-    results = []
-    for diff in diff_gen:
-        results.append(diff)
-    print(results)
+    samples = [0, 1, 0.5, 1.25, 99.99, 100, -5.75]
+    for d in samples:
+        print(dollars_to_cents(d))

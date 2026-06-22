@@ -1,25 +1,8 @@
-def compare_adjacent(numbers):
-    if len(numbers) < 2:
-        return []
-    result = []
-    for i in range(len(numbers) - 1):
-        if numbers[i] <= numbers[i+1]:
-            result.append(True)
-        else:
-            result.append(False)
-    return result
+def convert_kilometers_to_meters(kilometers):
+    return kilometers * 1000
+
 if __name__ == '__main__':
-    sample_list_1 = [1, 2, 3, 4, 5]
-    sample_list_2 = [5, 4, 3, 2, 1]
-    sample_list_3 = [1, 3, 2, 5, 4]
-    sample_list_4 = [10, 20, 30]
-    sample_list_5 = [7, 7, 8, 9]
-    sample_list_6 = [1]
-    sample_list_7 = []
-    print(f"List: {sample_list_1}, Result: {compare_adjacent(sample_list_1)}")
-    print(f"List: {sample_list_2}, Result: {compare_adjacent(sample_list_2)}")
-    print(f"List: {sample_list_3}, Result: {compare_adjacent(sample_list_3)}")
-    print(f"List: {sample_list_4}, Result: {compare_adjacent(sample_list_4)}")
-    print(f"List: {sample_list_5}, Result: {compare_adjacent(sample_list_5)}")
-    print(f"List: {sample_list_6}, Result: {compare_adjacent(sample_list_6)}")
-    print(f"List: {sample_list_7}, Result: {compare_adjacent(sample_list_7)}")
+    sample_values = [1, 5.5, 0, 100]
+    for km in sample_values:
+        meters = convert_kilometers_to_meters(km)
+        print(meters)

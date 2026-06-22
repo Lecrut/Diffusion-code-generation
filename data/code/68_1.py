@@ -1,10 +1,12 @@
-def find_element_differences(list1, list2):
-    differences = []
-    for i in range(len(list1)):
-        differences.append(abs(list1[i] - list2[i]))
-    return differences
+import decimal
+
+def convert_dollars_to_cents(dollar_value):
+    d = decimal.Decimal(str(dollar_value))
+    cents = d * 100
+    return cents
+
 if __name__ == '__main__':
-    list_a = [1, 5, 10, 15]
-    list_b = [3, 7, 8, 12]
-    result = find_element_differences(list_a, list_b)
-    print(result)
+    test_values = ['10.5', '0.01', '123.456', '0', '-5.99']
+    for val in test_values:
+        result = convert_dollars_to_cents(val)
+        print(result)

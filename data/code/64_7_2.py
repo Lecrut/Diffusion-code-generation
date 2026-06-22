@@ -1,16 +1,12 @@
-def find_all_indices(data, item):
-    indices = []
-    for i, x in enumerate(data):
-        if x == item:
-            indices.append(i)
-    return indices
-def find_final_index(data, item):
-    indices = find_all_indices(data, item)
-    if not indices:
-        return -1
-    return indices[-1]
+def calculate_power(base: float, exponent: float) -> float:
+    if base == 0 and exponent <= 0:
+        raise ValueError("0 cannot be raised to a non-positive power")
+    if base < 0 and exponent != int(exponent):
+        raise ValueError("Cannot raise negative base to a fractional exponent in real numbers")
+    return float(pow(base, exponent))
+
 if __name__ == '__main__':
-    sample_data = [1, 5, 2, 5, 8, 5, 3]
-    target_item = 5
-    final_index = find_final_index(sample_data, target_item)
-    print(final_index)
+    print(calculate_power(2.0, 3.0))
+    print(calculate_power(4.0, 0.5))
+    print(calculate_power(2.0, -3.0))
+    print(calculate_power(10.0, 1.5))

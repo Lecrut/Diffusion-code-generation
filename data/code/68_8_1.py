@@ -1,12 +1,9 @@
-def calculate_differences(list1: list[float], list2: list[float]) -> list[float]:
-    if len(list1) != len(list2):
-        raise ValueError("Input lists must have the same length")
-    differences = []
-    for a, b in zip(list1, list2):
-        differences.append(a - b)
-    return differences
+def dollars_to_cents(dollars):
+    cents = dollars * 100
+    return int(abs(cents))
+
 if __name__ == '__main__':
-    list_a = [1.0, 2.5, 3.0, 4.5]
-    list_b = [0.5, 2.0, 3.0, 4.0]
-    result = calculate_differences(list_a, list_b)
-    print(result)
+    print(dollars_to_cents(10.50))
+    print(dollars_to_cents(-5.25))
+    print(dollars_to_cents(0.0))
+    print(dollars_to_cents(99.99))

@@ -1,16 +1,12 @@
-import math
-def max_difference(A, B):
-    min_a = min(A)
-    max_a = max(A)
-    min_b = min(B)
-    max_b = max(B)
-    diff1 = abs(max_a - min_b)
-    diff2 = abs(min_a - max_b)
-    diff3 = abs(max_a - max_b)
-    diff4 = abs(min_a - min_b)
-    return max(diff1, diff2, diff3, diff4)
+import decimal
+
+def dollars_to_cents(dollars: float) -> int:
+    d = decimal.Decimal(str(dollars))
+    cents = d * 100
+    return int(cents.to_integral_value(rounding=decimal.ROUND_HALF_UP))
+
 if __name__ == '__main__':
-    A_sample = [1, 5, 10]
-    B_sample = [2, 6, 11]
-    result = max_difference(A_sample, B_sample)
-    print(result)
+    print(dollars_to_cents(12.34))
+    print(dollars_to_cents(0.005))
+    print(dollars_to_cents(10.00))
+    print(dollars_to_cents(0.995))

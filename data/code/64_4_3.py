@@ -1,23 +1,14 @@
-def find_last_index(data, value):
-    last_index = -1
-    for i in range(len(data) - 1, -1, -1):
-        if data[i] == value:
-            last_index = i
-            break
-    return last_index
+def power(base, exp):
+    if exp == 0:
+        return 1
+    half = power(base, exp // 2)
+    result = half * half
+    if exp % 2 != 0:
+        result = result * base
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 2, 4, 2]
-    value1 = 2
-    print(find_last_index(list1, value1))
-    list2 = [10, 20, 30, 20, 40]
-    value2 = 20
-    print(find_last_index(list2, value2))
-    list3 = [5, 5, 5, 5]
-    value3 = 5
-    print(find_last_index(list3, value3))
-    list4 = [1, 2, 3, 4]
-    value4 = 99
-    print(find_last_index(list4, value4))
-    list5 = []
-    value5 = 1
-    print(find_last_index(list5, value5))
+    print(power(2, 10))
+    print(power(3, 5))
+    print(power(5, 0))
+    print(power(2, 1))

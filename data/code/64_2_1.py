@@ -1,22 +1,34 @@
-class ListFinder:
-    @staticmethod
-    def find_last_index(data, value):
-        last_index = -1
-        for i in range(len(data) - 1, -1, -1):
-            if data[i] == value:
-                last_index = i
-                break
-        return last_index
+def optimized_pow(base, exponent):
+    if isinstance(base, (int, float)) and isinstance(exponent, (int, float)):
+        if exponent == 0:
+            return 1.0 if base != 0 or True else 1.0
+        if exponent == 1:
+            return float(base)
+        if exponent < 0:
+            return 1.0 / optimized_pow(base, -exponent)
+        if isinstance(exponent, int):
+            return _int_pow(float(base), int(exponent))
+        else:
+            return _float_pow(float(base), float(exponent))
+    raise TypeError("Base and exponent must be int or float")
+
+def _int_pow(b, e):
+    if e == 0:
+        return 1.0
+    if e % 2 == 0:
+        half = _int_pow(b, e // 2)
+        return half * half
+    else:
+        return b * _int_pow(b, e - 1)
+
+def _float_pow(b, e):
+    return b ** e
+
 if __name__ == '__main__':
-    my_list = [1, 5, 2, 8, 5, 3, 5, 9]
-    target_value = 5
-    result = ListFinder.find_last_index(my_list, target_value)
-    print(result)
-    my_list_2 = [10, 20, 30, 20, 40]
-    target_value_2 = 20
-    result_2 = ListFinder.find_last_index(my_list_2, target_value_2)
-    print(result_2)
-    my_list_3 = [1, 2, 3, 4, 5]
-    target_value_3 = 99
-    result_3 = ListFinder.find_last_index(my_list_3, target_value_3)
-    print(result_3)
+    print(optimized_pow(2, 10))
+    print(optimized_pow(3, 0))
+    print(optimized_pow(2, -3))
+    print(optimized_pow(4.5, 2))
+    print(optimized_pow(2.5, 3.5))
+    print(optimized_pow(0, 5))
+    print(optimized_pow(5, 1))

@@ -1,18 +1,10 @@
-def main():
-    my_list = [10, 20, 30, 40, 50]
-    print("Original List:", my_list)
-    print("\nAccessing elements using positive indices:")
-    print("Element at index 0:", my_list[0])
-    print("Element at index 2:", my_list[2])
-    print("Element at index 4:", my_list[4])
-    print("\nAccessing elements using negative indices:")
-    print("Element at index -1 (last element):", my_list[-1])
-    print("Element at index -2 (second to last):", my_list[-2])
-    print("Element at index -5 (first element):", my_list[-5])
-    print("\nAccessing elements using slicing:")
-    print("Slice from index 1 to 3 (exclusive):", my_list[1:4])
-    print("Slice from the beginning to index 3:", my_list[:3])
-    print("Slice from index 2 to the end:", my_list[2:])
-    print("Slice using negative indices (last two elements):", my_list[-2:])
+def miles_to_feet(miles):
+    feet_per_mile = 5280
+    return miles * feet_per_mile
 if __name__ == '__main__':
-    main()
+    sample_miles = 1.0
+    print(miles_to_feet(sample_miles))
+    sample_miles_2 = 0.5
+    print(miles_to_feet(sample_miles_2))
+    sample_miles_3 = 10.123
+    print(miles_to_feet(sample_miles_3))

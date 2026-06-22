@@ -1,10 +1,18 @@
-def get_element(sequence, index):
-    return sequence[index]
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
 if __name__ == '__main__':
-    my_list = [10, 20, 30, 40, 50]
-    my_tuple = (5, 15, 25, 35)
-    index_to_find = 2
-    list_result = get_element(my_list, index_to_find)
-    tuple_result = get_element(my_tuple, index_to_find)
-    print(f"Element at index {index_to_find} in the list: {list_result}")
-    print(f"Element at index {index_to_find} in the tuple: {tuple_result}")
+    sample_values = [1, 2, 3, 4, 5, 10, 17, 29, 30, 97, 100]
+    results = {val: is_prime(val) for val in sample_values}
+    print(results)

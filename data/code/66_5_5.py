@@ -1,12 +1,19 @@
-def check_adjacent_increase(numbers):
-    result = []
-    for i in range(len(numbers) - 1):
-        if numbers[i+1] > numbers[i]:
-            result.append(True)
-        else:
-            result.append(False)
-    return result
+def convert_km_to_m(kilometers):
+    return kilometers * 1000
+
+def format_table(results):
+    header = f"{'Kilometers':>15} | {'Meters':>15}"
+    separator = '-' * len(header)
+    print(header)
+    print(separator)
+    for km, m in results:
+        line = f"{km:>15} | {m:>15}"
+        print(line)
+
 if __name__ == '__main__':
-    sample_list = [1.0, 2.5, 3.0, 2.9, 4.0]
-    output = check_adjacent_increase(sample_list)
-    print(output)
+    test_cases = [1.5, 10, 0, 50.25]
+    results = []
+    for km in test_cases:
+        m = convert_km_to_m(km)
+        results.append((km, m))
+    format_table(results)

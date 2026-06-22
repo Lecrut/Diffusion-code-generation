@@ -1,12 +1,8 @@
-class ArrayComparator:
-    def check_adjacencies(self, arr):
-        results = []
-        for i in range(len(arr) - 1):
-            comparison = (arr[i], arr[i+1])
-            results.append(comparison)
-        return results
+class UnitConverter:
+    @staticmethod
+    def kilometers_to_meters(kilometers: float) -> float:
+        return kilometers * 1000
+
 if __name__ == '__main__':
-    comparator = ArrayComparator()
-    sample_array = [1, 5, 2, 8, 3]
-    comparison_results = comparator.check_adjacencies(sample_array)
-    print(comparison_results)
+    result = UnitConverter.kilometers_to_meters(5.0)
+    print(result)

@@ -1,14 +1,15 @@
-def get_second_item(data):
-    if len(data) > 1:
-        return data[1]
-    else:
-        return None
+def get_divisors(n):
+    divisors = []
+    i = 1
+    while i * i <= n:
+        if n % i == 0:
+            divisors.append(i)
+            if i * i != n:
+                divisors.append(n // i)
+        i += 1
+    return sorted(divisors)
+
 if __name__ == '__main__':
-    list1 = [10, 20, 30]
-    list2 = [5]
-    list3 = []
-    list4 = [1]
-    print(f"List {list1}: {get_second_item(list1)}")
-    print(f"List {list2}: {get_second_item(list2)}")
-    print(f"List {list3}: {get_second_item(list3)}")
-    print(f"List {list4}: {get_second_item(list4)}")
+    sample_values = [12, 28, 100, 1, 97]
+    for val in sample_values:
+        print(get_divisors(val))

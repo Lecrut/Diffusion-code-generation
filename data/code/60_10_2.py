@@ -1,18 +1,17 @@
-def get_last_item(data):
-    if not data:
-        raise IndexError("Cannot get the last item from an empty list")
-    return data[-1]
+def factorial(n):
+    if not isinstance(n, int):
+        raise TypeError("Input must be an integer")
+    if n < 0:
+        raise ValueError("Input must be non-negative")
+    
+    result = 1
+    current = 1
+    while current <= n:
+        result *= current
+        current += 1
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 2, 3, 4, 5]
-    list2 = ['a', 'b', 'c']
-    empty_list = []
-    try:
-        result1 = get_last_item(list1)
-        print(f"Last item of {list1}: {result1}")
-        result2 = get_last_item(list2)
-        print(f"Last item of {list2}: {result2}")
-        get_last_item(empty_list)
-    except IndexError as e:
-        print(f"Error caught: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    print(factorial(5))
+    print(factorial(0))
+    print(factorial(10))

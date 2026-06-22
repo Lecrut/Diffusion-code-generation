@@ -1,15 +1,39 @@
-def find_final_item_index(indices):
-    if not indices:
-        return -1
-    return max(indices)
+def power(base, exponent):
+    if not isinstance(exponent, int):
+        raise TypeError("Exponent must be an integer")
+    
+    if exponent == 0:
+        return 1
+    
+    is_negative_exponent = exponent < 0
+    abs_exponent = abs(exponent)
+    
+    result = 1.0
+    current_base = float(base)
+    
+    while abs_exponent > 0:
+        if abs_exponent % 2 == 1:
+            result *= current_base
+            if not is_negative_exponent:
+                try:
+                    float.__mul__(result, 1)
+                except OverflowError:
+                    raise OverflowError("Result too large")
+        
+        abs_exponent //= 2
+        current_base *= current_base
+        if not is_negative_exponent:
+            if current_base > float('inf') or (current_base != current_base and current_base == 0):
+                if current_base == float('inf'):
+                     raise OverflowError("Intermediate calculation overflowed")
+
+    if is_negative_exponent:
+        result = 1.0 / result
+    
+    return result
+
 if __name__ == '__main__':
-    list1 = [1, 5, 2, 8, 3]
-    print(f"Input: {list1}, Result: {find_final_item_index(list1)}")
-    list2 = []
-    print(f"Input: {list2}, Result: {find_final_item_index(list2)}")
-    list3 = [10]
-    print(f"Input: {list3}, Result: {find_final_item_index(list3)}")
-    list4 = [5, 5, 5]
-    print(f"Input: {list4}, Result: {find_final_item_index(list4)}")
-    list5 = [-1, 0, -5]
-    print(f"Input: {list5}, Result: {find_final_item_index(list5)}")
+    base_val = 2.0
+    exp_val = 10
+    res = power(base_val, exp_val)
+    print(res)

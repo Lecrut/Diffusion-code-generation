@@ -1,6 +1,6 @@
+def convert_feet_to_inches(feet: float) -> float:
+    return feet * 12.0
+
 if __name__ == '__main__':
-    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    target_index = 4
-    for number in input_data:
-        if number == input_data[target_index]:
-            print(number)
+    result = convert_feet_to_inches(5.5)
+    print(result)

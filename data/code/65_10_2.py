@@ -1,11 +1,13 @@
-def access_list_by_index():
-    my_list = [10, 20, 30, 40, 50]
-    first_element = my_list[0]
-    middle_element = my_list[2]
-    last_element = my_list[4]
-    print("Original List:", my_list)
-    print("First element (index 0):", first_element)
-    print("Middle element (index 2):", middle_element)
-    print("Last element (index 4):", last_element)
+import sys
+
+def feet_to_inches(feet: float) -> float:
+    if not isinstance(feet, (int, float)):
+        raise TypeError("feet must be a number")
+    if feet < 0:
+        raise ValueError("feet cannot be negative")
+    return feet * 12
+
 if __name__ == '__main__':
-    access_list_by_index()
+    sample_value = 5.5
+    result = feet_to_inches(sample_value)
+    print(result)
