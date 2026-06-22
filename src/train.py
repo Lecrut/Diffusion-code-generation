@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from pathlib import Path
 import os
 import time
@@ -35,10 +36,11 @@ def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
 # --- LIGHTNING MODULE ---
 
 class DiffCoderLightning(pl.LightningModule):
-    def __init__(self, model, base_lr=5e-5, rollback_stage=None, use_ast_loss=False):
+    def __init__(self, model, base_lr=5e-5, weight_decay=0.01, rollback_stage=None, use_ast_loss=False):
         super().__init__()
         self.model = model
         self.base_lr = base_lr
+        self.weight_decay = weight_decay
         self.rollback_stage = rollback_stage
         self.use_ast_loss = use_ast_loss
         
@@ -131,7 +133,7 @@ class DiffCoderLightning(pl.LightningModule):
         return loss
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=self.base_lr, weight_decay=0.01)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.base_lr, weight_decay=self.weight_decay)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
             optimizer, T_0=10000, T_mult=1, eta_min=1e-6
         )
@@ -589,6 +591,7 @@ class DiffCoderTrainer:
         self.lightning_model = DiffCoderLightning(
             model=raw_model,
             base_lr=self.config.base_lr,
+            weight_decay=self.config.weight_decay,
             rollback_stage=self.config.rollback_stage, # Przekazanie etapu do nadpisania
             use_ast_loss=self.config.use_ast_loss,
         )
@@ -686,6 +689,54 @@ class DiffCoderTrainer:
             train_dataloaders=self.train_loader, 
             val_dataloaders=self.val_loader,
         )
+
+        def scalar_metric(name):
+            value = trainer.callback_metrics.get(name)
+            if value is None:
+                return None
+            if hasattr(value, "detach"):
+                value = value.detach().cpu()
+            if hasattr(value, "item"):
+                return float(value.item())
+            return float(value)
+
+        best_score = best_checkpoint_callback.best_model_score
+        best_val_loss = None
+        if best_score is not None:
+            best_val_loss = float(best_score.detach().cpu().item() if hasattr(best_score, "detach") else best_score)
+        if best_val_loss is None:
+            best_val_loss = scalar_metric("val_loss")
+
+        last_model_path = getattr(last_checkpoint_callback, "last_model_path", "") or last_checkpoint_callback.best_model_path
+        train_result = {
+            "best_val_loss": best_val_loss,
+            "final_val_loss": scalar_metric("val_loss"),
+            "final_train_loss": scalar_metric("train_loss"),
+            "best_model_path": best_checkpoint_callback.best_model_path,
+            "last_model_path": last_model_path,
+            "global_step": int(trainer.global_step),
+            "current_epoch": int(trainer.current_epoch),
+            "train_rows": len(self.train_dataset),
+            "val_rows": len(self.val_dataset),
+            "config": {
+                "batch_size": self.config.batch_size,
+                "accumulation_steps": self.config.accumulation_steps,
+                "base_lr": self.config.base_lr,
+                "weight_decay": self.config.weight_decay,
+                "hidden_dim": self.config.hidden_dim,
+                "num_blocks": self.config.num_blocks,
+                "dilation_factor": self.config.dilation_factor,
+                "max_prompt_len": self.config.max_prompt_len,
+                "max_code_len": self.config.max_code_len,
+                "max_steps": self.config.max_steps,
+            },
+        }
+
+        result_json = os.getenv("TRAIN_RESULT_JSON")
+        if result_json:
+            result_path = Path(result_json)
+            result_path.parent.mkdir(parents=True, exist_ok=True)
+            result_path.write_text(json.dumps(train_result, ensure_ascii=True, indent=2), encoding="utf-8")
         
         if self.config.upload_checkpoints_to_comet and comet_logger is not None and best_checkpoint_callback.best_model_path:
             try:
@@ -697,7 +748,6 @@ class DiffCoderTrainer:
             except Exception as e:
                 print(f"[COMET WARNING] Nie udało się automatycznie zalogować BEST modelu: {e}")
 
-        last_model_path = getattr(last_checkpoint_callback, "last_model_path", "") or last_checkpoint_callback.best_model_path
         if self.config.upload_checkpoints_to_comet and comet_logger is not None and last_model_path:
             try:
                 comet_logger.experiment.log_model(
@@ -708,7 +758,7 @@ class DiffCoderTrainer:
             except Exception as e:
                 print(f"[COMET WARNING] Nie udało się automatycznie zalogować LAST modelu: {e}")
 
-        return best_checkpoint_callback.best_model_path
+        return train_result
 
 def env_bool(name, default=False):
     value = os.getenv(name)
@@ -728,8 +778,8 @@ def main():
         torch.set_float32_matmul_precision("high")
 
     class Config:
-        max_prompt_len = 96
-        max_code_len = 512
+        max_prompt_len = int(os.getenv("MAX_PROMPT_LEN", "96"))
+        max_code_len = int(os.getenv("MAX_CODE_LEN", "512"))
         batch_size = int(os.getenv("BATCH_SIZE", "32"))
         accumulation_steps = int(os.getenv("ACCUMULATION_STEPS", "1"))
         num_workers = int(os.getenv("NUM_WORKERS", "6"))
@@ -747,8 +797,8 @@ def main():
         sample_console_chars = int(os.getenv("SAMPLE_CONSOLE_CHARS", "1200"))
         num_sanity_val_steps = int(os.getenv("NUM_SANITY_VAL_STEPS", "0"))
         early_stopping_patience = 120 
-        hidden_dim = 512
-        num_blocks = 6
+        hidden_dim = int(os.getenv("HIDDEN_DIM", "512"))
+        num_blocks = int(os.getenv("NUM_BLOCKS", "6"))
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
         dataset_fraction = float(os.getenv("DATASET_FRACTION", "1.0"))
         cache_chunk_size = int(os.getenv("CACHE_CHUNK_SIZE", "8192"))
@@ -756,9 +806,10 @@ def main():
         rebuild_token_cache = env_bool("REBUILD_TOKEN_CACHE", False)
         use_ast_loss = env_bool("USE_AST_LOSS", False)
         upload_checkpoints_to_comet = env_bool("COMET_UPLOAD_CHECKPOINTS", False)
-        base_lr = 5e-5
+        base_lr = float(os.getenv("BASE_LR", "5e-5"))
+        weight_decay = float(os.getenv("WEIGHT_DECAY", "0.01"))
         
-        checkpoint_dir = 'checkpoints'
+        checkpoint_dir = os.getenv("CHECKPOINT_DIR", str(Path(__file__).resolve().parent.parent / "checkpoints"))
         
         # Trening startuje od zera, bez resume z checkpointu.
         rollback_stage = int(os.getenv("ROLLBACK_STAGE")) if os.getenv("ROLLBACK_STAGE") else None
@@ -766,8 +817,9 @@ def main():
 
     config = Config()
     trainer = DiffCoderTrainer(config)
-    best_model_path = trainer.train()
-    print(f"\nTrening zakończony. Najlepszy checkpoint: {best_model_path}")
+    train_result = trainer.train()
+    print(f"\nTrening zakończony. Najlepszy checkpoint: {train_result.get('best_model_path')}")
+    print(f"Najlepszy val_loss: {train_result.get('best_val_loss')}")
 
 
 if __name__ == "__main__":
