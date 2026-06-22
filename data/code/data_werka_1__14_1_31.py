@@ -1,0 +1,10 @@
+class VolumeComparator:
+    def compare(self, volume1, volume2):
+        comparison_result = "equal" if volume1 == volume2 else "not equal"
+        difference = abs(volume1 - volume2)
+        return (comparison_result, difference)
+
+if __name__ == '__main__':
+    comparator = VolumeComparator()
+    result = comparator.compare(500, 300)
+    print(result)

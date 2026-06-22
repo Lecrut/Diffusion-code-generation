@@ -1,0 +1,10 @@
+def format_string(s):
+    original = s
+    all_caps = s.upper()
+    sentence_case = s.capitalize()
+    return f"{original}, {all_caps}, {sentence_case}"
+
+if __name__ == '__main__':
+    sample_value = "hello world"
+    result = format_string(sample_value)
+    print(result)

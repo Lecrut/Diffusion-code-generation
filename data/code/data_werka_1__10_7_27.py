@@ -1,0 +1,18 @@
+def compare_temperatures(temp1, temp2):
+    if temp1 > temp2:
+        return "temp1 is greater than temp2"
+    elif temp1 < temp2:
+        return "temp1 is less than temp2"
+    else:
+        return "temp1 is equal to temp2"
+
+def test_compare_temperatures():
+    assert compare_temperatures(30, 25) == "temp1 is greater than temp2"
+    assert compare_temperatures(20, 25) == "temp1 is less than temp2"
+    assert compare_temperatures(25, 25) == "temp1 is equal to temp2"
+
+if __name__ == '__main__':
+    sample_values = [(30, 25), (20, 25), (25, 25)]
+    for temp1, temp2 in sample_values:
+        result = compare_temperatures(temp1, temp2)
+        print(result)

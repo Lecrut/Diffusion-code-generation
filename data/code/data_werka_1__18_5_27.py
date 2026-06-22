@@ -1,0 +1,5 @@
+if __name__ == '__main__':
+    a = 5
+    b = 3
+    result = (a > b)
+    print(result)

@@ -1,0 +1,12 @@
+def contains_zero(iterable):
+    for item in iterable:
+        if item == 0:
+            yield True
+            break
+    else:
+        yield False
+
+if __name__ == '__main__':
+    sample_values = [1, 2, 3, 0, 5]
+    result_generator = contains_zero(sample_values)
+    print(next(result_generator))

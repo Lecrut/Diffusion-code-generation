@@ -1,0 +1,16 @@
+def calculate_square_area(side_length):
+    if not isinstance(side_length, (int, float)):
+        raise ValueError("Side length must be a number.")
+    if side_length <= 0:
+        raise ValueError("Side length must be positive.")
+    return side_length ** 2
+
+if __name__ == '__main__':
+    test_cases = [4, -1, 0, '7', None]
+    for value in test_cases:
+        try:
+            area_value = calculate_square_area(value)
+            print(f"Side length: {value}")
+            print(f"Area of square: {area_value}\n")
+        except ValueError as e:
+            print(f"Error calculating area for side {value}: {e}")

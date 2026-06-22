@@ -1,0 +1,13 @@
+def are_lists_equal(list1, list2):
+    for a, b in zip(list1, list2):
+        if a != b:
+            yield False
+        else:
+            yield True
+
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = [1, 2, 4]
+    result = are_lists_equal(list1, list2)
+    for value in result:
+        print(value)

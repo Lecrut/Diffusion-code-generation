@@ -1,0 +1,13 @@
+def convert_weight_ratios(ratios):
+    from math import gcd
+    simplified_ratios = []
+    for num, denom in ratios:
+        common_divisor = gcd(num, denom)
+        simplified_num = num // common_divisor
+        simplified_denom = denom // common_divisor
+        simplified_ratios.append((simplified_num, simplified_denom))
+    return simplified_ratios
+if __name__ == '__main__':
+    sample_ratios = [(1000000000, 250000000), (800000000, 400000000), (300000000, 90000000)]
+    result = convert_weight_ratios(sample_ratios)
+    print(result)

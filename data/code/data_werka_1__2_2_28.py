@@ -1,0 +1,15 @@
+class VolumeManager:
+    def __init__(self):
+        self.volumes = []
+
+    def add_volume(self, volume):
+        self.volumes.append(volume)
+
+    def get_volumes(self):
+        return self.volumes
+
+if __name__ == '__main__':
+    manager = VolumeManager()
+    manager.add_volume(10)
+    manager.add_volume(20)
+    print(manager.get_volumes())
