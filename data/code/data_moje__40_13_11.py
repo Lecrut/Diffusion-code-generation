@@ -1,0 +1,5 @@
+def box_surface_area(l, w, h):
+    return 2 * (l * w + w * h + h * l)
+
+if __name__ == '__main__':
+    print(box_surface_area(4, 6, 8))

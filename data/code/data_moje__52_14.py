@@ -1,0 +1,19 @@
+def generate_diamond_pattern(size):
+    if size < 1:
+        return ""
+    lines = []
+    mid = size - 1
+    for i in range(size):
+        spaces = ' ' * (mid - i)
+        stars = '*' * (2 * i + 1)
+        lines.append(spaces + stars)
+    for i in range(size - 2, -1, -1):
+        spaces = ' ' * (mid - i)
+        stars = '*' * (2 * i + 1)
+        lines.append(spaces + stars)
+    return '\n'.join(lines)
+
+if __name__ == '__main__':
+    sample_size = 5
+    result = generate_diamond_pattern(sample_size)
+    print(result)

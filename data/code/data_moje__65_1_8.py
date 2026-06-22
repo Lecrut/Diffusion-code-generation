@@ -1,0 +1,9 @@
+FEET_TO_INCHES = 12
+
+def feet_to_inches(feet):
+    return feet * FEET_TO_INCHES
+
+if __name__ == '__main__':
+    sample_feet = 10
+    result = feet_to_inches(sample_feet)
+    print(result)

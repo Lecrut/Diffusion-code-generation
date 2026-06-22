@@ -1,0 +1,17 @@
+def power(base, exp):
+    if exp < 0:
+        return 1 / power(base, -exp)
+    result = 1
+    while exp > 0:
+        if exp % 2 == 1:
+            result *= base
+        base *= base
+        exp //= 2
+    return result
+
+if __name__ == '__main__':
+    print(power(2, 10))
+    print(power(3, 20))
+    print(power(5, 1))
+    print(power(2, 0))
+    print(power(2, -3))

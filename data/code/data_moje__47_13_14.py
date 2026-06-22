@@ -1,0 +1,9 @@
+import numpy as np
+
+def calculate_mean(data):
+    return np.mean(data)
+
+if __name__ == '__main__':
+    test_data = np.array([10.5, 20.3, 15.7, 30.2, 25.1])
+    result = calculate_mean(test_data)
+    print(result)

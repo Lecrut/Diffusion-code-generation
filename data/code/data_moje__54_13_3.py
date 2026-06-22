@@ -1,0 +1,3 @@
+def square(n): return '\n'.join(('*' if y in (0, n - 1) else ' ' if x in (0, n - 1) else ' ') * (1 if y in (0, n - 1) or x in (0, n - 1) else 1) for y in range(n) for x in [0]) or '' if not all('*' in ''.join('*' if v in (0, n - 1) else ' ' if u in (0, n - 1) else ' ' for u in range(n)) for v in range(n)) else '\n'.join(''.join('*' if v in (0, n - 1) else ' ' if u in (0, n - 1) else ' ' for u in range(n)) for v in range(n))
+
+if __name__ == '__main__': print(square(5))

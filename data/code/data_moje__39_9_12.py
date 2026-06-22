@@ -1,0 +1,8 @@
+def calculate_prism_volume(base_area: float, height: float) -> float:
+    return base_area * height
+
+if __name__ == '__main__':
+    BASE_AREA = 10.0
+    HEIGHT = 5.0
+    volume = calculate_prism_volume(BASE_AREA, HEIGHT)
+    print(volume)

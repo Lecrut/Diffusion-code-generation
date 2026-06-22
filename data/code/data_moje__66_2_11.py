@@ -1,0 +1,9 @@
+class UnitConverter:
+    @staticmethod
+    def km_to_m(km: float) -> float:
+        return km * 1000
+
+if __name__ == '__main__':
+    converter = UnitConverter()
+    print(converter.km_to_m(5))
+    print(converter.km_to_m(1.5))

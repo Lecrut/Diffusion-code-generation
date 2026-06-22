@@ -1,0 +1,14 @@
+def generate_isosceles_triangle(rows):
+    if rows <= 0:
+        return ""
+    lines = []
+    for i in range(rows):
+        spaces = " " * (rows - i - 1)
+        stars = "*" * (2 * i + 1)
+        lines.append(spaces + stars)
+    return "\n".join(lines)
+
+if __name__ == "__main__":
+    sample_rows = 5
+    result = generate_isosceles_triangle(sample_rows)
+    print(result)

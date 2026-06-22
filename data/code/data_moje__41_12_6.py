@@ -1,0 +1,3 @@
+r_area = lambda d1, d2: 0.5 * d1 * d2
+if __name__ == '__main__':
+    print(r_area(6.0, 8.0))

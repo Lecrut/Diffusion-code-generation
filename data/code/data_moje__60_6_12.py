@@ -1,0 +1,19 @@
+def factorial(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative numbers")
+    result = 1
+    while n > 1:
+        result *= n
+        n -= 1
+    return result
+
+if __name__ == '__main__':
+    assert factorial(0) == 1
+    assert factorial(1) == 1
+    assert factorial(5) == 120
+    assert factorial(10) == 3628800
+    print(factorial(5))
+    print(factorial(10))
+    print(factorial(0))
+    print(factorial(1))
+    print(factorial(15))

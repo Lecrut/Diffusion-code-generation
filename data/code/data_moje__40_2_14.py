@@ -1,0 +1,11 @@
+from typing import Tuple
+
+def calculate_surface_area(length: float, width: float, height: float) -> float:
+    return 2 * (length * width + length * height + width * height)
+
+if __name__ == '__main__':
+    sample_length = 5.0
+    sample_width = 3.0
+    sample_height = 2.0
+    area = calculate_surface_area(sample_length, sample_width, sample_height)
+    print(area)

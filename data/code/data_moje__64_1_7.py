@@ -1,0 +1,10 @@
+def power(base, exponent):
+    if not isinstance(base, (int, float)):
+        raise TypeError("base must be an integer or float")
+    if not isinstance(exponent, (int, float)):
+        raise TypeError("exponent must be an integer or float")
+    return base ** exponent
+
+if __name__ == '__main__':
+    result = power(2, 10)
+    print(result)
