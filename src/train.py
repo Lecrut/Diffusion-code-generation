@@ -432,6 +432,64 @@ class LogGeneratedSamplesCallback(Callback):
         pl_module.train()
 
 
+class CometCheckpointUploadCallback(Callback):
+    def __init__(self, best_checkpoint_callback, last_checkpoint_callback):
+        super().__init__()
+        self.best_checkpoint_callback = best_checkpoint_callback
+        self.last_checkpoint_callback = last_checkpoint_callback
+        self._uploaded_best_score = None
+        self._uploaded_best_path = ""
+
+    def _get_comet_experiment(self, trainer):
+        for logger in trainer.loggers:
+            if isinstance(logger, CometLogger):
+                return logger.experiment
+        return None
+
+    def _upload_model(self, experiment, model_name, model_path):
+        if not model_path or not os.path.isfile(model_path):
+            return False
+        experiment.log_model(model_name, model_path, overwrite=True)
+        return True
+
+    def on_validation_epoch_end(self, trainer, pl_module):
+        if trainer.sanity_checking:
+            return
+
+        experiment = self._get_comet_experiment(trainer)
+        if experiment is None:
+            return
+
+        best_path = self.best_checkpoint_callback.best_model_path
+        best_score = self.best_checkpoint_callback.best_model_score
+        if not best_path or best_score is None:
+            return
+
+        best_score_value = float(best_score.item() if hasattr(best_score, "item") else best_score)
+        is_improved = self._uploaded_best_score is None or best_score_value < self._uploaded_best_score
+        is_new_path = best_path != self._uploaded_best_path
+
+        if is_improved or is_new_path:
+            if self._upload_model(experiment, "LocalConvDiffCoder-best", best_path):
+                self._uploaded_best_score = best_score_value
+                self._uploaded_best_path = best_path
+                print(f">>> [COMET] Zapisano BEST model (val_loss={best_score_value:.6f}) z nadpisaniem. <<<")
+
+    def on_train_epoch_end(self, trainer, pl_module):
+        if trainer.sanity_checking:
+            return
+
+        experiment = self._get_comet_experiment(trainer)
+        if experiment is None:
+            return
+
+        last_path = self.last_checkpoint_callback.best_model_path
+        if self._upload_model(experiment, "LocalConvDiffCoder-last", last_path):
+            print(
+                f">>> [COMET] Zapisano LAST model z epoki {trainer.current_epoch + 1} z nadpisaniem. <<<"
+            )
+
+
 # --- GŁÓWNY PROCES TRENINGOWY ---
 
 class DiffCoderTrainer:
@@ -510,7 +568,8 @@ class DiffCoderTrainer:
             filename='last', 
             save_top_k=1,
             every_n_epochs=1,
-            save_on_train_epoch_end=True 
+            save_on_train_epoch_end=True,
+            enable_version_counter=False,
         )
 
         early_stop_callback = EarlyStopping(
@@ -541,12 +600,25 @@ class DiffCoderTrainer:
             )
             loggers.append(comet_logger)
 
+        comet_checkpoint_callback = CometCheckpointUploadCallback(
+            best_checkpoint_callback=best_checkpoint_callback,
+            last_checkpoint_callback=last_checkpoint_callback,
+        )
+
         trainer = pl.Trainer(
             max_epochs=self.config.epochs,
             accelerator='gpu' if torch.cuda.is_available() else 'cpu',
             devices=1 if torch.cuda.is_available() else "auto",
             accumulate_grad_batches=self.config.accumulation_steps,
-            callbacks=[best_checkpoint_callback, last_checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback, curriculum_callback],
+            callbacks=[
+                best_checkpoint_callback,
+                last_checkpoint_callback,
+                early_stop_callback,
+                lr_monitor,
+                sample_logger_callback,
+                curriculum_callback,
+                comet_checkpoint_callback,
+            ],
             logger=loggers if loggers else True,
             precision="16-mixed" if torch.cuda.is_available() else 32,
             gradient_clip_val=1.0
@@ -560,10 +632,23 @@ class DiffCoderTrainer:
         
         if comet_logger is not None and best_checkpoint_callback.best_model_path:
             try:
-                print(">>> [COMET] Rejestruję najlepszy model w chmurze Comet ML... <<<")
-                comet_logger.experiment.log_model("LocalConvDiffCoder", best_checkpoint_callback.best_model_path)
+                comet_logger.experiment.log_model(
+                    "LocalConvDiffCoder-best",
+                    best_checkpoint_callback.best_model_path,
+                    overwrite=True,
+                )
             except Exception as e:
-                print(f"[COMET WARNING] Nie udało się automatycznie zalogować modelu: {e}")
+                print(f"[COMET WARNING] Nie udało się automatycznie zalogować BEST modelu: {e}")
+
+        if comet_logger is not None and last_checkpoint_callback.best_model_path:
+            try:
+                comet_logger.experiment.log_model(
+                    "LocalConvDiffCoder-last",
+                    last_checkpoint_callback.best_model_path,
+                    overwrite=True,
+                )
+            except Exception as e:
+                print(f"[COMET WARNING] Nie udało się automatycznie zalogować LAST modelu: {e}")
 
         return best_checkpoint_callback.best_model_path
 
