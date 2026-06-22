@@ -1,0 +1,9 @@
+def get_edge_elements(lst):
+    if len(lst) == 0:
+        raise ValueError("Input must be non-empty")
+    return (lst[0], lst[-1])
+
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    result = get_edge_elements(sample_list)
+    print(result)

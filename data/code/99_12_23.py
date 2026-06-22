@@ -1,0 +1,127 @@
+class FlagEvaluator:
+    def __init__(self, flags: dict):
+        self.flags = flags
+
+    def evaluate(self, expression: str) -> bool:
+        if not isinstance(expression, str):
+            raise ValueError("Expression must be a string")
+        
+        cleaned = expression.replace(" ", "")
+        if not cleaned:
+            return False
+            
+        tokens = self._tokenize(cleaned)
+        if not tokens:
+            return False
+            
+        result = self._parse_or(tokens)
+        return result
+
+    def _tokenize(self, expression: str) -> list:
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char == '(':
+                tokens.append(('LPAREN', '('))
+                i += 1
+            elif char == ')':
+                tokens.append(('RPAREN', ')'))
+                i += 1
+            elif char == '&' and i + 1 < len(expression) and expression[i+1] == '&':
+                tokens.append(('AND', '&&'))
+                i += 2
+            elif char == '|' and i + 1 < len(expression) and expression[i+1] == '|':
+                tokens.append(('OR', '||'))
+                i += 2
+            elif char == '!' and i + 1 < len(expression) and expression[i+1] == '!':
+                tokens.append(('NOT', '!!'))
+                i += 2
+            elif char.isalpha():
+                start = i
+                while i < len(expression) and expression[i].isalnum():
+                    i += 1
+                tokens.append(('FLAG', expression[start:i]))
+            else:
+                raise ValueError(f"Unexpected character: {char}")
+        return tokens
+
+    def _parse_or(self, tokens: list) -> bool:
+        result = self._parse_and(tokens)
+        while tokens and tokens[0][0] == 'OR':
+            tokens.pop(0)
+            if not result:
+                result = self._parse_and(tokens)
+            else:
+                self._skip_and(tokens)
+        return result
+
+    def _parse_and(self, tokens: list) -> bool:
+        result = self._parse_not(tokens)
+        while tokens and tokens[0][0] == 'AND':
+            tokens.pop(0)
+            if not result:
+                result = self._parse_not(tokens)
+            else:
+                result = self._parse_not(tokens)
+        return result
+
+    def _parse_not(self, tokens: list) -> bool:
+        if tokens and tokens[0][0] == 'NOT':
+            tokens.pop(0)
+            return not self._parse_not(tokens)
+        return self._parse_primary(tokens)
+
+    def _parse_primary(self, tokens: list) -> bool:
+        if not tokens:
+            return False
+        token_type, token_val = tokens[0]
+        
+        if token_type == 'LPAREN':
+            tokens.pop(0)
+            result = self._parse_or(tokens)
+            if tokens and tokens[0][0] == 'RPAREN':
+                tokens.pop(0)
+            return result
+        
+        if token_type == 'FLAG':
+            tokens.pop(0)
+            flag_name = token_val
+            if flag_name not in self.flags:
+                raise ValueError(f"Unknown flag: {flag_name}")
+            return bool(self.flags[flag_name])
+            
+        if token_type == 'RPAREN':
+            return False
+            
+        return False
+
+    def _skip_and(self, tokens: list) -> None:
+        while tokens and tokens[0][0] == 'AND':
+            tokens.pop(0)
+            self._parse_not(tokens)
+
+if __name__ == '__main__':
+    flags = {
+        'A': True,
+        'B': False,
+        'C': True,
+        'D': False
+    }
+    
+    evaluator = FlagEvaluator(flags)
+    
+    result1 = evaluator.evaluate("A && B")
+    print(result1)
+    
+    result2 = evaluator.evaluate("A || B")
+    print(result2)
+    
+    result3 = evaluator.evaluate("(A || B) && C")
+    print(result3)
+    
+    result4 = evaluator.evaluate("A && (B || C)")
+    print(result4)
+    
+    result5 = evaluator.evaluate("!!A")
+    print(result5)

@@ -1,0 +1,20 @@
+import datetime
+
+WEEKDAY_NAMES = {
+    0: "Monday",
+    1: "Tuesday",
+    2: "Wednesday",
+    3: "Thursday",
+    4: "Friday",
+    5: "Saturday",
+    6: "Sunday",
+}
+
+def get_weekday(date_str):
+    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+    return WEEKDAY_NAMES[date_obj.weekday()]
+
+if __name__ == '__main__':
+    target_date = "2023-12-25"
+    result = get_weekday(target_date)
+    print(result)

@@ -1,0 +1,12 @@
+import datetime
+
+def calculate_elapsed_time_since_start_of_day(target_date):
+    start_of_day = datetime.datetime.combine(target_date, datetime.time.min)
+    end_of_day = datetime.datetime.combine(target_date, datetime.time.max)
+    elapsed = end_of_day - start_of_day
+    return elapsed.total_seconds()
+
+if __name__ == '__main__':
+    today = datetime.date(2023, 10, 5)
+    result = calculate_elapsed_time_since_start_of_day(today)
+    print(result)
