@@ -1,0 +1,7 @@
+def count_vowels(text):
+    return sum(1 for char in text if char.lower() in 'aeiou')
+
+if __name__ == '__main__':
+    text = "Hello World! How are you today?"
+    result = count_vowels(text)
+    print(result)

@@ -1,0 +1,10 @@
+def get_first_element(numbers):
+    if len(numbers) == 0:
+        return None
+    return numbers[0]
+
+if __name__ == '__main__':
+    sample_list = [5, 10, 15]
+    empty_list = []
+    print(get_first_element(sample_list))
+    print(get_first_element(empty_list))

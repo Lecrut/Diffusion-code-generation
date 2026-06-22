@@ -1,0 +1,6 @@
+def cm_to_inches(cm):
+    return cm / 2.54
+
+if __name__ == '__main__':
+    result = cm_to_inches(50)
+    print(result)

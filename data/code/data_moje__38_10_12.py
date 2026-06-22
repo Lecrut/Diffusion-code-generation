@@ -1,0 +1,10 @@
+import math
+
+def compute_cone_volume(radius: float, height: float) -> float:
+    return (math.pi * radius ** 2 * height) / 3
+
+if __name__ == '__main__':
+    radius_value = 5
+    height_value = 10
+    result = compute_cone_volume(radius_value, height_value)
+    print(result)

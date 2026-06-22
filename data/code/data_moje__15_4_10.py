@@ -1,0 +1,11 @@
+def get_penultimate(lst):
+    if lst is None or len(lst) < 2:
+        return None
+    return lst[-2]
+
+if __name__ == '__main__':
+    print(get_penultimate([1, 2, 3]))
+    print(get_penultimate([1, 2]))
+    print(get_penultimate([1]))
+    print(get_penultimate([]))
+    print(get_penultimate(None))

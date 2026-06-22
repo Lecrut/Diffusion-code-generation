@@ -1,0 +1,6 @@
+def calculate_rectangle_area(width, height):
+    return float(width * height)
+
+if __name__ == '__main__':
+    result = calculate_rectangle_area(5.0, 10.0)
+    print(result)

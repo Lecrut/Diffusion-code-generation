@@ -1,0 +1,18 @@
+def check_triangle_validity(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return "Invalid"
+    if a + b <= c or a + c <= b or b + c <= a:
+        return "Invalid"
+    return "Valid"
+
+if __name__ == '__main__':
+    side1 = 3
+    side2 = 4
+    side3 = 5
+    result = check_triangle_validity(side1, side2, side3)
+    print(result)
+    side4 = 1
+    side5 = 2
+    side6 = 3
+    result2 = check_triangle_validity(side4, side5, side6)
+    print(result2)

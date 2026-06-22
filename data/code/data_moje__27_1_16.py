@@ -1,0 +1,14 @@
+def check_triangle_validity(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    if a + b <= c:
+        return False
+    if a + c <= b:
+        return False
+    if b + c <= a:
+        return False
+    return True
+
+if __name__ == '__main__':
+    result = check_triangle_validity(3, 4, 5)
+    print(result)

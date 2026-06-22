@@ -1,0 +1,12 @@
+def is_leap_year(year):
+    return (year & 3 == 0) and ((year & 15 != 0) or (year % 400 == 0))
+
+if __name__ == '__main__':
+    print(is_leap_year(2000))
+    print(is_leap_year(1900))
+    print(is_leap_year(2024))
+    print(is_leap_year(2023))
+    print(is_leap_year(1600))
+    print(is_leap_year(1700))
+    print(is_leap_year(2004))
+    print(is_leap_year(2100))

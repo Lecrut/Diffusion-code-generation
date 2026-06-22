@@ -1,0 +1,5 @@
+def square_area(side: int) -> int:
+    return side * side
+
+if __name__ == '__main__':
+    print(square_area(5))

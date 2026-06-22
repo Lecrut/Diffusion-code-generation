@@ -1,0 +1,13 @@
+import math
+
+def compute_cylinder_areas(radius, height):
+    lateral_area = 2 * math.pi * radius * height
+    total_area = lateral_area + 2 * math.pi * radius ** 2
+    return lateral_area, total_area
+
+if __name__ == '__main__':
+    sample_radius = 5.0
+    sample_height = 10.0
+    lateral, total = compute_cylinder_areas(sample_radius, sample_height)
+    print(lateral)
+    print(total)

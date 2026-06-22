@@ -1,0 +1,2 @@
+def is_leap(year): return bool(year % 4 == 0 and (year % 100 != 0 or year % 400 == 0))
+if __name__ == '__main__': print(is_leap(2024), is_leap(1900), is_leap(2000))

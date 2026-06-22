@@ -1,0 +1,9 @@
+BASE_AREA = 50
+BASE_HEIGHT = 20
+
+def calculate_prism_volume(area, height):
+    return area * height
+
+if __name__ == '__main__':
+    volume = calculate_prism_volume(BASE_AREA, BASE_HEIGHT)
+    print(volume)

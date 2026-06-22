@@ -1,0 +1,12 @@
+from typing import Union
+
+def compute_parallelogram_area(base: Union[int, float], height: Union[int, float]) -> Union[int, float]:
+    if base <= 0 or height <= 0:
+        return 0
+    return base * height
+
+if __name__ == '__main__':
+    base_value = 10.0
+    height_value = 5.0
+    result = compute_parallelogram_area(base_value, height_value)
+    print(result)

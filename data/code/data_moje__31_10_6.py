@@ -1,0 +1,6 @@
+def calculate_square(side_length):
+    return side_length * side_length
+
+if __name__ == '__main__':
+    result = calculate_square(10)
+    print(result)

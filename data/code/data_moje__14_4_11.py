@@ -1,0 +1,11 @@
+def get_third_item(items):
+    if not isinstance(items, list):
+        raise TypeError("Expected a list")
+    if len(items) < 3:
+        raise IndexError("List must have at least three items")
+    return items[2]
+
+if __name__ == '__main__':
+    sample_list = ["first", "second", "third", "fourth"]
+    result = get_third_item(sample_list)
+    print(result)

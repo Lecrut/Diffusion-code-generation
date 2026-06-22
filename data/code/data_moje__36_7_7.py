@@ -1,0 +1,9 @@
+def calculate_trapezoid_area(base1, base2, height):
+    return (base1 + base2) * height / 2
+
+if __name__ == '__main__':
+    base_a = 5
+    base_b = 7
+    height_val = 4
+    result = calculate_trapezoid_area(base_a, base_b, height_val)
+    print(result)
