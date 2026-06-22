@@ -552,20 +552,10 @@ class DiffCoderTrainer:
             gradient_clip_val=1.0
         )
 
-        ckpt_to_resume = None
-        if self.config.resume_from_checkpoint and self.config.resume_ckpt_name:
-            target_ckpt = Path(self.config.checkpoint_dir) / self.config.resume_ckpt_name
-            if target_ckpt.exists():
-                ckpt_to_resume = str(target_ckpt)
-                print(f"\n>>> [RESUME] Odszukano wyznaczony plik: {ckpt_to_resume} <<<\n")
-            else:
-                print(f"\n>>> [WARNING] Nie znaleziono pliku '{self.config.resume_ckpt_name}' w katalogu {self.config.checkpoint_dir}! Rozpoczynam od zera. <<<\n")
-
         trainer.fit(
             self.lightning_model, 
             train_dataloaders=self.train_loader, 
             val_dataloaders=self.val_loader,
-            ckpt_path=ckpt_to_resume 
         )
         
         if comet_logger is not None and best_checkpoint_callback.best_model_path:
@@ -604,11 +594,9 @@ def main():
         
         checkpoint_dir = 'checkpoints'
         
-        # --- ZARZĄDZANIE WZNAWIANIEM TRENINGU ---
-        resume_from_checkpoint = True
-        resume_ckpt_name = "last-v1.ckpt" # Bezpośrednie celowanie w wirtualkę
+        # Trening startuje od zera, bez resume z checkpointu.
         rollback_stage = 2 # Sforsowany powrót do maskowania 20-35%
-        reset_curriculum_state = True # Reset liczników val_loss dla nowej paczki 15k danych
+        reset_curriculum_state = False
 
     config = Config()
     trainer = DiffCoderTrainer(config)
