@@ -8,6 +8,7 @@ import sys
 import tempfile
 import time
 import tokenize
+from dataclasses import dataclass
 
 from ollama import ollama_generate
 
@@ -20,6 +21,12 @@ CODE_PROMPT_TEMPLATE = (
     "Use hard-coded sample values instead of interactive input.\n"
     "No comments, docstrings, markdown, or explanation."
 )
+
+
+@dataclass(frozen=True)
+class CodeValidationResult:
+    ok: bool
+    error: str = ""
 
 
 def _remove_comments(text: str) -> str:
@@ -81,6 +88,70 @@ def is_valid(code: str, timeout: float = 3.0) -> bool:
             os.remove(tmp_path)
         except OSError:
             pass
+
+
+def _has_comments(text: str) -> bool:
+    reader = io.StringIO(text).readline
+    try:
+        return any(token.type == tokenize.COMMENT for token in tokenize.generate_tokens(reader))
+    except tokenize.TokenError:
+        return False
+
+
+def _has_docstrings(tree: ast.AST) -> bool:
+    if isinstance(tree, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and ast.get_docstring(tree):
+        return True
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and ast.get_docstring(node):
+            return True
+    return False
+
+
+def _has_main_block_with_work(tree: ast.Module) -> bool:
+    for node in tree.body:
+        if not isinstance(node, ast.If):
+            continue
+        test = ast.unparse(node.test) if hasattr(ast, "unparse") else ""
+        if "__name__" not in test or "__main__" not in test:
+            continue
+        work_nodes = [
+            item for item in node.body
+            if not isinstance(item, (ast.Pass, ast.Expr))
+            or not isinstance(getattr(item, "value", None), ast.Constant)
+            or getattr(item.value, "value", None) not in (None, Ellipsis)
+        ]
+        return any(not isinstance(item, ast.Pass) for item in work_nodes)
+    return False
+
+
+def validate_code(code: str, *, execute: bool = True, instruction: str | None = None, timeout: float = 3.0) -> CodeValidationResult:
+    if not isinstance(code, str) or not code.strip():
+        return CodeValidationResult(False, "code is empty")
+
+    if _has_comments(code):
+        return CodeValidationResult(False, "comments are not allowed")
+
+    try:
+        tree = ast.parse(code)
+    except SyntaxError as exc:
+        return CodeValidationResult(False, f"syntax error: {exc.msg}")
+
+    if _has_docstrings(tree):
+        return CodeValidationResult(False, "docstrings are not allowed")
+
+    if not _has_main_block_with_work(tree):
+        return CodeValidationResult(False, "missing non-empty __main__ block")
+
+    if any(isinstance(node, ast.Pass) for node in ast.walk(tree)):
+        return CodeValidationResult(False, "pass statements are not allowed")
+
+    if not any(isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) for node in ast.walk(tree)):
+        return CodeValidationResult(False, "code should define reusable functionality")
+
+    if execute and not is_valid(code, timeout=timeout):
+        return CodeValidationResult(False, "code failed execution validation")
+
+    return CodeValidationResult(True)
 
 
 def generate_code(instruction: str, temperature: float) -> str | None:

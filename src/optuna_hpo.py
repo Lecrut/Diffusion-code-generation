@@ -39,8 +39,14 @@ COMET_PARAM_PREFIXES = (
     "NUM_",
     "DILATION_",
     "BASE_",
+    "MIN_LR",
+    "LR_",
     "WEIGHT_",
     "DATASET_",
+    "MASK_",
+    "TOPOLOGY_",
+    "GENERATION_",
+    "VAL_AST_",
 )
 
 
@@ -180,10 +186,12 @@ def log_hpo_trial_success(experiment, result: dict, trial_dir: Path) -> None:
         return
 
     global_step = int(result.get("global_step") or 0)
-    for metric_name in ["best_val_loss", "final_val_loss", "final_train_loss"]:
+    for metric_name in ["best_monitor_score", "final_checkpoint_monitor", "final_val_loss", "final_train_loss"]:
         value = result.get(metric_name)
         if value is not None:
             safe_comet_call(experiment, "log_metric", metric_name, float(value), step=global_step)
+    if result.get("best_monitor") is not None:
+        safe_comet_call(experiment, "log_other", "best_monitor", result.get("best_monitor"))
 
     safe_comet_call(experiment, "log_metric", "trial_completed", 1, step=global_step)
     safe_comet_call(experiment, "log_other", "best_model_path", result.get("best_model_path"))
@@ -281,6 +289,50 @@ def fixed_trial_env(trial_number: int, trial_dir: Path) -> dict[str, str]:
         "PREFETCH_FACTOR",
         "CACHE_CHUNK_SIZE",
         "ENCODE_BATCH_SIZE",
+        "MASK_LOW_RANGE",
+        "MASK_MIDDLE_RANGE",
+        "MASK_HIGH_RANGE",
+        "MASK_LOW_WEIGHT",
+        "MASK_MIDDLE_WEIGHT",
+        "MASK_HIGH_WEIGHT",
+        "MASK_ALL_WEIGHT",
+        "MASK_LOW_ALPHA",
+        "MASK_MIDDLE_ALPHA",
+        "MASK_HIGH_ALPHA",
+        "MASK_LOW_BETA",
+        "MASK_MIDDLE_BETA",
+        "MASK_HIGH_BETA",
+        "MASK_SAMPLER_SEED",
+        "TOPOLOGY_INDEPENDENT_WEIGHT",
+        "TOPOLOGY_BLOCK_WEIGHT",
+        "TOPOLOGY_PREFIX_WEIGHT",
+        "TOPOLOGY_TRUNCATED_SUFFIX_WEIGHT",
+        "TOPOLOGY_BLOCK_LENGTHS",
+        "TOPOLOGY_MIN_VISIBLE_PREFIX_FRACTION",
+        "TOPOLOGY_MAX_VISIBLE_PREFIX_FRACTION",
+        "TOPOLOGY_MIN_TRUNCATED_VISIBLE_TOKENS",
+        "VAL_FIXED_MASK_BINS",
+        "VAL_DETERMINISTIC_SEED",
+        "VAL_LOGIT_CHUNK_SIZE",
+        "VAL_FIXED_PROMPT_SAMPLES",
+        "VAL_FIXED_PROMPT_EVERY_N_EPOCHS",
+        "VAL_FIXED_GENERATION_CODE_LEN",
+        "VAL_AST_EVAL_SAMPLES",
+        "VAL_AST_GENERATION_STEPS",
+        "VAL_AST_EVERY_N_STEPS",
+        "VAL_AST_LOG_FAILURES",
+        "VAL_PROMPT_SHUFFLE_DIAGNOSTIC",
+        "VAL_PROMPT_SHUFFLE_MASK_PROB",
+        "MIN_LR",
+        "LR_WARMUP_STEPS",
+        "CHECKPOINT_MONITOR",
+        "CHECKPOINT_MODE",
+        "GENERATION_DECODING_STRATEGY",
+        "GENERATION_REMASK_CONFIDENCE_THRESHOLD",
+        "GENERATION_MAX_REMASK_FRACTION_PER_STEP",
+        "GENERATION_MAX_REMASKS_PER_TOKEN",
+        "GENERATION_REMASK_COOLDOWN_STEPS",
+        "GENERATION_DISABLE_REMASKING_LAST_N_STEPS",
     ]:
         if os.getenv(name) is not None:
             env[name] = os.getenv(name, "")
@@ -303,7 +355,7 @@ def run_trial_subprocess(trial: optuna.Trial) -> dict:
     env.update(suggest_trial_env(trial))
 
     (trial_dir / "env.json").write_text(
-        json.dumps({key: env[key] for key in sorted(env) if key.startswith(("HPO_", "MAX_", "VAL_", "LIMIT_", "BATCH_", "ACCUMULATION_", "HIDDEN_", "NUM_", "DILATION_", "BASE_", "WEIGHT_", "CHECKPOINT_", "TRAIN_", "COMET_", "DATASET_"))}, indent=2),
+        json.dumps({key: env[key] for key in sorted(env) if key.startswith(("HPO_", "MAX_", "VAL_", "LIMIT_", "BATCH_", "ACCUMULATION_", "HIDDEN_", "NUM_", "DILATION_", "BASE_", "MIN_LR", "LR_", "WEIGHT_", "CHECKPOINT_", "TRAIN_", "COMET_", "DATASET_", "MASK_", "TOPOLOGY_", "GENERATION_"))}, indent=2),
         encoding="utf-8",
     )
     log_hpo_trial_start(comet_experiment, trial, env, trial_dir)
@@ -378,11 +430,12 @@ def run_trial_subprocess(trial: optuna.Trial) -> dict:
 
 def objective(trial: optuna.Trial) -> float:
     result = run_trial_subprocess(trial)
-    best_val_loss = result.get("best_val_loss")
-    if best_val_loss is None:
-        raise RuntimeError("Training result did not contain best_val_loss.")
-    trial.report(float(best_val_loss), step=int(result.get("global_step") or 0))
-    return float(best_val_loss)
+    metric_name = os.getenv("HPO_OBJECTIVE_METRIC", "best_monitor_score")
+    metric_value = result.get(metric_name)
+    if metric_value is None:
+        raise RuntimeError(f"Training result did not contain {metric_name}.")
+    trial.report(float(metric_value), step=int(result.get("global_step") or 0))
+    return float(metric_value)
 
 
 def build_comet_callback(study):
@@ -401,11 +454,12 @@ def build_comet_callback(study):
 
     project_name = os.getenv("HPO_COMET_PROJECT_NAME") or os.getenv("COMET_PROJECT_NAME") or "diffcoder-hpo"
     workspace = os.getenv("HPO_COMET_WORKSPACE") or os.getenv("COMET_WORKSPACE")
+    metric_name = os.getenv("HPO_OBJECTIVE_METRIC", "best_monitor_score")
     return CometCallback(
         study,
         workspace=workspace,
         project_name=project_name,
-        metric_names=["best_val_loss"],
+        metric_names=[metric_name],
     )
 
 
@@ -421,10 +475,11 @@ def main() -> None:
         n_startup_trials=env_int("HPO_PRUNER_STARTUP_TRIALS", 5),
         n_warmup_steps=env_int("HPO_PRUNER_WARMUP_STEPS", 0),
     )
+    default_direction = "maximize" if os.getenv("CHECKPOINT_MODE", "max") == "max" else "minimize"
     study = optuna.create_study(
         study_name=study_name,
         storage=storage,
-        direction="minimize",
+        direction=os.getenv("HPO_DIRECTION", default_direction),
         load_if_exists=True,
         sampler=sampler,
         pruner=pruner,

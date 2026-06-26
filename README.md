@@ -25,3 +25,22 @@ Repozytorium do budowy wieloagentowego systemu dyfuzyjnego generowania kodu.
 
 - - https://huggingface.co/datasets/flytech/python-codes-25k
 
+## Wznawianie treningu z checkpointu
+
+Trening zapisuje najlepszy model oraz `last.ckpt` w katalogu `CHECKPOINT_DIR`.
+Ustaw `AUTO_RESUME_LAST=1`, aby automatycznie wznowic trening z
+`CHECKPOINT_DIR/last.ckpt`, jesli ten plik istnieje:
+
+```powershell
+$env:AUTO_RESUME_LAST="1"
+python src/train.py
+```
+
+Mozesz tez wskazac konkretny checkpoint. `RESUME_CHECKPOINT_PATH` ma pierwszenstwo
+przed `AUTO_RESUME_LAST`:
+
+```powershell
+$env:RESUME_CHECKPOINT_PATH="checkpoints/last.ckpt"
+python src/train.py
+```
+

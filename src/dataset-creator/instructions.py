@@ -38,10 +38,42 @@ def _minimal_validator(instr: str) -> bool:
     if not instr or not isinstance(instr, str) or len(instr.split()) < 4:
         return False
 
+    normalized = _normalize_instr(instr)
+
     if "?" in instr:
         return False
 
     if instr.strip().lower().startswith(("how", "what", "why", "can", "please", "would", "should")):
+        return False
+
+    rejected_phrases = (
+        "well documented",
+        "documented",
+        "docstring",
+        "comment",
+        "comments",
+        "prompt the user",
+        "prompts the user",
+        "interactive",
+        "standard input",
+        "stdin",
+        "command line",
+        "cli",
+        "argparse",
+        "read values from a file",
+        "reads values from a file",
+        "read a file",
+        "reads a file",
+        "write the sorted result",
+        "writes the sorted result",
+        "unittest",
+        "test suite",
+        "previously implemented",
+        "existing class",
+        "abstract",
+        "inheritance",
+    )
+    if any(phrase in normalized for phrase in rejected_phrases):
         return False
 
     return True
