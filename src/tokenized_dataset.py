@@ -32,12 +32,21 @@ def tokenized_cache_dir(
     pad_token_id: int,
     vocab_size: int,
     dataset_fraction: float = 1.0,
+    max_ast_len: int = 256,
+    require_valid: bool = False,
+    compile_filter: str = "none",
+    canonicalize_instructions: bool = False,
 ) -> Path:
     tokenizer_part = _safe_name(tokenizer_name)
     frac_suffix = f"_frac{dataset_fraction}" if dataset_fraction != 1.0 else ""
+    ast_part = f"_ast{max_ast_len}"
+    req_part = f"_req{int(require_valid)}"
+    cf_part = f"_cf_{compile_filter}"
+    canon_part = f"_canon{int(canonicalize_instructions)}"
     return cache_root / (
         f"{tokenizer_part}_p{max_prompt_len}_c{max_code_len}"
         f"_pad{pad_token_id}_vocab{vocab_size}_v{CACHE_VERSION}{frac_suffix}"
+        f"{ast_part}{req_part}{cf_part}{canon_part}"
     )
 
 
@@ -305,6 +314,52 @@ def _ensure_cached_samples(
     _write_json(samples_path, samples)
 
 
+import ast
+
+AST_NODE_TYPES = [
+    "PAD", "UNK",
+    "Module", "FunctionDef", "AsyncFunctionDef", "ClassDef", "Return", "Delete",
+    "Assign", "AugAssign", "AnnAssign", "For", "AsyncFor", "While", "If", "With",
+    "AsyncWith", "Raise", "Try", "Assert", "Import", "ImportFrom", "Global",
+    "Nonlocal", "Expr", "Pass", "Break", "Continue", "Constant", "Attribute",
+    "Subscript", "Starred", "Name", "List", "Tuple", "Slice", "BinOp", "UnaryOp",
+    "Lambda", "IfExp", "Dict", "Set", "ListComp", "SetComp", "DictComp",
+    "GeneratorExp", "Await", "Yield", "YieldFrom", "Compare", "Call",
+    "FormattedValue", "JoinedStr", "NameConstant", "Ellipsis", "Num", "Str",
+    "Bytes", "Index", "ExtSlice", "Load", "Store", "Del", "And", "Or", "Add",
+    "Sub", "Mult", "MatMult", "Div", "Mod", "Pow", "LShift", "RShift", "BitOr",
+    "BitXor", "BitAnd", "FloorDiv", "Invert", "Not", "UAdd", "USub", "Eq",
+    "NotEq", "Lt", "LtE", "Gt", "GtE", "Is", "IsNot", "In", "NotIn",
+    "ExceptHandler", "arg", "arguments", "keyword", "withitem", "alias",
+    "comprehension", "match_case", "Match", "MatchValue", "MatchSingleton",
+    "MatchSequence", "MatchMapping", "MatchClass", "MatchAs", "MatchOr"
+]
+
+def code_to_ast_node_ids(code_text: str, vocab: dict[str, int], max_ast_len: int) -> tuple[list[int], int]:
+    try:
+        tree = ast.parse(code_text)
+    except Exception:
+        return [vocab["UNK"]] + [vocab["PAD"]] * (max_ast_len - 1), 1
+    
+    node_ids = []
+    def traverse(node):
+        if len(node_ids) >= max_ast_len:
+            return
+        node_name = node.__class__.__name__
+        if node_name not in vocab:
+            vocab[node_name] = len(vocab)
+        node_ids.append(vocab[node_name])
+        for child in ast.iter_child_nodes(node):
+            traverse(child)
+            if len(node_ids) >= max_ast_len:
+                return
+
+    traverse(tree)
+    actual_len = len(node_ids)
+    if len(node_ids) < max_ast_len:
+        node_ids.extend([vocab["PAD"]] * (max_ast_len - len(node_ids)))
+    return node_ids, actual_len
+
 def ensure_tokenized_cache(
     *,
     csv_path: Path,
@@ -312,6 +367,7 @@ def ensure_tokenized_cache(
     cache_dir: Path,
     max_prompt_len: int,
     max_code_len: int,
+    max_ast_len: int = 256,
     dataset_fraction: float = 1.0,
     chunk_size: int = 8192,
     encode_batch_size: int = 512,
@@ -349,6 +405,7 @@ def ensure_tokenized_cache(
         "code_eos_token_id": tokenizer.code_eos_token_id,
         "max_prompt_len": max_prompt_len,
         "max_code_len": max_code_len,
+        "max_ast_len": max_ast_len,
         "dataset_fraction": dataset_fraction,
         "require_valid": bool(require_valid),
         "compile_filter": compile_filter,
@@ -364,6 +421,9 @@ def ensure_tokenized_cache(
         cache_dir / "prompt_lens.npy",
         cache_dir / "code_lens.npy",
         cache_dir / "group_ids.npy",
+        cache_dir / "ast_node_ids.npy",
+        cache_dir / "ast_lengths.npy",
+        cache_dir / "ast_vocab.json",
         cache_dir / "reference_code_ids.npy",
         cache_dir / "reference_code_lens.npy",
         cache_dir / "group_ref_offsets.npy",
@@ -447,6 +507,18 @@ def ensure_tokenized_cache(
         dtype=np.int32,
         shape=(target_rows,),
     )
+    ast_node_ids = np.lib.format.open_memmap(
+        tmp_dir / "ast_node_ids.npy",
+        mode="w+",
+        dtype=np.int32,
+        shape=(target_rows, max_ast_len),
+    )
+    ast_lengths = np.lib.format.open_memmap(
+        tmp_dir / "ast_lengths.npy",
+        mode="w+",
+        dtype=np.uint16,
+        shape=(target_rows,),
+    )
     reference_code_ids = np.lib.format.open_memmap(
         tmp_dir / "reference_code_ids.npy",
         mode="w+",
@@ -468,8 +540,12 @@ def ensure_tokenized_cache(
     prompt_lens[:] = 0
     code_lens[:] = 0
     group_ids[:] = -1
+    ast_node_ids[:] = 0  # 0 is PAD ID
+    ast_lengths[:] = 0
     reference_code_ids[:] = tokenizer.pad_token_id
     reference_code_lens[:] = 0
+
+    ast_vocab = {name: idx for idx, name in enumerate(AST_NODE_TYPES)}
 
     ref_write_positions = group_ref_offsets[:-1].copy()
     ref_seen_code_keys: list[set[bytes]] = [set() for _ in group_keys]
@@ -583,6 +659,13 @@ def ensure_tokenized_cache(
                         code_ids[written, :code_len] = code
                     instruction_key = _instruction_key(instructions[start + local_idx])
                     group_ids[written] = group_key_to_id[instruction_key]
+
+                    # Parse AST sequence
+                    raw_code = codes[start + local_idx]
+                    ast_ids, ast_len = code_to_ast_node_ids(raw_code, ast_vocab, max_ast_len)
+                    ast_node_ids[written, :] = ast_ids
+                    ast_lengths[written] = ast_len
+
                     written += 1
 
             if written and (written % max(chunk_size * 10, 1) == 0 or written >= target_rows):
@@ -598,7 +681,9 @@ def ensure_tokenized_cache(
     prompt_lens.flush()
     code_lens.flush()
     group_ids.flush()
-    del prompt_ids, code_ids, prompt_lens, code_lens, group_ids
+    ast_node_ids.flush()
+    ast_lengths.flush()
+    del prompt_ids, code_ids, prompt_lens, code_lens, group_ids, ast_node_ids, ast_lengths
     del reference_code_ids, reference_code_lens
     gc.collect()
 
@@ -611,6 +696,7 @@ def ensure_tokenized_cache(
     _write_json(tmp_dir / "metadata.json", metadata_to_write)
     _write_json(tmp_dir / "samples.json", samples)
     _write_json(tmp_dir / "group_keys.json", [{"group_id": idx, "instruction_key": key} for idx, key in enumerate(group_keys)])
+    _write_json(tmp_dir / "ast_vocab.json", ast_vocab)
 
     if written != target_rows:
         shutil.rmtree(tmp_dir)
@@ -636,6 +722,11 @@ class TokenizedMemmapDataset(Dataset):
         self.prompt_lens = np.load(self.cache_dir / "prompt_lens.npy", mmap_mode="r")
         self.code_lens = np.load(self.cache_dir / "code_lens.npy", mmap_mode="r")
         self.group_ids = np.load(self.cache_dir / "group_ids.npy", mmap_mode="r")
+        self.ast_node_ids = None
+        self.ast_lengths = None
+        if (self.cache_dir / "ast_node_ids.npy").is_file():
+            self.ast_node_ids = np.load(self.cache_dir / "ast_node_ids.npy", mmap_mode="r")
+            self.ast_lengths = np.load(self.cache_dir / "ast_lengths.npy", mmap_mode="r")
 
     def _validate_cache(self) -> None:
         if self.prompt_ids.shape[0] != self.code_ids.shape[0]:
@@ -646,6 +737,11 @@ class TokenizedMemmapDataset(Dataset):
             raise ValueError("code_lens and code_ids cache files have different row counts.")
         if self.group_ids.shape[0] != self.code_ids.shape[0]:
             raise ValueError("group_ids and code_ids cache files have different row counts.")
+        if self.ast_node_ids is not None:
+            if self.ast_node_ids.shape[0] != self.code_ids.shape[0]:
+                raise ValueError("ast_node_ids and code_ids cache files have different row counts.")
+            if self.ast_lengths.shape[0] != self.code_ids.shape[0]:
+                raise ValueError("ast_lengths and code_ids cache files have different row counts.")
 
     def __getstate__(self) -> dict[str, Any]:
         state = self.__dict__.copy()
@@ -654,6 +750,8 @@ class TokenizedMemmapDataset(Dataset):
         state["prompt_lens"] = None
         state["code_lens"] = None
         state["group_ids"] = None
+        state["ast_node_ids"] = None
+        state["ast_lengths"] = None
         return state
 
     def __setstate__(self, state: dict[str, Any]) -> None:
@@ -668,13 +766,17 @@ class TokenizedMemmapDataset(Dataset):
 
     def __getitem__(self, idx: int) -> dict[str, np.ndarray]:
         row_idx = int(self.indices[idx]) if self.indices is not None else int(idx)
-        return {
+        res = {
             "prompt_ids": self.prompt_ids[row_idx],
             "code_ids": self.code_ids[row_idx],
             "code_len": np.array(self.code_lens[row_idx], dtype=np.int64),
             "group_id": np.array(self.group_ids[row_idx], dtype=np.int64),
             "sample_id": np.array(row_idx, dtype=np.int64),
         }
+        if self.ast_node_ids is not None:
+            res["ast_node_ids"] = self.ast_node_ids[row_idx]
+            res["ast_length"] = np.array(self.ast_lengths[row_idx], dtype=np.int64)
+        return res
 
 
 def make_train_val_indices(
@@ -683,20 +785,60 @@ def make_train_val_indices(
     val_split: float,
     max_val_samples: int,
     seed: int = 42,
+    group_ids: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     if not (0.0 < val_split < 1.0):
         raise ValueError("val_split must be in (0.0, 1.0).")
 
-    val_size = max(1, int(total_rows * val_split))
-    if max_val_samples > 0:
-        val_size = min(val_size, max_val_samples)
+    if group_ids is None or len(group_ids) == 0:
+        val_size = max(1, int(total_rows * val_split))
+        if max_val_samples > 0:
+            val_size = min(val_size, max_val_samples)
 
+        rng = np.random.default_rng(seed)
+        val_indices = np.sort(rng.choice(total_rows, size=val_size, replace=False))
+        train_mask = np.ones(total_rows, dtype=bool)
+        train_mask[val_indices] = False
+        train_indices = np.flatnonzero(train_mask)
+        return train_indices.astype(np.int64), val_indices.astype(np.int64)
+
+    # Group-based split to avoid train-val leakage (Cause 7)
+    unique_groups = np.unique(group_ids)
     rng = np.random.default_rng(seed)
-    val_indices = np.sort(rng.choice(total_rows, size=val_size, replace=False))
-    train_mask = np.ones(total_rows, dtype=bool)
-    train_mask[val_indices] = False
-    train_indices = np.flatnonzero(train_mask)
-    return train_indices.astype(np.int64), val_indices.astype(np.int64)
+    shuffled_groups = rng.permutation(unique_groups)
+
+    # Count samples in each group for accurate target split estimation
+    group_counts = {}
+    for g in group_ids:
+        g_val = int(g)
+        group_counts[g_val] = group_counts.get(g_val, 0) + 1
+
+    val_indices_list = []
+    train_indices_list = []
+    current_val_size = 0
+    target_val_size = int(total_rows * val_split)
+    if max_val_samples > 0:
+        target_val_size = min(target_val_size, max_val_samples)
+
+    val_groups = set()
+    for g in shuffled_groups:
+        g_val = int(g)
+        count = group_counts[g_val]
+        if current_val_size + count <= target_val_size or not val_groups:
+            val_groups.add(g_val)
+            current_val_size += count
+
+    for idx, g in enumerate(group_ids):
+        g_val = int(g)
+        if g_val in val_groups:
+            val_indices_list.append(idx)
+        else:
+            train_indices_list.append(idx)
+
+    val_indices = np.array(val_indices_list, dtype=np.int64)
+    train_indices = np.array(train_indices_list, dtype=np.int64)
+
+    return train_indices, val_indices
 
 
 def collate_tokenized_batch(batch: list[dict[str, np.ndarray]]) -> dict[str, torch.Tensor]:
@@ -705,13 +847,26 @@ def collate_tokenized_batch(batch: list[dict[str, np.ndarray]]) -> dict[str, tor
     sample_ids = np.stack([item["sample_id"] for item in batch], axis=0).astype(np.int64, copy=False)
     code_lens = np.stack([item["code_len"] for item in batch], axis=0).astype(np.int64, copy=False)
     group_ids = np.stack([item["group_id"] for item in batch], axis=0).astype(np.int64, copy=False)
-    return {
+    res = {
         "prompt_ids": torch.from_numpy(prompt_ids),
         "code_ids": torch.from_numpy(code_ids),
         "code_len": torch.from_numpy(code_lens),
         "group_id": torch.from_numpy(group_ids),
         "sample_id": torch.from_numpy(sample_ids),
     }
+    if "ast_node_ids" in batch[0]:
+        ast_node_ids = np.stack([item["ast_node_ids"] for item in batch], axis=0).astype(np.int64, copy=False)
+        ast_lengths = np.stack([item["ast_length"] for item in batch], axis=0).astype(np.int64, copy=False)
+        res["ast_node_ids"] = torch.from_numpy(ast_node_ids)
+        res["ast_length"] = torch.from_numpy(ast_lengths)
+        
+        # Build ast_mask: [batch_size, max_ast_len]
+        max_ast_len = ast_node_ids.shape[1]
+        arange = torch.arange(max_ast_len).unsqueeze(0)  # [1, max_ast_len]
+        ast_mask = arange < res["ast_length"].unsqueeze(1)  # [batch_size, max_ast_len]
+        res["ast_mask"] = ast_mask
+        
+    return res
 
 
 def load_cached_samples(cache_dir: Path) -> list[dict[str, str]]:
