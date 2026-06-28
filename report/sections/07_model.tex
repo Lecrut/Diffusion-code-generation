@@ -1,0 +1,19 @@
+
+\section{Architektura modelu}
+\label{sec:architektura_modelu}
+
+Zastosowany model jest warunkowym modelem dyfuzyjnym przeznaczonym do generowania kodu źródłowego na podstawie opisu zadania. Jego wejście składa się z dwóch części: instrukcji tekstowej określającej wymagane działanie programu oraz częściowo zamaskowanej sekwencji kodu. Model otrzymuje również informację o aktualnym poziomie zaszumienia, czyli o tym, jaka część kodu została ukryta.
+
+Tokeny instrukcji i kodu są najpierw przekształcane na reprezentacje wektorowe. Do każdej reprezentacji dodawana jest informacja o pozycji tokenu w sekwencji, dzięki czemu model może rozróżniać kolejność elementów programu. Reprezentacje instrukcji i kodu są następnie łączone w jedną sekwencję. Tokeny dopełniające, stosowane jedynie w celu wyrównania długości przykładów, są zerowane, aby nie wpływały na dalsze obliczenia.
+
+%\input{figures/architecture}
+
+Główną część modelu stanowi stos bloków splotowych. Sploty jednowymiarowe analizują lokalne zależności między sąsiednimi tokenami, takie jak struktura wyrażeń, argumenty funkcji czy kolejne elementy instrukcji. W kolejnych blokach zwiększane są rozmiar jądra i dylacja, co pozwala obejmować coraz większe fragmenty sekwencji bez konieczności znacznego zwiększania liczby warstw. Dzięki temu model może jednocześnie uwzględniać lokalną składnię oraz zależności występujące między bardziej odległymi częściami programu.
+
+Każdy blok wykorzystuje połączenia rezydualne, normalizację, warstwę nieliniową oraz dropout. Połączenia rezydualne ułatwiają przepływ informacji i stabilizują uczenie głębszej sieci. Normalizacja jest dodatkowo modyfikowana na podstawie poziomu zaszumienia, dzięki czemu sposób przetwarzania sekwencji zależy od liczby ukrytych tokenów. Model może więc inaczej zachowywać się podczas uzupełniania niewielkiego fragmentu kodu, a inaczej podczas odtwarzania prawie całego programu.
+
+Reprezentacje otrzymane w kolejnych blokach są łączone, a następnie wybierana jest część odpowiadająca tokenom kodu. Końcowa warstwa przekształca reprezentację każdej pozycji na rozkład prawdopodobieństwa obejmujący całe słownictwo tokenizatora. Na tej podstawie model przewiduje, jakie tokeny powinny znaleźć się w zamaskowanych miejscach.
+
+Rozmiar reprezentacji, liczba bloków splotowych, poziom dylacji i wartość dropout są parametrami konfiguracyjnymi. Mogą być zatem dostosowywane do wielkości zbioru danych, dostępnych zasobów obliczeniowych oraz wymaganej pojemności modelu.
+
+

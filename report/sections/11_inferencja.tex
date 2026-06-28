@@ -1,0 +1,13 @@
+
+\section{Inferencja i generowanie}
+\label{sec:inferencja}
+
+Podczas inferencji model generuje program na podstawie samego opisu zadania. Proces rozpoczyna się od sekwencji, w której wszystkie pozycje przeznaczone na kod są wypełnione tokenem maskującym. Model wielokrotnie analizuje tę sekwencję i stopniowo zastępuje maski przewidywanymi tokenami.
+
+W każdym kroku model wyznacza rozkład prawdopodobieństwa dla wszystkich nadal nieustalonych pozycji. Na jego podstawie wybierane są najbardziej prawdopodobne tokeny oraz określana jest pewność poszczególnych przewidywań. Liczba pozostających masek jest stopniowo zmniejszana, aż do uzyskania kompletnej sekwencji kodu.
+
+W strategii podstawowej tokeny o najwyższej pewności są utrwalane wcześniej, natomiast pozycje o niższej pewności pozostają zamaskowane i są ponownie przewidywane w kolejnych krokach. Umożliwia to stopniowe przechodzenie od ogólnego zarysu programu do bardziej szczegółowych decyzji dotyczących jego składni.
+
+Iteracyjny charakter procesu odróżnia zastosowane podejście od modeli autoregresyjnych, które generują kod kolejno od lewej do prawej. Model dyfuzyjny może modyfikować wiele pozycji jednocześnie oraz ponownie oceniać wcześniejsze decyzje na podstawie aktualnego stanu całej sekwencji.
+
+

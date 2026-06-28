@@ -1,0 +1,11 @@
+
+\section{Funkcja straty}
+\label{sec:strata}
+
+Podstawowym celem uczenia jest poprawne odtworzenie tokenów usuniętych podczas maskowania. Model przewiduje rozkład prawdopodobieństwa dla każdej zamaskowanej pozycji, a następnie porównuje go z prawidłowym tokenem pochodzącym z oryginalnego programu. Podstawową funkcją straty jest entropia krzyżowa, obliczana wyłącznie dla pozycji, które zostały ukryte. Tokeny pozostawione bez zmian nie uczestniczą bezpośrednio w obliczaniu tej części straty.
+
+Każdy błędnie przewidziany token wpływa na wynik zgodnie z prawdopodobieństwem przypisanym poprawnej odpowiedzi. Projekt umożliwia również uczenie z wieloma poprawnymi rozwiązaniami tego samego zadania. Jeżeli dla jednej instrukcji dostępnych jest kilka równoważnych programów, przewidywanie modelu może być porównywane z referencją najlepiej zgodną z widoczną częścią kodu. Dzięki temu model nie jest niepotrzebnie karany za wygenerowanie poprawnego rozwiązania, które różni się od jednego arbitralnie wybranego programu referencyjnego.
+
+Strata strukturalna wykorzystuje abstrakcyjne drzewo składniowe programu. Reprezentacja generowanego kodu jest wówczas porównywana z reprezentacją sekwencji elementów drzewa składniowego. Do ich dopasowania wykorzystywany jest algorytm Soft-DTW, który pozwala porównywać sekwencje o różnych długościach i uwzględnia możliwe przesunięcia pomiędzy elementami.
+
+Porównywana jest też strata dla właściwego opisu zadania oraz dla opisu pochodzącego z innego przykładu. Model jest karany, jeżeli nie wykorzystuje poprawnej instrukcji wyraźnie lepiej niż instrukcji niedopasowanej. Ma to ograniczyć generowanie kodu opartego wyłącznie na częstości wzorców występujących w zbiorze danych.

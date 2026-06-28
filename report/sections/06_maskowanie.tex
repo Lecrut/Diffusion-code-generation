@@ -1,0 +1,16 @@
+
+\section{Metoda maskowania}
+\label{sec:maskowanie}
+
+Podczas uczenia część tokenów w sekwencji kodu jest zastępowana specjalnym tokenem maskującym. Zadaniem modelu jest następnie odtworzenie ukrytych elementów na podstawie widocznej części kodu, opisu zadania oraz informacji o poziomie zaszumienia.
+
+Poziom maskowania nie jest stały. Dla każdej sekwencji losowany jest udział tokenów, które mają zostać ukryte. Stosowana jest mieszanina kilku zakresów maskowania: niskiego, średniego, wysokiego oraz pełnego. Dzięki temu model uczy się zarówno uzupełniania pojedynczych brakujących fragmentów, jak i generowania większych części programu przy bardzo ograniczonym dostępie do oryginalnego kodu. Próbki o niskim poziomie maskowania wspierają naukę lokalnej składni, natomiast próbki o wysokim poziomie maskowania zmuszają model do silniejszego wykorzystywania treści polecenia.
+
+Maskowaniu podlegają wyłącznie właściwe tokeny kodu. Tokeny techniczne, takie jak znaczniki początku i końca sekwencji oraz tokeny dopełniające, są chronione i pozostają niezmienione.
+
+Ukrywane pozycje mogą być wybierane na kilka sposobów. W maskowaniu niezależnym tokeny są wybierane losowo w całej sekwencji. Maskowanie blokowe usuwa spójne fragmenty kodu, co przypomina sytuację, w której brakuje całego wyrażenia lub instrukcji. W innych wariantach widoczny pozostaje początek programu, a maskowana jest jego dalsza część, albo usuwany jest końcowy fragment sekwencji. Możliwe jest również pełne zamaskowanie wszystkich dostępnych tokenów kodu. Zastosowanie różnych wariantów ma przygotować model do rozwiązywania zróżnicowanych zadań rekonstrukcji i generowania.
+
+Przy bardzo wysokim poziomie maskowania ograniczane są warianty pozostawiające długi, uporządkowany fragment kodu. Zapobiega to sytuacji, w której model opiera swoje przewidywania głównie na widocznym początku lub końcu programu zamiast na treści polecenia.
+
+Podczas walidacji wykorzystywane są również stałe, deterministycznie generowane maski. Oznacza to, że te same przykłady są oceniane przy użyciu tych samych ukrytych pozycji w kolejnych epokach. Pozwala to rzetelnie porównywać zmiany jakości modelu podczas treningu i ogranicza wpływ losowości na uzyskiwane wyniki.
+

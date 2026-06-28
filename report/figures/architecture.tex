@@ -1,0 +1,26 @@
+\begin{figure}[htbp]
+\centering
+\setlength{\fboxsep}{8pt}
+\fbox{\begin{minipage}{0.88\linewidth}
+\centering
+\texttt{.env} i zmienne środowiskowe\\
+$\downarrow$\\
+\texttt{src/train.py::main} $\rightarrow$ \texttt{Config} $\rightarrow$ \texttt{DiffCoderTrainer}\\
+$\downarrow$\\
+\texttt{data/dataset.csv}\\
+$\downarrow$\\
+\texttt{ensure\_tokenized\_cache} i \texttt{TokenizedMemmapDataset}\\
+$\downarrow$\\
+\texttt{MixtureMaskSampler} $\rightarrow$ \texttt{CodeCorruptor}\\
+$\downarrow$\\
+\texttt{LocalConvDiffCoder.forward}\\
+$\downarrow$\\
+\texttt{cross entropy} / opcjonalnie \texttt{aligned\_multi\_reference\_cross\_entropy} / opcjonalnie \texttt{CalculateLoss}\\
+$\downarrow$\\
+\texttt{AdamW} + \texttt{LambdaLR} + \texttt{Trainer}\\
+$\downarrow$\\
+walidacja, checkpointy, generowanie diagnostyczne
+\end{minipage}}
+\caption{Aktywna ścieżka treningu zrekonstruowana z \texttt{src/train.py}, \texttt{src/tokenized\_dataset.py}, \texttt{src/diffusion/masking.py} i \texttt{src/diffusion/model.py}.}
+\label{fig:architektura}
+\end{figure}

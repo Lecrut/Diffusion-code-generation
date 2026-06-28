@@ -1,0 +1,23 @@
+\section{Zbiór danych i przygotowanie danych}
+\label{sec:dane}
+
+Na potrzeby treningu modelu utworzono własny, syntetyczny zbiór danych zawierający polecenia programistyczne oraz odpowiadające im rozwiązania w języku Python. Dane zostały wygenerowane przy użyciu lokalnie uruchamianego dużego modelu językowego za pośrednictwem środowiska Ollama.
+
+Proces tworzenia zbioru przebiegał w trzech etapach. W pierwszej kolejności wygenerowano 500 tematów związanych z programowaniem. Następnie dla każdego tematu przygotowano po 15 różnych poleceń programistycznych. Ostatnim etapem było wygenerowanie wielu rozwiązań dla każdego polecenia.
+
+Każdy rekord zbioru zawiera temat zadania, treść instrukcji oraz wygenerowany kod. Dodatkowo przechowywane są identyfikatory tematu i instrukcji, numer wariantu rozwiązania oraz informacje związane z kontrolą poprawności kodu.
+
+\input{tables/dataset_summary}
+
+
+Przed przekazaniem danych do modelu tekst instrukcji oraz kod źródłowy zostały zamienione na sekwencje tokenów. Przy podziale zbioru na część treningową i walidacyjną uwzględniono powiązania między wariantami. Wszystkie rozwiązania wygenerowane dla tej samej instrukcji znajdowały się w tej samej części zbioru. Zapobiega to sytuacji, w której model jest trenowany na jednym wariancie rozwiązania, a następnie oceniany na bardzo podobnym wariancie tego samego zadania.
+
+
+%
+%Plik \texttt{data/dataset.csv} zawiera kolumny \texttt{topic\_id}, \texttt{instruction\_id}, \texttt{topic}, \texttt{instruction}, \texttt{code}, \texttt{valid}, \texttt{variant\_idx}, \texttt{id}, \texttt{code\_file}, \texttt{compile\_valid}, \texttt{validation\_error} oraz \texttt{runtime\_valid}. Do budowy cache aktywnie używane są co najmniej \texttt{instruction} i \texttt{code}, a filtry mogą wykorzystywać \texttt{valid} i \texttt{compile\_valid}. Liczebności pokazane w tabelach~\ref{tab:dane-podsumowanie} i~\ref{tab:dane-jakosc} pochodzą z materiałów dowodowych i bezpośredniego zliczenia plików CSV.
+%
+%Funkcja \texttt{ensure\_tokenized\_cache()} w \texttt{src/tokenized\_dataset.py} wykonuje filtrowanie, tokenizację oraz zapis macierzy \texttt{.npy}. Filtr \texttt{DATASET\_REQUIRE\_VALID} ogranicza dane do wierszy z \texttt{valid=True}, a \texttt{DATASET\_COMPILE\_FILTER} może wymagać \texttt{compile\_valid=True} albo tylko wykluczać jawne \texttt{False}. W aktualnych metadanych cache występuje tryb \texttt{exclude\_false}.
+%
+%\input{tables/cache_summary}
+%
+%Podział na trening i walidację realizuje \texttt{make\_train\_val\_indices()}. Funkcja może używać \texttt{group\_ids}, dzięki czemu warianty tej samej znormalizowanej instrukcji nie powinny trafiać jednocześnie do części treningowej i walidacyjnej. Nie znaleziono zapisanego \texttt{TRAIN\_RESULT\_JSON}, dlatego faktycznych liczebności podziału dla konkretnego przebiegu nie można potwierdzić.

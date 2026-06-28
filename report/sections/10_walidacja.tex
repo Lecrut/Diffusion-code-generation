@@ -1,0 +1,14 @@
+
+\section{Walidacja i metryki}
+\label{sec:walidacja}
+
+Pierwsza część walidacji odwzorowuje warunki treningowe. Poziom i sposób maskowania są losowane z tego samego rozkładu co podczas uczenia. Uzyskana strata pokazuje więc, jak model radzi sobie przeciętnie z zadaniami podobnymi do tych, które obserwuje w trakcie treningu.
+
+Druga część wykorzystuje ustalone poziomy maskowania: \num{0.25}, \num{0.50}, \num{0.75}, \num{0.95} oraz \num{1.00}. Dla każdego poziomu generowane są deterministyczne maski, dzięki czemu te same tokeny pozostają ukryte w kolejnych epokach. Umożliwia to bezpośrednie porównywanie jakości modelu w czasie, bez zakłóceń wynikających z losowego wyboru pozycji.
+
+Kolejna diagnostyka sprawdza, czy model rzeczywiście korzysta z opisu zadania. Dla tego samego zamaskowanego kodu porównywane są predykcje otrzymane z poprawną instrukcją oraz z instrukcją przypisaną do innego przykładu. Jeżeli właściwa instrukcja prowadzi do niższej straty, oznacza to, że model wykorzystuje jej treść podczas przewidywania kodu. Niewielka różnica może natomiast sugerować, że model zbyt mocno opiera się na widocznych fragmentach programu lub na ogólnych wzorcach występujących w zbiorze danych.
+
+Oprócz straty oceniane są właściwości wygenerowanych programów. Poprawność składniowa określa, jaki odsetek wyników może zostać przetworzony do postaci abstrakcyjnego drzewa składniowego języka Python. Osobna miara sprawdza, czy kod może zostać skompilowany bez wystąpienia błędu składniowego.
+
+Do porównania wygenerowanego programu z rozwiązaniem referencyjnym wykorzystywana jest również odległość Levenshteina. Określa ona minimalną liczbę operacji wstawienia, usunięcia lub zamiany znaku potrzebnych do przekształcenia jednego tekstu w drugi. Wersja znormalizowana dzieli uzyskaną wartość przez długość dłuższego tekstu, dzięki czemu możliwe jest porównywanie programów o różnej długości. Niższa wartość oznacza większe podobieństwo do rozwiązania referencyjnego.
+

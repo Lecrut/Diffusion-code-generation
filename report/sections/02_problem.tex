@@ -1,0 +1,21 @@
+\section{Sformułowanie problemu}
+\label{sec:problem}
+
+Dla instrukcji naturalnojęzykowej $p$, która w naszym projekcie wygenerowana jest przez LLM - model Ollamy należy wygenerować sekwencję tokenów kodu $x_0$, która odpowiada zadaniu opisanemu przez instrukcję.
+W czasie treningu znany kod referencyjny jest częściowo zastępowany tokenami \texttt{[MASK]}, a model otrzymuje zadanie przewidzenia oryginalnych tokenów w pozycjach objętych maską.
+
+Najpierw tworzona jest uszkodzona sekwencję $x_t$ oraz maska $m$.
+Maska (m) określa, które tokeny zostały ukryte: wartość (m\_i=1) oznacza pozycję zamaskowaną, natomiast (m\_i=0) — pozycję pozostawioną bez zmian.
+
+Na podstawie uszkodzonej sekwencji model przewiduje rozkład prawdopodobieństwa tokenów dla każdej pozycji.
+Funkcja straty jest jednak obliczana wyłącznie dla pozycji zamaskowanych, ponieważ to właśnie ich odtworzenia model ma się nauczyć:
+
+
+\begin{equation}
+\label{eq:ce}
+\mathcal{L}_{CE}
+= -\frac{1}{|M|}\sum_{i\in M}\log p_\theta(x_{0,i}\mid x_t,p,t),
+\end{equation}
+
+gdzie (M) jest zbiorem zamaskowanych pozycji, a (|M|) oznacza liczbę tych pozycji.
+Wyrażenie z sumą oznacza prawdopodobieństwo, jakie model przypisał prawidłowemu tokenowi (x\_{0,i}) na podstawie uszkodzonej sekwencji (x\_t), kontekstu (p) oraz poziomu zaszumienia (t).
