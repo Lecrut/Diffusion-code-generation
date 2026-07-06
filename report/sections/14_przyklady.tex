@@ -1,0 +1,31 @@
+\section{Analiza jakościowa generowanych przykładów}
+\label{sec:przyklady}
+
+Aby lepiej zrozumieć, jak nasz model radzi sobie z pisaniem kodu, przeanalizowaliśmy kilka konkretnych przykładów, które wygenerował. Podzieliliśmy je na udane (czyli takie, które działają i nie mają błędów) oraz nieudane (które zawierają błędy składniowe lub logiczne). Pełne kody tych przykładów znajdują się w dodatkach na końcu raportu.
+
+\subsection{Przykłady poprawnych generacji (Dodatek A)}
+
+Model pokazał, że potrafi napisać działający kod na podstawie prostego polecenia w języku angielskim. Oto dwa ciekawe przykłady:
+
+\begin{enumerate}
+  \item \textbf{Porównywanie dat} (Próbka \texttt{text-sample-13836 (1).txt}): 
+  Ten kod (znajdziesz go na Listingu~\ref{lst:text-sample-13836-1} w Dodatku~\ref{app:kody-kompilowalne}) poprawnie porównuje dwie daty wpisane jako tekst. Model sam zaimportował moduł \texttt{datetime}, napisał funkcję \texttt{compare\_dates} i dodał blok \texttt{try-except}, który chroni program przed crashowaniem, jeśli ktoś poda zły format daty. Co ciekawe, model dopisał też na końcu testy (w bloku \texttt{if \_\_name\_\_ == '\_\_main\_\_':}), sprawdzając poprawność kodu dla różnych danych. Pokazuje to, że model nauczył się nie tylko samej funkcji, ale też sposobu jej testowania.
+  
+  \item \textbf{Szukanie środkowego elementu} (Próbka \texttt{text-sample-14340 (2).txt}):
+  Kod na Listingu~\ref{lst:text-sample-14340-2} w Dodatku~\ref{app:kody-kompilowalne} realizuje zadanie szukania środka listy. Model dobrze zrozumiał warunek: jeśli lista ma parzystą długość, zwraca element o jeden wcześniej niż rzeczywisty środek, a w przeciwnym razie zwraca dokładny środek. Użył do tego dzielenia całkowitego (\texttt{n // 2}), co chroni przed błędami z indeksami ułamkowymi. Tutaj również model dodał testowe listy na końcu, by sprawdzić działanie kodu.
+\end{enumerate}
+
+\subsection{Przykłady generacji z błędami (Dodatek B)}
+
+Analiza błędów pozwala nam zobaczyć, z czym model radzi sobie najgorzej. Szczegółowe zestawienie problemów opisaliśmy w Dodatku~\ref{app:bledy-generacji}. Oto najczęstsze z nich:
+
+\begin{enumerate}
+  \item \textbf{Niezbalansowane nawiasy} (Próbka \texttt{text-sample-504 (1).txt}):
+  Na Listingu~\ref{lst:text-sample-504-1} w Dodatku~\ref{app:bledy-generacji} widać kod, w którym model zapisał samotny nawias zamykający w nagłówku funkcji. Model czasami gubi się w nawiasach przy dłuższych linijkach, bo nie zna reguł gramatycznych Pythona, a jedynie przewiduje kolejne tokeny na podstawie statystyki.
+  
+  \item \textbf{Niezgodność nazw} (Próbka \texttt{text-sample-16966 (3).txt}):
+  W kodzie z Listingu~\ref{lst:text-sample-16966-3} w Dodatku~\ref{app:bledy-generacji} pojawia się błąd \texttt{NameError}. Funkcja przyjmuje parametry o nazwach \texttt{date\_str} i \texttt{date2\_str2}, ale w środku funkcji model używa zmiennych \texttt{date\_str1} oraz \texttt{date\_str2}. Pokazuje to, że model potrafi stworzyć poprawną strukturę (np. pętle czy warunki), ale nie pamięta dokładnie nazw zmiennych, które sam zdefiniował chwilę wcześniej.
+  
+  \item \textbf{Przypisanie do liczby} (Próbka \texttt{text-sample-11008 (2).txt}):
+  Na Listingu~\ref{lst:text-sample-11008-2} w Dodatku~\ref{app:bledy-generacji} model napisał instrukcję typu \texttt{26 = ...}. To poważny błąd składniowy – nie można przypisać wartości do stałej liczbowej. Świadczy to o tym, że model nie rozumie logicznej roli znaku równości, a jedynie układa znaki tak, jak widział je w zbiorze treningowym.
+\end{enumerate}

@@ -1,4 +1,8 @@
-\section{Podsumowanie}
+\section{Podsumowanie i dalsze prace}
 \label{sec:podsumowanie}
 
-TODO
+W tym projekcie stworzyliśmy i przetestowaliśmy system, który generuje kod w Pythonie za pomocą dyfuzji i sieci konwolucyjnej (splotowej). Cały proces polega na przygotowaniu danych (poleceń i odpowiadających im kodów), zamianie tekstu na tokeny, losowym maskowaniu części kodu i wreszcie trenowaniu modelu \texttt{LocalConvDiffCoder}, aby odtwarzał te zasłonięte fragmenty na podstawie instrukcji.
+
+Eksperymenty pokazały, jak model zachowuje się podczas nauki. Strata na zbiorze walidacyjnym spadała stabilnie dla różnych poziomów maskowania, co oznacza, że model uczył się poprawnie i nie zaczął zapamiętywać danych na pamięć. Testy z przetasowaniem instrukcji (Prompt Shuffling) udowodniły, że model faktycznie rozumie treść poleceń, a nie tylko generuje losowy kod – gdy zmieniliśmy kolejność słów w poleceniu, strata gwałtownie rosła. Dodatkowo model z każdym krokiem treningu stawał się coraz bardziej pewny swoich decyzji, co widać po spadającej liczbie poprawianych (remaskowanych) tokenów w czasie generowania.
+
+Mimo że udało się uzyskać sporo poprawnie kompilujących się programów, dokładna analiza ujawniła też słabe punkty modelu. Pojawiały się błędy takie jak niezbalansowane nawiasy, używanie niezdefiniowanych zmiennych czy próby przypisywania wartości do liczb. Wynika to z faktu, że nasz model patrzy na kod lokalnie i nie zawsze rozumie całą strukturę programu w Pythonie.

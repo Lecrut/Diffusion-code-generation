@@ -1,0 +1,79 @@
+
+\section{Najczęstsze błędy w nieudanych generacjach}
+\label{app:bledy-generacji}
+
+Do klasyfikacji błędów wykorzystano plik \texttt{text-samples/compilation\_summary.txt}, który wygenerowano za pomocą skryptu \texttt{text-samples/check\_compile.py}. W analizie uwzględniono tylko pozycje oznaczone jako \texttt{FAILED}. Próbki pominięte przez skrypt, np. zawierające wyłącznie zera, nie zostały uznane za błędy kompilacji.
+
+W tabeli~\ref{tab:generation-bugs} przedstawiono liczbę błędów należących do poszczególnych kategorii oraz opis ich typowych objawów. Komunikaty parsera są zwykle krótkie i nie zawsze dokładnie wskazują przyczynę problemu. Z tego powodu w tabeli~\ref{tab:generation-examples} zamieszczono również podsumowanie przykładowych próbek.
+
+\input{tables/generation_compilation_bugs}
+
+\input{tables/generation_compilation_examples}
+
+Przykłady pokazują, że błędy nie ograniczają się do prostych literówek. W wielu przypadkach model nie zachowuje poprawnej struktury programu. Może na przykład wygenerować nawias zamykający bez nawiasu otwierającego, połączyć fragment definicji funkcji z jej wywołaniem, nie zamknąć napisu albo utworzyć wcięty blok bez poprawnego nagłówka.
+
+Osobną grupę stanowią programy, które są poprawne składniowo, ale zawierają błędy w nazwach zmiennych. Przykład z pliku \texttt{text-sample-16966 (3).txt} przedstawia funkcję, której ciało używa nazw innych niż nazwy podane w jej parametrach.
+
+Poniżej przedstawiono pełne kody wygenerowane przez model (sekcje \texttt{GENERATED:}) dla każdej z reprezentatywnych próbek błędów wymienionych w tabeli~\ref{tab:generation-examples} wraz z instrukcją (promptem), który model otrzymał jako warunek generacji.
+
+
+\subsection{Próbka text-sample-504 (1).txt -- Niezbalansowane nawiasy lub klamry}
+\label{sec:lst:text-sample-504-1}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized function named \texttt{compare\_dates} that accepts two date strings (in \texttt{YYYY-MM-DD} format) and returns the earlier date as a datetime object. Ensure the function is efficient and handles potential \texttt{ValueError} exceptions gracefully.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-504 (1).txt (Niezbalansowane nawiasy lub klamry); liczba linii: \num{33}},label={lst:text-sample-504-1}]{generated/failed_samples/text-sample-504_1.py}
+
+\subsection{Próbka text-sample-806 (2).txt -- Ogólne błędy składni}
+\label{sec:lst:text-sample-806-2}
+\textbf{Instrukcja (Prompt):} \textit{Implement a function \texttt{find\_middle\_element} that takes a list of floats and returns the element exactly in the center. If the list has an even number of elements, return the element at the lower middle index.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-806 (2).txt (Ogólne błędy składni); liczba linii: \num{2}},label={lst:text-sample-806-2}]{generated/failed_samples/text-sample-806_2.py}
+
+\subsection{Próbka text-sample-1816 (1).txt -- Niedomknięte literały tekstowe}
+\label{sec:lst:text-sample-1816-1}
+\textbf{Instrukcja (Prompt):} \textit{Implement a function \texttt{find\_middle\_element} that takes a list of floats and returns the element exactly in the center. If the list has an even number of elements, return the element at the lower middle index.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-1816 (1).txt (Niedomknięte literały tekstowe); liczba linii: \num{24}},label={lst:text-sample-1816-1}]{generated/failed_samples/text-sample-1816_1.py}
+
+\subsection{Próbka text-sample-402 (1).txt -- Błędy wcięć i bloków}
+\label{sec:lst:text-sample-402-1}
+\textbf{Instrukcja (Prompt):} \textit{Implement a function \texttt{find\_middle\_element} that takes a list of floats and returns the element exactly in the center. If the list has an even number of elements, return the element at the lower middle index.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-402 (1).txt (Błędy wcięć i bloków); liczba linii: \num{15}},label={lst:text-sample-402-1}]{generated/failed_samples/text-sample-402_1.py}
+
+\subsection{Próbka text-sample-5756 (2).txt -- Błędy literałów f-string}
+\label{sec:lst:text-sample-5756-2}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized class named \texttt{TimeConverter} with methods to convert between hours, minutes, and seconds, ensuring all conversion logic is mathematically sound and efficient.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-5756 (2).txt (Błędy literałów f-string); liczba linii: \num{35}},label={lst:text-sample-5756-2}]{generated/failed_samples/text-sample-5756_2.py}
+
+\subsection{Próbka text-sample-16966 (3).txt -- Niezdefiniowane nazwy}
+\label{sec:lst:text-sample-16966-3}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized function named \texttt{compare\_dates} that accepts two date strings (in \texttt{YYYY-MM-DD} format) and returns the earlier date as a datetime object. Ensure the function is efficient and handles potential \texttt{ValueError} exceptions gracefully.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-16966 (3).txt (Niezdefiniowane nazwy); liczba linii: \num{29}},label={lst:text-sample-16966-3}]{generated/failed_samples/text-sample-16966_3.py}
+
+\subsection{Próbka text-sample-1008 (3).txt -- Niepoprawne literały liczbowe}
+\label{sec:lst:text-sample-1008-3}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized function named \texttt{compare\_dates} that accepts two date strings (in \texttt{YYYY-MM-DD} format) and returns the earlier date as a datetime object. Ensure the function is efficient and handles potential \texttt{ValueError} exceptions gracefully.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-1008 (3).txt (Niepoprawne literały liczbowe); liczba linii: \num{6}},label={lst:text-sample-1008-3}]{generated/failed_samples/text-sample-1008_3.py}
+
+\subsection{Próbka text-sample-11008 (2).txt -- Przypisanie do literału}
+\label{sec:lst:text-sample-11008-2}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized class named \texttt{TimeConverter} with methods to convert between hours, minutes, and seconds, ensuring all conversion logic is mathematically sound and efficient.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-11008 (2).txt (Przypisanie do literału); liczba linii: \num{32}},label={lst:text-sample-11008-2}]{generated/failed_samples/text-sample-11008_2.py}
+
+\subsection{Próbka text-sample-2018 (3).txt -- Niepoprawna definicja parametrów funkcji}
+\label{sec:lst:text-sample-2018-3}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized class named \texttt{TimeConverter} with methods to convert between hours, minutes, and seconds, ensuring all conversion logic is mathematically sound and efficient.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-2018 (3).txt (Niepoprawna definicja parametrów funkcji); liczba linii: \num{3}},label={lst:text-sample-2018-3}]{generated/failed_samples/text-sample-2018_3.py}
+
+\subsection{Próbka text-sample-18482 (3).txt -- Niepoprawne użycie wyrażenia z gwiazdką}
+\label{sec:lst:text-sample-18482-3}
+\textbf{Instrukcja (Prompt):} \textit{Implement an optimized class named \texttt{TimeConverter} with methods to convert between hours, minutes, and seconds, ensuring all conversion logic is mathematically sound and efficient.}
+
+\lstinputlisting[language=Python,caption={Pełny wygenerowany kod dla próbki text-sample-18482 (3).txt (Niepoprawne użycie wyrażenia z gwiazdką); liczba linii: \num{32}},label={lst:text-sample-18482-3}]{generated/failed_samples/text-sample-18482_3.py}
+
