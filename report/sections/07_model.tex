@@ -1,12 +1,19 @@
-
 \section{Architektura modelu}
 \label{sec:architektura_modelu}
 
-Zastosowany model jest warunkowym modelem dyfuzyjnym przeznaczonym do generowania kodu źródłowego na podstawie opisu zadania. Jego wejście składa się z dwóch części: instrukcji tekstowej określającej wymagane działanie programu oraz częściowo zamaskowanej sekwencji kodu. Model otrzymuje również informację o aktualnym poziomie zaszumienia, czyli o tym, jaka część kodu została ukryta.
+Zastosowany model jest warunkowym modelem dyfuzyjnym przeznaczonym do generowania kodu źródłowego na podstawie opisu zadania (Schemat całej architektury przedstawiliśmy na Rysunku~\ref{fig:model-architecture}). Jego wejście składa się z dwóch części: instrukcji tekstowej określającej wymagane działanie programu oraz częściowo zamaskowanej sekwencji kodu. Model otrzymuje również informację o aktualnym poziomie zaszumienia, czyli o tym, jaka część kodu została ukryta.
 
 Tokeny instrukcji i kodu są najpierw przekształcane na reprezentacje wektorowe. Do każdej reprezentacji dodawana jest informacja o pozycji tokenu w sekwencji, dzięki czemu model może rozróżniać kolejność elementów programu. Reprezentacje instrukcji i kodu są następnie łączone w jedną sekwencję. Tokeny dopełniające, stosowane jedynie w celu wyrównania długości przykładów, są zerowane, aby nie wpływały na dalsze obliczenia.
 
 %\input{figures/architecture}
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/architecture}
+\caption{Schemat architektury modelu dyfuzyjnego z jednowymiarowymi blokami splotowymi.}
+\label{fig:model-architecture}
+\end{figure}
 
 Główną część modelu stanowi stos bloków splotowych. Sploty jednowymiarowe analizują lokalne zależności między sąsiednimi tokenami, takie jak struktura wyrażeń, argumenty funkcji czy kolejne elementy instrukcji. W kolejnych blokach zwiększane są rozmiar jądra i dylacja, co pozwala obejmować coraz większe fragmenty sekwencji bez konieczności znacznego zwiększania liczby warstw. Dzięki temu model może jednocześnie uwzględniać lokalną składnię oraz zależności występujące między bardziej odległymi częściami programu.
 
@@ -26,7 +33,7 @@ Problem z pamięcią i złożonością jest szczególnie istotny w przypadku wi�
 
 Alternatywą dla klasycznej generacji autoregresyjnej jest maskowana dyfuzja dyskretna, w której model nie musi generować sekwencji wyłącznie od lewej do prawej \cite{austin2021structured, chang2022maskgit}. Zamiast tego proces generacji rozpoczyna się od częściowo zamaskowanej reprezentacji, a następnie model iteracyjnie przewiduje brakujące tokeny. W kolejnych krokach odsłaniane są te fragmenty, co do których model ma największą pewność. Podejście to ma szczególne znaczenie dla kodu: struktura programu często pozwala z dużą pewnością wypełnić niektóre fragmenty — np. zamknięcie bloku, słowo kluczowe \texttt{return}, nawiasy domykające — bez znajomości pozostałych. Pytaniem otwartym pozostaje jednak, jak zaprojektować architekturę modelu, który będzie w stanie efektywnie przewidywać te tokeny przy ograniczonym koszcie obliczeniowym.
 
-W ramach niniejszego projektu proponujemy zbadanie, czy proces maskowanej dyfuzji dyskretnej może zostać zrealizowany nie przy użyciu klasycznego Transformera, lecz za pomocą architektury konwolucyjnej. Główną motywacją tego wyboru jest obserwacja, że kod źródłowy zawiera wiele silnych, lokalnych regularności. Allamanis et al. \cite{allamanis2018survey} pokazują, że kod wykazuje znacznie wyższy stopień powtarzalności niż tekst naturalny — zarówno na poziomie tokenów, jak i krótkich sekwencji. Analiza statystyczna kodu wskazuje, że znaczna część tokenów w typowym pliku źródłowym należy do niewielkiego zbioru wzorców: nawiasów, operatorów, słów kluczowych i krótkich wywołań funkcji \cite{bielik2016phog}. Sugeruje to, że duża część lokalnych decyzji generatywnych nie wymaga dostępu do całego kontekstu sekwencji.
+W ramach niniejszego projektu proponujemy zbadanie, czy proces maskowanej dyfuzji dyskretnej może zostać zrealizowany nie przy użyciu klasycznego Transformera, lecz za pomocą architektury konwolucyjnej. Główną motywacją tego wyboru jest obserwacja, że kod źródłowy zawiera wiele silnych, lokalnych regularności. Allamanis et al. \cite{allamanis2018survey} pokazują, że kod wykazuje znacznie wyższy stopień powtarzalności niż tekst naturalny — zarówno na poziomie tokenów, jak i krótkich sekwencji. Analiza statystyczna kodu wskazuje, że znaczna część tokenów w typowym pliku źródłowym należy do niewielkiego zbioru wzorców: nawiasów, operatorów, słów kluczowych i krótkich wywołań funkcji \cite{bielik2016phog}. Sugeruje to, że duża część lokalnych decyzń generatywnych nie wymaga dostępu do całego kontekstu sekwencji.
 
 Sieci konwolucyjne są naturalnym kandydatem do modelowania takich zależności, ponieważ analizują dane przez przesuwające się okna o stałym rozmiarze. Dzięki właściwości dzielenia wag, ta sama operacja filtrowania jest stosowana w każdym położeniu sekwencji, co pozwala na wykrywanie powtarzalnych wzorców niezależnie od ich miejsca w pliku. W porównaniu z mechanizmem uwagi, który traktuje każdą parę tokenów symetrycznie, konwolucja może dać lepsze rezultaty w kontekście lokalnym — co w przypadku kodu jest ważne.
 
